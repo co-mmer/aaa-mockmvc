@@ -1,4 +1,4 @@
-# <img src="./images/aaa-mockmvc-icon.png" width="100" align="left" style="margin-top: -28px;"/> Changelog
+# <img src="./images/aaa-mockmvc-icon.png"  align="left" style="margin-top: -20px;"/> Changelog
 
 ## [1.0.0]
 

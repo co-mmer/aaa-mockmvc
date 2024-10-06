@@ -1,4 +1,4 @@
-# <img src="./images/aaa-mockmvc-icon.png" width="100" align="left" style="margin-top: -28px;"/> AAA-MockMVC
+# <img src="./images/aaa-mockmvc-icon.png" align="left" style="margin-top: -20px;"/> AAA-MockMVC
 
 ## Overview
 
