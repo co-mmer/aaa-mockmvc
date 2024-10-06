@@ -1,7 +1,6 @@
-<div style="display: flex; align-items: center;">
-    <img src="./images/aaa-mockmvc-icon.png" style="margin-right: 10px; margin-top: 25px"/>
-    <h1>AAA-MockMvc</h1>
-</div>
+# <img src="./images/aaa-mockmvc-icon.png" align="left" style="margin-top: 35px;"/>
+
+# AAA-MockMvc
 
 ## Overview
 
