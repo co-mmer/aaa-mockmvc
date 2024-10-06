@@ -1,4 +1,4 @@
-<table>
+<table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><img src="./images/aaa-mockmvc-icon.png" alt="icon" style="vertical-align: middle;"/></td>
     <td><h1>AAA-MockMvc</h1></td>
