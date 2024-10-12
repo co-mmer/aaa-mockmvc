@@ -4,19 +4,26 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-import ej.test.aaamockmvc.request.act.exception.TestAssertException;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper;
+import ej.test.aaamockmvc.request.asserts.mapper.exception.TestAssertResultMapperException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import lombok.NonNull;
 import org.apache.logging.log4j.util.Strings;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 /**
- * This class provides assertion methods for validating the result of HTTP requests.
+ * This class provides implementation for assertions on HTTP responses in a testing context. It
+ * allows various validations of response status, content, and headers.
  *
- * <p>It wraps {@link ResultActions} and {@link MockHttpServletResponse} to perform assertions on
- * the status and content of the response, including string and byte array content.
+ * <p>It is primarily used for validating the results of HTTP requests performed with the {@code
+ * MockMvc} framework in a Spring web application context.
  *
  * @since 1.0.0
  */
@@ -65,124 +72,266 @@ public final class TestAssertImpl implements TestAssert {
   }
 
   /**
-   * Asserts that the content of the HTTP response is not an empty string.
+   * Asserts that the content of the HTTP response as a string is not empty.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
    *
    * @return the current instance of {@code TestAssert} for method chaining
-   * @throws TestAssertException if an error occurs when retrieving the content
    * @since 1.0.0
    */
   @Override
-  public TestAssert assertStringContentIsNotEmpty() throws TestAssertException {
-    var content = tryGetContentAsString();
-    assertThat(content, is(not(Strings.EMPTY)));
-    return this;
-  }
-
-  private String tryGetContentAsString() throws TestAssertException {
+  public TestAssert assertStringContentIsNotEmpty() {
     try {
-      return this.response.getContentAsString();
+      var content = this.response.getContentAsString();
+      assertThat(content, is(not(Strings.EMPTY)));
     } catch (Exception e) {
-      throw new TestAssertException(e);
+      Assertions.fail(e);
     }
-  }
-
-  /**
-   * Asserts that the content of the HTTP response is an empty string.
-   *
-   * @return the current instance of {@code TestAssert} for method chaining
-   * @throws TestAssertException if an error occurs when retrieving the content
-   * @since 1.0.0
-   */
-  @Override
-  public TestAssert assertStringContentIsEmpty() throws TestAssertException {
-    var content = tryGetContentAsString();
-    assertThat(content, is(Strings.EMPTY));
     return this;
   }
 
   /**
-   * Asserts that the content of the HTTP response matches the expected string.
+   * Asserts that the content of the HTTP response as a string is empty.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @return the current instance of {@code TestAssert} for method chaining
+   * @since 1.0.0
+   */
+  @Override
+  public TestAssert assertStringContentIsEmpty() {
+    try {
+      var content = this.response.getContentAsString();
+      assertThat(content, is(Strings.EMPTY));
+    } catch (Exception e) {
+      Assertions.fail(e);
+    }
+    return this;
+  }
+
+  /**
+   * Asserts that the content of the HTTP response matches the given string.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
    *
    * @param expectedString the expected content of the response (must not be {@code null})
-   * @throws TestAssertException if an error occurs when retrieving the content
-   * @throws NullPointerException if the {@code expectedString} is {@code null}
-   * @since 1.0.0
-   */
-  @Override
-  public TestAssert assertStringContent(@NonNull String expectedString) throws TestAssertException {
-    var content = tryGetContentAsString();
-    assertThat(content, is(expectedString));
-    return this;
-  }
-
-  /**
-   * Asserts that the byte array content of the HTTP response is not empty.
-   *
    * @return the current instance of {@code TestAssert} for method chaining
-   * @throws TestAssertException if an error occurs when retrieving the content
    * @since 1.0.0
    */
   @Override
-  public TestAssert assertByteContentIsNotEmpty() throws TestAssertException {
-    var content = tryGetContentAsByteArray();
-    assertThat(content.length, is(not(0)));
-    return this;
-  }
-
-  private byte[] tryGetContentAsByteArray() throws TestAssertException {
+  public TestAssert assertEquals(@NonNull String expectedString) {
     try {
-      return this.response.getContentAsByteArray();
+      var content = this.response.getContentAsString();
+      assertThat(content, is(expectedString));
     } catch (Exception e) {
-      throw new TestAssertException(e);
+      Assertions.fail(e);
     }
-  }
-
-  /**
-   * Asserts that the byte array content of the HTTP response is empty.
-   *
-   * @return the current instance of {@code TestAssert} for method chaining
-   * @throws TestAssertException if an error occurs when retrieving the content
-   * @since 1.0.0
-   */
-  @Override
-  public TestAssert assertByteContentIsEmpty() throws TestAssertException {
-    var content = tryGetContentAsByteArray();
-    assertThat(content.length, is(0));
     return this;
   }
 
   /**
-   * Asserts that the byte array content of the HTTP response matches the expected byte array.
+   * Asserts that the content of the HTTP response as a byte array is not empty.
    *
-   * @param expectedByte the expected byte array content (must not be {@code null})
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
    * @return the current instance of {@code TestAssert} for method chaining
-   * @throws TestAssertException if an error occurs when retrieving the content
-   * @throws NullPointerException if the {@code expectedByte} is {@code null}
    * @since 1.0.0
    */
   @Override
-  public TestAssert assertByteContent(byte[] expectedByte) throws TestAssertException {
-    var content = tryGetContentAsByteArray();
-    assertThat(content, is(expectedByte));
+  public TestAssert assertByteContentIsNotEmpty() {
+    try {
+      var content = this.response.getContentAsByteArray();
+      assertThat(content.length, is(not(0)));
+    } catch (Exception e) {
+      Assertions.fail(e);
+    }
+    return this;
+  }
+
+  /**
+   * Asserts that the content of the HTTP response as a byte array is empty.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @return the current instance of {@code TestAssert} for method chaining
+   * @since 1.0.0
+   */
+  @Override
+  public TestAssert assertByteContentIsEmpty() {
+    try {
+      var content = this.response.getContentAsByteArray();
+      assertThat(content.length, is(0));
+    } catch (Exception e) {
+      Assertions.fail(e);
+    }
+    return this;
+  }
+
+  /**
+   * Asserts that the content of the HTTP response matches the given byte array.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedByte the expected byte content of the response (must not be {@code null})
+   * @return the current instance of {@code TestAssert} for method chaining
+   * @since 1.0.0
+   */
+  @Override
+  public TestAssert assertEquals(byte[] expectedByte) {
+    try {
+      var content = this.response.getContentAsByteArray();
+      assertThat(content, is(expectedByte));
+    } catch (Exception e) {
+      Assertions.fail(e);
+    }
+    return this;
+  }
+
+  /**
+   * Asserts that the content of the HTTP response matches the given object of type {@code T}.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the expected object (must not be {@code null})
+   * @param expectedResponse the expected object (must not be {@code null})
+   * @param deserializers optional deserializers for custom object mapping
+   * @param <T> the type of the expected response
+   * @return the current instance of {@code TestAssert} for method chaining
+   * @since 1.0.0
+   */
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T> TestAssert assertEquals(
+      @NonNull Class<T> expectedClass,
+      @NonNull T expectedResponse,
+      JsonDeserializer<T>... deserializers) {
+
+    try {
+      var result = this.actions.andReturn();
+      var content = TestAssertResultMapper.mapTo(result, expectedClass, deserializers);
+      assertThat(content, is(expectedResponse));
+    } catch (TestAssertResultMapperException e) {
+      Assertions.fail(e);
+    }
+    return this;
+  }
+
+  /**
+   * Asserts that the content of the HTTP response matches the given list of objects.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the objects in the list (must not be {@code null})
+   * @param expectedResponse the expected list of objects (must not be {@code null})
+   * @param deserializers optional deserializers for custom object mapping
+   * @param <T> the type of the objects in the expected list
+   * @return the current instance of {@code TestAssert} for method chaining
+   * @since 1.0.0
+   */
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T> TestAssert assertEquals(
+      @NonNull Class<T> expectedClass,
+      @NonNull List<T> expectedResponse,
+      JsonDeserializer<T>... deserializers) {
+
+    try {
+      var result = this.actions.andReturn();
+      var content = TestAssertResultMapper.mapToList(result, expectedClass, deserializers);
+      assertThat(content, is(expectedResponse));
+    } catch (TestAssertResultMapperException e) {
+      Assertions.fail(e);
+    }
+    return this;
+  }
+
+  /**
+   * Asserts that the content of the HTTP response matches the given set of objects.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the objects in the set (must not be {@code null})
+   * @param expectedResponse the expected set of objects (must not be {@code null})
+   * @param deserializers optional deserializers for custom object mapping
+   * @param <T> the type of the objects in the expected set
+   * @return the current instance of {@code TestAssert} for method chaining
+   * @since 1.0.0
+   */
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T> TestAssert assertEquals(
+      @NonNull Class<T> expectedClass,
+      @NonNull Set<T> expectedResponse,
+      JsonDeserializer<T>... deserializers) {
+
+    try {
+      var result = this.actions.andReturn();
+      var content = TestAssertResultMapper.mapToSet(result, expectedClass, deserializers);
+      assertThat(content, is(expectedResponse));
+    } catch (TestAssertResultMapperException e) {
+      Assertions.fail(e);
+    }
+    return this;
+  }
+
+  /**
+   * Asserts that the content of the HTTP response matches the given map.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param keyClass the class of the keys in the map (must not be {@code null})
+   * @param valueClass the class of the values in the map (must not be {@code null})
+   * @param expectedResponse the expected map of key-value pairs (must not be {@code null})
+   * @param deserializers optional deserializers for custom object mapping
+   * @param <K> the type of the keys in the map
+   * @param <V> the type of the values in the map
+   * @return the current instance of {@code TestAssert} for method chaining
+   * @since 1.0.0
+   */
+  @Override
+  @SuppressWarnings("unchecked")
+  public <K, V> TestAssert assertEquals(
+      @NonNull Class<K> keyClass,
+      @NonNull Class<V> valueClass,
+      @NonNull Map<K, V> expectedResponse,
+      JsonDeserializer<V>... deserializers) {
+
+    try {
+      var result = this.actions.andReturn();
+      var content = TestAssertResultMapper.mapToMap(result, keyClass, valueClass, deserializers);
+      assertThat(content, is(expectedResponse));
+    } catch (TestAssertResultMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
   /**
    * Asserts that the result of the test request matches the given {@link ResultMatcher}.
    *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
    * @param matcher the {@code ResultMatcher} to be used for validation (must not be {@code null})
    * @return the current instance of {@code TestAssert} for method chaining
-   * @throws TestAssertException if an error occurs during validation
-   * @throws NullPointerException if the {@code matcher} is {@code null}
    * @since 1.0.0
    */
   @Override
-  public TestAssert assertByResultMatcher(@NonNull ResultMatcher matcher)
-      throws TestAssertException {
+  public TestAssert assertByResultMatcher(@NonNull ResultMatcher matcher) {
     try {
       this.actions.andExpect(matcher);
     } catch (Exception e) {
-      throw new TestAssertException(e);
+      Assertions.fail(e);
     }
     return this;
   }
