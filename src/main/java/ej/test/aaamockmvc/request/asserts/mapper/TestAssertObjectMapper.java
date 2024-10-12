@@ -26,10 +26,10 @@ public final class TestAssertObjectMapper {
   /**
    * Creates a new instance of {@code ObjectMapper} configured for the specified class type.
    *
-   * <p>If any custom deserializers are provided, they will be added to the {@code ObjectMapper}
-   * to handle specific JSON formats for the expected class type.
+   * <p>If any custom deserializers are provided, they will be added to the {@code ObjectMapper} to
+   * handle specific JSON formats for the expected class type.
    *
-   * @param <T>           the type of the expected class
+   * @param <T> the type of the expected class
    * @param expectedClass the expected class for the JSON mapping (must not be {@code null})
    * @param deserializers optional array of custom deserializers for the expected class
    * @return a configured instance of {@code ObjectMapper}
@@ -47,8 +47,8 @@ public final class TestAssertObjectMapper {
   }
 
   @SuppressWarnings("unchecked")
-  private static <T> void addDeserializer(Class<T> expectedClass,
-      JsonDeserializer<?>[] deserializers, ObjectMapper objectMapper) {
+  private static <T> void addDeserializer(
+      Class<T> expectedClass, JsonDeserializer<?>[] deserializers, ObjectMapper objectMapper) {
 
     var module = new SimpleModule();
     Arrays.stream(deserializers)

@@ -12,6 +12,10 @@ import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_SET_2
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECT_1_DTO;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECT_1_JSON;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECT_2_DTO;
+import static ej.test.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
+import static ej.test.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_KEY_2;
+import static ej.test.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
+import static ej.test.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_VALUE_2;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
@@ -469,5 +473,73 @@ class TestAssertImplTest {
 
     // Assert
     verify(this.actions).andExpect(mockStatusMatcher);
+  }
+
+  @Test
+  void GIVEN_existing_header_WHEN_assertHeaderContains_THEN_assert_is_true() {
+    // Arrange
+    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+
+    // Act & Assert
+    this.testAssert.assertHeaderContains(TEST_HEAD_KEY_1);
+  }
+
+  @Test
+  void GIVEN_not_existing_header_WHEN_assertHeaderContains_THEN_assert_is_false() {
+    // Arrange
+    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+
+    // Act & Assert
+    assertThrows(AssertionError.class, () -> this.testAssert.assertHeaderContains(TEST_HEAD_KEY_2));
+  }
+
+  @Test
+  void GIVEN_not_existing_header_WHEN_assertHeaderNotContains_THEN_assert_is_true() {
+    // Arrange
+    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+
+    // Act & Assert
+    this.testAssert.assertHeaderNotContains(TEST_HEAD_KEY_2);
+  }
+
+  @Test
+  void GIVEN_existing_header_WHEN_assertHeaderNotContains_THEN_assert_is_false() {
+    // Arrange
+    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+
+    // Act & Assert
+    assertThrows(
+        AssertionError.class, () -> this.testAssert.assertHeaderNotContains(TEST_HEAD_KEY_1));
+  }
+
+  @Test
+  void GIVEN_existing_header_WHEN_assertHeaderEquals_THEN_assert_is_true() {
+    // Arrange
+    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+
+    // Act & Assert
+    this.testAssert.assertHeaderEquals(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+  }
+
+  @Test
+  void GIVEN_not_expected_header_value_WHEN_assertHeaderEquals_THEN_assert_is_false() {
+    // Arrange
+    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+
+    // Act & Assert
+    assertThrows(
+        AssertionError.class,
+        () -> this.testAssert.assertHeaderEquals(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_2));
+  }
+
+  @Test
+  void GIVEN_not_expected_header_key_WHEN_assertHeaderEquals_THEN_assert_is_false() {
+    // Arrange
+    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+
+    // Act & Assert
+    assertThrows(
+        AssertionError.class,
+        () -> this.testAssert.assertHeaderEquals(TEST_HEAD_KEY_2, TEST_HEAD_VALUE_1));
   }
 }

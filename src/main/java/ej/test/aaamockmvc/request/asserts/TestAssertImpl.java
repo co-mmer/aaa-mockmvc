@@ -35,8 +35,8 @@ public final class TestAssertImpl implements TestAssert {
   /**
    * Constructs an instance of {@code TestAssert} with the provided {@code ResultActions}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
+   * @param actions the {@code ResultActions} from a performed HTTP request (must not be
+   *                {@code null})
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.0.0
    */
@@ -199,10 +199,10 @@ public final class TestAssertImpl implements TestAssert {
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param expectedClass the class of the expected object (must not be {@code null})
+   * @param expectedClass    the class of the expected object (must not be {@code null})
    * @param expectedResponse the expected object (must not be {@code null})
-   * @param deserializers optional deserializers for custom object mapping
-   * @param <T> the type of the expected response
+   * @param deserializers    optional deserializers for custom object mapping
+   * @param <T>              the type of the expected response
    * @return the current instance of {@code TestAssert} for method chaining
    * @since 1.0.0
    */
@@ -229,10 +229,10 @@ public final class TestAssertImpl implements TestAssert {
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param expectedClass the class of the objects in the list (must not be {@code null})
+   * @param expectedClass    the class of the objects in the list (must not be {@code null})
    * @param expectedResponse the expected list of objects (must not be {@code null})
-   * @param deserializers optional deserializers for custom object mapping
-   * @param <T> the type of the objects in the expected list
+   * @param deserializers    optional deserializers for custom object mapping
+   * @param <T>              the type of the objects in the expected list
    * @return the current instance of {@code TestAssert} for method chaining
    * @since 1.0.0
    */
@@ -259,10 +259,10 @@ public final class TestAssertImpl implements TestAssert {
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param expectedClass the class of the objects in the set (must not be {@code null})
+   * @param expectedClass    the class of the objects in the set (must not be {@code null})
    * @param expectedResponse the expected set of objects (must not be {@code null})
-   * @param deserializers optional deserializers for custom object mapping
-   * @param <T> the type of the objects in the expected set
+   * @param deserializers    optional deserializers for custom object mapping
+   * @param <T>              the type of the objects in the expected set
    * @return the current instance of {@code TestAssert} for method chaining
    * @since 1.0.0
    */
@@ -289,12 +289,12 @@ public final class TestAssertImpl implements TestAssert {
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param keyClass the class of the keys in the map (must not be {@code null})
-   * @param valueClass the class of the values in the map (must not be {@code null})
+   * @param keyClass         the class of the keys in the map (must not be {@code null})
+   * @param valueClass       the class of the values in the map (must not be {@code null})
    * @param expectedResponse the expected map of key-value pairs (must not be {@code null})
-   * @param deserializers optional deserializers for custom object mapping
-   * @param <K> the type of the keys in the map
-   * @param <V> the type of the values in the map
+   * @param deserializers    optional deserializers for custom object mapping
+   * @param <K>              the type of the keys in the map
+   * @param <V>              the type of the values in the map
    * @return the current instance of {@code TestAssert} for method chaining
    * @since 1.0.0
    */
@@ -333,6 +333,60 @@ public final class TestAssertImpl implements TestAssert {
     } catch (Exception e) {
       Assertions.fail(e);
     }
+    return this;
+  }
+
+  /**
+   * Asserts that the HTTP response contains the specified header.
+   *
+   * <p>This method checks if the response includes the header with the given key.
+   *
+   * @param expectedKey the key of the header to check (must not be {@code null})
+   * @return the current instance of {@code TestAssert} for method chaining
+   * @throws NullPointerException if the {@code expectedKey} is {@code null}
+   * @since 1.0.0
+   */
+  @Override
+  public TestAssert assertHeaderContains(@NonNull String expectedKey) {
+    var containsHeader = this.response.containsHeader(expectedKey);
+    assertThat(containsHeader, is(true));
+    return this;
+  }
+
+  /**
+   * Asserts that the HTTP response does not contain the specified header.
+   *
+   * <p>This method checks if the response does not include the header with the given key.
+   *
+   * @param notExpectedKey the key of the header that should not be present (must not be
+   *                       {@code null})
+   * @return the current instance of {@code TestAssert} for method chaining
+   * @throws NullPointerException if the {@code expectedKey} is {@code null}
+   * @since 1.0.0
+   */
+  @Override
+  public TestAssert assertHeaderNotContains(@NonNull String notExpectedKey) {
+    var containsHeader = this.response.containsHeader(notExpectedKey);
+    assertThat(containsHeader, is(false));
+    return this;
+  }
+
+  /**
+   * Asserts that the specified header in the HTTP response matches the expected value.
+   *
+   * <p>This method compares the value of the response header with the expected value.
+   *
+   * @param expectedKey   the key of the header to check (must not be {@code null})
+   * @param expectedValue the expected value of the header
+   * @return the current instance of {@code TestAssert} for method chaining
+   * @throws NullPointerException if the {@code expectedKey} is {@code null}
+   * @since 1.0.0
+   */
+  @Override
+  public TestAssert assertHeaderEquals(@NonNull String expectedKey, String expectedValue) {
+    var value = this.response.getHeader(expectedKey);
+    var cleanedValue = value != null ? value.replace("\"", "") : null;
+    assertThat(cleanedValue, is(expectedValue));
     return this;
   }
 }

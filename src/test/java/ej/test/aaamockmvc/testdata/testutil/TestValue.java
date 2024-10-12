@@ -69,6 +69,12 @@ public final class TestValue {
 
   public static final byte[] TEST_BYTE = new byte[0];
 
+  public static final String TEST_HEAD_KEY_1 = "headKey1";
+  public static final String TEST_HEAD_KEY_2 = "headKey2";
+
+  public static final String TEST_HEAD_VALUE_1 = "headValue1";
+  public static final String TEST_HEAD_VALUE_2 = "headValue2";
+
   private static URI createUri() {
     try {
       return new URI(TEST_PATH);
