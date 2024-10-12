@@ -1,34 +1,17 @@
 package ej.test.aaamockmvc.request.asserts;
 
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_1_DTO;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_1_JSON;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_2_DTO;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_DTO;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_JSON;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_MAP_2_DTO;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_SET_1_DTO;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_SET_1_JSON;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_SET_2_DTO;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECT_1_DTO;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECT_1_JSON;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECT_2_DTO;
 import static ej.test.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
-import static ej.test.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_KEY_2;
 import static ej.test.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
-import static ej.test.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_VALUE_2;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper;
-import ej.test.aaamockmvc.request.asserts.mapper.exception.TestAssertResultMapperException;
-import ej.test.aaamockmvc.testdata.testutil.TestObjectDto;
-import java.io.UnsupportedEncodingException;
-import org.apache.logging.log4j.util.Strings;
+import ej.test.aaamockmvc.request.asserts.content.TestAssertContentImpl;
+import ej.test.aaamockmvc.request.asserts.head.TestAssertHeadImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
@@ -40,8 +23,6 @@ import org.springframework.test.web.servlet.ResultMatcher;
 
 class TestAssertImplTest {
 
-  private static final String EXPECTED_CONTENT = "expected content";
-  private static final String ACTUAL_CONTENT = "actual content";
   private ResultActions actions;
   private MockHttpServletResponse response;
   private TestAssertImpl testAssert;
@@ -53,9 +34,9 @@ class TestAssertImplTest {
     this.response = new MockHttpServletResponse();
 
     when(mvcResult.getResponse()).thenReturn(this.response);
-    when(this.actions.andReturn()).thenReturn(mvcResult);
+    when(actions.andReturn()).thenReturn(mvcResult);
 
-    this.testAssert = new TestAssertImpl(this.actions);
+    this.testAssert = new TestAssertImpl(actions);
   }
 
   @Test
@@ -95,361 +76,6 @@ class TestAssertImplTest {
   }
 
   @Test
-  void GIVEN_expected_WHEN_assertStringContentIsNotEmpty_THEN_assert_true() throws Exception {
-    // Arrange
-    this.response.getWriter().write(EXPECTED_CONTENT);
-
-    // Act & Assert
-    this.testAssert.assertStringContentIsNotEmpty();
-  }
-
-  @Test
-  void GIVEN_unexpected_WHEN_assertStringContentIsNotEmpty_THEN_assert_false() throws Exception {
-    // Arrange
-    this.response.getWriter().write(Strings.EMPTY);
-
-    // Act & Assert
-    assertThrows(AssertionError.class, this.testAssert::assertStringContentIsNotEmpty);
-  }
-
-  @Test
-  void GIVEN_exception_WHEN_assertStringContentIsNotEmpty_THEN_assert_false() throws Exception {
-    // Arrange
-    var mockMvcResult = mockGetContentAsStringException();
-    when(this.actions.andReturn()).thenReturn(mockMvcResult);
-    var testAssert = new TestAssertImpl(this.actions);
-
-    // Act & Assert
-    assertThrows(AssertionError.class, testAssert::assertStringContentIsNotEmpty);
-  }
-
-  @Test
-  void GIVEN_expected_WHEN_assertStringContentIsEmpty_THEN_assert_true() throws Exception {
-    // Arrange
-    this.response.getWriter().write(Strings.EMPTY);
-
-    // Act & Assert
-    this.testAssert.assertStringContentIsEmpty();
-  }
-
-  @Test
-  void GIVEN_unexpected_WHEN_assertStringContentIsEmpty_THEN_return_assert_false()
-      throws Exception {
-
-    // Arrange
-    this.response.getWriter().write(ACTUAL_CONTENT);
-
-    // Act & Assert
-    assertThrows(AssertionError.class, this.testAssert::assertStringContentIsEmpty);
-  }
-
-  @Test
-  void GIVEN_exception_WHEN_assertStringContentIsEmpty_THEN_assert_false() throws Exception {
-    // Arrange
-    var mockMvcResult = mockGetContentAsStringException();
-    when(this.actions.andReturn()).thenReturn(mockMvcResult);
-    var testAssert = new TestAssertImpl(this.actions);
-
-    // Act & Assert
-    assertThrows(AssertionError.class, testAssert::assertStringContentIsEmpty);
-  }
-
-  @Test
-  void GIVEN_expected_WHEN_assertEquals_THEN_assert_true() throws Exception {
-    // Arrange
-    this.response.getWriter().write(EXPECTED_CONTENT);
-
-    // Act & Assert
-    this.testAssert.assertEquals(EXPECTED_CONTENT);
-  }
-
-  @Test
-  void GIVEN_unexpected_WHEN_assertEquals_THEN_assert_false() throws Exception {
-    // Arrange
-    this.response.getWriter().write(ACTUAL_CONTENT);
-
-    // Act & Assert
-    assertThrows(AssertionError.class, () -> this.testAssert.assertEquals(EXPECTED_CONTENT));
-  }
-
-  @Test
-  void GIVEN_exception_WHEN_assertEquals_THEN_assert_false() throws Exception {
-    // Arrange
-    var mockMvcResult = mockGetContentAsStringException();
-    when(this.actions.andReturn()).thenReturn(mockMvcResult);
-    var testAssert = new TestAssertImpl(this.actions);
-
-    // Act & Assert
-    assertThrows(AssertionFailedError.class, () -> testAssert.assertEquals(EXPECTED_CONTENT));
-  }
-
-  private static MvcResult mockGetContentAsStringException() throws UnsupportedEncodingException {
-    var mockMvcResult = mock(MvcResult.class);
-    var mockResponse = mock(MockHttpServletResponse.class);
-    when(mockResponse.getContentAsString()).thenThrow(new RuntimeException());
-    when(mockMvcResult.getResponse()).thenReturn(mockResponse);
-    return mockMvcResult;
-  }
-
-  @Test
-  void GIVEN_expected_WHEN_assertByteContentIsNotEmpty_THEN_assert_true() throws Exception {
-    // Arrange
-    this.response.getWriter().write(ACTUAL_CONTENT);
-
-    // Act & Assert
-    this.testAssert.assertByteContentIsNotEmpty();
-  }
-
-  @Test
-  void GIVEN_unexpected_WHEN_assertByteContentIsNotEmpty_THEN_assert_false() throws Exception {
-    // Arrange
-    this.response.getWriter().write(Strings.EMPTY);
-
-    // Act & Assert
-    assertThrows(AssertionError.class, this.testAssert::assertByteContentIsNotEmpty);
-  }
-
-  @Test
-  void GIVEN_exception_WHEN_assertByteContentIsNotEmpty_THEN_assert_false() {
-    // Arrange
-    var mockMvcResult = mockGetContentAsSByteException();
-
-    when(this.actions.andReturn()).thenReturn(mockMvcResult);
-    var testAssert = new TestAssertImpl(this.actions);
-
-    // Act & Assert
-    assertThrows(AssertionFailedError.class, testAssert::assertByteContentIsNotEmpty);
-  }
-
-  @Test
-  void GIVEN_expected_WHEN_assertByteContentIsEmpty_THEN_assert_true() throws Exception {
-    // Arrange
-    this.response.getWriter().write(Strings.EMPTY);
-
-    // Act & Assert
-    this.testAssert.assertByteContentIsEmpty();
-  }
-
-  @Test
-  void GIVEN_unexpected_WHEN_assertByteContentIsEmpty_THEN_return_assert_false() throws Exception {
-    // Arrange
-    this.response.getWriter().write(ACTUAL_CONTENT);
-
-    // Act & Assert
-    assertThrows(AssertionError.class, this.testAssert::assertByteContentIsEmpty);
-  }
-
-  @Test
-  void GIVEN_exception_WHEN_assertByteContentIsEmpty_THEN_assert_false() {
-    // Arrange
-    var mockMvcResult = mockGetContentAsSByteException();
-
-    when(this.actions.andReturn()).thenReturn(mockMvcResult);
-    var testAssert = new TestAssertImpl(this.actions);
-
-    // Act & Assert
-    assertThrows(AssertionFailedError.class, testAssert::assertByteContentIsEmpty);
-  }
-
-  @Test
-  void GIVEN_expected_WHEN_assertByteContent_THEN_assert_true() throws Exception {
-    // Arrange
-    this.response.getWriter().write(EXPECTED_CONTENT);
-
-    // Act & Assert
-    this.testAssert.assertEquals(EXPECTED_CONTENT.getBytes());
-  }
-
-  @Test
-  void GIVEN_unexpected_WHEN_assertByteContent_THEN_assert_false() throws Exception {
-    // Arrange
-    this.response.getWriter().write(ACTUAL_CONTENT);
-
-    // Act & Assert
-    assertThrows(AssertionError.class, () -> this.testAssert.assertEquals(new byte[1]));
-  }
-
-  @Test
-  void GIVEN_exception_WHEN_assertByteContent_THEN_assert_false() {
-    // Arrange
-    var mockMvcResult = mockGetContentAsSByteException();
-
-    when(this.actions.andReturn()).thenReturn(mockMvcResult);
-    var testAssert = new TestAssertImpl(this.actions);
-
-    // Act & Assert
-    assertThrows(AssertionFailedError.class, () -> testAssert.assertEquals(new byte[1]));
-  }
-
-  private static MvcResult mockGetContentAsSByteException() {
-    var mockMvcResult = mock(MvcResult.class);
-    var mockResponse = mock(MockHttpServletResponse.class);
-    when(mockResponse.getContentAsByteArray()).thenThrow(new RuntimeException());
-    when(mockMvcResult.getResponse()).thenReturn(mockResponse);
-    return mockMvcResult;
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_expected_object_WHEN_assertEquals_THEN_assert_is_true() throws Exception {
-    // Arrange
-    this.response.getWriter().write(TEST_OBJECT_1_JSON);
-
-    // Act & Assert
-    this.testAssert.assertEquals(TestObjectDto.class, TEST_OBJECT_1_DTO);
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_unexpected_object_WHEN_assertEquals_THEN_assert_is_false() throws Exception {
-    // Arrange
-    this.response.getWriter().write(TEST_OBJECT_1_JSON);
-
-    // Act & Assert
-    assertThrows(
-        AssertionError.class,
-        () -> this.testAssert.assertEquals(TestObjectDto.class, TEST_OBJECT_2_DTO));
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_exception_object_WHEN_assertEquals_THEN_assert_is_false() {
-    // Arrange
-    var mockTestAssertResultMapper = mockStatic(TestAssertResultMapper.class);
-    mockTestAssertResultMapper
-        .when(() -> TestAssertResultMapper.mapTo(any(), any()))
-        .thenThrow(new TestAssertResultMapperException(new Throwable("error")));
-
-    // Act & Assert
-    assertThrows(
-        AssertionFailedError.class,
-        () -> this.testAssert.assertEquals(TestObjectDto.class, TEST_OBJECT_1_DTO));
-
-    mockTestAssertResultMapper.close();
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_expected_list_WHEN_assertEquals_THEN_assert_is_true() throws Exception {
-    // Arrange
-    this.response.getWriter().write(TEST_OBJECTS_1_JSON);
-
-    // Act & Assert
-    this.testAssert.assertEquals(TestObjectDto.class, TEST_OBJECTS_1_DTO);
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_unexpected_list_WHEN_assertEquals_THEN_assert_is_false() throws Exception {
-    // Arrange
-    this.response.getWriter().write(TEST_OBJECTS_1_JSON);
-
-    // Act & Assert
-    assertThrows(
-        AssertionError.class,
-        () -> this.testAssert.assertEquals(TestObjectDto.class, TEST_OBJECTS_2_DTO));
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_exception_list_WHEN_assertEquals_THEN_assert_is_false() {
-    // Arrange
-    var mockTestAssertResultMapper = mockStatic(TestAssertResultMapper.class);
-    mockTestAssertResultMapper
-        .when(() -> TestAssertResultMapper.mapToList(any(), any()))
-        .thenThrow(new TestAssertResultMapperException(new Throwable("error")));
-
-    // Act & Assert
-    assertThrows(
-        AssertionFailedError.class,
-        () -> this.testAssert.assertEquals(TestObjectDto.class, TEST_OBJECTS_1_DTO));
-
-    mockTestAssertResultMapper.close();
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_expected_set_WHEN_assertEquals_THEN_assert_is_true() throws Exception {
-    // Arrange
-    this.response.getWriter().write(TEST_OBJECTS_SET_1_JSON);
-
-    // Act & Assert
-    this.testAssert.assertEquals(TestObjectDto.class, TEST_OBJECTS_SET_1_DTO);
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_unexpected_set_WHEN_assertEquals_THEN_assert_is_false() throws Exception {
-    // Arrange
-    this.response.getWriter().write(TEST_OBJECTS_SET_1_JSON);
-
-    // Act & Assert
-    assertThrows(
-        AssertionError.class,
-        () -> this.testAssert.assertEquals(TestObjectDto.class, TEST_OBJECTS_SET_2_DTO));
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_exception_set_WHEN_assertEquals_THEN_assert_is_false() {
-    // Arrange
-    var mockTestAssertResultMapper = mockStatic(TestAssertResultMapper.class);
-    mockTestAssertResultMapper
-        .when(() -> TestAssertResultMapper.mapToSet(any(), any()))
-        .thenThrow(new TestAssertResultMapperException(new Throwable("error")));
-
-    // Act & Assert
-    assertThrows(
-        AssertionFailedError.class,
-        () -> this.testAssert.assertEquals(TestObjectDto.class, TEST_OBJECTS_SET_1_DTO));
-
-    mockTestAssertResultMapper.close();
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_expected_map_WHEN_assertEquals_THEN_assert_is_true() throws Exception {
-    // Arrange
-    this.response.getWriter().write(TEST_OBJECTS_MAP_1_JSON);
-
-    // Act & Assert
-    this.testAssert.assertEquals(Boolean.class, TestObjectDto.class, TEST_OBJECTS_MAP_1_DTO);
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_unexpected_map_WHEN_assertEquals_THEN_assert_is_false() throws Exception {
-    // Arrange
-    this.response.getWriter().write(TEST_OBJECTS_SET_1_JSON);
-
-    // Act & Assert
-    assertThrows(
-        AssertionError.class,
-        () ->
-            this.testAssert.assertEquals(
-                Boolean.class, TestObjectDto.class, TEST_OBJECTS_MAP_2_DTO));
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_exception_map_WHEN_assertEquals_THEN_assert_is_false() {
-    // Arrange
-    var mockTestAssertResultMapper = mockStatic(TestAssertResultMapper.class);
-    mockTestAssertResultMapper
-        .when(() -> TestAssertResultMapper.mapToMap(any(), any(), any()))
-        .thenThrow(new TestAssertResultMapperException(new Throwable("error")));
-
-    // Act & Assert
-    assertThrows(
-        AssertionFailedError.class,
-        () ->
-            this.testAssert.assertEquals(
-                Boolean.class, TestObjectDto.class, TEST_OBJECTS_MAP_1_DTO));
-
-    mockTestAssertResultMapper.close();
-  }
-
-  @Test
   void GIVEN_exception_WHEN_assertMatcher_THEN_throw_TestAssertException() throws Exception {
     // Arrange
     var mockStatusMatcher = mock(ResultMatcher.class);
@@ -476,70 +102,26 @@ class TestAssertImplTest {
   }
 
   @Test
-  void GIVEN_existing_header_WHEN_assertHeaderContains_THEN_assert_is_true() {
+  void WHEN_assertHead_THEN_return_expected_class() {
     // Arrange
     this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
 
-    // Act & Assert
-    this.testAssert.assertHeaderContains(TEST_HEAD_KEY_1);
+    // Act
+    var assertHead = this.testAssert.assertHead();
+
+    // Assert
+    assertThat(assertHead.getClass(), is(TestAssertHeadImpl.class));
   }
 
   @Test
-  void GIVEN_not_existing_header_WHEN_assertHeaderContains_THEN_assert_is_false() {
+  void WHEN_assertContent_THEN_return_expected_class() {
     // Arrange
     this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
 
-    // Act & Assert
-    assertThrows(AssertionError.class, () -> this.testAssert.assertHeaderContains(TEST_HEAD_KEY_2));
-  }
+    // Act
+    var assertContent = this.testAssert.assertContent();
 
-  @Test
-  void GIVEN_not_existing_header_WHEN_assertHeaderNotContains_THEN_assert_is_true() {
-    // Arrange
-    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
-
-    // Act & Assert
-    this.testAssert.assertHeaderNotContains(TEST_HEAD_KEY_2);
-  }
-
-  @Test
-  void GIVEN_existing_header_WHEN_assertHeaderNotContains_THEN_assert_is_false() {
-    // Arrange
-    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
-
-    // Act & Assert
-    assertThrows(
-        AssertionError.class, () -> this.testAssert.assertHeaderNotContains(TEST_HEAD_KEY_1));
-  }
-
-  @Test
-  void GIVEN_existing_header_WHEN_assertHeaderEquals_THEN_assert_is_true() {
-    // Arrange
-    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
-
-    // Act & Assert
-    this.testAssert.assertHeaderEquals(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
-  }
-
-  @Test
-  void GIVEN_not_expected_header_value_WHEN_assertHeaderEquals_THEN_assert_is_false() {
-    // Arrange
-    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
-
-    // Act & Assert
-    assertThrows(
-        AssertionError.class,
-        () -> this.testAssert.assertHeaderEquals(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_2));
-  }
-
-  @Test
-  void GIVEN_not_expected_header_key_WHEN_assertHeaderEquals_THEN_assert_is_false() {
-    // Arrange
-    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
-
-    // Act & Assert
-    assertThrows(
-        AssertionError.class,
-        () -> this.testAssert.assertHeaderEquals(TEST_HEAD_KEY_2, TEST_HEAD_VALUE_1));
+    // Assert
+    assertThat(assertContent.getClass(), is(TestAssertContentImpl.class));
   }
 }
