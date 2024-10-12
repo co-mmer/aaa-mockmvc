@@ -32,11 +32,21 @@ ___
 To write tests using this framework, certain configurations are necessary. Below are the steps
 required to set up your testing environment effectively.
 
-### 1. Create a Configuration Class
+## 1. Configuration
 
-First, a configuration class must be created that provides a `AAAMockMvc` bean. This bean will
-be
-used to interact with the MVC testing framework.
+To configure the `AAAMockMvc` for your tests, there are two main options available. Both
+configurations will allow the use of `AAAMockMvc` in the test setup to interact with the MVC testing
+framework.
+
+### Option A: Default WebApplicationContext
+
+This option configures `AAAMockMvc` using the default `WebApplicationContext`. It is the simplest
+approach and requires minimal setup.
+
+#### Steps:
+
+1. Define a configuration class.
+2. Create a `AAAMockMvc` bean using the `WebApplicationContext`.
 
 ```java
 
@@ -49,6 +59,49 @@ public class AAAMockMvcConfig {
   }
 }
 ```
+
+### Option B: Custom MockMvc
+
+If a custom MockMvc configuration is required, such as adding filters or additional setup, it is
+possible to pass a pre-configured `MockMvc` instance to `AAAMockMvc`. This is useful for projects
+with
+specific requirements beyond the default configuration.
+
+#### Steps:
+
+1. Define a configuration class.
+2. Create a MockMvc bean with custom configuration.
+3. Pass the custom MockMvc instance to the AAAMockMvc bea
+
+```java
+
+@Configuration
+public class AAAMockMvcConfig {
+
+  @Bean
+  AAAMockMvc aaaMockMvc(MockMvc mvc) {
+    return new AAAMockMvc(mvc);
+  }
+
+  @Bean
+  public MockMvc mockMvc(WebApplicationContext context) {
+    // Example Custom MockMvc configuration
+    return MockMvcBuilders.webAppContextSetup(context)
+        .addFilters(new CharacterEncodingFilter("UTF-8", true))
+        .build();
+  }
+}
+```
+
+### Conclusion
+
+Both options provide the necessary configuration to use `AAAMockMvc` in tests:
+
+- **Option A** is suited for simple projects using the default `WebApplicationContext`.
+- **Option B** offers more flexibility for projects requiring custom `MockMvc` setups, such as
+  adding filters or other advanced configurations.
+
+---
 
 ### 2. Using AAAMockMvc in Tests
 
@@ -114,7 +167,7 @@ ___
 The following examples illustrate the usage of the fluent API for arranging, acting, and asserting
 in test cases.
 
-### Example 1: Status Check
+### Example 1: Status asserts
 
 ```java
 
@@ -144,7 +197,7 @@ void WHEN_call_endpoint_THEN_return_status_ok() throws Exception {
 }
 ```
 
-### Example 2: Content Check
+### Example 2: String Content asserts
 
 ```java
 
@@ -161,7 +214,60 @@ void WHEN_call_endpoint_THEN_return_expected_content() throws Exception {
 }
 ```
 
-### Example 3: Status and Content Check
+### Example 3: Collection Content asserts
+
+```java
+
+@Test
+void WHEN_call_endpoint_THEN_return_expected_content() throws Exception {
+  // TEST_DTO_LIST = List.of(TEST_DTO_1, TEST_DTO_2);
+
+  get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus(200)
+      .assertEquals(DemoDto.class, TEST_DTO_LIST);
+}
+```
+
+```java
+
+@Test
+void WHEN_call_endpoint_THEN_return_expected_content() throws Exception {
+  // TEST_DTO_SET = Set.of(TEST_DTO_1, TEST_DTO_2);
+
+  get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus(200)
+      .assertEquals(DemoDto.class, TEST_DTO_SET);
+}
+```
+
+```java
+
+@Test
+void WHEN_call_endpoint_THEN_return_expected_content() throws Exception {
+  // TEST_DTO_MAP = Map<Boolean, DemoDto> TEST_DTO_MAP = Map.of(TRUE, TEST_DTO_1, FALSE, TEST_DTO_2);
+
+  get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus(200)
+      .assertEquals(Boolean.class, DemoDto.class, TEST_DTO_MAP);
+}
+```
+
+### Example 4: Status and Content asserts
 
 ```java
 
@@ -179,7 +285,7 @@ void WHEN_call_endpoint_THEN_return_expected_status_content() throws Exception {
 }
 ```
 
-### Example 4: Complex Request with Parameters and Headers
+### Example 5: Complex Request with Parameters and Headers
 
 ```java
 
@@ -201,7 +307,7 @@ void WHEN_call_endpoint_THEN_return_expected_status_content() throws Exception {
 }
 ```
 
-### Example 5: Complex Request with Parameters, Headers and Body
+### Example 6: Complex Request with Parameters, Headers and Body
 
 ```java
 
@@ -225,7 +331,7 @@ void GIVEN_files_WHEN_call_endpoint_THEN_return_expected_status_201()
 }
 ```
 
-### Example 6: Custom Assertions After actPerform()
+### Example 7: Custom Assertions After actPerform()
 
 It is possible, in addition to the provided assertion methods, to directly
 access the `ResultActions` object after `actPerform()` to extract the response content (e.g.,
