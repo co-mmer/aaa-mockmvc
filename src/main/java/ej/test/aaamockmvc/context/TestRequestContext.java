@@ -1,19 +1,16 @@
 package ej.test.aaamockmvc.context;
 
 import ej.test.aaamockmvc.request.model.TestRequestDto;
-import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * This record encapsulates the context required for executing a test request, including the {@code
- * MockMvc} instance and the {@code TestRequestDto} object that holds the request details.
+ * Represents the context of a test request, encapsulating the request data and configuration.
  *
- * <p>The {@code TestRequestContext} provides access to the configured {@code MockMvc} for
- * simulating HTTP requests and the {@code TestRequestDto} for storing the details of the current
- * request.
+ * <p>This record is used to hold the information necessary for executing a test request, including
+ * the request details encapsulated in a {@code TestRequestDto} and the associated configuration
+ * from {@code TestRequestConfig}.
  *
- * @param mvc the {@code MockMvc} instance used to perform the request (must not be {@code null})
- * @param request the {@code TestRequestDto} object containing the request details (must not be
- *     {@code null})
+ * @param request the details of the test request (must not be {@code null})
+ * @param config the configuration for the test request (must not be {@code null})
  * @since 1.0.0
  */
-public record TestRequestContext(MockMvc mvc, TestRequestDto request) {}
+public record TestRequestContext(TestRequestDto request, TestRequestConfig config) {}

@@ -17,12 +17,12 @@ class TestRequestPostTest extends TestRequestBase {
   @InjectMocks private TestRequestPost testRequestPost;
 
   @Test
-  void WHEN_arrange_THEN_TestRequestContext_is_called_with_mockMvc() {
+  void WHEN_arrange_THEN_TestRequestContext_is_called_with_config() {
     // Act
     this.testRequestPost.arrange();
 
     // Assert
-    verify(this.mockContextBuilder).withMockMvc(this.mockMvc);
+    verify(this.mockContextBuilder).withTestRequestConfig(this.config);
   }
 
   @Test

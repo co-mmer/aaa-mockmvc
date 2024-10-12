@@ -22,7 +22,7 @@ class TestRequestOptionTest extends TestRequestBase {
     this.testRequestOption.arrange();
 
     // Assert
-    verify(this.mockContextBuilder).withMockMvc(this.mockMvc);
+    verify(this.mockContextBuilder).withTestRequestConfig(this.config);
   }
 
   @Test

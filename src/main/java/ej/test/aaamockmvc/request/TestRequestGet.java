@@ -2,11 +2,11 @@ package ej.test.aaamockmvc.request;
 
 import static ej.test.aaamockmvc.request.model.TestRequestType.GET;
 
+import ej.test.aaamockmvc.context.TestRequestConfig;
 import ej.test.aaamockmvc.request.arrange.get.url.TestArrange1GetUrl;
 import ej.test.aaamockmvc.request.arrange.get.url.TestArrangeGetUrlImpl;
 import ej.test.aaamockmvc.request.base.TestRequestBase;
 import lombok.NonNull;
-import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * This class represents a specific test request using the HTTP GET method.
@@ -16,15 +16,15 @@ import org.springframework.test.web.servlet.MockMvc;
 public final class TestRequestGet extends TestRequestBase {
 
   /**
-   * Constructs a new {@code TestRequestGet} object with the provided {@code MockMvc} instance.
+   * Constructs a new instance of {@code TestRequestGet} with the given configuration.
    *
-   * @param mvc the {@code MockMvc} instance to be used for making GET requests (must not be {@code
-   *     null})
-   * @throws NullPointerException if the {@code mvc} is {@code null}
-   * @since 1.0.0s
+   * @param config the {@link TestRequestConfig} used to configure the GET request (must not be
+   *     {@code null})
+   * @throws NullPointerException if {@code config} is {@code null}
+   * @since 1.0.0
    */
-  public TestRequestGet(@NonNull MockMvc mvc) {
-    super(mvc);
+  public TestRequestGet(@NonNull TestRequestConfig config) {
+    super(config);
   }
 
   /**

@@ -9,14 +9,10 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Utility class for creating and configuring an {@code ObjectMapper} for JSON serialization and
- * deserialization.
+ * Utility class for creating and configuring an {@code ObjectMapper} with custom deserializers.
  *
- * <p>This class allows the addition of custom deserializers for specific classes, enabling more
- * flexible handling of JSON data structures.
- *
- * <p>All methods are static and the class cannot be instantiated, as indicated by the private
- * constructor.
+ * <p>This class provides methods to add specific deserializers to an existing {@code ObjectMapper},
+ * allowing for the deserialization of complex objects in a controlled manner.
  *
  * @since 1.0.0
  */
@@ -24,22 +20,26 @@ import lombok.RequiredArgsConstructor;
 public final class TestAssertObjectMapper {
 
   /**
-   * Creates a new instance of {@code ObjectMapper} configured for the specified class type.
+   * Creates and configures an {@code ObjectMapper} with optional custom deserializers.
    *
-   * <p>If any custom deserializers are provided, they will be added to the {@code ObjectMapper} to
-   * handle specific JSON formats for the expected class type.
+   * <p>If provided, the deserializers are registered for the specified expected class.
    *
+   * @param objectMapper the existing {@code ObjectMapper} to configure (must not be {@code null})
+   * @param expectedClass the class type for which the deserializers are intended (must not be
+   *     {@code null})
+   * @param deserializers an array of custom {@code JsonDeserializer} instances to register (can be
+   *     {@code null})
    * @param <T> the type of the expected class
-   * @param expectedClass the expected class for the JSON mapping (must not be {@code null})
-   * @param deserializers optional array of custom deserializers for the expected class
-   * @return a configured instance of {@code ObjectMapper}
-   * @throws NullPointerException if the {@code expectedClass} is {@code null}
+   * @return the configured {@code ObjectMapper} instance
+   * @throws NullPointerException if either {@code objectMapper} or {@code expectedClass} is {@code
+   *     null}
    * @since 1.0.0
    */
   public static <T> ObjectMapper create(
-      @NonNull Class<T> expectedClass, JsonDeserializer<?>[] deserializers) {
+      @NonNull ObjectMapper objectMapper,
+      @NonNull Class<T> expectedClass,
+      JsonDeserializer<?>[] deserializers) {
 
-    var objectMapper = new ObjectMapper();
     if (deserializers != null && deserializers.length > 0) {
       addDeserializer(expectedClass, deserializers, objectMapper);
     }

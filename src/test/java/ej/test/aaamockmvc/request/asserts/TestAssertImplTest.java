@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ej.test.aaamockmvc.request.asserts.content.TestAssertContentImpl;
 import ej.test.aaamockmvc.request.asserts.head.TestAssertHeadImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +37,7 @@ class TestAssertImplTest {
     when(mvcResult.getResponse()).thenReturn(this.response);
     when(actions.andReturn()).thenReturn(mvcResult);
 
-    this.testAssert = new TestAssertImpl(actions);
+    this.testAssert = new TestAssertImpl(actions, new ObjectMapper());
   }
 
   @Test

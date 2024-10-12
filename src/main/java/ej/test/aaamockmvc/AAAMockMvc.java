@@ -1,5 +1,7 @@
 package ej.test.aaamockmvc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ej.test.aaamockmvc.context.TestRequestConfig;
 import ej.test.aaamockmvc.request.TestRequestDelete;
 import ej.test.aaamockmvc.request.TestRequestGet;
 import ej.test.aaamockmvc.request.TestRequestHead;
@@ -22,23 +24,45 @@ import org.springframework.web.context.WebApplicationContext;
  * <p>Each HTTP method corresponds to a method in this class that returns an instance of a specific
  * request class, which can be further configured before executing the request.
  *
+ * <p>The class can be initialized either with a {@code WebApplicationContext} to automatically set
+ * up the {@code MockMvc} instance, or directly with a preconfigured {@code MockMvc} object and
+ * optional {@code ObjectMapper} for JSON serialization.
+ *
  * @since 1.0.0
  */
 public final class AAAMockMvc {
 
-  private final MockMvc mockMvc;
+  private final TestRequestConfig config;
 
   /**
-   * Constructs an instance of {@code AAAMockMvc} and sets up the {@code MockMvc} object with the
-   * provided {@code WebApplicationContext}.
+   * Constructs an instance of {@code AAAMockMvc} with a {@code WebApplicationContext} to set up a
+   * {@code MockMvc} instance.
    *
-   * @param webApplicationContext the {@code WebApplicationContext} to be used for setting up the
-   *     {@code MockMvc} (must not be {@code null})
+   * @param webApplicationContext the {@code WebApplicationContext} to initialize the {@code
+   *     MockMvc} (must not be {@code null})
    * @throws NullPointerException if the {@code webApplicationContext} is {@code null}
    * @since 1.0.0
    */
   public AAAMockMvc(@NonNull WebApplicationContext webApplicationContext) {
-    this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    var mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    this.config = new TestRequestConfig(mockMvc, new ObjectMapper());
+  }
+
+  /**
+   * Constructs an instance of {@code AAAMockMvc} with a {@code WebApplicationContext} and a custom
+   * {@code ObjectMapper} for JSON serialization.
+   *
+   * @param webApplicationContext the {@code WebApplicationContext} to initialize the {@code
+   *     MockMvc} (must not be {@code null})
+   * @param objectMapper the {@code ObjectMapper} to be used for JSON serialization
+   * @throws NullPointerException if either the {@code webApplicationContext} or {@code
+   *     objectMapper} is {@code null}
+   * @since 1.0.0
+   */
+  public AAAMockMvc(
+      @NonNull WebApplicationContext webApplicationContext, @NonNull ObjectMapper objectMapper) {
+    var mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    this.config = new TestRequestConfig(mockMvc, objectMapper);
   }
 
   /**
@@ -50,7 +74,22 @@ public final class AAAMockMvc {
    * @since 1.0.0
    */
   public AAAMockMvc(@NonNull MockMvc mockMvc) {
-    this.mockMvc = mockMvc;
+    this.config = new TestRequestConfig(mockMvc, new ObjectMapper());
+  }
+
+  /**
+   * Constructs an instance of {@code AAAMockMvc} with an existing {@code MockMvc} object and a
+   * custom {@code ObjectMapper} for JSON serialization.
+   *
+   * @param mockMvc the {@code MockMvc} object to be used for performing requests (must not be
+   *     {@code null})
+   * @param objectMapper the {@code ObjectMapper} to be used for JSON serialization
+   * @throws NullPointerException if either the {@code mockMvc} or {@code objectMapper} is {@code
+   *     null}
+   * @since 1.0.0
+   */
+  public AAAMockMvc(@NonNull MockMvc mockMvc, @NonNull ObjectMapper objectMapper) {
+    this.config = new TestRequestConfig(mockMvc, objectMapper);
   }
 
   /**
@@ -60,7 +99,7 @@ public final class AAAMockMvc {
    * @since 1.0.0
    */
   public TestRequestGet get() {
-    return new TestRequestGet(this.mockMvc);
+    return new TestRequestGet(this.config);
   }
 
   /**
@@ -70,7 +109,7 @@ public final class AAAMockMvc {
    * @since 1.0.0
    */
   public TestRequestPost post() {
-    return new TestRequestPost(this.mockMvc);
+    return new TestRequestPost(this.config);
   }
 
   /**
@@ -80,7 +119,7 @@ public final class AAAMockMvc {
    * @since 1.0.0
    */
   public TestRequestPut put() {
-    return new TestRequestPut(this.mockMvc);
+    return new TestRequestPut(this.config);
   }
 
   /**
@@ -90,7 +129,7 @@ public final class AAAMockMvc {
    * @since 1.0.0
    */
   public TestRequestPatch patch() {
-    return new TestRequestPatch(this.mockMvc);
+    return new TestRequestPatch(this.config);
   }
 
   /**
@@ -100,7 +139,7 @@ public final class AAAMockMvc {
    * @since 1.0.0
    */
   public TestRequestDelete delete() {
-    return new TestRequestDelete(this.mockMvc);
+    return new TestRequestDelete(this.config);
   }
 
   /**
@@ -110,7 +149,7 @@ public final class AAAMockMvc {
    * @since 1.0.0
    */
   public TestRequestOption options() {
-    return new TestRequestOption(this.mockMvc);
+    return new TestRequestOption(this.config);
   }
 
   /**
@@ -120,6 +159,6 @@ public final class AAAMockMvc {
    * @since 1.0.0
    */
   public TestRequestHead head() {
-    return new TestRequestHead(this.mockMvc);
+    return new TestRequestHead(this.config);
   }
 }

@@ -81,7 +81,8 @@ class TestAssertHeadImplTest {
     this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
 
     // Assert
-    assertThrows(AssertionError.class,
+    assertThrows(
+        AssertionError.class,
 
         // Act
         () -> this.testAssert.assertHeadEquals(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_2));
@@ -93,7 +94,8 @@ class TestAssertHeadImplTest {
     this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
 
     // Assert
-    assertThrows(AssertionError.class,
+    assertThrows(
+        AssertionError.class,
 
         // Act
         () -> this.testAssert.assertHeadEquals(TEST_HEAD_KEY_2, TEST_HEAD_VALUE_1));

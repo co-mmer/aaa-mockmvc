@@ -22,7 +22,7 @@ class TestRequestHeadTest extends TestRequestBase {
     this.testRequestHead.arrange();
 
     // Assert
-    verify(this.mockContextBuilder).withMockMvc(this.mockMvc);
+    verify(this.mockContextBuilder).withTestRequestConfig(this.config);
   }
 
   @Test

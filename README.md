@@ -34,14 +34,14 @@ required to set up your testing environment effectively.
 
 ## 1. Configuration
 
-To configure the `AAAMockMvc` for your tests, there are two main options available. Both
-configurations will allow the use of `AAAMockMvc` in the test setup to interact with the MVC testing
-framework.
+To configure `AAAMockMvc` for your tests, there are four main options available. Each configuration
+provides flexibility to use `AAAMockMvc` in the test setup to interact with the MVC testing
+framework, depending on the specific project requirements.
 
-### Option A: Default WebApplicationContext
+### Option A: WebApplicationContext with Default ObjectMapper
 
-This option configures `AAAMockMvc` using the default `WebApplicationContext`. It is the simplest
-approach and requires minimal setup.
+In this option, `AAAMockMvc` is configured using the `WebApplicationContext`.
+The framework will use a default ObjectMapper (`new ObjectMapper()`).
 
 #### Steps:
 
@@ -60,32 +60,63 @@ public class AAAMockMvcConfig {
 }
 ```
 
-### Option B: Custom MockMvc
+### Option B: WebApplicationContext with Custom ObjectMapper
 
-If a custom MockMvc configuration is required, such as adding filters or additional setup, it is
-possible to pass a pre-configured `MockMvc` instance to `AAAMockMvc`. This is useful for projects
-with
-specific requirements beyond the default configuration.
+In this option, both the `WebApplicationContext` and a custom `ObjectMapper` can be passed
+to `AAAMockMvc`.
 
 #### Steps:
 
 1. Define a configuration class.
-2. Create a MockMvc bean with custom configuration.
-3. Pass the custom MockMvc instance to the AAAMockMvc bea
+2. Create a ObjectMapper bean with custom configuration.
+3. Pass the custom ObjectMapper instance to the AAAMockMvc bean
 
 ```java
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class AAAMockMvcConfig {
 
   @Bean
-  AAAMockMvc aaaMockMvc(MockMvc mvc) {
-    return new AAAMockMvc(mvc);
+  AAAMockMvc aaaMockMvc(WebApplicationContext context, ObjectMapper objectMapper) {
+    return new AAAMockMvc(context, objectMapper);
+  }
+
+  @Bean
+  public ObjectMapper objectMapper() {
+    // Custom ObjectMapper configuration
+    return new ObjectMapper();
+  }
+}
+```
+
+### Option C: Custom MockMvc and Default ObjectMapper
+
+This option allows for configuring `AAAMockMvc` with a custom `MockMvc` instance.
+The framework will use a default ObjectMapper (`new ObjectMapper()`).
+
+#### Steps:
+
+1. Define a configuration class.
+2. Create a MockMvc bean with custom configuration.
+3. Pass the custom MockMvc instance to the AAAMockMvc bean
+
+```java
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@Configuration
+public class AAAMockMvcConfig {
+
+  @Bean
+  AAAMockMvc aaaMockMvc(MockMvc mockMvc) {
+    return new AAAMockMvc(mockMvc);
   }
 
   @Bean
   public MockMvc mockMvc(WebApplicationContext context) {
-    // Example Custom MockMvc configuration
+    // Custom MockMvc configuration
     return MockMvcBuilders.webAppContextSetup(context)
         .addFilters(new CharacterEncodingFilter("UTF-8", true))
         .build();
@@ -93,13 +124,57 @@ public class AAAMockMvcConfig {
 }
 ```
 
+### Option D: Custom MockMvc and Custom ObjectMapper
+
+This option allows for full customization by passing both a custom `MockMvc` instance and a
+custom `ObjectMapper` to `AAAMockMvc`. This provides maximum flexibility for projects that need
+specific configurations.
+
+#### Steps:
+
+1. Define a configuration class.
+2. Create a MockMvc bean with custom configuration.
+3. Create a ObjectMapper bean with custom configuration.
+4. Pass the custom MockMvc and ObjectMapper instance to the AAAMockMvc bean
+
+```java
+
+@Configuration
+public class AAAMockMvcConfig {
+
+  @Bean
+  AAAMockMvc aaaMockMvc(WebApplicationContext context, ObjectMapper objectMapper) {
+    return new AAAMockMvc(context, objectMapper);
+  }
+
+  @Bean
+  public MockMvc mockMvc(WebApplicationContext context) {
+    // Custom MockMvc configuration
+    return MockMvcBuilders.webAppContextSetup(context)
+        .addFilters(new CharacterEncodingFilter("UTF-8", true))
+        .build();
+  }
+
+  @Bean
+  public ObjectMapper objectMapper() {
+    // Custom MockMvc configuration
+    return new ObjectMapper();
+  }
+}
+```
+
 ### Conclusion
 
-Both options provide the necessary configuration to use `AAAMockMvc` in tests:
+All options provide the necessary configuration to use `AAAMockMvc` in tests:
 
-- **Option A** is suited for simple projects using the default `WebApplicationContext`.
-- **Option B** offers more flexibility for projects requiring custom `MockMvc` setups, such as
-  adding filters or other advanced configurations.
+- **Option A** is ideal for simple projects that use the default `WebApplicationContext` and rely on
+  the default `ObjectMapper`.
+- **Option B** provides flexibility by allowing the use of a custom `ObjectMapper` with the
+  default `WebApplicationContext`.
+- **Option C** is suited for projects requiring a custom `MockMvc` setup, while still using the
+  default `ObjectMapper`.
+- **Option D** offers full customization, allowing both a custom `MockMvc` and a
+  custom `ObjectMapper`, for projects with advanced configuration needs.
 
 ---
 
@@ -116,6 +191,7 @@ used directly in the tests.
 ```java
 
 @WebMvcTest
+
 public class ControllerTest {
 
   @Autowired

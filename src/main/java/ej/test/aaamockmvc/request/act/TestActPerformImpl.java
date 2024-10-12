@@ -1,5 +1,6 @@
 package ej.test.aaamockmvc.request.act;
 
+import ej.test.aaamockmvc.context.TestRequestConfig;
 import ej.test.aaamockmvc.context.TestRequestContext;
 import ej.test.aaamockmvc.request.act.exception.TestActException;
 import ej.test.aaamockmvc.request.act.strategy.TestRequestStrategyFactory;
@@ -9,7 +10,6 @@ import ej.test.aaamockmvc.request.model.TestRequestDto;
 import java.io.UnsupportedEncodingException;
 import org.springframework.lang.NonNull;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
  */
 public final class TestActPerformImpl implements TestAct1Perform, TestAct2Perform {
 
-  private final MockMvc mvc;
+  private final TestRequestConfig config;
   private final TestRequestDto request;
   private MockHttpServletRequestBuilder requestBuilder;
 
@@ -43,7 +43,7 @@ public final class TestActPerformImpl implements TestAct1Perform, TestAct2Perfor
    */
   public TestActPerformImpl(@NonNull TestRequestContext context) {
     this.request = context.request();
-    this.mvc = context.mvc();
+    this.config = context.config();
   }
 
   /**
@@ -70,7 +70,7 @@ public final class TestActPerformImpl implements TestAct1Perform, TestAct2Perfor
   @Override
   public ResultActions resultActions() throws TestActException {
     try {
-      return this.mvc.perform(this.requestBuilder);
+      return this.config.mvc().perform(this.requestBuilder);
     } catch (Exception e) {
       throw new TestActException(e);
     }
@@ -144,6 +144,6 @@ public final class TestActPerformImpl implements TestAct1Perform, TestAct2Perfor
   @Override
   public TestAssert asserts() throws TestActException {
     var resultActions = resultActions();
-    return new TestAssertImpl(resultActions);
+    return new TestAssertImpl(resultActions, this.config.objectMapper());
   }
 }

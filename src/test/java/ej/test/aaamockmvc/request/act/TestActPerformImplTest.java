@@ -14,6 +14,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ej.test.aaamockmvc.context.TestRequestConfig;
 import ej.test.aaamockmvc.context.TestRequestContext;
 import ej.test.aaamockmvc.request.act.exception.TestActException;
 import ej.test.aaamockmvc.request.act.strategy.TestRequestBaseStrategy;
@@ -29,28 +31,20 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 class TestActPerformImplTest {
 
-  private MockMvcSetup setup;
   private MockMvc mvc;
+  private MockMvcSetup setup;
   private MockHttpServletRequestBuilder mockRequestBuilder;
-
   private TestActPerformImpl testActPerform;
+  private TestRequestContext testRequestContext;
 
   @BeforeEach
   void setUp() {
-    this.setup = new MockMvcSetup();
-
     this.mvc = mock(MockMvc.class);
-
+    this.setup = new MockMvcSetup(this.mvc);
+    var testRequestConfig = new TestRequestConfig(this.mvc, new ObjectMapper());
     this.mockRequestBuilder = mock(MockHttpServletRequestBuilder.class);
-    var mockTestRequestContext = mockTestRequestContext(this.mvc);
-    this.testActPerform = new TestActPerformImpl(mockTestRequestContext);
-  }
-
-  private TestRequestContext mockTestRequestContext(MockMvc mvc) {
-    var mockTestRequestContext = mock(TestRequestContext.class);
-    when(mockTestRequestContext.mvc()).thenReturn(mvc);
-    when(mockTestRequestContext.request()).thenReturn(TEST_REQUEST_DTO);
-    return mockTestRequestContext;
+    this.testRequestContext = new TestRequestContext(TEST_REQUEST_DTO, testRequestConfig);
+    this.testActPerform = new TestActPerformImpl(this.testRequestContext);
   }
 
   @Test
@@ -151,9 +145,7 @@ class TestActPerformImplTest {
   void WHEN_resultAsString_THEN_mvc_getContentAsString_is_called() throws Exception {
     // Arrange
     this.setup.mockGetContentAsString();
-
-    var mockTestRequestContext = mockTestRequestContext(this.setup.getMvc());
-    this.testActPerform = new TestActPerformImpl(mockTestRequestContext);
+    this.testActPerform = new TestActPerformImpl(this.testRequestContext);
 
     // Act
     this.testActPerform.resultAsString();
@@ -166,9 +158,7 @@ class TestActPerformImplTest {
   void WHEN_resultAsString_THEN_return_expected_value() throws Exception {
     // Arrange
     this.setup.mockGetContentAsString();
-
-    var mockTestRequestContext = mockTestRequestContext(this.setup.getMvc());
-    this.testActPerform = new TestActPerformImpl(mockTestRequestContext);
+    this.testActPerform = new TestActPerformImpl(this.testRequestContext);
 
     // Act
     var result = this.testActPerform.resultAsString();
@@ -181,9 +171,7 @@ class TestActPerformImplTest {
   void GIVEN_exception_WHEN_resultAsString_THEN_throw_TestActException() throws Exception {
     // Arrange
     this.setup.mockThrowGetContentAsString();
-
-    var mockTestRequestContext = mockTestRequestContext(this.setup.getMvc());
-    this.testActPerform = new TestActPerformImpl(mockTestRequestContext);
+    this.testActPerform = new TestActPerformImpl(this.testRequestContext);
 
     // Act
     var exception = assertThrows(Exception.class, () -> this.testActPerform.resultAsString());
@@ -197,9 +185,7 @@ class TestActPerformImplTest {
   void WHEN_resultAsByte_THEN_mvc_getContentAsByteArray_is_called() throws Exception {
     // Arrange
     this.setup.mockGetContentAsByteArray();
-
-    var mockTestRequestContext = mockTestRequestContext(this.setup.getMvc());
-    this.testActPerform = new TestActPerformImpl(mockTestRequestContext);
+    this.testActPerform = new TestActPerformImpl(this.testRequestContext);
 
     // Act
     this.testActPerform.resultAsByte();
@@ -212,9 +198,7 @@ class TestActPerformImplTest {
   void WHEN_resultAsByte_THEN_return_expected_value() throws Exception {
     // Arrange
     this.setup.mockGetContentAsByteArray();
-
-    var mockTestRequestContext = mockTestRequestContext(this.setup.getMvc());
-    this.testActPerform = new TestActPerformImpl(mockTestRequestContext);
+    this.testActPerform = new TestActPerformImpl(this.testRequestContext);
 
     // Act
     var result = this.testActPerform.resultAsByte();
@@ -227,9 +211,7 @@ class TestActPerformImplTest {
   void WHEN_resultHeader_THEN_mvc_getContentAsByteArray_is_called() throws Exception {
     // Arrange
     this.setup.mockGetHeader();
-
-    var mockTestRequestContext = mockTestRequestContext(this.setup.getMvc());
-    this.testActPerform = new TestActPerformImpl(mockTestRequestContext);
+    this.testActPerform = new TestActPerformImpl(this.testRequestContext);
 
     // Act
     this.testActPerform.resultHeader(TEST_HEADER_KEY_1);
@@ -242,9 +224,7 @@ class TestActPerformImplTest {
   void WHEN_resultHeader_THEN_return_expected_value() throws Exception {
     // Arrange
     this.setup.mockGetHeader();
-
-    var mockTestRequestContext = mockTestRequestContext(this.setup.getMvc());
-    this.testActPerform = new TestActPerformImpl(mockTestRequestContext);
+    this.testActPerform = new TestActPerformImpl(this.testRequestContext);
 
     // Act
     var result = this.testActPerform.resultHeader(TEST_HEADER_KEY_1);
@@ -257,9 +237,7 @@ class TestActPerformImplTest {
   void WHEN_asserts_THEN_return_expected_class() throws Exception {
     // Arrange
     this.setup.mockGetHeader();
-
-    var mockTestRequestContext = mockTestRequestContext(this.setup.getMvc());
-    this.testActPerform = new TestActPerformImpl(mockTestRequestContext);
+    this.testActPerform = new TestActPerformImpl(this.testRequestContext);
 
     // Act
     var asserts = this.testActPerform.asserts();

@@ -1,12 +1,12 @@
 package ej.test.aaamockmvc.scenario.get.data;
 
-import static ej.test.aaamockmvc.testdata.testutil.TestDataMockMvc.MOCK_MVC;
 import static ej.test.aaamockmvc.testdata.testutil.TestHeader.TEST_AUTH_VALUE;
 import static ej.test.aaamockmvc.testdata.testutil.TestHeader.TEST_HEADER_KEY_1;
 import static ej.test.aaamockmvc.testdata.testutil.TestHeader.TEST_HEADER_KEY_2;
 import static ej.test.aaamockmvc.testdata.testutil.TestHeader.TEST_HEADER_MAP_1_2;
 import static ej.test.aaamockmvc.testdata.testutil.TestHeader.TEST_HEADER_VALUE_1;
 import static ej.test.aaamockmvc.testdata.testutil.TestHeader.TEST_HEADER_VALUE_2;
+import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_REQUEST_CONFIG;
 import static ej.test.aaamockmvc.testdata.testutil.TestParameter.TEST_PARAM_KEY_1;
 import static ej.test.aaamockmvc.testdata.testutil.TestParameter.TEST_PARAM_KEY_2;
 import static ej.test.aaamockmvc.testdata.testutil.TestParameter.TEST_PARAM_KEY_VALUE_MAP_1_2;
@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ScenarioDataActGet {
 
-  private static final TestRequestGet GET = new TestRequestGet(MOCK_MVC);
+  private static final TestRequestGet GET = new TestRequestGet(TEST_REQUEST_CONFIG);
 
   public static final TestAct1Perform GET_ARRANGE__URL = GET.arrange().arrangeUrl(TEST_PATH).act();
 

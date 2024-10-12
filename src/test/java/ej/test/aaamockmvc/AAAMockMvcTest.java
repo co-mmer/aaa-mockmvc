@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ej.test.aaamockmvc.request.TestRequestDelete;
 import ej.test.aaamockmvc.request.TestRequestGet;
 import ej.test.aaamockmvc.request.TestRequestHead;
@@ -100,9 +101,36 @@ class AAAMockMvcTest {
   }
 
   @Test
+  void WHEN_call_constructor_context_THEN_return_not_null() {
+    // Act
+    var aaaMockMvc = new AAAMockMvc((WebApplicationContext) this.context);
+
+    // Assert
+    assertThat(aaaMockMvc, is(notNullValue()));
+  }
+
+  @Test
+  void WHEN_call_constructor_context_ObjectMapper_THEN_return_not_null() {
+    // Act
+    var aaaMockMvc = new AAAMockMvc((WebApplicationContext) this.context, new ObjectMapper());
+
+    // Assert
+    assertThat(aaaMockMvc, is(notNullValue()));
+  }
+
+  @Test
   void WHEN_call_constructor_mockMvc_THEN_return_not_null() {
     // Act
     var aaaMockMvc = new AAAMockMvc(MOCK_MVC);
+
+    // Assert
+    assertThat(aaaMockMvc, is(notNullValue()));
+  }
+
+  @Test
+  void WHEN_call_constructor_mockMvc_ObjectMapper_THEN_return_not_null() {
+    // Act
+    var aaaMockMvc = new AAAMockMvc(MOCK_MVC, new ObjectMapper());
 
     // Assert
     assertThat(aaaMockMvc, is(notNullValue()));

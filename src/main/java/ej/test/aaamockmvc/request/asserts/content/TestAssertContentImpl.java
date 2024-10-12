@@ -1,13 +1,17 @@
 package ej.test.aaamockmvc.request.asserts.content;
 
+import static ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper.mapTo;
+import static ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper.mapToList;
+import static ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper.mapToMap;
+import static ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper.mapToSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ej.test.aaamockmvc.request.asserts.head.TestAssertHead;
 import ej.test.aaamockmvc.request.asserts.head.TestAssertHeadImpl;
-import ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper;
 import ej.test.aaamockmvc.request.asserts.mapper.exception.TestAssertResultMapperException;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +39,8 @@ import org.springframework.test.web.servlet.ResultActions;
 public final class TestAssertContentImpl implements TestAssertContent {
 
   private final ResultActions actions;
-
   private final MockHttpServletResponse response;
+  private final ObjectMapper objectMapper;
 
   /**
    * Constructs an instance of {@code TestAssertContent} with the provided {@code ResultActions}.
@@ -46,9 +50,10 @@ public final class TestAssertContentImpl implements TestAssertContent {
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.0.0
    */
-  public TestAssertContentImpl(@NonNull ResultActions actions) {
+  public TestAssertContentImpl(@NonNull ResultActions actions, @NonNull ObjectMapper objectMapper) {
     this.actions = actions;
     this.response = actions.andReturn().getResponse();
+    this.objectMapper = objectMapper;
   }
 
   /**
@@ -195,7 +200,7 @@ public final class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var result = this.actions.andReturn();
-      var content = TestAssertResultMapper.mapTo(result, expectedClass, deserializers);
+      var content = mapTo(this.objectMapper, result, expectedClass, deserializers);
       assertThat(content, is(expectedResponse));
     } catch (TestAssertResultMapperException e) {
       Assertions.fail(e);
@@ -225,7 +230,7 @@ public final class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var result = this.actions.andReturn();
-      var content = TestAssertResultMapper.mapToList(result, expectedClass, deserializers);
+      var content = mapToList(this.objectMapper, result, expectedClass, deserializers);
       assertThat(content, is(expectedResponse));
     } catch (TestAssertResultMapperException e) {
       Assertions.fail(e);
@@ -255,7 +260,7 @@ public final class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var result = this.actions.andReturn();
-      var content = TestAssertResultMapper.mapToSet(result, expectedClass, deserializers);
+      var content = mapToSet(this.objectMapper, result, expectedClass, deserializers);
       assertThat(content, is(expectedResponse));
     } catch (TestAssertResultMapperException e) {
       Assertions.fail(e);
@@ -288,7 +293,7 @@ public final class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var result = this.actions.andReturn();
-      var content = TestAssertResultMapper.mapToMap(result, keyClass, valueClass, deserializers);
+      var content = mapToMap(this.objectMapper, result, keyClass, valueClass, deserializers);
       assertThat(content, is(expectedResponse));
     } catch (TestAssertResultMapperException e) {
       Assertions.fail(e);

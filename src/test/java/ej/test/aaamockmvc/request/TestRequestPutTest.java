@@ -22,7 +22,7 @@ class TestRequestPutTest extends TestRequestBase {
     this.testRequestPut.arrange();
 
     // Assert
-    verify(this.mockContextBuilder).withMockMvc(this.mockMvc);
+    verify(this.mockContextBuilder).withTestRequestConfig(this.config);
   }
 
   @Test

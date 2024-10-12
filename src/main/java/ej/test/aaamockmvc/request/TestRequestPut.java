@@ -2,11 +2,11 @@ package ej.test.aaamockmvc.request;
 
 import static ej.test.aaamockmvc.request.model.TestRequestType.PUT;
 
+import ej.test.aaamockmvc.context.TestRequestConfig;
 import ej.test.aaamockmvc.request.arrange.res.url.TestArrange1ResUrl;
 import ej.test.aaamockmvc.request.arrange.res.url.TestArrangeResUrlImpl;
 import ej.test.aaamockmvc.request.base.TestRequestBase;
 import lombok.NonNull;
-import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * This class represents a specific test request using the HTTP PUT method.
@@ -16,15 +16,15 @@ import org.springframework.test.web.servlet.MockMvc;
 public final class TestRequestPut extends TestRequestBase {
 
   /**
-   * Constructs a new {@code TestRequestPut} object with the provided {@code MockMvc} instance.
+   * Constructs a new instance of {@code TestRequestPut} with the given configuration.
    *
-   * @param mvc the {@code MockMvc} instance to be used for making PUT requests (must not be {@code
-   *     null})
-   * @throws NullPointerException if the {@code mvc} is {@code null}
+   * @param config the {@link TestRequestConfig} used to configure the PUT request (must not be
+   *     {@code null})
+   * @throws NullPointerException if {@code config} is {@code null}
    * @since 1.0.0
    */
-  public TestRequestPut(@NonNull MockMvc mvc) {
-    super(mvc);
+  public TestRequestPut(@NonNull TestRequestConfig config) {
+    super(config);
   }
 
   /**

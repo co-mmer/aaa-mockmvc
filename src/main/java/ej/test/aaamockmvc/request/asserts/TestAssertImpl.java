@@ -3,6 +3,7 @@ package ej.test.aaamockmvc.request.asserts;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ej.test.aaamockmvc.request.asserts.content.TestAssertContent;
 import ej.test.aaamockmvc.request.asserts.content.TestAssertContentImpl;
 import ej.test.aaamockmvc.request.asserts.head.TestAssertHead;
@@ -27,18 +28,22 @@ public final class TestAssertImpl implements TestAssert {
 
   private final ResultActions actions;
   private final MockHttpServletResponse response;
+  private final ObjectMapper objectMapper;
 
   /**
-   * Constructs an instance of {@code TestAssert} with the provided {@code ResultActions}.
+   * Constructs an instance of {@code TestAssertImpl} with the provided {@code ResultActions} and
+   * {@code ObjectMapper}.
    *
    * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
    *     null})
-   * @throws NullPointerException if the {@code actions} is {@code null}
+   * @param objectMapper the {@code ObjectMapper} for JSON serialization (must not be {@code null})
+   * @throws NullPointerException if either {@code actions} or {@code objectMapper} is {@code null}
    * @since 1.0.0
    */
-  public TestAssertImpl(@NonNull ResultActions actions) {
+  public TestAssertImpl(@NonNull ResultActions actions, @NonNull ObjectMapper objectMapper) {
     this.actions = actions;
     this.response = actions.andReturn().getResponse();
+    this.objectMapper = objectMapper;
   }
 
   /**
@@ -99,7 +104,7 @@ public final class TestAssertImpl implements TestAssert {
    */
   @Override
   public TestAssertContent assertContent() {
-    return new TestAssertContentImpl(this.actions);
+    return new TestAssertContentImpl(this.actions, this.objectMapper);
   }
 
   /**

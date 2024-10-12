@@ -22,6 +22,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ej.test.aaamockmvc.request.asserts.head.TestAssertHeadImpl;
 import ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper;
 import ej.test.aaamockmvc.request.asserts.mapper.exception.TestAssertResultMapperException;
@@ -52,7 +53,7 @@ class TestAssertContentImplTest {
     when(mvcResult.getResponse()).thenReturn(this.response);
     when(this.actions.andReturn()).thenReturn(mvcResult);
 
-    this.testAssert = new TestAssertContentImpl(this.actions);
+    this.testAssert = new TestAssertContentImpl(this.actions, new ObjectMapper());
   }
 
   @Test
@@ -78,7 +79,7 @@ class TestAssertContentImplTest {
     // Arrange
     var mockMvcResult = mockGetContentAsStringException();
     when(this.actions.andReturn()).thenReturn(mockMvcResult);
-    var testAssertContent = new TestAssertContentImpl(this.actions);
+    var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
     assertThrows(AssertionError.class, testAssertContent::assertContentStringIsNotEmpty);
@@ -109,7 +110,7 @@ class TestAssertContentImplTest {
     // Arrange
     var mockMvcResult = mockGetContentAsStringException();
     when(this.actions.andReturn()).thenReturn(mockMvcResult);
-    var testAssertContent = new TestAssertContentImpl(this.actions);
+    var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
     assertThrows(AssertionError.class, testAssertContent::assertContentStringIsEmpty);
@@ -138,7 +139,7 @@ class TestAssertContentImplTest {
     // Arrange
     var mockMvcResult = mockGetContentAsStringException();
     when(this.actions.andReturn()).thenReturn(mockMvcResult);
-    var testAssertContent = new TestAssertContentImpl(this.actions);
+    var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
     assertThrows(
@@ -177,7 +178,7 @@ class TestAssertContentImplTest {
     var mockMvcResult = mockGetContentAsSByteException();
 
     when(this.actions.andReturn()).thenReturn(mockMvcResult);
-    var testAssertContent = new TestAssertContentImpl(this.actions);
+    var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
     assertThrows(AssertionFailedError.class, testAssertContent::assertContentByteIsNotEmpty);
@@ -207,7 +208,7 @@ class TestAssertContentImplTest {
     var mockMvcResult = mockGetContentAsSByteException();
 
     when(this.actions.andReturn()).thenReturn(mockMvcResult);
-    var testAssertContent = new TestAssertContentImpl(this.actions);
+    var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
     assertThrows(AssertionFailedError.class, testAssertContent::assertContentByteIsEmpty);
@@ -237,7 +238,7 @@ class TestAssertContentImplTest {
     var mockMvcResult = mockGetContentAsSByteException();
 
     when(this.actions.andReturn()).thenReturn(mockMvcResult);
-    var testAssertContent = new TestAssertContentImpl(this.actions);
+    var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
     assertThrows(
@@ -280,7 +281,7 @@ class TestAssertContentImplTest {
     // Arrange
     var mockTestAssertResultMapper = mockStatic(TestAssertResultMapper.class);
     mockTestAssertResultMapper
-        .when(() -> TestAssertResultMapper.mapTo(any(), any()))
+        .when(() -> TestAssertResultMapper.mapTo(any(), any(), any()))
         .thenThrow(new TestAssertResultMapperException(new Throwable("error")));
 
     // Act & Assert
@@ -319,7 +320,7 @@ class TestAssertContentImplTest {
     // Arrange
     var mockTestAssertResultMapper = mockStatic(TestAssertResultMapper.class);
     mockTestAssertResultMapper
-        .when(() -> TestAssertResultMapper.mapToList(any(), any()))
+        .when(() -> TestAssertResultMapper.mapToList(any(), any(), any()))
         .thenThrow(new TestAssertResultMapperException(new Throwable("error")));
 
     // Act & Assert
@@ -358,7 +359,7 @@ class TestAssertContentImplTest {
     // Arrange
     var mockTestAssertResultMapper = mockStatic(TestAssertResultMapper.class);
     mockTestAssertResultMapper
-        .when(() -> TestAssertResultMapper.mapToSet(any(), any()))
+        .when(() -> TestAssertResultMapper.mapToSet(any(), any(), any()))
         .thenThrow(new TestAssertResultMapperException(new Throwable("error")));
 
     // Act & Assert
@@ -399,7 +400,7 @@ class TestAssertContentImplTest {
     // Arrange
     var mockTestAssertResultMapper = mockStatic(TestAssertResultMapper.class);
     mockTestAssertResultMapper
-        .when(() -> TestAssertResultMapper.mapToMap(any(), any(), any()))
+        .when(() -> TestAssertResultMapper.mapToMap(any(), any(), any(), any()))
         .thenThrow(new TestAssertResultMapperException(new Throwable("error")));
 
     // Act & Assert

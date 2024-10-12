@@ -1,10 +1,12 @@
 package ej.test.aaamockmvc.testdata.testutil;
 
+import static ej.test.aaamockmvc.testdata.testutil.TestDataMockMvc.MOCK_MVC;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ej.test.aaamockmvc.context.TestRequestConfig;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,6 +35,9 @@ public final class TestObject {
   public static final String TEST_OBJECTS_1_JSON = mapToString(TEST_OBJECTS_1_DTO);
   public static final String TEST_OBJECTS_SET_1_JSON = mapToString(TEST_OBJECTS_SET_1_DTO);
   public static final String TEST_OBJECTS_MAP_1_JSON = mapToString(TEST_OBJECTS_MAP_1_DTO);
+
+  public static final TestRequestConfig TEST_REQUEST_CONFIG =
+      new TestRequestConfig(MOCK_MVC, new ObjectMapper());
 
   private static String mapToString(Object value) {
     try {

@@ -3,34 +3,34 @@ package ej.test.aaamockmvc.context;
 import ej.test.aaamockmvc.request.model.TestRequestDto;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Builder class for constructing instances of {@link TestRequestContext}.
  *
- * <p>This builder allows the configuration of a {@link MockMvc} instance and a {@link
- * TestRequestDto} to create a fully configured {@code TestRequestContext}. It follows the builder
- * pattern to make the object creation flexible and readable.
+ * <p>This class provides a fluent API for setting up the configuration and request details
+ * necessary to create a {@code TestRequestContext}. It allows chaining method calls for ease of
+ * use.
  *
- * <p>Use {@link #getInstance()} to obtain a new builder instance.
+ * <p>This class is marked as {@code final} and cannot be subclassed. The constructor is private,
+ * enforcing the use of the builder pattern for creating instances.
  *
  * @since 1.0.0
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TestRequestContextBuilder {
 
-  private MockMvc mvc;
+  private TestRequestConfig config;
   private TestRequestDto request;
 
   /**
-   * Sets the {@link MockMvc} instance for the context being built.
+   * Sets the {@link TestRequestConfig} for the context being built.
    *
-   * @param mvc the {@link MockMvc} instance to be associated with the request context
+   * @param config the {@link TestRequestConfig} representing the configuration for the test request
    * @return the current {@code TestRequestContextBuilder} instance for further configuration
    * @since 1.0.0
    */
-  public TestRequestContextBuilder withMockMvc(MockMvc mvc) {
-    this.mvc = mvc;
+  public TestRequestContextBuilder withTestRequestConfig(TestRequestConfig config) {
+    this.config = config;
     return this;
   }
 
@@ -47,14 +47,14 @@ public final class TestRequestContextBuilder {
   }
 
   /**
-   * Builds and returns a new {@link TestRequestContext} using the configured {@link MockMvc} and
-   * {@link TestRequestDto}.
+   * Builds and returns a new {@link TestRequestContext} using the configured {@link TestRequestDto}
+   * and {@link TestRequestContext}.
    *
    * @return a new {@code TestRequestContext} instance
    * @since 1.0.0
    */
   public TestRequestContext build() {
-    return new TestRequestContext(this.mvc, this.request);
+    return new TestRequestContext(this.request, this.config);
   }
 
   /**

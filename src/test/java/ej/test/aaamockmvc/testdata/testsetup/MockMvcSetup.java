@@ -24,8 +24,8 @@ public final class MockMvcSetup {
   private final ResultActions mockResultActions;
   private final MockMvc mvc;
 
-  public MockMvcSetup() {
-    this.mvc = mock(MockMvc.class);
+  public MockMvcSetup(MockMvc mvc) {
+    this.mvc = mvc;
     this.mockMockHttpServletResponse = mock(MockHttpServletResponse.class);
     this.mockMvcResult = mock(MvcResult.class);
     this.mockResultActions = mock(ResultActions.class);
