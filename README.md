@@ -30,11 +30,9 @@ ___
 ## Table of Contents
 
 - [Getting Started](#getting-started)
-    - [Setup Bean](#1-bean-setup)
-    - [Usage](#2-using-aaamockmvc-in-tests)
-        - [AAAMocMvc](#option-a-directly-autowiring-aaamockmvc)
-        - [AAAMockMvcAbstract](#option-b-extending-aaamockmvcabstract)
-- [Examples](#3-examples)
+    - [Setup Bean](#1-setup-bean)
+    - [Usage](#2-usage)
+- [Examples](#examples)
     - [Test Case](#test-case-validate-response-with-expected-list-of-dtos)
     - [Arrange Section](#examples-for-the-arrange-section)
     - [Assert Section](#examples-for-the-assert-section)
@@ -193,7 +191,7 @@ public class AAAMockMvcConfig {
 
 There are two options for utilizing the AAAMockMvc in test classes:
 
-####         
+####          
 
 <details>
 <summary>Option A: AAAMockMvc</summary>
