@@ -34,9 +34,9 @@ required to set up your testing environment effectively.
 
 ## 1. Configuration
 
-To configure `AAAMockMvc` for your tests, there are four main options available. Each configuration
-provides flexibility to use `AAAMockMvc` in the test setup to interact with the MVC testing
-framework, depending on the specific project requirements.
+To configure `AAAMockMvc` for tests, four main options are available. Each configuration offers
+flexibility in using `AAAMockMvc` within the test setup to interact with the MVC testing framework,
+tailored to the specific project requirements.
 
 ### Option A: WebApplicationContext with Default ObjectMapper
 
@@ -201,11 +201,11 @@ public class ControllerTest {
   void WHEN_calling_endpoint_THEN_return_expected_status() throws Exception {
     aaaMockMvc.get()
         .arrange()
-        .arrangeUrl(GET_EXAMPLE)
+        .arrangeUrl(GET_SIMPLE)
         .act()
         .actPerform()
-        .assertResult()
-        .assertMatcher(status().isOk());
+        .asserts()
+        .assertStatus(HttpStatus.OK);
   }
 }
 ```
@@ -227,11 +227,11 @@ public class ControllerTest extends AAAMockMvcAbstract {
   void WHEN_calling_endpoint_THEN_return_expected_content() throws Exception {
     get()
         .arrange()
-        .arrangeUrl(GET_EXMAPLE)
+        .arrangeUrl(GET_SIMPLE)
         .act()
         .actPerform()
-        .assertResponse()
-        .assertContent("expectedResponse");
+        .asserts()
+        .assertStatus(HttpStatus.OK);
   }
 }
 ```
@@ -240,164 +240,86 @@ ___
 
 ## Examples
 
-The following examples illustrate the usage of the fluent API for arranging, acting, and asserting
-in test cases.
+### Test Case: Validate Response with Expected List of DTOs
 
-### Example 1: Status asserts
+In this test case, a GET request is made to the specified endpoint using a URL that includes a
+parameter. The following steps are executed:
 
-```java
+1. **Arrange**: The initial setup is performed, including defining the request URL.
+2. **Arrange URL**: The base URL (`GET_EXAMPLE`) is arranged for the request.
+3. **Arrange PARAM**: A query parameter is added to the request using `arrangeKeyValue`, allowing
+   for dynamic data retrieval.
+4. **Action**: The request is executed with the `act()` method, followed by `actPerform()` to send
+   the request.
+5. **Assertions**: Several assertions are made to verify the response:
+    - The response is asserted to be non-empty using `assertNotEmpty()`.
+    - The HTTP status of the response is asserted to be `HttpStatus.OK`, ensuring the request was
+      successful.
+    - The response content is asserted to match the expected list of `DemoDto` objects
+      using `assertContentEquals`, confirming that the API returns the correct data structure.
 
-@Test
-void WHEN_call_endpoint_THEN_return_status_200() throws Exception {
-  get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus(200);
-}
-```
-
-```java
-
-@Test
-void WHEN_call_endpoint_THEN_return_status_ok() throws Exception {
-  get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus(HttpStatus.OK);
-}
-```
-
-### Example 2: String Content asserts
+This structured approach helps ensure that the endpoint behaves as expected and returns the correct
+list of DTOs.
 
 ```java
 
 @Test
-void WHEN_call_endpoint_THEN_return_expected_content() throws Exception {
-  get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStringContentIsNotEmpty()
-      .assertStringContent("expectedContent");
-}
-```
-
-### Example 3: Collection Content asserts
-
-```java
-
-@Test
-void WHEN_call_endpoint_THEN_return_expected_content() throws Exception {
-  // TEST_DTO_LIST = List.of(TEST_DTO_1, TEST_DTO_2);
+void WHEN_call_endpoint_THEN_return_expected_list_dto() throws Exception {
 
   get()
       .arrange()
       .arrangeUrl(GET_EXAMPLE)
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus(200)
-      .assertEquals(DemoDto.class, TEST_DTO_LIST);
-}
-```
-
-```java
-
-@Test
-void WHEN_call_endpoint_THEN_return_expected_content() throws Exception {
-  // TEST_DTO_SET = Set.of(TEST_DTO_1, TEST_DTO_2);
-
-  get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus(200)
-      .assertEquals(DemoDto.class, TEST_DTO_SET);
-}
-```
-
-```java
-
-@Test
-void WHEN_call_endpoint_THEN_return_expected_content() throws Exception {
-  // TEST_DTO_MAP = Map<Boolean, DemoDto> TEST_DTO_MAP = Map.of(TRUE, TEST_DTO_1, FALSE, TEST_DTO_2);
-
-  get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus(200)
-      .assertEquals(Boolean.class, DemoDto.class, TEST_DTO_MAP);
-}
-```
-
-### Example 4: Status and Content asserts
-
-```java
-
-@Test
-void WHEN_call_endpoint_THEN_return_expected_status_content() throws Exception {
-  get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus(200)
-      .assertStringContentIsNotEmpty()
-      .assertStringContent("expectedContent");
-}
-```
-
-### Example 5: Complex Request with Parameters and Headers
-
-```java
-
-@Test
-void WHEN_call_endpoint_THEN_return_expected_status_content() throws Exception {
-  get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE, VAR_ID_8)
       .arrangeParam()
       .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
-      .arrangeHead()
-      .arrangeKeyValue(HEAD_X_CUSTOM_1, HEAD_X_CUSTOM_VALUE_1)
       .act()
       .actPerform()
       .asserts()
-      .assertStatus(200)
-      .assertStringContentIsNotEmpty()
-      .assertStringContent("expectedContent");
+      .assertNotEmpty()
+      .assertStatus(HttpStatus.OK)
+      .assertContent()
+      .assertContentEquals(DemoDto.class, EXPECTED_LIST);
 }
 ```
 
-### Example 6: Complex Request with Parameters, Headers and Body
+---
+
+### Test Case: Validate Response Status for File Upload
+
+In this test case, a POST request is made to the specified endpoint to upload files. The following
+steps are executed:
+
+1. **Arrange**: The initial setup is performed, including defining the request URL and necessary
+   parameters.
+2. **Arrange URL**: The URL is arranged using `arrangeUrl`, which includes dynamic path
+   variables (`PATH_VARIABLE_USER_ID_8`, `PATH_VARIABLE_PAGE_ID_3`) to target specific resources.
+3. **Arrange PARAM**: A query parameter is added to the request using `arrangeKeyValue`,
+   allowing
+   for additional context in the request.
+4. **Arrange HEAD**: An authorization token is included in the request headers
+   using `arrangeAuth`,
+   which is typically required for secured endpoints.
+5. **Arrange BODY**: The files to be uploaded are arranged using `arrangeFiles`, enabling multiple
+   file uploads in a single request.
+6. **Action**: The request is executed with the `act()` method, followed by `actPerform()` to send
+   the request.
+7. **Assertions**: The response status is asserted to be `201`, indicating that the resource was
+   created successfully.
+
+This structured approach ensures that the endpoint correctly processes file uploads and returns the
+expected status code.
 
 ```java
 
 @Test
-void GIVEN_files_WHEN_call_endpoint_THEN_return_expected_status_201()
-    throws Exception {
+void GIVEN_files_WHEN_call_endpoint_THEN_return_expected_status_201() throws Exception {
 
   post()
       .arrange()
-      .arrangeUrl(POST_EXAMPLE)
+      .arrangeUrl(POST_EXAMPLE, PATH_VARIABLE_USER_ID_8, PATH_VARIABLE_PAGE_ID_3)
       .arrangeParam()
       .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
       .arrangeHead()
-      .arrangeKeyValue(HEAD_X_CUSTOM_1, HEAD_X_CUSTOM_VALUE_1)
+      .arrangeAuth(TEST_TOKEN)
       .arrangeBody()
       .arrangeFiles(TEST_BODY_FILES)
       .act()
@@ -407,42 +329,443 @@ void GIVEN_files_WHEN_call_endpoint_THEN_return_expected_status_201()
 }
 ```
 
-### Example 7: Custom Assertions After actPerform()
+---
 
-It is possible, in addition to the provided assertion methods, to directly
-access the `ResultActions` object after `actPerform()` to extract the response content (e.g.,
-using `getContentAsString()`) and perform custom assertions. This provides the flexibility to
-extend beyond the provided assertions if needed.
+### Examples for the Arrange Section
 
-```java
+The following examples illustrate the usage of the fluent API for arranging, acting, and asserting
+in test cases.
 
-@Test
-void WHEN_call_endpoint_THEN_custom_assertions_on_result() throws Exception {
+<details>
+<summary>Arrange URL</summary>
+
+In this example, the simplest form of a request is demonstrated, utilizing only the base URL.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .act()
+```
+
+---
+
+In this example, a URL with a path variable is utilized, which dynamically replaces a segment of the
+URL to retrieve specific data.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE, PATH_VAR_8)
+      .act()
+```
+
+---
+
+In this example, when a complete URL is provided, the request is directed to that specific endpoint.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE_URI)
+      .act()
+```
+
+---
+
+In this example, a URL is enhanced with a query parameter, commonly used for search or filter
+requests.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeParam()
+      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
+      .act()
+```
+
+---
+
+In this example, multiple parameters are appended to the URL, enabling a more detailed query.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeParam()
+      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
+      .arrangeKeyValue(PARAM_KEY_2, PARAM_VALUE_2)
+      .act()
+```
+
+---
+
+In this example, an entire set of parameters is appended to the URL using a map, which simplifies
+the handling of dynamic parameters.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeParam()
+      .arrangeKeyValue(PARAM_MAP)
+      .act()
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>Arrange HEAD</summary>
+
+In this example, the Accept header is set, indicating that the client
+expects a response in JSON format.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeHead()
+      .arrangeAccept(APPLICATION_JSON)
+      .act()
+```
+
+---
+
+In this example, an authorization token is added to the headers, which is typically required for
+secured endpoints.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeHead()
+      .arrangeAuth(TOKEN)
+      .act()
+```
+
+---
+
+In this example, the Content-Type header is defined, indicating the format of the data being sent (
+if applicable).
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeHead()
+      .arrangeContentType(APPLICATION_JSON)
+      .act()
+```
+
+---
+
+In this example, a single custom header is set, allowing for additional context or control over the
+request.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeHead()
+      .arrangeKeyValue(HEAD_X_CUSTOM_1, HEAD_X_CUSTOM_VALUE_1)
+      .act()
+```
+
+---
+
+In this example, this example shows how to set multiple custom headers in a single request, which
+can be necessary for more complex API interactions.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeHead()
+      .arrangeKeyValue(HEAD_X_CUSTOM_1, HEAD_X_CUSTOM_VALUE_1)
+      .arrangeKeyValue(HEAD_X_CUSTOM_2, HEAD_X_CUSTOM_VALUE_2)
+      .act()
+```
+
+---
+
+In this example, using a map to set multiple custom headers allows for a cleaner approach when
+numerous headers are required, making the code more maintainable.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeHead()
+      .arrangeKeyValue(HEAD_X_CUSTOM_MAP)
+      .act()
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>Arrange BODY</summary>
+
+In this example, one file are added to the request body.
+
+```
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeFile(FILE_1)
+      .act()
+```
+
+---
+
+In this example, two files are added to the request body.
+
+```
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeFile(FILE_1)
+      .arrangeFile(FILE_2)
+      .act()
+```
+
+---
+
+In this example, this example illustrates how to upload multiple files using a list. This approach
+simplifies adding multiple files and enhances code readability.
+
+```
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeFiles(List.of(FILE_1, FILE_2))
+      .act()
+```
+
+---
+
+In this example, raw content is sent in the body along with its media type, allowing for versatile
+content submissions beyond standard formats.
+
+```
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeContent(RAW_CONTENT, RAW_MEDIATYPE)
+      .act()
+```
+
+---
+
+In this example, JSON data is sent in the request body, demonstrating how to transmit structured
+data to the server.
+
+```
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeJson(JSON_1)
+      .act()
+```
+
+</details>
+
+---
+
+### Examples for the Assert Section
+
+<details>
+<summary>Assert Empty</summary>
+
+```
   get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
+      ...
       .act()
       .actPerform()
-      .resultActions()
-
-      // Assert
-      .andExpect(status().isCreated())
-      .andReturn();
-}
+      .asserts()
+      .assertNotEmpty()
 ```
 
-```java
-
-@Test
-void WHEN_call_endpoint_THEN_custom_assertions_on_result() throws Exception {
-  String result = get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
+```
+  get()
+      ...
       .act()
       .actPerform()
-      .resultAsString(); // Perform the action and store the result
-
-  // Custom assertions on the result
-  assertTrue(result.contains("expectedContent"));
-}
+      .asserts()
+      .assertEmpty()
 ```
+
+</details> 
+
+<details>
+<summary>Assert Status</summary>
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus(200)
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus(HttpStatus.OK)
+```
+
+</details> 
+
+<details>
+<summary>Assert Content</summary>
+
+In this example, the **`assertContentEquals`** method is used to assert that the response content
+matches an expected byte array.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEquals(EXPECTED_BYTE_ARRAY)
+```
+
+---
+
+In this example, the **`assertContentEquals`** method is used to assert that the response content
+matches an expected string.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEquals(EXPECTED_STRING)
+```
+
+---
+
+In this example, the **`assertContentEquals`** method is used to assert that the response content
+matches an expected **`list`** of objects.
+
+- **Class Specification**: Only the class of the objects contained in the list needs to be
+  specified (in this case, `DemoDto.class`). This informs the framework about the type of object to
+  expect.
+- **Expected Objects**: Alongside the class, a list of expected objects (`EXPECTED_LIST`) is
+  provided, which the response should match. This approach is particularly useful for validating
+  collections of data returned by the API.
+
+```
+  // EXPECTED_LIST = List.of(TEST_DTO_1, TEST_DTO_2);
+  
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEquals(DemoDto.class, EXPECTED_LIST)
+```
+
+---
+
+In this example, the **`assertContentEquals`** method is used to assert that the response content
+matches an expected **`set`** of objects.
+
+- **Class Specification**: Only the class of the objects contained in the set needs to be
+  specified (in this case, `DemoDto.class`). This informs the framework about the type of object to
+  expect.
+- **Expected Objects**: Alongside the class, a set of expected objects (`EXPECTED_SET`) is provided,
+  which the response should match. This approach is particularly useful for validating collections
+  of data returned by the API.
+
+### Expected Objects
+
+Alongside the class, a set of expected objects (`EXPECTED_SET`) is provided, which the response
+should match. This approach is particularly useful for validating collections of data returned by
+the API, especially when duplicates are not allowed.
+
+```
+  // EXPECTED_SET = Set.of(TEST_DTO_1, TEST_DTO_2);
+  
+    get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEquals(DemoDto.class, EXPECTED_SET)
+```
+
+---
+
+In this example, the **`assertContentEquals`** method is utilized to assert that the response
+content matches an expected **`map`** of objects.
+
+- **Class Specifications**:
+    - **Key Class**: The class of the keys in the map must be specified (in this
+      case, `Boolean.class`).
+    - **Value Class:** The class of the values in the map must be specified (in this case,
+      DemoDto.class).
+- **Expected Objects**: Alongside the class, a map of expected objects (`EXPECTED_MAP`) is
+  provided, which the response should match. This approach is particularly useful for validating
+  collections of data returned by the API.
+
+```
+  // EXPECTED_MAP = Map.of(TRUE, TEST_DTO_1, FALSE, TEST_DTO_2);
+  
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEquals(Boolean.class, DemoDto.class, EXPECTED_MAP);
+```
+
+---
+</details>
+
+<details>
+
+<summary>Assert ResultMatcher</summary>
+
+
+In this example, the **`assertByResultMatcher`** method demonstrates how to use custom assertions
+through the `ResultMatcher` interface.
+
+In the provided code snippet, a custom assertion is made to check for the existence
+of a cookie named `"sessionId"` in the response. The syntax `cookie().exists("sessionId")` is a
+specific `ResultMatcher` that verifies if the specified cookie is present in the response.
+
+```  
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertByResultMatcher(cookie().exists("sessionId"))
+```
+
+</details>
+
+---

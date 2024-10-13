@@ -17,6 +17,22 @@ import org.springframework.test.web.servlet.ResultMatcher;
 public interface TestAssert {
 
   /**
+   * Asserts that the HTTP response content is not empty.
+   *
+   * @return the current instance of {@code TestAssert} for method chaining
+   * @since 1.0.0
+   */
+  TestAssert assertNotEmpty();
+
+  /**
+   * Asserts that the HTTP response content is empty.
+   *
+   * @return the current instance of {@code TestAssert} for method chaining
+   * @since 1.0.0
+   */
+  TestAssert assertEmpty();
+
+  /**
    * Asserts that the HTTP response status matches the given {@code HttpStatus}.
    *
    * @param status the expected {@code HttpStatus} of the response (must not be {@code null})

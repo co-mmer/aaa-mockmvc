@@ -1,5 +1,7 @@
 package ej.test.aaamockmvc.request.asserts.content;
 
+import static ej.test.aaamockmvc.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsSByteException;
+import static ej.test.aaamockmvc.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsStringException;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_1_DTO;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_1_JSON;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_2_DTO;
@@ -27,7 +29,6 @@ import ej.test.aaamockmvc.request.asserts.head.TestAssertHeadImpl;
 import ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper;
 import ej.test.aaamockmvc.request.asserts.mapper.exception.TestAssertResultMapperException;
 import ej.test.aaamockmvc.testdata.testutil.TestObjectDto;
-import java.io.UnsupportedEncodingException;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -146,14 +147,6 @@ class TestAssertContentImplTest {
         AssertionFailedError.class, () -> testAssertContent.assertContentEquals(EXPECTED_CONTENT));
   }
 
-  private static MvcResult mockGetContentAsStringException() throws UnsupportedEncodingException {
-    var mockMvcResult = mock(MvcResult.class);
-    var mockResponse = mock(MockHttpServletResponse.class);
-    when(mockResponse.getContentAsString()).thenThrow(new RuntimeException());
-    when(mockMvcResult.getResponse()).thenReturn(mockResponse);
-    return mockMvcResult;
-  }
-
   @Test
   void GIVEN_expected_WHEN_assertContentByteIsNotEmpty_THEN_assert_true() throws Exception {
     // Arrange
@@ -236,21 +229,12 @@ class TestAssertContentImplTest {
   void GIVEN_exception_byte_WHEN_assertContentEquals_THEN_assert_false() {
     // Arrange
     var mockMvcResult = mockGetContentAsSByteException();
-
     when(this.actions.andReturn()).thenReturn(mockMvcResult);
     var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
     assertThrows(
         AssertionFailedError.class, () -> testAssertContent.assertContentEquals(new byte[1]));
-  }
-
-  private static MvcResult mockGetContentAsSByteException() {
-    var mockMvcResult = mock(MvcResult.class);
-    var mockResponse = mock(MockHttpServletResponse.class);
-    when(mockResponse.getContentAsByteArray()).thenThrow(new RuntimeException());
-    when(mockMvcResult.getResponse()).thenReturn(mockResponse);
-    return mockMvcResult;
   }
 
   @Test

@@ -1,5 +1,6 @@
 package ej.test.aaamockmvc.request.asserts;
 
+import static ej.test.aaamockmvc.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsStringException;
 import static ej.test.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
 import static ej.test.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,6 +14,7 @@ import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ej.test.aaamockmvc.request.asserts.content.TestAssertContentImpl;
 import ej.test.aaamockmvc.request.asserts.head.TestAssertHeadImpl;
+import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
@@ -24,6 +26,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
 
 class TestAssertImplTest {
 
+  private static final String CONTENT = "content";
   private ResultActions actions;
   private MockHttpServletResponse response;
   private TestAssertImpl testAssert;
@@ -38,6 +41,64 @@ class TestAssertImplTest {
     when(actions.andReturn()).thenReturn(mvcResult);
 
     this.testAssert = new TestAssertImpl(actions, new ObjectMapper());
+  }
+
+  @Test
+  void GIVEN_expected_WHEN_assertNotEmpty_THEN_assert_is_true() throws Exception {
+    // Arrange
+    this.response.getWriter().write(CONTENT);
+
+    // Act & Assert
+    this.testAssert.assertNotEmpty();
+  }
+
+  @Test
+  void GIVEN_unexpected_WHEN_assertNotEmpty_THEN_assert_is_false() throws Exception {
+    // Arrange
+    this.response.getWriter().write(Strings.EMPTY);
+
+    // Act & Assert
+    assertThrows(AssertionError.class, () -> this.testAssert.assertNotEmpty());
+  }
+
+  @Test
+  void GIVEN_exception_WHEN_assertNotEmpty_THEN_throw_TestAssertException() throws Exception {
+    // Arrange
+    var mockMvcResult = mockGetContentAsStringException();
+    when(this.actions.andReturn()).thenReturn(mockMvcResult);
+    var testAssert = new TestAssertImpl(this.actions, new ObjectMapper());
+
+    // Act & Assert
+    assertThrows(AssertionFailedError.class, testAssert::assertNotEmpty);
+  }
+
+  @Test
+  void GIVEN_expected_WHEN_assertEmpty_THEN_assert_is_true() throws Exception {
+    // Arrange
+    this.response.getWriter().write(Strings.EMPTY);
+
+    // Act & Assert
+    this.testAssert.assertEmpty();
+  }
+
+  @Test
+  void GIVEN_unexpected_WHEN_assertEmpty_THEN_assert_is_false() throws Exception {
+    // Arrange
+    this.response.getWriter().write(CONTENT);
+
+    // Act & Assert
+    assertThrows(AssertionError.class, () -> this.testAssert.assertEmpty());
+  }
+
+  @Test
+  void GIVEN_exception_WHEN_assertEmpty_THEN_throw_TestAssertException() throws Exception {
+    // Arrange
+    var mockMvcResult = mockGetContentAsStringException();
+    when(this.actions.andReturn()).thenReturn(mockMvcResult);
+    var testAssert = new TestAssertImpl(this.actions, new ObjectMapper());
+
+    // Act & Assert
+    assertThrows(AssertionFailedError.class, testAssert::assertEmpty);
   }
 
   @Test
