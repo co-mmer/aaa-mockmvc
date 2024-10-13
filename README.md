@@ -27,18 +27,35 @@ In the provided library, every test follows the AAA structure using the followin
 
 ___
 
-## Guide
+## Table of Contents
+
+- [Getting Started](#getting-started)
+    - [Setup Bean](#1-bean-setup)
+    - [Usage](#2-using-aaamockmvc-in-tests)
+        - [AAAMocMvc](#option-a-directly-autowiring-aaamockmvc)
+        - [AAAMockMvcAbstract](#option-b-extending-aaamockmvcabstract)
+- [Examples](#3-examples)
+    - [Test Case](#test-case-validate-response-with-expected-list-of-dtos)
+    - [Arrange Section](#examples-for-the-arrange-section)
+    - [Assert Section](#examples-for-the-assert-section)
+- [License](#License)
+
+---
+
+## Getting Started
 
 To write tests using this framework, certain configurations are necessary. Below are the steps
 required to set up your testing environment effectively.
 
-## 1. Configuration
+### 1. Setup Bean
 
 To configure `AAAMockMvc` for tests, four main options are available. Each configuration offers
 flexibility in using `AAAMockMvc` within the test setup to interact with the MVC testing framework,
 tailored to the specific project requirements.
 
-### Option A: WebApplicationContext with Default ObjectMapper
+<details>
+<summary>Setup A: WebApplicationContext with Default ObjectMapper</summary>
+
 
 In this option, `AAAMockMvc` is configured using the `WebApplicationContext`.
 The framework will use a default ObjectMapper (`new ObjectMapper()`).
@@ -60,7 +77,10 @@ public class AAAMockMvcConfig {
 }
 ```
 
-### Option B: WebApplicationContext with Custom ObjectMapper
+</details>
+
+<details>
+<summary>Setup B: WebApplicationContext with Custom ObjectMapper</summary>
 
 In this option, both the `WebApplicationContext` and a custom `ObjectMapper` can be passed
 to `AAAMockMvc`.
@@ -72,8 +92,6 @@ to `AAAMockMvc`.
 3. Pass the custom ObjectMapper instance to the AAAMockMvc bean
 
 ```java
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class AAAMockMvcConfig {
@@ -91,7 +109,10 @@ public class AAAMockMvcConfig {
 }
 ```
 
-### Option C: Custom MockMvc and Default ObjectMapper
+</details>
+
+<details>
+<summary>Setup C: Custom MockMvc and Default ObjectMapper</summary>
 
 This option allows for configuring `AAAMockMvc` with a custom `MockMvc` instance.
 The framework will use a default ObjectMapper (`new ObjectMapper()`).
@@ -103,8 +124,6 @@ The framework will use a default ObjectMapper (`new ObjectMapper()`).
 3. Pass the custom MockMvc instance to the AAAMockMvc bean
 
 ```java
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class AAAMockMvcConfig {
@@ -124,7 +143,10 @@ public class AAAMockMvcConfig {
 }
 ```
 
-### Option D: Custom MockMvc and Custom ObjectMapper
+</details>
+
+<details>
+<summary>Setup D: Custom MockMvc and Custom ObjectMapper</summary>
 
 This option allows for full customization by passing both a custom `MockMvc` instance and a
 custom `ObjectMapper` to `AAAMockMvc`. This provides maximum flexibility for projects that need
@@ -163,26 +185,18 @@ public class AAAMockMvcConfig {
 }
 ```
 
-### Conclusion
-
-All options provide the necessary configuration to use `AAAMockMvc` in tests:
-
-- **Option A** is ideal for simple projects that use the default `WebApplicationContext` and rely on
-  the default `ObjectMapper`.
-- **Option B** provides flexibility by allowing the use of a custom `ObjectMapper` with the
-  default `WebApplicationContext`.
-- **Option C** is suited for projects requiring a custom `MockMvc` setup, while still using the
-  default `ObjectMapper`.
-- **Option D** offers full customization, allowing both a custom `MockMvc` and a
-  custom `ObjectMapper`, for projects with advanced configuration needs.
+</details>
 
 ---
 
-### 2. Using AAAMockMvc in Tests
+### 2. Usage
 
 There are two options for utilizing the AAAMockMvc in test classes:
 
-#### Option A: Directly Autowiring AAAMockMvc
+####         
+
+<details>
+<summary>Option A: AAAMockMvc</summary>
 
 AAAMockMvc can be directly autowired into the test class. This method allows the API methods to
 be
@@ -191,7 +205,6 @@ used directly in the tests.
 ```java
 
 @WebMvcTest
-
 public class ControllerTest {
 
   @Autowired
@@ -210,12 +223,15 @@ public class ControllerTest {
 }
 ```
 
-#### Option B: Extending AAAMockMvcAbstract
+</details>
+
+<details>
+<summary>Option B: AAAMockMvcAbstract</summary>
+
 
 Alternatively, extending the abstract class `AAAMockMvcAbstract` is another option, which
-provides
-all
-necessary methods like get(), post(), etc. This approach is useful for encapsulating common test
+provides all necessary methods like get(), post(), etc. This approach is useful for encapsulating
+common test
 behaviors and reducing boilerplate code in test classes.
 
 ```java
@@ -235,6 +251,8 @@ public class ControllerTest extends AAAMockMvcAbstract {
   }
 }
 ```
+
+</details>
 
 ___
 
@@ -769,3 +787,9 @@ specific `ResultMatcher` that verifies if the specified cookie is present in the
 </details>
 
 ---
+
+## License
+
+This project is licensed under the Apache License, Version 2.0. See `LICENSE.txt` for more
+information.
+
