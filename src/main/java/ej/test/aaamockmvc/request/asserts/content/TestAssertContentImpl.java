@@ -7,6 +7,7 @@ import static ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper.m
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -296,6 +297,28 @@ public final class TestAssertContentImpl implements TestAssertContent {
       var content = mapToMap(this.objectMapper, result, keyClass, valueClass, deserializers);
       assertThat(content, is(expectedResponse));
     } catch (TestAssertResultMapperException e) {
+      Assertions.fail(e);
+    }
+    return this;
+  }
+
+  /**
+   * Asserts that the JSON content of the HTTP response has the specified size.
+   *
+   * <p>This method checks if the length of the JSON content matches the expected size. It uses
+   * {@code jsonPath} to validate the presence and length of the JSON array or object. If the actual
+   * size does not match the expected size, an assertion failure is triggered.
+   *
+   * @param expectedSize the expected size of the JSON content (must be greater than or equal to
+   *     zero)
+   * @return the current instance of {@code TestAssertContent} for method chaining
+   * @since 1.0.0
+   */
+  @Override
+  public TestAssertContent assertContentSize(int expectedSize) {
+    try {
+      this.actions.andExpect(jsonPath("$.length()", is(expectedSize)));
+    } catch (Exception e) {
       Assertions.fail(e);
     }
     return this;

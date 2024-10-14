@@ -3,11 +3,12 @@ package ej.test.aaamockmvc.request.asserts.content;
 import static ej.test.aaamockmvc.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsSByteException;
 import static ej.test.aaamockmvc.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsStringException;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_1_DTO;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_1_JSON;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_2_DTO;
+import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_LIST_1_JSON;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_DTO;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_JSON;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_MAP_2_DTO;
+import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_MAP_2_JSON;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_SET_1_DTO;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_SET_1_JSON;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_SET_2_DTO;
@@ -280,7 +281,7 @@ class TestAssertContentImplTest {
   @SuppressWarnings("unchecked")
   void GIVEN_expected_list_WHEN_assertContentEquals_THEN_assert_is_true() throws Exception {
     // Arrange
-    this.response.getWriter().write(TEST_OBJECTS_1_JSON);
+    this.response.getWriter().write(TEST_OBJECTS_LIST_1_JSON);
 
     // Act & Assert
     this.testAssert.assertContentEquals(TestObjectDto.class, TEST_OBJECTS_1_DTO);
@@ -290,7 +291,7 @@ class TestAssertContentImplTest {
   @SuppressWarnings("unchecked")
   void GIVEN_unexpected_list_WHEN_assertContentEquals_THEN_assert_is_false() throws Exception {
     // Arrange
-    this.response.getWriter().write(TEST_OBJECTS_1_JSON);
+    this.response.getWriter().write(TEST_OBJECTS_LIST_1_JSON);
 
     // Act & Assert
     assertThrows(
@@ -395,6 +396,35 @@ class TestAssertContentImplTest {
                 Boolean.class, TestObjectDto.class, TEST_OBJECTS_MAP_1_DTO));
 
     mockTestAssertResultMapper.close();
+  }
+
+  @Test
+  void GIVEN_expected_WHEN_assertContentSize_THEN_assert_is_true() throws Exception {
+    // Arrange
+    this.response.getWriter().write(TEST_OBJECTS_MAP_2_JSON);
+
+    // Act & Assert
+    this.testAssert.assertContentSize(2);
+  }
+
+  @Test
+  void GIVEN_unexpected_WHEN_assertContentSize_THEN_assert_is_false() throws Exception {
+    // Arrange
+    when(this.actions.andExpect(any())).thenThrow(new AssertionError());
+    var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
+
+    // Act & Assert
+    assertThrows(AssertionError.class, () -> testAssertContent.assertContentSize(1));
+  }
+
+  @Test
+  void GIVEN_exception_WHEN_assertContentSize_THEN_assert_is_false() throws Exception {
+    // Arrange
+    when(this.actions.andExpect(any())).thenThrow(new Exception());
+    var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
+
+    // Act & Assert
+    assertThrows(AssertionFailedError.class, () -> testAssertContent.assertContentSize(1));
   }
 
   @Test

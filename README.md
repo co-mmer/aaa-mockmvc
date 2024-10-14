@@ -191,7 +191,7 @@ public class AAAMockMvcConfig {
 
 There are two options for utilizing the AAAMockMvc in test classes:
 
-####          
+####                 
 
 <details>
 <summary>Option A: AAAMockMvc</summary>
@@ -271,6 +271,8 @@ parameter. The following steps are executed:
     - The response is asserted to be non-empty using `assertNotEmpty()`.
     - The HTTP status of the response is asserted to be `HttpStatus.OK`, ensuring the request was
       successful.
+    - The response content size is asserted to match the expected number of items
+      using `assertContentSize(2)`, confirming that the correct number of objects is returned.
     - The response content is asserted to match the expected list of `DemoDto` objects
       using `assertContentEquals`, confirming that the API returns the correct data structure.
 
@@ -293,6 +295,7 @@ void WHEN_call_endpoint_THEN_return_expected_list_dto() throws Exception {
       .assertNotEmpty()
       .assertStatus(HttpStatus.OK)
       .assertContent()
+      .assertContentSize(2)
       .assertContentEquals(DemoDto.class, EXPECTED_LIST);
 }
 ```
@@ -756,6 +759,21 @@ content matches an expected **`map`** of objects.
       .asserts()
       .assertContent()
       .assertContentEquals(Boolean.class, DemoDto.class, EXPECTED_MAP);
+```
+
+---
+
+In this example, the **`assertContentSize`** method is used to assert that the response content size
+matches an expected size.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentSize(2)
 ```
 
 ---

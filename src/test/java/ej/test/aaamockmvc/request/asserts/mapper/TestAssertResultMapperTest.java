@@ -1,7 +1,11 @@
 package ej.test.aaamockmvc.request.asserts.mapper;
 
+import static ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper.mapTo;
+import static ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper.mapToList;
+import static ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper.mapToMap;
+import static ej.test.aaamockmvc.request.asserts.mapper.TestAssertResultMapper.mapToSet;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_1_DTO;
-import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_1_JSON;
+import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_LIST_1_JSON;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_DTO;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_JSON;
 import static ej.test.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_SET_1_DTO;
@@ -43,8 +47,7 @@ class TestAssertResultMapperTest {
     when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECT_1_JSON);
 
     // Act
-    var result =
-        TestAssertResultMapper.mapTo(this.objectMapper, this.mockMvcResult, TestObjectDto.class);
+    var result = mapTo(this.objectMapper, this.mockMvcResult, TestObjectDto.class);
 
     // Assert
     assertThat(result, is(TEST_OBJECT_1_DTO));
@@ -61,19 +64,17 @@ class TestAssertResultMapperTest {
         TestAssertResultMapperException.class,
 
         // Act
-        () -> TestAssertResultMapper.mapTo(this.objectMapper, this.mockMvcResult, String.class));
+        () -> mapTo(this.objectMapper, this.mockMvcResult, String.class));
   }
 
   @Test
   @SuppressWarnings("unchecked")
   void GIVEN_expected_list_WHEN_mapToList_THEN_return_expect_object() throws Exception {
     // Arrange
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_1_JSON);
+    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_LIST_1_JSON);
 
     // Act
-    var result =
-        TestAssertResultMapper.mapToList(
-            this.objectMapper, this.mockMvcResult, TestObjectDto.class);
+    var result = mapToList(this.objectMapper, this.mockMvcResult, TestObjectDto.class);
 
     // Assert
     assertThat(result, is(TEST_OBJECTS_1_DTO));
@@ -83,15 +84,14 @@ class TestAssertResultMapperTest {
   @SuppressWarnings("unchecked")
   void GIVEN_unexpected_expectedClass_WHEN_mapToList_THEN_throw_exception() throws Exception {
     // Arrange
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_1_JSON);
+    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_LIST_1_JSON);
 
     // Assert
     assertThrows(
         TestAssertResultMapperException.class,
 
         // Act
-        () ->
-            TestAssertResultMapper.mapToList(this.objectMapper, this.mockMvcResult, String.class));
+        () -> mapToList(this.objectMapper, this.mockMvcResult, String.class));
   }
 
   @Test
@@ -101,8 +101,7 @@ class TestAssertResultMapperTest {
     when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_SET_1_JSON);
 
     // Act
-    var result =
-        TestAssertResultMapper.mapToSet(this.objectMapper, this.mockMvcResult, TestObjectDto.class);
+    var result = mapToSet(this.objectMapper, this.mockMvcResult, TestObjectDto.class);
 
     // Assert
     assertThat(result, is(TEST_OBJECTS_SET_1_DTO));
@@ -119,7 +118,7 @@ class TestAssertResultMapperTest {
         TestAssertResultMapperException.class,
 
         // Act
-        () -> TestAssertResultMapper.mapToSet(this.objectMapper, this.mockMvcResult, String.class));
+        () -> mapToSet(this.objectMapper, this.mockMvcResult, String.class));
   }
 
   @Test
@@ -130,8 +129,7 @@ class TestAssertResultMapperTest {
 
     // Act
     var result =
-        TestAssertResultMapper.mapToMap(
-            this.objectMapper, this.mockMvcResult, Boolean.class, TestObjectDto.class);
+        mapToMap(this.objectMapper, this.mockMvcResult, Boolean.class, TestObjectDto.class);
 
     // Assert
     assertThat(result, is(TEST_OBJECTS_MAP_1_DTO));
@@ -148,9 +146,7 @@ class TestAssertResultMapperTest {
         TestAssertResultMapperException.class,
 
         // Act
-        () ->
-            TestAssertResultMapper.mapToMap(
-                this.objectMapper, this.mockMvcResult, String.class, TestObjectDto.class));
+        () -> mapToMap(this.objectMapper, this.mockMvcResult, String.class, TestObjectDto.class));
   }
 
   @Test
@@ -164,9 +160,7 @@ class TestAssertResultMapperTest {
         TestAssertResultMapperException.class,
 
         // Act
-        () ->
-            TestAssertResultMapper.mapToMap(
-                this.objectMapper, this.mockMvcResult, Boolean.class, String.class));
+        () -> mapToMap(this.objectMapper, this.mockMvcResult, Boolean.class, String.class));
   }
 
   @Test
@@ -180,8 +174,6 @@ class TestAssertResultMapperTest {
         TestAssertResultMapperException.class,
 
         // Act
-        () ->
-            TestAssertResultMapper.mapToMap(
-                this.objectMapper, this.mockMvcResult, String.class, String.class));
+        () -> mapToMap(this.objectMapper, this.mockMvcResult, String.class, String.class));
   }
 }

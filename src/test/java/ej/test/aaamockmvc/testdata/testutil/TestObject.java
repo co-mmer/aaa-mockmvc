@@ -32,9 +32,11 @@ public final class TestObject {
   public static final Map<Boolean, TestObjectDto> TEST_OBJECTS_MAP_2_DTO =
       Map.of(TRUE, TEST_OBJECT_1_DTO, FALSE, TEST_OBJECT_3_DTO);
   public static final String TEST_OBJECT_1_JSON = mapToString(TEST_OBJECT_1_DTO);
-  public static final String TEST_OBJECTS_1_JSON = mapToString(TEST_OBJECTS_1_DTO);
+  public static final String TEST_OBJECTS_LIST_1_JSON = mapToString(TEST_OBJECTS_1_DTO);
+
   public static final String TEST_OBJECTS_SET_1_JSON = mapToString(TEST_OBJECTS_SET_1_DTO);
   public static final String TEST_OBJECTS_MAP_1_JSON = mapToString(TEST_OBJECTS_MAP_1_DTO);
+  public static final String TEST_OBJECTS_MAP_2_JSON = mapToString(TEST_OBJECTS_MAP_2_DTO);
 
   public static final TestRequestConfig TEST_REQUEST_CONFIG =
       new TestRequestConfig(MOCK_MVC, new ObjectMapper());

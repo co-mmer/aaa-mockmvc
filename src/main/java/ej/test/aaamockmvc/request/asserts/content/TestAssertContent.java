@@ -169,6 +169,20 @@ public interface TestAssertContent {
       JsonDeserializer<V>... deserializers);
 
   /**
+   * Asserts that the JSON content of the HTTP response has the specified size.
+   *
+   * <p>This method checks if the length of the JSON content matches the expected size. It uses
+   * {@code jsonPath} to validate the presence and length of the JSON array or object. If the actual
+   * size does not match the expected size, an assertion failure is triggered.
+   *
+   * @param expectedSize the expected size of the JSON content (must be greater than or equal to
+   *     zero)
+   * @return the current instance of {@code TestAssertContent} for method chaining
+   * @since 1.0.0
+   */
+  TestAssertContent assertContentSize(int expectedSize);
+
+  /**
    * Asserts that the HTTP response is valid for a HEAD request.
    *
    * <p>This method returns an instance of {@code TestAssertHead} for asserting the headers of the
