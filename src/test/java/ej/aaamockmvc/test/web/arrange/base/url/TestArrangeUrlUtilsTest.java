@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.utils;
+package ej.aaamockmvc.test.web.arrange.base.url;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestParameter.TEST_PARAM_KEY_0;
 import static ej.aaamockmvc.test.testdata.testutil.TestParameter.TEST_PARAM_KEY_1;
@@ -23,7 +23,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.request.model.TestRequestUrlDto;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +70,7 @@ class TestArrangeUrlUtilsTest {
 
   @Test
   void
-      GIVEN_path_var2_and_vars_2_unsupported_and_2_supported_WHEN_setUri_THEN_getUri_returned_expected_value() {
+  GIVEN_path_var2_and_vars_2_unsupported_and_2_supported_WHEN_setUri_THEN_getUri_returned_expected_value() {
     // Arrange
     var urlDto = new TestRequestUrlDto();
 
@@ -147,7 +146,7 @@ class TestArrangeUrlUtilsTest {
 
   @Test
   void
-      GIVEN_addParam_key_0_WHEN_addParam_with_map_key_1_2_THEN_getParam_returned_expected_values() {
+  GIVEN_addParam_key_0_WHEN_addParam_with_map_key_1_2_THEN_getParam_returned_expected_values() {
     // Arrange
     var testRequestUrlDto = new TestRequestUrlDto();
     TestArrangeUrlUtils.addParam(testRequestUrlDto, TEST_PARAM_KEY_0, TEST_PARAM_VALUE_0);

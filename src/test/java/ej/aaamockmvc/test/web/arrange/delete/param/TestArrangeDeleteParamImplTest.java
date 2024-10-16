@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.delete.param;
+package ej.aaamockmvc.test.web.arrange.delete.param;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestParameter.TEST_PARAM_KEY_1;
 import static ej.aaamockmvc.test.testdata.testutil.TestParameter.TEST_PARAM_KEY_VALUE_MAP_1_2;
@@ -7,9 +7,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import ej.aaamockmvc.test.web.act.TestActPerformImpl;
+import ej.aaamockmvc.test.web.arrange.base.url.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.arrange.delete.head.TestArrangeDeleteHeadImpl;
-import ej.aaamockmvc.test.web.arrange.delete.param.TestArrangeDeleteParamImpl;
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.request.context.TestRequestContextBuilder;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
 import ej.aaamockmvc.test.web.request.model.TestRequestType;
@@ -24,11 +23,11 @@ class TestArrangeDeleteParamImplTest {
 
   private TestRequestDto dto;
   private TestArrangeDeleteParamImpl impl;
-  private MockedStatic<TestArrangeUrlUtils> mockTestArrangeRequestUrl;
+  private MockedStatic<TestArrangeUrlUtils> mockTestArrangeUrlUtils;
 
   @BeforeEach
   void setUp() {
-    this.mockTestArrangeRequestUrl = Mockito.mockStatic(TestArrangeUrlUtils.class);
+    this.mockTestArrangeUrlUtils = Mockito.mockStatic(TestArrangeUrlUtils.class);
 
     this.dto = new TestRequestDto(TestRequestType.DELETE);
     var context = TestRequestContextBuilder.getInstance().withTestRequest(this.dto).build();
@@ -38,7 +37,7 @@ class TestArrangeDeleteParamImplTest {
 
   @AfterEach
   void clean() {
-    this.mockTestArrangeRequestUrl.close();
+    this.mockTestArrangeUrlUtils.close();
   }
 
   @Test
@@ -47,7 +46,7 @@ class TestArrangeDeleteParamImplTest {
     this.impl.arrangeKeyValue(TEST_PARAM_KEY_1, TEST_PARAM_VALUE_1);
 
     // Assert
-    this.mockTestArrangeRequestUrl.verify(
+    this.mockTestArrangeUrlUtils.verify(
         () ->
             TestArrangeUrlUtils.addParam(this.dto.getUrl(), TEST_PARAM_KEY_1, TEST_PARAM_VALUE_1));
   }
@@ -58,7 +57,7 @@ class TestArrangeDeleteParamImplTest {
     this.impl.arrangeKeyValue(TEST_PARAM_KEY_VALUE_MAP_1_2);
 
     // Assert
-    this.mockTestArrangeRequestUrl.verify(
+    this.mockTestArrangeUrlUtils.verify(
         () -> TestArrangeUrlUtils.addParam(this.dto.getUrl(), TEST_PARAM_KEY_VALUE_MAP_1_2));
   }
 

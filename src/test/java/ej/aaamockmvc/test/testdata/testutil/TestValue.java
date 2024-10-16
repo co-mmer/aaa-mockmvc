@@ -1,6 +1,6 @@
 package ej.aaamockmvc.test.testdata.testutil;
 
-import ej.aaamockmvc.test.web.arrange.utils.TestRequestUriMapper;
+import ej.aaamockmvc.test.web.arrange.base.url.TestRequestUriMapper;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;

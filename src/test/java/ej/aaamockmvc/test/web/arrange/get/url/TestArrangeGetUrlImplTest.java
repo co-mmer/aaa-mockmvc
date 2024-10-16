@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.get.url;
+package ej.aaamockmvc.test.web.arrange.get.url;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestValue.TEST_PATH_VAR1;
 import static ej.aaamockmvc.test.testdata.testutil.TestValue.TEST_URI;
@@ -7,10 +7,9 @@ import static ej.aaamockmvc.test.testdata.testutil.TestValue.VAR_STRING_1;
 import static org.hamcrest.Matchers.is;
 
 import ej.aaamockmvc.test.web.act.TestActPerformImpl;
+import ej.aaamockmvc.test.web.arrange.base.url.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.arrange.get.head.TestArrangeGetHeadImpl;
 import ej.aaamockmvc.test.web.arrange.get.param.TestArrangeGetParamImpl;
-import ej.aaamockmvc.test.web.arrange.get.url.TestArrangeGetUrlImpl;
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.request.context.TestRequestContextBuilder;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
 import ej.aaamockmvc.test.web.request.model.TestRequestType;
@@ -25,11 +24,11 @@ class TestArrangeGetUrlImplTest {
 
   private TestRequestDto requestDto;
   private TestArrangeGetUrlImpl impl;
-  private MockedStatic<TestArrangeUrlUtils> mockTestArrangeRequestUrl;
+  private MockedStatic<TestArrangeUrlUtils> mockTestArrangeUrlUtils;
 
   @BeforeEach
   void setUp() {
-    this.mockTestArrangeRequestUrl = Mockito.mockStatic(TestArrangeUrlUtils.class);
+    this.mockTestArrangeUrlUtils = Mockito.mockStatic(TestArrangeUrlUtils.class);
 
     this.requestDto = new TestRequestDto(TestRequestType.GET);
     var context = TestRequestContextBuilder.getInstance().withTestRequest(this.requestDto).build();
@@ -39,7 +38,7 @@ class TestArrangeGetUrlImplTest {
 
   @AfterEach
   void clean() {
-    this.mockTestArrangeRequestUrl.close();
+    this.mockTestArrangeUrlUtils.close();
   }
 
   @Test
@@ -48,7 +47,7 @@ class TestArrangeGetUrlImplTest {
     this.impl.arrangeUrl(TEST_URL);
 
     // Assert
-    this.mockTestArrangeRequestUrl.verify(
+    this.mockTestArrangeUrlUtils.verify(
         () -> TestArrangeUrlUtils.setUri(this.requestDto.getUrl(), TEST_URL));
   }
 
@@ -58,7 +57,7 @@ class TestArrangeGetUrlImplTest {
     this.impl.arrangeUrl(TEST_PATH_VAR1, VAR_STRING_1);
 
     // Assert
-    this.mockTestArrangeRequestUrl.verify(
+    this.mockTestArrangeUrlUtils.verify(
         () -> TestArrangeUrlUtils.setUri(this.requestDto.getUrl(), TEST_PATH_VAR1, VAR_STRING_1));
   }
 
@@ -68,7 +67,7 @@ class TestArrangeGetUrlImplTest {
     this.impl.arrangeUri(TEST_URI);
 
     // Assert
-    this.mockTestArrangeRequestUrl.verify(
+    this.mockTestArrangeUrlUtils.verify(
         () -> TestArrangeUrlUtils.setUri(this.requestDto.getUrl(), TEST_URI));
   }
 

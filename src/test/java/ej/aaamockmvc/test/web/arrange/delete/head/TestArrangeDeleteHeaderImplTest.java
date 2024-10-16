@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.delete.head;
+package ej.aaamockmvc.test.web.arrange.delete.head;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestHeader.TEST_AUTH_KEY;
 import static ej.aaamockmvc.test.testdata.testutil.TestHeader.TEST_AUTH_VALUE;
@@ -11,8 +11,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_PDF;
 
 import ej.aaamockmvc.test.web.act.TestActPerformImpl;
-import ej.aaamockmvc.test.web.arrange.delete.head.TestArrangeDeleteHeadImpl;
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeHeadUtils;
+import ej.aaamockmvc.test.web.arrange.base.head.TestArrangeHeadUtils;
 import ej.aaamockmvc.test.web.request.context.TestRequestContextBuilder;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
 import ej.aaamockmvc.test.web.request.model.TestRequestType;

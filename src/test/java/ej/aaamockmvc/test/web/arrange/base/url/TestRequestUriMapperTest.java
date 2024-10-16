@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.utils;
+package ej.aaamockmvc.test.web.arrange.base.url;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestValue.TEST_PATH;
 import static ej.aaamockmvc.test.testdata.testutil.TestValue.TEST_PATH_VAR1;
@@ -8,7 +8,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import ej.aaamockmvc.test.web.arrange.utils.TestRequestUriMapper;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;

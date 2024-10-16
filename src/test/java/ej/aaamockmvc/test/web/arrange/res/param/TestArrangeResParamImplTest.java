@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.res.param;
+package ej.aaamockmvc.test.web.arrange.res.param;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestParameter.TEST_PARAM_KEY_1;
 import static ej.aaamockmvc.test.testdata.testutil.TestParameter.TEST_PARAM_KEY_VALUE_MAP_1_2;
@@ -7,11 +7,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import ej.aaamockmvc.test.web.act.TestActPerformImpl;
+import ej.aaamockmvc.test.web.arrange.base.body.TestArrangeBodyUtils;
+import ej.aaamockmvc.test.web.arrange.base.url.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.arrange.res.body.TestArrangeResBodyImpl;
 import ej.aaamockmvc.test.web.arrange.res.head.TestArrangeResHeadImpl;
-import ej.aaamockmvc.test.web.arrange.res.param.TestArrangeResParamImpl;
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeRequestBody;
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.request.context.TestRequestContextBuilder;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
 import ej.aaamockmvc.test.web.request.model.TestRequestType;
@@ -25,13 +24,13 @@ class TestArrangeResParamImplTest {
 
   private TestRequestDto dto;
   private TestArrangeResParamImpl impl;
-  private MockedStatic<TestArrangeUrlUtils> mockTestArrangeRequestUrl;
-  private MockedStatic<TestArrangeRequestBody> mockTestArrangeRequestBody;
+  private MockedStatic<TestArrangeUrlUtils> mockTestArrangeUrlUtils;
+  private MockedStatic<TestArrangeBodyUtils> mockTestArrangeBodyUtils;
 
   @BeforeEach
   void setUp() {
-    this.mockTestArrangeRequestUrl = Mockito.mockStatic(TestArrangeUrlUtils.class);
-    this.mockTestArrangeRequestBody = Mockito.mockStatic(TestArrangeRequestBody.class);
+    this.mockTestArrangeUrlUtils = Mockito.mockStatic(TestArrangeUrlUtils.class);
+    this.mockTestArrangeBodyUtils = Mockito.mockStatic(TestArrangeBodyUtils.class);
 
     this.dto = new TestRequestDto(TestRequestType.POST);
     var context = TestRequestContextBuilder.getInstance().withTestRequest(this.dto).build();
@@ -41,8 +40,8 @@ class TestArrangeResParamImplTest {
 
   @AfterEach
   void clean() {
-    this.mockTestArrangeRequestUrl.close();
-    this.mockTestArrangeRequestBody.close();
+    this.mockTestArrangeUrlUtils.close();
+    this.mockTestArrangeBodyUtils.close();
   }
 
   @Test
@@ -51,7 +50,7 @@ class TestArrangeResParamImplTest {
     this.impl.arrangeKeyValue(TEST_PARAM_KEY_1, TEST_PARAM_VALUE_1);
 
     // Assert
-    this.mockTestArrangeRequestUrl.verify(
+    this.mockTestArrangeUrlUtils.verify(
         () ->
             TestArrangeUrlUtils.addParam(this.dto.getUrl(), TEST_PARAM_KEY_1, TEST_PARAM_VALUE_1));
   }
@@ -62,7 +61,7 @@ class TestArrangeResParamImplTest {
     this.impl.arrangeKeyValue(TEST_PARAM_KEY_VALUE_MAP_1_2);
 
     // Assert
-    this.mockTestArrangeRequestUrl.verify(
+    this.mockTestArrangeUrlUtils.verify(
         () -> TestArrangeUrlUtils.addParam(this.dto.getUrl(), TEST_PARAM_KEY_VALUE_MAP_1_2));
   }
 

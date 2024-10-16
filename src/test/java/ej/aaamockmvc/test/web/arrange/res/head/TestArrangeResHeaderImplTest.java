@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.res.head;
+package ej.aaamockmvc.test.web.arrange.res.head;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestHeader.TEST_AUTH_KEY;
 import static ej.aaamockmvc.test.testdata.testutil.TestHeader.TEST_AUTH_VALUE;
@@ -11,9 +11,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_PDF;
 
 import ej.aaamockmvc.test.web.act.TestActPerformImpl;
+import ej.aaamockmvc.test.web.arrange.base.head.TestArrangeHeadUtils;
 import ej.aaamockmvc.test.web.arrange.res.body.TestArrangeResBodyImpl;
-import ej.aaamockmvc.test.web.arrange.res.head.TestArrangeResHeadImpl;
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeHeadUtils;
 import ej.aaamockmvc.test.web.request.context.TestRequestContextBuilder;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
 import ej.aaamockmvc.test.web.request.model.TestRequestType;
@@ -27,11 +26,11 @@ class TestArrangeResHeaderImplTest {
 
   private TestRequestDto dto;
   private TestArrangeResHeadImpl impl;
-  private MockedStatic<TestArrangeHeadUtils> mockTestArrangeRequestHead;
+  private MockedStatic<TestArrangeHeadUtils> mockTestArrangeHeadUtils;
 
   @BeforeEach
   void setUp() {
-    this.mockTestArrangeRequestHead = Mockito.mockStatic(TestArrangeHeadUtils.class);
+    this.mockTestArrangeHeadUtils = Mockito.mockStatic(TestArrangeHeadUtils.class);
 
     this.dto = new TestRequestDto(TestRequestType.POST);
     var context = TestRequestContextBuilder.getInstance().withTestRequest(this.dto).build();
@@ -41,7 +40,7 @@ class TestArrangeResHeaderImplTest {
 
   @AfterEach
   void clean() {
-    this.mockTestArrangeRequestHead.close();
+    this.mockTestArrangeHeadUtils.close();
   }
 
   @Test
@@ -50,7 +49,7 @@ class TestArrangeResHeaderImplTest {
     this.impl.arrangeAccept(APPLICATION_JSON);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () -> TestArrangeHeadUtils.setAccepts(this.dto.getHead(), APPLICATION_JSON));
   }
 
@@ -60,7 +59,7 @@ class TestArrangeResHeaderImplTest {
     this.impl.arrangeAccept(APPLICATION_JSON, APPLICATION_PDF);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () ->
             TestArrangeHeadUtils.setAccepts(this.dto.getHead(), APPLICATION_JSON, APPLICATION_PDF));
   }
@@ -71,7 +70,7 @@ class TestArrangeResHeaderImplTest {
     this.impl.arrangeAuth(TEST_AUTH_VALUE);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () -> TestArrangeHeadUtils.addKeyValue(this.dto.getHead(), TEST_AUTH_KEY, TEST_AUTH_VALUE));
   }
 
@@ -81,7 +80,7 @@ class TestArrangeResHeaderImplTest {
     this.impl.arrangeContentType(APPLICATION_JSON);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () -> TestArrangeHeadUtils.setContentTypes(this.dto.getHead(), APPLICATION_JSON));
   }
 
@@ -91,7 +90,7 @@ class TestArrangeResHeaderImplTest {
     this.impl.arrangeContentType(APPLICATION_JSON, APPLICATION_PDF);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () ->
             TestArrangeHeadUtils.setContentTypes(
                 this.dto.getHead(), APPLICATION_JSON, APPLICATION_PDF));
@@ -103,7 +102,7 @@ class TestArrangeResHeaderImplTest {
     this.impl.arrangeKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () ->
             TestArrangeHeadUtils.addKeyValue(
                 this.dto.getHead(), TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1));
@@ -115,7 +114,7 @@ class TestArrangeResHeaderImplTest {
     this.impl.arrangeKeyValue(TEST_HEADER_MAP_1_2);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () -> TestArrangeHeadUtils.addKeyValue(this.dto.getHead(), TEST_HEADER_MAP_1_2));
   }
 

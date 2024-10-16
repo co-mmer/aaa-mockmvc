@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.utils;
+package ej.aaamockmvc.test.web.arrange.base.body;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestBody.TEST_BODY_JSON;
 import static ej.aaamockmvc.test.testdata.testutil.TestFiles.TEST_FILE_1;
@@ -12,12 +12,11 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeRequestBody;
 import ej.aaamockmvc.test.web.request.model.TestRequestBodyDto;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class TestArrangeRequestBodyTest {
+class TestArrangeBodyUtilsTest {
 
   @Test
   void WHEN_addFile_THEN_getFiles_returned_expected_value() {
@@ -25,7 +24,7 @@ class TestArrangeRequestBodyTest {
     var testRequestBodyDto = new TestRequestBodyDto();
 
     // Act
-    TestArrangeRequestBody.addFile(testRequestBodyDto, TEST_FILE_1);
+    TestArrangeBodyUtils.addFile(testRequestBodyDto, TEST_FILE_1);
 
     // Assert
     assertThat(testRequestBodyDto.getFiles().size(), is(1));
@@ -39,7 +38,7 @@ class TestArrangeRequestBodyTest {
     testRequestBodyDto.setFiles(List.of(TEST_FILE_1));
 
     // Act
-    TestArrangeRequestBody.addFile(testRequestBodyDto, TEST_FILE_2);
+    TestArrangeBodyUtils.addFile(testRequestBodyDto, TEST_FILE_2);
 
     // Assert
     assertThat(testRequestBodyDto.getFiles().size(), is(2));
@@ -53,7 +52,7 @@ class TestArrangeRequestBodyTest {
     testRequestBodyDto.setFiles(List.of(TEST_FILE_1, TEST_FILE_2));
 
     // Act
-    TestArrangeRequestBody.addFile(testRequestBodyDto, TEST_FILE_3);
+    TestArrangeBodyUtils.addFile(testRequestBodyDto, TEST_FILE_3);
 
     // Assert
     assertThat(testRequestBodyDto.getFiles().size(), is(3));
@@ -66,7 +65,7 @@ class TestArrangeRequestBodyTest {
     var testRequestBodyDto = new TestRequestBodyDto();
 
     // Act
-    TestArrangeRequestBody.addFiles(testRequestBodyDto, TEST_FILE_1_2);
+    TestArrangeBodyUtils.addFiles(testRequestBodyDto, TEST_FILE_1_2);
 
     // Assert
     assertThat(testRequestBodyDto.getFiles().size(), is(2));
@@ -80,7 +79,7 @@ class TestArrangeRequestBodyTest {
     testRequestBodyDto.setFiles(TEST_FILE_1_2);
 
     // Act
-    TestArrangeRequestBody.addFiles(testRequestBodyDto, TEST_FILE_3_4);
+    TestArrangeBodyUtils.addFiles(testRequestBodyDto, TEST_FILE_3_4);
 
     // Assert
     assertThat(testRequestBodyDto.getFiles().size(), is(4));
@@ -95,7 +94,7 @@ class TestArrangeRequestBodyTest {
     var testRequestBodyDto = new TestRequestBodyDto();
 
     // Act
-    TestArrangeRequestBody.setContent(testRequestBodyDto, TEST_BODY_JSON, APPLICATION_JSON);
+    TestArrangeBodyUtils.setContent(testRequestBodyDto, TEST_BODY_JSON, APPLICATION_JSON);
 
     // Assert
     assertThat(testRequestBodyDto.getContent(), is(TEST_BODY_JSON));

@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.res.body;
+package ej.aaamockmvc.test.web.arrange.res.body;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestBody.TEST_BODY_JSON;
 import static ej.aaamockmvc.test.testdata.testutil.TestBody.TEST_BODY_XML;
@@ -10,8 +10,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 
 import ej.aaamockmvc.test.web.act.TestActPerformImpl;
-import ej.aaamockmvc.test.web.arrange.res.body.TestArrangeResBodyImpl;
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeRequestBody;
+import ej.aaamockmvc.test.web.arrange.base.body.TestArrangeBodyUtils;
 import ej.aaamockmvc.test.web.request.context.TestRequestContextBuilder;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
 import ej.aaamockmvc.test.web.request.model.TestRequestType;
@@ -25,11 +24,11 @@ class TestArrangeResBodyImplTest {
 
   private TestRequestDto dto;
   private TestArrangeResBodyImpl impl;
-  private MockedStatic<TestArrangeRequestBody> mockTestArrangeRequestBody;
+  private MockedStatic<TestArrangeBodyUtils> mockTestArrangeBodyUtils;
 
   @BeforeEach
   void setUp() {
-    this.mockTestArrangeRequestBody = Mockito.mockStatic(TestArrangeRequestBody.class);
+    this.mockTestArrangeBodyUtils = Mockito.mockStatic(TestArrangeBodyUtils.class);
 
     this.dto = new TestRequestDto(TestRequestType.POST);
     var context = TestRequestContextBuilder.getInstance().withTestRequest(this.dto).build();
@@ -39,7 +38,7 @@ class TestArrangeResBodyImplTest {
 
   @AfterEach
   void clean() {
-    this.mockTestArrangeRequestBody.close();
+    this.mockTestArrangeBodyUtils.close();
   }
 
   @Test
@@ -48,9 +47,9 @@ class TestArrangeResBodyImplTest {
     this.impl.arrangeJson(TEST_BODY_JSON);
 
     // Assert
-    this.mockTestArrangeRequestBody.verify(
+    this.mockTestArrangeBodyUtils.verify(
         () ->
-            TestArrangeRequestBody.setContent(
+            TestArrangeBodyUtils.setContent(
                 this.dto.getBody(), TEST_BODY_JSON, APPLICATION_JSON));
   }
 
@@ -60,9 +59,9 @@ class TestArrangeResBodyImplTest {
     this.impl.arrangeContent(TEST_BODY_XML, APPLICATION_XML);
 
     // Assert
-    this.mockTestArrangeRequestBody.verify(
+    this.mockTestArrangeBodyUtils.verify(
         () ->
-            TestArrangeRequestBody.setContent(this.dto.getBody(), TEST_BODY_XML, APPLICATION_XML));
+            TestArrangeBodyUtils.setContent(this.dto.getBody(), TEST_BODY_XML, APPLICATION_XML));
   }
 
   @Test
@@ -71,8 +70,8 @@ class TestArrangeResBodyImplTest {
     this.impl.arrangeFile(TEST_FILE_1);
 
     // Assert
-    this.mockTestArrangeRequestBody.verify(
-        () -> TestArrangeRequestBody.addFile(this.dto.getBody(), TEST_FILE_1));
+    this.mockTestArrangeBodyUtils.verify(
+        () -> TestArrangeBodyUtils.addFile(this.dto.getBody(), TEST_FILE_1));
   }
 
   @Test
@@ -81,8 +80,8 @@ class TestArrangeResBodyImplTest {
     this.impl.arrangeFiles(TEST_FILE_1_2);
 
     // Assert
-    this.mockTestArrangeRequestBody.verify(
-        () -> TestArrangeRequestBody.addFiles(this.dto.getBody(), TEST_FILE_1_2));
+    this.mockTestArrangeBodyUtils.verify(
+        () -> TestArrangeBodyUtils.addFiles(this.dto.getBody(), TEST_FILE_1_2));
   }
 
   @Test

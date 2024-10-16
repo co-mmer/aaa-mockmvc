@@ -1,7 +1,7 @@
 package ej.aaamockmvc.test.web.arrange.get.url;
 
 import ej.aaamockmvc.test.web.act.TestAct1Perform;
-import ej.aaamockmvc.test.web.arrange.base.TestArrangeBaseUrl;
+import ej.aaamockmvc.test.web.arrange.base.url.TestArrangeBaseUrl;
 import ej.aaamockmvc.test.web.arrange.get.head.TestArrange1GetHead;
 import ej.aaamockmvc.test.web.arrange.get.head.TestArrangeGetHeadImpl;
 import ej.aaamockmvc.test.web.arrange.get.param.TestArrange1GetParam;
@@ -50,16 +50,17 @@ public final class TestArrangeGetUrlImpl extends TestArrangeBaseUrl
    * Arranges the URL for the GET request with path variables.
    *
    * <p>This method allows the setting of a URL template with optional variables that will be
-   * substituted into the template. Supported types for the variables include {@code String}, {@code
-   * Character}, {@code Integer}, {@code Double}, {@code Float}, and {@code Boolean}.
+   * substituted into the template. Supported types for the variables include {@code String},
+   * {@code Character}, {@code Integer}, {@code Double}, {@code Float}, and {@code Boolean}.
    *
-   * @param url the URL template to be set for the request (must not be {@code null})
+   * @param url      the URL template to be set for the request (must not be {@code null})
    * @param variable the variables to be used in the URL. Supported types are: {@code String},
-   *     {@code Character}, {@code Integer}, {@code Double}, {@code Float}, and {@code Boolean}.
+   *                 {@code Character}, {@code Integer}, {@code Double}, {@code Float}, and
+   *                 {@code Boolean}.
    * @return the current instance for further configuration
-   * @throws NullPointerException if the {@code url} is {@code null}
+   * @throws NullPointerException     if the {@code url} is {@code null}
    * @throws IllegalArgumentException if there are not enough variables provided to fully expand the
-   *     {@code url} template
+   *                                  {@code url} template
    * @since 1.0.0
    */
   @Override

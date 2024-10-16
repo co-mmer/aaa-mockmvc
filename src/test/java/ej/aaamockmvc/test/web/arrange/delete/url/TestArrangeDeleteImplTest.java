@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.delete.url;
+package ej.aaamockmvc.test.web.arrange.delete.url;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestValue.TEST_PATH_VAR1;
 import static ej.aaamockmvc.test.testdata.testutil.TestValue.TEST_URI;
@@ -8,10 +8,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import ej.aaamockmvc.test.web.act.TestActPerformImpl;
+import ej.aaamockmvc.test.web.arrange.base.url.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.arrange.delete.head.TestArrangeDeleteHeadImpl;
 import ej.aaamockmvc.test.web.arrange.delete.param.TestArrangeDeleteParamImpl;
-import ej.aaamockmvc.test.web.arrange.delete.url.TestArrangeDeleteUrlImpl;
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.request.context.TestRequestContextBuilder;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
 import ej.aaamockmvc.test.web.request.model.TestRequestType;
@@ -26,11 +25,11 @@ class TestArrangeDeleteImplTest {
 
   private TestRequestDto requestDto;
   private TestArrangeDeleteUrlImpl impl;
-  private MockedStatic<TestArrangeUrlUtils> mockTestArrangeRequestUrl;
+  private MockedStatic<TestArrangeUrlUtils> mockTestArrangeUrlUtils;
 
   @BeforeEach
   void setUp() {
-    this.mockTestArrangeRequestUrl = Mockito.mockStatic(TestArrangeUrlUtils.class);
+    this.mockTestArrangeUrlUtils = Mockito.mockStatic(TestArrangeUrlUtils.class);
 
     this.requestDto = new TestRequestDto(TestRequestType.DELETE);
     var context = TestRequestContextBuilder.getInstance().withTestRequest(this.requestDto).build();
@@ -40,7 +39,7 @@ class TestArrangeDeleteImplTest {
 
   @AfterEach
   void clean() {
-    this.mockTestArrangeRequestUrl.close();
+    this.mockTestArrangeUrlUtils.close();
   }
 
   @Test
@@ -49,7 +48,7 @@ class TestArrangeDeleteImplTest {
     this.impl.arrangeUrl(TEST_URL);
 
     // Assert
-    this.mockTestArrangeRequestUrl.verify(
+    this.mockTestArrangeUrlUtils.verify(
         () -> TestArrangeUrlUtils.setUri(this.requestDto.getUrl(), TEST_URL));
   }
 
@@ -59,7 +58,7 @@ class TestArrangeDeleteImplTest {
     this.impl.arrangeUrl(TEST_PATH_VAR1, VAR_STRING_1);
 
     // Assert
-    this.mockTestArrangeRequestUrl.verify(
+    this.mockTestArrangeUrlUtils.verify(
         () -> TestArrangeUrlUtils.setUri(this.requestDto.getUrl(), TEST_PATH_VAR1, VAR_STRING_1));
   }
 
@@ -69,7 +68,7 @@ class TestArrangeDeleteImplTest {
     this.impl.arrangeUri(TEST_URI);
 
     // Assert
-    this.mockTestArrangeRequestUrl.verify(
+    this.mockTestArrangeUrlUtils.verify(
         () -> TestArrangeUrlUtils.setUri(this.requestDto.getUrl(), TEST_URI));
   }
 

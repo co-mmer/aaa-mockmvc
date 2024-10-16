@@ -1,7 +1,7 @@
 package ej.aaamockmvc.test.web.arrange.info.url;
 
 import ej.aaamockmvc.test.web.act.TestAct1Perform;
-import ej.aaamockmvc.test.web.arrange.base.TestArrangeBaseUrl;
+import ej.aaamockmvc.test.web.arrange.base.url.TestArrangeBaseUrl;
 import ej.aaamockmvc.test.web.arrange.info.head.TestArrange1InfoHead;
 import ej.aaamockmvc.test.web.arrange.info.head.TestArrangeInfoHeadImpl;
 import ej.aaamockmvc.test.web.arrange.info.param.TestArrange1InfoParam;
@@ -23,8 +23,8 @@ public final class TestArrangeInfoUrlImpl extends TestArrangeBaseUrl
     implements TestArrange1InfoUrl, TestArrange2InfoUrl {
 
   /**
-   * Initializes the arrangement for HEAD/OPTIONS request URLs using the provided {@code
-   * TestRequestContext}.
+   * Initializes the arrangement for HEAD/OPTIONS request URLs using the provided
+   * {@code TestRequestContext}.
    *
    * @param context the context that manages the state of the request (must not be {@code null})
    * @throws NullPointerException if the {@code context} is {@code null}
@@ -52,16 +52,17 @@ public final class TestArrangeInfoUrlImpl extends TestArrangeBaseUrl
    * Arranges the URL for the HEAD/OPTIONS request with path variables.
    *
    * <p>This method allows the setting of a URL template with optional variables that will be
-   * substituted into the template. Supported types for the variables include {@code String}, {@code
-   * Character}, {@code Integer}, {@code Double}, {@code Float}, and {@code Boolean}.
+   * substituted into the template. Supported types for the variables include {@code String},
+   * {@code Character}, {@code Integer}, {@code Double}, {@code Float}, and {@code Boolean}.
    *
-   * @param url the URL template to be set for the request (must not be {@code null})
+   * @param url      the URL template to be set for the request (must not be {@code null})
    * @param variable the variables to be used in the URL. Supported types are: {@code String},
-   *     {@code Character}, {@code Integer}, {@code Double}, {@code Float}, and {@code Boolean}.
+   *                 {@code Character}, {@code Integer}, {@code Double}, {@code Float}, and
+   *                 {@code Boolean}.
    * @return the current instance for further configuration
-   * @throws NullPointerException if the {@code url} is {@code null}
+   * @throws NullPointerException     if the {@code url} is {@code null}
    * @throws IllegalArgumentException if there are not enough variables provided to fully expand the
-   *     {@code url} template
+   *                                  {@code url} template
    * @since 1.0.0
    */
   @Override

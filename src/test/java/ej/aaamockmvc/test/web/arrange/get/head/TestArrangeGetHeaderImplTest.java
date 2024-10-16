@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.get.head;
+package ej.aaamockmvc.test.web.arrange.get.head;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestHeader.TEST_AUTH_KEY;
 import static ej.aaamockmvc.test.testdata.testutil.TestHeader.TEST_AUTH_VALUE;
@@ -10,8 +10,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_PDF;
 
 import ej.aaamockmvc.test.web.act.TestActPerformImpl;
-import ej.aaamockmvc.test.web.arrange.get.head.TestArrangeGetHeadImpl;
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeHeadUtils;
+import ej.aaamockmvc.test.web.arrange.base.head.TestArrangeHeadUtils;
 import ej.aaamockmvc.test.web.request.context.TestRequestContextBuilder;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
 import ej.aaamockmvc.test.web.request.model.TestRequestType;
@@ -26,11 +25,11 @@ class TestArrangeGetHeaderImplTest {
 
   private TestRequestDto dto;
   private TestArrangeGetHeadImpl impl;
-  private MockedStatic<TestArrangeHeadUtils> mockTestArrangeRequestHead;
+  private MockedStatic<TestArrangeHeadUtils> mockTestArrangeHeadUtils;
 
   @BeforeEach
   void setUp() {
-    this.mockTestArrangeRequestHead = Mockito.mockStatic(TestArrangeHeadUtils.class);
+    this.mockTestArrangeHeadUtils = Mockito.mockStatic(TestArrangeHeadUtils.class);
 
     this.dto = new TestRequestDto(TestRequestType.GET);
     var context = TestRequestContextBuilder.getInstance().withTestRequest(this.dto).build();
@@ -40,7 +39,7 @@ class TestArrangeGetHeaderImplTest {
 
   @AfterEach
   void clean() {
-    this.mockTestArrangeRequestHead.close();
+    this.mockTestArrangeHeadUtils.close();
   }
 
   @Test
@@ -49,7 +48,7 @@ class TestArrangeGetHeaderImplTest {
     this.impl.arrangeAccept(APPLICATION_JSON);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () -> TestArrangeHeadUtils.setAccepts(this.dto.getHead(), APPLICATION_JSON));
   }
 
@@ -59,7 +58,7 @@ class TestArrangeGetHeaderImplTest {
     this.impl.arrangeAccept(APPLICATION_JSON, APPLICATION_PDF);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () ->
             TestArrangeHeadUtils.setAccepts(this.dto.getHead(), APPLICATION_JSON, APPLICATION_PDF));
   }
@@ -70,7 +69,7 @@ class TestArrangeGetHeaderImplTest {
     this.impl.arrangeAuth(TEST_AUTH_VALUE);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () -> TestArrangeHeadUtils.addKeyValue(this.dto.getHead(), TEST_AUTH_KEY, TEST_AUTH_VALUE));
   }
 
@@ -80,7 +79,7 @@ class TestArrangeGetHeaderImplTest {
     this.impl.arrangeContentType(APPLICATION_JSON);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () -> TestArrangeHeadUtils.setContentTypes(this.dto.getHead(), APPLICATION_JSON));
   }
 
@@ -90,7 +89,7 @@ class TestArrangeGetHeaderImplTest {
     this.impl.arrangeContentType(APPLICATION_JSON, APPLICATION_PDF);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () ->
             TestArrangeHeadUtils.setContentTypes(
                 this.dto.getHead(), APPLICATION_JSON, APPLICATION_PDF));
@@ -102,7 +101,7 @@ class TestArrangeGetHeaderImplTest {
     this.impl.arrangeKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () ->
             TestArrangeHeadUtils.addKeyValue(
                 this.dto.getHead(), TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1));
@@ -114,7 +113,7 @@ class TestArrangeGetHeaderImplTest {
     this.impl.arrangeKeyValue(TEST_HEADER_MAP_1_2);
 
     // Assert
-    this.mockTestArrangeRequestHead.verify(
+    this.mockTestArrangeHeadUtils.verify(
         () -> TestArrangeHeadUtils.addKeyValue(this.dto.getHead(), TEST_HEADER_MAP_1_2));
   }
 

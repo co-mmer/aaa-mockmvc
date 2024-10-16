@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.utils;
+package ej.aaamockmvc.test.web.arrange.base.head;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestHeader.TEST_HEADER_KEY_0;
 import static ej.aaamockmvc.test.testdata.testutil.TestHeader.TEST_HEADER_KEY_1;
@@ -13,7 +13,6 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeHeadUtils;
 import ej.aaamockmvc.test.web.request.model.TestRequestHeadDto;
 import org.junit.jupiter.api.Test;
 
@@ -109,7 +108,7 @@ class TestArrangeHeadUtilsTest {
 
   @Test
   void
-      GIVEN_addKeyValue_key_0_WHEN_addKeyValue_with_map_key_1_2_THEN_getKeyValue_returned_expected_values() {
+  GIVEN_addKeyValue_key_0_WHEN_addKeyValue_with_map_key_1_2_THEN_getKeyValue_returned_expected_values() {
     // Arrange
     var testRequestHeadDto = new TestRequestHeadDto();
     TestArrangeHeadUtils.addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_0, TEST_HEADER_VALUE_0);

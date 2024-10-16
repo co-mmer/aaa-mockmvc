@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.arrange.get.param;
+package ej.aaamockmvc.test.web.arrange.get.param;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestParameter.TEST_PARAM_KEY_1;
 import static ej.aaamockmvc.test.testdata.testutil.TestParameter.TEST_PARAM_KEY_VALUE_MAP_1_2;
@@ -7,9 +7,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import ej.aaamockmvc.test.web.act.TestActPerformImpl;
+import ej.aaamockmvc.test.web.arrange.base.url.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.arrange.get.head.TestArrangeGetHeadImpl;
-import ej.aaamockmvc.test.web.arrange.get.param.TestArrangeGetParamImpl;
-import ej.aaamockmvc.test.web.arrange.utils.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.request.context.TestRequestContextBuilder;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
 import ej.aaamockmvc.test.web.request.model.TestRequestType;
@@ -24,11 +23,11 @@ class TestArrangeGetParamImplTest {
 
   private TestRequestDto requestDto;
   private TestArrangeGetParamImpl impl;
-  private MockedStatic<TestArrangeUrlUtils> mockTestArrangeRequestUrl;
+  private MockedStatic<TestArrangeUrlUtils> mockTestArrangeUrlUtils;
 
   @BeforeEach
   void setUp() {
-    this.mockTestArrangeRequestUrl = Mockito.mockStatic(TestArrangeUrlUtils.class);
+    this.mockTestArrangeUrlUtils = Mockito.mockStatic(TestArrangeUrlUtils.class);
 
     this.requestDto = new TestRequestDto(TestRequestType.GET);
     var context = TestRequestContextBuilder.getInstance().withTestRequest(this.requestDto).build();
@@ -38,7 +37,7 @@ class TestArrangeGetParamImplTest {
 
   @AfterEach
   void clean() {
-    this.mockTestArrangeRequestUrl.close();
+    this.mockTestArrangeUrlUtils.close();
   }
 
   @Test
@@ -47,7 +46,7 @@ class TestArrangeGetParamImplTest {
     this.impl.arrangeKeyValue(TEST_PARAM_KEY_1, TEST_PARAM_VALUE_1);
 
     // Assert
-    this.mockTestArrangeRequestUrl.verify(
+    this.mockTestArrangeUrlUtils.verify(
         () ->
             TestArrangeUrlUtils.addParam(
                 this.requestDto.getUrl(), TEST_PARAM_KEY_1, TEST_PARAM_VALUE_1));
@@ -59,7 +58,7 @@ class TestArrangeGetParamImplTest {
     this.impl.arrangeKeyValue(TEST_PARAM_KEY_VALUE_MAP_1_2);
 
     // Assert
-    this.mockTestArrangeRequestUrl.verify(
+    this.mockTestArrangeUrlUtils.verify(
         () -> TestArrangeUrlUtils.addParam(this.requestDto.getUrl(), TEST_PARAM_KEY_VALUE_MAP_1_2));
   }
 

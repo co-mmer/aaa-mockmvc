@@ -1,7 +1,7 @@
 package ej.aaamockmvc.test.web.arrange.info.param;
 
 import ej.aaamockmvc.test.web.act.TestAct1Perform;
-import ej.aaamockmvc.test.web.arrange.base.TestArrangeBaseParam;
+import ej.aaamockmvc.test.web.arrange.base.url.TestArrangeBaseParam;
 import ej.aaamockmvc.test.web.arrange.info.head.TestArrange1InfoHead;
 import ej.aaamockmvc.test.web.arrange.info.head.TestArrangeInfoHeadImpl;
 import ej.aaamockmvc.test.web.request.context.TestRequestContext;
@@ -21,8 +21,8 @@ public final class TestArrangeInfoParamImpl extends TestArrangeBaseParam
     implements TestArrange1InfoParam, TestArrange2InfoParam, TestArrange3InfoParam {
 
   /**
-   * Initializes the arrangement for HEAD/OPTIONS request parameters using the provided {@code
-   * TestRequestContext}.
+   * Initializes the arrangement for HEAD/OPTIONS request parameters using the provided
+   * {@code TestRequestContext}.
    *
    * @param context the context that manages the state of the request (must not be {@code null})
    * @throws NullPointerException if the {@code context} is {@code null}
@@ -35,7 +35,7 @@ public final class TestArrangeInfoParamImpl extends TestArrangeBaseParam
   /**
    * Arranges a single key-value pair for the HEAD/OPTIONS request parameters.
    *
-   * @param key the parameter name
+   * @param key   the parameter name
    * @param value the parameter value
    * @return the current instance for further configuration
    * @since 1.0.0
@@ -49,8 +49,8 @@ public final class TestArrangeInfoParamImpl extends TestArrangeBaseParam
   /**
    * Arranges multiple key-value pairs for the HEAD/OPTIONS request parameters.
    *
-   * @param keyValue a map of parameter names and their corresponding values (must not be {@code
-   *     null})
+   * @param keyValue a map of parameter names and their corresponding values (must not be
+   *                 {@code null})
    * @return the current instance for further configuration
    * @throws NullPointerException if the {@code keyValue} is {@code null}
    * @since 1.0.0
