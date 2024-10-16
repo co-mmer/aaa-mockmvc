@@ -28,7 +28,7 @@ public interface TestAssertContent {
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
-  TestAssertContent assertContentStringIsNotEmpty();
+  TestAssertContent assertContentNotEmpty();
 
   /**
    * Asserts that the string content of the HTTP response is empty.
@@ -39,7 +39,7 @@ public interface TestAssertContent {
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
-  TestAssertContent assertContentStringIsEmpty();
+  TestAssertContent assertContentEmpty();
 
   /**
    * Asserts that the string content of the HTTP response matches the expected string.

@@ -108,7 +108,7 @@ class TestArrangeHeadUtilsTest {
 
   @Test
   void
-  GIVEN_addKeyValue_key_0_WHEN_addKeyValue_with_map_key_1_2_THEN_getKeyValue_returned_expected_values() {
+      GIVEN_addKeyValue_key_0_WHEN_addKeyValue_with_map_key_1_2_THEN_getKeyValue_returned_expected_values() {
     // Arrange
     var testRequestHeadDto = new TestRequestHeadDto();
     TestArrangeHeadUtils.addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_0, TEST_HEADER_VALUE_0);

@@ -70,7 +70,7 @@ class TestArrangeUrlUtilsTest {
 
   @Test
   void
-  GIVEN_path_var2_and_vars_2_unsupported_and_2_supported_WHEN_setUri_THEN_getUri_returned_expected_value() {
+      GIVEN_path_var2_and_vars_2_unsupported_and_2_supported_WHEN_setUri_THEN_getUri_returned_expected_value() {
     // Arrange
     var urlDto = new TestRequestUrlDto();
 
@@ -146,7 +146,7 @@ class TestArrangeUrlUtilsTest {
 
   @Test
   void
-  GIVEN_addParam_key_0_WHEN_addParam_with_map_key_1_2_THEN_getParam_returned_expected_values() {
+      GIVEN_addParam_key_0_WHEN_addParam_with_map_key_1_2_THEN_getParam_returned_expected_values() {
     // Arrange
     var testRequestUrlDto = new TestRequestUrlDto();
     TestArrangeUrlUtils.addParam(testRequestUrlDto, TEST_PARAM_KEY_0, TEST_PARAM_VALUE_0);

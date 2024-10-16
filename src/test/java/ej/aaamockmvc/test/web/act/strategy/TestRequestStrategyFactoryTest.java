@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.act.strategy;
+package ej.aaamockmvc.test.web.act.strategy;
 
 import static ej.aaamockmvc.test.web.request.model.TestRequestType.DELETE;
 import static ej.aaamockmvc.test.web.request.model.TestRequestType.GET;
@@ -10,15 +10,6 @@ import static ej.aaamockmvc.test.web.request.model.TestRequestType.PUT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import ej.aaamockmvc.test.web.act.strategy.TestRequestDeleteStrategy;
-import ej.aaamockmvc.test.web.act.strategy.TestRequestGetStrategy;
-import ej.aaamockmvc.test.web.act.strategy.TestRequestHeadStrategy;
-import ej.aaamockmvc.test.web.act.strategy.TestRequestOptionsStrategy;
-import ej.aaamockmvc.test.web.act.strategy.TestRequestPatchStrategy;
-import ej.aaamockmvc.test.web.act.strategy.TestRequestPostStrategy;
-import ej.aaamockmvc.test.web.act.strategy.TestRequestPutStrategy;
-import ej.aaamockmvc.test.web.act.strategy.TestRequestStrategy;
-import ej.aaamockmvc.test.web.act.strategy.TestRequestStrategyFactory;
 import ej.aaamockmvc.test.web.request.model.TestRequestType;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;

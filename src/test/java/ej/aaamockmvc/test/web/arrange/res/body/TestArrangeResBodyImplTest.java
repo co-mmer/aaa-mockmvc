@@ -49,8 +49,7 @@ class TestArrangeResBodyImplTest {
     // Assert
     this.mockTestArrangeBodyUtils.verify(
         () ->
-            TestArrangeBodyUtils.setContent(
-                this.dto.getBody(), TEST_BODY_JSON, APPLICATION_JSON));
+            TestArrangeBodyUtils.setContent(this.dto.getBody(), TEST_BODY_JSON, APPLICATION_JSON));
   }
 
   @Test
@@ -60,8 +59,7 @@ class TestArrangeResBodyImplTest {
 
     // Assert
     this.mockTestArrangeBodyUtils.verify(
-        () ->
-            TestArrangeBodyUtils.setContent(this.dto.getBody(), TEST_BODY_XML, APPLICATION_XML));
+        () -> TestArrangeBodyUtils.setContent(this.dto.getBody(), TEST_BODY_XML, APPLICATION_XML));
   }
 
   @Test

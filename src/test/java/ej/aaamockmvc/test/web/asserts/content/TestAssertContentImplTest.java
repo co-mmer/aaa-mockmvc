@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.asserts.content;
+package ej.aaamockmvc.test.web.asserts.content;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsSByteException;
 import static ej.aaamockmvc.test.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsStringException;
@@ -27,8 +27,6 @@ import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ej.aaamockmvc.test.testdata.testutil.TestObjectDto;
-import ej.aaamockmvc.test.web.asserts.content.TestAssertContent;
-import ej.aaamockmvc.test.web.asserts.content.TestAssertContentImpl;
 import ej.aaamockmvc.test.web.asserts.head.TestAssertHeadImpl;
 import ej.aaamockmvc.test.web.asserts.mapper.TestAssertResultMapper;
 import ej.aaamockmvc.test.web.asserts.mapper.exception.TestAssertResultMapperException;
@@ -61,63 +59,62 @@ class TestAssertContentImplTest {
   }
 
   @Test
-  void GIVEN_expected_WHEN_assertContentStringIsNotEmpty_THEN_assert_true() throws Exception {
+  void GIVEN_expected_WHEN_assertContentNotEmpty_THEN_assert_true() throws Exception {
     // Arrange
     this.response.getWriter().write(EXPECTED_CONTENT);
 
     // Act & Assert
-    this.testAssert.assertContentStringIsNotEmpty();
+    this.testAssert.assertContentNotEmpty();
   }
 
   @Test
-  void GIVEN_unexpected_WHEN_assertContentStringIsNotEmpty_THEN_assert_false() throws Exception {
+  void GIVEN_unexpected_WHEN_assertContentNotEmpty_THEN_assert_false() throws Exception {
     // Arrange
     this.response.getWriter().write(Strings.EMPTY);
 
     // Act & Assert
-    assertThrows(AssertionError.class, this.testAssert::assertContentStringIsNotEmpty);
+    assertThrows(AssertionError.class, this.testAssert::assertContentNotEmpty);
   }
 
   @Test
-  void GIVEN_exception_WHEN_assertContentStringIsNotEmpty_THEN_assert_false() throws Exception {
+  void GIVEN_exception_WHEN_assertContentNotEmpty_THEN_assert_false() throws Exception {
     // Arrange
     var mockMvcResult = mockGetContentAsStringException();
     when(this.actions.andReturn()).thenReturn(mockMvcResult);
     var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
-    assertThrows(AssertionError.class, testAssertContent::assertContentStringIsNotEmpty);
+    assertThrows(AssertionError.class, testAssertContent::assertContentNotEmpty);
   }
 
   @Test
-  void GIVEN_expected_WHEN_assertContentStringIsEmpty_THEN_assert_true() throws Exception {
+  void GIVEN_expected_WHEN_assertContentEmpty_THEN_assert_true() throws Exception {
     // Arrange
     this.response.getWriter().write(Strings.EMPTY);
 
     // Act & Assert
-    this.testAssert.assertContentStringIsEmpty();
+    this.testAssert.assertContentEmpty();
   }
 
   @Test
-  void GIVEN_unexpected_WHEN_assertContentStringIsEmpty_THEN_return_assert_false()
-      throws Exception {
+  void GIVEN_unexpected_WHEN_assertContentEmpty_THEN_return_assert_false() throws Exception {
 
     // Arrange
     this.response.getWriter().write(ACTUAL_CONTENT);
 
     // Act & Assert
-    assertThrows(AssertionError.class, this.testAssert::assertContentStringIsEmpty);
+    assertThrows(AssertionError.class, this.testAssert::assertContentEmpty);
   }
 
   @Test
-  void GIVEN_exception_WHEN_assertContentStringIsEmpty_THEN_assert_false() throws Exception {
+  void GIVEN_exception_WHEN_assertContentEmpty_THEN_assert_false() throws Exception {
     // Arrange
     var mockMvcResult = mockGetContentAsStringException();
     when(this.actions.andReturn()).thenReturn(mockMvcResult);
     var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
-    assertThrows(AssertionError.class, testAssertContent::assertContentStringIsEmpty);
+    assertThrows(AssertionError.class, testAssertContent::assertContentEmpty);
   }
 
   @Test

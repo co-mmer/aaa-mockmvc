@@ -30,7 +30,7 @@ public abstract class TestArrangeBaseParam extends TestArrangeBaseAbstract {
   /**
    * Adds a single key-value pair as a query parameter to the request.
    *
-   * @param key   the parameter name
+   * @param key the parameter name
    * @param value the parameter value
    * @since 1.0.0
    */
@@ -41,8 +41,8 @@ public abstract class TestArrangeBaseParam extends TestArrangeBaseAbstract {
   /**
    * Adds multiple key-value pairs as query parameters to the request.
    *
-   * @param keyValue a map of parameter names and their corresponding values (must not be
-   *                 {@code null})
+   * @param keyValue a map of parameter names and their corresponding values (must not be {@code
+   *     null})
    * @throws NullPointerException if the {@code keyValue} is {@code null}
    * @since 1.0.0
    */

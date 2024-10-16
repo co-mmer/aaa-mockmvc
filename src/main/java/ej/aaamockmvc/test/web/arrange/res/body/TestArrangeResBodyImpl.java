@@ -14,8 +14,8 @@ import org.springframework.mock.web.MockMultipartFile;
 /**
  * This class is responsible for arrangement of the request body for PATCH/POST/PUT requests.
  *
- * <p>Provides methods to configure raw content, JSON content, and files as the body of the
- * request, as well as the ability to execute the request.
+ * <p>Provides methods to configure raw content, JSON content, and files as the body of the request,
+ * as well as the ability to execute the request.
  *
  * @since 1.0.0
  */
@@ -23,8 +23,8 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
     implements TestArrange1ResBody, TestArrange2ResBody, TestArrange3ResBody {
 
   /**
-   * Initializes the arrangement for a PATCH/POST/PUT request using the provided
-   * {@code TestRequestContext}.
+   * Initializes the arrangement for a PATCH/POST/PUT request using the provided {@code
+   * TestRequestContext}.
    *
    * @param context the context that manages the state of the request (must not be {@code null})
    * @throws NullPointerException if the {@code context} is {@code null}
@@ -37,7 +37,7 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
   /**
    * Arranges raw content as the body for the PATCH/POST/PUT request with a specific media type.
    *
-   * @param raw  the raw content to be set as the request body
+   * @param raw the raw content to be set as the request body
    * @param type the media type of the content (must not be {@code null})
    * @return the current instance for further configuration
    * @throws NullPointerException if the {@code raw} is {@code null}

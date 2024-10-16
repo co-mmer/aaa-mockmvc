@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import lombok.NonNull;
-import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
@@ -64,10 +63,9 @@ public final class TestAssertContentImpl implements TestAssertContent {
    * @since 1.0.0
    */
   @Override
-  public TestAssertContent assertContentStringIsNotEmpty() {
+  public TestAssertContent assertContentNotEmpty() {
     try {
-      var content = this.response.getContentAsString();
-      assertThat(content, is(not(Strings.EMPTY)));
+      assertThat(this.response.getContentAsString().isEmpty(), is(false));
     } catch (Exception e) {
       Assertions.fail(e);
     }
@@ -84,10 +82,9 @@ public final class TestAssertContentImpl implements TestAssertContent {
    * @since 1.0.0
    */
   @Override
-  public TestAssertContent assertContentStringIsEmpty() {
+  public TestAssertContent assertContentEmpty() {
     try {
-      var content = this.response.getContentAsString();
-      assertThat(content, is(Strings.EMPTY));
+      assertThat(this.response.getContentAsString().isEmpty(), is(true));
     } catch (Exception e) {
       Assertions.fail(e);
     }

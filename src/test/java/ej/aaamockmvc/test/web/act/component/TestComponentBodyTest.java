@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.act.component;
+package ej.aaamockmvc.test.web.act.component;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestBody.TEST_BODY_JSON;
 import static ej.aaamockmvc.test.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_CONTENT_NULL;

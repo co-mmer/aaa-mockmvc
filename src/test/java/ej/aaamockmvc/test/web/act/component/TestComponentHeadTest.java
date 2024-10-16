@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.act.component;
+package ej.aaamockmvc.test.web.act.component;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_1;
 import static ej.aaamockmvc.test.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_2;

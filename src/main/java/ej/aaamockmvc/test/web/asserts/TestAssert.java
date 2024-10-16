@@ -9,28 +9,9 @@ import org.springframework.test.web.servlet.ResultMatcher;
 /**
  * This interface defines a contract for performing various assertions on HTTP response results.
  *
- * <p>The {@code TestAssert} interface provides methods to validate the status and content of HTTP
- * responses, including assertions for status codes, string content, and byte array content.
- *
  * @since 1.0.0
  */
 public interface TestAssert {
-
-  /**
-   * Asserts that the HTTP response content is not empty.
-   *
-   * @return the current instance of {@code TestAssert} for method chaining
-   * @since 1.0.0
-   */
-  TestAssert assertNotEmpty();
-
-  /**
-   * Asserts that the HTTP response content is empty.
-   *
-   * @return the current instance of {@code TestAssert} for method chaining
-   * @since 1.0.0
-   */
-  TestAssert assertEmpty();
 
   /**
    * Asserts that the HTTP response status matches the given {@code HttpStatus}.

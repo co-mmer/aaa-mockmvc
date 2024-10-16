@@ -1,9 +1,8 @@
-package ej.aaamockmvc.test.request.act.strategy.builder;
+package ej.aaamockmvc.test.web.act.strategy.builder;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import ej.aaamockmvc.test.web.act.strategy.builder.TestRequestBuilderUtils;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;

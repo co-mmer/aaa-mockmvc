@@ -1,11 +1,10 @@
-package ej.aaamockmvc.test.request.act.strategy;
+package ej.aaamockmvc.test.web.act.strategy;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO;
 import static ej.aaamockmvc.test.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO_WITH_FILE_1;
 import static ej.aaamockmvc.test.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO_WITH_FILE_EMPTY;
 
 import ej.aaamockmvc.test.testdata.testsetup.TestRequestStrategySetup;
-import ej.aaamockmvc.test.web.act.strategy.TestRequestPatchStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

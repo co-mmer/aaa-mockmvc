@@ -47,38 +47,6 @@ public final class TestAssertImpl implements TestAssert {
   }
 
   /**
-   * Asserts that the HTTP response content is not empty.
-   *
-   * @return the current instance of {@code TestAssert} for method chaining
-   * @since 1.0.0
-   */
-  @Override
-  public TestAssert assertNotEmpty() {
-    try {
-      assertThat(this.response.getContentAsString().isEmpty(), is(false));
-    } catch (Exception e) {
-      Assertions.fail(e);
-    }
-    return this;
-  }
-
-  /**
-   * Asserts that the HTTP response content is empty.
-   *
-   * @return the current instance of {@code TestAssert} for method chaining
-   * @since 1.0.0
-   */
-  @Override
-  public TestAssert assertEmpty() {
-    try {
-      assertThat(this.response.getContentAsString().isEmpty(), is(true));
-    } catch (Exception e) {
-      Assertions.fail(e);
-    }
-    return this;
-  }
-
-  /**
    * Asserts that the status of the HTTP response matches the given {@code HttpStatus}.
    *
    * @param status the expected {@code HttpStatus} of the response (must not be {@code null})

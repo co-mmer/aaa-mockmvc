@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.asserts.mapper;
+package ej.aaamockmvc.test.web.asserts.mapper;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestObject.TEST_OBJECTS_1_DTO;
 import static ej.aaamockmvc.test.testdata.testutil.TestObject.TEST_OBJECTS_LIST_1_JSON;

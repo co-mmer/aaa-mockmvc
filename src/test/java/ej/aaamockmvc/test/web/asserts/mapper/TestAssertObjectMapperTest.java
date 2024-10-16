@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.asserts.mapper;
+package ej.aaamockmvc.test.web.asserts.mapper;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestObject.TEST_OBJECT_1_JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ej.aaamockmvc.test.testdata.testutil.TestObjectDeserializer;
 import ej.aaamockmvc.test.testdata.testutil.TestObjectDto;
-import ej.aaamockmvc.test.web.asserts.mapper.TestAssertObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

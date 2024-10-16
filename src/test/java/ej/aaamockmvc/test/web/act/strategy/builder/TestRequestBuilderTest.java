@@ -1,10 +1,8 @@
-package ej.aaamockmvc.test.request.act.strategy.builder;
+package ej.aaamockmvc.test.web.act.strategy.builder;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestValue.TEST_URI;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import ej.aaamockmvc.test.web.act.strategy.builder.TestRequestBuilder;
-import ej.aaamockmvc.test.web.act.strategy.builder.TestRequestBuilderUtils;
 import ej.aaamockmvc.test.web.request.model.TestRequestType;
 import jakarta.servlet.ServletContext;
 import org.hamcrest.Matchers;

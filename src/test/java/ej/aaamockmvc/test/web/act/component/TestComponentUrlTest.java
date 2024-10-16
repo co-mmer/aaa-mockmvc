@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.act.component;
+package ej.aaamockmvc.test.web.act.component;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestDataRequestUrlDto.TEST_REQUEST_URL_PARAM;
 import static ej.aaamockmvc.test.testdata.testutil.TestDataRequestUrlDto.TEST_REQUEST_URL_PARAM_EMPTY;

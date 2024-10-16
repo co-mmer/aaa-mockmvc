@@ -1,4 +1,4 @@
-package ej.aaamockmvc.test.request.asserts.head;
+package ej.aaamockmvc.test.web.asserts.head;
 
 import static ej.aaamockmvc.test.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
 import static ej.aaamockmvc.test.testdata.testutil.TestValue.TEST_HEAD_KEY_2;
@@ -8,8 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ej.aaamockmvc.test.web.asserts.head.TestAssertHead;
-import ej.aaamockmvc.test.web.asserts.head.TestAssertHeadImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletResponse;

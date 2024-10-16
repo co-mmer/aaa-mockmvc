@@ -191,7 +191,7 @@ public class AAAMockMvcConfig {
 
 There are two options for utilizing the AAAMockMvc in test classes:
 
-####                 
+####                        
 
 <details>
 <summary>Option A: AAAMockMvc</summary>
@@ -268,7 +268,7 @@ parameter. The following steps are executed:
 4. **Action**: The request is executed with the `act()` method, followed by `actPerform()` to send
    the request.
 5. **Assertions**: Several assertions are made to verify the response:
-    - The response is asserted to be non-empty using `assertNotEmpty()`.
+    - The response is asserted to be non-empty using `assertContentNotEmpty()`.
     - The HTTP status of the response is asserted to be `HttpStatus.OK`, ensuring the request was
       successful.
     - The response content size is asserted to match the expected number of items
@@ -292,9 +292,9 @@ void WHEN_call_endpoint_THEN_return_expected_list_dto() throws Exception {
       .act()
       .actPerform()
       .asserts()
-      .assertNotEmpty()
       .assertStatus(HttpStatus.OK)
       .assertContent()
+      .assertContentNotEmpty()
       .assertContentSize(2)
       .assertContentEquals(DemoDto.class, EXPECTED_LIST);
 }
@@ -605,29 +605,6 @@ data to the server.
 ### Examples for the Assert Section
 
 <details>
-<summary>Assert Empty</summary>
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertNotEmpty()
-```
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertEmpty()
-```
-
-</details> 
-
-<details>
 <summary>Assert Status</summary>
 
 ```
@@ -652,6 +629,36 @@ data to the server.
 
 <details>
 <summary>Assert Content</summary>
+
+In this example, the **`assertContentNotEmpty`** method is used to assert that the response content
+is not empty.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentNotEmpty()
+```
+
+---
+
+In this example, the **`assertContentEmpty`** method is used to assert that the response content
+is empty.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEmpty()
+```
+
+---
 
 In this example, the **`assertContentEquals`** method is used to assert that the response content
 matches an expected byte array.

@@ -41,14 +41,14 @@ public abstract class TestArrangeBaseUrl extends TestArrangeBaseAbstract {
    * Sets the URI for the request using a URL template and optional path variables.
    *
    * <p>This method allows for the inclusion of path variables in the URL, which are substituted
-   * into the URL at runtime. The supported types for path variables include {@code String},
-   * {@code Character}, {@code Integer}, {@code Double}, {@code Float}, and {@code Boolean}.
+   * into the URL at runtime. The supported types for path variables include {@code String}, {@code
+   * Character}, {@code Integer}, {@code Double}, {@code Float}, and {@code Boolean}.
    *
-   * @param url      the URL template to be set for the request (must not be {@code null})
+   * @param url the URL template to be set for the request (must not be {@code null})
    * @param variable the optional path variables to be included in the URL
-   * @throws NullPointerException     if the {@code url} is {@code null}
+   * @throws NullPointerException if the {@code url} is {@code null}
    * @throws IllegalArgumentException if there are not enough variables provided to fully expand the
-   *                                  {@code url} template
+   *     {@code url} template
    * @since 1.0.0
    */
   protected void setUri(@NonNull String url, Object... variable) {

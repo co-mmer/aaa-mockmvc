@@ -9,9 +9,9 @@ import org.springframework.http.MediaType;
 /**
  * Abstract base class for arranging headers in a GET request.
  *
- * <p>Provides methods to configure common HTTP headers such as "Accept", "Content-Type", and
- * custom key-value pairs. This class is extended by concrete classes to arrange specific headers
- * for requests.
+ * <p>Provides methods to configure common HTTP headers such as "Accept", "Content-Type", and custom
+ * key-value pairs. This class is extended by concrete classes to arrange specific headers for
+ * requests.
  *
  * @since 1.0.0
  */
@@ -72,7 +72,7 @@ public abstract class TestArrangeBaseHead extends TestArrangeBaseAbstract {
   /**
    * Adds a custom key-value pair to the request headers.
    *
-   * @param key   the name of the header
+   * @param key the name of the header
    * @param value the value of the header
    * @since 1.0.0
    */
@@ -84,7 +84,7 @@ public abstract class TestArrangeBaseHead extends TestArrangeBaseAbstract {
    * Adds multiple custom key-value pairs to the request headers.
    *
    * @param keyValue a map containing header names and their corresponding values (must not be
-   *                 {@code null})
+   *     {@code null})
    * @throws NullPointerException if the {@code keyValue} is {@code null}
    * @since 1.0.0
    */

@@ -24,19 +24,19 @@ public final class TestArrangeUrlUtils {
    * Sets the URI for the specified destination DTO by mapping the given path with the provided
    * variable arguments.
    *
-   * <p>This method filters the provided variable arguments to ensure only supported types are
-   * used, then maps the specified path to a URI using those variables. Finally, it sets the
-   * resulting URI to the destination DTO.
+   * <p>This method filters the provided variable arguments to ensure only supported types are used,
+   * then maps the specified path to a URI using those variables. Finally, it sets the resulting URI
+   * to the destination DTO.
    *
    * <p>Supported variable types include {@code String}, {@code Character}, {@code Integer}, {@code
    * Double}, {@code Float}, and {@code Boolean}. If any unsupported types are passed, they will be
    * filtered out.
    *
    * @param destination the destination DTO to which the URI will be set (must not be {@code null})
-   * @param path        the path template used to create the URI (must not be {@code null})
-   * @param variable    the optional variable arguments to substitute into the path template
+   * @param path the path template used to create the URI (must not be {@code null})
+   * @param variable the optional variable arguments to substitute into the path template
    * @throws NullPointerException if any of the parameters {@code destination}, {@code path}, or any
-   *                              element in {@code variable} is {@code null}
+   *     element in {@code variable} is {@code null}
    * @since 1.0.0
    */
   public static void setUri(
@@ -65,7 +65,7 @@ public final class TestArrangeUrlUtils {
    *
    * @param destination the destination DTO to which the URI will be set (must not be {@code null})
    * @throws NullPointerException if any of the parameters {@code destination}, {@code path}, or any
-   *                              element in {@code variable} is {@code null}
+   *     element in {@code variable} is {@code null}
    * @since 1.0.0
    */
   public static void setUri(@NonNull TestRequestUrlDto destination, @NonNull URI uri) {
@@ -76,11 +76,11 @@ public final class TestArrangeUrlUtils {
    * Adds a parameter to the request URL.
    *
    * @param destination the destination {@code TestRequestUrlDto} to add the parameter to (must not
-   *                    be {@code null})
-   * @param key         the name of the parameter (must not be {@code null})
-   * @param value       the value of the parameter (must not be {@code null})
+   *     be {@code null})
+   * @param key the name of the parameter (must not be {@code null})
+   * @param value the value of the parameter (must not be {@code null})
    * @throws NullPointerException if either {@code destination}, {@code key}, or {@code value} is
-   *                              {@code null}
+   *     {@code null}
    * @since 1.0.0
    */
   public static void addParam(@NonNull TestRequestUrlDto destination, String key, String value) {
@@ -91,9 +91,9 @@ public final class TestArrangeUrlUtils {
    * Adds multiple parameters to the request URL.
    *
    * @param destination the destination {@code TestRequestUrlDto} to add parameters to (must not be
-   *                    {@code null})
-   * @param params      a map of parameter names and their corresponding values (must not be
-   *                    {@code null})
+   *     {@code null})
+   * @param params a map of parameter names and their corresponding values (must not be {@code
+   *     null})
    * @throws NullPointerException if either {@code destination} or {@code params} is {@code null}
    * @since 1.0.0
    */
