@@ -44,6 +44,8 @@ public final class TestAssertContentImpl implements TestAssertContent {
    *
    * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
    *     null})
+   * @param objectMapper the {@link ObjectMapper} used for JSON processing (must not be {@code
+   *     null})
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.0.0
    */

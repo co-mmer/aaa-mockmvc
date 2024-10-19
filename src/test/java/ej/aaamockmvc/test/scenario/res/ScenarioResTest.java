@@ -7,7 +7,7 @@ import static org.mockito.ArgumentMatchers.eq;
 
 import ej.aaamockmvc.test.scenario.res.data.ScenarioDataActPost;
 import ej.aaamockmvc.test.scenario.res.data.ScenarioDataPost;
-import ej.aaamockmvc.test.web.act.TestAct1Perform;
+import ej.aaamockmvc.test.web.act.TestAct1;
 import ej.aaamockmvc.test.web.act.strategy.TestRequestStrategy;
 import ej.aaamockmvc.test.web.act.strategy.TestRequestStrategyFactory;
 import ej.aaamockmvc.test.web.arrange.res.body.TestArrange1ResBody;
@@ -47,7 +47,7 @@ class ScenarioResTest {
   @ParameterizedTest
   @MethodSource("useCase")
   void GIVEN_useCase_WHEN_perform_THEN_return_expected_data(
-      TestAct1Perform arrangePerform, TestRequestDto requestDTO) {
+      TestAct1 arrangePerform, TestRequestDto requestDTO) {
 
     // Arrange
     var captor = ArgumentCaptor.forClass(TestRequestDto.class);

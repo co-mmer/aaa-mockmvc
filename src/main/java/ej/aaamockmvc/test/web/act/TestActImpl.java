@@ -23,15 +23,14 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
  *
  * @since 1.0.0
  */
-public final class TestActPerformImpl implements TestAct1Perform, TestAct2Perform {
+public final class TestActImpl implements TestAct1, TestAct2 {
 
   private final TestRequestBean bean;
   private final TestRequestDto request;
   private MockHttpServletRequestBuilder requestBuilder;
 
   /**
-   * Constructs an instance of {@code TestActPerformImpl} with the provided {@link
-   * TestRequestContext}.
+   * Constructs an instance of {@code TestActImpl} with the provided {@link TestRequestContext}.
    *
    * <p>This constructor initializes the request and {@code MockMvc} instance that will be used to
    * perform the HTTP request defined in the test context.
@@ -41,7 +40,7 @@ public final class TestActPerformImpl implements TestAct1Perform, TestAct2Perfor
    * @throws NullPointerException if the {@code context} is {@code null}
    * @since 1.0.0
    */
-  public TestActPerformImpl(@NonNull TestRequestContext context) {
+  public TestActImpl(@NonNull TestRequestContext context) {
     this.request = context.request();
     this.bean = context.bean();
   }
@@ -54,7 +53,7 @@ public final class TestActPerformImpl implements TestAct1Perform, TestAct2Perfor
    * @since 1.0.0
    */
   @Override
-  public TestAct2Perform actPerform() {
+  public TestAct2 actPerform() {
     var strategy = TestRequestStrategyFactory.resolve(this.request.getType());
     this.requestBuilder = strategy.apply(this.request);
     return this;

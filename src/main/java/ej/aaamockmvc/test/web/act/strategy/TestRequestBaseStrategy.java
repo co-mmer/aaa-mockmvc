@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
  */
 public abstract class TestRequestBaseStrategy implements TestRequestStrategy {
 
+  /** The request builder used to construct the mock HTTP request. */
   protected MockHttpServletRequestBuilder requestBuilder;
 
   /**

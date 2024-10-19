@@ -27,7 +27,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_PDF;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 
-import ej.aaamockmvc.test.web.act.TestAct1Perform;
+import ej.aaamockmvc.test.web.act.TestAct1;
 import ej.aaamockmvc.test.web.arrange.res.body.TestArrange1ResBody;
 import ej.aaamockmvc.test.web.arrange.res.head.TestArrange2ResHead;
 import ej.aaamockmvc.test.web.request.TestRequestPost;
@@ -40,23 +40,22 @@ public final class ScenarioDataActPost {
 
   private static final TestRequestPost POST = new TestRequestPost(TEST_REQUEST_CONFIG);
 
-  public static final TestAct1Perform POST_ARRANGE__URL =
-      POST.arrange().arrangeUrl(TEST_PATH).act();
+  public static final TestAct1 POST_ARRANGE__URL = POST.arrange().arrangeUrl(TEST_PATH).act();
 
-  public static final TestAct1Perform POST_ARRANGE__URL_VARIABLE =
+  public static final TestAct1 POST_ARRANGE__URL_VARIABLE =
       POST.arrange().arrangeUrl(TEST_PATH_VAR_1, VAR_STRING_1).act();
 
-  public static final TestAct1Perform POST_ARRANGE__URL_VARIABLES =
+  public static final TestAct1 POST_ARRANGE__URL_VARIABLES =
       POST.arrange().arrangeUrl(TEST_PATH_VAR_2, VAR_STRING_1, VAR_STRING_2).act();
 
-  public static final TestAct1Perform POST_ARRANGE__PARAM_KEY_VALUE_1 =
+  public static final TestAct1 POST_ARRANGE__PARAM_KEY_VALUE_1 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeParam()
           .arrangeKeyValue(TEST_PARAM_KEY_1, TEST_PARAM_VALUE_1)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__PARAM_KEY_VALUE_2 =
+  public static final TestAct1 POST_ARRANGE__PARAM_KEY_VALUE_2 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeParam()
@@ -64,43 +63,43 @@ public final class ScenarioDataActPost {
           .arrangeKeyValue(TEST_PARAM_KEY_2, TEST_PARAM_VALUE_2)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__PARAM_KEY_VALUE_MAP =
+  public static final TestAct1 POST_ARRANGE__PARAM_KEY_VALUE_MAP =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeParam()
           .arrangeKeyValue(TEST_PARAM_KEY_VALUE_MAP_1_2)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_ACCEPT_1 =
+  public static final TestAct1 POST_ARRANGE__HEAD_ACCEPT_1 =
       POST.arrange().arrangeUrl(TEST_PATH).arrangeHead().arrangeAccept(APPLICATION_JSON).act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_ACCEPT_2 =
+  public static final TestAct1 POST_ARRANGE__HEAD_ACCEPT_2 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
           .arrangeAccept(APPLICATION_JSON, APPLICATION_PDF)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_AUTH =
+  public static final TestAct1 POST_ARRANGE__HEAD_AUTH =
       POST.arrange().arrangeUrl(TEST_PATH).arrangeHead().arrangeAuth(TEST_AUTH_VALUE).act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_CONTENT_TYPE_1 =
+  public static final TestAct1 POST_ARRANGE__HEAD_CONTENT_TYPE_1 =
       POST.arrange().arrangeUrl(TEST_PATH).arrangeHead().arrangeContentType(APPLICATION_JSON).act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_CONTENT_TYPE_2 =
+  public static final TestAct1 POST_ARRANGE__HEAD_CONTENT_TYPE_2 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
           .arrangeContentType(APPLICATION_JSON, APPLICATION_PDF)
           .act();
-  public static final TestAct1Perform POST_ARRANGE__HEAD_KEY_VALUE_1 =
+  public static final TestAct1 POST_ARRANGE__HEAD_KEY_VALUE_1 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
           .arrangeKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_KEY_VALUE_2 =
+  public static final TestAct1 POST_ARRANGE__HEAD_KEY_VALUE_2 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -108,13 +107,13 @@ public final class ScenarioDataActPost {
           .arrangeKeyValue(TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_KEY_VALUE_MAP =
+  public static final TestAct1 POST_ARRANGE__HEAD_KEY_VALUE_MAP =
       POST.arrange().arrangeUrl(TEST_PATH).arrangeHead().arrangeKeyValue(TEST_HEADER_MAP_1_2).act();
 
-  public static final TestAct1Perform POST_ARRANGE__BODY_BINARY_FILE_1 =
+  public static final TestAct1 POST_ARRANGE__BODY_BINARY_FILE_1 =
       POST.arrange().arrangeUrl(TEST_PATH).arrangeBody().arrangeFile(TEST_FILE_1).act();
 
-  public static final TestAct1Perform POST_ARRANGE__BODY_BINARY_FILE_2 =
+  public static final TestAct1 POST_ARRANGE__BODY_BINARY_FILE_2 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeBody()
@@ -122,14 +121,14 @@ public final class ScenarioDataActPost {
           .arrangeFile(TEST_FILE_2)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__BODY_BINARY_FILES =
+  public static final TestAct1 POST_ARRANGE__BODY_BINARY_FILES =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeBody()
           .arrangeFiles(List.of(TEST_FILE_1, TEST_FILE_2))
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__BODY_BINARY_FILE_1_FILES =
+  public static final TestAct1 POST_ARRANGE__BODY_BINARY_FILE_1_FILES =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeBody()
@@ -137,7 +136,7 @@ public final class ScenarioDataActPost {
           .arrangeFiles(List.of(TEST_FILE_2, TEST_FILE_3))
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__BODY_BINARY_FILE_2_FILES =
+  public static final TestAct1 POST_ARRANGE__BODY_BINARY_FILE_2_FILES =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeBody()
@@ -146,7 +145,7 @@ public final class ScenarioDataActPost {
           .arrangeFiles(List.of(TEST_FILE_3, TEST_FILE_4))
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__BODY_BINARY_FILES_FILES =
+  public static final TestAct1 POST_ARRANGE__BODY_BINARY_FILES_FILES =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeBody()
@@ -154,24 +153,24 @@ public final class ScenarioDataActPost {
           .arrangeFiles(List.of(TEST_FILE_3, TEST_FILE_4))
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__BODY_JSON =
+  public static final TestAct1 POST_ARRANGE__BODY_JSON =
       POST.arrange().arrangeUrl(TEST_PATH).arrangeBody().arrangeJson(TEST_BODY_JSON).act();
 
-  public static final TestAct1Perform POST_ARRANGE__BODY_CONTENT_JSON =
+  public static final TestAct1 POST_ARRANGE__BODY_CONTENT_JSON =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeBody()
           .arrangeContent(TEST_BODY_JSON, APPLICATION_JSON)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__BODY_CONTENT_XML =
+  public static final TestAct1 POST_ARRANGE__BODY_CONTENT_XML =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeBody()
           .arrangeContent(TEST_BODY_XML, APPLICATION_XML)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_1 =
+  public static final TestAct1 POST_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_1 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -179,7 +178,7 @@ public final class ScenarioDataActPost {
           .arrangeKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_2 =
+  public static final TestAct1 POST_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_2 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -188,7 +187,7 @@ public final class ScenarioDataActPost {
           .arrangeKeyValue(TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_MAP =
+  public static final TestAct1 POST_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_MAP =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -196,7 +195,7 @@ public final class ScenarioDataActPost {
           .arrangeKeyValue(TEST_HEADER_MAP_1_2)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_AUT_CONTENT_TYPE_1 =
+  public static final TestAct1 POST_ARRANGE__HEAD_AUT_CONTENT_TYPE_1 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -204,7 +203,7 @@ public final class ScenarioDataActPost {
           .arrangeContentType(APPLICATION_JSON)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_AUT_KEY_VALUE_1 =
+  public static final TestAct1 POST_ARRANGE__HEAD_AUT_KEY_VALUE_1 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -212,7 +211,7 @@ public final class ScenarioDataActPost {
           .arrangeKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_AUT_KEY_VALUE_2 =
+  public static final TestAct1 POST_ARRANGE__HEAD_AUT_KEY_VALUE_2 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -221,7 +220,7 @@ public final class ScenarioDataActPost {
           .arrangeKeyValue(TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_AUT_KEY_VALUE_MAP =
+  public static final TestAct1 POST_ARRANGE__HEAD_AUT_KEY_VALUE_MAP =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -229,7 +228,7 @@ public final class ScenarioDataActPost {
           .arrangeKeyValue(TEST_HEADER_MAP_1_2)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_ACCEPT_1_CONTENT_TYPE_1 =
+  public static final TestAct1 POST_ARRANGE__HEAD_ACCEPT_1_CONTENT_TYPE_1 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -237,7 +236,7 @@ public final class ScenarioDataActPost {
           .arrangeContentType(APPLICATION_XML)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_ACCEPT_1_AUTH =
+  public static final TestAct1 POST_ARRANGE__HEAD_ACCEPT_1_AUTH =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -245,7 +244,7 @@ public final class ScenarioDataActPost {
           .arrangeAuth(TEST_AUTH_VALUE)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_1 =
+  public static final TestAct1 POST_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_1 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -253,7 +252,7 @@ public final class ScenarioDataActPost {
           .arrangeKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_2 =
+  public static final TestAct1 POST_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_2 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -262,7 +261,7 @@ public final class ScenarioDataActPost {
           .arrangeKeyValue(TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2)
           .act();
 
-  public static final TestAct1Perform POST_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_MAP =
+  public static final TestAct1 POST_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_MAP =
       POST.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()

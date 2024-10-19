@@ -1,6 +1,6 @@
 package ej.aaamockmvc.test.web.arrange.info.url;
 
-import ej.aaamockmvc.test.web.act.TestAct1Perform;
+import ej.aaamockmvc.test.web.act.TestAct1;
 import ej.aaamockmvc.test.web.arrange.info.head.TestArrange1InfoHead;
 import ej.aaamockmvc.test.web.arrange.info.param.TestArrange1InfoParam;
 
@@ -39,8 +39,8 @@ public interface TestArrange2InfoUrl {
    * <p>This method triggers the actual request and returns an interface for performing actions and
    * evaluating the response.
    *
-   * @return an instance of {@code TestAct1Perform} to execute the request and evaluate the response
+   * @return an instance of {@code TestAct1} to execute the request and evaluate the response
    * @since 1.0.0
    */
-  TestAct1Perform act();
+  TestAct1 act();
 }

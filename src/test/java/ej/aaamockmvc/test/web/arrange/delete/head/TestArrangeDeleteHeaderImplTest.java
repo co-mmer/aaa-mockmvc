@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_PDF;
 
-import ej.aaamockmvc.test.web.act.TestActPerformImpl;
+import ej.aaamockmvc.test.web.act.TestActImpl;
 import ej.aaamockmvc.test.web.arrange.base.head.TestArrangeHeadUtils;
 import ej.aaamockmvc.test.web.request.context.TestRequestContextBuilder;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
@@ -123,6 +123,6 @@ class TestArrangeDeleteHeaderImplTest {
     var act = this.impl.act();
 
     // Assert
-    assertThat(act.getClass(), is(TestActPerformImpl.class));
+    assertThat(act.getClass(), is(TestActImpl.class));
   }
 }

@@ -1,6 +1,6 @@
 package ej.aaamockmvc.test.web.arrange.info.param;
 
-import ej.aaamockmvc.test.web.act.TestAct1Perform;
+import ej.aaamockmvc.test.web.act.TestAct1;
 import ej.aaamockmvc.test.web.arrange.base.url.TestArrangeBaseParam;
 import ej.aaamockmvc.test.web.arrange.info.head.TestArrange1InfoHead;
 import ej.aaamockmvc.test.web.arrange.info.head.TestArrangeInfoHeadImpl;
@@ -75,11 +75,11 @@ public final class TestArrangeInfoParamImpl extends TestArrangeBaseParam
   /**
    * Executes the HEAD/OPTIONS request.
    *
-   * @return an instance of {@code TestAct1Perform} to execute the request and evaluate the response
+   * @return an instance of {@code TestAct1} to execute the request and evaluate the response
    * @since 1.0.0
    */
   @Override
-  public TestAct1Perform act() {
-    return createActPerformImpl();
+  public TestAct1 act() {
+    return createActImpl();
   }
 }

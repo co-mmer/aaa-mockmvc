@@ -1,6 +1,6 @@
 package ej.aaamockmvc.test.scenario.delete.data;
 
-import ej.aaamockmvc.test.web.act.TestAct1Perform;
+import ej.aaamockmvc.test.web.act.TestAct1;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
 import lombok.Getter;
 
@@ -88,10 +88,10 @@ public enum ScenarioDataDelete {
       ScenarioDataActDelete.DEL_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_MAP,
       ScenarioDataRequestDelete.DEL_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_MAP);
 
-  private final TestAct1Perform act;
+  private final TestAct1 act;
   private final TestRequestDto requestDto;
 
-  ScenarioDataDelete(TestAct1Perform act, TestRequestDto requestDto) {
+  ScenarioDataDelete(TestAct1 act, TestRequestDto requestDto) {
     this.act = act;
     this.requestDto = requestDto;
   }

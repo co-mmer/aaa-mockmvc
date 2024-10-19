@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.ResultActions;
  *
  * @since 1.0.0
  */
-public interface TestAct2Perform {
+public interface TestAct2 {
 
   /**
    * Retrieves the {@link ResultActions} from the executed HTTP request.

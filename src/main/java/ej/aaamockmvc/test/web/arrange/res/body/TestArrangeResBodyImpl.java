@@ -2,7 +2,7 @@ package ej.aaamockmvc.test.web.arrange.res.body;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-import ej.aaamockmvc.test.web.act.TestAct1Perform;
+import ej.aaamockmvc.test.web.act.TestAct1;
 import ej.aaamockmvc.test.web.arrange.base.TestArrangeBaseAbstract;
 import ej.aaamockmvc.test.web.arrange.base.body.TestArrangeBodyUtils;
 import ej.aaamockmvc.test.web.request.context.TestRequestContext;
@@ -95,11 +95,11 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
   /**
    * Executes the PATCH/POST/PUT request.
    *
-   * @return an instance of {@code TestAct1Perform} to execute the request and evaluate the response
+   * @return an instance of {@code TestAct1} to execute the request and evaluate the response
    * @since 1.0.0
    */
   @Override
-  public TestAct1Perform act() {
-    return createActPerformImpl();
+  public TestAct1 act() {
+    return createActImpl();
   }
 }

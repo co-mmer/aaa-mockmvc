@@ -7,7 +7,7 @@ import static ej.aaamockmvc.test.testdata.testutil.TestValue.VAR_STRING_1;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import ej.aaamockmvc.test.web.act.TestActPerformImpl;
+import ej.aaamockmvc.test.web.act.TestActImpl;
 import ej.aaamockmvc.test.web.arrange.base.url.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.arrange.delete.head.TestArrangeDeleteHeadImpl;
 import ej.aaamockmvc.test.web.arrange.delete.param.TestArrangeDeleteParamImpl;
@@ -96,6 +96,6 @@ class TestArrangeDeleteImplTest {
     var act = this.impl.act();
 
     // Assert
-    assertThat(act.getClass(), is(TestActPerformImpl.class));
+    assertThat(act.getClass(), is(TestActImpl.class));
   }
 }

@@ -1,6 +1,6 @@
 package ej.aaamockmvc.test.web.arrange.info.head;
 
-import ej.aaamockmvc.test.web.act.TestAct1Perform;
+import ej.aaamockmvc.test.web.act.TestAct1;
 
 /**
  * Interface for executing the HEAD/OPTIONS request after all headers have been arranged.
@@ -15,8 +15,8 @@ public interface TestArrange6InfoHead {
   /**
    * Executes the HEAD/OPTIONS request.
    *
-   * @return an instance of {@code TestAct1Perform} to execute the request and evaluate the response
+   * @return an instance of {@code TestAct1} to execute the request and evaluate the response
    * @since 1.0.0
    */
-  TestAct1Perform act();
+  TestAct1 act();
 }

@@ -64,6 +64,7 @@ public final class TestArrangeUrlUtils {
    * Sets the URI for the request URL.
    *
    * @param destination the destination DTO to which the URI will be set (must not be {@code null})
+   * @param uri the {@link URI} to be assigned to the destination (must not be {@code null})
    * @throws NullPointerException if any of the parameters {@code destination}, {@code path}, or any
    *     element in {@code variable} is {@code null}
    * @since 1.0.0

@@ -27,7 +27,7 @@ import static ej.aaamockmvc.test.scenario.get.data.ScenarioDataRequestGet.GET_RE
 import static ej.aaamockmvc.test.scenario.get.data.ScenarioDataRequestGet.GET_REQUEST__URI_VARIABLE;
 import static ej.aaamockmvc.test.scenario.get.data.ScenarioDataRequestGet.GET_REQUEST__URI_VARIABLES;
 
-import ej.aaamockmvc.test.web.act.TestAct1Perform;
+import ej.aaamockmvc.test.web.act.TestAct1;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
 import lombok.Getter;
 
@@ -87,10 +87,10 @@ public enum ScenarioDataGet {
       ScenarioDataActGet.GET_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_MAP,
       GET_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_MAP);
 
-  private final TestAct1Perform act;
+  private final TestAct1 act;
   private final TestRequestDto requestDto;
 
-  ScenarioDataGet(TestAct1Perform act, TestRequestDto requestDto) {
+  ScenarioDataGet(TestAct1 act, TestRequestDto requestDto) {
     this.act = act;
     this.requestDto = requestDto;
   }

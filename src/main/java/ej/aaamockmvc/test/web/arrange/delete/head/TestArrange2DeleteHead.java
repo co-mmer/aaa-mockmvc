@@ -1,6 +1,6 @@
 package ej.aaamockmvc.test.web.arrange.delete.head;
 
-import ej.aaamockmvc.test.web.act.TestAct1Perform;
+import ej.aaamockmvc.test.web.act.TestAct1;
 import java.util.Map;
 import lombok.NonNull;
 import org.springframework.http.MediaType;
@@ -57,8 +57,8 @@ public interface TestArrange2DeleteHead {
   /**
    * Executes the DELETE request.
    *
-   * @return an instance of {@code TestAct1Perform} to execute the request and evaluate the response
+   * @return an instance of {@code TestAct1} to execute the request and evaluate the response
    * @since 1.0.0
    */
-  TestAct1Perform act();
+  TestAct1 act();
 }

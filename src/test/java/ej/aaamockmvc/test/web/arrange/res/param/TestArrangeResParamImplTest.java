@@ -6,7 +6,7 @@ import static ej.aaamockmvc.test.testdata.testutil.TestParameter.TEST_PARAM_VALU
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import ej.aaamockmvc.test.web.act.TestActPerformImpl;
+import ej.aaamockmvc.test.web.act.TestActImpl;
 import ej.aaamockmvc.test.web.arrange.base.body.TestArrangeBodyUtils;
 import ej.aaamockmvc.test.web.arrange.base.url.TestArrangeUrlUtils;
 import ej.aaamockmvc.test.web.arrange.res.body.TestArrangeResBodyImpl;
@@ -89,6 +89,6 @@ class TestArrangeResParamImplTest {
     var act = this.impl.act();
 
     // Assert
-    assertThat(act.getClass(), is(TestActPerformImpl.class));
+    assertThat(act.getClass(), is(TestActImpl.class));
   }
 }

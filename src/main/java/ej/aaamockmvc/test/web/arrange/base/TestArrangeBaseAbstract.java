@@ -1,7 +1,7 @@
 package ej.aaamockmvc.test.web.arrange.base;
 
-import ej.aaamockmvc.test.web.act.TestAct1Perform;
-import ej.aaamockmvc.test.web.act.TestActPerformImpl;
+import ej.aaamockmvc.test.web.act.TestAct1;
+import ej.aaamockmvc.test.web.act.TestActImpl;
 import ej.aaamockmvc.test.web.request.context.TestRequestContext;
 import ej.aaamockmvc.test.web.request.model.TestRequestBodyDto;
 import ej.aaamockmvc.test.web.request.model.TestRequestHeadDto;
@@ -72,12 +72,12 @@ public abstract class TestArrangeBaseAbstract {
   }
 
   /**
-   * Creates a new instance of {@code TestAct1Perform} for executing actions.
+   * Creates a new instance of {@code TestAct1} for executing actions.
    *
-   * @return a new instance of {@code TestAct1Perform}
+   * @return a new instance of {@code TestAct1}
    * @since 1.0.0
    */
-  protected TestAct1Perform createActPerformImpl() {
-    return new TestActPerformImpl(getContext());
+  protected TestAct1 createActImpl() {
+    return new TestActImpl(getContext());
   }
 }

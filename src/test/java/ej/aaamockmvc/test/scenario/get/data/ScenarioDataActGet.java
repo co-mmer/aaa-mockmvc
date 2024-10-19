@@ -20,7 +20,7 @@ import static ej.aaamockmvc.test.testdata.testutil.TestValue.VAR_STRING_2;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 
-import ej.aaamockmvc.test.web.act.TestAct1Perform;
+import ej.aaamockmvc.test.web.act.TestAct1;
 import ej.aaamockmvc.test.web.arrange.get.head.TestArrange1GetHead;
 import ej.aaamockmvc.test.web.request.TestRequestGet;
 import lombok.AccessLevel;
@@ -31,22 +31,22 @@ public final class ScenarioDataActGet {
 
   private static final TestRequestGet GET = new TestRequestGet(TEST_REQUEST_CONFIG);
 
-  public static final TestAct1Perform GET_ARRANGE__URL = GET.arrange().arrangeUrl(TEST_PATH).act();
+  public static final TestAct1 GET_ARRANGE__URL = GET.arrange().arrangeUrl(TEST_PATH).act();
 
-  public static final TestAct1Perform GET_ARRANGE__URL_VARIABLE =
+  public static final TestAct1 GET_ARRANGE__URL_VARIABLE =
       GET.arrange().arrangeUrl(TEST_PATH_VAR_1, VAR_STRING_1).act();
 
-  public static final TestAct1Perform GET_ARRANGE__URL_VARIABLES =
+  public static final TestAct1 GET_ARRANGE__URL_VARIABLES =
       GET.arrange().arrangeUrl(TEST_PATH_VAR_2, VAR_STRING_1, VAR_STRING_2).act();
 
-  public static final TestAct1Perform GET_ARRANGE__PARAM_KEY_VALUE_1 =
+  public static final TestAct1 GET_ARRANGE__PARAM_KEY_VALUE_1 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeParam()
           .arrangeKeyValue(TEST_PARAM_KEY_1, TEST_PARAM_VALUE_1)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__PARAM_KEY_VALUE_2 =
+  public static final TestAct1 GET_ARRANGE__PARAM_KEY_VALUE_2 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeParam()
@@ -54,21 +54,21 @@ public final class ScenarioDataActGet {
           .arrangeKeyValue(TEST_PARAM_KEY_2, TEST_PARAM_VALUE_2)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__PARAM_KEY_VALUE_MAP =
+  public static final TestAct1 GET_ARRANGE__PARAM_KEY_VALUE_MAP =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeParam()
           .arrangeKeyValue(TEST_PARAM_KEY_VALUE_MAP_1_2)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_KEY_VALUE_1 =
+  public static final TestAct1 GET_ARRANGE__HEAD_KEY_VALUE_1 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
           .arrangeKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_KEY_VALUE_2 =
+  public static final TestAct1 GET_ARRANGE__HEAD_KEY_VALUE_2 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -76,33 +76,33 @@ public final class ScenarioDataActGet {
           .arrangeKeyValue(TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_KEY_VALUE_MAP =
+  public static final TestAct1 GET_ARRANGE__HEAD_KEY_VALUE_MAP =
       GET.arrange().arrangeUrl(TEST_PATH).arrangeHead().arrangeKeyValue(TEST_HEADER_MAP_1_2).act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_AUTH =
+  public static final TestAct1 GET_ARRANGE__HEAD_AUTH =
       GET.arrange().arrangeUrl(TEST_PATH).arrangeHead().arrangeAuth(TEST_AUTH_VALUE).act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_ACCEPT_1 =
+  public static final TestAct1 GET_ARRANGE__HEAD_ACCEPT_1 =
       GET.arrange().arrangeUrl(TEST_PATH).arrangeHead().arrangeAccept(APPLICATION_JSON).act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_ACCEPT_2 =
+  public static final TestAct1 GET_ARRANGE__HEAD_ACCEPT_2 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
           .arrangeAccept(APPLICATION_XML, APPLICATION_JSON)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_CONTENT_TYPE_1 =
+  public static final TestAct1 GET_ARRANGE__HEAD_CONTENT_TYPE_1 =
       GET.arrange().arrangeUrl(TEST_PATH).arrangeHead().arrangeContentType(APPLICATION_JSON).act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_CONTENT_TYPE_2 =
+  public static final TestAct1 GET_ARRANGE__HEAD_CONTENT_TYPE_2 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
           .arrangeContentType(APPLICATION_JSON, APPLICATION_XML)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_ACCEPT_1_AUTH =
+  public static final TestAct1 GET_ARRANGE__HEAD_ACCEPT_1_AUTH =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -110,7 +110,7 @@ public final class ScenarioDataActGet {
           .arrangeAuth(TEST_AUTH_VALUE)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_ACCEPT_1_CONTENT_TYPE_1 =
+  public static final TestAct1 GET_ARRANGE__HEAD_ACCEPT_1_CONTENT_TYPE_1 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -118,7 +118,7 @@ public final class ScenarioDataActGet {
           .arrangeContentType(APPLICATION_JSON)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_1 =
+  public static final TestAct1 GET_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_1 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -126,7 +126,7 @@ public final class ScenarioDataActGet {
           .arrangeKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_2 =
+  public static final TestAct1 GET_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_2 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -135,7 +135,7 @@ public final class ScenarioDataActGet {
           .arrangeKeyValue(TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_MAP =
+  public static final TestAct1 GET_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_MAP =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -143,7 +143,7 @@ public final class ScenarioDataActGet {
           .arrangeKeyValue(TEST_HEADER_MAP_1_2)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_AUT_CONTENT_TYPE_1 =
+  public static final TestAct1 GET_ARRANGE__HEAD_AUT_CONTENT_TYPE_1 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -151,7 +151,7 @@ public final class ScenarioDataActGet {
           .arrangeContentType(APPLICATION_JSON)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_AUT_KEY_VALUE_1 =
+  public static final TestAct1 GET_ARRANGE__HEAD_AUT_KEY_VALUE_1 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -159,7 +159,7 @@ public final class ScenarioDataActGet {
           .arrangeKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_AUT_KEY_VALUE_2 =
+  public static final TestAct1 GET_ARRANGE__HEAD_AUT_KEY_VALUE_2 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -168,7 +168,7 @@ public final class ScenarioDataActGet {
           .arrangeKeyValue(TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_AUT_KEY_VALUE_MAP =
+  public static final TestAct1 GET_ARRANGE__HEAD_AUT_KEY_VALUE_MAP =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -176,7 +176,7 @@ public final class ScenarioDataActGet {
           .arrangeKeyValue(TEST_HEADER_MAP_1_2)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_1 =
+  public static final TestAct1 GET_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_1 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -184,7 +184,7 @@ public final class ScenarioDataActGet {
           .arrangeKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_2 =
+  public static final TestAct1 GET_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_2 =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()
@@ -193,7 +193,7 @@ public final class ScenarioDataActGet {
           .arrangeKeyValue(TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2)
           .act();
 
-  public static final TestAct1Perform GET_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_MAP =
+  public static final TestAct1 GET_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_MAP =
       GET.arrange()
           .arrangeUrl(TEST_PATH)
           .arrangeHead()

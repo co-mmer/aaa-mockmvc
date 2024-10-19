@@ -1,6 +1,6 @@
 package ej.aaamockmvc.test.scenario.res.data;
 
-import ej.aaamockmvc.test.web.act.TestAct1Perform;
+import ej.aaamockmvc.test.web.act.TestAct1;
 import ej.aaamockmvc.test.web.request.model.TestRequestDto;
 import lombok.Getter;
 
@@ -116,10 +116,10 @@ public enum ScenarioDataPost {
       ScenarioDataActPost.POST_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_MAP,
       ScenarioDataRequestPost.POST_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_MAP);
 
-  private final TestAct1Perform act;
+  private final TestAct1 act;
   private final TestRequestDto requestDto;
 
-  ScenarioDataPost(TestAct1Perform act, TestRequestDto requestDto) {
+  ScenarioDataPost(TestAct1 act, TestRequestDto requestDto) {
     this.act = act;
     this.requestDto = requestDto;
   }
