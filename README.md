@@ -28,7 +28,7 @@ ___
 
 ## Installation
 
-To include AAAMockMvc in your project, add the following dependency to your pom.xml:
+To include AAAMockMvc in the project, add the following dependency to the `pom.xml`:
 
 ```xml
 
@@ -38,6 +38,7 @@ To include AAAMockMvc in your project, add the following dependency to your pom.
   <version>1.0.0</version>
   <scope>test</scope>
 </dependency>
+
 ```
 
 ---
