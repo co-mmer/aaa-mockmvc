@@ -16,36 +16,38 @@ express their test logic fluently and naturally.
 
 ___
 
-## Description
-
-In the provided library, every test follows the AAA structure using the following three phases:
-
-1. **Arrange**: Set up the necessary conditions for the test (e.g., define URL, parameters,
-   headers).
-2. **Act**: Perform the operation (e.g., make the API request).
-3. **Assert**: Validate the result (e.g., check HTTP status, response content).
-
-___
-
 ## Table of Contents
 
-- [Getting Started](#getting-started)
-    - [Setup Bean](#1-setup-bean)
-    - [Usage](#2-usage)
+- [Installation](#Installation)
+- [Setup](#setup)
+- [Writing Tests](#writing-tests)
 - [Examples](#examples)
-    - [Test Case](#test-case-validate-response-with-expected-list-of-dtos)
-    - [Arrange Section](#examples-for-the-arrange-section)
-    - [Assert Section](#examples-for-the-assert-section)
 - [License](#License)
 
 ---
 
-## Getting Started
+## Installation
 
-To write tests using this framework, certain configurations are necessary. Below are the steps
+To include AAAMockMvc in your project, add the following dependency to your pom.xml:
+
+```xml
+
+<dependency>
+  <groupId>ej.aaamockmvc</groupId>
+  <artifactId>aaamockmvc</artifactId>
+  <version>1.0.0</version>
+  <scope>test</scope>
+</dependency>
+```
+
+---
+
+## Setup
+
+To write tests using this library, certain configurations are necessary. Below are the steps
 required to set up your testing environment effectively.
 
-### 1. Setup Bean
+### Bean
 
 To configure `AAAMockMvc` for tests, four main options are available. Each configuration offers
 flexibility in using `AAAMockMvc` within the test setup to interact with the MVC testing framework,
@@ -185,16 +187,12 @@ public class AAAMockMvcConfig {
 
 </details>
 
----
-
-### 2. Usage
+### Test
 
 There are two options for utilizing the AAAMockMvc in test classes:
 
-####                        
-
 <details>
-<summary>Option A: AAAMockMvc</summary>
+<summary>Setup A: AAAMockMvc</summary>
 
 AAAMockMvc can be directly autowired into the test class. This method allows the API methods to
 be
@@ -202,7 +200,6 @@ used directly in the tests.
 
 ```java
 
-@WebMvcTest
 public class ControllerTest {
 
   @Autowired
@@ -224,7 +221,7 @@ public class ControllerTest {
 </details>
 
 <details>
-<summary>Option B: AAAMockMvcAbstract</summary>
+<summary>Setup B: AAAMockMvcAbstract</summary>
 
 
 Alternatively, extending the abstract class `AAAMockMvcAbstract` is another option, which
@@ -234,7 +231,6 @@ behaviors and reducing boilerplate code in test classes.
 
 ```java
 
-@WebMvcTest
 public class ControllerTest extends AAAMockMvcAbstract {
 
   @Test
@@ -253,6 +249,598 @@ public class ControllerTest extends AAAMockMvcAbstract {
 </details>
 
 ___
+
+## Writing Tests
+
+In the provided library, every test follows the AAA structure using the following three phases:
+
+1. **Arrange**: Set up the necessary conditions for the test (e.g., define URL, parameters,
+   headers).
+2. **Act**: Perform the operation (e.g., make the API request).
+3. **Assert**: Validate the result (e.g., check HTTP status, response content).
+
+### Arrange Section
+
+<details>
+<summary>Arrange URL</summary>
+
+### Arrange URL
+
+In this example, the simplest form of a request is demonstrated, utilizing only the base URL.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Path Variable
+
+In this example, a URL with a path variable is utilized, which dynamically replaces a segment of the
+URL to retrieve specific data.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE, PATH_VAR_8)
+      .act()
+      ...
+```
+
+---
+
+### Arrange URI
+
+In this example, when a complete URL is provided, the request is directed to that specific endpoint.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE_URI)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Parameter
+
+In this example, a URL is enhanced with a query parameter, commonly used for search or filter
+requests.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeParam()
+      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Parameters
+
+In this example, multiple parameters are appended to the URL, enabling a more detailed query.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeParam()
+      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
+      .arrangeKeyValue(PARAM_KEY_2, PARAM_VALUE_2)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Parameters (Map)
+
+In this example, an entire set of parameters is appended to the URL using a map, which simplifies
+the handling of dynamic parameters.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeParam()
+      .arrangeKeyValue(PARAM_MAP)
+      .act()
+      ...
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>Arrange HEAD</summary>
+
+### Arrange Header Accept
+
+In this example, the Accept header is set, indicating that the client
+expects a response in JSON format.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeHead()
+      .arrangeAccept(APPLICATION_JSON)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Header Auth
+
+In this example, an authorization token is added to the headers, which is typically required for
+secured endpoints.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeHead()
+      .arrangeAuth(TOKEN)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Header Content-Type
+
+In this example, the Content-Type header is defined, indicating the format of the data being sent (
+if applicable).
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeHead()
+      .arrangeContentType(APPLICATION_JSON)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Header Key-Value
+
+In this example, a single custom header is set, allowing for additional context or control over the
+request.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeHead()
+      .arrangeKeyValue(HEAD_X_CUSTOM_1, HEAD_X_CUSTOM_VALUE_1)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Header Key-Value (Multiple)
+
+In this example, this example shows how to set multiple custom headers in a single request, which
+can be necessary for more complex API interactions.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeHead()
+      .arrangeKeyValue(HEAD_X_CUSTOM_1, HEAD_X_CUSTOM_VALUE_1)
+      .arrangeKeyValue(HEAD_X_CUSTOM_2, HEAD_X_CUSTOM_VALUE_2)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Header Key-Value (Map)
+
+In this example, using a map to set multiple custom headers allows for a cleaner approach when
+numerous headers are required, making the code more maintainable.
+
+```
+ get()
+      .arrange()
+      .arrangeUrl(GET_EXAMPLE)
+      .arrangeHead()
+      .arrangeKeyValue(HEAD_X_CUSTOM_MAP)
+      .act()
+      ...
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>Arrange BODY</summary>
+
+### Arrange Body File
+
+In this example, one file are added to the request body.
+
+```
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeFile(FILE_1)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Body File (Multiple)
+
+In this example, two files are added to the request body.
+
+```
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeFile(FILE_1)
+      .arrangeFile(FILE_2)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Body File (List)
+
+In this example, this example illustrates how to upload multiple files using a list. This approach
+simplifies adding multiple files and enhances code readability.
+
+```
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeFiles(List.of(FILE_1, FILE_2))
+      .act()
+      ...
+```
+
+---
+
+### Arrange Content Raw
+
+In this example, raw content is sent in the body along with its media type, allowing for versatile
+content submissions beyond standard formats.
+
+```
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeContent(RAW_CONTENT, RAW_MEDIATYPE)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Content Json
+
+In this example, JSON data is sent in the request body, demonstrating how to transmit structured
+data to the server.
+
+```
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeJson(JSON_1)
+      .act()
+      ...
+```
+
+</details>
+
+### Assert Section
+
+<details>
+<summary>Assert Status</summary>
+
+### Assert Status (Literal)
+
+This example shows how to assert that the response returns the exact status code.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus(200)
+```
+
+### Assert Status (Enum)
+
+This example shows how to assert that the response returns the exact HttpStatus.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus(HttpStatus.OK)
+```
+
+---
+</details> 
+
+<details>
+<summary>Assert Content</summary>
+
+### Assert Content Not Empty
+
+In this example, the **`assertContentNotEmpty`** method is used to assert that the response content
+is not empty.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentNotEmpty()
+```
+
+---
+
+### Assert Content Empty
+
+In this example, the **`assertContentEmpty`** method is used to assert that the response content
+is empty.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEmpty()
+```
+
+---
+
+### Assert Content Equals (Byte)
+
+In this example, the **`assertContentEquals`** method is used to assert that the response content
+matches an expected byte array.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEquals(EXPECTED_BYTE_ARRAY)
+```
+
+---
+
+### Assert Content Equals (String)
+
+In this example, the **`assertContentEquals`** method is used to assert that the response content
+matches an expected string.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEquals(EXPECTED_STRING)
+```
+
+---
+
+</details>
+
+
+
+<details>
+<summary>Assert Content (Collection) </summary>
+
+### Assert Content Equals (List)
+
+In this example, the **`assertContentEquals`** method is used to assert that the response content
+matches an expected **`List`** of objects.
+
+- **Class Specification**: Only the class of the objects contained in the list needs to be
+  specified (in this case, `DemoDto.class`). This informs the framework about the type of object to
+  expect.
+- **Expected Objects**: Alongside the class, a list of expected objects (`EXPECTED_LIST`) is
+  provided, which the response should match. This approach is particularly useful for validating
+  collections of data returned by the API.
+
+```
+  // EXPECTED_LIST = List.of(TEST_DTO_1, TEST_DTO_2);
+  
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEquals(DemoDto.class, EXPECTED_LIST)
+```
+
+### Assert Content Equals (Set)
+
+In this example, the **`assertContentEquals`** method is used to assert that the response content
+matches an expected **`Set`** of objects.
+
+- **Class Specification**: Only the class of the objects contained in the set needs to be
+  specified (in this case, `DemoDto.class`). This informs the framework about the type of object to
+  expect.
+- **Expected Objects**: Alongside the class, a set of expected objects (`EXPECTED_SET`) is provided,
+  which the response should match. This approach is particularly useful for validating collections
+  of data returned by the API.
+
+```
+  // EXPECTED_SET = Set.of(TEST_DTO_1, TEST_DTO_2);
+  
+    get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEquals(DemoDto.class, EXPECTED_SET)
+```
+
+### Assert Content Equals (Map)
+
+In this example, the **`assertContentEquals`** method is utilized to assert that the response
+content matches an expected **`map`** of objects.
+
+- **Class Specifications**:
+    - **Key Class**: The class of the keys in the map must be specified (in this
+      case, `Boolean.class`).
+    - **Value Class:** The class of the values in the map must be specified (in this case,
+      DemoDto.class).
+- **Expected Objects**: Alongside the class, a map of expected objects (`EXPECTED_MAP`) is
+  provided, which the response should match. This approach is particularly useful for validating
+  collections of data returned by the API.
+
+```
+  // EXPECTED_MAP = Map.of(TRUE, TEST_DTO_1, FALSE, TEST_DTO_2);
+  
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEquals(Boolean.class, DemoDto.class, EXPECTED_MAP);
+```
+
+---
+
+### Assert Content Size
+
+In this example, the **`assertContentSize`** method is used to assert that the response content size
+matches an expected size.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentSize(2)
+```
+
+---
+
+</details> 
+
+<details>
+<summary>Assert Head</summary>
+
+### Assert Head Contains
+
+This example asserts that the response contains a specific header.
+
+```
+  head()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertHead()
+      .assertHeadContains(X_HEADER)
+```
+
+---
+
+### Assert Head Not Contains
+
+This example asserts that a specific header is not present in the response.
+
+```
+  head()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertHead()
+      .assertHeadNotContains(X_HEADER)
+```
+
+---
+
+### Assert Head Equals
+
+This example is used to assert that a specific header key has the expected value.
+
+```
+  head()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertHead()
+      .assertHeadEquals(X_HEAD_KEY, X_HEAD_VALUE)
+```
+
+--- 
+</details>
+
+
+<details>
+<summary>Assert ResultMatcher</summary>
+
+### Assert Result Matcher
+
+In this example, the **`assertByResultMatcher`** method demonstrates how to use custom assertions
+through the `ResultMatcher` interface.
+
+In the provided code snippet, a custom assertion is made to check for the existence
+of a cookie named `"sessionId"` in the response. The syntax `cookie().exists("sessionId")` is a
+specific `ResultMatcher` that verifies if the specified cookie is present in the response.
+
+```  
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertByResultMatcher(cookie().exists("sessionId"))
+```
+
+</details>
+
+---
 
 ## Examples
 
@@ -347,467 +935,6 @@ void GIVEN_files_WHEN_call_endpoint_THEN_return_expected_status_201() throws Exc
       .assertStatus(201);
 }
 ```
-
----
-
-### Examples for the Arrange Section
-
-The following examples illustrate the usage of the fluent API for arranging, acting, and asserting
-in test cases.
-
-<details>
-<summary>Arrange URL</summary>
-
-In this example, the simplest form of a request is demonstrated, utilizing only the base URL.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .act()
-```
-
----
-
-In this example, a URL with a path variable is utilized, which dynamically replaces a segment of the
-URL to retrieve specific data.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE, PATH_VAR_8)
-      .act()
-```
-
----
-
-In this example, when a complete URL is provided, the request is directed to that specific endpoint.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE_URI)
-      .act()
-```
-
----
-
-In this example, a URL is enhanced with a query parameter, commonly used for search or filter
-requests.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
-      .act()
-```
-
----
-
-In this example, multiple parameters are appended to the URL, enabling a more detailed query.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
-      .arrangeKeyValue(PARAM_KEY_2, PARAM_VALUE_2)
-      .act()
-```
-
----
-
-In this example, an entire set of parameters is appended to the URL using a map, which simplifies
-the handling of dynamic parameters.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_MAP)
-      .act()
-```
-
----
-
-</details>
-
-
-<details>
-<summary>Arrange HEAD</summary>
-
-In this example, the Accept header is set, indicating that the client
-expects a response in JSON format.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeHead()
-      .arrangeAccept(APPLICATION_JSON)
-      .act()
-```
-
----
-
-In this example, an authorization token is added to the headers, which is typically required for
-secured endpoints.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeHead()
-      .arrangeAuth(TOKEN)
-      .act()
-```
-
----
-
-In this example, the Content-Type header is defined, indicating the format of the data being sent (
-if applicable).
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeHead()
-      .arrangeContentType(APPLICATION_JSON)
-      .act()
-```
-
----
-
-In this example, a single custom header is set, allowing for additional context or control over the
-request.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeHead()
-      .arrangeKeyValue(HEAD_X_CUSTOM_1, HEAD_X_CUSTOM_VALUE_1)
-      .act()
-```
-
----
-
-In this example, this example shows how to set multiple custom headers in a single request, which
-can be necessary for more complex API interactions.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeHead()
-      .arrangeKeyValue(HEAD_X_CUSTOM_1, HEAD_X_CUSTOM_VALUE_1)
-      .arrangeKeyValue(HEAD_X_CUSTOM_2, HEAD_X_CUSTOM_VALUE_2)
-      .act()
-```
-
----
-
-In this example, using a map to set multiple custom headers allows for a cleaner approach when
-numerous headers are required, making the code more maintainable.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeHead()
-      .arrangeKeyValue(HEAD_X_CUSTOM_MAP)
-      .act()
-```
-
----
-
-</details>
-
-
-<details>
-<summary>Arrange BODY</summary>
-
-In this example, one file are added to the request body.
-
-```
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeFile(FILE_1)
-      .act()
-```
-
----
-
-In this example, two files are added to the request body.
-
-```
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeFile(FILE_1)
-      .arrangeFile(FILE_2)
-      .act()
-```
-
----
-
-In this example, this example illustrates how to upload multiple files using a list. This approach
-simplifies adding multiple files and enhances code readability.
-
-```
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeFiles(List.of(FILE_1, FILE_2))
-      .act()
-```
-
----
-
-In this example, raw content is sent in the body along with its media type, allowing for versatile
-content submissions beyond standard formats.
-
-```
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeContent(RAW_CONTENT, RAW_MEDIATYPE)
-      .act()
-```
-
----
-
-In this example, JSON data is sent in the request body, demonstrating how to transmit structured
-data to the server.
-
-```
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeJson(JSON_1)
-      .act()
-```
-
-</details>
-
----
-
-### Examples for the Assert Section
-
-<details>
-<summary>Assert Status</summary>
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus(200)
-```
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus(HttpStatus.OK)
-```
-
-</details> 
-
-<details>
-<summary>Assert Content</summary>
-
-In this example, the **`assertContentNotEmpty`** method is used to assert that the response content
-is not empty.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentNotEmpty()
-```
-
----
-
-In this example, the **`assertContentEmpty`** method is used to assert that the response content
-is empty.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentEmpty()
-```
-
----
-
-In this example, the **`assertContentEquals`** method is used to assert that the response content
-matches an expected byte array.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentEquals(EXPECTED_BYTE_ARRAY)
-```
-
----
-
-In this example, the **`assertContentEquals`** method is used to assert that the response content
-matches an expected string.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentEquals(EXPECTED_STRING)
-```
-
----
-
-In this example, the **`assertContentEquals`** method is used to assert that the response content
-matches an expected **`list`** of objects.
-
-- **Class Specification**: Only the class of the objects contained in the list needs to be
-  specified (in this case, `DemoDto.class`). This informs the framework about the type of object to
-  expect.
-- **Expected Objects**: Alongside the class, a list of expected objects (`EXPECTED_LIST`) is
-  provided, which the response should match. This approach is particularly useful for validating
-  collections of data returned by the API.
-
-```
-  // EXPECTED_LIST = List.of(TEST_DTO_1, TEST_DTO_2);
-  
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentEquals(DemoDto.class, EXPECTED_LIST)
-```
-
----
-
-In this example, the **`assertContentEquals`** method is used to assert that the response content
-matches an expected **`set`** of objects.
-
-- **Class Specification**: Only the class of the objects contained in the set needs to be
-  specified (in this case, `DemoDto.class`). This informs the framework about the type of object to
-  expect.
-- **Expected Objects**: Alongside the class, a set of expected objects (`EXPECTED_SET`) is provided,
-  which the response should match. This approach is particularly useful for validating collections
-  of data returned by the API.
-
-### Expected Objects
-
-Alongside the class, a set of expected objects (`EXPECTED_SET`) is provided, which the response
-should match. This approach is particularly useful for validating collections of data returned by
-the API, especially when duplicates are not allowed.
-
-```
-  // EXPECTED_SET = Set.of(TEST_DTO_1, TEST_DTO_2);
-  
-    get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentEquals(DemoDto.class, EXPECTED_SET)
-```
-
----
-
-In this example, the **`assertContentEquals`** method is utilized to assert that the response
-content matches an expected **`map`** of objects.
-
-- **Class Specifications**:
-    - **Key Class**: The class of the keys in the map must be specified (in this
-      case, `Boolean.class`).
-    - **Value Class:** The class of the values in the map must be specified (in this case,
-      DemoDto.class).
-- **Expected Objects**: Alongside the class, a map of expected objects (`EXPECTED_MAP`) is
-  provided, which the response should match. This approach is particularly useful for validating
-  collections of data returned by the API.
-
-```
-  // EXPECTED_MAP = Map.of(TRUE, TEST_DTO_1, FALSE, TEST_DTO_2);
-  
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentEquals(Boolean.class, DemoDto.class, EXPECTED_MAP);
-```
-
----
-
-In this example, the **`assertContentSize`** method is used to assert that the response content size
-matches an expected size.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentSize(2)
-```
-
----
-</details>
-
-<details>
-
-<summary>Assert ResultMatcher</summary>
-
-
-In this example, the **`assertByResultMatcher`** method demonstrates how to use custom assertions
-through the `ResultMatcher` interface.
-
-In the provided code snippet, a custom assertion is made to check for the existence
-of a cookie named `"sessionId"` in the response. The syntax `cookie().exists("sessionId")` is a
-specific `ResultMatcher` that verifies if the specified cookie is present in the response.
-
-```  
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertByResultMatcher(cookie().exists("sessionId"))
-```
-
-</details>
 
 ---
 
