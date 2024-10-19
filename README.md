@@ -34,7 +34,7 @@ To include AAAMockMvc in the project, add the following dependency to the `pom.x
 
 <dependency>
   <groupId>ej.aaamockmvc</groupId>
-  <artifactId>aaamockmvc</artifactId>
+  <artifactId>aaa-mockmvc</artifactId>
   <version>1.0.0</version>
   <scope>test</scope>
 </dependency>
