@@ -2,6 +2,15 @@
 
 # Changelog
 
+## [1.2.0]
+
+### Added
+
+- **TestAnswer**: Introduced for accessing the results of HTTP requests.
+    - New method `answer()` in TestAct for retrieving the result of the executed request.
+
+---
+
 ## [1.1.0]
 
 ### Added
@@ -22,6 +31,8 @@
         - `assertStatusIsAccessForbidden()`
         - `assertStatusIsAccessUnauthorized()`
         - `assertStatusInRange(int minStatusCode, int maxStatusCode);`
+
+---
 
 ## [1.0.0]
 
