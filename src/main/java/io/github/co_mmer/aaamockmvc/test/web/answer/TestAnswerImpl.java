@@ -24,12 +24,12 @@ public final class TestAnswerImpl implements TestAnswer {
    * Constructs an instance of {@code TestAnswerImpl} with the specified request context and request
    * builder.
    *
-   * @param context        the {@link TestRequestContext} containing the request context and
-   *                       associated beans (must not be {@code null})
+   * @param context the {@link TestRequestContext} containing the request context and associated
+   *     beans (must not be {@code null})
    * @param requestBuilder the {@link MockHttpServletRequestBuilder} used to build and perform the
-   *                       HTTP request (must not be {@code null})
-   * @throws NullPointerException if either {@code context} or {@code requestBuilder} is
-   *                              {@code null}
+   *     HTTP request (must not be {@code null})
+   * @throws NullPointerException if either {@code context} or {@code requestBuilder} is {@code
+   *     null}
    * @since 1.2.0
    */
   public TestAnswerImpl(
