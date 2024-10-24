@@ -1,10 +1,9 @@
 package io.github.co_mmer.aaamockmvc.test.web.asserts;
 
 import io.github.co_mmer.aaamockmvc.test.web.asserts.content.TestAssertContent;
+import io.github.co_mmer.aaamockmvc.test.web.asserts.custom.TestAssertCustom;
 import io.github.co_mmer.aaamockmvc.test.web.asserts.head.TestAssertHead;
-import lombok.NonNull;
-import org.springframework.http.HttpStatus;
-import org.springframework.test.web.servlet.ResultMatcher;
+import io.github.co_mmer.aaamockmvc.test.web.asserts.status.TestAssert1Status;
 
 /**
  * This interface defines a contract for performing various assertions on HTTP response results.
@@ -13,33 +12,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
  */
 public interface TestAssert {
 
-  /**
-   * Asserts that the HTTP response status matches the given {@code HttpStatus}.
-   *
-   * @param status the expected {@code HttpStatus} of the response (must not be {@code null})
-   * @return the current instance of {@code TestAssert} for method chaining
-   * @since 1.0.0
-   */
-  TestAssert assertStatus(@NonNull HttpStatus status);
-
-  /**
-   * Asserts that the HTTP response status matches the given status code.
-   *
-   * @param status the expected status code of the response
-   * @return the current instance of {@code TestAssert} for method chaining
-   * @since 1.0.0
-   */
-  TestAssert assertStatus(int status);
-
-  /**
-   * Asserts that the HTTP response matches the given {@link ResultMatcher}.
-   *
-   * @param matcher the {@code ResultMatcher} to be used for validation (must not be {@code null})
-   * @return the current instance of {@code TestAssert} for method chaining
-   * @throws NullPointerException if the {@code matcher} is {@code null}
-   * @since 1.0.0
-   */
-  TestAssert assertByResultMatcher(@NonNull ResultMatcher matcher);
+  TestAssert1Status assertStatus();
 
   /**
    * Asserts that the HTTP response is valid for content assertions.
@@ -64,4 +37,17 @@ public interface TestAssert {
    * @since 1.0.0
    */
   TestAssertHead assertHead();
+
+  /**
+   * Asserts that the HTTP response matches custom validation logic.
+   *
+   * <p>This method returns an instance of {@code TestAssertCustom} for asserting custom validations
+   * on the HTTP response. It allows users to define their own result matchers or custom logic for
+   * validating the response, giving flexibility beyond standard status, content, and header
+   * assertions.
+   *
+   * @return an instance of {@code TestAssertCustom} for custom assertions on the response
+   * @since 1.1.0
+   */
+  TestAssertCustom assertCustom();
 }

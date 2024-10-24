@@ -1,9 +1,9 @@
 package io.github.co_mmer.aaamockmvc.test.web.arrange.res.url;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestValue.TEST_PATH_VAR1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestValue.TEST_URI;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestValue.TEST_URL;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestValue.VAR_STRING_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestValue.TEST_PATH_VAR1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestValue.TEST_URI;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestValue.TEST_URL;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestValue.VAR_STRING_1;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

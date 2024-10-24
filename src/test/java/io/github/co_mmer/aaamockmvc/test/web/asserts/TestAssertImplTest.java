@@ -1,36 +1,31 @@
 package io.github.co_mmer.aaamockmvc.test.web.asserts;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.test.web.asserts.content.TestAssertContentImpl;
+import io.github.co_mmer.aaamockmvc.test.web.asserts.custom.TestAssertCustomImpl;
 import io.github.co_mmer.aaamockmvc.test.web.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.test.web.asserts.status.TestAssertStatusImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.opentest4j.AssertionFailedError;
-import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 class TestAssertImplTest {
 
-  private ResultActions actions;
   private MockHttpServletResponse response;
   private TestAssertImpl testAssert;
 
   @BeforeEach
   void setUp() {
-    this.actions = mock(ResultActions.class);
+    var actions = mock(ResultActions.class);
     var mvcResult = mock(MvcResult.class);
     this.response = new MockHttpServletResponse();
 
@@ -41,65 +36,15 @@ class TestAssertImplTest {
   }
 
   @Test
-  void GIVEN_expected_HttpStatus_WHEN_assertStatus_THEN_assert_is_true() {
+  void WHEN_assertStatus_THEN_return_expected_class() {
     // Arrange
-    this.response.setStatus(HttpStatus.OK.value());
-
-    // Act & Assert
-    this.testAssert.assertStatus(HttpStatus.OK);
-  }
-
-  @Test
-  void GIVEN_unexpected_HttpStatus_WHEN_assertStatus_THEN_assert_is_false() {
-    // Arrange
-    this.response.setStatus(HttpStatus.NO_CONTENT.value());
-
-    // Act & Assert
-    assertThrows(AssertionError.class, () -> this.testAssert.assertStatus(HttpStatus.OK));
-  }
-
-  @Test
-  void GIVEN_expected_status_WHEN_assertStatus_THEN_assert_is_true() {
-    // Arrange
-    this.response.setStatus(HttpStatus.OK.value());
-
-    // Act & Assert
-    this.testAssert.assertStatus(200);
-  }
-
-  @Test
-  void GIVEN_unexpected_status_WHEN_assertStatus_THEN_assert_is_false() {
-    // Arrange
-    this.response.setStatus(HttpStatus.NO_CONTENT.value());
-
-    // Act & Assert
-    assertThrows(AssertionError.class, () -> this.testAssert.assertStatus(200));
-  }
-
-  @Test
-  void GIVEN_exception_WHEN_assertMatcher_THEN_throw_TestAssertException() throws Exception {
-    // Arrange
-    var mockStatusMatcher = mock(ResultMatcher.class);
-    doThrow(new RuntimeException()).when(this.actions).andExpect(mockStatusMatcher);
+    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
 
     // Act
-    assertThrows(
-        AssertionFailedError.class, () -> this.testAssert.assertByResultMatcher(mockStatusMatcher));
+    var assertStatus = this.testAssert.assertStatus();
 
     // Assert
-    verify(this.actions).andExpect(mockStatusMatcher);
-  }
-
-  @Test
-  void GIVEN_matcher_WHEN_assertByResultMatcher_THEN_andExpect_is_called() throws Exception {
-    // Arrange
-    var mockStatusMatcher = mock(ResultMatcher.class);
-
-    // Act
-    this.testAssert.assertByResultMatcher(mockStatusMatcher);
-
-    // Assert
-    verify(this.actions).andExpect(mockStatusMatcher);
+    assertThat(assertStatus.getClass(), is(TestAssertStatusImpl.class));
   }
 
   @Test
@@ -124,5 +69,17 @@ class TestAssertImplTest {
 
     // Assert
     assertThat(assertContent.getClass(), is(TestAssertContentImpl.class));
+  }
+
+  @Test
+  void WHEN_assertCustom_THEN_return_expected_class() {
+    // Arrange
+    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+
+    // Act
+    var assertCustom = this.testAssert.assertCustom();
+
+    // Assert
+    assertThat(assertCustom.getClass(), is(TestAssertCustomImpl.class));
   }
 }

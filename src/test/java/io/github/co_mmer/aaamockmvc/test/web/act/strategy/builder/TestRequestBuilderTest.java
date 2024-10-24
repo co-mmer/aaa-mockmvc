@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.test.web.act.strategy.builder;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestValue.TEST_URI;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestValue.TEST_URI;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.github.co_mmer.aaamockmvc.test.web.request.model.TestRequestType;

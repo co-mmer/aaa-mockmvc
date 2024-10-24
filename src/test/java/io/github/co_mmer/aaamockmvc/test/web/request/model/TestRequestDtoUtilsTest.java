@@ -1,19 +1,19 @@
 package io.github.co_mmer.aaamockmvc.test.web.request.model;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_CONTENT;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_CONTENT_NULL;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_EMPTY;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_NULL;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_EMPTY;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_NULL;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_EMPTY;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_NULL;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_EMPTY;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_NULL;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_CONTENT;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_CONTENT_NULL;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_EMPTY;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_NULL;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_EMPTY;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_NULL;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_EMPTY;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_NULL;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_EMPTY;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_NULL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
