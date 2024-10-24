@@ -268,6 +268,9 @@ In the provided library, every test follows the AAA structure using the followin
 2. **Act**: Perform the operation (e.g., make the API request).
 3. **Assert**: Validate the result (e.g., check HTTP status, response content).
 
+Optionally, the result of the request can be accessed using the `answer()` method, allowing for
+further examination and validation of the response.
+
 ### Arrange Section
 
 <details>
@@ -1011,6 +1014,99 @@ specific `ResultMatcher` that verifies if the specified cookie is present in the
       .asserts()
       .assertCustom()
       .assertCustomResultMatcher(cookie().exists("sessionId"))
+```
+
+</details>
+
+### Answer Section
+
+<details>
+<summary>Answer ResultActions</summary>
+
+This method retrieves the ResultActions from the executed HTTP request, allowing detailed
+examination and validation of the response.
+
+```  
+ var answer = get()
+                 ...
+                 .act()
+                 .actPerform()
+                 .answer()
+                 .answerAsResultActions();
+```
+
+---
+
+</details>
+
+<details>
+<summary>Answer String</summary>
+
+This method retrieves the content of the HTTP response as a String.
+
+```  
+ var answer = get()
+                 ...
+                 .act()
+                 .actPerform()
+                 .answer()
+                 .answerAsString();
+```
+
+---
+
+</details>
+
+<details>
+<summary>Answer Byte</summary>
+
+This method retrieves the content of the HTTP response as a byte array.
+
+```  
+ var answer = get()
+                 ...
+                 .act()
+                 .actPerform()
+                 .answer()
+                 .answerAsByte();
+```
+
+---
+
+</details>
+
+<details>
+<summary>Answer Header</summary>
+
+This method retrieves the value of a specific response header.
+
+```  
+ var answer = get()
+                 ...
+                 .act()
+                 .actPerform()
+                 .answer()
+                 .answerHeader(KEY);
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>Answer Void</summary>
+
+This method retrieves the result of the HTTP request without returning any content. It is used when
+the response is not needed.
+
+```  
+  get()
+      ...
+      .act()
+      .actPerform()
+      .answer()
+      .answerVoid();
 ```
 
 </details>

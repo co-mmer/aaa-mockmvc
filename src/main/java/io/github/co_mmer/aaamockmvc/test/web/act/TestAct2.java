@@ -1,9 +1,8 @@
 package io.github.co_mmer.aaamockmvc.test.web.act;
 
 import io.github.co_mmer.aaamockmvc.test.web.act.exception.TestActException;
+import io.github.co_mmer.aaamockmvc.test.web.answer.TestAnswer;
 import io.github.co_mmer.aaamockmvc.test.web.asserts.TestAssert;
-import org.springframework.lang.Nullable;
-import org.springframework.test.web.servlet.ResultActions;
 
 /**
  * This interface represents a contract for performing actions and obtaining results from HTTP
@@ -17,59 +16,25 @@ import org.springframework.test.web.servlet.ResultActions;
 public interface TestAct2 {
 
   /**
-   * Retrieves the {@link ResultActions} from the executed HTTP request.
+   * Retrieves the {@link TestAssert} instance for asserting the response of the HTTP request.
    *
-   * @return the result actions of the request
-   * @throws TestActException if an error occurs while retrieving the result actions
-   * @since 1.0.0
-   */
-  ResultActions resultActions() throws TestActException;
-
-  /**
-   * Retrieves the response content as a string from the executed HTTP request.
-   *
-   * @return the response content as a string
-   * @throws TestActException if an error occurs while retrieving the response content
-   * @since 1.0.0
-   */
-  String resultAsString() throws TestActException;
-
-  /**
-   * Retrieves the response content as a byte array from the executed HTTP request.
-   *
-   * @return the response content as a byte array
-   * @throws TestActException if an error occurs while retrieving the response content
-   * @since 1.0.0
-   */
-  byte[] resultAsByte() throws TestActException;
-
-  /**
-   * Executes the HTTP request without returning any content.
-   *
-   * @throws TestActException if an error occurs during the execution
-   * @since 1.0.0
-   */
-  void resultVoid() throws TestActException;
-
-  /**
-   * Retrieves the value of a specified response header from the executed HTTP request.
-   *
-   * @param key the name of the response header to retrieve
-   * @return the value of the response header, or {@code null} if the header is not present
-   * @throws TestActException if an error occurs while retrieving the header value
-   * @since 1.0.0
-   */
-  @Nullable
-  String resultHeader(String key) throws TestActException;
-
-  /**
-   * Returns an instance of {@link TestAssert} for asserting the response of the HTTP request.
-   *
-   * <p>This method allows for further validation of the result using various assertion methods.
+   * <p>This method allows for further validation of the result using various assertion methods,
+   * enabling comprehensive checks on the HTTP response to ensure it meets expected criteria.
    *
    * @return a {@code TestAssert} instance for asserting the result of the request
    * @throws TestActException if an error occurs while performing the request
    * @since 1.0.0
    */
   TestAssert asserts() throws TestActException;
+
+  /**
+   * Retrieves the {@link TestAnswer} instance for the executed HTTP request.
+   *
+   * <p>This method provides access to the response content and other aspects of the request's
+   * outcome, enabling further validation and examination of the HTTP response.
+   *
+   * @return a {@code TestAnswer} instance for accessing the result of the request
+   * @since 1.2.0
+   */
+  TestAnswer answer();
 }
