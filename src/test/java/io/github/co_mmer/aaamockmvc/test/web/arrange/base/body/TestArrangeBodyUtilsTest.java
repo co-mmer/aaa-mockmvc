@@ -1,12 +1,12 @@
 package io.github.co_mmer.aaamockmvc.test.web.arrange.base.body;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestBody.TEST_BODY_JSON;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestFiles.TEST_FILE_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestFiles.TEST_FILE_1_2;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestFiles.TEST_FILE_2;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestFiles.TEST_FILE_3;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestFiles.TEST_FILE_3_4;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestFiles.TEST_FILE_4;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestBody.TEST_BODY_JSON;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestFiles.TEST_FILE_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestFiles.TEST_FILE_1_2;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestFiles.TEST_FILE_2;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestFiles.TEST_FILE_3;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestFiles.TEST_FILE_3_4;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestFiles.TEST_FILE_4;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;

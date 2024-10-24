@@ -1,10 +1,10 @@
 package io.github.co_mmer.aaamockmvc.test.web.arrange.get.head;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestHeader.TEST_AUTH_KEY;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestHeader.TEST_AUTH_VALUE;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestHeader.TEST_HEADER_KEY_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestHeader.TEST_HEADER_MAP_1_2;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestHeader.TEST_HEADER_VALUE_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestHeader.TEST_AUTH_KEY;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestHeader.TEST_AUTH_VALUE;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestHeader.TEST_HEADER_KEY_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestHeader.TEST_HEADER_MAP_1_2;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestHeader.TEST_HEADER_VALUE_1;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_PDF;

@@ -28,14 +28,16 @@ ___
 
 ## Installation
 
-To include AAAMockMvc in the project, add the following dependency to the `pom.xml`:
+To include AAAMockMvc in the project, add the following dependency to the `pom.xml`.
+The sources can also be downloaded directly within the IDE (e.g., IntelliJ IDEA) to access the
+documentation of the classes.
 
 ```xml
 
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <scope>test</scope>
 </dependency>
 
@@ -573,6 +575,7 @@ This example shows how to assert that the response returns the exact status code
       .act()
       .actPerform()
       .asserts()
+      .assertStatus()
       .assertStatus(200)
 ```
 
@@ -586,10 +589,174 @@ This example shows how to assert that the response returns the exact HttpStatus.
       .act()
       .actPerform()
       .asserts()
+      .assertStatus()
       .assertStatus(HttpStatus.OK)
 ```
 
 ---
+
+### Assert Status Is OK
+
+This example shows how to assert that the response status is 200 OK.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus()
+      .assertStatusIsOk()
+```
+
+---
+
+### Assert Status Is Created
+
+This example shows how to assert that the response status is 201 Created.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus()
+      .assertStatusIsCreated()
+```
+
+---
+
+### Assert Status Is Accepted
+
+This example shows how to assert that the response status is 202 Accepted.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus()
+      .assertStatusIsAccepted()
+```
+
+---
+
+### Assert Status Is Not Found
+
+This example shows how to assert that the response status is 404 Not Found.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus()
+      .assertStatusIsNotFound()
+```
+
+---
+
+### Assert Status Is Client Error
+
+This example shows how to assert that the response status is within the range of client errors (
+400-499).
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus()
+      .assertStatusIsClientError()
+```
+
+---
+
+### Assert Status Is Server Error
+
+This example shows how to assert that the response status is within the range of server errors (
+500-599).
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus()
+      .assertStatusIsServerError()
+```
+
+---
+
+### Assert Status Is Redirect
+
+This example shows how to assert that the response status indicates a redirection (3xx).
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus()
+      .assertStatusIsRedirect()
+```
+
+---
+
+### Assert Status Is Access Forbidden
+
+This example shows how to assert that the response status is 403 Access Forbidden.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus()
+      .assertStatusIsAccessForbidden()
+```
+
+---
+
+### Assert Status Is Access Unauthorized
+
+This example shows how to assert that the response status is 401 Access Unauthorized.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus()
+      .assertStatusIsAccessUnauthorized()
+```
+
+---
+
+### Assert Status In Range
+
+This example shows how to assert that the response status is within a specific range.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus()
+      .assertStatusInRange(400, 499)
+```
+
+---
+
 </details> 
 
 <details>
@@ -819,12 +986,12 @@ This example is used to assert that a specific header key has the expected value
 
 
 <details>
-<summary>Assert ResultMatcher</summary>
+<summary>Assert Custom</summary>
 
 ### Assert Result Matcher
 
-In this example, the **`assertByResultMatcher`** method demonstrates how to use custom assertions
-through the `ResultMatcher` interface.
+In this example, the **`assertCustomResultMatcher`** method demonstrates how to use custom
+assertions through the `ResultMatcher` interface.
 
 In the provided code snippet, a custom assertion is made to check for the existence
 of a cookie named `"sessionId"` in the response. The syntax `cookie().exists("sessionId")` is a
@@ -836,7 +1003,8 @@ specific `ResultMatcher` that verifies if the specified cookie is present in the
       .act()
       .actPerform()
       .asserts()
-      .assertByResultMatcher(cookie().exists("sessionId"))
+      .assertCustom()
+      .assertCustomResultMatcher(cookie().exists("sessionId"))
 ```
 
 </details>
@@ -881,7 +1049,8 @@ void WHEN_call_endpoint_THEN_return_expected_list_dto() throws Exception {
       .act()
       .actPerform()
       .asserts()
-      .assertStatus(HttpStatus.OK)
+      .assertStatus()
+      .assertStatusIsOk()
       .assertContent()
       .assertContentNotEmpty()
       .assertContentSize(2)
@@ -933,7 +1102,8 @@ void GIVEN_files_WHEN_call_endpoint_THEN_return_expected_status_201() throws Exc
       .act()
       .actPerform()
       .asserts()
-      .assertStatus(201);
+      .assertStatus()
+      .assertStatusIsCreated();
 }
 ```
 

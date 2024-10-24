@@ -1,14 +1,14 @@
 package io.github.co_mmer.aaamockmvc.test.web.act.component;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestBody.TEST_BODY_JSON;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_CONTENT_NULL;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_2;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_EMPTY;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_NULL;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestBodyDto.createRequestBodyDto;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestFiles.TEST_FILE_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestFiles.TEST_FILE_2;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestBody.TEST_BODY_JSON;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_CONTENT_NULL;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_2;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_EMPTY;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestBodyDto.TEST_REQUEST_BODY_FILE_NULL;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestBodyDto.createRequestBodyDto;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestFiles.TEST_FILE_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestFiles.TEST_FILE_2;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

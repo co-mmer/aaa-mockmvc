@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.test.web.request.context;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestObject.TEST_REQUEST_CONFIG;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_REQUEST_CONFIG;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

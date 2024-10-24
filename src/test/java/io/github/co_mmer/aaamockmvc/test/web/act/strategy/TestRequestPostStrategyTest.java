@@ -1,10 +1,10 @@
 package io.github.co_mmer.aaamockmvc.test.web.act.strategy;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO_WITH_FILE_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO_WITH_FILE_EMPTY;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO_WITH_FILE_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO_WITH_FILE_EMPTY;
 
-import io.github.co_mmer.aaamockmvc.test.testdata.testsetup.TestRequestStrategySetup;
+import io.github.co_mmer.aaamockmvc.testdata.testsetup.TestRequestStrategySetup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

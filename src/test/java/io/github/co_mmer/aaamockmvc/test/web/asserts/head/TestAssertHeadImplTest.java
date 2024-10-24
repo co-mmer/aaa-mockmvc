@@ -1,9 +1,9 @@
 package io.github.co_mmer.aaamockmvc.test.web.asserts.head;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestValue.TEST_HEAD_KEY_2;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestValue.TEST_HEAD_VALUE_2;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_KEY_2;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestValue.TEST_HEAD_VALUE_2;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

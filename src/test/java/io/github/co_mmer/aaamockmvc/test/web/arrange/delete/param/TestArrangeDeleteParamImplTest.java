@@ -1,8 +1,8 @@
 package io.github.co_mmer.aaamockmvc.test.web.arrange.delete.param;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestParameter.TEST_PARAM_KEY_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestParameter.TEST_PARAM_KEY_VALUE_MAP_1_2;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestParameter.TEST_PARAM_VALUE_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestParameter.TEST_PARAM_KEY_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestParameter.TEST_PARAM_KEY_VALUE_MAP_1_2;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestParameter.TEST_PARAM_VALUE_1;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

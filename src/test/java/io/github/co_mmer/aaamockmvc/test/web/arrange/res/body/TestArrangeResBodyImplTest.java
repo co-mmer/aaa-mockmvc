@@ -1,9 +1,9 @@
 package io.github.co_mmer.aaamockmvc.test.web.arrange.res.body;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestBody.TEST_BODY_JSON;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestBody.TEST_BODY_XML;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestFiles.TEST_FILE_1;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestFiles.TEST_FILE_1_2;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestBody.TEST_BODY_JSON;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestBody.TEST_BODY_XML;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestFiles.TEST_FILE_1;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestFiles.TEST_FILE_1_2;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON;

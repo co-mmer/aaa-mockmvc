@@ -1,17 +1,17 @@
 package io.github.co_mmer.aaamockmvc.test.web.asserts.mapper;
 
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestObject.TEST_OBJECTS_1_DTO;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestObject.TEST_OBJECTS_LIST_1_JSON;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_DTO;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_JSON;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestObject.TEST_OBJECTS_SET_1_DTO;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestObject.TEST_OBJECTS_SET_1_JSON;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestObject.TEST_OBJECT_1_DTO;
-import static io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestObject.TEST_OBJECT_1_JSON;
 import static io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.TestAssertResultMapper.mapTo;
 import static io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.TestAssertResultMapper.mapToList;
 import static io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.TestAssertResultMapper.mapToMap;
 import static io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.TestAssertResultMapper.mapToSet;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_1_DTO;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_LIST_1_JSON;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_DTO;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_JSON;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_SET_1_DTO;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_SET_1_JSON;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECT_1_DTO;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECT_1_JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,8 +19,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.co_mmer.aaamockmvc.test.testdata.testutil.TestObjectDto;
 import io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.exception.TestAssertResultMapperException;
+import io.github.co_mmer.aaamockmvc.testdata.testutil.TestObjectDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletResponse;
