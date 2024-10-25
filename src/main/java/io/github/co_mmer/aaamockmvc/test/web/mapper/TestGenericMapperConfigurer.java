@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.test.web.asserts.mapper;
+package io.github.co_mmer.aaamockmvc.test.web.mapper;
 
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +9,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Utility class for creating and configuring an {@code ObjectMapper} with custom deserializers.
+ * Utility class for configuring an {@code ObjectMapper} with custom deserializers.
  *
  * <p>This class provides methods to add specific deserializers to an existing {@code ObjectMapper},
  * allowing for the deserialization of complex objects in a controlled manner.
@@ -17,10 +17,10 @@ import lombok.RequiredArgsConstructor;
  * @since 1.0.0
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class TestAssertObjectMapper {
+public final class TestGenericMapperConfigurer {
 
   /**
-   * Creates and configures an {@code ObjectMapper} with optional custom deserializers.
+   * Registers custom deserializers in the provided {@code ObjectMapper}.
    *
    * <p>If provided, the deserializers are registered for the specified expected class.
    *
@@ -35,7 +35,7 @@ public final class TestAssertObjectMapper {
    *     null}
    * @since 1.0.0
    */
-  public static <T> ObjectMapper create(
+  public static <T> ObjectMapper registerDeserializers(
       @NonNull ObjectMapper objectMapper,
       @NonNull Class<T> expectedClass,
       JsonDeserializer<?>[] deserializers) {

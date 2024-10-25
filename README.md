@@ -1,9 +1,15 @@
-<table border="0" cellspacing="0" cellpadding="0">
+<table>
   <tr>
-    <td><img src="./images/aaa-mockmvc-icon.png" alt="icon" style="vertical-align: middle;"/></td>
+    <td><img src="./images/aaa-mockmvc-icon.png" alt="aaa-mockmvc-icon" style="vertical-align: middle;"/></td>
     <td><h1>AAA-MockMvc</h1></td>
   </tr>
 </table>
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
+[![SQALE Rating](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
 
 ## Overview
 
@@ -37,7 +43,7 @@ documentation of the classes.
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
   <scope>test</scope>
 </dependency>
 
@@ -261,6 +267,9 @@ In the provided library, every test follows the AAA structure using the followin
    headers).
 2. **Act**: Perform the operation (e.g., make the API request).
 3. **Assert**: Validate the result (e.g., check HTTP status, response content).
+
+Optionally, the result of the request can be accessed using the `answer()` method, allowing for
+further examination and validation of the response.
 
 ### Arrange Section
 
@@ -1005,6 +1014,109 @@ specific `ResultMatcher` that verifies if the specified cookie is present in the
       .asserts()
       .assertCustom()
       .assertCustomResultMatcher(cookie().exists("sessionId"))
+```
+
+</details>
+
+### Answer Section
+
+<details>
+<summary>Answer ResultActions</summary>
+
+### Retrieve Result Actions
+
+This method retrieves the ResultActions from the executed HTTP request, allowing detailed
+examination and validation of the response.
+
+```  
+ var answer = get()
+                 ...
+                 .act()
+                 .actPerform()
+                 .answer()
+                 .answerAsResultActions();
+```
+
+---
+
+</details>
+
+<details>
+<summary>Answer String</summary>
+
+### Retrieve Response as String
+
+This method retrieves the content of the HTTP response as a String.
+
+```  
+ var answer = get()
+                 ...
+                 .act()
+                 .actPerform()
+                 .answer()
+                 .answerAsString();
+```
+
+---
+
+</details>
+
+<details>
+<summary>Answer Byte</summary>
+
+### Retrieve Response as Byte Array
+
+This method retrieves the content of the HTTP response as a byte array.
+
+```  
+ var answer = get()
+                 ...
+                 .act()
+                 .actPerform()
+                 .answer()
+                 .answerAsByte();
+```
+
+---
+
+</details>
+
+<details>
+<summary>Answer Header</summary>
+
+### Retrieve Specific Response Header
+
+This method retrieves the value of a specific response header.
+
+```  
+ var answer = get()
+                 ...
+                 .act()
+                 .actPerform()
+                 .answer()
+                 .answerHeader(KEY);
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>Answer Void</summary>
+
+### Execute and Discard Response Content
+
+This method retrieves the result of the HTTP request without returning any content. It is used when
+the response is not needed.
+
+```  
+  get()
+      ...
+      .act()
+      .actPerform()
+      .answer()
+      .answerVoid();
 ```
 
 </details>

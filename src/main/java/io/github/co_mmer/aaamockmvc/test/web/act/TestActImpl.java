@@ -2,24 +2,26 @@ package io.github.co_mmer.aaamockmvc.test.web.act;
 
 import io.github.co_mmer.aaamockmvc.test.web.act.exception.TestActException;
 import io.github.co_mmer.aaamockmvc.test.web.act.strategy.TestRequestStrategyFactory;
+import io.github.co_mmer.aaamockmvc.test.web.answer.TestAnswer;
+import io.github.co_mmer.aaamockmvc.test.web.answer.TestAnswerImpl;
 import io.github.co_mmer.aaamockmvc.test.web.asserts.TestAssert;
 import io.github.co_mmer.aaamockmvc.test.web.asserts.TestAssertImpl;
 import io.github.co_mmer.aaamockmvc.test.web.request.context.TestRequestBean;
 import io.github.co_mmer.aaamockmvc.test.web.request.context.TestRequestContext;
 import io.github.co_mmer.aaamockmvc.test.web.request.model.TestRequestDto;
-import java.io.UnsupportedEncodingException;
 import org.springframework.lang.NonNull;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 /**
- * This class represents the implementation of the HTTP request execution process in the testing
- * context. It provides methods for configuring, executing, and retrieving results from HTTP
- * requests.
+ * This class is responsible for executing HTTP requests and providing access to assertions and
+ * results within a testing context. It allows users to assert the response of the HTTP request
+ * through the {@link #asserts()} method and access the results via the {@link #answer()} method.
  *
- * <p>Using the {@code MockMvc} framework, this class simulates various HTTP requests defined by the
- * {@link TestRequestDto} and allows for result extraction and validation.
+ * <p>Utilizing a {@link TestRequestContext}, it manages request data and integrates with the {@link
+ * MockMvc} framework to perform the actual HTTP requests, enabling comprehensive testing
+ * strategies.
  *
  * @since 1.0.0
  */
@@ -27,6 +29,7 @@ public final class TestActImpl implements TestAct1, TestAct2 {
 
   private final TestRequestBean bean;
   private final TestRequestDto request;
+  private final TestRequestContext context;
   private MockHttpServletRequestBuilder requestBuilder;
 
   /**
@@ -41,6 +44,7 @@ public final class TestActImpl implements TestAct1, TestAct2 {
    * @since 1.0.0
    */
   public TestActImpl(@NonNull TestRequestContext context) {
+    this.context = context;
     this.request = context.request();
     this.bean = context.bean();
   }
@@ -60,81 +64,10 @@ public final class TestActImpl implements TestAct1, TestAct2 {
   }
 
   /**
-   * Performs the HTTP request and returns the actions result.
+   * Retrieves the {@link TestAssert} instance for asserting the response of the HTTP request.
    *
-   * @return the {@link ResultActions} for the performed request
-   * @throws TestActException if an error occurs while performing the request
-   * @since 1.0.0
-   */
-  @Override
-  public ResultActions resultActions() throws TestActException {
-    try {
-      return this.bean.mvc().perform(this.requestBuilder);
-    } catch (Exception e) {
-      throw new TestActException(e);
-    }
-  }
-
-  /**
-   * Performs the HTTP request but does not return the result.
-   *
-   * @throws TestActException if an error occurs while performing the request
-   * @since 1.0.0
-   */
-  @Override
-  public void resultVoid() throws TestActException {
-    resultActions();
-  }
-
-  /**
-   * Retrieves the content of the response as a string.
-   *
-   * @return the response content as a string
-   * @throws TestActException if an error occurs while retrieving the content
-   * @since 1.0.0
-   */
-  @Override
-  public String resultAsString() throws TestActException {
-    try {
-      return getResponse().getContentAsString();
-    } catch (UnsupportedEncodingException e) {
-      throw new TestActException(e);
-    }
-  }
-
-  private MockHttpServletResponse getResponse() throws TestActException {
-    return resultActions().andReturn().getResponse();
-  }
-
-  /**
-   * Retrieves the response as a byte array.
-   *
-   * @return the response content as a byte array
-   * @throws TestActException if an error occurs while retrieving the response
-   * @since 1.0.0
-   */
-  @Override
-  public byte[] resultAsByte() throws TestActException {
-    return getResponse().getContentAsByteArray();
-  }
-
-  /**
-   * Retrieves the value of a specific header from the response.
-   *
-   * @param key the name of the header to retrieve (must not be {@code null})
-   * @return the value of the specified header, or {@code null} if not present
-   * @throws TestActException if an error occurs while retrieving the header
-   * @since 1.0.0
-   */
-  @Override
-  public String resultHeader(String key) throws TestActException {
-    return getResponse().getHeader(key);
-  }
-
-  /**
-   * Returns an instance of {@link TestAssert} for asserting the response of the HTTP request.
-   *
-   * <p>This method allows for further validation of the result using various assertion methods.
+   * <p>This method allows for further validation of the result using various assertion methods,
+   * enabling comprehensive checks on the HTTP response to ensure it meets expected criteria.
    *
    * @return a {@code TestAssert} instance for asserting the result of the request
    * @throws TestActException if an error occurs while performing the request
@@ -144,5 +77,27 @@ public final class TestActImpl implements TestAct1, TestAct2 {
   public TestAssert asserts() throws TestActException {
     var resultActions = resultActions();
     return new TestAssertImpl(resultActions, this.bean.objectMapper());
+  }
+
+  private ResultActions resultActions() throws TestActException {
+    try {
+      return this.bean.mvc().perform(this.requestBuilder);
+    } catch (Exception e) {
+      throw new TestActException(e);
+    }
+  }
+
+  /**
+   * Retrieves the {@link TestAnswer} instance for the executed HTTP request.
+   *
+   * <p>This method provides access to the response content and other aspects of the request's
+   * outcome, enabling further validation and examination of the HTTP response.
+   *
+   * @return a {@code TestAnswer} instance for accessing the result of the request
+   * @since 1.2.0
+   */
+  @Override
+  public TestAnswer answer() {
+    return new TestAnswerImpl(this.context, this.requestBuilder);
   }
 }

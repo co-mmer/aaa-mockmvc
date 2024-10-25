@@ -27,8 +27,8 @@ import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.test.web.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.TestAssertResultMapper;
-import io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.exception.TestAssertResultMapperException;
+import io.github.co_mmer.aaamockmvc.test.web.mapper.TestGenericMapper;
+import io.github.co_mmer.aaamockmvc.test.web.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.testdata.testutil.TestObjectDto;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.BeforeEach;
@@ -263,17 +263,17 @@ class TestAssertContentImplTest {
   @SuppressWarnings("unchecked")
   void GIVEN_exception_object_WHEN_assertContentEquals_THEN_assert_is_false() {
     // Arrange
-    var mockTestAssertResultMapper = mockStatic(TestAssertResultMapper.class);
-    mockTestAssertResultMapper
-        .when(() -> TestAssertResultMapper.mapTo(any(), any(), any()))
-        .thenThrow(new TestAssertResultMapperException(new Throwable("error")));
+    var mockTestGenericMapper = mockStatic(TestGenericMapper.class);
+    mockTestGenericMapper
+        .when(() -> TestGenericMapper.mapTo(any(), any(), any()))
+        .thenThrow(new TestGenericMapperException(new Throwable("error")));
 
     // Act & Assert
     assertThrows(
         AssertionFailedError.class,
         () -> this.testAssert.assertContentEquals(TestObjectDto.class, TEST_OBJECT_1_DTO));
 
-    mockTestAssertResultMapper.close();
+    mockTestGenericMapper.close();
   }
 
   @Test
@@ -302,17 +302,17 @@ class TestAssertContentImplTest {
   @SuppressWarnings("unchecked")
   void GIVEN_exception_list_WHEN_assertContentEquals_THEN_assert_is_false() {
     // Arrange
-    var mockTestAssertResultMapper = mockStatic(TestAssertResultMapper.class);
-    mockTestAssertResultMapper
-        .when(() -> TestAssertResultMapper.mapToList(any(), any(), any()))
-        .thenThrow(new TestAssertResultMapperException(new Throwable("error")));
+    var mockTestGenericMapper = mockStatic(TestGenericMapper.class);
+    mockTestGenericMapper
+        .when(() -> TestGenericMapper.mapToList(any(), any(), any()))
+        .thenThrow(new TestGenericMapperException(new Throwable("error")));
 
     // Act & Assert
     assertThrows(
         AssertionFailedError.class,
         () -> this.testAssert.assertContentEquals(TestObjectDto.class, TEST_OBJECTS_1_DTO));
 
-    mockTestAssertResultMapper.close();
+    mockTestGenericMapper.close();
   }
 
   @Test
@@ -341,17 +341,17 @@ class TestAssertContentImplTest {
   @SuppressWarnings("unchecked")
   void GIVEN_exception_set_WHEN_assertContentEquals_THEN_assert_is_false() {
     // Arrange
-    var mockTestAssertResultMapper = mockStatic(TestAssertResultMapper.class);
-    mockTestAssertResultMapper
-        .when(() -> TestAssertResultMapper.mapToSet(any(), any(), any()))
-        .thenThrow(new TestAssertResultMapperException(new Throwable("error")));
+    var mockTestGenericMapper = mockStatic(TestGenericMapper.class);
+    mockTestGenericMapper
+        .when(() -> TestGenericMapper.mapToSet(any(), any(), any()))
+        .thenThrow(new TestGenericMapperException(new Throwable("error")));
 
     // Act & Assert
     assertThrows(
         AssertionFailedError.class,
         () -> this.testAssert.assertContentEquals(TestObjectDto.class, TEST_OBJECTS_SET_1_DTO));
 
-    mockTestAssertResultMapper.close();
+    mockTestGenericMapper.close();
   }
 
   @Test
@@ -382,10 +382,10 @@ class TestAssertContentImplTest {
   @SuppressWarnings("unchecked")
   void GIVEN_exception_map_WHEN_assertContentEquals_THEN_assert_is_false() {
     // Arrange
-    var mockTestAssertResultMapper = mockStatic(TestAssertResultMapper.class);
-    mockTestAssertResultMapper
-        .when(() -> TestAssertResultMapper.mapToMap(any(), any(), any(), any()))
-        .thenThrow(new TestAssertResultMapperException(new Throwable("error")));
+    var mockTestGenericMapper = mockStatic(TestGenericMapper.class);
+    mockTestGenericMapper
+        .when(() -> TestGenericMapper.mapToMap(any(), any(), any(), any()))
+        .thenThrow(new TestGenericMapperException(new Throwable("error")));
 
     // Act & Assert
     assertThrows(
@@ -394,7 +394,7 @@ class TestAssertContentImplTest {
             this.testAssert.assertContentEquals(
                 Boolean.class, TestObjectDto.class, TEST_OBJECTS_MAP_1_DTO));
 
-    mockTestAssertResultMapper.close();
+    mockTestGenericMapper.close();
   }
 
   @Test
