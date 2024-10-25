@@ -1,9 +1,9 @@
-package io.github.co_mmer.aaamockmvc.test.web.asserts.mapper;
+package io.github.co_mmer.aaamockmvc.test.web.mapper;
 
-import static io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.TestAssertResultMapper.mapTo;
-import static io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.TestAssertResultMapper.mapToList;
-import static io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.TestAssertResultMapper.mapToMap;
-import static io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.TestAssertResultMapper.mapToSet;
+import static io.github.co_mmer.aaamockmvc.test.web.mapper.TestGenericMapper.mapTo;
+import static io.github.co_mmer.aaamockmvc.test.web.mapper.TestGenericMapper.mapToList;
+import static io.github.co_mmer.aaamockmvc.test.web.mapper.TestGenericMapper.mapToMap;
+import static io.github.co_mmer.aaamockmvc.test.web.mapper.TestGenericMapper.mapToSet;
 import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_1_DTO;
 import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_LIST_1_JSON;
 import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_DTO;
@@ -19,14 +19,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.exception.TestAssertResultMapperException;
+import io.github.co_mmer.aaamockmvc.test.web.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.testdata.testutil.TestObjectDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 
-class TestAssertResultMapperTest {
+class TestGenericMapperTest {
 
   private MvcResult mockMvcResult;
   private MockHttpServletResponse mockHttpServletResponse;
@@ -61,7 +61,7 @@ class TestAssertResultMapperTest {
 
     // Assert
     assertThrows(
-        TestAssertResultMapperException.class,
+        TestGenericMapperException.class,
 
         // Act
         () -> mapTo(this.objectMapper, this.mockMvcResult, String.class));
@@ -88,7 +88,7 @@ class TestAssertResultMapperTest {
 
     // Assert
     assertThrows(
-        TestAssertResultMapperException.class,
+        TestGenericMapperException.class,
 
         // Act
         () -> mapToList(this.objectMapper, this.mockMvcResult, String.class));
@@ -115,7 +115,7 @@ class TestAssertResultMapperTest {
 
     // Assert
     assertThrows(
-        TestAssertResultMapperException.class,
+        TestGenericMapperException.class,
 
         // Act
         () -> mapToSet(this.objectMapper, this.mockMvcResult, String.class));
@@ -143,7 +143,7 @@ class TestAssertResultMapperTest {
 
     // Assert
     assertThrows(
-        TestAssertResultMapperException.class,
+        TestGenericMapperException.class,
 
         // Act
         () -> mapToMap(this.objectMapper, this.mockMvcResult, String.class, TestObjectDto.class));
@@ -157,7 +157,7 @@ class TestAssertResultMapperTest {
 
     // Assert
     assertThrows(
-        TestAssertResultMapperException.class,
+        TestGenericMapperException.class,
 
         // Act
         () -> mapToMap(this.objectMapper, this.mockMvcResult, Boolean.class, String.class));
@@ -171,7 +171,7 @@ class TestAssertResultMapperTest {
 
     // Assert
     assertThrows(
-        TestAssertResultMapperException.class,
+        TestGenericMapperException.class,
 
         // Act
         () -> mapToMap(this.objectMapper, this.mockMvcResult, String.class, String.class));

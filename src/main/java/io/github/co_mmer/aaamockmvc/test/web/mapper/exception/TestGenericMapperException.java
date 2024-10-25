@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.exception;
+package io.github.co_mmer.aaamockmvc.test.web.mapper.exception;
 
 /**
  * Custom exception class for handling errors that occur during the mapping of HTTP response results
@@ -10,10 +10,10 @@ package io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.exception;
  *
  * @since 1.0.0
  */
-public final class TestAssertResultMapperException extends Exception {
+public final class TestGenericMapperException extends Exception {
 
   /**
-   * Constructs a new {@code TestAssertResultMapperException} with the specified cause.
+   * Constructs a new {@code TestGenericMapperException} with the specified cause.
    *
    * <p>This constructor is used to wrap an existing {@link Throwable} that caused the mapping
    * error, preserving the original exception for further analysis.
@@ -22,7 +22,7 @@ public final class TestAssertResultMapperException extends Exception {
    * @throws NullPointerException if the {@code cause} is {@code null}
    * @since 1.0.0
    */
-  public TestAssertResultMapperException(Throwable cause) {
+  public TestGenericMapperException(Throwable cause) {
     super(cause);
   }
 }

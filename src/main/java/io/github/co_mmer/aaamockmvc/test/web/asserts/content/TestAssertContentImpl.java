@@ -1,5 +1,9 @@
 package io.github.co_mmer.aaamockmvc.test.web.asserts.content;
 
+import static io.github.co_mmer.aaamockmvc.test.web.mapper.TestGenericMapper.mapTo;
+import static io.github.co_mmer.aaamockmvc.test.web.mapper.TestGenericMapper.mapToList;
+import static io.github.co_mmer.aaamockmvc.test.web.mapper.TestGenericMapper.mapToMap;
+import static io.github.co_mmer.aaamockmvc.test.web.mapper.TestGenericMapper.mapToSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -9,8 +13,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.test.web.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.TestAssertResultMapper;
-import io.github.co_mmer.aaamockmvc.test.web.asserts.mapper.exception.TestAssertResultMapperException;
+import io.github.co_mmer.aaamockmvc.test.web.mapper.exception.TestGenericMapperException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -197,10 +200,9 @@ public final class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var result = this.actions.andReturn();
-      var content =
-          TestAssertResultMapper.mapTo(this.objectMapper, result, expectedClass, deserializers);
+      var content = mapTo(this.objectMapper, result, expectedClass, deserializers);
       assertThat(content, is(expectedResponse));
-    } catch (TestAssertResultMapperException e) {
+    } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
     return this;
@@ -228,10 +230,9 @@ public final class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var result = this.actions.andReturn();
-      var content =
-          TestAssertResultMapper.mapToList(this.objectMapper, result, expectedClass, deserializers);
+      var content = mapToList(this.objectMapper, result, expectedClass, deserializers);
       assertThat(content, is(expectedResponse));
-    } catch (TestAssertResultMapperException e) {
+    } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
     return this;
@@ -259,10 +260,9 @@ public final class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var result = this.actions.andReturn();
-      var content =
-          TestAssertResultMapper.mapToSet(this.objectMapper, result, expectedClass, deserializers);
+      var content = mapToSet(this.objectMapper, result, expectedClass, deserializers);
       assertThat(content, is(expectedResponse));
-    } catch (TestAssertResultMapperException e) {
+    } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
     return this;
@@ -293,11 +293,9 @@ public final class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var result = this.actions.andReturn();
-      var content =
-          TestAssertResultMapper.mapToMap(
-              this.objectMapper, result, keyClass, valueClass, deserializers);
+      var content = mapToMap(this.objectMapper, result, keyClass, valueClass, deserializers);
       assertThat(content, is(expectedResponse));
-    } catch (TestAssertResultMapperException e) {
+    } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
     return this;
