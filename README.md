@@ -1023,6 +1023,8 @@ specific `ResultMatcher` that verifies if the specified cookie is present in the
 <details>
 <summary>Answer ResultActions</summary>
 
+### Retrieve Result Actions
+
 This method retrieves the ResultActions from the executed HTTP request, allowing detailed
 examination and validation of the response.
 
@@ -1042,6 +1044,8 @@ examination and validation of the response.
 <details>
 <summary>Answer String</summary>
 
+### Retrieve Response as String
+
 This method retrieves the content of the HTTP response as a String.
 
 ```  
@@ -1059,6 +1063,8 @@ This method retrieves the content of the HTTP response as a String.
 
 <details>
 <summary>Answer Byte</summary>
+
+### Retrieve Response as Byte Array
 
 This method retrieves the content of the HTTP response as a byte array.
 
@@ -1078,6 +1084,8 @@ This method retrieves the content of the HTTP response as a byte array.
 <details>
 <summary>Answer Header</summary>
 
+### Retrieve Specific Response Header
+
 This method retrieves the value of a specific response header.
 
 ```  
@@ -1096,6 +1104,8 @@ This method retrieves the value of a specific response header.
 
 <details>
 <summary>Answer Void</summary>
+
+### Execute and Discard Response Content
 
 This method retrieves the result of the HTTP request without returning any content. It is used when
 the response is not needed.
