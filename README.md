@@ -1,6 +1,6 @@
 <table>
   <tr>
-    <td><img src="./images/aaa-mockmvc-icon.png" alt="icon" style="vertical-align: middle;"/></td>
+    <td><img src="./images/aaa-mockmvc-icon.png" alt="aaa-mockmvc-icon" style="vertical-align: middle;"/></td>
     <td><h1>AAA-MockMvc</h1></td>
   </tr>
 </table>
