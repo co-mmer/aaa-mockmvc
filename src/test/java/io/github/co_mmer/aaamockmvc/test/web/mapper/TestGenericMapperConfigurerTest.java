@@ -2,6 +2,7 @@ package io.github.co_mmer.aaamockmvc.test.web.mapper;
 
 import static io.github.co_mmer.aaamockmvc.test.web.mapper.TestGenericMapperConfigurer.registerDeserializers;
 import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestObject.TEST_OBJECT_1_JSON;
+import static io.github.co_mmer.aaamockmvc.testdata.testutil.TestValue.TEST_DESERIALIZE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -51,6 +52,6 @@ class TestGenericMapperConfigurerTest {
 
     // Assert
     var result = mapper.readValue(TEST_OBJECT_1_JSON, TestObjectDto.class);
-    assertThat(result.name(), is("deserialize"));
+    assertThat(result.name(), is(TEST_DESERIALIZE));
   }
 }
