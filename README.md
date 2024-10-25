@@ -43,7 +43,7 @@ documentation of the classes.
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
   <scope>test</scope>
 </dependency>
 

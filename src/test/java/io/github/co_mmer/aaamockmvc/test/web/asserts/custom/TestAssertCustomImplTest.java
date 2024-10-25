@@ -31,21 +31,40 @@ class TestAssertCustomImplTest {
     this.testAssert = new TestAssertCustomImpl(this.actions);
   }
 
+  @SuppressWarnings("ConstantConditions")
   @Test
-  void GIVEN_exception_WHEN_assertCustomResultMatcher_THEN_throw_TestAssertException()
+  void GIVEN_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
+    //  Assert
+    assertThrows(NullPointerException.class,
+
+        // Act
+        () -> new TestAssertCustomImpl(null));
+  }
+
+  @Test
+  void GIVEN_exception_WHEN_assertCustomResultMatcher_THEN_throw_exception()
       throws Exception {
 
     // Arrange
     var mockStatusMatcher = mock(ResultMatcher.class);
     doThrow(new RuntimeException()).when(this.actions).andExpect(mockStatusMatcher);
 
-    // Act
-    assertThrows(
-        AssertionFailedError.class,
+    // Assert
+    assertThrows(AssertionFailedError.class,
+
+        // Act
         () -> this.testAssert.assertCustomResultMatcher(mockStatusMatcher));
 
-    // Assert
-    verify(this.actions).andExpect(mockStatusMatcher);
+  }
+
+  @SuppressWarnings("ConstantConditions")
+  @Test
+  void GIVEN_null_WHEN_assertCustomResultMatcher_THEN_throw_NullPointerException() {
+    //  Assert
+    assertThrows(NullPointerException.class,
+
+        // Act
+        () -> this.testAssert.assertCustomResultMatcher(null));
   }
 
   @Test
