@@ -33,21 +33,68 @@ import org.springframework.test.web.servlet.ResultActions;
 
 class TestAssertStatusImplTest {
 
+  private ResultActions actions;
+  private ObjectMapper objectMapper;
   private MockHttpServletResponse response;
   private TestAssert1Status testAssert1;
   private TestAssert2Status testAssert2;
 
   @BeforeEach
   void setUp() {
-    var actions = mock(ResultActions.class);
+    this.actions = mock(ResultActions.class);
     var mvcResult = mock(MvcResult.class);
     this.response = new MockHttpServletResponse();
 
     when(mvcResult.getResponse()).thenReturn(this.response);
-    when(actions.andReturn()).thenReturn(mvcResult);
+    when(this.actions.andReturn()).thenReturn(mvcResult);
 
-    this.testAssert1 = new TestAssertStatusImpl(actions, new ObjectMapper());
-    this.testAssert2 = new TestAssertStatusImpl(actions, new ObjectMapper());
+    this.objectMapper = new ObjectMapper();
+    this.testAssert1 = new TestAssertStatusImpl(this.actions, this.objectMapper);
+    this.testAssert2 = new TestAssertStatusImpl(this.actions, this.objectMapper);
+  }
+
+  @SuppressWarnings("ConstantConditions")
+  @Test
+  void GIVEN_null_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
+    //  Assert
+    assertThrows(
+        NullPointerException.class,
+
+        // Act
+        () -> new TestAssertStatusImpl(null, null));
+  }
+
+  @SuppressWarnings("ConstantConditions")
+  @Test
+  void GIVEN_objectMapper_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
+    //  Assert
+    assertThrows(
+        NullPointerException.class,
+
+        // Act
+        () -> new TestAssertStatusImpl(this.actions, null));
+  }
+
+  @SuppressWarnings("ConstantConditions")
+  @Test
+  void GIVEN_actions_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
+    //  Assert
+    assertThrows(
+        NullPointerException.class,
+
+        // Act
+        () -> new TestAssertStatusImpl(null, this.objectMapper));
+  }
+
+  @SuppressWarnings("ConstantConditions")
+  @Test
+  void GIVEN_null_WHEN_assertStatus_THEN_throw_NullPointerException() {
+    //  Assert
+    assertThrows(
+        NullPointerException.class,
+
+        // Act
+        () -> this.testAssert1.assertStatus(null));
   }
 
   @Test
