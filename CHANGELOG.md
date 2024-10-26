@@ -2,6 +2,15 @@
 
 # Changelog
 
+## [1.2.1]
+
+### Improved
+
+- This release improves general test coverage across the framework, enhancing reliability and
+  stability in core functionalities.
+
+---
+
 ## [1.2.0]
 
 ### Added
