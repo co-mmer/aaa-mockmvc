@@ -8,11 +8,48 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestBodyDto;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class TestRequestUriMapperTest {
+
+  @SuppressWarnings("all")
+  @Test
+  void GIVEN_null_null_WHEN_mapTo_THEN_throw_NullPointerException() {
+    //  Assert
+    assertThrows(
+        NullPointerException.class,
+
+        // Act
+        () -> TestRequestUriMapper.mapTo(null, null));
+  }
+
+  @SuppressWarnings("all")
+  @Test
+  void GIVEN_url_null_WHEN_addFile_THEN_throw_NullPointerException() {
+    //  Assert
+    assertThrows(
+        NullPointerException.class,
+
+        // Act
+        () -> TestRequestUriMapper.mapTo(null, List.of(VAR_STRING_1)));
+  }
+
+  @SuppressWarnings("all")
+  @Test
+  void GIVEN_path_variables_null_WHEN_addFile_THEN_throw_NullPointerException() {
+    // Arrange
+    var testRequestBodyDto = new TestRequestBodyDto();
+
+    //  Assert
+    assertThrows(
+        NullPointerException.class,
+
+        // Act
+        () -> TestRequestUriMapper.mapTo(TEST_PATH, null));
+  }
 
   @Test
   void GIVEN_path_variables_empty_WHEN_mapTo_THEN_returned_expected_value() {
