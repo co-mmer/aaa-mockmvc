@@ -16,6 +16,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_2;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -24,8 +25,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.strategy.component.TestComponentHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestHeadDto;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 class TestComponentHeadTest {
@@ -35,6 +41,24 @@ class TestComponentHeadTest {
   @BeforeEach
   void setUp() {
     this.mockRequestBuilder = mock(MockHttpServletRequestBuilder.class);
+  }
+
+  @ParameterizedTest()
+  @MethodSource("provideNull")
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_provideNull_WHEN_apply_THEN_throw_NullPointerException(
+      MockHttpServletRequestBuilder builder, TestRequestHeadDto testRequestHeadDto) {
+
+    assertThrows(
+        NullPointerException.class,
+        () -> TestComponentHead.apply(builder, testRequestHeadDto));
+  }
+
+  private static Stream<Arguments> provideNull() {
+    return Stream.of(
+        Arguments.of(null, mock(TestRequestHeadDto.class)),
+        Arguments.of(mock(MockHttpServletRequestBuilder.class), null),
+        Arguments.of(null, null));
   }
 
   @Test

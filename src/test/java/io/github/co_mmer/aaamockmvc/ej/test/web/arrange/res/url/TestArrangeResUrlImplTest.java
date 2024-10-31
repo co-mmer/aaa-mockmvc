@@ -6,6 +6,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_U
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.VAR_STRING_1;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestActImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.url.TestArrangeUrlUtils;
@@ -43,6 +44,18 @@ class TestArrangeResUrlImplTest {
   }
 
   @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> new TestArrangeResUrlImpl(null));
+  }
+
+  @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_WHEN_arrangeUrl_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> this.impl.arrangeUrl(null));
+  }
+
+  @Test
   void GIVEN_url_WHEN_arrangeUrl_THEN_setUri_is_called() {
     // Act
     this.impl.arrangeUrl(TEST_URL);
@@ -53,13 +66,25 @@ class TestArrangeResUrlImplTest {
   }
 
   @Test
-  void GIVEN_url_var1_and_vars_1_WHEN_arrangeUrl_THEN_setUri_is_called() {
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_url_null_var1_WHEN_arrangeUrl_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> this.impl.arrangeUrl(null, VAR_STRING_1));
+  }
+
+  @Test
+  void GIVEN_url_var1_vars_1_WHEN_arrangeUrl_THEN_setUri_is_called() {
     // Act
     this.impl.arrangeUrl(TEST_PATH_VAR1, VAR_STRING_1);
 
     // Assert
     this.mockTestArrangeUrlUtils.verify(
         () -> TestArrangeUrlUtils.setUri(this.requestDto.getUrl(), TEST_PATH_VAR1, VAR_STRING_1));
+  }
+
+  @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_WHEN_arrangeUri_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> this.impl.arrangeUri(null));
   }
 
   @Test

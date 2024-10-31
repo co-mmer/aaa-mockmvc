@@ -7,7 +7,6 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_BYTE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -55,7 +54,6 @@ class TestAnswerTest {
     var exception = assertThrows(Exception.class, () -> this.testAnswer.answerAsResultActions());
 
     // Assert
-    assertThat(exception, is(notNullValue()));
     assertThat(exception.getClass(), is(TestAnswerException.class));
   }
 
@@ -124,7 +122,6 @@ class TestAnswerTest {
     var exception = assertThrows(Exception.class, () -> this.testAnswer.answerAsString());
 
     // Assert
-    assertThat(exception, is(notNullValue()));
     assertThat(exception.getClass(), is(TestAnswerException.class));
   }
 

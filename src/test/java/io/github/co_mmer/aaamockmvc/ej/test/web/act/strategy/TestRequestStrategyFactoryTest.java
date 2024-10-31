@@ -9,14 +9,22 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequest
 import static io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestType.PUT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestType;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class TestRequestStrategyFactoryTest {
+
+  @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_WHEN_resolve_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> TestRequestStrategyFactory.resolve(null));
+  }
 
   @ParameterizedTest
   @MethodSource("useCase")

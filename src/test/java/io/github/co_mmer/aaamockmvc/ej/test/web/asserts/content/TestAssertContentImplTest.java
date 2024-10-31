@@ -37,9 +37,13 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapp
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1Deserializer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1Dto;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject2Deserializer;
+import java.util.stream.Stream;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
@@ -63,6 +67,23 @@ class TestAssertContentImplTest {
     when(this.actions.andReturn()).thenReturn(mvcResult);
 
     this.testAssert = new TestAssertContentImpl(this.actions, new ObjectMapper());
+  }
+
+  @ParameterizedTest()
+  @MethodSource("provideNullParameters")
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_provideNullParameters_WHEN_call_constructor_THEN_throw_NullPointerException(
+      ResultActions actions, ObjectMapper objectMapper) {
+
+    assertThrows(
+        NullPointerException.class, () -> new TestAssertContentImpl(actions, objectMapper));
+  }
+
+  private static Stream<Arguments> provideNullParameters() {
+    return Stream.of(
+        Arguments.of(null, new ObjectMapper()),
+        Arguments.of(mock(ResultActions.class), null),
+        Arguments.of(null, null));
   }
 
   @Test
@@ -257,7 +278,7 @@ class TestAssertContentImplTest {
   @SuppressWarnings("unchecked")
   void GIVEN_deserializers_object_WHEN_assertContentEquals_THEN_assert_is_true() throws Exception {
     // Arrange
-    var deserializers = new JsonDeserializer[] {new TestObject1Deserializer()};
+    var deserializers = new JsonDeserializer[]{new TestObject1Deserializer()};
     this.response.getWriter().write(TEST_OBJECT_1_JSON);
 
     // Act & Assert
@@ -268,11 +289,11 @@ class TestAssertContentImplTest {
   @Test
   @SuppressWarnings("unchecked")
   void
-      GIVEN_object2_deserializer_expectedClass_object1_WHEN_assertContentEquals_THEN_assert_is_false()
-          throws Exception {
+  GIVEN_object2_deserializer_expectedClass_object1_WHEN_assertContentEquals_THEN_assert_is_false()
+      throws Exception {
 
     // Arrange
-    var deserializers = new JsonDeserializer[] {new TestObject2Deserializer()};
+    var deserializers = new JsonDeserializer[]{new TestObject2Deserializer()};
     this.response.getWriter().write(TEST_OBJECT_1_JSON);
 
     // Act & Assert
@@ -326,7 +347,7 @@ class TestAssertContentImplTest {
   @SuppressWarnings("unchecked")
   void GIVEN_deserializers_list_WHEN_assertContentEquals_THEN_assert_is_true() throws Exception {
     // Arrange
-    var deserializers = new JsonDeserializer[] {new TestObject1Deserializer()};
+    var deserializers = new JsonDeserializer[]{new TestObject1Deserializer()};
     this.response.getWriter().write(TEST_OBJECTS_LIST_1_JSON);
 
     // Act & Assert
@@ -377,7 +398,7 @@ class TestAssertContentImplTest {
   @SuppressWarnings("unchecked")
   void GIVEN_deserializers_set_WHEN_assertContentEquals_THEN_assert_is_true() throws Exception {
     // Arrange
-    var deserializers = new JsonDeserializer[] {new TestObject1Deserializer()};
+    var deserializers = new JsonDeserializer[]{new TestObject1Deserializer()};
     this.response.getWriter().write(TEST_OBJECTS_SET_1_JSON);
 
     // Act & Assert
@@ -429,7 +450,7 @@ class TestAssertContentImplTest {
   @SuppressWarnings("unchecked")
   void GIVEN_deserializers_map_WHEN_assertContentEquals_THEN_assert_is_true() throws Exception {
     // Arrange
-    var deserializers = new JsonDeserializer[] {new TestObject1Deserializer()};
+    var deserializers = new JsonDeserializer[]{new TestObject1Deserializer()};
     this.response.getWriter().write(TEST_OBJECTS_MAP_1_JSON);
 
     // Act & Assert

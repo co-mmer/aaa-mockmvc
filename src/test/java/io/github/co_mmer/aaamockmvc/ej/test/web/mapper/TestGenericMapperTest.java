@@ -22,8 +22,12 @@ import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1Deserializer
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1Dto;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -39,6 +43,26 @@ class TestGenericMapperTest {
     this.mockHttpServletResponse = mock(MockHttpServletResponse.class);
     when(this.mockMvcResult.getResponse()).thenReturn(this.mockHttpServletResponse);
     this.objectMapper = new ObjectMapper();
+  }
+
+  @ParameterizedTest()
+  @MethodSource("provideNullParameters")
+  @SuppressWarnings("unchecked")
+  void GIVEN_provideNullParametersOnMapTo_WHEN_mapTo_THEN_throw_NullPointerException(
+      ObjectMapper mapper, MvcResult result, Class<?> clazz) {
+
+    assertThrows(NullPointerException.class, () -> TestGenericMapper.mapTo(mapper, result, clazz));
+  }
+
+  private static Stream<Arguments> provideNullParameters() {
+    return Stream.of(
+        Arguments.of(null, mock(MvcResult.class), String.class),
+        Arguments.of(new ObjectMapper(), null, String.class),
+        Arguments.of(new ObjectMapper(), mock(MvcResult.class), null),
+        Arguments.of(null, null, String.class),
+        Arguments.of(null, mock(MvcResult.class), null),
+        Arguments.of(new ObjectMapper(), null, null),
+        Arguments.of(null, null, null));
   }
 
   @Test
@@ -59,7 +83,7 @@ class TestGenericMapperTest {
   @SuppressWarnings("unchecked")
   void GIVEN_deserializers_WHEN_mapTo_THEN_return_deserialize_value() throws Exception {
     // Arrange
-    var deserializers = new JsonDeserializer[] {new TestObject1Deserializer()};
+    var deserializers = new JsonDeserializer[]{new TestObject1Deserializer()};
     when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECT_1_JSON);
 
     // Act
@@ -85,6 +109,16 @@ class TestGenericMapperTest {
         () -> TestGenericMapper.mapTo(this.objectMapper, this.mockMvcResult, String.class));
   }
 
+  @ParameterizedTest()
+  @MethodSource("provideNullParameters")
+  @SuppressWarnings("unchecked")
+  void GIVEN_provideNullParameters_WHEN_mapToList_THEN_throw_NullPointerException(
+      ObjectMapper mapper, MvcResult result, Class<?> clazz) {
+
+    assertThrows(
+        NullPointerException.class, () -> TestGenericMapper.mapToList(mapper, result, clazz));
+  }
+
   @Test
   @SuppressWarnings("unchecked")
   void GIVEN_expected_list_WHEN_mapToList_THEN_return_expect_object() throws Exception {
@@ -103,7 +137,7 @@ class TestGenericMapperTest {
   @SuppressWarnings("unchecked")
   void GIVEN_deserializers_WHEN_mapToList_THEN_return_deserialize_values() throws Exception {
     // Arrange
-    var deserializers = new JsonDeserializer[] {new TestObject1Deserializer()};
+    var deserializers = new JsonDeserializer[]{new TestObject1Deserializer()};
     when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_LIST_1_JSON);
 
     // Act
@@ -128,6 +162,16 @@ class TestGenericMapperTest {
 
         // Act
         () -> TestGenericMapper.mapToList(this.objectMapper, this.mockMvcResult, String.class));
+  }
+
+  @ParameterizedTest()
+  @MethodSource("provideNullParameters")
+  @SuppressWarnings("unchecked")
+  void GIVEN_provideNullParameters_WHEN_mapToSet_THEN_throw_NullPointerException(
+      ObjectMapper mapper, MvcResult result, Class<?> clazz) {
+
+    assertThrows(
+        NullPointerException.class, () -> TestGenericMapper.mapToSet(mapper, result, clazz));
   }
 
   @Test
@@ -158,6 +202,33 @@ class TestGenericMapperTest {
         () -> TestGenericMapper.mapToSet(this.objectMapper, this.mockMvcResult, String.class));
   }
 
+  @ParameterizedTest()
+  @MethodSource("provideNullParametersMapToMap")
+  @SuppressWarnings("unchecked")
+  void GIVEN_provideNullParametersMapToMap_WHEN_mapToMap_THEN_throw_NullPointerException(
+      ObjectMapper mapper, MvcResult result, Class<?> keyClass, Class<?> valueClass) {
+
+    assertThrows(
+        NullPointerException.class,
+        () -> TestGenericMapper.mapToMap(mapper, result, keyClass, valueClass));
+  }
+
+  private static Stream<Arguments> provideNullParametersMapToMap() {
+    return Stream.of(
+        Arguments.of(null, mock(MvcResult.class), String.class, Integer.class),
+        Arguments.of(new ObjectMapper(), null, String.class, Integer.class),
+        Arguments.of(new ObjectMapper(), mock(MvcResult.class), null, Integer.class),
+        Arguments.of(new ObjectMapper(), mock(MvcResult.class), String.class, null),
+        Arguments.of(null, null, String.class, Integer.class),
+        Arguments.of(null, mock(MvcResult.class), null, Integer.class),
+        Arguments.of(new ObjectMapper(), null, null, Integer.class),
+        Arguments.of(new ObjectMapper(), mock(MvcResult.class), null, null),
+        Arguments.of(null, null, null, Integer.class),
+        Arguments.of(null, mock(MvcResult.class), null, null),
+        Arguments.of(new ObjectMapper(), null, null, null),
+        Arguments.of(null, null, null, null));
+  }
+
   @Test
   @SuppressWarnings("unchecked")
   void GIVEN_expected_map_WHEN_mapToSet_THEN_return_expect_object() throws Exception {
@@ -177,7 +248,7 @@ class TestGenericMapperTest {
   @SuppressWarnings("unchecked")
   void GIVEN_deserializers_WHEN_mapToSet_THEN_return_deserialize_values() throws Exception {
     // Arrange
-    var deserializers = new JsonDeserializer[] {new TestObject1Deserializer()};
+    var deserializers = new JsonDeserializer[]{new TestObject1Deserializer()};
     when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_MAP_1_JSON);
 
     // Act

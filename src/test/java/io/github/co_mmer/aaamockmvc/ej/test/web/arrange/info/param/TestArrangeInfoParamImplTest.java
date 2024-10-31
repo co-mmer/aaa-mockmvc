@@ -5,6 +5,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TE
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_VALUE_1;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestActImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.url.TestArrangeUrlUtils;
@@ -37,6 +38,12 @@ class TestArrangeInfoParamImplTest {
   @AfterEach
   void clean() {
     this.mockTestArrangeUrlUtils.close();
+  }
+
+  @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> new TestArrangeInfoParamImpl(null));
   }
 
   @Test

@@ -18,15 +18,15 @@ import org.springframework.http.MediaType;
  */
 public final class TestArrangeDeleteHeadImpl extends TestArrangeBaseHead
     implements TestArrange1DeleteHead,
-        TestArrange2DeleteHead,
-        TestArrange3DeleteHead,
-        TestArrange4DeleteHead,
-        TestArrange5DeleteHead,
-        TestArrange6DeleteHead {
+    TestArrange2DeleteHead,
+    TestArrange3DeleteHead,
+    TestArrange4DeleteHead,
+    TestArrange5DeleteHead,
+    TestArrange6DeleteHead {
 
   /**
-   * Initializes the arrangement for DELETE request headers using the provided {@code
-   * TestRequestContext}.
+   * Initializes the arrangement for DELETE request headers using the provided
+   * {@code TestRequestContext}.
    *
    * @param context the context that manages the state of the request (must not be {@code null})
    * @throws NullPointerException if the {@code context} is {@code null}
@@ -39,14 +39,14 @@ public final class TestArrangeDeleteHeadImpl extends TestArrangeBaseHead
   /**
    * Arranges the "Accept" header for the DELETE request.
    *
-   * @param mediaTypes the acceptable media types for the response (must not be {@code null})
+   * @param accepts the acceptable media types for the response (must not be {@code null})
    * @return the current instance for further configuration
    * @throws NullPointerException if the {@code mediaTypes} is {@code null}
    * @since 1.0.0
    */
   @Override
-  public TestArrange2DeleteHead arrangeAccept(@NonNull MediaType... mediaTypes) {
-    setAccepts(mediaTypes);
+  public TestArrange2DeleteHead arrangeAccept(@NonNull MediaType... accepts) {
+    setAccepts(accepts);
     return this;
   }
 
@@ -66,21 +66,21 @@ public final class TestArrangeDeleteHeadImpl extends TestArrangeBaseHead
   /**
    * Arranges the "Content-Type" header for the DELETE request.
    *
-   * @param mediaTypes the content types to be sent in the request (must not be {@code null})
+   * @param contentType the content types to be sent in the request (must not be {@code null})
    * @return the current instance for further configuration
    * @throws NullPointerException if the {@code mediaTypes} is {@code null}
    * @since 1.0.0
    */
   @Override
-  public TestArrange4DeleteHead arrangeContentType(@NonNull MediaType... mediaTypes) {
-    setContentTypes(mediaTypes);
+  public TestArrange4DeleteHead arrangeContentType(@NonNull MediaType... contentType) {
+    setContentTypes(contentType);
     return this;
   }
 
   /**
    * Arranges a custom key-value pair to be added as a header in the DELETE request.
    *
-   * @param key the name of the header
+   * @param key   the name of the header
    * @param value the value of the header
    * @return the current instance for further configuration
    * @since 1.0.0
@@ -95,7 +95,7 @@ public final class TestArrangeDeleteHeadImpl extends TestArrangeBaseHead
    * Arranges multiple custom key-value pairs to be added as headers in the DELETE request.
    *
    * @param keyValue a map containing header names and their corresponding values (must not be
-   *     {@code null})
+   *                 {@code null})
    * @return the current instance for further configuration
    * @throws NullPointerException if the {@code keyValue} is {@code null}
    * @since 1.0.0

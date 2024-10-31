@@ -14,7 +14,8 @@ import org.mockito.InjectMocks;
 
 class TestRequestPutTest extends TestRequestBase {
 
-  @InjectMocks private TestRequestPut testRequestPut;
+  @InjectMocks
+  private TestRequestPut testRequestPut;
 
   @Test
   void WHEN_arrange_THEN_TestRequestContext_is_called_with_mockMvc() {

@@ -1,6 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.head;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.TestArrangeBaseAbstract;
+import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.validation.TestArrangeValidator;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContext;
 import java.util.Map;
 import lombok.NonNull;
@@ -9,9 +10,9 @@ import org.springframework.http.MediaType;
 /**
  * Abstract base class for arranging headers in a GET request.
  *
- * <p>Provides methods to configure common HTTP headers such as "Accept", "Content-Type", and custom
- * key-value pairs. This class is extended by concrete classes to arrange specific headers for
- * requests.
+ * <p>Provides methods to configure common HTTP headers such as "Accept", "Content-Type", and
+ * custom key-value pairs. This class is extended by concrete classes to arrange specific headers
+ * for requests.
  *
  * @since 1.0.0
  */
@@ -40,6 +41,7 @@ public abstract class TestArrangeBaseHead extends TestArrangeBaseAbstract {
    * @since 1.0.0
    */
   protected void setAccepts(@NonNull MediaType... types) {
+    TestArrangeValidator.nonNullAccepts(types);
     TestArrangeHeadUtils.setAccepts(getHead(), types);
   }
 
@@ -66,13 +68,14 @@ public abstract class TestArrangeBaseHead extends TestArrangeBaseAbstract {
    * @since 1.0.0
    */
   protected void setContentTypes(@NonNull MediaType... types) {
+    TestArrangeValidator.nonNullContentTypes(types);
     TestArrangeHeadUtils.setContentTypes(getHead(), types);
   }
 
   /**
    * Adds a custom key-value pair to the request headers.
    *
-   * @param key the name of the header
+   * @param key   the name of the header
    * @param value the value of the header
    * @since 1.0.0
    */
@@ -84,7 +87,7 @@ public abstract class TestArrangeBaseHead extends TestArrangeBaseAbstract {
    * Adds multiple custom key-value pairs to the request headers.
    *
    * @param keyValue a map containing header names and their corresponding values (must not be
-   *     {@code null})
+   *                 {@code null})
    * @throws NullPointerException if the {@code keyValue} is {@code null}
    * @since 1.0.0
    */

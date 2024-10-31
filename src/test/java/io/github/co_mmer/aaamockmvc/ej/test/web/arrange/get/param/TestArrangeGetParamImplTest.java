@@ -5,6 +5,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TE
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_VALUE_1;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestActImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.url.TestArrangeUrlUtils;
@@ -41,6 +42,12 @@ class TestArrangeGetParamImplTest {
   }
 
   @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> new TestArrangeGetParamImpl(null));
+  }
+
+  @Test
   void GIVEN_key_value_WHEN_arrangeKeyValue_THEN_addParam_is_called() {
     // Act
     this.impl.arrangeKeyValue(TEST_PARAM_KEY_1, TEST_PARAM_VALUE_1);
@@ -50,6 +57,13 @@ class TestArrangeGetParamImplTest {
         () ->
             TestArrangeUrlUtils.addParam(
                 this.requestDto.getUrl(), TEST_PARAM_KEY_1, TEST_PARAM_VALUE_1));
+  }
+
+  @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_map_null_WHEN_arrangeKeyValue_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class,
+        () -> this.impl.arrangeKeyValue(null));
   }
 
   @Test

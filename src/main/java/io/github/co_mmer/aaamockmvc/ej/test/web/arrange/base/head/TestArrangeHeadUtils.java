@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.head;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.validation.TestArrangeValidator;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestHeadDto;
 import java.util.Arrays;
 import java.util.Map;
@@ -24,30 +25,32 @@ public final class TestArrangeHeadUtils {
    * Sets the acceptable media types for the request headers.
    *
    * @param destination the destination {@code TestRequestHeadDto} to set accepts on (must not be
-   *     {@code null})
-   * @param accepts the media types that the request can accept (must not be {@code null})
+   *                    {@code null})
+   * @param accepts     the media types that the request can accept (must not be {@code null})
    * @throws NullPointerException if either {@code destination} or {@code accepts} is {@code null}
    * @since 1.0.0
    */
   public static void setAccepts(
       @NonNull TestRequestHeadDto destination, @NonNull MediaType... accepts) {
 
+    TestArrangeValidator.nonNullAccepts(accepts);
     destination.setAccepts(Arrays.stream(accepts).toList());
   }
 
   /**
    * Sets the content types for the request headers.
    *
-   * @param destination the destination {@code TestRequestHeadDto} to set content types on (must not
-   *     be {@code null})
+   * @param destination  the destination {@code TestRequestHeadDto} to set content types on (must
+   *                     not be {@code null})
    * @param contentTypes the media types that the request will send (must not be {@code null})
-   * @throws NullPointerException if either {@code destination} or {@code contentTypes} is {@code
-   *     null}
+   * @throws NullPointerException if either {@code destination} or {@code contentTypes} is
+   *                              {@code null}
    * @since 1.0.0
    */
   public static void setContentTypes(
       @NonNull TestRequestHeadDto destination, @NonNull MediaType... contentTypes) {
 
+    TestArrangeValidator.nonNullContentTypes(contentTypes);
     destination.setContentTypes(Arrays.stream(contentTypes).toList());
   }
 
@@ -55,9 +58,9 @@ public final class TestArrangeHeadUtils {
    * Adds a key-value pair to the request headers.
    *
    * @param destination the destination {@code TestRequestHeadDto} to add key-value pair to (must
-   *     not be {@code null})
-   * @param key the header name (must not be {@code null})
-   * @param value the header value
+   *                    not be {@code null})
+   * @param key         the header name (must not be {@code null})
+   * @param value       the header value
    * @throws NullPointerException if {@code destination} or {@code key} is {@code null}
    * @since 1.0.0
    */
@@ -71,8 +74,9 @@ public final class TestArrangeHeadUtils {
    * Adds multiple key-value pairs to the request headers.
    *
    * @param destination the destination {@code TestRequestHeadDto} to add key-value pairs to (must
-   *     not be {@code null})
-   * @param keyValue a map of header names and their corresponding values (must not be {@code null})
+   *                    not be {@code null})
+   * @param keyValue    a map of header names and their corresponding values (must not be
+   *                    {@code null})
    * @throws NullPointerException if either {@code destination} or {@code keyValue} is {@code null}
    * @since 1.0.0
    */
