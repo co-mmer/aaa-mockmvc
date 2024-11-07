@@ -45,7 +45,7 @@ documentation of the classes.
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.2.1</version>
+  <version>1.3.0</version>
   <scope>test</scope>
 </dependency>
 
@@ -224,7 +224,8 @@ public class ControllerTest {
         .act()
         .actPerform()
         .asserts()
-        .assertStatus(HttpStatus.OK);
+        .assertStatus()
+        .assertStatusIsOk();
   }
 }
 ```
@@ -252,7 +253,8 @@ public class ControllerTest extends AAAMockMvcAbstract {
         .act()
         .actPerform()
         .asserts()
-        .assertStatus(HttpStatus.OK);
+        .assertStatus()
+        .assertStatusIsOk();
   }
 }
 ```
@@ -1057,6 +1059,103 @@ This method retrieves the content of the HTTP response as a String.
                  .actPerform()
                  .answer()
                  .answerAsString();
+```
+
+---
+
+</details>
+
+<details>
+<summary>Answer Object</summary>
+
+### Retrieve Object
+
+The `answerAsObject` method deserializes the HTTP response content directly into an instance of the
+specified class type `(T)`. In this case, it converts the response data into an object of type
+`DemoA`. This allows for streamlined handling of the response, as it is returned as a fully typed
+object, eliminating the need for additional parsing or casting steps.
+
+```  
+DemoA demoA = get()
+                  .arrange()
+                  .arrangeUrl(GET_DEMO)
+                  .act()
+                  .actPerform()
+                  .answer()
+                  .answerAsObject(DemoA.class);
+```
+
+---
+
+</details>
+
+<details>
+<summary>Answer List</summary>
+
+### Retrieve List
+
+The `answerAsList` method deserializes the HTTP response content directly into a list of the
+specified class type `(T)`. In this case, it converts the response data into a list of `DemoA`
+objects. This allows for streamlined handling of the response, as it is returned as a fully typed
+list, eliminating the need for additional parsing or casting steps.
+
+```  
+List<DemoA> demoA = get()
+                      .arrange()
+                      .arrangeUrl(GET_DEMO)
+                      .act()
+                      .actPerform()
+                      .answer()
+                      .answerAsList(DemoA.class);
+```
+
+---
+
+</details>
+
+<details>
+<summary>Answer Set</summary>
+
+### Retrieve Set
+
+The `answerAsSet` method deserializes the HTTP response content directly into a set of the specified
+class type `(T)`. In this case, it converts the response data into a set of `DemoA` objects. This
+allows for streamlined handling of the response, as it is returned as a fully typed set, eliminating
+the need for additional parsing or casting steps.
+
+```  
+Set<DemoA> demoA = get()
+                      .arrange()
+                      .arrangeUrl(GET_DEMO)
+                      .act()
+                      .actPerform()
+                      .answer()
+                      .answerAsSet(DemoA.class);
+```
+
+---
+
+</details>
+
+<details>
+<summary>Answer Map</summary>
+
+### Retrieve Map
+
+The `answerAsMap` method deserializes the HTTP response content directly into a map, where the
+specified key and value types are provided as parameters `(K and V)`. In this case, it converts the
+response data into a map with `Integer` as the key type and `DemoA` as the value type. This allows
+for streamlined handling of the response, as it is returned as a fully typed map, eliminating the
+need for additional parsing or casting steps.
+
+```  
+Map<Integer, DemoA> demoA = get()
+                              .arrange()
+                              .arrangeUrl(GET_DEMO)
+                              .act()
+                              .actPerform()
+                              .answer()
+                              .answerAsMap(Integer.class, DemoA.class);
 ```
 
 ---

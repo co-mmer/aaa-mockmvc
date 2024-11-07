@@ -81,7 +81,8 @@ class TestAssertHeadImplTest {
   @Test
   @SuppressWarnings("ConstantConditions")
   void GIVEN_null_WHEN_assertHeadEquals_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class,
+    assertThrows(
+        NullPointerException.class,
         () -> this.testAssert.assertHeadEquals(null, TEST_HEAD_VALUE_1));
   }
 

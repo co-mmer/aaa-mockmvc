@@ -1,10 +1,19 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.answer;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapTo;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToList;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToMap;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToSet;
+
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestBean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContext;
 import java.io.UnsupportedEncodingException;
-import org.springframework.lang.NonNull;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import lombok.NonNull;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -48,6 +57,10 @@ public final class TestAnswerImpl implements TestAnswer {
    */
   @Override
   public ResultActions answerAsResultActions() throws TestAnswerException {
+    return this.resultActions();
+  }
+
+  private ResultActions resultActions() throws TestAnswerException {
     try {
       return this.bean.mvc().perform(this.requestBuilder);
     } catch (Exception e) {
@@ -85,6 +98,92 @@ public final class TestAnswerImpl implements TestAnswer {
   @Override
   public byte[] answerAsByte() throws TestAnswerException {
     return getResponse().getContentAsByteArray();
+  }
+
+  /**
+   * Retrieves the response as an instance of the specified class type.
+   *
+   * @param resultType the target class to map the response content to (must not be {@code null})
+   * @param <T> the type of the object to be returned
+   * @return an instance of the specified type populated with the response data
+   * @throws NullPointerException if the {@code targetClass} is {@code null}
+   * @throws TestAnswerException if an error occurs during the mapping process
+   * @since 1.3.0
+   */
+  @Override
+  public <T> T answerAsObject(@NonNull Class<T> resultType) throws TestAnswerException {
+    try {
+      var result = this.resultActions().andReturn();
+      return mapTo(this.bean.objectMapper(), result, resultType);
+    } catch (TestGenericMapperException e) {
+      throw new TestAnswerException(e);
+    }
+  }
+
+  /**
+   * Retrieves the response as a {@link List} of the specified class type.
+   *
+   * @param elementType the target class type for each element in the list (must not be {@code
+   *     null})
+   * @param <T> the type of each element in the list
+   * @return a {@link List} populated with elements of the specified type
+   * @throws NullPointerException if the {@code targetClass} is {@code null}
+   * @throws TestAnswerException if an error occurs during the mapping process
+   * @since 1.3.0
+   */
+  @Override
+  public <T> List<T> answerAsList(@NonNull Class<T> elementType) throws TestAnswerException {
+    try {
+      var result = this.resultActions().andReturn();
+      return mapToList(this.bean.objectMapper(), result, elementType);
+    } catch (TestGenericMapperException e) {
+      throw new TestAnswerException(e);
+    }
+  }
+
+  /**
+   * Retrieves the response as a {@link Set} of the specified class type.
+   *
+   * @param elementType the target class type for each element in the set (must not be {@code null})
+   * @param <T> the type of each element in the set
+   * @return a {@link Set} populated with elements of the specified type
+   * @throws NullPointerException if the {@code targetClass} is {@code null}
+   * @throws TestAnswerException if an error occurs during the mapping process
+   * @since 1.3.0
+   */
+  @Override
+  public <T> Set<T> answerAsSet(@NonNull Class<T> elementType) throws TestAnswerException {
+    try {
+      var result = this.resultActions().andReturn();
+      return mapToSet(this.bean.objectMapper(), result, elementType);
+    } catch (TestGenericMapperException e) {
+      throw new TestAnswerException(e);
+    }
+  }
+
+  /**
+   * Retrieves the response as a {@link Map} with the specified key and value types.
+   *
+   * @param keyType the target class type for the map keys (must not be {@code null})
+   * @param valueType the target class type for the map values (must not be {@code null})
+   * @param <K> the type of keys in the map
+   * @param <V> the type of values in the map
+   * @return a {@link Map} populated with keys and values of the specified types
+   * @throws NullPointerException if either {@code targetKeyClass} or {@code targetValueClass} is
+   *     {@code null}
+   * @throws TestAnswerException if an error occurs during the mapping process
+   * @since 1.3.0
+   */
+  @Override
+  public <K, V> Map<K, V> answerAsMap(@NonNull Class<K> keyType, @NonNull Class<V> valueType)
+      throws TestAnswerException {
+
+    try {
+      var result = this.resultActions().andReturn();
+      return mapToMap(this.bean.objectMapper(), result, keyType, valueType);
+    } catch (TestGenericMapperException e) {
+      throw new TestAnswerException(e);
+    }
   }
 
   /**

@@ -42,15 +42,15 @@ class TestRequestDtoUtilsTest {
   @Test
   @SuppressWarnings("ConstantConditions")
   void GIVEN_null_WHEN_isNotEmptyContentTypes_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class,
-        () -> TestRequestDtoUtils.isNotEmptyContentTypes(null));
+    assertThrows(
+        NullPointerException.class, () -> TestRequestDtoUtils.isNotEmptyContentTypes(null));
   }
 
   @ParameterizedTest
   @MethodSource("useCaseContainsHeadContentTypes")
   void
-  GIVEN_useCaseContainsHeadContentTypes_WHEN_containsHeadContentTypes_THEN_return_expected_boolean(
-      TestRequestHeadDto headDto, boolean expectedBoolean) {
+      GIVEN_useCaseContainsHeadContentTypes_WHEN_containsHeadContentTypes_THEN_return_expected_boolean(
+          TestRequestHeadDto headDto, boolean expectedBoolean) {
 
     // Act
     var result = TestRequestDtoUtils.isNotEmptyContentTypes(headDto);
@@ -69,8 +69,7 @@ class TestRequestDtoUtilsTest {
   @Test
   @SuppressWarnings("ConstantConditions")
   void GIVEN_null_WHEN_isNotNullContent_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class,
-        () -> TestRequestDtoUtils.isNotNullContent(null));
+    assertThrows(NullPointerException.class, () -> TestRequestDtoUtils.isNotNullContent(null));
   }
 
   @ParameterizedTest
@@ -95,8 +94,7 @@ class TestRequestDtoUtilsTest {
   @Test
   @SuppressWarnings("ConstantConditions")
   void GIVEN_null_WHEN_isNotEmptyFiles_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class,
-        () -> TestRequestDtoUtils.isNotEmptyFiles(null));
+    assertThrows(NullPointerException.class, () -> TestRequestDtoUtils.isNotEmptyFiles(null));
   }
 
   @ParameterizedTest
@@ -121,8 +119,7 @@ class TestRequestDtoUtilsTest {
   @Test
   @SuppressWarnings("ConstantConditions")
   void GIVEN_null_WHEN_isNotEmptyKeyValues_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class,
-        () -> TestRequestDtoUtils.isNotEmptyKeyValue(null));
+    assertThrows(NullPointerException.class, () -> TestRequestDtoUtils.isNotEmptyKeyValue(null));
   }
 
   @ParameterizedTest

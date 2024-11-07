@@ -46,8 +46,7 @@ class TestComponentBodyTest {
       MockHttpServletRequestBuilder builder, TestRequestBodyDto testRequestBodyDto) {
 
     assertThrows(
-        NullPointerException.class,
-        () -> TestComponentBody.apply(builder, testRequestBodyDto));
+        NullPointerException.class, () -> TestComponentBody.apply(builder, testRequestBodyDto));
   }
 
   private static Stream<Arguments> provideNull() {

@@ -62,8 +62,7 @@ class TestArrangeGetParamImplTest {
   @Test
   @SuppressWarnings("ConstantConditions")
   void GIVEN_map_null_WHEN_arrangeKeyValue_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class,
-        () -> this.impl.arrangeKeyValue(null));
+    assertThrows(NullPointerException.class, () -> this.impl.arrangeKeyValue(null));
   }
 
   @Test

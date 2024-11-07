@@ -8,9 +8,9 @@ import org.springframework.util.CollectionUtils;
 /**
  * Utility class for validating properties of request DTOs.
  *
- * <p>This class provides static methods to check the presence and validity of various properties
- * in request-related data transfer objects (DTOs), such as URL parameters, headers, and body
- * content. The methods mainly focus on determining whether certain fields are empty or null.
+ * <p>This class provides static methods to check the presence and validity of various properties in
+ * request-related data transfer objects (DTOs), such as URL parameters, headers, and body content.
+ * The methods mainly focus on determining whether certain fields are empty or null.
  *
  * <p>The constructor is private, and the class is designed to be used statically.
  *
@@ -42,7 +42,7 @@ public final class TestRequestDtoUtils {
   public static boolean isNotEmptyContentTypes(@NonNull TestRequestHeadDto headDto) {
     return !CollectionUtils.isEmpty(headDto.getContentTypes());
   }
-  
+
   /**
    * Checks if the content in the provided {@code TestRequestBodyDto} is not null.
    *
@@ -90,5 +90,4 @@ public final class TestRequestDtoUtils {
   public static boolean isNotEmptyKeyValue(@NonNull TestRequestHeadDto headDto) {
     return !CollectionUtils.isEmpty(headDto.getKeyValue());
   }
-
 }

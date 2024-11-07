@@ -18,12 +18,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public abstract class TestRequestBase {
 
-  @Mock
-  protected TestRequestBean bean;
-  @Mock
-  protected TestRequestContextBuilder mockContextBuilder;
-  @Mock
-  protected TestRequestContext mockContext;
+  @Mock protected TestRequestBean bean;
+  @Mock protected TestRequestContextBuilder mockContextBuilder;
+  @Mock protected TestRequestContext mockContext;
   protected MockedStatic<TestRequestContextBuilder> mockedStatic;
 
   @BeforeEach

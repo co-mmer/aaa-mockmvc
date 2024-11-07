@@ -48,8 +48,7 @@ class TestArrangeResParamImplTest {
   @Test
   @SuppressWarnings("ConstantConditions")
   void GIVEN_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class,
-        () -> new TestArrangeResParamImpl(null));
+    assertThrows(NullPointerException.class, () -> new TestArrangeResParamImpl(null));
   }
 
   @Test
@@ -66,8 +65,7 @@ class TestArrangeResParamImplTest {
   @Test
   @SuppressWarnings("ConstantConditions")
   void GIVEN_null_WHEN_arrangeKeyValue_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class,
-        () -> this.impl.arrangeKeyValue(null));
+    assertThrows(NullPointerException.class, () -> this.impl.arrangeKeyValue(null));
   }
 
   @Test

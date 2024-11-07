@@ -16,8 +16,7 @@ class TestRequestBuilderUtilsTest {
   @Test
   @SuppressWarnings("ConstantConditions")
   void GIVEN_null_WHEN_setMethod_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class,
-        () -> TestRequestBuilderUtils.setMethod(null));
+    assertThrows(NullPointerException.class, () -> TestRequestBuilderUtils.setMethod(null));
   }
 
   @ParameterizedTest

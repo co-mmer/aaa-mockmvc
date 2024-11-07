@@ -160,8 +160,7 @@ class TestArrangeBodyUtilsTest {
           Arguments.of(null, TEST_BODY_JSON, APPLICATION_JSON),
           Arguments.of(mock(TestRequestBodyDto.class), null, APPLICATION_JSON),
           Arguments.of(mock(TestRequestBodyDto.class), TEST_BODY_JSON, null),
-          Arguments.of(null, null, null)
-      );
+          Arguments.of(null, null, null));
     }
 
     @Test

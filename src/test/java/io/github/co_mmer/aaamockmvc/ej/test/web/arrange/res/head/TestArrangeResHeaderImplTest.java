@@ -67,8 +67,7 @@ class TestArrangeResHeaderImplTest {
     this.impl.arrangeAccept(APPLICATION_JSON);
 
     // Assert
-    mockTestArrangeValidator.verify(
-        () -> TestArrangeValidator.nonNullAccepts(APPLICATION_JSON));
+    mockTestArrangeValidator.verify(() -> TestArrangeValidator.nonNullAccepts(APPLICATION_JSON));
     mockTestArrangeValidator.close();
   }
 
@@ -160,8 +159,7 @@ class TestArrangeResHeaderImplTest {
   @Test
   @SuppressWarnings("ConstantConditions")
   void GIVEN_map_null_WHEN_arrangeKeyValue_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class,
-        () -> this.impl.arrangeKeyValue(null));
+    assertThrows(NullPointerException.class, () -> this.impl.arrangeKeyValue(null));
   }
 
   @Test

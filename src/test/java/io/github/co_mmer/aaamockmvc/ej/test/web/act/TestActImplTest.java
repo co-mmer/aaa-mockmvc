@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.act;
 
+import static io.github.co_mmer.aaamockmvc.ej.testdata.MockTestRequestStrategyFactory.mockTestRequestStrategyFactory;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -17,12 +18,12 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswerImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestBean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContext;
-import io.github.co_mmer.aaamockmvc.ej.testdata.MockTestRequestStrategyFactory;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testsetup.MockMvcSetup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 class TestActImplTest {
 
@@ -44,8 +45,7 @@ class TestActImplTest {
   @Test
   void WHEN_actPerform_THEN_TestRequestStrategyFactory_resolve_is_called() {
     // Arrange
-    var mockTestRequestStrategyFactory =
-        MockTestRequestStrategyFactory.mockTestRequestStrategyFactory();
+    var mockTestRequestStrategyFactory = mockTestRequestStrategyFactory();
 
     // Act
     this.testAct.actPerform();
@@ -61,8 +61,7 @@ class TestActImplTest {
   void WHEN_actPerform_THEN_strategy_apply_is_called() {
     // Arrange
     var mockTestRequestStrategy = Mockito.mock(TestRequestBaseStrategy.class);
-    var mockTestRequestStrategyFactory =
-        MockTestRequestStrategyFactory.mockTestRequestStrategyFactory(mockTestRequestStrategy);
+    var mockTestRequestStrategyFactory = mockTestRequestStrategyFactory(mockTestRequestStrategy);
 
     // Act
     this.testAct.actPerform();
@@ -100,15 +99,20 @@ class TestActImplTest {
   }
 
   @Test
-  void WHEN_answer_THEN_return_expected_class() throws Exception {
+  void WHEN_answer_THEN_return_expected_class() {
     // Arrange
-    this.setup.mockGetHeader();
-    this.testAct = new TestActImpl(this.testRequestContext);
+    var mockMockHttpServletRequestBuilder = mock(MockHttpServletRequestBuilder.class);
+    var mockTestRequestStrategy = mock(TestRequestBaseStrategy.class);
+    var mockTestRequestStrategyFactory = mockTestRequestStrategyFactory(mockTestRequestStrategy);
+    when(mockTestRequestStrategy.apply(any())).thenReturn(mockMockHttpServletRequestBuilder);
+
+    this.testAct.actPerform();
 
     // Act
     var answer = this.testAct.answer();
 
     // Assert
     assertThat(answer.getClass(), is(TestAnswerImpl.class));
+    mockTestRequestStrategyFactory.close();
   }
 }

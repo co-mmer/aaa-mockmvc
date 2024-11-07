@@ -2,6 +2,22 @@
 
 # Changelog
 
+## [1.3.0]
+
+### Added
+
+- Answer Section Enhancements
+    - **`answerAsObject(T resultType)`**: Deserializes the HTTP response directly into an object
+      of the specified type (T).
+    - **`answerAsList(Class<T> elementType)`**: Deserializes the HTTP response into a set of the
+      specified type (T).
+    - **`answerAsSet(Class<T> elementType)`** Deserializes HTTP response content directly into
+      a set of a specified class.
+    - **`answerAsMap(Class<K> keyType, Class<V> valueType)`**:  Deserializes the HTTP response
+      into a map with specified key and value types (K and V).
+
+---
+
 ## [1.2.1]
 
 ### Improved

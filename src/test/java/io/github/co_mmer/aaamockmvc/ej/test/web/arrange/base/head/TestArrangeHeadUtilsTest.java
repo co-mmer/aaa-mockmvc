@@ -55,8 +55,10 @@ class TestArrangeHeadUtilsTest {
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
-      var exception = assertThrows(NullPointerException.class,
-          () -> TestArrangeHeadUtils.setAccepts(testRequestHeadDto, null, null));
+      var exception =
+          assertThrows(
+              NullPointerException.class,
+              () -> TestArrangeHeadUtils.setAccepts(testRequestHeadDto, null, null));
 
       // Assert
       assertThat(exception.getMessage(), is("Accepts must not contain null values"));
@@ -115,8 +117,10 @@ class TestArrangeHeadUtilsTest {
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
-      var exception = assertThrows(NullPointerException.class,
-          () -> TestArrangeHeadUtils.setContentTypes(testRequestHeadDto, null, null));
+      var exception =
+          assertThrows(
+              NullPointerException.class,
+              () -> TestArrangeHeadUtils.setContentTypes(testRequestHeadDto, null, null));
 
       // Assert
       assertThat(exception.getMessage(), is("ContentTypes must not contain null values"));
@@ -153,7 +157,8 @@ class TestArrangeHeadUtilsTest {
     @Test
     @SuppressWarnings("ConstantConditions")
     void GIVEN_null_WHEN_addKeyValue_THEN_throw_NullPointerException() {
-      assertThrows(NullPointerException.class,
+      assertThrows(
+          NullPointerException.class,
           () -> TestArrangeHeadUtils.addKeyValue(null, TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1));
     }
 
@@ -217,7 +222,7 @@ class TestArrangeHeadUtilsTest {
 
     @Test
     void
-    GIVEN_addKeyValue_key_0_WHEN_addKeyValue_with_map_key_1_2_THEN_getKeyValue_returned_expected_values() {
+        GIVEN_addKeyValue_key_0_WHEN_addKeyValue_with_map_key_1_2_THEN_getKeyValue_returned_expected_values() {
       // Arrange
       var testRequestHeadDto = new TestRequestHeadDto();
       TestArrangeHeadUtils.addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_0, TEST_HEADER_VALUE_0);

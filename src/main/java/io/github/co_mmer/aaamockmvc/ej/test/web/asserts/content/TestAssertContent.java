@@ -1,6 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
 
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import java.util.List;
 import java.util.Map;
@@ -99,14 +98,11 @@ public interface TestAssertContent {
    * @param <T> the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
    * @param expectedResponse the expected object (must not be {@code null})
-   * @param deserializers optional deserializers to map the response content
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
   <T> TestAssertContent assertContentEquals(
-      @NonNull Class<T> expectedClass,
-      @NonNull T expectedResponse,
-      JsonDeserializer<T>... deserializers);
+      @NonNull Class<T> expectedClass, @NonNull T expectedResponse);
 
   /**
    * Asserts that the list of objects in the HTTP response matches the expected list, using the
@@ -118,14 +114,11 @@ public interface TestAssertContent {
    * @param <T> the type of the objects in the list
    * @param expectedClass the class of the objects in the list (must not be {@code null})
    * @param expectedResponse the expected list of objects (must not be {@code null})
-   * @param deserializers optional deserializers to map the response content
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
   <T> TestAssertContent assertContentEquals(
-      @NonNull Class<T> expectedClass,
-      @NonNull List<T> expectedResponse,
-      JsonDeserializer<T>... deserializers);
+      @NonNull Class<T> expectedClass, @NonNull List<T> expectedResponse);
 
   /**
    * Asserts that the set of objects in the HTTP response matches the expected set, using the
@@ -137,14 +130,11 @@ public interface TestAssertContent {
    * @param <T> the type of the objects in the set
    * @param expectedClass the class of the objects in the set (must not be {@code null})
    * @param expectedResponse the expected set of objects (must not be {@code null})
-   * @param deserializers optional deserializers to map the response content
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
   <T> TestAssertContent assertContentEquals(
-      @NonNull Class<T> expectedClass,
-      @NonNull Set<T> expectedResponse,
-      JsonDeserializer<T>... deserializers);
+      @NonNull Class<T> expectedClass, @NonNull Set<T> expectedResponse);
 
   /**
    * Asserts that the map of objects in the HTTP response matches the expected map, using the
@@ -158,15 +148,13 @@ public interface TestAssertContent {
    * @param keyClass the class of the map keys (must not be {@code null})
    * @param valueClass the class of the map values (must not be {@code null})
    * @param expectedResponse the expected map (must not be {@code null})
-   * @param deserializers optional deserializers to map the response content
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
   <K, V> TestAssertContent assertContentEquals(
       @NonNull Class<K> keyClass,
       @NonNull Class<V> valueClass,
-      @NonNull Map<K, V> expectedResponse,
-      JsonDeserializer<V>... deserializers);
+      @NonNull Map<K, V> expectedResponse);
 
   /**
    * Asserts that the JSON content of the HTTP response has the specified size.

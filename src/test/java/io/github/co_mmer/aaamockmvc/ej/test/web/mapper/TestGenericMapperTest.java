@@ -1,27 +1,22 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.mapper;
 
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECTS_1_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECTS_LIST_1_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECTS_MAP_1_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECTS_SET_1_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECTS_SET_1_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_DTO;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_1_DTO;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECT_1_DTO;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECT_1_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_DESERIALIZE;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_1_DTO;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_1_JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1Deserializer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1Dto;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,7 +42,6 @@ class TestGenericMapperTest {
 
   @ParameterizedTest()
   @MethodSource("provideNullParameters")
-  @SuppressWarnings("unchecked")
   void GIVEN_provideNullParametersOnMapTo_WHEN_mapTo_THEN_throw_NullPointerException(
       ObjectMapper mapper, MvcResult result, Class<?> clazz) {
 
@@ -66,7 +60,6 @@ class TestGenericMapperTest {
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   void GIVEN_expected_class_WHEN_mapTo_THEN_return_expect_object() throws Exception {
     // Arrange
     when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECT_1_JSON);
@@ -80,23 +73,6 @@ class TestGenericMapperTest {
   }
 
   @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_deserializers_WHEN_mapTo_THEN_return_deserialize_value() throws Exception {
-    // Arrange
-    var deserializers = new JsonDeserializer[]{new TestObject1Deserializer()};
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECT_1_JSON);
-
-    // Act
-    var result =
-        TestGenericMapper.mapTo(
-            this.objectMapper, this.mockMvcResult, TestObject1Dto.class, deserializers);
-
-    // Assert
-    assertThat(result.name(), is(TEST_DESERIALIZE));
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
   void GIVEN_unexpected_expectedClass_WHEN_mapTo_THEN_throw_exception() throws Exception {
     // Arrange
     when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECT_1_JSON);
@@ -111,7 +87,6 @@ class TestGenericMapperTest {
 
   @ParameterizedTest()
   @MethodSource("provideNullParameters")
-  @SuppressWarnings("unchecked")
   void GIVEN_provideNullParameters_WHEN_mapToList_THEN_throw_NullPointerException(
       ObjectMapper mapper, MvcResult result, Class<?> clazz) {
 
@@ -120,41 +95,22 @@ class TestGenericMapperTest {
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   void GIVEN_expected_list_WHEN_mapToList_THEN_return_expect_object() throws Exception {
     // Arrange
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_LIST_1_JSON);
+    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_LIST_1_JSON);
 
     // Act
     var result =
         TestGenericMapper.mapToList(this.objectMapper, this.mockMvcResult, TestObject1Dto.class);
 
     // Assert
-    assertThat(result, is(TEST_OBJECTS_1_DTO));
+    assertThat(result, is(TEST_LIST_1_DTO));
   }
 
   @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_deserializers_WHEN_mapToList_THEN_return_deserialize_values() throws Exception {
-    // Arrange
-    var deserializers = new JsonDeserializer[]{new TestObject1Deserializer()};
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_LIST_1_JSON);
-
-    // Act
-    List<TestObject1Dto> result =
-        TestGenericMapper.mapToList(
-            this.objectMapper, this.mockMvcResult, TestObject1Dto.class, deserializers);
-
-    // Assert
-    assertThat(result.get(0).name(), is(TEST_DESERIALIZE));
-    assertThat(result.get(1).name(), is(TEST_DESERIALIZE));
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
   void GIVEN_unexpected_expectedClass_WHEN_mapToList_THEN_throw_exception() throws Exception {
     // Arrange
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_LIST_1_JSON);
+    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_LIST_1_JSON);
 
     // Assert
     assertThrows(
@@ -166,7 +122,6 @@ class TestGenericMapperTest {
 
   @ParameterizedTest()
   @MethodSource("provideNullParameters")
-  @SuppressWarnings("unchecked")
   void GIVEN_provideNullParameters_WHEN_mapToSet_THEN_throw_NullPointerException(
       ObjectMapper mapper, MvcResult result, Class<?> clazz) {
 
@@ -175,24 +130,22 @@ class TestGenericMapperTest {
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   void GIVEN_expected_set_WHEN_mapToSet_THEN_return_expect_object() throws Exception {
     // Arrange
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_SET_1_JSON);
+    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_SET_1_JSON);
 
     // Act
     var result =
         TestGenericMapper.mapToSet(this.objectMapper, this.mockMvcResult, TestObject1Dto.class);
 
     // Assert
-    assertThat(result, is(TEST_OBJECTS_SET_1_DTO));
+    assertThat(result, is(TEST_SET_1_DTO));
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   void GIVEN_unexpected_expectedClass_WHEN_mapToSet_THEN_throw_exception() throws Exception {
     // Arrange
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_SET_1_JSON);
+    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_SET_1_JSON);
 
     // Assert
     assertThrows(
@@ -204,7 +157,6 @@ class TestGenericMapperTest {
 
   @ParameterizedTest()
   @MethodSource("provideNullParametersMapToMap")
-  @SuppressWarnings("unchecked")
   void GIVEN_provideNullParametersMapToMap_WHEN_mapToMap_THEN_throw_NullPointerException(
       ObjectMapper mapper, MvcResult result, Class<?> keyClass, Class<?> valueClass) {
 
@@ -230,10 +182,9 @@ class TestGenericMapperTest {
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   void GIVEN_expected_map_WHEN_mapToSet_THEN_return_expect_object() throws Exception {
     // Arrange
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_MAP_1_JSON);
+    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_MAP_1_JSON);
 
     // Act
     var result =
@@ -241,35 +192,13 @@ class TestGenericMapperTest {
             this.objectMapper, this.mockMvcResult, Boolean.class, TestObject1Dto.class);
 
     // Assert
-    assertThat(result, is(TEST_OBJECTS_MAP_1_DTO));
+    assertThat(result, is(TEST_MAP_1_DTO));
   }
 
   @Test
-  @SuppressWarnings("unchecked")
-  void GIVEN_deserializers_WHEN_mapToSet_THEN_return_deserialize_values() throws Exception {
-    // Arrange
-    var deserializers = new JsonDeserializer[]{new TestObject1Deserializer()};
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_MAP_1_JSON);
-
-    // Act
-    Map<Boolean, TestObject1Dto> result =
-        TestGenericMapper.mapToMap(
-            this.objectMapper,
-            this.mockMvcResult,
-            Boolean.class,
-            TestObject1Dto.class,
-            deserializers);
-
-    // Assert
-    assertThat(result.get(Boolean.TRUE).name(), is(TEST_DESERIALIZE));
-    assertThat(result.get(Boolean.FALSE).name(), is(TEST_DESERIALIZE));
-  }
-
-  @Test
-  @SuppressWarnings("unchecked")
   void GIVEN_unexpected_keyClass_WHEN_mapToMap_THEN_throw_exception() throws Exception {
     // Arrange
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_SET_1_JSON);
+    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_SET_1_JSON);
 
     // Assert
     assertThrows(
@@ -282,10 +211,9 @@ class TestGenericMapperTest {
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   void GIVEN_unexpected_valueClass_WHEN_mapToMap_THEN_throw_exception() throws Exception {
     // Arrange
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_SET_1_JSON);
+    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_SET_1_JSON);
 
     // Assert
     assertThrows(
@@ -298,10 +226,9 @@ class TestGenericMapperTest {
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   void GIVEN_unexpected_keyClass_valueClass_WHEN_mapToMap_THEN_throw_exception() throws Exception {
     // Arrange
-    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_OBJECTS_SET_1_JSON);
+    when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_SET_1_JSON);
 
     // Assert
     assertThrows(

@@ -66,8 +66,7 @@ class TestArrangeDeleteHeaderImplTest {
     this.impl.arrangeAccept(APPLICATION_JSON);
 
     // Assert
-    mockTestArrangeValidator.verify(
-        () -> TestArrangeValidator.nonNullAccepts(APPLICATION_JSON));
+    mockTestArrangeValidator.verify(() -> TestArrangeValidator.nonNullAccepts(APPLICATION_JSON));
     mockTestArrangeValidator.close();
   }
 
@@ -165,7 +164,6 @@ class TestArrangeDeleteHeaderImplTest {
     this.mockTestArrangeRequestHead.verify(
         () -> TestArrangeHeadUtils.addKeyValue(this.dto.getHead(), TEST_HEADER_MAP_1_2));
   }
-
 
   @Test
   void WHEN_act_THEN_expected_class() {
