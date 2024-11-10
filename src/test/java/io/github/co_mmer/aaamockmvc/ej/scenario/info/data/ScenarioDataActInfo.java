@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ScenarioDataActInfo {
 
-  private static final TestRequestHead HEAD = new TestRequestHead(TestObject.TEST_REQUEST_CONFIG);
+  private static final TestRequestHead HEAD = new TestRequestHead(TestObject.TEST_REQUEST_BEAN);
 
   public static final TestAct1 HEAD_ARRANGE__URL =
       HEAD.arrange().arrangeUrl(TestValue.TEST_PATH).act();

@@ -75,8 +75,6 @@ public final class TestValue {
   public static final String TEST_HEAD_VALUE_1 = "headValue1";
   public static final String TEST_HEAD_VALUE_2 = "headValue2";
 
-  public static final String TEST_DESERIALIZE = "deserialize";
-
   private static URI createUri() {
     try {
       return new URI(TEST_PATH);

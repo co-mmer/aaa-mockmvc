@@ -1,6 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.testdata.testutil;
 
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_DESERIALIZE;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
@@ -17,40 +16,29 @@ import lombok.NoArgsConstructor;
 public final class TestObject {
 
   public static final TestObject1Dto TEST_OBJECT_1_DTO = new TestObject1Dto(1, "test");
-  public static final TestObject1Dto TEST_OBJECT_1_DTO_DESERIALIZER =
-      new TestObject1Dto(1, TEST_DESERIALIZE);
   public static final TestObject1Dto TEST_OBJECT_2_DTO = new TestObject1Dto(2, "test");
-  public static final TestObject1Dto TEST_OBJECT_2_DTO_DESERIALIZER =
-      new TestObject1Dto(2, TEST_DESERIALIZE);
-
   public static final TestObject1Dto TEST_OBJECT_3_DTO = new TestObject1Dto(3, "test");
-  public static final List<TestObject1Dto> TEST_OBJECTS_1_DTO =
+  public static final List<TestObject1Dto> TEST_LIST_1_DTO =
       List.of(TEST_OBJECT_1_DTO, TEST_OBJECT_2_DTO);
-  public static final List<TestObject1Dto> TEST_OBJECTS_1_DTO_DESERIALIZER =
-      List.of(TEST_OBJECT_1_DTO_DESERIALIZER, TEST_OBJECT_2_DTO_DESERIALIZER);
   public static final List<TestObject1Dto> TEST_OBJECTS_2_DTO =
       List.of(TEST_OBJECT_1_DTO, TEST_OBJECT_3_DTO);
-  public static final Set<TestObject1Dto> TEST_OBJECTS_SET_1_DTO =
+  public static final Set<TestObject1Dto> TEST_SET_1_DTO =
       Set.of(TEST_OBJECT_1_DTO, TEST_OBJECT_2_DTO);
-  public static final Set<TestObject1Dto> TEST_OBJECTS_SET_1_DTO_DESERIALIZER =
-      Set.of(TEST_OBJECT_1_DTO_DESERIALIZER, TEST_OBJECT_2_DTO_DESERIALIZER);
   public static final Set<TestObject1Dto> TEST_OBJECTS_SET_2_DTO =
       Set.of(TEST_OBJECT_1_DTO, TEST_OBJECT_3_DTO);
-  public static final Map<Boolean, TestObject1Dto> TEST_OBJECTS_MAP_1_DTO =
+  public static final Map<Boolean, TestObject1Dto> TEST_MAP_1_DTO =
       Map.of(TRUE, TEST_OBJECT_1_DTO, FALSE, TEST_OBJECT_2_DTO);
 
-  public static final Map<Boolean, TestObject1Dto> TEST_OBJECTS_MAP_1_DTO_DESERIALIZER =
-      Map.of(TRUE, TEST_OBJECT_1_DTO_DESERIALIZER, FALSE, TEST_OBJECT_2_DTO_DESERIALIZER);
   public static final Map<Boolean, TestObject1Dto> TEST_OBJECTS_MAP_2_DTO =
       Map.of(TRUE, TEST_OBJECT_1_DTO, FALSE, TEST_OBJECT_3_DTO);
   public static final String TEST_OBJECT_1_JSON = mapToString(TEST_OBJECT_1_DTO);
-  public static final String TEST_OBJECTS_LIST_1_JSON = mapToString(TEST_OBJECTS_1_DTO);
+  public static final String TEST_LIST_1_JSON = mapToString(TEST_LIST_1_DTO);
 
-  public static final String TEST_OBJECTS_SET_1_JSON = mapToString(TEST_OBJECTS_SET_1_DTO);
-  public static final String TEST_OBJECTS_MAP_1_JSON = mapToString(TEST_OBJECTS_MAP_1_DTO);
+  public static final String TEST_SET_1_JSON = mapToString(TEST_SET_1_DTO);
+  public static final String TEST_MAP_1_JSON = mapToString(TEST_MAP_1_DTO);
   public static final String TEST_OBJECTS_MAP_2_JSON = mapToString(TEST_OBJECTS_MAP_2_DTO);
 
-  public static final TestRequestBean TEST_REQUEST_CONFIG =
+  public static final TestRequestBean TEST_REQUEST_BEAN =
       new TestRequestBean(TestDataMockMvc.MOCK_MVC, new ObjectMapper());
 
   private static String mapToString(Object value) {

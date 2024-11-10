@@ -2,6 +2,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct1;
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestActImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestBean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestBodyDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestHeadDto;
@@ -69,6 +70,16 @@ public abstract class TestArrangeBaseAbstract {
    */
   protected TestRequestBodyDto getBody() {
     return this.context.request().getBody();
+  }
+
+  /**
+   * Retrieves the {@code TestRequestBean} associated with the current request context.
+   *
+   * @return the {@code TestRequestBean} instance for the current context
+   * @since 1.3.0
+   */
+  protected TestRequestBean getBean() {
+    return this.context.bean();
   }
 
   /**

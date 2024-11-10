@@ -6,7 +6,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_MAP_1_2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_REQUEST_CONFIG;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_REQUEST_BEAN;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_KEY_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_KEY_2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_KEY_VALUE_MAP_1_2;
@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ScenarioDataActGet {
 
-  private static final TestRequestGet GET = new TestRequestGet(TEST_REQUEST_CONFIG);
+  private static final TestRequestGet GET = new TestRequestGet(TEST_REQUEST_BEAN);
 
   public static final TestAct1 GET_ARRANGE__URL = GET.arrange().arrangeUrl(TEST_PATH).act();
 

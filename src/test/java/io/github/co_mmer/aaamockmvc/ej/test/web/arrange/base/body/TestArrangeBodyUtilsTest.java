@@ -11,52 +11,41 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestBodyDto;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 
 class TestArrangeBodyUtilsTest {
 
   @Nested
   class addFile {
 
-    @SuppressWarnings("all")
-    @Test
-    void GIVEN_null_null_WHEN_addFile_THEN_throw_NullPointerException() {
-      //  Assert
+    @ParameterizedTest()
+    @MethodSource("provideNull")
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_provideNull_WHEN_addFile_THEN_throw_NullPointerException(
+        TestRequestBodyDto testRequestBodyDto, MockMultipartFile mockMultipartFile) {
+
       assertThrows(
           NullPointerException.class,
-
-          // Act
-          () -> TestArrangeBodyUtils.addFile(null, null));
+          () -> TestArrangeBodyUtils.addFile(testRequestBodyDto, mockMultipartFile));
     }
 
-    @SuppressWarnings("all")
-    @Test
-    void GIVEN_requestBodyDto_null_WHEN_addFile_THEN_throw_NullPointerException() {
-      //  Assert
-      assertThrows(
-          NullPointerException.class,
-
-          // Act
-          () -> TestArrangeBodyUtils.addFile(null, TEST_FILE_1));
-    }
-
-    @SuppressWarnings("all")
-    @Test
-    void GIVEN_file_null_WHEN_addFile_THEN_throw_NullPointerException() {
-      // Arrange
-      var testRequestBodyDto = new TestRequestBodyDto();
-
-      //  Assert
-      assertThrows(
-          NullPointerException.class,
-
-          // Act
-          () -> TestArrangeBodyUtils.addFile(testRequestBodyDto, null));
+    private static Stream<Arguments> provideNull() {
+      return Stream.of(
+          Arguments.of(null, mock(MockMultipartFile.class)),
+          Arguments.of(mock(TestRequestBodyDto.class), null),
+          Arguments.of(null, null));
     }
 
     @Test
@@ -104,40 +93,22 @@ class TestArrangeBodyUtilsTest {
   @Nested
   class addFiles {
 
-    @SuppressWarnings("all")
-    @Test
-    void GIVEN_null_null_WHEN_addFiles_THEN_throw_NullPointerException() {
-      //  Assert
+    @ParameterizedTest()
+    @MethodSource("provideNull")
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_provideNull_WHEN_addFiles_THEN_throw_NullPointerException(
+        TestRequestBodyDto testRequestBodyDto, List<MockMultipartFile> mockMultipartFiles) {
+
       assertThrows(
           NullPointerException.class,
-
-          // Act
-          () -> TestArrangeBodyUtils.addFiles(null, null));
+          () -> TestArrangeBodyUtils.addFiles(testRequestBodyDto, mockMultipartFiles));
     }
 
-    @SuppressWarnings("all")
-    @Test
-    void GIVEN_requestBodyDto_null_WHEN_addFiles_THEN_throw_NullPointerException() {
-      //  Assert
-      assertThrows(
-          NullPointerException.class,
-
-          // Act
-          () -> TestArrangeBodyUtils.addFiles(null, TEST_FILE_1_2));
-    }
-
-    @SuppressWarnings("all")
-    @Test
-    void GIVEN_files_null_WHEN_addFiles_THEN_throw_NullPointerException() {
-      // Arrange
-      var testRequestBodyDto = new TestRequestBodyDto();
-
-      //  Assert
-      assertThrows(
-          NullPointerException.class,
-
-          // Act
-          () -> TestArrangeBodyUtils.addFiles(testRequestBodyDto, null));
+    private static Stream<Arguments> provideNull() {
+      return Stream.of(
+          Arguments.of(null, TEST_FILE_1_2),
+          Arguments.of(mock(TestRequestBodyDto.class), null),
+          Arguments.of(null, null));
     }
 
     @Test
@@ -167,6 +138,29 @@ class TestArrangeBodyUtilsTest {
       assertThat(
           testRequestBodyDto.getFiles(),
           contains(TEST_FILE_1, TEST_FILE_2, TEST_FILE_3, TEST_FILE_4));
+    }
+  }
+
+  @Nested
+  class setContent {
+
+    @ParameterizedTest()
+    @MethodSource("provideNull")
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_provideNull_WHEN_setContent_THEN_throw_NullPointerException(
+        TestRequestBodyDto testRequestBodyDto, String content, MediaType type) {
+
+      assertThrows(
+          NullPointerException.class,
+          () -> TestArrangeBodyUtils.setContent(testRequestBodyDto, content, type));
+    }
+
+    private static Stream<Arguments> provideNull() {
+      return Stream.of(
+          Arguments.of(null, TEST_BODY_JSON, APPLICATION_JSON),
+          Arguments.of(mock(TestRequestBodyDto.class), null, APPLICATION_JSON),
+          Arguments.of(mock(TestRequestBodyDto.class), TEST_BODY_JSON, null),
+          Arguments.of(null, null, null));
     }
 
     @Test

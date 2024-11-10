@@ -14,12 +14,12 @@ class TestRequestContextBuilderTest {
     // Act
     var context =
         TestRequestContextBuilder.getInstance()
-            .withTestRequestBean(TestObject.TEST_REQUEST_CONFIG)
+            .withTestRequestBean(TestObject.TEST_REQUEST_BEAN)
             .withTestRequest(TestDataRequestDto.TEST_REQUEST_DTO)
             .build();
 
     // Assert
-    assertThat(context.bean(), Matchers.is(TestObject.TEST_REQUEST_CONFIG));
+    assertThat(context.bean(), Matchers.is(TestObject.TEST_REQUEST_BEAN));
     assertThat(context.request(), Matchers.is(TestDataRequestDto.TEST_REQUEST_DTO));
   }
 }

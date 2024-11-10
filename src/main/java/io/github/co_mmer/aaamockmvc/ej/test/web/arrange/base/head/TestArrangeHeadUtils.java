@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.head;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.validation.TestArrangeValidator;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestHeadDto;
 import java.util.Arrays;
 import java.util.Map;
@@ -32,6 +33,7 @@ public final class TestArrangeHeadUtils {
   public static void setAccepts(
       @NonNull TestRequestHeadDto destination, @NonNull MediaType... accepts) {
 
+    TestArrangeValidator.nonNullAccepts(accepts);
     destination.setAccepts(Arrays.stream(accepts).toList());
   }
 
@@ -48,6 +50,7 @@ public final class TestArrangeHeadUtils {
   public static void setContentTypes(
       @NonNull TestRequestHeadDto destination, @NonNull MediaType... contentTypes) {
 
+    TestArrangeValidator.nonNullContentTypes(contentTypes);
     destination.setContentTypes(Arrays.stream(contentTypes).toList());
   }
 

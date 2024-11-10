@@ -9,6 +9,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestB
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestBodyDto.createRequestBodyDto;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestFiles.TEST_FILE_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestFiles.TEST_FILE_2;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -26,6 +27,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 
 class TestComponentBodyTest {
@@ -35,6 +37,23 @@ class TestComponentBodyTest {
   @BeforeEach
   void setUp() {
     this.mockRequestBuilder = mock(MockMultipartHttpServletRequestBuilder.class);
+  }
+
+  @ParameterizedTest()
+  @MethodSource("provideNull")
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_provideNull_WHEN_apply_THEN_throw_NullPointerException(
+      MockHttpServletRequestBuilder builder, TestRequestBodyDto testRequestBodyDto) {
+
+    assertThrows(
+        NullPointerException.class, () -> TestComponentBody.apply(builder, testRequestBodyDto));
+  }
+
+  private static Stream<Arguments> provideNull() {
+    return Stream.of(
+        Arguments.of(null, mock(TestRequestBodyDto.class)),
+        Arguments.of(mock(MockHttpServletRequestBuilder.class), null),
+        Arguments.of(null, null));
   }
 
   @Test

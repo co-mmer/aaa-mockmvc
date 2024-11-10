@@ -39,7 +39,11 @@ public final class MockMvcSetup {
   }
 
   public void mockGetContentAsString() throws Exception {
-    when(this.mockMockHttpServletResponse.getContentAsString()).thenReturn(TestBody.TEST_BODY_JSON);
+    mockGetContentAsString(TestBody.TEST_BODY_JSON);
+  }
+
+  public void mockGetContentAsString(String content) throws Exception {
+    when(this.mockMockHttpServletResponse.getContentAsString()).thenReturn(content);
     when(this.mockMvcResult.getResponse()).thenReturn(this.mockMockHttpServletResponse);
     when(this.mockResultActions.andReturn()).thenReturn(this.mockMvcResult);
     when(this.mvc.perform(any())).thenReturn(this.mockResultActions);

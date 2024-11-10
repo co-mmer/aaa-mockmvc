@@ -3,6 +3,8 @@ package io.github.co_mmer.aaamockmvc.ej.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestDelete;
@@ -14,11 +16,16 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPost;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPut;
 import io.github.co_mmer.aaamockmvc.ej.testdata.Application;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataMockMvc;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 class AAAMockMvcTest {
@@ -36,6 +43,51 @@ class AAAMockMvcTest {
   @AfterEach
   public void clean() {
     this.context.close();
+  }
+
+  @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_WebApplicationContext_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> new AAAMockMvc((WebApplicationContext) null));
+  }
+
+  @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_MockMvc_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> new AAAMockMvc((MockMvc) null));
+  }
+
+  @ParameterizedTest()
+  @MethodSource("provideNullContextObjectMapper")
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_provideNullContextObjectMapper_WHEN_call_constructor_THEN_throw_NullPointerException(
+      WebApplicationContext webApplicationContext, ObjectMapper objectMapper) {
+
+    assertThrows(
+        NullPointerException.class, () -> new AAAMockMvc(webApplicationContext, objectMapper));
+  }
+
+  private static Stream<Arguments> provideNullContextObjectMapper() {
+    return Stream.of(
+        Arguments.of(null, mock(ObjectMapper.class)),
+        Arguments.of(mock(WebApplicationContext.class), null),
+        Arguments.of(null, null));
+  }
+
+  @ParameterizedTest()
+  @MethodSource("provideNullMockMvcObjectMapper")
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_provideNullMockMvcObjectMapper_WHEN_call_constructor_THEN_throw_NullPointerException(
+      MockMvc mockMvc, ObjectMapper objectMapper) {
+
+    assertThrows(NullPointerException.class, () -> new AAAMockMvc(mockMvc, objectMapper));
+  }
+
+  private static Stream<Arguments> provideNullMockMvcObjectMapper() {
+    return Stream.of(
+        Arguments.of(null, mock(ObjectMapper.class)),
+        Arguments.of(mock(MockMvc.class), null),
+        Arguments.of(null, null));
   }
 
   @Test

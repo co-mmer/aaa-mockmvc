@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public final class ScenarioDataActDelete {
 
   private static final TestRequestDelete DELETE =
-      new TestRequestDelete(TestObject.TEST_REQUEST_CONFIG);
+      new TestRequestDelete(TestObject.TEST_REQUEST_BEAN);
 
   public static final TestAct1 DEL_ARRANGE__URL =
       DELETE.arrange().arrangeUrl(TestValue.TEST_PATH).act();

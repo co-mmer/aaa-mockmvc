@@ -30,6 +30,18 @@ class TestAssertHeadImplTest {
   }
 
   @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> new TestAssertHeadImpl(null));
+  }
+
+  @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_WHEN_assertHeadContains_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> this.testAssert.assertHeadContains(null));
+  }
+
+  @Test
   void GIVEN_existing_header_WHEN_assertHeadContains_THEN_assert_is_true() {
     // Arrange
     this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
@@ -64,6 +76,14 @@ class TestAssertHeadImplTest {
     // Act & Assert
     assertThrows(
         AssertionError.class, () -> this.testAssert.assertHeadNotContains(TEST_HEAD_KEY_1));
+  }
+
+  @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_WHEN_assertHeadEquals_THEN_throw_NullPointerException() {
+    assertThrows(
+        NullPointerException.class,
+        () -> this.testAssert.assertHeadEquals(null, TEST_HEAD_VALUE_1));
   }
 
   @Test

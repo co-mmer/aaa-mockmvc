@@ -1,9 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.mapper;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapperConfigurer.registerDeserializers;
-
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import java.util.List;
@@ -17,9 +14,6 @@ import org.springframework.test.web.servlet.MvcResult;
 /**
  * Utility class responsible for mapping the content of {@code MvcResult} responses to various
  * generic types such as objects, lists, sets, or maps.
- *
- * <p>This class uses the {@code TestGenericMapperConfigurer} to deserialize the JSON content of
- * HTTP responses into the expected data structures, supporting custom deserializers when provided.
  *
  * <p>All methods throw {@code TestGenericMapperException} if an error occurs during the mapping
  * process, which encapsulates the underlying exception.
@@ -41,25 +35,19 @@ public final class TestGenericMapper {
    * @param objectMapper the {@code ObjectMapper} used for mapping (must not be {@code null})
    * @param <T> the type of the object to be mapped
    * @param result the {@code MvcResult} containing the response (must not be {@code null})
-   * @param expectedClass the expected class of the object (must not be {@code null})
-   * @param deserializers optional custom deserializers for the JSON mapping
+   * @param resultType the expected class of the object (must not be {@code null})
    * @return an object of the specified type
-   * @throws NullPointerException if the {@code result}, {@code objectMapper}, or {@code
-   *     expectedClass} is {@code null}
+   * @throws NullPointerException if the {@code result}, {@code objectMapper}, or {@code resultType}
+   *     is {@code null}
    * @throws TestGenericMapperException if an error occurs during mapping
    * @since 1.0.0
    */
-  @SuppressWarnings("unchecked")
   public static <T> T mapTo(
-      @NonNull ObjectMapper objectMapper,
-      @NonNull MvcResult result,
-      @NonNull Class<T> expectedClass,
-      JsonDeserializer<T>... deserializers)
+      @NonNull ObjectMapper objectMapper, @NonNull MvcResult result, @NonNull Class<T> resultType)
       throws TestGenericMapperException {
 
-    var mapper = registerDeserializers(objectMapper, expectedClass, deserializers);
-    var javaType = mapper.getTypeFactory().constructType(expectedClass);
-    return mapToGenericType(mapper, result, javaType);
+    var javaType = objectMapper.getTypeFactory().constructType(resultType);
+    return mapToGenericType(objectMapper, result, javaType);
   }
 
   private static <T> T mapToGenericType(
@@ -81,25 +69,19 @@ public final class TestGenericMapper {
    * @param objectMapper the {@code ObjectMapper} used for mapping (must not be {@code null})
    * @param <T> the type of the objects in the list
    * @param result the {@code MvcResult} containing the response (must not be {@code null})
-   * @param expectedClass the expected class of the objects in the list (must not be {@code null})
-   * @param deserializers optional custom deserializers for the JSON mapping
+   * @param elementType the expected class of the objects in the list (must not be {@code null})
    * @return a {@code List} of objects of the specified type
    * @throws NullPointerException if the {@code result}, {@code objectMapper}, or {@code
-   *     expectedClass} is {@code null}
+   *     elementType} is {@code null}
    * @throws TestGenericMapperException if an error occurs during mapping
    * @since 1.0.0
    */
-  @SuppressWarnings("unchecked")
   public static <T> List<T> mapToList(
-      @NonNull ObjectMapper objectMapper,
-      @NonNull MvcResult result,
-      @NonNull Class<T> expectedClass,
-      JsonDeserializer<T>... deserializers)
+      @NonNull ObjectMapper objectMapper, @NonNull MvcResult result, @NonNull Class<T> elementType)
       throws TestGenericMapperException {
 
-    var mapper = registerDeserializers(objectMapper, expectedClass, deserializers);
-    var javaType = mapper.getTypeFactory().constructParametricType(List.class, expectedClass);
-    return mapToGenericType(mapper, result, javaType);
+    var javaType = objectMapper.getTypeFactory().constructParametricType(List.class, elementType);
+    return mapToGenericType(objectMapper, result, javaType);
   }
 
   /**
@@ -109,25 +91,19 @@ public final class TestGenericMapper {
    * @param objectMapper the {@code ObjectMapper} used for mapping (must not be {@code null})
    * @param <T> the type of the objects in the set
    * @param result the {@code MvcResult} containing the response (must not be {@code null})
-   * @param expectedClass the expected class of the objects in the set (must not be {@code null})
-   * @param deserializers optional custom deserializers for the JSON mapping
+   * @param elementType the expected class of the objects in the set (must not be {@code null})
    * @return a {@code Set} of objects of the specified type
    * @throws NullPointerException if the {@code result}, {@code objectMapper}, or {@code
-   *     expectedClass} is {@code null}
+   *     elementType} is {@code null}
    * @throws TestGenericMapperException if an error occurs during mapping
    * @since 1.0.0
    */
-  @SuppressWarnings("unchecked")
   public static <T> Set<T> mapToSet(
-      @NonNull ObjectMapper objectMapper,
-      @NonNull MvcResult result,
-      @NonNull Class<T> expectedClass,
-      JsonDeserializer<T>... deserializers)
+      @NonNull ObjectMapper objectMapper, @NonNull MvcResult result, @NonNull Class<T> elementType)
       throws TestGenericMapperException {
 
-    var mapper = registerDeserializers(objectMapper, expectedClass, deserializers);
-    var javaType = mapper.getTypeFactory().constructParametricType(Set.class, expectedClass);
-    return mapToGenericType(mapper, result, javaType);
+    var javaType = objectMapper.getTypeFactory().constructParametricType(Set.class, elementType);
+    return mapToGenericType(objectMapper, result, javaType);
   }
 
   /**
@@ -138,26 +114,45 @@ public final class TestGenericMapper {
    * @param <K> the type of the keys in the map
    * @param <V> the type of the values in the map
    * @param result the {@code MvcResult} containing the response (must not be {@code null})
-   * @param keyClass the expected class of the map keys (must not be {@code null})
-   * @param valueClass the expected class of the map values (must not be {@code null})
-   * @param deserializers optional custom deserializers for the value JSON mapping
+   * @param keyType the expected class of the map keys (must not be {@code null})
+   * @param valueType the expected class of the map values (must not be {@code null})
    * @return a {@code Map} of key-value pairs of the specified types
-   * @throws NullPointerException if the {@code result}, {@code objectMapper}, {@code keyClass}, or
-   *     {@code valueClass} is {@code null}
+   * @throws NullPointerException if the {@code result}, {@code objectMapper}, {@code keyType}, or
+   *     {@code valueType} is {@code null}
    * @throws TestGenericMapperException if an error occurs during mapping
    * @since 1.0.0
    */
-  @SuppressWarnings("unchecked")
   public static <K, V> Map<K, V> mapToMap(
       @NonNull ObjectMapper objectMapper,
       @NonNull MvcResult result,
-      @NonNull Class<K> keyClass,
-      @NonNull Class<V> valueClass,
-      JsonDeserializer<V>... deserializers)
+      @NonNull Class<K> keyType,
+      @NonNull Class<V> valueType)
       throws TestGenericMapperException {
 
-    var mapper = registerDeserializers(objectMapper, valueClass, deserializers);
-    var javaType = mapper.getTypeFactory().constructParametricType(Map.class, keyClass, valueClass);
-    return mapToGenericType(mapper, result, javaType);
+    var javaType =
+        objectMapper.getTypeFactory().constructParametricType(Map.class, keyType, valueType);
+    return mapToGenericType(objectMapper, result, javaType);
+  }
+
+  /**
+   * Maps the specified content to a JSON string representation using the provided {@code
+   * ObjectMapper}.
+   *
+   * @param objectMapper the {@code ObjectMapper} used for mapping (must not be {@code null})
+   * @param content the content to be serialized to JSON (must not be {@code null})
+   * @param <T> the type of the content being serialized
+   * @return a JSON string representation of the specified content
+   * @throws NullPointerException if the {@code objectMapper} or {@code content} is {@code null}
+   * @throws TestGenericMapperException if an error occurs during serialization
+   * @since 1.3.0
+   */
+  public static <T> String mapToString(@NonNull ObjectMapper objectMapper, @NonNull T content)
+      throws TestGenericMapperException {
+
+    try {
+      return objectMapper.writeValueAsString(content);
+    } catch (Exception e) {
+      throw new TestGenericMapperException(e);
+    }
   }
 }

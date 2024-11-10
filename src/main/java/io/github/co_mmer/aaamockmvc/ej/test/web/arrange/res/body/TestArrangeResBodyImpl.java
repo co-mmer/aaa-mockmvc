@@ -1,10 +1,13 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.res.body;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.body.TestArrangeBodyUtils.setContent;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToString;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct1;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.TestArrangeBaseAbstract;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.body.TestArrangeBodyUtils;
+import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.exception.TestArrangeException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContext;
 import java.util.List;
 import lombok.NonNull;
@@ -46,7 +49,6 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
   @Override
   public TestArrange3ResBody arrangeContent(@NonNull String raw, @NonNull MediaType type) {
     TestArrangeBodyUtils.setContent(getBody(), raw, type);
-
     return this;
   }
 
@@ -61,6 +63,31 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
   @Override
   public TestArrange3ResBody arrangeJson(@NonNull String json) {
     TestArrangeBodyUtils.setContent(getBody(), json, APPLICATION_JSON);
+    return this;
+  }
+
+  /**
+   * Arranges the specified content as JSON in the request body for PATCH/POST/PUT requests.
+   *
+   * <p>This method serializes the provided object to a JSON string and sets it as the request body,
+   * allowing complex objects to be sent as JSON payloads in the request.
+   *
+   * @param content the object to be serialized and set as JSON in the request body (must not be
+   *     {@code null})
+   * @param <T> the type of the content being serialized
+   * @return the current instance for further configuration
+   * @throws NullPointerException if the {@code content} is {@code null}
+   * @throws TestArrangeException if an error occurs during serialization
+   * @since 1.3.0
+   */
+  @Override
+  public <T> TestArrange3ResBody arrangeJson(@NonNull T content) throws TestArrangeException {
+    try {
+      var json = mapToString(super.getBean().objectMapper(), content);
+      setContent(getBody(), json, APPLICATION_JSON);
+    } catch (Exception e) {
+      throw new TestArrangeException(e);
+    }
     return this;
   }
 

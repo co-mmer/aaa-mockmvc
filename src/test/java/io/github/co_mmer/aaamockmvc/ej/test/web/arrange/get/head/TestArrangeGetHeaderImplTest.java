@@ -6,11 +6,13 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_MAP_1_2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_1;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_PDF;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestActImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.head.TestArrangeHeadUtils;
+import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.validation.TestArrangeValidator;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContextBuilder;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestType;
@@ -20,6 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.springframework.http.MediaType;
 
 class TestArrangeGetHeaderImplTest {
 
@@ -40,6 +43,31 @@ class TestArrangeGetHeaderImplTest {
   @AfterEach
   void clean() {
     this.mockTestArrangeHeadUtils.close();
+  }
+
+  @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> new TestArrangeGetHeadImpl(null));
+  }
+
+  @Test
+  void WHEN_arrangeAccept_THEN_TestArrangeValidator_is_called() {
+    // Arrange
+    var mockTestArrangeValidator = Mockito.mockStatic(TestArrangeValidator.class);
+
+    // Act
+    this.impl.arrangeAccept(APPLICATION_JSON);
+
+    // Assert
+    mockTestArrangeValidator.verify(() -> TestArrangeValidator.nonNullAccepts(APPLICATION_JSON));
+    mockTestArrangeValidator.close();
+  }
+
+  @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_WHEN_arrangeAccept_THEN_throw_IllegalArgumentException() {
+    assertThrows(IllegalArgumentException.class, () -> this.impl.arrangeAccept((MediaType) null));
   }
 
   @Test
@@ -74,6 +102,27 @@ class TestArrangeGetHeaderImplTest {
   }
 
   @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_WHEN_arrangeContentType_THEN_throw_IllegalArgumentException() {
+    assertThrows(
+        IllegalArgumentException.class, () -> this.impl.arrangeContentType((MediaType) null));
+  }
+
+  @Test
+  void WHEN_arrangeContentType_THEN_TestArrangeValidator_is_called() {
+    // Arrange
+    var mockTestArrangeValidator = Mockito.mockStatic(TestArrangeValidator.class);
+
+    // Act
+    this.impl.arrangeContentType(APPLICATION_JSON);
+
+    // Assert
+    mockTestArrangeValidator.verify(
+        () -> TestArrangeValidator.nonNullContentTypes(APPLICATION_JSON));
+    mockTestArrangeValidator.close();
+  }
+
+  @Test
   void GIVEN_type_WHEN_arrangeContentType_THEN_setContentTypes_is_called() {
     // Act
     this.impl.arrangeContentType(APPLICATION_JSON);
@@ -93,6 +142,12 @@ class TestArrangeGetHeaderImplTest {
         () ->
             TestArrangeHeadUtils.setContentTypes(
                 this.dto.getHead(), APPLICATION_JSON, APPLICATION_PDF));
+  }
+
+  @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_map_null_WHEN_arrangeKeyValue_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> this.impl.arrangeKeyValue(null));
   }
 
   @Test

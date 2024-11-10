@@ -4,6 +4,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_H
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -12,8 +13,12 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertConten
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssertStatusImpl;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
@@ -33,6 +38,21 @@ class TestAssertImplTest {
     when(actions.andReturn()).thenReturn(mvcResult);
 
     this.testAssert = new TestAssertImpl(actions, new ObjectMapper());
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideNull")
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_provideNull_WHEN_call_constructor__THEN_throw_NullPointerException(
+      ResultActions resultActions, ObjectMapper objectMapper) {
+    assertThrows(NullPointerException.class, () -> new TestAssertImpl(resultActions, objectMapper));
+  }
+
+  private static Stream<Arguments> provideNull() {
+    return Stream.of(
+        Arguments.of(null, mock(ObjectMapper.class)),
+        Arguments.of(mock(ResultActions.class), null),
+        Arguments.of(null, null));
   }
 
   @Test
