@@ -16,6 +16,7 @@ import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1Dto;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -238,5 +239,42 @@ class TestGenericMapperTest {
         () ->
             TestGenericMapper.mapToMap(
                 this.objectMapper, this.mockMvcResult, String.class, String.class));
+  }
+
+  @ParameterizedTest()
+  @MethodSource("provideNullMapToString")
+  void GIVEN_provideNullMapToString_WHEN_mapToString_THEN_throw_NullPointerException(
+      ObjectMapper mapper, Object object) {
+
+    assertThrows(NullPointerException.class, () -> TestGenericMapper.mapToString(mapper, object));
+  }
+
+  private static Stream<Arguments> provideNullMapToString() {
+    return Stream.of(
+        Arguments.of(null, TEST_OBJECT_1_DTO),
+        Arguments.of(new ObjectMapper(), null),
+        Arguments.of(null, null));
+  }
+
+  @Test
+  void GIVEN_unexpected_WHEN_mapToString_THEN_throw_exception() throws Exception {
+    // Arrange
+    var mockObjectMapper = MockObjectMapper.throwOnWriteValueAsString();
+
+    // Assert
+    assertThrows(
+        TestGenericMapperException.class,
+
+        // Act
+        () -> TestGenericMapper.mapToString(mockObjectMapper, TEST_OBJECT_1_DTO));
+  }
+
+  @Test
+  void GIVEN_object_WHEN_mapToString_THEN_return_expect_object() throws Exception {
+    // Act
+    var result = TestGenericMapper.mapToString(this.objectMapper, TEST_OBJECT_1_DTO);
+
+    // Assert
+    assertThat(result, is(TEST_OBJECT_1_JSON));
   }
 }

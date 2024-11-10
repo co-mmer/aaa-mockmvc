@@ -1,5 +1,9 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeList;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeMap;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeObject;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeSet;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapTo;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToList;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToMap;
@@ -183,6 +187,10 @@ public final class TestAssertContentImpl implements TestAssertContent {
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
+   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
+   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
+   * Unicode formats.
+   *
    * @param expectedClass the class of the expected object (must not be {@code null})
    * @param expectedResponse the expected object (must not be {@code null})
    * @param <T> the type of the expected response
@@ -195,8 +203,8 @@ public final class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var result = this.actions.andReturn();
-      var content = mapTo(this.objectMapper, result, expectedClass);
-      assertThat(content, is(expectedResponse));
+      var actual = mapTo(this.objectMapper, result, expectedClass);
+      assertThat(normalizeObject(actual), is(normalizeObject(expectedResponse)));
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
@@ -208,6 +216,10 @@ public final class TestAssertContentImpl implements TestAssertContent {
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
+   *
+   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
+   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
+   * Unicode formats.
    *
    * @param expectedClass the class of the objects in the list (must not be {@code null})
    * @param expectedResponse the expected list of objects (must not be {@code null})
@@ -221,8 +233,8 @@ public final class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var result = this.actions.andReturn();
-      var content = mapToList(this.objectMapper, result, expectedClass);
-      assertThat(content, is(expectedResponse));
+      var actual = mapToList(this.objectMapper, result, expectedClass);
+      assertThat(normalizeList(actual), is(normalizeList(expectedResponse)));
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
@@ -234,6 +246,10 @@ public final class TestAssertContentImpl implements TestAssertContent {
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
+   *
+   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
+   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
+   * Unicode formats.
    *
    * @param expectedClass the class of the objects in the set (must not be {@code null})
    * @param expectedResponse the expected set of objects (must not be {@code null})
@@ -247,8 +263,8 @@ public final class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var result = this.actions.andReturn();
-      var content = mapToSet(this.objectMapper, result, expectedClass);
-      assertThat(content, is(expectedResponse));
+      var actual = mapToSet(this.objectMapper, result, expectedClass);
+      assertThat(normalizeSet(actual), is(normalizeSet(expectedResponse)));
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
@@ -260,6 +276,10 @@ public final class TestAssertContentImpl implements TestAssertContent {
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
+   *
+   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
+   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
+   * Unicode formats.
    *
    * @param keyClass the class of the keys in the map (must not be {@code null})
    * @param valueClass the class of the values in the map (must not be {@code null})
@@ -277,8 +297,8 @@ public final class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var result = this.actions.andReturn();
-      var content = mapToMap(this.objectMapper, result, keyClass, valueClass);
-      assertThat(content, is(expectedResponse));
+      var actual = mapToMap(this.objectMapper, result, keyClass, valueClass);
+      assertThat(normalizeMap(actual), is(normalizeMap(expectedResponse)));
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }

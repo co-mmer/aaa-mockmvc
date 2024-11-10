@@ -15,9 +15,6 @@ import org.springframework.test.web.servlet.MvcResult;
  * Utility class responsible for mapping the content of {@code MvcResult} responses to various
  * generic types such as objects, lists, sets, or maps.
  *
- * <p>This class uses the {@code TestGenericMapperConfigurer} to deserialize the JSON content of
- * HTTP responses into the expected data structures, supporting custom deserializers when provided.
- *
  * <p>All methods throw {@code TestGenericMapperException} if an error occurs during the mapping
  * process, which encapsulates the underlying exception.
  *
@@ -135,5 +132,27 @@ public final class TestGenericMapper {
     var javaType =
         objectMapper.getTypeFactory().constructParametricType(Map.class, keyType, valueType);
     return mapToGenericType(objectMapper, result, javaType);
+  }
+
+  /**
+   * Maps the specified content to a JSON string representation using the provided {@code
+   * ObjectMapper}.
+   *
+   * @param objectMapper the {@code ObjectMapper} used for mapping (must not be {@code null})
+   * @param content the content to be serialized to JSON (must not be {@code null})
+   * @param <T> the type of the content being serialized
+   * @return a JSON string representation of the specified content
+   * @throws NullPointerException if the {@code objectMapper} or {@code content} is {@code null}
+   * @throws TestGenericMapperException if an error occurs during serialization
+   * @since 1.3.0
+   */
+  public static <T> String mapToString(@NonNull ObjectMapper objectMapper, @NonNull T content)
+      throws TestGenericMapperException {
+
+    try {
+      return objectMapper.writeValueAsString(content);
+    } catch (Exception e) {
+      throw new TestGenericMapperException(e);
+    }
   }
 }

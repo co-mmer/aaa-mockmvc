@@ -95,6 +95,10 @@ public interface TestAssertContent {
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
+   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
+   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
+   * Unicode formats.
+   *
    * @param <T> the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
    * @param expectedResponse the expected object (must not be {@code null})
@@ -110,6 +114,10 @@ public interface TestAssertContent {
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
+   *
+   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
+   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
+   * Unicode formats.
    *
    * @param <T> the type of the objects in the list
    * @param expectedClass the class of the objects in the list (must not be {@code null})
@@ -127,6 +135,10 @@ public interface TestAssertContent {
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
+   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
+   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
+   * Unicode formats.
+   *
    * @param <T> the type of the objects in the set
    * @param expectedClass the class of the objects in the set (must not be {@code null})
    * @param expectedResponse the expected set of objects (must not be {@code null})
@@ -142,6 +154,10 @@ public interface TestAssertContent {
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
+   *
+   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
+   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
+   * Unicode formats.
    *
    * @param <K> the type of the keys in the map
    * @param <V> the type of the values in the map

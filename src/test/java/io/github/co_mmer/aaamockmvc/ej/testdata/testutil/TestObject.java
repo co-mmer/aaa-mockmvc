@@ -38,7 +38,7 @@ public final class TestObject {
   public static final String TEST_MAP_1_JSON = mapToString(TEST_MAP_1_DTO);
   public static final String TEST_OBJECTS_MAP_2_JSON = mapToString(TEST_OBJECTS_MAP_2_DTO);
 
-  public static final TestRequestBean TEST_REQUEST_CONFIG =
+  public static final TestRequestBean TEST_REQUEST_BEAN =
       new TestRequestBean(TestDataMockMvc.MOCK_MVC, new ObjectMapper());
 
   private static String mapToString(Object value) {

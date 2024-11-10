@@ -1,17 +1,26 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.res.body;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToString;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestBody.TEST_BODY_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestBody.TEST_BODY_XML;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestFiles.TEST_FILE_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestFiles.TEST_FILE_1_2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECT_1_DTO;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECT_1_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_REQUEST_BEAN;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mockStatic;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestActImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.body.TestArrangeBodyUtils;
+import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.exception.TestArrangeException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContextBuilder;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestType;
@@ -23,7 +32,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 
 class TestArrangeResBodyImplTest {
@@ -34,10 +42,14 @@ class TestArrangeResBodyImplTest {
 
   @BeforeEach
   void setUp() {
-    this.mockTestArrangeBodyUtils = Mockito.mockStatic(TestArrangeBodyUtils.class);
+    this.mockTestArrangeBodyUtils = mockStatic(TestArrangeBodyUtils.class);
 
     this.dto = new TestRequestDto(TestRequestType.POST);
-    var context = TestRequestContextBuilder.getInstance().withTestRequest(this.dto).build();
+    var context =
+        TestRequestContextBuilder.getInstance()
+            .withTestRequestBean(TEST_REQUEST_BEAN)
+            .withTestRequest(this.dto)
+            .build();
 
     this.impl = new TestArrangeResBodyImpl(context);
   }
@@ -98,6 +110,43 @@ class TestArrangeResBodyImplTest {
     this.mockTestArrangeBodyUtils.verify(
         () ->
             TestArrangeBodyUtils.setContent(this.dto.getBody(), TEST_BODY_JSON, APPLICATION_JSON));
+  }
+
+  @Test()
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_as_T_WHEN_arrangeJson_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> this.impl.arrangeJson((Object) null));
+  }
+
+  @Test()
+  void GIVEN_T_exception_WHEN_arrangeJson_THEN_throw_TestArrangeException() {
+    // Arrange
+    var mockTestGenericMapper = mockStatic(TestGenericMapper.class);
+    mockTestGenericMapper
+        .when(() -> mapToString(any(), any()))
+        .thenThrow(new TestGenericMapperException(new Throwable()));
+
+    // Assert
+    assertThrows(
+        TestArrangeException.class,
+        ()
+
+        // Act
+        -> this.impl.arrangeJson(TEST_OBJECT_1_DTO));
+
+    mockTestGenericMapper.close();
+  }
+
+  @Test
+  void GIVEN_T_WHEN_arrangeJson_THEN_addFile_is_setContent() throws Exception {
+    // Act
+    this.impl.arrangeJson(TEST_OBJECT_1_DTO);
+
+    // Assert
+    this.mockTestArrangeBodyUtils.verify(
+        () ->
+            TestArrangeBodyUtils.setContent(
+                this.dto.getBody(), TEST_OBJECT_1_JSON, APPLICATION_JSON));
   }
 
   @Test()

@@ -63,34 +63,42 @@ public interface TestAnswer {
    *     null})
    * @param <T> the type of each element in the list
    * @return a {@link List} populated with elements of the specified type
-   * @throws NullPointerException if the {@code elementType} is {@code null}
+   * @throws NullPointerException if the {@code targetClass} is {@code null}
    * @throws TestAnswerException if an error occurs during the mapping process
    * @since 1.3.0
    */
   <T> List<T> answerAsList(@NonNull Class<T> elementType) throws TestAnswerException;
 
   /**
-   * Retrieves the response as a {@link Set} of the specified class type.
+   * Retrieves the HTTP response content as a {@code Set} of elements of type {@code T}.
    *
-   * @param elementType the element type for each element in the set (must not be {@code null})
-   * @param <T> the type of each element in the set
-   * @return a {@link Set} populated with elements of the specified type
-   * @throws NullPointerException if the {@code elementType} is {@code null}
-   * @throws TestAnswerException if an error occurs during the mapping process
+   * <p>This method maps the response content to a {@code Set} using the provided element type. It
+   * utilizes an {@code ObjectMapper} to deserialize the content into a set of the specified type.
+   *
+   * @param elementType the expected class of the elements in the set (must not be {@code null})
+   * @param <T> the type of the elements in the set
+   * @return a {@code Set} containing the deserialized elements
+   * @throws NullPointerException if {@code elementType} is {@code null}
+   * @throws TestAnswerException if an error occurs during the response mapping process
    * @since 1.3.0
    */
   <T> Set<T> answerAsSet(@NonNull Class<T> elementType) throws TestAnswerException;
 
   /**
-   * Retrieves the response as a {@link Map} with the specified key and value types.
+   * Retrieves the HTTP response content as a {@code Map} of key-value pairs of types {@code K} and
+   * {@code V}.
    *
-   * @param keyType the type for the map keys (must not be {@code null})
-   * @param valueType the type for the map values (must not be {@code null})
-   * @param <K> the type of keys in the map
-   * @param <V> the type of values in the map
-   * @return a {@link Map} populated with keys and values of the specified types
-   * @throws NullPointerException if either {@code keyType} or {@code valueType} is {@code null}
-   * @throws TestAnswerException if an error occurs during the mapping process
+   * <p>This method maps the response content to a {@code Map} using the provided key and value
+   * types. It utilizes an {@code ObjectMapper} to deserialize the content into a map with the
+   * specified key and value types.
+   *
+   * @param keyType the expected class of the map keys (must not be {@code null})
+   * @param valueType the expected class of the map values (must not be {@code null})
+   * @param <K> the type of the keys in the map
+   * @param <V> the type of the values in the map
+   * @return a {@code Map} containing the deserialized key-value pairs
+   * @throws NullPointerException if {@code keyType} or {@code valueType} are {@code null}
+   * @throws TestAnswerException if an error occurs during the response mapping process
    * @since 1.3.0
    */
   <K, V> Map<K, V> answerAsMap(@NonNull Class<K> keyType, @NonNull Class<V> valueType)

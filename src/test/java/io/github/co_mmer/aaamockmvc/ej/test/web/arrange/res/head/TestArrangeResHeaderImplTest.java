@@ -54,8 +54,8 @@ class TestArrangeResHeaderImplTest {
 
   @Test
   @SuppressWarnings("ConstantConditions")
-  void GIVEN_null_WHEN_arrangeAccept_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class, () -> this.impl.arrangeAccept((MediaType) null));
+  void GIVEN_null_WHEN_arrangeAccept_THEN_throw_IllegalArgumentException() {
+    assertThrows(IllegalArgumentException.class, () -> this.impl.arrangeAccept((MediaType) null));
   }
 
   @Test
@@ -104,8 +104,9 @@ class TestArrangeResHeaderImplTest {
 
   @Test
   @SuppressWarnings("ConstantConditions")
-  void GIVEN_null_WHEN_arrangeContentType_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class, () -> this.impl.arrangeContentType((MediaType) null));
+  void GIVEN_null_WHEN_arrangeContentType_THEN_throw_IllegalArgumentException() {
+    assertThrows(
+        IllegalArgumentException.class, () -> this.impl.arrangeContentType((MediaType) null));
   }
 
   @Test

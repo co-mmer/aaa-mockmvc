@@ -1,5 +1,9 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeList;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeMap;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeObject;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeSet;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsSByteException;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsStringException;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_DTO;
@@ -23,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -294,6 +299,20 @@ class TestAssertContentImplTest {
   }
 
   @Test
+  void GIVEN_object_WHEN_assertContentEquals_THEN_normalizeObject_is_called() throws Exception {
+    // Arrange
+    var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
+    this.response.getWriter().write(TEST_OBJECT_1_JSON);
+
+    // Act
+    this.testAssert.assertContentEquals(TestObject1Dto.class, TEST_OBJECT_1_DTO);
+
+    // Assert
+    mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
+    mockTestArrangeNormalizer.close();
+  }
+
+  @Test
   void GIVEN_expected_list_WHEN_assertContentEquals_THEN_assert_is_true() throws Exception {
     // Arrange
     this.response.getWriter().write(TEST_LIST_1_JSON);
@@ -330,6 +349,20 @@ class TestAssertContentImplTest {
   }
 
   @Test
+  void GIVEN_list_WHEN_assertContentEquals_THEN_normalizeList_is_called() throws Exception {
+    // Arrange
+    var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
+    this.response.getWriter().write(TEST_LIST_1_JSON);
+
+    // Act
+    this.testAssert.assertContentEquals(TestObject1Dto.class, TEST_LIST_1_DTO);
+
+    // Assert
+    mockTestArrangeNormalizer.verify(() -> normalizeList(any()), times(2));
+    mockTestArrangeNormalizer.close();
+  }
+
+  @Test
   void GIVEN_expected_set_WHEN_assertContentEquals_THEN_assert_is_true() throws Exception {
     // Arrange
     this.response.getWriter().write(TEST_SET_1_JSON);
@@ -363,6 +396,20 @@ class TestAssertContentImplTest {
         () -> this.testAssert.assertContentEquals(TestObject1Dto.class, TEST_SET_1_DTO));
 
     mockTestGenericMapper.close();
+  }
+
+  @Test
+  void GIVEN_set_WHEN_assertContentEquals_THEN_normalizeSet_is_called() throws Exception {
+    // Arrange
+    var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
+    this.response.getWriter().write(TEST_SET_1_JSON);
+
+    // Act
+    this.testAssert.assertContentEquals(TestObject1Dto.class, TEST_SET_1_DTO);
+
+    // Assert
+    mockTestArrangeNormalizer.verify(() -> normalizeSet(any()), times(2));
+    mockTestArrangeNormalizer.close();
   }
 
   @Test
@@ -403,6 +450,20 @@ class TestAssertContentImplTest {
                 Boolean.class, TestObject1Dto.class, TEST_MAP_1_DTO));
 
     mockTestGenericMapper.close();
+  }
+
+  @Test
+  void GIVEN_map_WHEN_assertContentEquals_THEN_normalizeMap_is_called() throws Exception {
+    // Arrange
+    var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
+    this.response.getWriter().write(TEST_MAP_1_JSON);
+
+    // Act
+    this.testAssert.assertContentEquals(Boolean.class, TestObject1Dto.class, TEST_MAP_1_DTO);
+
+    // Assert
+    mockTestArrangeNormalizer.verify(() -> normalizeMap(any()), times(2));
+    mockTestArrangeNormalizer.close();
   }
 
   @Test

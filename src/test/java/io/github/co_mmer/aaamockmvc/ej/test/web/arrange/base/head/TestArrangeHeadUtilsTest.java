@@ -1,5 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.head;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.head.TestArrangeHeadUtils.addKeyValue;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.head.TestArrangeHeadUtils.setAccepts;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.head.TestArrangeHeadUtils.setContentTypes;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_0;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_2;
@@ -30,38 +33,32 @@ class TestArrangeHeadUtilsTest {
   @Nested
   class setAccepts {
 
-    @ParameterizedTest()
-    @MethodSource("provideNull")
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_provideNull_WHEN_setAccepts_THEN_throw_NullPointerException(
-        TestRequestHeadDto testRequestHeadDto, MediaType mediaType) {
-
-      assertThrows(
-          NullPointerException.class,
-          () -> TestArrangeHeadUtils.setAccepts(testRequestHeadDto, mediaType));
-    }
-
-    private static Stream<Arguments> provideNull() {
-      return Stream.of(
-          Arguments.of(null, APPLICATION_JSON),
-          Arguments.of(mock(TestRequestHeadDto.class), null),
-          Arguments.of(null, null));
-    }
-
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_nulls_WHEN_setAccepts_THEN_throw_NullPointerException() {
+    void GIVEN_types_null_WHEN_setAccepts_THEN_throw_IllegalArgumentException() {
       // Arrange
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
       var exception =
           assertThrows(
-              NullPointerException.class,
-              () -> TestArrangeHeadUtils.setAccepts(testRequestHeadDto, null, null));
+              IllegalArgumentException.class, () -> setAccepts(testRequestHeadDto, null, null));
 
       // Assert
       assertThat(exception.getMessage(), is("Accepts must not contain null values"));
+    }
+
+    @ParameterizedTest()
+    @MethodSource("provideNull")
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_provideNull_WHEN_setAccepts_THEN_throw_NullPointerException(
+        TestRequestHeadDto testRequestHeadDto, MediaType mediaType) {
+
+      assertThrows(NullPointerException.class, () -> setAccepts(testRequestHeadDto, mediaType));
+    }
+
+    private static Stream<Arguments> provideNull() {
+      return Stream.of(Arguments.of(null, APPLICATION_JSON), Arguments.of(null, null));
     }
 
     @Test
@@ -70,7 +67,7 @@ class TestArrangeHeadUtilsTest {
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
-      TestArrangeHeadUtils.setAccepts(testRequestHeadDto, APPLICATION_JSON);
+      setAccepts(testRequestHeadDto, APPLICATION_JSON);
 
       // Assert
       assertThat(testRequestHeadDto.getAccepts(), contains(APPLICATION_JSON));
@@ -82,7 +79,7 @@ class TestArrangeHeadUtilsTest {
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
-      TestArrangeHeadUtils.setAccepts(testRequestHeadDto, APPLICATION_JSON, APPLICATION_XML);
+      setAccepts(testRequestHeadDto, APPLICATION_JSON, APPLICATION_XML);
 
       // Assert
       assertThat(testRequestHeadDto.getAccepts(), contains(APPLICATION_JSON, APPLICATION_XML));
@@ -92,6 +89,22 @@ class TestArrangeHeadUtilsTest {
   @Nested
   class setContentTypes {
 
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_types_null_WHEN_setContentTypes_THEN_throw_IllegalArgumentException() {
+      // Arrange
+      var testRequestHeadDto = new TestRequestHeadDto();
+
+      // Act
+      var exception =
+          assertThrows(
+              IllegalArgumentException.class,
+              () -> setContentTypes(testRequestHeadDto, null, null));
+
+      // Assert
+      assertThat(exception.getMessage(), is("ContentTypes must not contain null values"));
+    }
+
     @ParameterizedTest()
     @MethodSource("provideNull")
     @SuppressWarnings("ConstantConditions")
@@ -99,31 +112,11 @@ class TestArrangeHeadUtilsTest {
         TestRequestHeadDto testRequestHeadDto, MediaType mediaType) {
 
       assertThrows(
-          NullPointerException.class,
-          () -> TestArrangeHeadUtils.setContentTypes(testRequestHeadDto, mediaType));
+          NullPointerException.class, () -> setContentTypes(testRequestHeadDto, mediaType));
     }
 
     private static Stream<Arguments> provideNull() {
-      return Stream.of(
-          Arguments.of(null, APPLICATION_JSON),
-          Arguments.of(mock(TestRequestHeadDto.class), null),
-          Arguments.of(null, null));
-    }
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_nulls_WHEN_ssetContentTypes_THEN_throw_NullPointerException() {
-      // Arrange
-      var testRequestHeadDto = new TestRequestHeadDto();
-
-      // Act
-      var exception =
-          assertThrows(
-              NullPointerException.class,
-              () -> TestArrangeHeadUtils.setContentTypes(testRequestHeadDto, null, null));
-
-      // Assert
-      assertThat(exception.getMessage(), is("ContentTypes must not contain null values"));
+      return Stream.of(Arguments.of(null, APPLICATION_JSON), Arguments.of(null, null));
     }
 
     @Test
@@ -132,7 +125,7 @@ class TestArrangeHeadUtilsTest {
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
-      TestArrangeHeadUtils.setContentTypes(testRequestHeadDto, APPLICATION_JSON);
+      setContentTypes(testRequestHeadDto, APPLICATION_JSON);
 
       // Assert
       assertThat(testRequestHeadDto.getContentTypes(), contains(APPLICATION_JSON));
@@ -144,7 +137,7 @@ class TestArrangeHeadUtilsTest {
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
-      TestArrangeHeadUtils.setContentTypes(testRequestHeadDto, APPLICATION_JSON, APPLICATION_XML);
+      setContentTypes(testRequestHeadDto, APPLICATION_JSON, APPLICATION_XML);
 
       // Assert
       assertThat(testRequestHeadDto.getContentTypes(), contains(APPLICATION_JSON, APPLICATION_XML));
@@ -159,7 +152,7 @@ class TestArrangeHeadUtilsTest {
     void GIVEN_null_WHEN_addKeyValue_THEN_throw_NullPointerException() {
       assertThrows(
           NullPointerException.class,
-          () -> TestArrangeHeadUtils.addKeyValue(null, TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1));
+          () -> addKeyValue(null, TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1));
     }
 
     @Test
@@ -168,7 +161,7 @@ class TestArrangeHeadUtilsTest {
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
-      TestArrangeHeadUtils.addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1);
+      addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1);
 
       // Assert
       assertThat(testRequestHeadDto.getKeyValue().size(), is(1));
@@ -181,8 +174,8 @@ class TestArrangeHeadUtilsTest {
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
-      TestArrangeHeadUtils.addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1);
-      TestArrangeHeadUtils.addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2);
+      addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1);
+      addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2);
 
       // Assert
       assertThat(testRequestHeadDto.getKeyValue().size(), is(2));
@@ -196,9 +189,7 @@ class TestArrangeHeadUtilsTest {
     void GIVEN_provideNull_WHEN_addKeyValue_THEN_throw_NullPointerException(
         TestRequestHeadDto testRequestHeadDto, Map<String, Object> keyValue) {
 
-      assertThrows(
-          NullPointerException.class,
-          () -> TestArrangeHeadUtils.addKeyValue(testRequestHeadDto, keyValue));
+      assertThrows(NullPointerException.class, () -> addKeyValue(testRequestHeadDto, keyValue));
     }
 
     private static Stream<Arguments> provideNull() {
@@ -214,7 +205,7 @@ class TestArrangeHeadUtilsTest {
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
-      TestArrangeHeadUtils.addKeyValue(testRequestHeadDto, TEST_HEADER_MAP_1_2);
+      addKeyValue(testRequestHeadDto, TEST_HEADER_MAP_1_2);
 
       // Assert
       assertThat(testRequestHeadDto.getKeyValue(), is(TEST_HEADER_MAP_1_2));
@@ -225,10 +216,10 @@ class TestArrangeHeadUtilsTest {
         GIVEN_addKeyValue_key_0_WHEN_addKeyValue_with_map_key_1_2_THEN_getKeyValue_returned_expected_values() {
       // Arrange
       var testRequestHeadDto = new TestRequestHeadDto();
-      TestArrangeHeadUtils.addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_0, TEST_HEADER_VALUE_0);
+      addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_0, TEST_HEADER_VALUE_0);
 
       // Act
-      TestArrangeHeadUtils.addKeyValue(testRequestHeadDto, TEST_HEADER_MAP_1_2);
+      addKeyValue(testRequestHeadDto, TEST_HEADER_MAP_1_2);
 
       // Assert
       assertThat(testRequestHeadDto.getKeyValue().size(), is(3));

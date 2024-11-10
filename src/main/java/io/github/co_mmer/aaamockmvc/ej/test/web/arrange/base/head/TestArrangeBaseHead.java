@@ -38,6 +38,7 @@ public abstract class TestArrangeBaseHead extends TestArrangeBaseAbstract {
    *
    * @param types the acceptable media types for the response (must not be {@code null})
    * @throws NullPointerException if the {@code types} is {@code null}
+   * @throws IllegalArgumentException if any of the provided types is {@code null}
    * @since 1.0.0
    */
   protected void setAccepts(@NonNull MediaType... types) {
@@ -65,6 +66,7 @@ public abstract class TestArrangeBaseHead extends TestArrangeBaseAbstract {
    *
    * @param types the content types to be sent in the request (must not be {@code null})
    * @throws NullPointerException if the {@code types} is {@code null}
+   * @throws IllegalArgumentException if any of the provided types is {@code null}
    * @since 1.0.0
    */
   protected void setContentTypes(@NonNull MediaType... types) {

@@ -12,6 +12,7 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
 ![Java](https://img.shields.io/badge/Java-17-blueviolet)
+![Maven Central](https://img.shields.io/maven-central/v/io.github.co-mmer/aaa-mockmvc)
 
 ## Overview
 
@@ -271,9 +272,11 @@ In the provided library, every test follows the AAA structure using the followin
    headers).
 2. **Act**: Perform the operation (e.g., make the API request).
 3. **Assert**: Validate the result (e.g., check HTTP status, response content).
-
-Optionally, the result of the request can be accessed using the `answer()` method, allowing for
-further examination and validation of the response.
+4. **Answer**: Optionally, the result of the request can be accessed using the `answer()` method,
+   allowing for further examination and validation of the response. Additionally, the returned
+   object can be passed back as the body of a subsequent request using `arrangeJson(T content)`.
+   This enables used to set up the next, creating a seamless flow in
+   testing. [For more details, see the example below.](#test-case-update-resource-with-put-and-validate-response-object)
 
 ### Arrange Section
 
@@ -487,7 +490,116 @@ numerous headers are required, making the code more maintainable.
 
 
 <details>
-<summary>Arrange BODY</summary>
+<summary>Arrange BODY 🔸 (Extension) </summary>
+
+### Arrange Content Raw
+
+In this example, raw content is sent in the body along with its media type, allowing for versatile
+content submissions beyond standard formats.
+
+```
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeContent(RAW_CONTENT, RAW_MEDIATYPE)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Content Json
+
+In this example, JSON data is sent in the request body, demonstrating how to transmit structured
+data to the server.
+
+```
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeJson(JSON_1)
+      .act()
+      ...
+```
+
+---
+
+### Arrange Content Json (Generic) 🔸 _(new)_
+
+The `arrangeJson` method allows for easily sending JSON payloads in `POST`, `PUT`, or `PATCH`
+requests. It
+handles various object types, including single objects, lists, sets, and maps. Below are examples
+demonstrating how to use this method:
+
+**Example 1: Sending a Single Object**
+
+In this example, a single `DemoA object` is sent as the JSON body of a POST request.
+
+```
+ DemoA demo = new DemoA();
+
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeJson(demo) // Serialize the DemoA object to JSON
+      .act()
+      ...
+```
+
+**Example 2: Sending a List of Objects**
+
+Here, a `List<DemoA>` containing multiple objects is sent as the JSON body.
+
+```
+ List<DemoA> demo = List.of(DEMO_A1, DEMO_A2);
+
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeJson(demo) // Serialize the List of DemoA objects to JSON
+      .act()
+      ...
+```
+
+**Example 3: Sending a Set of Objects**
+
+In this case, a `Set<DemoA>` is used, ensuring that no duplicate objects are included in the JSON
+payload.
+
+```
+ Set<DemoA> demo = Set.of(DEMO_A1, DEMO_A2);
+
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeJson(demo) // Serialize the Set of DemoA objects to JSON
+      .act()
+      ...
+```
+
+**Example 4: Sending a Map of Objects**
+
+This example demonstrates how to send a `Map<Integer, DemoA>` as the JSON body. The map's keys and
+values are serialized.
+
+```
+ Map<Integer, DemoA> demo = Map.of(1L, DEMO_A1, 2L, DEMO_A2);
+
+ post()
+      .arrange()
+      .arrangeUrl(POST_EXAMPLE)
+      .arrangeBody()
+      .arrangeJson(demo) // Serialize the Map of DemoA objects to JSON
+      .act()
+      ...
+```
+
+---
 
 ### Arrange Body File
 
@@ -539,38 +651,6 @@ simplifies adding multiple files and enhances code readability.
 
 ---
 
-### Arrange Content Raw
-
-In this example, raw content is sent in the body along with its media type, allowing for versatile
-content submissions beyond standard formats.
-
-```
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeContent(RAW_CONTENT, RAW_MEDIATYPE)
-      .act()
-      ...
-```
-
----
-
-### Arrange Content Json
-
-In this example, JSON data is sent in the request body, demonstrating how to transmit structured
-data to the server.
-
-```
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeJson(JSON_1)
-      .act()
-      ...
-```
-
 </details>
 
 ### Assert Section
@@ -580,7 +660,9 @@ data to the server.
 
 ### Assert Status (Literal)
 
-This example shows how to assert that the response returns the exact status code.
+In this example, the response status is asserted against a specific HTTP status code using
+`assertStatus()`. This literal assertion is useful for cases where an exact status code, such as 200
+for success, is expected and needs to be verified directly.
 
 ```
   get()
@@ -594,7 +676,10 @@ This example shows how to assert that the response returns the exact status code
 
 ### Assert Status (Enum)
 
-This example shows how to assert that the response returns the exact HttpStatus.
+In this example, the response status is asserted using an `HttpStatus` enum value with
+`assertStatus()`. This approach allows for clearer and more expressive assertions, as common HTTP
+statuses are referenced by their enum names (e.g., HttpStatus.OK), improving readability and
+reducing potential for error with numeric codes.
 
 ```
   get()
@@ -1029,8 +1114,9 @@ specific `ResultMatcher` that verifies if the specified cookie is present in the
 
 ### Retrieve Result Actions
 
-This method retrieves the ResultActions from the executed HTTP request, allowing detailed
-examination and validation of the response.
+In this example, the response is captured as ResultActions using the `answerAsResultActions()`
+method. This approach is useful for accessing advanced testing features, such as chaining additional
+assertions directly on the response.
 
 ```  
  var answer = get()
@@ -1050,7 +1136,10 @@ examination and validation of the response.
 
 ### Retrieve Response as String
 
-This method retrieves the content of the HTTP response as a String.
+In this example, the response is retrieved as a plain string using the `answerAsString()` method.
+This
+method is ideal when the response data is plain text or JSON that will be processed separately,
+without needing deserialization into a specific object.
 
 ```  
  var answer = get()
@@ -1066,7 +1155,7 @@ This method retrieves the content of the HTTP response as a String.
 </details>
 
 <details>
-<summary>Answer Object</summary>
+<summary>Answer Object 🔸 (New)</summary>
 
 ### Retrieve Object
 
@@ -1090,7 +1179,7 @@ DemoA demoA = get()
 </details>
 
 <details>
-<summary>Answer List</summary>
+<summary>Answer List  🔸 (New) </summary>
 
 ### Retrieve List
 
@@ -1114,7 +1203,7 @@ List<DemoA> demoA = get()
 </details>
 
 <details>
-<summary>Answer Set</summary>
+<summary>Answer Set 🔸 (New) </summary>
 
 ### Retrieve Set
 
@@ -1138,7 +1227,7 @@ Set<DemoA> demoA = get()
 </details>
 
 <details>
-<summary>Answer Map</summary>
+<summary>Answer Map 🔸 (New) </summary> 
 
 ### Retrieve Map
 
@@ -1167,7 +1256,9 @@ Map<Integer, DemoA> demoA = get()
 
 ### Retrieve Response as Byte Array
 
-This method retrieves the content of the HTTP response as a byte array.
+In this example, the response is retrieved as a byte array using the `answerAsByte()` method. This
+method is particularly useful for handling binary data, such as file downloads or media content,
+where the response content is best represented in raw byte form.
 
 ```  
  var answer = get()
@@ -1235,7 +1326,7 @@ parameter. The following steps are executed:
 2. **Arrange URL**: The base URL (`GET_EXAMPLE`) is arranged for the request.
 3. **Arrange PARAM**: A query parameter is added to the request using `arrangeKeyValue`, allowing
    for dynamic data retrieval.
-4. **Action**: The request is executed with the `act()` method, followed by `actPerform()` to send
+4. **Act**: The request is executed with the `act()` method, followed by `actPerform()` to send
    the request.
 5. **Assertions**: Several assertions are made to verify the response:
     - The response is asserted to be non-empty using `assertContentNotEmpty()`.
@@ -1317,6 +1408,66 @@ void GIVEN_files_WHEN_call_endpoint_THEN_return_expected_status_201() throws Exc
       .asserts()
       .assertStatus()
       .assertStatusIsCreated();
+}
+```
+
+---
+
+### Test Case: Update Resource with PUT and Validate Response Object
+
+Step 1: Send the Request (GET)
+
+1. **Arrange**: The URL for the update endpoint (`GET_DEMO`) is arranged
+   using `arrangeUrl`.
+2. **Arrange BODY**: The `DemoA` object, previously updated with a new name (`demoAUpdated`),
+   is serialized into JSON using `arrangeJson` and set as the request body.
+3. **Action**: The `PUT` request is executed using `act()` followed by `actPerform()` to send the
+   updated resource to the endpoint.
+4. **Answer**: The response is processed using `answer()`, and the content is deserialized into a
+   `DemoA` object using `answerAsObject(DemoA.class)`. This allows the response data to be used in
+   subsequent steps.
+
+Step 2: Send the Modify DemoA (PUT)
+
+1. **Arrange**: The initial setup is performed, including defining the request URL for the PUT
+   endpoint.
+2. **Arrange URL**: The URL is arranged using arrangeUrl, targeting the PUT_EXAMPLE endpoint.
+3. **Arrange BODY**: The body is arranged using `arrangeJson(demoA)`, where the response from the
+   previous request `(demoA)` is serialized and passed as the body of the PUT request.
+4. **Action**: The request is executed with the `act()` method, followed by `actPerform()` to send
+   the
+   request.
+5. **Assertions**: The response status is asserted to be 200 (or the expected status), confirming
+   the successful update of the resource. Optionally, the content of the response can be validated
+   to ensure it matches the expected result.
+
+```java
+
+@Test
+void GIVEN_demoA_with_new_name_WHEN_update_THEN_return_expected_object() throws Exception {
+
+  var demoA = get()
+      .arrange()
+      .arrangeUrl(GET_DEMO)
+      .act()
+      .actPerform()
+      .answer()
+      .answerAsObject(DemoA.class);
+
+  var demoAUpdated = demoA.withName(TEST_UPDATED);
+
+  put()
+      .arrange()
+      .arrangeUrl(PUT_DEMO)
+      .arrangeBody()
+      .arrangeJson(demoAUpdated)
+      .act()
+      .actPerform()
+      .asserts()
+      .assertStatus()
+      .assertStatusIsCreated()
+      .assertContent()
+      .assertContentEquals(DemoA.class, TEST_A1_UPDATED);
 }
 ```
 

@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.res.body;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.exception.TestArrangeException;
 import java.util.List;
 import lombok.NonNull;
 import org.springframework.http.MediaType;
@@ -35,6 +36,22 @@ public interface TestArrange1ResBody {
    * @since 1.0.0
    */
   TestArrange3ResBody arrangeJson(@NonNull String json);
+
+  /**
+   * Arranges the specified content as JSON in the request body for PATCH/POST/PUT requests.
+   *
+   * <p>This method serializes the provided object to a JSON string and sets it as the request body,
+   * allowing complex objects to be sent as JSON payloads in the request.
+   *
+   * @param content the object to be serialized and set as JSON in the request body (must not be
+   *     {@code null})
+   * @param <T> the type of the content being serialized
+   * @return the current instance for further configuration
+   * @throws NullPointerException if the {@code content} is {@code null}
+   * @throws TestArrangeException if an error occurs during serialization
+   * @since 1.3.0
+   */
+  <T> TestArrange3ResBody arrangeJson(@NonNull T content) throws TestArrangeException;
 
   /**
    * Arranges a single file as the body for the PATCH/POST/PUT request.

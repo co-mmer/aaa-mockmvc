@@ -16,6 +16,19 @@
     - **`answerAsMap(Class<K> keyType, Class<V> valueType)`**:  Deserializes the HTTP response
       into a map with specified key and value types (K and V).
 
+
+- Arrange Section Enhancements
+    - **` arrangeJson(T content)`**: A new generic method for setting JSON content in the request
+      body for PUT, POST, and PATCH requests.
+
+### Improved
+
+- Content Assertion Methods **`assertContentEquals)`**:
+    - Enhanced to normalize both the actual and expected response content using Unicode
+      Normalization Form C (NFC).
+    - This ensures consistent text representation across Unicode formats, improving reliability when
+      comparing text-based content with potential Unicode variations.
+
 ---
 
 ## [1.2.1]
