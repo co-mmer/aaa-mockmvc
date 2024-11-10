@@ -173,6 +173,20 @@ class TestAssertContentImplTest {
   }
 
   @Test
+  void GIVEN_string_WHEN_assertContentEquals_THEN_normalizeObject_is_called() throws Exception {
+    // Arrange
+    var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
+    this.response.getWriter().write(ACTUAL_CONTENT);
+
+    // Act
+    this.testAssert.assertContentEquals(EXPECTED_CONTENT);
+
+    // Assert
+    mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
+    mockTestArrangeNormalizer.close();
+  }
+
+  @Test
   void GIVEN_expected_WHEN_assertContentByteIsNotEmpty_THEN_assert_true() throws Exception {
     // Arrange
     this.response.getWriter().write(ACTUAL_CONTENT);

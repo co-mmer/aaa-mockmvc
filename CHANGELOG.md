@@ -23,11 +23,17 @@
 
 ### Improved
 
-- Content Assertion Methods **`assertContentEquals)`**:
+- Content Assertion Methods **`assertContentEquals()`**:
     - Enhanced to normalize both the actual and expected response content using Unicode
       Normalization Form C (NFC).
     - This ensures consistent text representation across Unicode formats, improving reliability when
       comparing text-based content with potential Unicode variations.
+    - The following methods are affected:
+        - `assertContentEquals(String expectedString)`
+        - `assertContentEquals(Class<T> expectedClass, T expectedResponse)`,
+        - `assertContentEquals(Class<T> expectedClass, List<T> expectedResponse)`
+        - `assertContentEquals(Class<T> expectedClass, Set<T> expectedResponse)`
+        - `assertContentEquals(Class<K> keyClass, Class<V> valueClass, Map<K, V> expectedResponse)`
 
 ---
 
