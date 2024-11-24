@@ -42,16 +42,15 @@ public final class TestArrangeHeadUtils {
    *
    * @param destination the destination {@code TestRequestHeadDto} to set content types on (must not
    *     be {@code null})
-   * @param contentTypes the media types that the request will send (must not be {@code null})
+   * @param contentType the media type that the request will send (must not be {@code null})
    * @throws NullPointerException if either {@code destination} or {@code contentTypes} is {@code
    *     null}
    * @since 1.0.0
    */
   public static void setContentTypes(
-      @NonNull TestRequestHeadDto destination, @NonNull MediaType... contentTypes) {
+      @NonNull TestRequestHeadDto destination, @NonNull MediaType contentType) {
 
-    TestArrangeValidator.nonNullContentTypes(contentTypes);
-    destination.setContentTypes(Arrays.stream(contentTypes).toList());
+    destination.setContentType(contentType);
   }
 
   /**

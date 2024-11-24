@@ -20,7 +20,9 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapp
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
@@ -39,6 +41,7 @@ import org.springframework.test.web.servlet.ResultActions;
  *
  * @since 1.0.0
  */
+@Log4j2
 public final class TestAssertContentImpl implements TestAssertContent {
 
   private final ResultActions actions;
@@ -48,10 +51,10 @@ public final class TestAssertContentImpl implements TestAssertContent {
   /**
    * Constructs an instance of {@code TestAssertContent} with the provided {@code ResultActions}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
-   * @param objectMapper the {@link ObjectMapper} used for JSON processing (must not be {@code
-   *     null})
+   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
+   *                     {@code null})
+   * @param objectMapper the {@link ObjectMapper} used for JSON processing (must not be
+   *                     {@code null})
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.0.0
    */
@@ -195,9 +198,9 @@ public final class TestAssertContentImpl implements TestAssertContent {
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
    * Unicode formats.
    *
-   * @param expectedClass the class of the expected object (must not be {@code null})
+   * @param expectedClass    the class of the expected object (must not be {@code null})
    * @param expectedResponse the expected object (must not be {@code null})
-   * @param <T> the type of the expected response
+   * @param <T>              the type of the expected response
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
@@ -225,9 +228,9 @@ public final class TestAssertContentImpl implements TestAssertContent {
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
    * Unicode formats.
    *
-   * @param expectedClass the class of the objects in the list (must not be {@code null})
+   * @param expectedClass    the class of the objects in the list (must not be {@code null})
    * @param expectedResponse the expected list of objects (must not be {@code null})
-   * @param <T> the type of the objects in the expected list
+   * @param <T>              the type of the objects in the expected list
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
@@ -235,10 +238,19 @@ public final class TestAssertContentImpl implements TestAssertContent {
   public <T> TestAssertContent assertContentEquals(
       @NonNull Class<T> expectedClass, @NonNull List<T> expectedResponse) {
 
+    return performAssertionList(
+        expectedClass,
+        expectedResponse,
+        (actual, expected) -> assertThat(normalizeList(actual), is(normalizeList(expected))));
+  }
+
+  private <T> TestAssertContent performAssertionList(
+      Class<T> expectedClass, List<T> expectedResponse, BiConsumer<List<T>, List<T>> assertion) {
+
     try {
       var result = this.actions.andReturn();
       var actual = mapToList(this.objectMapper, result, expectedClass);
-      assertThat(normalizeList(actual), is(normalizeList(expectedResponse)));
+      assertion.accept(actual, expectedResponse);
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
@@ -255,9 +267,9 @@ public final class TestAssertContentImpl implements TestAssertContent {
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
    * Unicode formats.
    *
-   * @param expectedClass the class of the objects in the set (must not be {@code null})
+   * @param expectedClass    the class of the objects in the set (must not be {@code null})
    * @param expectedResponse the expected set of objects (must not be {@code null})
-   * @param <T> the type of the objects in the expected set
+   * @param <T>              the type of the objects in the expected set
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
@@ -285,11 +297,11 @@ public final class TestAssertContentImpl implements TestAssertContent {
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
    * Unicode formats.
    *
-   * @param keyClass the class of the keys in the map (must not be {@code null})
-   * @param valueClass the class of the values in the map (must not be {@code null})
+   * @param keyClass         the class of the keys in the map (must not be {@code null})
+   * @param valueClass       the class of the values in the map (must not be {@code null})
    * @param expectedResponse the expected map of key-value pairs (must not be {@code null})
-   * @param <K> the type of the keys in the map
-   * @param <V> the type of the values in the map
+   * @param <K>              the type of the keys in the map
+   * @param <V>              the type of the values in the map
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
@@ -302,6 +314,7 @@ public final class TestAssertContentImpl implements TestAssertContent {
     try {
       var result = this.actions.andReturn();
       var actual = mapToMap(this.objectMapper, result, keyClass, valueClass);
+
       assertThat(normalizeMap(actual), is(normalizeMap(expectedResponse)));
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
@@ -317,7 +330,7 @@ public final class TestAssertContentImpl implements TestAssertContent {
    * size does not match the expected size, an assertion failure is triggered.
    *
    * @param expectedSize the expected size of the JSON content (must be greater than or equal to
-   *     zero)
+   *                     zero)
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */

@@ -10,9 +10,8 @@ import org.springframework.http.MediaType;
 /**
  * This class is responsible for configuring the headers of a GET request.
  *
- * <p>It provides methods to set common HTTP headers such as "Accept", "Authorization", and
- * "Content-Type", as well as custom key-value header pairs. After configuring the headers, the GET
- * request can be executed.
+ * <p>It provides methods to set common HTTP headers such as "Accept", "Authorization", and custom
+ * key-value header pairs. After configuring the headers, the GET request can be executed.
  *
  * @since 1.0.0
  */
@@ -60,20 +59,6 @@ public final class TestArrangeGetHeadImpl extends TestArrangeBaseHead
   @Override
   public TestArrange3GetHead arrangeAuth(String token) {
     setAuth(token);
-    return this;
-  }
-
-  /**
-   * Arranges the "Content-Type" header for the GET request.
-   *
-   * @param mediaTypes the content types to be sent in the request (must not be {@code null})
-   * @return the current instance for further configuration
-   * @throws NullPointerException if the {@code mediaTypes} is {@code null}
-   * @since 1.0.0
-   */
-  @Override
-  public TestArrange4GetHead arrangeContentType(@NonNull MediaType... mediaTypes) {
-    setContentTypes(mediaTypes);
     return this;
   }
 

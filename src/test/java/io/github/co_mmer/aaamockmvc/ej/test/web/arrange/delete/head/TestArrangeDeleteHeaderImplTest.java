@@ -102,49 +102,6 @@ class TestArrangeDeleteHeaderImplTest {
   }
 
   @Test
-  @SuppressWarnings("ConstantConditions")
-  void GIVEN_null_WHEN_arrangeContentType_THEN_throw_IllegalArgumentException() {
-    assertThrows(
-        IllegalArgumentException.class, () -> this.impl.arrangeContentType((MediaType) null));
-  }
-
-  @Test
-  void WHEN_arrangeContentType_THEN_TestArrangeValidator_is_called() {
-    // Arrange
-    var mockTestArrangeValidator = Mockito.mockStatic(TestArrangeValidator.class);
-
-    // Act
-    this.impl.arrangeContentType(APPLICATION_JSON);
-
-    // Assert
-    mockTestArrangeValidator.verify(
-        () -> TestArrangeValidator.nonNullContentTypes(APPLICATION_JSON));
-    mockTestArrangeValidator.close();
-  }
-
-  @Test
-  void GIVEN_type_WHEN_arrangeContentType_THEN_setContentTypes_is_called() {
-    // Act
-    this.impl.arrangeContentType(APPLICATION_JSON);
-
-    // Assert
-    this.mockTestArrangeRequestHead.verify(
-        () -> TestArrangeHeadUtils.setContentTypes(this.dto.getHead(), APPLICATION_JSON));
-  }
-
-  @Test
-  void GIVEN_types_WHEN_arrangeContentType_THEN_setContentTypes_is_called() {
-    // Act
-    this.impl.arrangeContentType(APPLICATION_JSON, APPLICATION_PDF);
-
-    // Assert
-    this.mockTestArrangeRequestHead.verify(
-        () ->
-            TestArrangeHeadUtils.setContentTypes(
-                this.dto.getHead(), APPLICATION_JSON, APPLICATION_PDF));
-  }
-
-  @Test
   void GIVEN_header_WHEN_arrangeKeyValue_THEN_addKeyValue_is_called() {
     // Act
     this.impl.arrangeKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1);

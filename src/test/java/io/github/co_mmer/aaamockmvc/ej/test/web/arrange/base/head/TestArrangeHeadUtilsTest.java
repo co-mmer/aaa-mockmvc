@@ -89,22 +89,6 @@ class TestArrangeHeadUtilsTest {
   @Nested
   class setContentTypes {
 
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_types_null_WHEN_setContentTypes_THEN_throw_IllegalArgumentException() {
-      // Arrange
-      var testRequestHeadDto = new TestRequestHeadDto();
-
-      // Act
-      var exception =
-          assertThrows(
-              IllegalArgumentException.class,
-              () -> setContentTypes(testRequestHeadDto, null, null));
-
-      // Assert
-      assertThat(exception.getMessage(), is("ContentTypes must not contain null values"));
-    }
-
     @ParameterizedTest()
     @MethodSource("provideNull")
     @SuppressWarnings("ConstantConditions")
@@ -120,7 +104,7 @@ class TestArrangeHeadUtilsTest {
     }
 
     @Test
-    void GIVEN_type_WHEN_setContentTypes_THEN_getContentTypes_returned_expected_value() {
+    void GIVEN_type_WHEN_setContentType_THEN_getContentType_returned_expected_value() {
       // Arrange
       var testRequestHeadDto = new TestRequestHeadDto();
 
@@ -128,19 +112,7 @@ class TestArrangeHeadUtilsTest {
       setContentTypes(testRequestHeadDto, APPLICATION_JSON);
 
       // Assert
-      assertThat(testRequestHeadDto.getContentTypes(), contains(APPLICATION_JSON));
-    }
-
-    @Test
-    void GIVEN_types_WHEN_setContentTypes_THEN_getContentTypes_returned_expected_values() {
-      // Arrange
-      var testRequestHeadDto = new TestRequestHeadDto();
-
-      // Act
-      setContentTypes(testRequestHeadDto, APPLICATION_JSON, APPLICATION_XML);
-
-      // Assert
-      assertThat(testRequestHeadDto.getContentTypes(), contains(APPLICATION_JSON, APPLICATION_XML));
+      assertThat(testRequestHeadDto.getContentType(), is(APPLICATION_JSON));
     }
   }
 

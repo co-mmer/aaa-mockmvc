@@ -5,6 +5,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestHeadDto
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 /**
@@ -48,15 +49,15 @@ public final class TestComponentHead {
       MockHttpServletRequestBuilder builder, TestRequestHeadDto requestHeadDto) {
 
     if (TestRequestDtoUtils.isNotEmptyAccepts(requestHeadDto)) {
-      requestHeadDto.getAccepts().forEach(builder::accept);
+      builder.accept(requestHeadDto.getAccepts().toArray(MediaType[]::new));
     }
   }
 
   private static void applyContentType(
       MockHttpServletRequestBuilder builder, TestRequestHeadDto requestHeadDto) {
 
-    if (TestRequestDtoUtils.isNotEmptyContentTypes(requestHeadDto)) {
-      requestHeadDto.getContentTypes().forEach(builder::contentType);
+    if (TestRequestDtoUtils.isNotNullContentType(requestHeadDto)) {
+      builder.contentType(requestHeadDto.getContentType());
     }
   }
 

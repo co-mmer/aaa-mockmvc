@@ -66,7 +66,6 @@ class ScenarioDeleteTest {
 
     assertThat(captorValue.getHead().getKeyValue(), is(requestDTO.getHead().getKeyValue()));
     assertThat(captorValue.getHead().getAccepts(), is(requestDTO.getHead().getAccepts()));
-    assertThat(captorValue.getHead().getContentTypes(), is(requestDTO.getHead().getContentTypes()));
 
     assertThat(captorValue.getBody().getContentType(), is(nullValue()));
     assertThat(captorValue.getBody().getContent(), is(nullValue()));
