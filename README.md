@@ -46,7 +46,7 @@ documentation of the classes.
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.3.0</version>
+  <version>1.4.0</version>
   <scope>test</scope>
 </dependency>
 
@@ -490,7 +490,7 @@ numerous headers are required, making the code more maintainable.
 
 
 <details>
-<summary>Arrange BODY 🔸 (Extension) </summary>
+<summary>Arrange BODY</summary>
 
 ### Arrange Content Raw
 
@@ -931,21 +931,81 @@ matches an expected string.
 </details>
 
 
-
 <details>
-<summary>Assert Content (Collection) </summary>
+<summary>Assert Collection 🔸 (New) </summary>
 
-### Assert Content Equals (List)
+### Assert Collection Not Empty
 
-In this example, the **`assertContentEquals`** method is used to assert that the response content
+The **`assertCollectionNotEmpty`** method verifies that the collection returned in the response is
+**not** empty. If it is needed, it must be called first. Once invoked, other collection-related
+assertions can follow. However, if any other assertCollection methods are called before
+assertCollectionNotEmpty, the framework will not provide this method again, as it ensures that only
+methods which are contextually appropriate are available.
+
+```
+      get()
+          ...
+          .act()
+          .actPerform()
+          .asserts()
+          .assertCollection()
+          .assertCollectionNotEmpty()
+```
+
+---
+
+### Assert Collection Empty
+
+The **`assertCollectionEmpty`**  method verifies that the collection returned in the response is
+empty. After this assertion, no further collection-related assertions can be performed, as it would
+be semantically incorrect to validate additional properties on an empty result.
+
+```
+      get()
+          ...
+          .act()
+          .actPerform()
+          .asserts()
+          .assertCollection()
+          .assertCollectionEmpty();
+```
+
+---
+
+### Assert Collection Size
+
+The **`assertCollectionSize`** method verifies that the size of the collection returned in the
+response matches the expected size.
+
+If `assertCollectionSize` and `assertCollectionEquals` are used together, `assertCollectionSize`
+must be called before `assertCollectionEquals`. After calling `assertCollectionEquals`, the
+framework will no longer offer `assertCollectionSize`, as it would not be logically applicable to
+check the size after comparing the collection's contents.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionSize(2)
+```
+
+---
+
+---
+
+### Assert Collection Equals
+
+In this example, the **`assertCollectionEquals`** method is used to assert that the response content
 matches an expected **`List`** of objects.
 
-- **Class Specification**: Only the class of the objects contained in the list needs to be
-  specified (in this case, `DemoDto.class`). This informs the framework about the type of object to
-  expect.
-- **Expected Objects**: Alongside the class, a list of expected objects (`EXPECTED_LIST`) is
-  provided, which the response should match. This approach is particularly useful for validating
-  collections of data returned by the API.
+- **Class Specification**: The class type of the objects within the collection (e.g., DemoDto.class)
+  must be specified.
+- **Expected Collection**: The expected collection (e.g. EXPECTED_LIST) is provided to compare
+  against
+  the response.
 
 ```
   // EXPECTED_LIST = List.of(TEST_DTO_1, TEST_DTO_2);
@@ -955,37 +1015,40 @@ matches an expected **`List`** of objects.
       .act()
       .actPerform()
       .asserts()
-      .assertContent()
-      .assertContentEquals(DemoDto.class, EXPECTED_LIST)
+      .assertCollection()
+      .assertCollectionEquals(DemoDto.class, EXPECTED_LIST)
 ```
 
-### Assert Content Equals (Set)
+---
 
-In this example, the **`assertContentEquals`** method is used to assert that the response content
-matches an expected **`Set`** of objects.
+### Assert Collection Equals Ignore Order
 
-- **Class Specification**: Only the class of the objects contained in the set needs to be
-  specified (in this case, `DemoDto.class`). This informs the framework about the type of object to
-  expect.
-- **Expected Objects**: Alongside the class, a set of expected objects (`EXPECTED_SET`) is provided,
-  which the response should match. This approach is particularly useful for validating collections
-  of data returned by the API.
+The **`assertCollectionEqualsIgnoreOrder`**  method verifies that the collection returned in the
+response matches the expected collection, ignoring the order of the elements. This allows comparison
+of collections where the element order is not important.
 
 ```
-  // EXPECTED_SET = Set.of(TEST_DTO_1, TEST_DTO_2);
-  
-    get()
+  @GetMapping(...)
+  public ResponseEntity<List<DemoA>> getDemoAList() {
+    return new ResponseEntity<>(List.of(A_1, A_2), HttpStatus.OK);
+  }
+```
+
+```
+  get()
       ...
       .act()
       .actPerform()
       .asserts()
-      .assertContent()
-      .assertContentEquals(DemoDto.class, EXPECTED_SET)
+      .assertCollection()
+      .assertCollectionEqualsIgnoreOrder(DemoA.class, List.of(A_2, A_1));
 ```
 
-### Assert Content Equals (Map)
+---
 
-In this example, the **`assertContentEquals`** method is utilized to assert that the response
+### Assert Collection Equals (Map)
+
+In this example, the **`assertCollectionEquals`** method is utilized to assert that the response
 content matches an expected **`map`** of objects.
 
 - **Class Specifications**:
@@ -993,7 +1056,7 @@ content matches an expected **`map`** of objects.
       case, `Boolean.class`).
     - **Value Class:** The class of the values in the map must be specified (in this case,
       DemoDto.class).
-- **Expected Objects**: Alongside the class, a map of expected objects (`EXPECTED_MAP`) is
+- **Expected Map**: Alongside the class, a map of expected objects (`EXPECTED_MAP`) is
   provided, which the response should match. This approach is particularly useful for validating
   collections of data returned by the API.
 
@@ -1005,25 +1068,8 @@ content matches an expected **`map`** of objects.
       .act()
       .actPerform()
       .asserts()
-      .assertContent()
-      .assertContentEquals(Boolean.class, DemoDto.class, EXPECTED_MAP);
-```
-
----
-
-### Assert Content Size
-
-In this example, the **`assertContentSize`** method is used to assert that the response content size
-matches an expected size.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentSize(2)
+      .assertCollection()
+      .assertCollectionEquals(Boolean.class, DemoDto.class, EXPECTED_MAP);
 ```
 
 ---
@@ -1155,7 +1201,7 @@ without needing deserialization into a specific object.
 </details>
 
 <details>
-<summary>Answer Object 🔸 (New)</summary>
+<summary>Answer Object</summary>
 
 ### Retrieve Object
 
@@ -1179,7 +1225,7 @@ DemoA demoA = get()
 </details>
 
 <details>
-<summary>Answer List  🔸 (New) </summary>
+<summary>Answer List</summary>
 
 ### Retrieve List
 
@@ -1203,7 +1249,7 @@ List<DemoA> demoA = get()
 </details>
 
 <details>
-<summary>Answer Set 🔸 (New) </summary>
+<summary>Answer Set </summary>
 
 ### Retrieve Set
 
@@ -1227,7 +1273,7 @@ Set<DemoA> demoA = get()
 </details>
 
 <details>
-<summary>Answer Map 🔸 (New) </summary> 
+<summary>Answer Map </summary> 
 
 ### Retrieve Map
 

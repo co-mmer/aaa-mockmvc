@@ -14,6 +14,7 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCollectionImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
@@ -301,6 +302,18 @@ class TestAssertStatusImplTest {
 
     // Assert
     assertThat(assertContent.getClass(), is(TestAssertContentImpl.class));
+  }
+
+  @Test
+  void GIVEN_assert2_WHEN_assertCollection_THEN_return_expected_class() {
+    // Arrange
+    this.response.setHeader(TestValue.TEST_HEAD_KEY_1, TestValue.TEST_HEAD_VALUE_1);
+
+    // Act
+    var assertCollection = this.testAssert2.assertCollection();
+
+    // Assert
+    assertThat(assertCollection.getClass(), is(TestAssertCollectionImpl.class));
   }
 
   @Test

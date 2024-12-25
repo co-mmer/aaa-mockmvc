@@ -1,6 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCollectionImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
@@ -71,6 +73,14 @@ public final class TestAssertImpl implements TestAssert {
   @Override
   public TestAssertContent assertContent() {
     return new TestAssertContentImpl(this.actions, this.objectMapper);
+  }
+
+  /**
+   * @since 1.4.0
+   */
+  @Override
+  public TestAssert1Collection assertCollection() {
+    return new TestAssertCollectionImpl(this.actions, this.objectMapper);
   }
 
   /**

@@ -66,7 +66,7 @@ class ScenarioResTest {
 
     assertThat(captorValue.getHead().getKeyValue(), is(requestDTO.getHead().getKeyValue()));
     assertThat(captorValue.getHead().getAccepts(), is(requestDTO.getHead().getAccepts()));
-    assertThat(captorValue.getHead().getContentTypes(), is(requestDTO.getHead().getContentTypes()));
+    assertThat(captorValue.getHead().getContentType(), is(requestDTO.getHead().getContentType()));
 
     assertThat(captorValue.getBody().getFiles(), is(requestDTO.getBody().getFiles()));
     assertThat(captorValue.getBody().getContent(), is(requestDTO.getBody().getContent()));

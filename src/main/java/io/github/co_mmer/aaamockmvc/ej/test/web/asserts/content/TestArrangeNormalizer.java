@@ -3,6 +3,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
 import static java.text.Normalizer.normalize;
 
 import java.text.Normalizer.Form;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -45,13 +46,13 @@ public final class TestArrangeNormalizer {
    * Normalizes the string representations of elements in the provided list, ensuring all elements
    * are in a consistent format.
    *
-   * @param actual the list of objects to be normalized (must not be {@code null})
+   * @param actual the collection of objects to be normalized (must not be {@code null})
    * @param <T> the type of the objects in the list
    * @return a list of normalized {@code String} representations of the objects
    * @throws NullPointerException if {@code actual} is {@code null}
-   * @since 1.3.0
+   * @since 1.4.0
    */
-  public static <T> List<String> normalizeList(@NonNull List<T> actual) {
+  public static <T> List<String> normalizeCollection(@NonNull Collection<T> actual) {
     return actual.stream().map(element -> normalizeObject(element.toString())).toList();
   }
 

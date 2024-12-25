@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
@@ -25,6 +26,8 @@ public interface TestAssert {
    * @since 1.0.0
    */
   TestAssertContent assertContent();
+
+  TestAssert1Collection assertCollection();
 
   /**
    * Asserts that the HTTP response is valid for a HEAD request.

@@ -112,35 +112,12 @@ public final class ScenarioDataRequestGet {
           .withHeadAccept(APPLICATION_JSON)
           .build();
 
-  public static final TestRequestDto GET_REQUEST__HEAD_CONTENT_TYPE_1 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.GET)
-          .withUri(TEST_URI)
-          .withHeadContentType(APPLICATION_JSON)
-          .build();
-
-  public static final TestRequestDto GET_REQUEST__HEAD_CONTENT_TYPE_2 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.GET)
-          .withUri(TEST_URI)
-          .withHeadContentType(APPLICATION_JSON)
-          .withHeadContentType(APPLICATION_XML)
-          .build();
-
   public static final TestRequestDto GET_REQUEST__HEAD_ACCEPT_1_AUTH =
       TestRequestDtoBuilder.builder()
           .withRequestType(TestRequestType.GET)
           .withUri(TEST_URI)
           .withHeadAccept(APPLICATION_JSON)
           .withHeadKeyValue(TEST_AUTH_KEY, TEST_AUTH_VALUE)
-          .build();
-
-  public static final TestRequestDto GET_REQUEST__HEAD_ACCEPT_1_CONTENT_TYPE_1 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.GET)
-          .withUri(TEST_URI)
-          .withHeadAccept(APPLICATION_XML)
-          .withHeadContentType(APPLICATION_JSON)
           .build();
 
   public static final TestRequestDto GET_REQUEST__HEAD_ACCEPT_1_KEY_VALUE_1 =
@@ -163,13 +140,6 @@ public final class ScenarioDataRequestGet {
   public static final TestRequestDto GET_REQUEST__HEAD_ACCEPT_1_KEY_VALUE_MAP =
       GET_REQUEST__HEAD_ACCEPT_1_KEY_VALUE_2;
 
-  public static final TestRequestDto GET_REQUEST__HEAD_AUT_CONTENT_TYPE_1 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.GET)
-          .withUri(TEST_URI)
-          .withHeadKeyValue(TEST_AUTH_KEY, TEST_AUTH_VALUE)
-          .withHeadContentType(APPLICATION_JSON)
-          .build();
   public static final TestRequestDto GET_REQUEST__HEAD_AUTH_KEY_VALUE_1 =
       TestRequestDtoBuilder.builder()
           .withRequestType(TestRequestType.GET)
@@ -189,23 +159,4 @@ public final class ScenarioDataRequestGet {
 
   public static final TestRequestDto GET_REQUEST__HEAD_AUT_KEY_VALUE_MAP =
       GET_REQUEST__HEAD_AUTH_KEY_VALUE_2;
-  public static final TestRequestDto GET_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_1 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.GET)
-          .withUri(TEST_URI)
-          .withHeadContentType(APPLICATION_XML)
-          .withHeadKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1)
-          .build();
-
-  public static final TestRequestDto GET_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_2 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.GET)
-          .withUri(TEST_URI)
-          .withHeadContentType(APPLICATION_XML)
-          .withHeadKeyValue(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1)
-          .withHeadKeyValue(TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2)
-          .build();
-
-  public static final TestRequestDto GET_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_MAP =
-      GET_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_2;
 }

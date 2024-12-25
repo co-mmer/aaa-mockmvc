@@ -20,12 +20,12 @@ public final class TestObject {
   public static final TestObject1Dto TEST_OBJECT_3_DTO = new TestObject1Dto(3, "test");
   public static final List<TestObject1Dto> TEST_LIST_1_DTO =
       List.of(TEST_OBJECT_1_DTO, TEST_OBJECT_2_DTO);
-  public static final List<TestObject1Dto> TEST_OBJECTS_2_DTO =
+  public static final List<TestObject1Dto> TEST_LIST_1_3_DTO =
       List.of(TEST_OBJECT_1_DTO, TEST_OBJECT_3_DTO);
+  public static final List<TestObject1Dto> TEST_LIST_3_1_DTO =
+      List.of(TEST_OBJECT_3_DTO, TEST_OBJECT_1_DTO);
   public static final Set<TestObject1Dto> TEST_SET_1_DTO =
       Set.of(TEST_OBJECT_1_DTO, TEST_OBJECT_2_DTO);
-  public static final Set<TestObject1Dto> TEST_OBJECTS_SET_2_DTO =
-      Set.of(TEST_OBJECT_1_DTO, TEST_OBJECT_3_DTO);
   public static final Map<Boolean, TestObject1Dto> TEST_MAP_1_DTO =
       Map.of(TRUE, TEST_OBJECT_1_DTO, FALSE, TEST_OBJECT_2_DTO);
 
@@ -33,6 +33,7 @@ public final class TestObject {
       Map.of(TRUE, TEST_OBJECT_1_DTO, FALSE, TEST_OBJECT_3_DTO);
   public static final String TEST_OBJECT_1_JSON = mapToString(TEST_OBJECT_1_DTO);
   public static final String TEST_LIST_1_JSON = mapToString(TEST_LIST_1_DTO);
+  public static final String TEST_LIST_1_3_JSON = mapToString(TEST_LIST_1_3_DTO);
 
   public static final String TEST_SET_1_JSON = mapToString(TEST_SET_1_DTO);
   public static final String TEST_MAP_1_JSON = mapToString(TEST_MAP_1_DTO);

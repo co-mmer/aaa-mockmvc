@@ -1,9 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import lombok.NonNull;
 
 /**
@@ -111,84 +108,6 @@ public interface TestAssertContent {
    */
   <T> TestAssertContent assertContentEquals(
       @NonNull Class<T> expectedClass, @NonNull T expectedResponse);
-
-  /**
-   * Asserts that the list of objects in the HTTP response matches the expected list, using the
-   * provided deserializer(s).
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
-   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
-   * Unicode formats.
-   *
-   * @param <T> the type of the objects in the list
-   * @param expectedClass the class of the objects in the list (must not be {@code null})
-   * @param expectedResponse the expected list of objects (must not be {@code null})
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
-   */
-  <T> TestAssertContent assertContentEquals(
-      @NonNull Class<T> expectedClass, @NonNull List<T> expectedResponse);
-
-  /**
-   * Asserts that the set of objects in the HTTP response matches the expected set, using the
-   * provided deserializer(s).
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
-   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
-   * Unicode formats.
-   *
-   * @param <T> the type of the objects in the set
-   * @param expectedClass the class of the objects in the set (must not be {@code null})
-   * @param expectedResponse the expected set of objects (must not be {@code null})
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
-   */
-  <T> TestAssertContent assertContentEquals(
-      @NonNull Class<T> expectedClass, @NonNull Set<T> expectedResponse);
-
-  /**
-   * Asserts that the map of objects in the HTTP response matches the expected map, using the
-   * provided deserializer(s).
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
-   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
-   * Unicode formats.
-   *
-   * @param <K> the type of the keys in the map
-   * @param <V> the type of the values in the map
-   * @param keyClass the class of the map keys (must not be {@code null})
-   * @param valueClass the class of the map values (must not be {@code null})
-   * @param expectedResponse the expected map (must not be {@code null})
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
-   */
-  <K, V> TestAssertContent assertContentEquals(
-      @NonNull Class<K> keyClass,
-      @NonNull Class<V> valueClass,
-      @NonNull Map<K, V> expectedResponse);
-
-  /**
-   * Asserts that the JSON content of the HTTP response has the specified size.
-   *
-   * <p>This method checks if the length of the JSON content matches the expected size. It uses
-   * {@code jsonPath} to validate the presence and length of the JSON array or object. If the actual
-   * size does not match the expected size, an assertion failure is triggered.
-   *
-   * @param expectedSize the expected size of the JSON content (must be greater than or equal to
-   *     zero)
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
-   */
-  TestAssertContent assertContentSize(int expectedSize);
 
   /**
    * Asserts that the HTTP response is valid for a HEAD request.
