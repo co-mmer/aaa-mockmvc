@@ -1,13 +1,9 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeObject;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsSByteException;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsStringException;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECT_1_DTO;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECT_1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECT_2_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,9 +11,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
@@ -30,27 +26,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.opentest4j.AssertionFailedError;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
-class TestAssertContentImplTest {
+class TestAssertContentImplTest extends TestAssertBase {
 
   private static final String EXPECTED_CONTENT = "expected content";
   private static final String ACTUAL_CONTENT = "actual content";
-  private ResultActions actions;
-  private MockHttpServletResponse response;
   private TestAssertContent testAssert;
 
   @BeforeEach
   void setUp() {
-    this.actions = mock(ResultActions.class);
-    var mvcResult = mock(MvcResult.class);
-    this.response = new MockHttpServletResponse();
-
-    when(mvcResult.getResponse()).thenReturn(this.response);
-    when(this.actions.andReturn()).thenReturn(mvcResult);
-
+    initMockServer();
     this.testAssert = new TestAssertContentImpl(this.actions, new ObjectMapper());
   }
 
@@ -74,7 +60,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_expected_WHEN_assertContentNotEmpty_THEN_assert_true() throws Exception {
     // Arrange
-    this.response.getWriter().write(EXPECTED_CONTENT);
+    useServerWithResponse(EXPECTED_CONTENT);
 
     // Act & Assert
     this.testAssert.assertContentNotEmpty();
@@ -83,7 +69,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_unexpected_WHEN_assertContentNotEmpty_THEN_assert_false() throws Exception {
     // Arrange
-    this.response.getWriter().write(Strings.EMPTY);
+    useServerWithResponse(Strings.EMPTY);
 
     // Act & Assert
     assertThrows(AssertionError.class, this.testAssert::assertContentNotEmpty);
@@ -92,8 +78,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_exception_WHEN_assertContentNotEmpty_THEN_assert_false() throws Exception {
     // Arrange
-    var mockMvcResult = mockGetContentAsStringException();
-    when(this.actions.andReturn()).thenReturn(mockMvcResult);
+    useServerWithStringException();
     var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
@@ -103,7 +88,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_expected_WHEN_assertContentEmpty_THEN_assert_true() throws Exception {
     // Arrange
-    this.response.getWriter().write(Strings.EMPTY);
+    useServerWithResponse(Strings.EMPTY);
 
     // Act & Assert
     this.testAssert.assertContentEmpty();
@@ -112,7 +97,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_unexpected_WHEN_assertContentEmpty_THEN_return_assert_false() throws Exception {
     // Arrange
-    this.response.getWriter().write(ACTUAL_CONTENT);
+    useServerWithResponse(ACTUAL_CONTENT);
 
     // Act & Assert
     assertThrows(AssertionError.class, this.testAssert::assertContentEmpty);
@@ -121,8 +106,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_exception_WHEN_assertContentEmpty_THEN_assert_false() throws Exception {
     // Arrange
-    var mockMvcResult = mockGetContentAsStringException();
-    when(this.actions.andReturn()).thenReturn(mockMvcResult);
+    useServerWithStringException();
     var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
@@ -132,7 +116,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_expected_WHEN_assertContentEquals_THEN_assert_true() throws Exception {
     // Arrange
-    this.response.getWriter().write(EXPECTED_CONTENT);
+    useServerWithResponse(EXPECTED_CONTENT);
 
     // Act & Assert
     this.testAssert.assertContentEquals(EXPECTED_CONTENT);
@@ -141,7 +125,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_unexpected_WHEN_assertContentEquals_THEN_assert_false() throws Exception {
     // Arrange
-    this.response.getWriter().write(ACTUAL_CONTENT);
+    useServerWithResponse(ACTUAL_CONTENT);
 
     // Act & Assert
     assertThrows(AssertionError.class, () -> this.testAssert.assertContentEquals(EXPECTED_CONTENT));
@@ -150,8 +134,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_exception_WHEN_assertContentEquals_THEN_assert_false() throws Exception {
     // Arrange
-    var mockMvcResult = mockGetContentAsStringException();
-    when(this.actions.andReturn()).thenReturn(mockMvcResult);
+    useServerWithStringException();
     var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
@@ -176,7 +159,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_expected_WHEN_assertContentByteIsNotEmpty_THEN_assert_true() throws Exception {
     // Arrange
-    this.response.getWriter().write(ACTUAL_CONTENT);
+    useServerWithResponse(ACTUAL_CONTENT);
 
     // Act & Assert
     this.testAssert.assertContentByteIsNotEmpty();
@@ -185,7 +168,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_unexpected_WHEN_assertContentByteIsNotEmpty_THEN_assert_false() throws Exception {
     // Arrange
-    this.response.getWriter().write(Strings.EMPTY);
+    useServerWithResponse(Strings.EMPTY);
 
     // Act & Assert
     assertThrows(AssertionError.class, this.testAssert::assertContentByteIsNotEmpty);
@@ -194,9 +177,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_exception_WHEN_assertContentByteIsNotEmpty_THEN_assert_false() {
     // Arrange
-    var mockMvcResult = mockGetContentAsSByteException();
-
-    when(this.actions.andReturn()).thenReturn(mockMvcResult);
+    useServerWithByteException();
     var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
@@ -206,7 +187,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_expected_WHEN_assertContentByteIsEmpty_THEN_assert_true() throws Exception {
     // Arrange
-    this.response.getWriter().write(Strings.EMPTY);
+    useServerWithResponse(Strings.EMPTY);
 
     // Act & Assert
     this.testAssert.assertContentByteIsEmpty();
@@ -215,7 +196,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_unexpected_WHEN_assertContentByteIsEmpty_THEN_return_assert_false() throws Exception {
     // Arrange
-    this.response.getWriter().write(ACTUAL_CONTENT);
+    useServerWithResponse(ACTUAL_CONTENT);
 
     // Act & Assert
     assertThrows(AssertionError.class, this.testAssert::assertContentByteIsEmpty);
@@ -224,9 +205,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_exception_WHEN_assertContentByteIsEmpty_THEN_assert_false() {
     // Arrange
-    var mockMvcResult = mockGetContentAsSByteException();
-
-    when(this.actions.andReturn()).thenReturn(mockMvcResult);
+    useServerWithByteException();
     var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
@@ -236,7 +215,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_expected_byte_WHEN_assertContentEquals_THEN_assert_true() throws Exception {
     // Arrange
-    this.response.getWriter().write(EXPECTED_CONTENT);
+    useServerWithResponse(EXPECTED_CONTENT);
 
     // Act & Assert
     this.testAssert.assertContentEquals(EXPECTED_CONTENT.getBytes());
@@ -245,7 +224,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_unexpected_byte_WHEN_assertContentEquals_THEN_assert_false() throws Exception {
     // Arrange
-    this.response.getWriter().write(ACTUAL_CONTENT);
+    useServerWithResponse(ACTUAL_CONTENT);
 
     // Act & Assert
     assertThrows(AssertionError.class, () -> this.testAssert.assertContentEquals(new byte[1]));
@@ -254,8 +233,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_exception_byte_WHEN_assertContentEquals_THEN_assert_false() {
     // Arrange
-    var mockMvcResult = mockGetContentAsSByteException();
-    when(this.actions.andReturn()).thenReturn(mockMvcResult);
+    useServerWithByteException();
     var testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
@@ -266,7 +244,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_expected_object_WHEN_assertContentEquals_THEN_assert_is_true() throws Exception {
     // Arrange
-    this.response.getWriter().write(TEST_OBJECT_1_JSON);
+    useServerWithResponse(TEST_OBJECT_1_JSON);
 
     // Act & Assert
     this.testAssert.assertContentEquals(TestObject1Dto.class, TEST_OBJECT_1_DTO);
@@ -275,7 +253,7 @@ class TestAssertContentImplTest {
   @Test
   void GIVEN_unexpected_object_WHEN_assertContentEquals_THEN_assert_is_false() throws Exception {
     // Arrange
-    this.response.getWriter().write(TEST_OBJECT_1_JSON);
+    useServerWithResponse(TEST_OBJECT_1_JSON);
 
     // Act & Assert
     assertThrows(
@@ -316,7 +294,7 @@ class TestAssertContentImplTest {
   @Test
   void WHEN_assertHead_THEN_return_expected_class() {
     // Arrange
-    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+    useHeader();
 
     // Act
     var assertHead = this.testAssert.assertHead();

@@ -1,15 +1,12 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeCollection;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsStringException;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_3_DTO;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_3_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_DTO;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_3_1_DTO;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECTS_MAP_2_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,9 +14,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper;
@@ -33,25 +30,15 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.opentest4j.AssertionFailedError;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
-class TestAssertCollectionImplTest {
+class TestAssertCollectionImplTest extends TestAssertBase {
 
-  private ResultActions actions;
-  private MockHttpServletResponse response;
   private TestAssertCollectionImpl testAssert;
 
   @BeforeEach
   void setUp() {
-    this.actions = mock(ResultActions.class);
-    var mvcResult = mock(MvcResult.class);
-    this.response = new MockHttpServletResponse();
-
-    when(mvcResult.getResponse()).thenReturn(this.response);
-    when(this.actions.andReturn()).thenReturn(mvcResult);
-
+    initMockServer();
     this.testAssert = new TestAssertCollectionImpl(this.actions, new ObjectMapper());
   }
 
@@ -75,21 +62,17 @@ class TestAssertCollectionImplTest {
   @Test
   void GIVEN_expected_WHEN_assertCollectionNotEmpty_THEN_assert_true() throws Exception {
     // Arrange
-    mockResponse(TEST_LIST_1_JSON);
+    useServerWithResponse(TEST_LIST_1_JSON);
 
     // Act & Assert
     this.testAssert.assertCollectionNotEmpty();
-  }
-
-  private void mockResponse(String json) throws Exception {
-    this.response.getWriter().write(json);
   }
 
   @ParameterizedTest
   @ValueSource(strings = {Strings.EMPTY, "[]"})
   void GIVEN_empty_WHEN_assertCollectionNotEmpty_THEN_assert_false(String value) throws Exception {
     // Arrange
-    mockResponse(value);
+    useServerWithResponse(value);
 
     // Act & Assert
     assertThrows(AssertionError.class, this.testAssert::assertCollectionNotEmpty);
@@ -98,22 +81,18 @@ class TestAssertCollectionImplTest {
   @Test
   void GIVEN_exception_WHEN_assertCollectionNotEmpty_THEN_assert_false() throws Exception {
     // Arrange
-    mockActionReturn(mockGetContentAsStringException());
+    useServerWithStringException();
     var testAssertCollection = new TestAssertCollectionImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
     assertThrows(AssertionError.class, testAssertCollection::assertCollectionNotEmpty);
   }
 
-  private void mockActionReturn(MvcResult mvcResult) {
-    when(this.actions.andReturn()).thenReturn(mvcResult);
-  }
-
   @ParameterizedTest
   @ValueSource(strings = {Strings.EMPTY, "[]"})
   void GIVEN_expected_WHEN_assertCollectionEmpty_THEN_assert_true(String value) throws Exception {
     // Arrange
-    mockResponse(value);
+    useServerWithResponse(value);
 
     // Act & Assert
     this.testAssert.assertCollectionEmpty();
@@ -122,7 +101,7 @@ class TestAssertCollectionImplTest {
   @Test
   void GIVEN_unexpected_WHEN_assertCollectionEmpty_THEN_return_assert_false() throws Exception {
     // Arrange
-    mockResponse(TEST_LIST_1_JSON);
+    useServerWithResponse(TEST_LIST_1_JSON);
 
     // Act & Assert
     assertThrows(AssertionError.class, this.testAssert::assertCollectionEmpty);
@@ -131,7 +110,7 @@ class TestAssertCollectionImplTest {
   @Test
   void GIVEN_exception_WHEN_assertCollectionEmpty_THEN_assert_false() throws Exception {
     // Arrange
-    mockActionReturn(mockGetContentAsStringException());
+    useServerWithStringException();
     var testAssertCollection = new TestAssertCollectionImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
@@ -141,7 +120,7 @@ class TestAssertCollectionImplTest {
   @Test
   void GIVEN_expected_list_WHEN_assertCollectionEquals_THEN_assert_is_true() throws Exception {
     // Arrange
-    mockResponse(TEST_LIST_1_JSON);
+    useServerWithResponse(TEST_LIST_1_JSON);
 
     // Act & Assert
     this.testAssert.assertCollectionEquals(TestObject1Dto.class, TEST_LIST_1_DTO);
@@ -150,7 +129,7 @@ class TestAssertCollectionImplTest {
   @Test
   void GIVEN_unexpected_list_WHEN_assertCollectionEquals_THEN_assert_is_false() throws Exception {
     // Arrange
-    mockResponse(TEST_LIST_1_JSON);
+    useServerWithResponse(TEST_LIST_1_JSON);
 
     // Act & Assert
     assertThrows(
@@ -177,7 +156,7 @@ class TestAssertCollectionImplTest {
 
     // Arrange
     var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
-    mockResponse(TEST_LIST_1_JSON);
+    useServerWithResponse(TEST_LIST_1_JSON);
 
     // Act
     this.testAssert.assertCollectionEquals(TestObject1Dto.class, TEST_LIST_1_DTO);
@@ -192,7 +171,7 @@ class TestAssertCollectionImplTest {
       throws Exception {
 
     // Arrange
-    mockResponse(TEST_LIST_1_3_JSON);
+    useServerWithResponse(TEST_LIST_1_3_JSON);
 
     // Act & Assert
     this.testAssert.assertCollectionEqualsIgnoreOrder(TestObject1Dto.class, TEST_LIST_3_1_DTO);
@@ -203,7 +182,7 @@ class TestAssertCollectionImplTest {
       throws Exception {
 
     // Arrange
-    mockResponse(TEST_LIST_1_JSON);
+    useServerWithResponse(TEST_LIST_1_JSON);
 
     // Act & Assert
     assertThrows(
@@ -234,7 +213,7 @@ class TestAssertCollectionImplTest {
 
     // Arrange
     var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
-    mockResponse(TEST_LIST_1_JSON);
+    useServerWithResponse(TEST_LIST_1_JSON);
 
     // Act
     this.testAssert.assertCollectionEqualsIgnoreOrder(TestObject1Dto.class, TEST_LIST_1_DTO);
@@ -247,7 +226,7 @@ class TestAssertCollectionImplTest {
   @Test
   void GIVEN_expected_WHEN_assertCollectionSize_THEN_assert_is_true() throws Exception {
     // Arrange
-    mockResponse(TEST_OBJECTS_MAP_2_JSON);
+    useServerWithResponse(TEST_OBJECTS_MAP_2_JSON);
 
     // Act & Assert
     this.testAssert.assertCollectionSize(2);
@@ -256,21 +235,17 @@ class TestAssertCollectionImplTest {
   @Test
   void GIVEN_unexpected_WHEN_assertCollectionSize_THEN_assert_is_false() throws Exception {
     // Arrange
-    mockActionThrow(new AssertionError());
+    useResultAssertionError();
     var testAssertCollection = new TestAssertCollectionImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
     assertThrows(AssertionError.class, () -> testAssertCollection.assertCollectionSize(1));
   }
 
-  private void mockActionThrow(Throwable throwable) throws Exception {
-    when(this.actions.andExpect(any())).thenThrow(throwable);
-  }
-
   @Test
   void GIVEN_exception_WHEN_assertCollectionSize_THEN_assert_is_false() throws Exception {
     // Arrange
-    mockActionThrow(new Exception());
+    useResultAssertionFailedError();
     var testAssertCollection = new TestAssertCollectionImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
@@ -280,7 +255,7 @@ class TestAssertCollectionImplTest {
   @Test
   void WHEN_assertHead_THEN_return_expected_class() {
     // Arrange
-    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+    useHeader();
 
     // Act
     var assertHead = this.testAssert.assertHead();

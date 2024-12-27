@@ -3,8 +3,6 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.ACCEPTED;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -14,11 +12,11 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCollectionImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,26 +25,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpStatus;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 
-class TestAssertStatusImplTest {
+class TestAssertStatusImplTest extends TestAssertBase {
 
-  private ResultActions actions;
   private ObjectMapper objectMapper;
-  private MockHttpServletResponse response;
   private TestAssert1Status testAssert1;
   private TestAssert2Status testAssert2;
 
   @BeforeEach
   void setUp() {
-    this.actions = mock(ResultActions.class);
-    var mvcResult = mock(MvcResult.class);
-    this.response = new MockHttpServletResponse();
-
-    when(mvcResult.getResponse()).thenReturn(this.response);
-    when(this.actions.andReturn()).thenReturn(mvcResult);
+    initMockServer();
 
     this.objectMapper = new ObjectMapper();
     this.testAssert1 = new TestAssertStatusImpl(this.actions, this.objectMapper);
@@ -295,7 +283,7 @@ class TestAssertStatusImplTest {
   @Test
   void GIVEN_assert2_WHEN_assertContent_THEN_return_expected_class() {
     // Arrange
-    this.response.setHeader(TestValue.TEST_HEAD_KEY_1, TestValue.TEST_HEAD_VALUE_1);
+    useHeader();
 
     // Act
     var assertContent = this.testAssert2.assertContent();
@@ -307,7 +295,7 @@ class TestAssertStatusImplTest {
   @Test
   void GIVEN_assert2_WHEN_assertCollection_THEN_return_expected_class() {
     // Arrange
-    this.response.setHeader(TestValue.TEST_HEAD_KEY_1, TestValue.TEST_HEAD_VALUE_1);
+    useHeader();
 
     // Act
     var assertCollection = this.testAssert2.assertCollection();
@@ -319,7 +307,7 @@ class TestAssertStatusImplTest {
   @Test
   void GIVEN_assert2_WHEN_assertHead_THEN_return_expected_class() {
     // Arrange
-    this.response.setHeader(TestValue.TEST_HEAD_KEY_1, TestValue.TEST_HEAD_VALUE_1);
+    useHeader();
 
     // Act
     var assertHead = this.testAssert2.assertHead();
@@ -331,7 +319,7 @@ class TestAssertStatusImplTest {
   @Test
   void GIVEN_assert2_WHEN_assertCustom_THEN_return_expected_class() {
     // Arrange
-    this.response.setHeader(TestValue.TEST_HEAD_KEY_1, TestValue.TEST_HEAD_VALUE_1);
+    useHeader();
 
     // Act
     var assertCustom = this.testAssert2.assertCustom();

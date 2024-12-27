@@ -92,7 +92,7 @@ public final class TestAssertCollectionImpl
   @Override
   public TestAssertLCollection assertCollectionEmpty() {
     try {
-      assertThat(this.response.getContentAsString(), anyOf(is(Strings.EMPTY), is("[]"), is("{}")));
+      assertThat(this.response.getContentAsString(), anyOf(is(Strings.EMPTY), is("[]")));
     } catch (Exception e) {
       Assertions.fail(e);
     }
@@ -122,6 +122,8 @@ public final class TestAssertCollectionImpl
 
   /**
    * Asserts that the content of the HTTP response matches the given collection of objects.
+   *
+   * <p>Both collections are normalized before comparison to ensure consistent results.
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
