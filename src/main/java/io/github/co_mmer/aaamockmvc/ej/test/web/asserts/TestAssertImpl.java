@@ -9,6 +9,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertMapImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssertStatusImpl;
 import lombok.NonNull;
@@ -81,6 +83,14 @@ public final class TestAssertImpl implements TestAssert {
   @Override
   public TestAssert1Collection assertCollection() {
     return new TestAssertCollectionImpl(this.actions, this.objectMapper);
+  }
+
+  /**
+   * @since 1.4.0
+   */
+  @Override
+  public TestAssert1Map assertMap() {
+    return new TestAssertMapImpl(this.actions, this.objectMapper);
   }
 
   /**

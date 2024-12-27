@@ -1,18 +1,13 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeCollection;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeMap;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestMockHttpServletResponse.mockGetContentAsStringException;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_3_DTO;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_3_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_DTO;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_3_1_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_1_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_1_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECTS_MAP_2_DTO;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECTS_MAP_2_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -246,58 +241,6 @@ class TestAssertCollectionImplTest {
 
     // Assert
     mockTestArrangeNormalizer.verify(() -> normalizeCollection(any()), times(2));
-    mockTestArrangeNormalizer.close();
-  }
-
-  //
-  @Test
-  void GIVEN_expected_map_WHEN_assertCollectionEquals_THEN_assert_is_true() throws Exception {
-    // Arrange
-    mockResponse(TEST_MAP_1_JSON);
-
-    // Act & Assert
-    this.testAssert.assertCollectionEquals(Boolean.class, TestObject1Dto.class, TEST_MAP_1_DTO);
-  }
-
-  @Test
-  void GIVEN_unexpected_map_WHEN_assertCollectionEquals_THEN_assert_is_false() throws Exception {
-    // Arrange
-    mockResponse(TEST_SET_1_JSON);
-
-    // Act & Assert
-    assertThrows(
-        AssertionError.class,
-        () ->
-            this.testAssert.assertCollectionEquals(
-                Boolean.class, TestObject1Dto.class, TEST_OBJECTS_MAP_2_DTO));
-  }
-
-  @Test
-  void GIVEN_exception_map_WHEN_assertCollectionEquals_THEN_assert_is_false() {
-    // Arrange
-    var mockTestGenericMapper = MockTestGenericMapper.mapToMapThrowException();
-
-    // Act & Assert
-    assertThrows(
-        AssertionFailedError.class,
-        () ->
-            this.testAssert.assertCollectionEquals(
-                Boolean.class, TestObject1Dto.class, TEST_MAP_1_DTO));
-
-    mockTestGenericMapper.close();
-  }
-
-  @Test
-  void GIVEN_map_WHEN_assertCollectionEquals_THEN_normalizeMap_is_called() throws Exception {
-    // Arrange
-    var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
-    mockResponse(TEST_MAP_1_JSON);
-
-    // Act
-    this.testAssert.assertCollectionEquals(Boolean.class, TestObject1Dto.class, TEST_MAP_1_DTO);
-
-    // Assert
-    mockTestArrangeNormalizer.verify(() -> normalizeMap(any()), times(2));
     mockTestArrangeNormalizer.close();
   }
 

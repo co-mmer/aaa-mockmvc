@@ -4,6 +4,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Co
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status;
 
 /**
@@ -28,6 +29,8 @@ public interface TestAssert {
   TestAssertContent assertContent();
 
   TestAssert1Collection assertCollection();
+
+  TestAssert1Map assertMap();
 
   /**
    * Asserts that the HTTP response is valid for a HEAD request.

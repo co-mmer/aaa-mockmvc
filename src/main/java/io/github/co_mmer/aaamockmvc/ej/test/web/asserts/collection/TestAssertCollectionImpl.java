@@ -1,9 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeCollection;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeMap;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToList;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToMap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -16,7 +14,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import java.util.Collection;
-import java.util.Map;
 import java.util.function.BiConsumer;
 import lombok.NonNull;
 import org.apache.logging.log4j.util.Strings;
@@ -26,12 +23,11 @@ import org.springframework.test.web.servlet.ResultActions;
 
 /**
  * Implementation of {@code TestAssertCollection} for asserting the contents of HTTP responses
- * containing collections or maps.
+ * containing collections.
  *
  * <p>This class provides various assertion methods to validate that the response body matches the
- * expected collections or maps. It supports checking for empty or non-empty collections, validating
- * the size of collections, and asserting equality of collections or maps with optional
- * normalization.
+ * expected collections. It supports checking for empty or non-empty collections, validating the
+ * size of collections, and asserting equality of collections.
  *
  * @since 1.4.0
  */
@@ -96,7 +92,7 @@ public final class TestAssertCollectionImpl
   @Override
   public TestAssertLCollection assertCollectionEmpty() {
     try {
-      assertThat(this.response.getContentAsString(), anyOf(is(Strings.EMPTY), is("[]")));
+      assertThat(this.response.getContentAsString(), anyOf(is(Strings.EMPTY), is("[]"), is("{}")));
     } catch (Exception e) {
       Assertions.fail(e);
     }
@@ -133,6 +129,7 @@ public final class TestAssertCollectionImpl
    * @param expectedClass the class of the objects in the list (must not be {@code null})
    * @param expectedCollection the expected list of objects (must not be {@code null})
    * @param <T> the type of the objects in the expected list
+   * @throws AssertionError if the collections do not match
    * @since 1.4.0
    */
   @Override
@@ -184,38 +181,6 @@ public final class TestAssertCollectionImpl
       var result = this.actions.andReturn();
       var actual = mapToList(this.objectMapper, result, expectedClass);
       assertion.accept(actual, expectedResponse);
-    } catch (TestGenericMapperException e) {
-      Assertions.fail(e);
-    }
-    return this;
-  }
-
-  /**
-   * Asserts that the map in the HTTP response matches the expected map of key-value pairs.
-   *
-   * <p>Both maps are normalized before comparison to ensure consistent results.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @param keyClass the class of the keys in the map (must not be {@code null})
-   * @param valueClass the class of the values in the map (must not be {@code null})
-   * @param expectedMap the expected map of key-value pairs (must not be {@code null})
-   * @param <K> the type of the keys in the map
-   * @param <V> the type of the values in the map
-   * @return the current instance of {@code TestAssertCollection} for further assertions
-   * @throws AssertionError if the maps do not match
-   * @since 1.4.0
-   */
-  @Override
-  public <K, V> TestAssertLCollection assertCollectionEquals(
-      @NonNull Class<K> keyClass, @NonNull Class<V> valueClass, @NonNull Map<K, V> expectedMap) {
-
-    try {
-      var result = this.actions.andReturn();
-      var actual = mapToMap(this.objectMapper, result, keyClass, valueClass);
-
-      assertThat(normalizeMap(actual), is(normalizeMap(expectedMap)));
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
