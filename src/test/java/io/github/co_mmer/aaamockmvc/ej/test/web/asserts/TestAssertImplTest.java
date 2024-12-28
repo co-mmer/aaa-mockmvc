@@ -13,6 +13,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCol
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertMapImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssertStatusImpl;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -102,6 +103,18 @@ class TestAssertImplTest {
 
     // Assert
     assertThat(assertCollection.getClass(), is(TestAssertCollectionImpl.class));
+  }
+
+  @Test
+  void WHEN_assertMap_THEN_return_expected_class() {
+    // Arrange
+    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+
+    // Act
+    var assertMap = this.testAssert.assertMap();
+
+    // Assert
+    assertThat(assertMap.getClass(), is(TestAssertMapImpl.class));
   }
 
   @Test

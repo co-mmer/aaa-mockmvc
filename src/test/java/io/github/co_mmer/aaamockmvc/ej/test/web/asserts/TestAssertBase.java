@@ -8,7 +8,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.opentest4j.AssertionFailedError;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
@@ -47,8 +46,8 @@ public abstract class TestAssertBase {
     when(this.actions.andExpect(any())).thenThrow(new AssertionError());
   }
 
-  protected void useResultAssertionFailedError() throws Exception {
-    when(this.actions.andExpect(any())).thenThrow(new AssertionFailedError());
+  protected void useResultException() throws Exception {
+    when(this.actions.andExpect(any())).thenThrow(new Exception());
   }
 
   protected void useHeader() {

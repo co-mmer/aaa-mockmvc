@@ -245,7 +245,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
   @Test
   void GIVEN_exception_WHEN_assertCollectionSize_THEN_assert_is_false() throws Exception {
     // Arrange
-    useResultAssertionFailedError();
+    useResultException();
     var testAssertCollection = new TestAssertCollectionImpl(this.actions, new ObjectMapper());
 
     // Act & Assert
