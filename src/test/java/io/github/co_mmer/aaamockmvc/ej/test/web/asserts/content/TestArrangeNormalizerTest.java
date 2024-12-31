@@ -46,6 +46,20 @@ class TestArrangeNormalizerTest {
   }
 
   @Test
+  void GIVEN_null_WHEN_normalizeAsObjects_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> TestArrangeNormalizer.normalizeAsObjects(null));
+  }
+
+  @Test
+  void GIVEN_words_WHEN_normalizeAsObjects_THEN_return_expected_list() {
+    // Act
+    var result = TestArrangeNormalizer.normalizeAsObjects(WORD_LIST);
+
+    // Assert
+    assertThat(result, is(WORD_LIST_NORMALIZED));
+  }
+
+  @Test
   void GIVEN_null_WHEN_normalizeSet_THEN_throw_NullPointerException() {
     assertThrows(NullPointerException.class, () -> TestArrangeNormalizer.normalizeSet(null));
   }

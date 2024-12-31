@@ -1,11 +1,11 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeMap;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_1_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_1_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECTS_MAP_2_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECTS_MAP_2_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_1_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A3;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A3_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_A1_A2_JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,7 +19,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1Dto;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectA;
 import java.util.stream.Stream;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,8 +47,7 @@ class TestAssertMapImplTest extends TestAssertBase {
   void GIVEN_provideNullParameters_WHEN_call_constructor_THEN_throw_NullPointerException(
       ResultActions actions, ObjectMapper objectMapper) {
 
-    assertThrows(
-        NullPointerException.class, () -> new TestAssertMapImpl(actions, objectMapper));
+    assertThrows(NullPointerException.class, () -> new TestAssertMapImpl(actions, objectMapper));
   }
 
   private static Stream<Arguments> provideNullParameters() {
@@ -61,7 +60,7 @@ class TestAssertMapImplTest extends TestAssertBase {
   @Test
   void GIVEN_expected_WHEN_assertMapNotEmpty_THEN_assert_true() throws Exception {
     // Arrange
-    useServerWithResponse(TEST_MAP_1_JSON);
+    useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
     // Act & Assert
     this.testAssert.assertMapNotEmpty();
@@ -100,7 +99,7 @@ class TestAssertMapImplTest extends TestAssertBase {
   @Test
   void GIVEN_unexpected_WHEN_assertMapEmpty_THEN_return_assert_false() throws Exception {
     // Arrange
-    useServerWithResponse(TEST_MAP_1_JSON);
+    useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
     // Act & Assert
     assertThrows(AssertionError.class, this.testAssert::assertMapEmpty);
@@ -116,27 +115,26 @@ class TestAssertMapImplTest extends TestAssertBase {
     assertThrows(AssertionError.class, testAssertMap::assertMapEmpty);
   }
 
-
   @Test
   void GIVEN_expected_map_WHEN_assertMapEquals_THEN_assert_is_true() throws Exception {
     // Arrange
-    useServerWithResponse(TEST_MAP_1_JSON);
+    useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
     // Act & Assert
-    this.testAssert.assertMapEquals(Boolean.class, TestObject1Dto.class, TEST_MAP_1_DTO);
+    this.testAssert.assertMapEquals(Boolean.class, TestObjectA.class, TEST_MAP_A1_A2);
   }
 
   @Test
   void GIVEN_unexpected_map_WHEN_assertMapEquals_THEN_assert_is_false() throws Exception {
     // Arrange
-    useServerWithResponse(TEST_SET_1_JSON);
+    useServerWithResponse(TEST_SET_A1_A2_JSON);
 
     // Act & Assert
     assertThrows(
         AssertionError.class,
         () ->
             this.testAssert.assertMapEquals(
-                Boolean.class, TestObject1Dto.class, TEST_OBJECTS_MAP_2_DTO));
+                Boolean.class, TestObjectA.class, TEST_MAP_A1_A3));
   }
 
   @Test
@@ -147,7 +145,7 @@ class TestAssertMapImplTest extends TestAssertBase {
     // Act & Assert
     assertThrows(
         AssertionFailedError.class,
-        () -> this.testAssert.assertMapEquals(Boolean.class, TestObject1Dto.class, TEST_MAP_1_DTO));
+        () -> this.testAssert.assertMapEquals(Boolean.class, TestObjectA.class, TEST_MAP_A1_A2));
 
     mockTestGenericMapper.close();
   }
@@ -156,10 +154,10 @@ class TestAssertMapImplTest extends TestAssertBase {
   void GIVEN_map_WHEN_assertMapEquals_THEN_normalizeMap_is_called() throws Exception {
     // Arrange
     var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
-    useServerWithResponse(TEST_MAP_1_JSON);
+    useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
     // Act
-    this.testAssert.assertMapEquals(Boolean.class, TestObject1Dto.class, TEST_MAP_1_DTO);
+    this.testAssert.assertMapEquals(Boolean.class, TestObjectA.class, TEST_MAP_A1_A2);
 
     // Assert
     mockTestArrangeNormalizer.verify(() -> normalizeMap(any()), times(2));
@@ -169,7 +167,7 @@ class TestAssertMapImplTest extends TestAssertBase {
   @Test
   void GIVEN_expected_WHEN_assertMapSize_THEN_assert_is_true() throws Exception {
     // Arrange
-    useServerWithResponse(TEST_OBJECTS_MAP_2_JSON);
+    useServerWithResponse(TEST_MAP_A1_A3_JSON);
 
     // Act & Assert
     this.testAssert.assertMapSize(2);

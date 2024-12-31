@@ -15,29 +15,33 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TestObject {
 
-  public static final TestObject1Dto TEST_OBJECT_1_DTO = new TestObject1Dto(1, "test");
-  public static final TestObject1Dto TEST_OBJECT_2_DTO = new TestObject1Dto(2, "test");
-  public static final TestObject1Dto TEST_OBJECT_3_DTO = new TestObject1Dto(3, "test");
-  public static final List<TestObject1Dto> TEST_LIST_1_DTO =
-      List.of(TEST_OBJECT_1_DTO, TEST_OBJECT_2_DTO);
-  public static final List<TestObject1Dto> TEST_LIST_1_3_DTO =
-      List.of(TEST_OBJECT_1_DTO, TEST_OBJECT_3_DTO);
-  public static final List<TestObject1Dto> TEST_LIST_3_1_DTO =
-      List.of(TEST_OBJECT_3_DTO, TEST_OBJECT_1_DTO);
-  public static final Set<TestObject1Dto> TEST_SET_1_DTO =
-      Set.of(TEST_OBJECT_1_DTO, TEST_OBJECT_2_DTO);
-  public static final Map<Boolean, TestObject1Dto> TEST_MAP_1_DTO =
-      Map.of(TRUE, TEST_OBJECT_1_DTO, FALSE, TEST_OBJECT_2_DTO);
+  public static final TestObjectA TEST_A1 = new TestObjectA(1, "test");
+  public static final TestObjectA TEST_A2 = new TestObjectA(2, "test");
+  public static final TestObjectA TEST_A3 = new TestObjectA(3, "test");
+  public static final List<TestObjectA> TEST_LIST_A1 =
+      List.of(TEST_A1);
+  public static final List<TestObjectA> TEST_LIST_A3 =
+      List.of(TEST_A3);
+  public static final List<TestObjectA> TEST_LIST_A1_A2 =
+      List.of(TEST_A1, TEST_A2);
+  public static final List<TestObjectA> TEST_LIST_A1_A3 =
+      List.of(TEST_A1, TEST_A3);
+  public static final List<TestObjectA> TEST_LIST_A3_A1 =
+      List.of(TEST_A3, TEST_A1);
+  public static final Set<TestObjectA> TEST_SET_A1_A2 =
+      Set.of(TEST_A1, TEST_A2);
+  public static final Map<Boolean, TestObjectA> TEST_MAP_A1_A2 =
+      Map.of(TRUE, TEST_A1, FALSE, TEST_A2);
 
-  public static final Map<Boolean, TestObject1Dto> TEST_OBJECTS_MAP_2_DTO =
-      Map.of(TRUE, TEST_OBJECT_1_DTO, FALSE, TEST_OBJECT_3_DTO);
-  public static final String TEST_OBJECT_1_JSON = mapToString(TEST_OBJECT_1_DTO);
-  public static final String TEST_LIST_1_JSON = mapToString(TEST_LIST_1_DTO);
-  public static final String TEST_LIST_1_3_JSON = mapToString(TEST_LIST_1_3_DTO);
+  public static final Map<Boolean, TestObjectA> TEST_MAP_A1_A3 =
+      Map.of(TRUE, TEST_A1, FALSE, TEST_A3);
+  public static final String TEST_A1_JSON = mapToString(TEST_A1);
+  public static final String TEST_LIST_A1_A2_JSON = mapToString(TEST_LIST_A1_A2);
+  public static final String TEST_LIST_A1_A3_JSON = mapToString(TEST_LIST_A1_A3);
 
-  public static final String TEST_SET_1_JSON = mapToString(TEST_SET_1_DTO);
-  public static final String TEST_MAP_1_JSON = mapToString(TEST_MAP_1_DTO);
-  public static final String TEST_OBJECTS_MAP_2_JSON = mapToString(TEST_OBJECTS_MAP_2_DTO);
+  public static final String TEST_SET_A1_A2_JSON = mapToString(TEST_SET_A1_A2);
+  public static final String TEST_MAP_A1_A2_JSON = mapToString(TEST_MAP_A1_A2);
+  public static final String TEST_MAP_A1_A3_JSON = mapToString(TEST_MAP_A1_A3);
 
   public static final TestRequestBean TEST_REQUEST_BEAN =
       new TestRequestBean(TestDataMockMvc.MOCK_MVC, new ObjectMapper());

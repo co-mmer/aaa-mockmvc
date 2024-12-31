@@ -82,4 +82,90 @@ public interface TestAssert1Collection {
    */
   <T> TestAssertLCollection assertCollectionEqualsIgnoreOrder(
       @NonNull Class<T> expectedClass, @NonNull Collection<T> expectedCollection);
+
+  /**
+   * Asserts that the collection in the HTTP response contains the expected elements.
+   *
+   * <p>Both collections are normalized before comparison to ensure consistent results.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param expectedElements the collection of expected elements (must not be {@code null})
+   * @param <T> the type of the objects in the collection
+   * @return the current instance of {@code TestAssertCollection} for further assertions
+   * @throws AssertionError if the collection does not contain the expected elements
+   * @since 1.4.0
+   */
+  // @Override
+  <T> TestAssertLCollection assertCollectionContains(
+      @NonNull Class<T> expectedClass, @NonNull Collection<T> expectedElements);
+
+  /**
+   * Asserts that the collection in the HTTP response contains the specified elements.
+   *
+   * <p>This method provides a varargs overload for specifying the expected elements directly, which
+   * are converted into a collection and passed to the main {@code assertCollectionContains} method.
+   *
+   * <p>Both the actual and expected collections are normalized before comparison to ensure
+   * consistent results.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param expectedElements the elements expected to be present in the collection (must not be
+   *     {@code null})
+   * @param <T> the type of the objects in the collection
+   * @return the current instance of {@code TestAssertLCollection} for further assertions
+   * @throws AssertionError if the collection does not contain the specified elements
+   * @since 1.4.0
+   */
+  <T> TestAssertLCollection assertCollectionContains(
+      @NonNull Class<T> expectedClass, @NonNull T... expectedElements);
+
+  /**
+   * Asserts that the collection in the HTTP response does not contain the specified elements.
+   *
+   * <p>Both the actual and expected collections are normalized before comparison to ensure
+   * consistent results.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param unexpectedElements the elements that must not be present in the collection (must not be
+   *     {@code null})
+   * @param <T> the type of the objects in the collection
+   * @return the current instance of {@code TestAssertLCollection} for further assertions
+   * @throws AssertionError if the collection contains any of the specified elements
+   * @since 1.4.0
+   */
+  <T> TestAssertLCollection assertCollectionNotContains(
+      @NonNull Class<T> expectedClass, @NonNull Collection<T> unexpectedElements);
+
+  /**
+   * Asserts that the collection in the HTTP response does not contain the specified elements.
+   *
+   * <p>This method provides a varargs overload for specifying the unexpected elements directly,
+   * which are converted into a collection and passed to the main {@code
+   * assertCollectionNotContains} method.
+   *
+   * <p>Both the actual and unexpected collections are normalized before comparison to ensure
+   * consistent results.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param unexpectedElements the elements that must not be present in the collection (must not be
+   *     {@code null})
+   * @param <T> the type of the objects in the collection
+   * @return the current instance of {@code TestAssertLCollection} for further assertions
+   * @throws AssertionError if the collection contains any of the specified elements
+   * @since 1.4.0
+   */
+  <T> TestAssertLCollection assertCollectionNotContains(
+      @NonNull Class<T> expectedClass, @NonNull T... unexpectedElements);
 }
