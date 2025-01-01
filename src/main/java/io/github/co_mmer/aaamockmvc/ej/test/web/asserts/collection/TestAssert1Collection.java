@@ -1,6 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection;
 
 import java.util.Collection;
+import java.util.function.Predicate;
 import lombok.NonNull;
 
 /**
@@ -168,4 +169,53 @@ public interface TestAssert1Collection {
    */
   <T> TestAssertLCollection assertCollectionNotContains(
       @NonNull Class<T> expectedClass, @NonNull T... unexpectedElements);
+
+  /**
+   * Asserts that all elements in the collection in the HTTP response match the specified condition.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param condition the condition that all elements must match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
+   * @return the current instance of {@code TestAssertLCollection} for further assertions
+   * @throws AssertionError if any element in the collection does not match the condition
+   * @since 1.4.0
+   */
+  <T> TestAssertLCollection assertCollectionMatchAll(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition);
+
+  /**
+   * Asserts that at least one element in the collection in the HTTP response matches the specified
+   * condition.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param condition the condition that at least one element must match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
+   * @return the current instance of {@code TestAssertLCollection} for further assertions
+   * @throws AssertionError if no element in the collection matches the condition
+   * @since 1.4.0
+   */
+  <T> TestAssertLCollection assertCollectionMatchAny(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition);
+
+  /**
+   * Asserts that no elements in the collection in the HTTP response match the specified condition.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param condition the condition that no element must match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
+   * @return the current instance of {@code TestAssertLCollection} for further assertions
+   * @throws AssertionError if any element in the collection matches the condition
+   * @since 1.4.0
+   */
+  <T> TestAssertLCollection assertCollectionMatchNone(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition);
 }

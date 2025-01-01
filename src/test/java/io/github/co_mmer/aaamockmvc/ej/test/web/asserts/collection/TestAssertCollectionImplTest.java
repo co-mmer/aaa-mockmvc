@@ -255,9 +255,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () ->
-              testAssert.assertCollectionEqualsIgnoreOrder(
-                  TestObjectA.class, TEST_LIST_A1_A3));
+          () -> testAssert.assertCollectionEqualsIgnoreOrder(TestObjectA.class, TEST_LIST_A1_A3));
     }
 
     @Test
@@ -268,9 +266,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionFailedError.class,
-          () ->
-              testAssert.assertCollectionEqualsIgnoreOrder(
-                  TestObjectA.class, TEST_LIST_A1_A2));
+          () -> testAssert.assertCollectionEqualsIgnoreOrder(TestObjectA.class, TEST_LIST_A1_A2));
 
       mockTestGenericMapper.close();
     }
@@ -311,7 +307,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class,
+      assertThrows(
+          AssertionError.class,
           () -> testAssert.assertCollectionContains(TestObjectA.class, TEST_LIST_A3));
     }
 
@@ -323,7 +320,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var testAssertCollection = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class,
+      assertThrows(
+          AssertionError.class,
           () -> testAssertCollection.assertCollectionContains(TestObjectA.class, TEST_LIST_A1));
     }
 
@@ -344,7 +342,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class,
+      assertThrows(
+          AssertionError.class,
           () -> testAssert.assertCollectionContains(TestObjectA.class, TEST_A3));
     }
 
@@ -356,7 +355,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var testAssertCollection = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class,
+      assertThrows(
+          AssertionError.class,
           () -> testAssertCollection.assertCollectionContains(TestObjectA.class, TEST_A1));
     }
   }
@@ -381,7 +381,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class,
+      assertThrows(
+          AssertionError.class,
           () -> testAssert.assertCollectionNotContains(TestObjectA.class, TEST_LIST_A1));
     }
 
@@ -393,7 +394,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var testAssertCollection = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class,
+      assertThrows(
+          AssertionError.class,
           () -> testAssertCollection.assertCollectionNotContains(TestObjectA.class, TEST_LIST_A3));
     }
 
@@ -415,7 +417,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class,
+      assertThrows(
+          AssertionError.class,
           () -> testAssert.assertCollectionNotContains(TestObjectA.class, TEST_A1));
     }
 
@@ -427,7 +430,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var testAssertCollection = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class,
+      assertThrows(
+          AssertionError.class,
           () -> testAssertCollection.assertCollectionNotContains(TestObjectA.class, TEST_A3));
     }
   }

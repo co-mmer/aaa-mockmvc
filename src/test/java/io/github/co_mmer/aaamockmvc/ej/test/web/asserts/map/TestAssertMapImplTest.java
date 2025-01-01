@@ -132,9 +132,7 @@ class TestAssertMapImplTest extends TestAssertBase {
     // Act & Assert
     assertThrows(
         AssertionError.class,
-        () ->
-            this.testAssert.assertMapEquals(
-                Boolean.class, TestObjectA.class, TEST_MAP_A1_A3));
+        () -> this.testAssert.assertMapEquals(Boolean.class, TestObjectA.class, TEST_MAP_A1_A3));
   }
 
   @Test

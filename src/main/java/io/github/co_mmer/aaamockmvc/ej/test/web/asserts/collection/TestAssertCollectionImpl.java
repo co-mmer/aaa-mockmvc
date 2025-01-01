@@ -1,5 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.match.TestMatchType.ALL;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.match.TestMatchType.ANY;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.match.TestMatchType.NONE;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeAsObjects;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeCollection;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToList;
@@ -12,12 +15,15 @@ import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.match.TestMatchType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import lombok.NonNull;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Assertions;
@@ -314,6 +320,78 @@ public final class TestAssertCollectionImpl
   }
 
   /**
+   * Asserts that all elements in the collection in the HTTP response match the specified
+   * condition.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param condition     the condition that all elements must match (must not be {@code null})
+   * @param <T>           the type of the objects in the collection
+   * @return the current instance of {@code TestAssertLCollection} for further assertions
+   * @throws AssertionError if any element in the collection does not match the condition
+   * @since 1.4.0
+   */
+  @Override
+  public <T> TestAssertLCollection assertCollectionMatchAll(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
+
+    assertCollectionMatch(expectedClass, condition, ALL);
+    return this;
+  }
+
+  private <T> void assertCollectionMatch(
+      Class<T> expectedClass, Predicate<T> condition, TestMatchType matchType) {
+
+    try {
+      var result = this.actions.andReturn();
+      var actual = mapToList(this.objectMapper, result, expectedClass);
+
+      var matches =
+          switch (matchType) {
+            case ALL -> actual.stream().allMatch(condition);
+            case ANY -> actual.stream().anyMatch(condition);
+            case NONE -> actual.stream().noneMatch(condition);
+          };
+      assertThat(matchType.getReason() + " Actual list: " + actual, matches, is(true));
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
+  }
+
+  /**
+   * Asserts that at least one element in the collection in the HTTP response matches the specified
+   * condition.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param condition     the condition that at least one element must match (must not be
+   *                      {@code null})
+   * @param <T>           the type of the objects in the collection
+   * @return the current instance of {@code TestAssertLCollection} for further assertions
+   * @throws AssertionError if no element in the collection matches the condition
+   * @since 1.4.0
+   */
+  @Override
+  public <T> TestAssertLCollection assertCollectionMatchAny(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
+
+    assertCollectionMatch(expectedClass, condition, ANY);
+    return this;
+  }
+
+  @Override
+  public <T> TestAssertLCollection assertCollectionMatchNone(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
+
+    assertCollectionMatch(expectedClass, condition, NONE);
+    return this;
+  }
+
+  /**
    * Asserts that the HTTP response is valid for a HEAD request.
    *
    * <p>This method returns an instance of {@code TestAssertHead} for asserting the headers of the
@@ -326,5 +404,19 @@ public final class TestAssertCollectionImpl
   @Override
   public TestAssertHead assertHead() {
     return new TestAssertHeadImpl(this.actions);
+  }
+
+  /**
+   * Retrieves the {@link TestAnswer} instance for the executed HTTP request.
+   *
+   * <p>This method provides access to the response content and other aspects of the request's
+   * outcome, enabling further validation and examination of the HTTP response.
+   *
+   * @return a {@code TestAnswer} instance for accessing the result of the request
+   * @since 1.4.0
+   */
+  @Override
+  public TestAnswer answer() {
+    return null; // todo
   }
 }

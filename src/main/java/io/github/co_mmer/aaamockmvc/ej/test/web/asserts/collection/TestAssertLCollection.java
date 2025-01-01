@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 
 /**
@@ -23,4 +24,15 @@ public interface TestAssertLCollection {
    * @since 1.4.0
    */
   TestAssertHead assertHead();
+
+  /**
+   * Retrieves the {@link TestAnswer} instance for the executed HTTP request.
+   *
+   * <p>This method provides access to the response content and other aspects of the request's
+   * outcome, enabling further validation and examination of the HTTP response.
+   *
+   * @return a {@code TestAnswer} instance for accessing the result of the request
+   * @since 1.4.0
+   */
+  TestAnswer answer();
 }

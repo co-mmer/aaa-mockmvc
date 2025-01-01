@@ -328,8 +328,7 @@ class TestAnswerImplTest {
     // Act
     var exception =
         assertThrows(
-            Exception.class,
-            () -> this.testAnswer.answerAsMap(Boolean.class, TestObjectA.class));
+            Exception.class, () -> this.testAnswer.answerAsMap(Boolean.class, TestObjectA.class));
 
     // Assert
     assertThat(exception.getClass(), is(TestAnswerException.class));

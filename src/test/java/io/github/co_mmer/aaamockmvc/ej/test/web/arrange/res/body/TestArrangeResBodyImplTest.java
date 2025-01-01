@@ -131,8 +131,8 @@ class TestArrangeResBodyImplTest {
         TestArrangeException.class,
         ()
 
-            // Act
-            -> this.impl.arrangeJson(TEST_A1));
+        // Act
+        -> this.impl.arrangeJson(TEST_A1));
 
     mockTestGenericMapper.close();
   }
@@ -144,9 +144,7 @@ class TestArrangeResBodyImplTest {
 
     // Assert
     this.mockTestArrangeBodyUtils.verify(
-        () ->
-            TestArrangeBodyUtils.setContent(
-                this.dto.getBody(), TEST_A1_JSON, APPLICATION_JSON));
+        () -> TestArrangeBodyUtils.setContent(this.dto.getBody(), TEST_A1_JSON, APPLICATION_JSON));
   }
 
   @Test()

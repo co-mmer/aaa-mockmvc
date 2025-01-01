@@ -66,8 +66,7 @@ class TestGenericMapperTest {
     when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_A1_JSON);
 
     // Act
-    var result =
-        TestGenericMapper.mapTo(this.objectMapper, this.mockMvcResult, TestObjectA.class);
+    var result = TestGenericMapper.mapTo(this.objectMapper, this.mockMvcResult, TestObjectA.class);
 
     // Assert
     assertThat(result, is(TEST_A1));

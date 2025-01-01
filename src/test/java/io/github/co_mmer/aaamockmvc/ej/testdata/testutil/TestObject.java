@@ -18,18 +18,12 @@ public final class TestObject {
   public static final TestObjectA TEST_A1 = new TestObjectA(1, "test");
   public static final TestObjectA TEST_A2 = new TestObjectA(2, "test");
   public static final TestObjectA TEST_A3 = new TestObjectA(3, "test");
-  public static final List<TestObjectA> TEST_LIST_A1 =
-      List.of(TEST_A1);
-  public static final List<TestObjectA> TEST_LIST_A3 =
-      List.of(TEST_A3);
-  public static final List<TestObjectA> TEST_LIST_A1_A2 =
-      List.of(TEST_A1, TEST_A2);
-  public static final List<TestObjectA> TEST_LIST_A1_A3 =
-      List.of(TEST_A1, TEST_A3);
-  public static final List<TestObjectA> TEST_LIST_A3_A1 =
-      List.of(TEST_A3, TEST_A1);
-  public static final Set<TestObjectA> TEST_SET_A1_A2 =
-      Set.of(TEST_A1, TEST_A2);
+  public static final List<TestObjectA> TEST_LIST_A1 = List.of(TEST_A1);
+  public static final List<TestObjectA> TEST_LIST_A3 = List.of(TEST_A3);
+  public static final List<TestObjectA> TEST_LIST_A1_A2 = List.of(TEST_A1, TEST_A2);
+  public static final List<TestObjectA> TEST_LIST_A1_A3 = List.of(TEST_A1, TEST_A3);
+  public static final List<TestObjectA> TEST_LIST_A3_A1 = List.of(TEST_A3, TEST_A1);
+  public static final Set<TestObjectA> TEST_SET_A1_A2 = Set.of(TEST_A1, TEST_A2);
   public static final Map<Boolean, TestObjectA> TEST_MAP_A1_A2 =
       Map.of(TRUE, TEST_A1, FALSE, TEST_A2);
 
