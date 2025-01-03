@@ -934,6 +934,17 @@ matches an expected string.
 <details>
 <summary>Assert Collection 🔸 (New) </summary>
 
+- [Not Empty](#assert-collection-not-empty)
+- [Empty](#assert-collection-empty)
+- [Size](#assert-collection-size)
+- [Equals](#assert-collection-equals)
+- [Contains Any Order](#assert-collection-contains-any-order)
+- [Not Contains](#assert-collection-not-contains)
+- [Contains](#assert-collection-contains)
+- [Match All](#assert-collection-match-all)
+- [Match Any](#assert-collection-match-any)
+- [Match None](#assert-collection-match-none)
+
 ### Assert Collection Not Empty
 
 The **`assertCollectionNotEmpty`** method verifies that the collection returned in the response is
@@ -1165,6 +1176,146 @@ exist within the collection returned in the response.
 
 ---
 
+### Assert Collection Match All
+
+The **`assertCollectionMatchAll`** method is used to verify that all elements in the collection
+match the specified conditions. This assertion allows for checking multiple attributes or conditions
+for every element in the collection.
+
+- **Class Specification:** The class type of the objects within the collection (
+  e.g., `DemoMatch.class`) must be defined to ensure the proper type is being validated.
+- **Conditions:** One or more conditions (e.g., predicates) can be provided. These conditions will
+  be applied to each element in the collection, and the assertion will pass only if **all elements**
+  satisfy the provided conditions.
+
+```
+  public record DemoMatch(String name, Integer id, Status status) {}
+```
+
+```
+  @GetMapping(...)
+  public ResponseEntity<List<DemoMatch>> getAll() {
+    return new ResponseEntity<>(List.of(A1_NEW, A2_NEW), OK);
+  }
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionMatchAll(DemoMatch.class, element -> element.name().equals(A));
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionMatchAll(DemoMatch.class,
+            element -> element.name().equals(A),
+            element -> element.status().equals(NEW));
+```
+
+---
+
+### Assert Collection Match Any
+
+The **`assertCollectionMatchAny`** method is used to verify that at least one element in the
+collection matches the specified conditions. This assertion allows for checking multiple attributes
+or conditions, and it will pass if **any element** satisfies at least one of the provided
+conditions.
+
+- **Class Specification:** The class type of the objects within the collection (
+  e.g., `DemoMatch.class`) must be defined to ensure proper validation.
+- **Conditions:** One or more conditions (e.g., predicates) can be provided. The assertion will pass
+  if **any element** satisfies any of the given conditions.
+
+```
+  public record DemoMatch(String name, Integer id, Status status) {}
+```
+
+```
+  @GetMapping(...)
+  public ResponseEntity<List<DemoMatch>> getAll() {
+    return new ResponseEntity<>(List.of(A1_NEW, A2_NEW), OK);
+  }
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionMatchAny(DemoMatch.class, element -> element.name().equals(A));
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionMatchAny(DemoMatch.class,
+            element -> element.name().equals(A),
+            element -> element.status().equals(CLOSE));
+```
+
+---
+
+### Assert Collection Match None
+
+The **`assertCollectionMatchNone`** method is used to verify that no elements in the collection
+match the specified conditions. This assertion allows for checking multiple attributes or
+conditions, and it will pass if **none of the elements** satisfy the given conditions.
+
+- **Class Specification:** The class type of the objects within the collection (
+  e.g., `DemoMatch.class`) must be defined to ensure proper validation.
+- **Conditions:** One or more conditions (e.g., predicates) can be provided. The assertion will pass
+  only if **none of the elements** match any of the specified conditions.
+
+```
+  public record DemoMatch(String name, Integer id, Status status) {}
+```
+
+```
+  @GetMapping(...)
+  public ResponseEntity<List<DemoMatch>> getAll() {
+    return new ResponseEntity<>(List.of(A1_NEW, A2_NEW), OK);
+  }
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionMatchNone(DemoMatch.class, element -> element.name().equals(B));
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionMatchNone(DemoMatch.class,
+            element -> element.name().equals(B),
+            element -> element.status().equals(CLOSE));
+```
+
+---
+
 </details>
 
 
@@ -1186,15 +1337,17 @@ content matches an expected **`map`** of objects.
   collections of data returned by the API.
 
 ```
-  // EXPECTED_MAP = Map.of(TRUE, TEST_DTO_1, FALSE, TEST_DTO_2);
-  
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertCollection()
-      .assertCollectionEquals(Boolean.class, DemoDto.class, EXPECTED_MAP);
+
+// EXPECTED_MAP = Map.of(TRUE, TEST_DTO_1, FALSE, TEST_DTO_2);
+
+get()
+...
+.act()
+.actPerform()
+.asserts()
+.assertCollection()
+.assertCollectionEquals(Boolean.class, DemoDto.class, EXPECTED_MAP);
+
 ```
 
 ---
@@ -1209,13 +1362,15 @@ content matches an expected **`map`** of objects.
 This example asserts that the response contains a specific header.
 
 ```
-  head()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertHead()
-      .assertHeadContains(X_HEADER)
+
+head()
+...
+.act()
+.actPerform()
+.asserts()
+.assertHead()
+.assertHeadContains(X_HEADER)
+
 ```
 
 ---
@@ -1225,13 +1380,15 @@ This example asserts that the response contains a specific header.
 This example asserts that a specific header is not present in the response.
 
 ```
-  head()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertHead()
-      .assertHeadNotContains(X_HEADER)
+
+head()
+...
+.act()
+.actPerform()
+.asserts()
+.assertHead()
+.assertHeadNotContains(X_HEADER)
+
 ```
 
 ---
@@ -1241,13 +1398,15 @@ This example asserts that a specific header is not present in the response.
 This example is used to assert that a specific header key has the expected value.
 
 ```
-  head()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertHead()
-      .assertHeadEquals(X_HEAD_KEY, X_HEAD_VALUE)
+
+head()
+...
+.act()
+.actPerform()
+.asserts()
+.assertHead()
+.assertHeadEquals(X_HEAD_KEY, X_HEAD_VALUE)
+
 ```
 
 --- 
@@ -1267,13 +1426,15 @@ of a cookie named `"sessionId"` in the response. The syntax `cookie().exists("se
 specific `ResultMatcher` that verifies if the specified cookie is present in the response.
 
 ```  
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertCustom()
-      .assertCustomResultMatcher(cookie().exists("sessionId"))
+
+get()
+...
+.act()
+.actPerform()
+.asserts()
+.assertCustom()
+.assertCustomResultMatcher(cookie().exists("sessionId"))
+
 ```
 
 </details>
@@ -1290,12 +1451,14 @@ method. This approach is useful for accessing advanced testing features, such as
 assertions directly on the response.
 
 ```  
- var answer = get()
-                 ...
-                 .act()
-                 .actPerform()
-                 .answer()
-                 .answerAsResultActions();
+
+var answer = get()
+...
+.act()
+.actPerform()
+.answer()
+.answerAsResultActions();
+
 ```
 
 ---
@@ -1313,12 +1476,14 @@ method is ideal when the response data is plain text or JSON that will be proces
 without needing deserialization into a specific object.
 
 ```  
- var answer = get()
-                 ...
-                 .act()
-                 .actPerform()
-                 .answer()
-                 .answerAsString();
+
+var answer = get()
+...
+.act()
+.actPerform()
+.answer()
+.answerAsString();
+
 ```
 
 ---
@@ -1336,13 +1501,15 @@ specified class type `(T)`. In this case, it converts the response data into an 
 object, eliminating the need for additional parsing or casting steps.
 
 ```  
+
 DemoA demoA = get()
-                  .arrange()
-                  .arrangeUrl(GET_DEMO)
-                  .act()
-                  .actPerform()
-                  .answer()
-                  .answerAsObject(DemoA.class);
+.arrange()
+.arrangeUrl(GET_DEMO)
+.act()
+.actPerform()
+.answer()
+.answerAsObject(DemoA.class);
+
 ```
 
 ---
@@ -1360,13 +1527,15 @@ objects. This allows for streamlined handling of the response, as it is returned
 list, eliminating the need for additional parsing or casting steps.
 
 ```  
+
 List<DemoA> demoA = get()
-                      .arrange()
-                      .arrangeUrl(GET_DEMO)
-                      .act()
-                      .actPerform()
-                      .answer()
-                      .answerAsList(DemoA.class);
+.arrange()
+.arrangeUrl(GET_DEMO)
+.act()
+.actPerform()
+.answer()
+.answerAsList(DemoA.class);
+
 ```
 
 ---
@@ -1384,13 +1553,15 @@ allows for streamlined handling of the response, as it is returned as a fully ty
 the need for additional parsing or casting steps.
 
 ```  
+
 Set<DemoA> demoA = get()
-                      .arrange()
-                      .arrangeUrl(GET_DEMO)
-                      .act()
-                      .actPerform()
-                      .answer()
-                      .answerAsSet(DemoA.class);
+.arrange()
+.arrangeUrl(GET_DEMO)
+.act()
+.actPerform()
+.answer()
+.answerAsSet(DemoA.class);
+
 ```
 
 ---
@@ -1409,13 +1580,15 @@ for streamlined handling of the response, as it is returned as a fully typed map
 need for additional parsing or casting steps.
 
 ```  
+
 Map<Integer, DemoA> demoA = get()
-                              .arrange()
-                              .arrangeUrl(GET_DEMO)
-                              .act()
-                              .actPerform()
-                              .answer()
-                              .answerAsMap(Integer.class, DemoA.class);
+.arrange()
+.arrangeUrl(GET_DEMO)
+.act()
+.actPerform()
+.answer()
+.answerAsMap(Integer.class, DemoA.class);
+
 ```
 
 ---
@@ -1432,12 +1605,14 @@ method is particularly useful for handling binary data, such as file downloads o
 where the response content is best represented in raw byte form.
 
 ```  
- var answer = get()
-                 ...
-                 .act()
-                 .actPerform()
-                 .answer()
-                 .answerAsByte();
+
+var answer = get()
+...
+.act()
+.actPerform()
+.answer()
+.answerAsByte();
+
 ```
 
 ---
@@ -1452,12 +1627,14 @@ where the response content is best represented in raw byte form.
 This method retrieves the value of a specific response header.
 
 ```  
- var answer = get()
-                 ...
-                 .act()
-                 .actPerform()
-                 .answer()
-                 .answerHeader(KEY);
+
+var answer = get()
+...
+.act()
+.actPerform()
+.answer()
+.answerHeader(KEY);
+
 ```
 
 ---
@@ -1474,12 +1651,14 @@ This method retrieves the result of the HTTP request without returning any conte
 the response is not needed.
 
 ```  
-  get()
-      ...
-      .act()
-      .actPerform()
-      .answer()
-      .answerVoid();
+
+get()
+...
+.act()
+.actPerform()
+.answer()
+.answerVoid();
+
 ```
 
 </details>
