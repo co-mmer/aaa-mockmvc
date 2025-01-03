@@ -189,7 +189,7 @@ class TestGenericMapperTest {
     // Act
     var result =
         TestGenericMapper.mapToMap(
-            this.objectMapper, this.mockMvcResult, Boolean.class, TestObject1.class);
+            this.objectMapper, this.mockMvcResult, Integer.class, TestObject1.class);
 
     // Assert
     assertThat(result, is(TEST_MAP_A1_A2));

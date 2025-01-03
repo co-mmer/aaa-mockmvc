@@ -6,6 +6,7 @@ import static java.lang.Boolean.TRUE;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestBean;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,8 +36,8 @@ public final class TestObject {
   public static final List<TestObject1> TEST_LIST_A1_A3 = List.of(A1, A3);
   public static final List<TestObject1> TEST_LIST_A3_A1 = List.of(A3, A1);
   public static final Set<TestObject1> TEST_SET_A1_A2 = Set.of(A1, A2);
-  public static final Map<Boolean, TestObject1> TEST_MAP_A1_A2 =
-      Map.of(TRUE, A1, FALSE, A2);
+  public static final Map<Integer, TestObject1> TEST_MAP_A1_A2 =
+      Map.of(1, A1, 2, A2);
 
   public static final Map<Boolean, TestObject1> TEST_MAP_A1_A3 =
       Map.of(TRUE, A1, FALSE, A3);
@@ -48,6 +49,7 @@ public final class TestObject {
   public static final String TEST_SET_A1_A2_JSON = mapToString(TEST_SET_A1_A2);
   public static final String TEST_MAP_A1_A2_JSON = mapToString(TEST_MAP_A1_A2);
   public static final String TEST_MAP_A1_A3_JSON = mapToString(TEST_MAP_A1_A3);
+  public static final String TEST_MAP_EMPTY_JSON = mapToString(Collections.emptyMap());
 
   public static final TestRequestBean TEST_REQUEST_BEAN =
       new TestRequestBean(TestDataMockMvc.MOCK_MVC, new ObjectMapper());

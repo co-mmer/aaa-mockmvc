@@ -5,6 +5,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A3;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A3_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_EMPTY_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_A1_A2_JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -21,6 +22,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
 import java.util.stream.Stream;
+import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -137,7 +139,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertMapEquals(Boolean.class, TestObject1.class, TEST_MAP_A1_A2);
+      testAssert.assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2);
     }
 
     @Test
@@ -159,7 +161,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionFailedError.class,
-          () -> testAssert.assertMapEquals(Boolean.class, TestObject1.class, TEST_MAP_A1_A2));
+          () -> testAssert.assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2));
 
       mockTestGenericMapper.close();
     }
@@ -171,7 +173,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act
-      testAssert.assertMapEquals(Boolean.class, TestObject1.class, TEST_MAP_A1_A2);
+      testAssert.assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeMap(any()), times(2));
@@ -225,6 +227,66 @@ class TestAssertMapImplTest extends TestAssertBase {
 
       // Assert
       assertThat(assertHead.getClass(), is(TestAssertHeadImpl.class));
+    }
+  }
+
+  @Nested
+  class combinationNotEmpty {
+
+    @Test
+    @SneakyThrows
+    void not_empty__equals() {
+      // Arrange
+      useServerWithResponse(TEST_MAP_A1_A2_JSON);
+
+      // Act & Assert
+      testAssert
+          .assertMapNotEmpty()
+          .assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2);
+    }
+  }
+
+  @Nested
+  class combinationEmpty {
+
+    @Test
+    @SneakyThrows
+    void empty__head() {
+      // Arrange
+      useServerWithResponse(TEST_MAP_EMPTY_JSON);
+
+      // Act & Assert
+      testAssert
+          .assertMapEmpty()
+          .assertHead();
+    }
+  }
+
+  @Nested
+  class combinationSize {
+
+    @Test
+    @SneakyThrows
+    void size__equals() {
+      // Arrange
+      useServerWithResponse(TEST_MAP_A1_A2_JSON);
+
+      // Act & Assert
+      testAssert
+          .assertMapSize(2)
+          .assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2);
+    }
+
+    @Test
+    @SneakyThrows
+    void size__head() {
+      // Arrange
+      useServerWithResponse(TEST_MAP_A1_A2_JSON);
+
+      // Act & Assert
+      testAssert
+          .assertMapSize(2)
+          .assertHead();
     }
   }
 }

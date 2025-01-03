@@ -365,7 +365,7 @@ class TestAnswerImplTest {
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Act
-    var result = this.testAnswer.answerAsMap(Boolean.class, TestObject1.class);
+    var result = this.testAnswer.answerAsMap(Integer.class, TestObject1.class);
 
     // Assert
     assertThat(result, is(TEST_MAP_A1_A2));
