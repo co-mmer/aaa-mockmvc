@@ -994,43 +994,53 @@ check the size after comparing the collection's contents.
 
 ---
 
----
-
 ### Assert Collection Equals
 
-In this example, the **`assertCollectionEquals`** method is used to assert that the response content
-matches an expected **`List`** of objects.
+The **`assertCollectionEquals`** method ensures that the collection returned in the response matches
+an
+expected List of objects both in content and order.
 
 - **Class Specification**: The class type of the objects within the collection (e.g., DemoDto.class)
   must be specified.
 - **Expected Collection**: The expected collection (e.g. EXPECTED_LIST) is provided to compare
-  against
-  the response.
+  against the response.
 
 ```
-  // EXPECTED_LIST = List.of(TEST_DTO_1, TEST_DTO_2);
-  
+  public record DemoObject(String name, Integer id) {}
+```
+
+```
+  @GetMapping(...)
+  public ResponseEntity<List<DemoObject>> getAll() {
+    return new ResponseEntity<>(List.of(A1, A2), OK);
+  }
+```
+
+```  
   get()
       ...
       .act()
       .actPerform()
       .asserts()
       .assertCollection()
-      .assertCollectionEquals(DemoDto.class, EXPECTED_LIST)
+      .assertCollectionEquals(DemoObject.class, List.of(A1, A2))
 ```
 
 ---
 
-### Assert Collection Equals Ignore Order
+### Assert Collection Contains Any Order
 
-The **`assertCollectionEqualsIgnoreOrder`**  method verifies that the collection returned in the
-response matches the expected collection, ignoring the order of the elements. This allows comparison
-of collections where the element order is not important.
+The **`assertCollectionContainsAnyOrder`**  method verifies that the collection returned in the
+response matches the expected collection, ignoring the order of the elements.
+
+```
+  public record DemoObject(String name, Integer id) {}
+```
 
 ```
   @GetMapping(...)
-  public ResponseEntity<List<DemoA>> getDemoAList() {
-    return new ResponseEntity<>(List.of(A_1, A_2), HttpStatus.OK);
+  public ResponseEntity<List<DemoObject>> getAll() {
+    return new ResponseEntity<>(List.of(A1, A2), OK);
   }
 ```
 
@@ -1041,10 +1051,125 @@ of collections where the element order is not important.
       .actPerform()
       .asserts()
       .assertCollection()
-      .assertCollectionEqualsIgnoreOrder(DemoA.class, List.of(A_2, A_1));
+      .assertCollectionContainsAnyOrder(DemoObject.class, List.of(A2, A1));
 ```
 
 ---
+
+### Assert Collection Not Contains
+
+The **`assertCollectionNotContains`**  method is used to verify that the specified objects do **not
+**
+exist within the collection returned in the response.
+
+- **Class Specification**: The class type of the objects within the collection (e.g.,
+  DemoObject.class) must be explicitly provided to ensure accurate comparison.
+- **Expected Objects**: The method checks that the given objects (e.g., A3, A4) are not present in
+  the returned collection. These objects can be specified as a single object, as varargs, or as a
+  collection.
+
+```
+  public record DemoObject(String name, Integer id) {}
+```
+
+```
+  @GetMapping(...)
+  public ResponseEntity<List<DemoObject>> getAll() {
+    return new ResponseEntity<>(List.of(A1, A2), OK);
+  }
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionNotContains(DemoObject.class, A3);
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionNotContains(DemoObject.class, A3, A4, ...);
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionNotContains(DemoObject.class, List.of(A3, A4));
+```
+
+---
+
+### Assert Collection Contains
+
+The **`assertCollectionContains`**  method is used to verify that the specified objects do
+exist within the collection returned in the response.
+
+- **Class Specification**: The class type of the objects within the collection (e.g.,
+  DemoObject.class) must be explicitly provided to ensure accurate comparison.
+- **Expected Objects**: The method checks that the given objects (e.g., A1, A2) are present in
+  the returned collection. These objects can be specified as a single object, as varargs, or as a
+  collection.
+
+```
+  public record DemoObject(String name, Integer id) {}
+```
+
+```
+  @GetMapping(...)
+  public ResponseEntity<List<DemoObject>> getAll() {
+    return new ResponseEntity<>(List.of(A1, A2), OK);
+  }
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionContains(DemoObject.class, A1);
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionContains(DemoObject.class, A1, A2, ...);
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertCollection()
+      .assertCollectionContains(DemoObject.class, List.of(A1, A2));
+```
+
+---
+
+</details>
+
+
+<details>
+<summary>Assert Map 🔸 (New) </summary>
 
 ### Assert Collection Equals (Map)
 
