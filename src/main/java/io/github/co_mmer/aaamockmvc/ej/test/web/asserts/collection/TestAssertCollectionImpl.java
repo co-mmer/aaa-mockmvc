@@ -16,10 +16,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.match.TestMatchAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.match.TestMatchType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -42,9 +44,11 @@ import org.springframework.test.web.servlet.ResultActions;
  */
 public final class TestAssertCollectionImpl
     implements TestAssert1Collection,
-    TestAssert2Collection,
-    TestAssert3Collection,
-    TestAssertLCollection {
+        TestAssert2Collection,
+        TestAssert3Collection,
+        TestAssert4Collection,
+        TestAssert5Collection,
+        TestAssertLCollection {
 
   private final ResultActions actions;
   private final MockHttpServletResponse response;
@@ -54,10 +58,10 @@ public final class TestAssertCollectionImpl
    * Constructs a new {@code TestAssertCollectionImpl} instance with the given {@code ResultActions}
    * and {@code ObjectMapper}.
    *
-   * @param actions      the {@code ResultActions} containing the HTTP response (must not be
-   *                     {@code null})
-   * @param objectMapper the {@code ObjectMapper} for JSON deserialization (must not be
-   *                     {@code null})
+   * @param actions the {@code ResultActions} containing the HTTP response (must not be {@code
+   *     null})
+   * @param objectMapper the {@code ObjectMapper} for JSON deserialization (must not be {@code
+   *     null})
    * @throws NullPointerException if any of the parameters is {@code null}
    * @since 1.4.0
    */
@@ -115,12 +119,12 @@ public final class TestAssertCollectionImpl
    * the corresponding exception.
    *
    * @param size the expected size of the collection
-   * @return the current instance of {@code TestAssert3Collection} for further assertions
+   * @return the current instance of {@code TestAssert2Collection} for further assertions
    * @throws AssertionError if the collection size does not match the expected size
    * @since 1.4.0
    */
   @Override
-  public TestAssert3Collection assertCollectionSize(int size) {
+  public TestAssert2Collection assertCollectionSize(int size) {
     try {
       this.actions.andExpect(jsonPath("$.length()", is(size)));
     } catch (Exception e) {
@@ -137,9 +141,9 @@ public final class TestAssertCollectionImpl
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param expectedClass      the class of the objects in the list (must not be {@code null})
+   * @param expectedClass the class of the objects in the list (must not be {@code null})
    * @param expectedCollection the expected list of objects (must not be {@code null})
-   * @param <T>                the type of the objects in the expected list
+   * @param <T> the type of the objects in the expected list
    * @throws AssertionError if the collections do not match
    * @since 1.4.0
    */
@@ -147,44 +151,15 @@ public final class TestAssertCollectionImpl
   public <T> TestAssertLCollection assertCollectionEquals(
       @NonNull Class<T> expectedClass, @NonNull Collection<T> expectedCollection) {
 
-    return performAssertion(
+    performAssertion(
         expectedClass,
         expectedCollection,
         (actual, expected) ->
             assertThat(normalizeCollection(actual), is(normalizeCollection(expected))));
+    return this;
   }
 
-  /**
-   * Asserts that the collection in the HTTP response matches the expected collection, ignoring
-   * order.
-   *
-   * <p>Both collections are normalized before comparison to ensure consistent results.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @param expectedClass      the class of the objects in the collection (must not be
-   *                           {@code null})
-   * @param expectedCollection the expected collection of objects (must not be {@code null})
-   * @param <T>                the type of the objects in the collection
-   * @return the current instance of {@code TestAssertCollection} for further assertions
-   * @throws AssertionError if the collections do not match
-   * @since 1.4.0
-   */
-  @Override
-  public <T> TestAssertLCollection assertCollectionEqualsIgnoreOrder(
-      @NonNull Class<T> expectedClass, @NonNull Collection<T> expectedCollection) {
-
-    return performAssertion(
-        expectedClass,
-        expectedCollection,
-        (actual, expected) ->
-            assertThat(
-                normalizeCollection(actual),
-                containsInAnyOrder(normalizeCollection(expected).toArray())));
-  }
-
-  private <T> TestAssertLCollection performAssertion(
+  private <T> void performAssertion(
       Class<T> expectedClass,
       Collection<T> expectedResponse,
       BiConsumer<Collection<T>, Collection<T>> assertion) {
@@ -196,7 +171,6 @@ public final class TestAssertCollectionImpl
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
-    return this;
   }
 
   /**
@@ -207,18 +181,18 @@ public final class TestAssertCollectionImpl
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param expectedClass    the class of the objects in the collection (must not be {@code null})
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
    * @param expectedElements the collection of expected elements (must not be {@code null})
-   * @param <T>              the type of the objects in the collection
+   * @param <T> the type of the objects in the collection
    * @return the current instance of {@code TestAssertLCollection} for further assertions
    * @throws AssertionError if the collection does not contain the expected elements
    * @since 1.4.0
    */
   @Override
-  public <T> TestAssertLCollection assertCollectionContains(
+  public <T> TestAssert3Collection assertCollectionContains(
       @NonNull Class<T> expectedClass, @NonNull Collection<T> expectedElements) {
 
-    return performAssertion(
+    performAssertion(
         expectedClass,
         expectedElements,
         (actual, expected) -> {
@@ -226,14 +200,14 @@ public final class TestAssertCollectionImpl
           List<Object> normalizeExpected = normalizeAsObjects(expected);
           assertThat(normalizeActual, hasItems(normalizeExpected.toArray()));
         });
+    return this;
   }
 
   /**
    * Asserts that the collection in the HTTP response contains the specified elements.
    *
-   * <p>This method provides a varargs overload for specifying the expected elements directly,
-   * which are converted into a collection and passed to the main {@code assertCollectionContains}
-   * method.
+   * <p>This method provides a varargs overload for specifying the expected elements directly, which
+   * are converted into a collection and passed to the main {@code assertCollectionContains} method.
    *
    * <p>Both the actual and expected collections are normalized before comparison to ensure
    * consistent results.
@@ -241,20 +215,50 @@ public final class TestAssertCollectionImpl
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param expectedClass    the class of the objects in the collection (must not be {@code null})
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
    * @param expectedElements the elements expected to be present in the collection (must not be
-   *                         {@code null})
-   * @param <T>              the type of the objects in the collection
+   *     {@code null})
+   * @param <T> the type of the objects in the collection
    * @return the current instance of {@code TestAssertLCollection} for further assertions
    * @throws AssertionError if the collection does not contain the specified elements
    * @since 1.4.0
    */
   @SafeVarargs
   @Override
-  public final <T> TestAssertLCollection assertCollectionContains(
+  public final <T> TestAssert3Collection assertCollectionContains(
       @NonNull Class<T> expectedClass, @NonNull T... expectedElements) {
 
     return assertCollectionContains(expectedClass, List.of(expectedElements));
+  }
+
+  /**
+   * Asserts that the collection in the HTTP response matches the given collection of objects,
+   * ignoring order.
+   *
+   * <p>Both collections are normalized before comparison to ensure consistent results.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param expectedCollection the expected collection of objects (must not be {@code null})
+   * @param <T> the type of the objects in the collection
+   * @return the current instance of {@code TestAssertCollection} for further assertions
+   * @throws AssertionError if the collections do not match
+   * @since 1.4.0
+   */
+  @Override
+  public <T> TestAssertLCollection assertCollectionContainsAnyOrder(
+      @NonNull Class<T> expectedClass, @NonNull Collection<T> expectedCollection) {
+
+    performAssertion(
+        expectedClass,
+        expectedCollection,
+        (actual, expected) ->
+            assertThat(
+                normalizeCollection(actual),
+                containsInAnyOrder(normalizeCollection(expected).toArray())));
+    return this;
   }
 
   /**
@@ -266,20 +270,19 @@ public final class TestAssertCollectionImpl
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param expectedClass      the class of the objects in the collection (must not be
-   *                           {@code null})
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
    * @param unexpectedElements the elements that must not be present in the collection (must not be
-   *                           {@code null})
-   * @param <T>                the type of the objects in the collection
+   *     {@code null})
+   * @param <T> the type of the objects in the collection
    * @return the current instance of {@code TestAssertLCollection} for further assertions
    * @throws AssertionError if the collection contains any of the specified elements
    * @since 1.4.0
    */
   @Override
-  public <T> TestAssertLCollection assertCollectionNotContains(
+  public <T> TestAssert3Collection assertCollectionNotContains(
       @NonNull Class<T> expectedClass, @NonNull Collection<T> unexpectedElements) {
 
-    return performAssertion(
+    performAssertion(
         expectedClass,
         unexpectedElements,
         (actual, unexpected) -> {
@@ -287,14 +290,15 @@ public final class TestAssertCollectionImpl
           List<Object> unexpectedNormalize = normalizeAsObjects(unexpected);
           assertThat(actualNormalize, not(hasItems(unexpectedNormalize.toArray())));
         });
+    return this;
   }
 
   /**
    * Asserts that the collection in the HTTP response does not contain the specified elements.
    *
    * <p>This method provides a varargs overload for specifying the unexpected elements directly,
-   * which are converted into a collection and passed to the main
-   * {@code assertCollectionNotContains} method.
+   * which are converted into a collection and passed to the main {@code
+   * assertCollectionNotContains} method.
    *
    * <p>Both the actual and unexpected collections are normalized before comparison to ensure
    * consistent results.
@@ -302,59 +306,81 @@ public final class TestAssertCollectionImpl
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param expectedClass      the class of the objects in the collection (must not be
-   *                           {@code null})
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
    * @param unexpectedElements the elements that must not be present in the collection (must not be
-   *                           {@code null})
-   * @param <T>                the type of the objects in the collection
+   *     {@code null})
+   * @param <T> the type of the objects in the collection
    * @return the current instance of {@code TestAssertLCollection} for further assertions
    * @throws AssertionError if the collection contains any of the specified elements
    * @since 1.4.0
    */
   @SafeVarargs
   @Override
-  public final <T> TestAssertLCollection assertCollectionNotContains(
+  public final <T> TestAssert3Collection assertCollectionNotContains(
       @NonNull Class<T> expectedClass, @NonNull T... unexpectedElements) {
 
     return assertCollectionNotContains(expectedClass, List.of(unexpectedElements));
   }
 
   /**
-   * Asserts that all elements in the collection in the HTTP response match the specified
-   * condition.
+   * Asserts that all elements in the collection in the HTTP response match the specified condition.
    *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
+   * <p>This method checks whether **all** elements in the collection satisfy the specified
+   * condition. If every element matches the condition, the assertion passes. If any element does
+   * not match the condition, the assertion fails.
+   *
+   * <p>The condition is applied to **each element** in the collection, and the method returns the
+   * current instance of {@code TestAssertLCollection} for further assertions.
    *
    * @param expectedClass the class of the objects in the collection (must not be {@code null})
-   * @param condition     the condition that all elements must match (must not be {@code null})
-   * @param <T>           the type of the objects in the collection
+   * @param condition the condition that all elements must match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
    * @return the current instance of {@code TestAssertLCollection} for further assertions
    * @throws AssertionError if any element in the collection does not match the condition
    * @since 1.4.0
    */
   @Override
-  public <T> TestAssertLCollection assertCollectionMatchAll(
+  public <T> TestAssert4Collection assertCollectionMatchAll(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
-    assertCollectionMatch(expectedClass, condition, ALL);
+    assertCollectionMatch(ALL, expectedClass, List.of(condition));
+    return this;
+  }
+
+  /**
+   * Asserts that all elements in the collection in the HTTP response match the specified
+   * conditions.
+   *
+   * <p>This method checks whether **all** elements in the collection satisfy **all** of the
+   * specified conditions. If **every element** matches all conditions, the assertion passes. If any
+   * element does not match the conditions, the assertion fails.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception. The conditions are applied to **each element** in the collection.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param conditions the conditions that the elements must match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
+   * @return the current instance of {@code TestAssertLCollection} for further assertions
+   * @throws AssertionError if any element in the collection does not match all the conditions
+   * @since 1.4.0
+   */
+  @SafeVarargs
+  @Override
+  public final <T> TestAssert4Collection assertCollectionMatchAll(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
+
+    assertCollectionMatch(ALL, expectedClass, Arrays.asList(conditions));
     return this;
   }
 
   private <T> void assertCollectionMatch(
-      Class<T> expectedClass, Predicate<T> condition, TestMatchType matchType) {
+      TestMatchType matchType, Class<T> expectedClass, List<Predicate<T>> conditions) {
 
     try {
       var result = this.actions.andReturn();
       var actual = mapToList(this.objectMapper, result, expectedClass);
-
-      var matches =
-          switch (matchType) {
-            case ALL -> actual.stream().allMatch(condition);
-            case ANY -> actual.stream().anyMatch(condition);
-            case NONE -> actual.stream().noneMatch(condition);
-          };
-      assertThat(matchType.getReason() + " Actual list: " + actual, matches, is(true));
+      TestMatchAssert.assertMatch(matchType, actual, conditions);
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
@@ -368,26 +394,97 @@ public final class TestAssertCollectionImpl
    * the corresponding exception.
    *
    * @param expectedClass the class of the objects in the collection (must not be {@code null})
-   * @param condition     the condition that at least one element must match (must not be
-   *                      {@code null})
-   * @param <T>           the type of the objects in the collection
+   * @param condition the condition that at least one element must match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
    * @return the current instance of {@code TestAssertLCollection} for further assertions
    * @throws AssertionError if no element in the collection matches the condition
    * @since 1.4.0
    */
   @Override
-  public <T> TestAssertLCollection assertCollectionMatchAny(
+  public <T> TestAssert5Collection assertCollectionMatchAny(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
-    assertCollectionMatch(expectedClass, condition, ANY);
+    assertCollectionMatch(ANY, expectedClass, List.of(condition));
     return this;
   }
 
+  /**
+   * Asserts that at least one element in the collection in the HTTP response matches the specified
+   * conditions.
+   *
+   * <p>This method checks whether **any one** element in the collection satisfies **all** of the
+   * specified conditions. If at least one element matches all conditions, the assertion passes. If
+   * no element matches the conditions, the assertion fails.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception. The conditions are applied to **each element** in the collection.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param conditions the conditions that the elements must match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
+   * @return the current instance of {@code TestAssertLCollection} for further assertions
+   * @throws AssertionError if no element in the collection matches all the conditions
+   * @since 1.4.0
+   */
+  @SafeVarargs
+  @Override
+  public final <T> TestAssert5Collection assertCollectionMatchAny(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
+
+    assertCollectionMatch(ANY, expectedClass, Arrays.asList(conditions));
+    return this;
+  }
+
+  /**
+   * Asserts that none of the elements in the collection in the HTTP response match the specified
+   * condition.
+   *
+   * <p>This method checks whether **none** of the elements in the collection satisfy the specified
+   * condition. If no element matches the condition, the assertion passes. If at least one element
+   * matches the condition, the assertion fails.
+   *
+   * <p>The condition is applied to **each element** in the collection, and the method returns the
+   * current instance of {@code TestAssertLCollection} for further assertions.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param condition the condition that the elements must not match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
+   * @return the current instance of {@code TestAssertLCollection} for further assertions
+   * @throws AssertionError if at least one element in the collection matches the condition
+   * @since 1.4.0
+   */
   @Override
   public <T> TestAssertLCollection assertCollectionMatchNone(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
-    assertCollectionMatch(expectedClass, condition, NONE);
+    assertCollectionMatch(NONE, expectedClass, List.of(condition));
+    return this;
+  }
+
+  /**
+   * Asserts that none of the elements in the collection in the HTTP response match any of the
+   * specified conditions.
+   *
+   * <p>This method checks whether **none** of the elements in the collection satisfy **any** of the
+   * specified conditions. If no element matches any of the conditions, the assertion passes. If at
+   * least one element matches any of the conditions, the assertion fails.
+   *
+   * <p>The conditions are applied to **each element** in the collection, and the method returns the
+   * current instance of {@code TestAssertLCollection} for further assertions.
+   *
+   * @param expectedClass the class of the objects in the collection (must not be {@code null})
+   * @param conditions the conditions that the elements must not match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
+   * @return the current instance of {@code TestAssertLCollection} for further assertions
+   * @throws AssertionError if at least one element in the collection matches any of the conditions
+   * @since 1.4.0
+   */
+  @SafeVarargs
+  @Override
+  public final <T> TestAssertLCollection assertCollectionMatchNone(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
+
+    assertCollectionMatch(NONE, expectedClass, Arrays.asList(conditions));
     return this;
   }
 

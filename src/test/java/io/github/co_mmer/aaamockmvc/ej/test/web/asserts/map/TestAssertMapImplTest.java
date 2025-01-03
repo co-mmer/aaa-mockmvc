@@ -19,7 +19,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectA;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
 import java.util.stream.Stream;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.BeforeEach;
@@ -121,7 +121,7 @@ class TestAssertMapImplTest extends TestAssertBase {
     useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
     // Act & Assert
-    this.testAssert.assertMapEquals(Boolean.class, TestObjectA.class, TEST_MAP_A1_A2);
+    this.testAssert.assertMapEquals(Boolean.class, TestObject1.class, TEST_MAP_A1_A2);
   }
 
   @Test
@@ -132,7 +132,7 @@ class TestAssertMapImplTest extends TestAssertBase {
     // Act & Assert
     assertThrows(
         AssertionError.class,
-        () -> this.testAssert.assertMapEquals(Boolean.class, TestObjectA.class, TEST_MAP_A1_A3));
+        () -> this.testAssert.assertMapEquals(Boolean.class, TestObject1.class, TEST_MAP_A1_A3));
   }
 
   @Test
@@ -143,7 +143,7 @@ class TestAssertMapImplTest extends TestAssertBase {
     // Act & Assert
     assertThrows(
         AssertionFailedError.class,
-        () -> this.testAssert.assertMapEquals(Boolean.class, TestObjectA.class, TEST_MAP_A1_A2));
+        () -> this.testAssert.assertMapEquals(Boolean.class, TestObject1.class, TEST_MAP_A1_A2));
 
     mockTestGenericMapper.close();
   }
@@ -155,7 +155,7 @@ class TestAssertMapImplTest extends TestAssertBase {
     useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
     // Act
-    this.testAssert.assertMapEquals(Boolean.class, TestObjectA.class, TEST_MAP_A1_A2);
+    this.testAssert.assertMapEquals(Boolean.class, TestObject1.class, TEST_MAP_A1_A2);
 
     // Assert
     mockTestArrangeNormalizer.verify(() -> normalizeMap(any()), times(2));

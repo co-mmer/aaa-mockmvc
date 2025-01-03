@@ -5,7 +5,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestBody.TEST_BO
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestBody.TEST_BODY_XML;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestFiles.TEST_FILE_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestFiles.TEST_FILE_1_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_REQUEST_BEAN;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -131,8 +131,8 @@ class TestArrangeResBodyImplTest {
         TestArrangeException.class,
         ()
 
-        // Act
-        -> this.impl.arrangeJson(TEST_A1));
+            // Act
+            -> this.impl.arrangeJson(A1));
 
     mockTestGenericMapper.close();
   }
@@ -140,7 +140,7 @@ class TestArrangeResBodyImplTest {
   @Test
   void GIVEN_T_WHEN_arrangeJson_THEN_addFile_is_setContent() throws Exception {
     // Act
-    this.impl.arrangeJson(TEST_A1);
+    this.impl.arrangeJson(A1);
 
     // Assert
     this.mockTestArrangeBodyUtils.verify(

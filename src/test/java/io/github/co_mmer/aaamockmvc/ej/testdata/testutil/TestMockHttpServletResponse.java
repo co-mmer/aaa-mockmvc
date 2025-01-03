@@ -14,7 +14,7 @@ public final class TestMockHttpServletResponse {
   public static MvcResult mockGetContentAsStringException() throws Exception {
     var mockMvcResult = mock(MvcResult.class);
     var mockResponse = mock(MockHttpServletResponse.class);
-    when(mockResponse.getContentAsString()).thenThrow(new RuntimeException());
+    when(mockResponse.getContentAsString()).thenThrow(new RuntimeException("test"));
     when(mockMvcResult.getResponse()).thenReturn(mockResponse);
     return mockMvcResult;
   }
@@ -22,7 +22,7 @@ public final class TestMockHttpServletResponse {
   public static MvcResult mockGetContentAsSByteException() {
     var mockMvcResult = mock(MvcResult.class);
     var mockResponse = mock(MockHttpServletResponse.class);
-    when(mockResponse.getContentAsByteArray()).thenThrow(new RuntimeException());
+    when(mockResponse.getContentAsByteArray()).thenThrow(new RuntimeException("test"));
     when(mockMvcResult.getResponse()).thenReturn(mockResponse);
     return mockMvcResult;
   }

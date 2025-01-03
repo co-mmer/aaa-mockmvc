@@ -1,9 +1,9 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeObject;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A2;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,7 +17,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectA;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
 import java.util.stream.Stream;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.BeforeEach;
@@ -247,7 +247,7 @@ class TestAssertContentImplTest extends TestAssertBase {
     useServerWithResponse(TEST_A1_JSON);
 
     // Act & Assert
-    this.testAssert.assertContentEquals(TestObjectA.class, TEST_A1);
+    this.testAssert.assertContentEquals(TestObject1.class, A1);
   }
 
   @Test
@@ -258,7 +258,7 @@ class TestAssertContentImplTest extends TestAssertBase {
     // Act & Assert
     assertThrows(
         AssertionError.class,
-        () -> this.testAssert.assertContentEquals(TestObjectA.class, TEST_A2));
+        () -> this.testAssert.assertContentEquals(TestObject1.class, A2));
   }
 
   @Test
@@ -272,7 +272,7 @@ class TestAssertContentImplTest extends TestAssertBase {
     // Act & Assert
     assertThrows(
         AssertionFailedError.class,
-        () -> this.testAssert.assertContentEquals(TestObjectA.class, TEST_A1));
+        () -> this.testAssert.assertContentEquals(TestObject1.class, A1));
 
     mockTestGenericMapper.close();
   }
@@ -284,7 +284,7 @@ class TestAssertContentImplTest extends TestAssertBase {
     this.response.getWriter().write(TEST_A1_JSON);
 
     // Act
-    this.testAssert.assertContentEquals(TestObjectA.class, TEST_A1);
+    this.testAssert.assertContentEquals(TestObject1.class, A1);
 
     // Assert
     mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));

@@ -1,8 +1,14 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeCollection;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A3;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A3;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A4;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.B;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.CLOSE;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.NEW;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2_JSON;
@@ -10,6 +16,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A3_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A3;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A3_A1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_B1NEW_B2NEW_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A3_JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -24,7 +31,9 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectA;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject2;
+import java.util.List;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
@@ -40,12 +49,12 @@ import org.springframework.test.web.servlet.ResultActions;
 
 class TestAssertCollectionImplTest extends TestAssertBase {
 
-  private TestAssertCollectionImpl testAssert;
+  private TestAssertCollectionImpl testAssertCollectionImpl;
 
   @BeforeEach
   void setUp() {
     initMockServer();
-    this.testAssert = new TestAssertCollectionImpl(this.actions, new ObjectMapper());
+    this.testAssertCollectionImpl = new TestAssertCollectionImpl(this.actions, new ObjectMapper());
   }
 
   @Nested
@@ -79,7 +88,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertCollectionNotEmpty();
+      testAssertCollectionImpl.assertCollectionNotEmpty();
     }
 
     @ParameterizedTest
@@ -90,7 +99,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(value);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertCollectionNotEmpty);
+      assertThrows(AssertionError.class, testAssertCollectionImpl::assertCollectionNotEmpty);
     }
 
     @Test
@@ -98,10 +107,10 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     void GIVEN_exception_WHEN_assertCollectionNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertCollection = new TestAssertCollectionImpl(actions, new ObjectMapper());
+      var testAssertCollectionException = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertCollection::assertCollectionNotEmpty);
+      assertThrows(AssertionError.class, testAssertCollectionException::assertCollectionNotEmpty);
     }
   }
 
@@ -116,7 +125,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(value);
 
       // Act & Assert
-      testAssert.assertCollectionEmpty();
+      testAssertCollectionImpl.assertCollectionEmpty();
     }
 
     @Test
@@ -126,7 +135,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertCollectionEmpty);
+      assertThrows(AssertionError.class, testAssertCollectionImpl::assertCollectionEmpty);
     }
 
     @Test
@@ -151,7 +160,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_MAP_A1_A3_JSON);
 
       // Act & Assert
-      testAssert.assertCollectionSize(2);
+      testAssertCollectionImpl.assertCollectionSize(2);
     }
 
     @Test
@@ -159,10 +168,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     void GIVEN_unexpected_WHEN_assertCollectionSize_THEN_assert_is_false() {
       // Arrange
       useResultAssertionError();
-      var testAssertCollection = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssertCollection.assertCollectionSize(1));
+      assertThrows(AssertionError.class, () -> testAssertCollectionImpl.assertCollectionSize(1));
     }
 
     @Test
@@ -170,10 +178,10 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     void GIVEN_exception_WHEN_assertCollectionSize_THEN_assert_is_false() {
       // Arrange
       useResultException();
-      var testAssertCollection = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, () -> testAssertCollection.assertCollectionSize(1));
+      assertThrows(AssertionFailedError.class,
+          () -> testAssertCollectionImpl.assertCollectionSize(1));
     }
   }
 
@@ -187,7 +195,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertCollectionEquals(TestObjectA.class, TEST_LIST_A1_A2);
+      testAssertCollectionImpl.assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2);
     }
 
     @Test
@@ -199,7 +207,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssert.assertCollectionEquals(TestObjectA.class, TEST_LIST_A1_A3));
+          () ->
+              testAssertCollectionImpl.assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A3));
     }
 
     @Test
@@ -210,7 +219,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionFailedError.class,
-          () -> testAssert.assertCollectionEquals(TestObjectA.class, TEST_LIST_A1_A2));
+          () ->
+              testAssertCollectionImpl.assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2));
 
       mockTestGenericMapper.close();
     }
@@ -224,7 +234,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act
-      testAssert.assertCollectionEquals(TestObjectA.class, TEST_LIST_A1_A2);
+      testAssertCollectionImpl.assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeCollection(any()), times(2));
@@ -233,53 +243,57 @@ class TestAssertCollectionImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertCollectionEqualsIgnoreOrder {
+  class assertCollectionContainsAnyOrder {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_list_WHEN_assertCollectionEqualsIgnoreOrder_THEN_assert_is_true() {
+    void GIVEN_expected_list_WHEN_assertCollectionContainsAnyOrder_THEN_assert_is_true() {
 
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A3_JSON);
 
       // Act & Assert
-      testAssert.assertCollectionEqualsIgnoreOrder(TestObjectA.class, TEST_LIST_A3_A1);
+      testAssertCollectionImpl.assertCollectionContainsAnyOrder(TestObject1.class, TEST_LIST_A3_A1);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_list_WHEN_assertCollectionEqualsIgnoreOrder_THEN_assert_is_false() {
+    void GIVEN_unexpected_list_WHEN_assertCollectionContainsAnyOrder_THEN_assert_is_false() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssert.assertCollectionEqualsIgnoreOrder(TestObjectA.class, TEST_LIST_A1_A3));
+          () ->
+              testAssertCollectionImpl.assertCollectionContainsAnyOrder(
+                  TestObject1.class, TEST_LIST_A1_A3));
     }
 
     @Test
-    void GIVEN_exception_list_WHEN_assertCollectionEqualsIgnoreOrder_THEN_assert_is_false() {
+    void GIVEN_exception_list_WHEN_assertCollectionContainsAnyOrder_THEN_assert_is_false() {
       // Arrange
       var mockTestGenericMapper = MockTestGenericMapper.mapToListThrowException();
 
       // Act & Assert
       assertThrows(
           AssertionFailedError.class,
-          () -> testAssert.assertCollectionEqualsIgnoreOrder(TestObjectA.class, TEST_LIST_A1_A2));
+          () ->
+              testAssertCollectionImpl.assertCollectionContainsAnyOrder(
+                  TestObject1.class, TEST_LIST_A1_A2));
 
       mockTestGenericMapper.close();
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_list_WHEN_assertCollectionEqualsIgnoreOrder_THEN_normalizeCollection_is_called() {
+    void GIVEN_list_WHEN_assertCollectionContainsAnyOrder_THEN_normalizeCollection_is_called() {
       // Arrange
       var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act
-      testAssert.assertCollectionEqualsIgnoreOrder(TestObjectA.class, TEST_LIST_A1_A2);
+      testAssertCollectionImpl.assertCollectionContainsAnyOrder(TestObject1.class, TEST_LIST_A1_A2);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeCollection(any()), times(2));
@@ -297,7 +311,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertCollectionContains(TestObjectA.class, TEST_LIST_A1);
+      testAssertCollectionImpl.assertCollectionContains(TestObject1.class, TEST_LIST_A1);
     }
 
     @Test
@@ -309,7 +323,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssert.assertCollectionContains(TestObjectA.class, TEST_LIST_A3));
+          () -> testAssertCollectionImpl.assertCollectionContains(TestObject1.class, TEST_LIST_A3));
     }
 
     @Test
@@ -317,12 +331,11 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     void GIVEN_exception_WHEN_assertCollectionContains_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertCollection = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertCollection.assertCollectionContains(TestObjectA.class, TEST_LIST_A1));
+          () -> testAssertCollectionImpl.assertCollectionContains(TestObject1.class, TEST_LIST_A1));
     }
 
     @Test
@@ -332,7 +345,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertCollectionContains(TestObjectA.class, TEST_A1);
+      testAssertCollectionImpl.assertCollectionContains(TestObject1.class, A1);
     }
 
     @Test
@@ -344,7 +357,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssert.assertCollectionContains(TestObjectA.class, TEST_A3));
+          () -> testAssertCollectionImpl.assertCollectionContains(TestObject1.class, A3));
     }
 
     @Test
@@ -352,12 +365,11 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     void GIVEN_exception_WHEN_assertCollectionContains_varargs_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertCollection = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertCollection.assertCollectionContains(TestObjectA.class, TEST_A1));
+          () -> testAssertCollectionImpl.assertCollectionContains(TestObject1.class, A1));
     }
   }
 
@@ -371,7 +383,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertCollectionNotContains(TestObjectA.class, TEST_LIST_A3);
+      testAssertCollectionImpl.assertCollectionNotContains(TestObject1.class, TEST_LIST_A3);
     }
 
     @Test
@@ -383,7 +395,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssert.assertCollectionNotContains(TestObjectA.class, TEST_LIST_A1));
+          () ->
+              testAssertCollectionImpl.assertCollectionNotContains(
+                  TestObject1.class, TEST_LIST_A1));
     }
 
     @Test
@@ -391,12 +405,12 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     void GIVEN_exception_WHEN_assertCollectionNotContains_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertCollection = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertCollection.assertCollectionNotContains(TestObjectA.class, TEST_LIST_A3));
+          () -> testAssertCollectionImpl.assertCollectionNotContains(TestObject1.class,
+              TEST_LIST_A3));
     }
 
     @Test
@@ -406,7 +420,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertCollectionNotContains(TestObjectA.class, TEST_A3);
+      testAssertCollectionImpl.assertCollectionNotContains(TestObject1.class, A3);
     }
 
     @Test
@@ -419,7 +433,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssert.assertCollectionNotContains(TestObjectA.class, TEST_A1));
+          () -> testAssertCollectionImpl.assertCollectionNotContains(TestObject1.class, A1));
     }
 
     @Test
@@ -427,12 +441,300 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     void GIVEN_exception_WHEN_assertCollectionNotContains_varargs_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertCollection = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertCollection.assertCollectionNotContains(TestObjectA.class, TEST_A3));
+          () -> testAssertCollectionImpl.assertCollectionNotContains(TestObject1.class, A3));
+    }
+  }
+
+  @Nested
+  class assertCollectionMatchAll {
+
+    @Test
+    @SneakyThrows
+    void GIVEN_expected_WHEN_assertCollectionMatchAll_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_unexpected_WHEN_assertCollectionMatchAll_THEN_assert_is_false() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class,
+          () ->
+              testAssertCollectionImpl.assertCollectionMatchAll(
+                  TestObject1.class, element -> element.name().equals(B)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionMatchAll_THEN_assert_false() {
+      // Arrange
+      useServerWithStringException();
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class,
+          () -> testAssertCollectionImpl.assertCollectionMatchAll(TestObject1.class,
+              element -> element.name().equals(A)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_expected_WHEN_assertCollectionMatchAll_varargs_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      assertThrows(AssertionError.class, () -> testAssertCollectionImpl
+          .assertCollectionMatchNone(TestObject2.class,
+              element -> element.name().equals(B),
+              element -> element.status().equals(NEW)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_unexpected_one_WHEN_assertCollectionMatchAll_varargs_THEN_assert_is_false() {
+
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class,
+          () -> testAssertCollectionImpl.assertCollectionMatchAll(TestObject2.class,
+              element -> element.name().equals(A),
+              element -> element.status().equals(NEW)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_unexpected_all_WHEN_assertCollectionMatchAll_varargs_THEN_assert_is_false() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class,
+          () -> testAssertCollectionImpl.assertCollectionMatchAll(TestObject2.class,
+              element -> element.name().equals(A),
+              element -> element.status().equals(CLOSE)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionMatchAll_varargs_THEN_assert_false() {
+      // Arrange
+      useServerWithStringException();
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class,
+          () -> testAssertCollectionImpl.assertCollectionMatchAll(TestObject2.class,
+              element -> element.name().equals(A),
+              element -> element.status().equals(NEW)));
+    }
+  }
+
+  @Nested
+  class assertCollectionMatchAny {
+
+    @Test
+    @SneakyThrows
+    void GIVEN_expected_WHEN_assertCollectionMatchAny_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAny(TestObject1.class, element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_unexpected_WHEN_assertCollectionMatchAny_THEN_assert_is_false() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class,
+          () ->
+              testAssertCollectionImpl.assertCollectionMatchAny(
+                  TestObject1.class, element -> element.name().equals(B)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionMatchAny_THEN_assert_false() {
+      // Arrange
+      useServerWithStringException();
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class,
+          () -> testAssertCollectionImpl.assertCollectionMatchAny(TestObject1.class,
+              element -> element.name().equals(A)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_expected_one_WHEN_assertCollectionMatchAny_varargs_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAny(TestObject2.class,
+              element -> element.name().equals(A),
+              element -> element.name().equals(B));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_expected_all_WHEN_assertCollectionMatchAny_varargs_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAny(TestObject2.class,
+              element -> element.name().equals(B),
+              element -> element.status().equals(NEW));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_unexpected_all_WHEN_assertCollectionMatchAny_varargs_THEN_assert_is_false() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class,
+          () -> testAssertCollectionImpl.assertCollectionMatchAny(TestObject2.class,
+              element -> element.name().equals(A),
+              element -> element.status().equals(CLOSE)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionMatchAny_varargs_THEN_assert_false() {
+      // Arrange
+      useServerWithStringException();
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class,
+          () -> testAssertCollectionImpl.assertCollectionMatchAny(TestObject2.class,
+              element -> element.name().equals(A),
+              element -> element.status().equals(NEW)));
+    }
+  }
+
+  @Nested
+  class assertCollectionMatchNone {
+
+    @Test
+    @SneakyThrows
+    void GIVEN_A1_A2_condition_B_WHEN_assertCollectionMatchNone_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchNone(TestObject1.class, element -> element.name().equals(B));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_A1_A2_condition_A_WHEN_assertCollectionMatchNone_THEN_assert_is_false() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class,
+          () ->
+              testAssertCollectionImpl.assertCollectionMatchNone(
+                  TestObject1.class, element -> element.name().equals(A)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionMatchNone_THEN_assert_false() {
+      // Arrange
+      useServerWithStringException();
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class,
+          () -> testAssertCollectionImpl.assertCollectionMatchNone(TestObject1.class,
+              element -> element.name().equals(A)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_B1NEW_B2NEW_condition_B_NEW_WHEN_assertCollectionMatchNone_varargs_THEN_assert_false() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      assertThrows(AssertionError.class, () -> testAssertCollectionImpl
+          .assertCollectionMatchNone(TestObject2.class,
+              element -> element.name().equals(B),
+              element -> element.status().equals(NEW)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_B1NEW_B2NEW_condition_B_CLOSE_WHEN_assertCollectionMatchNone_varargs_THEN_assert_false() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class, () -> testAssertCollectionImpl
+              .assertCollectionMatchNone(TestObject2.class,
+                  element -> element.name().equals(B),
+                  element -> element.status().equals(CLOSE)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_B1NEW_B2NEW_condition_A_CLOSE_WHEN_assertCollectionMatchNone_varargs_THEN_assert_is_true() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl.assertCollectionMatchNone(TestObject2.class,
+          element -> element.name().equals(A),
+          element -> element.status().equals(CLOSE));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionMatchNone_varargs_THEN_assert_false() {
+      // Arrange
+      useServerWithStringException();
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class,
+          () -> testAssertCollectionImpl.assertCollectionMatchNone(TestObject2.class,
+              element -> element.name().equals(A),
+              element -> element.status().equals(NEW)));
     }
   }
 
@@ -440,15 +742,842 @@ class TestAssertCollectionImplTest extends TestAssertBase {
   class nextStep {
 
     @Test
-    void WHEN_assertHead_THEN_return_expected_class() {
+    void assertHead() {
       // Arrange
       useHeader();
 
       // Act
-      var assertHead = testAssert.assertHead();
+      var assertHead = testAssertCollectionImpl.assertHead();
 
       // Assert
       assertThat(assertHead.getClass(), is(TestAssertHeadImpl.class));
+    }
+  }
+
+  @Nested
+  class combinationNotEmpty {
+
+    @Test
+    @SneakyThrows
+    void not_empty__contains_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotEmpty()
+          .assertCollectionContains(TestObject1.class, A1);
+    }
+
+    @Test
+    @SneakyThrows
+    void not_empty__contains_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotEmpty()
+          .assertCollectionContains(TestObject1.class, A1, A2);
+    }
+
+    @Test
+    @SneakyThrows
+    void not_empty__contains_any_order() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotEmpty()
+          .assertCollectionContainsAnyOrder(TestObject1.class, List.of(A2, A1));
+    }
+
+    @Test
+    @SneakyThrows
+    void not_empty__not_contains_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotEmpty()
+          .assertCollectionNotContains(TestObject1.class, A3);
+    }
+
+    @Test
+    @SneakyThrows
+    void not_empty__not_contains_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotEmpty()
+          .assertCollectionNotContains(TestObject1.class, A3, A4);
+    }
+
+    @Test
+    @SneakyThrows
+    void not_empty__equals() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotEmpty()
+          .assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2);
+    }
+
+    @Test
+    @SneakyThrows
+    void not_empty__match_all_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotEmpty()
+          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void not_empty__match_all_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotEmpty()
+          .assertCollectionMatchAll(TestObject1.class,
+              element -> element.name().equals(A),
+              element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    void not_empty__match_any_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotEmpty()
+          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void not_empty__match_any_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotEmpty()
+          .assertCollectionMatchAny(TestObject1.class,
+              element -> element.id() == 1,
+              element -> element.id() == 2);
+    }
+
+    @Test
+    @SneakyThrows
+    void not_empty__match_none_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotEmpty()
+          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void not_empty__match_none_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotEmpty()
+          .assertCollectionMatchNone(TestObject1.class,
+              element -> element.id() == 3,
+              element -> element.id() == 4);
+    }
+  }
+
+  @Nested
+  class combinationSize {
+
+    @Test
+    @SneakyThrows
+    void size__contains_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionSize(2)
+          .assertCollectionContains(TestObject1.class, A1);
+    }
+
+    @Test
+    @SneakyThrows
+    void size__contains_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionSize(2)
+          .assertCollectionContains(TestObject1.class, A1, A2);
+    }
+
+    @Test
+    @SneakyThrows
+    void size__contains_any_order() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionSize(2)
+          .assertCollectionContainsAnyOrder(TestObject1.class, List.of(A2, A1));
+    }
+
+    @Test
+    @SneakyThrows
+    void size__not_contains_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionSize(2)
+          .assertCollectionNotContains(TestObject1.class, A3);
+    }
+
+    @Test
+    @SneakyThrows
+    void size__not_contains_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionSize(2)
+          .assertCollectionNotContains(TestObject1.class, A3, A4);
+    }
+
+    @Test
+    @SneakyThrows
+    void size__equals() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionSize(2)
+          .assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2);
+    }
+
+    @Test
+    @SneakyThrows
+    void size__match_all_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionSize(2)
+          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void size__match_all_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionSize(2)
+          .assertCollectionMatchAll(TestObject1.class,
+              element -> element.name().equals(A),
+              element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    void size__match_any_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionSize(2)
+          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void size__match_any_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionSize(2)
+          .assertCollectionMatchAny(TestObject1.class,
+              element -> element.id() == 1,
+              element -> element.id() == 2);
+    }
+
+    @Test
+    @SneakyThrows
+    void size__match_none_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionSize(2)
+          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void size__match_none_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionSize(2)
+          .assertCollectionMatchNone(TestObject1.class,
+              element -> element.id() == 3,
+              element -> element.id() == 4);
+    }
+  }
+
+  @Nested
+  class combinationContains {
+
+    @Test
+    @SneakyThrows
+    void contains_1__match_any_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionContains(TestObject1.class, A1)
+          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void contains_1__match_any_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionContains(TestObject1.class, A1)
+          .assertCollectionMatchAny(TestObject1.class,
+              element -> element.id() == 1,
+              element -> element.id() == 2);
+    }
+
+    @Test
+    @SneakyThrows
+    void contains_1__match_all_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionContains(TestObject1.class, A1)
+          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void contains_1__match_all_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionContains(TestObject1.class, A1)
+          .assertCollectionMatchAll(TestObject1.class,
+              element -> element.name().equals(A),
+              element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    void contains_1__match_none_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionContains(TestObject1.class, A1)
+          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void contains_1__match_none_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionContains(TestObject1.class, A1)
+          .assertCollectionMatchNone(TestObject1.class,
+              element -> element.id() == 3,
+              element -> element.id() == 4);
+    }
+
+    @Test
+    @SneakyThrows
+    void contains_2__match_any_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionContains(TestObject1.class, A1, A2)
+          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void contains_2__match_any_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionContains(TestObject1.class, A1, A2)
+          .assertCollectionMatchAny(TestObject1.class,
+              element -> element.id() == 1,
+              element -> element.id() == 2);
+    }
+
+    @Test
+    @SneakyThrows
+    void contains_2__match_all_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionContains(TestObject1.class, A1, A2)
+          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void contains_2__match_all_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionContains(TestObject1.class, A1, A2)
+          .assertCollectionMatchAll(TestObject1.class,
+              element -> element.name().equals(A),
+              element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    void contains_2__match_none_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionContains(TestObject1.class, A1, A2)
+          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void contains_2__match_none_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionContains(TestObject1.class, A1, A2)
+          .assertCollectionMatchNone(TestObject1.class,
+              element -> element.id() == 3,
+              element -> element.id() == 4);
+    }
+
+  }
+
+  @Nested
+  class combinationNotContains {
+
+    @Test
+    @SneakyThrows
+    void not_contains_1__match_any_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotContains(TestObject1.class, A3)
+          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void not_contains_1__match_any_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotContains(TestObject1.class, A3)
+          .assertCollectionMatchAny(TestObject1.class,
+              element -> element.id() == 1,
+              element -> element.id() == 2);
+    }
+
+    @Test
+    @SneakyThrows
+    void not_contains_1__match_all_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotContains(TestObject1.class, A3)
+          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void not_contains_1__match_all_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotContains(TestObject1.class, A3)
+          .assertCollectionMatchAll(TestObject1.class,
+              element -> element.name().equals(A),
+              element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    void not_contains_1__match_none_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotContains(TestObject1.class, A3)
+          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void not_contains_1__match_none_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotContains(TestObject1.class, A3)
+          .assertCollectionMatchNone(TestObject1.class,
+              element -> element.id() == 3,
+              element -> element.id() == 4);
+    }
+
+    @Test
+    @SneakyThrows
+    void not_contains_2__match_any_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotContains(TestObject1.class, A3, A4)
+          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void not_contains_2__match_any_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotContains(TestObject1.class, A3, A4)
+          .assertCollectionMatchAny(TestObject1.class,
+              element -> element.id() == 1,
+              element -> element.id() == 2);
+    }
+
+    @Test
+    @SneakyThrows
+    void not_contains_2__match_all_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotContains(TestObject1.class, A3, A4)
+          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void not_contains_2__match_all_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotContains(TestObject1.class, A3, A4)
+          .assertCollectionMatchAll(TestObject1.class,
+              element -> element.name().equals(A),
+              element -> element.name().equals(A));
+    }
+
+    @Test
+    @SneakyThrows
+    void not_contains_2__match_none_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotContains(TestObject1.class, A3, A4)
+          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void not_contains_2__match_none_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionNotContains(TestObject1.class, A3, A4)
+          .assertCollectionMatchNone(TestObject1.class,
+              element -> element.id() == 3,
+              element -> element.id() == 4);
+    }
+  }
+
+  @Nested
+  class combinationMatchAll {
+
+    @Test
+    @SneakyThrows
+    void match_all_1__match_any_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A))
+          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void match_all_1__match_any_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A))
+          .assertCollectionMatchAny(TestObject1.class,
+              element -> element.id() == 1,
+              element -> element.id() == 2);
+    }
+
+    @Test
+    @SneakyThrows
+    void match_all_1__match_none_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A))
+          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void match_all_1__match_none_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A))
+          .assertCollectionMatchNone(TestObject1.class,
+              element -> element.id() == 3,
+              element -> element.id() == 4);
+    }
+
+    //
+
+    @Test
+    @SneakyThrows
+    void match_all_2__match_any_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAll(TestObject2.class,
+              element -> element.name().equals(B),
+              element -> element.status().equals(NEW))
+          .assertCollectionMatchAny(TestObject2.class, element -> element.id() == 1);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void match_all_2__match_any_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAll(TestObject2.class,
+              element -> element.name().equals(B),
+              element -> element.status().equals(NEW))
+          .assertCollectionMatchAny(TestObject2.class,
+              element -> element.id() == 1,
+              element -> element.id() == 2);
+    }
+
+    @Test
+    @SneakyThrows
+    void match_all_2__match_none_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAll(TestObject2.class, element -> element.name().equals(B))
+          .assertCollectionMatchNone(TestObject2.class, element -> element.id() == 3);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void match_all_2__match_none_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAll(TestObject2.class, element -> element.name().equals(B))
+          .assertCollectionMatchNone(TestObject2.class,
+              element -> element.id() == 3,
+              element -> element.id() == 4);
+    }
+  }
+
+  @Nested
+  class combinationMatchAny {
+
+    @Test
+    @SneakyThrows
+    void match_any_1_match_none_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1)
+          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void match_any_1_match_none_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1)
+          .assertCollectionMatchNone(TestObject1.class,
+              element -> element.id() == 3,
+              element -> element.id() == 4);
+    }
+
+    @Test
+    @SneakyThrows
+    void match_any_2_match_none_1() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAny(TestObject1.class,
+              element -> element.id() == 1,
+              element -> element.id() == 2)
+          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+    }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    void match_any_2_match_none_2() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAny(TestObject1.class,
+              element -> element.id() == 1,
+              element -> element.id() == 2)
+          .assertCollectionMatchNone(TestObject1.class,
+              element -> element.id() == 3,
+              element -> element.id() == 4);
     }
   }
 }

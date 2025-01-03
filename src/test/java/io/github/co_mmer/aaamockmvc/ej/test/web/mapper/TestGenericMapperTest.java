@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.mapper;
 
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2_JSON;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockObjectMapper;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectA;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,10 +66,10 @@ class TestGenericMapperTest {
     when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_A1_JSON);
 
     // Act
-    var result = TestGenericMapper.mapTo(this.objectMapper, this.mockMvcResult, TestObjectA.class);
+    var result = TestGenericMapper.mapTo(this.objectMapper, this.mockMvcResult, TestObject1.class);
 
     // Assert
-    assertThat(result, is(TEST_A1));
+    assertThat(result, is(A1));
   }
 
   @Test
@@ -101,7 +101,7 @@ class TestGenericMapperTest {
 
     // Act
     var result =
-        TestGenericMapper.mapToList(this.objectMapper, this.mockMvcResult, TestObjectA.class);
+        TestGenericMapper.mapToList(this.objectMapper, this.mockMvcResult, TestObject1.class);
 
     // Assert
     assertThat(result, is(TEST_LIST_A1_A2));
@@ -136,7 +136,7 @@ class TestGenericMapperTest {
 
     // Act
     var result =
-        TestGenericMapper.mapToSet(this.objectMapper, this.mockMvcResult, TestObjectA.class);
+        TestGenericMapper.mapToSet(this.objectMapper, this.mockMvcResult, TestObject1.class);
 
     // Assert
     assertThat(result, is(TEST_SET_A1_A2));
@@ -189,7 +189,7 @@ class TestGenericMapperTest {
     // Act
     var result =
         TestGenericMapper.mapToMap(
-            this.objectMapper, this.mockMvcResult, Boolean.class, TestObjectA.class);
+            this.objectMapper, this.mockMvcResult, Boolean.class, TestObject1.class);
 
     // Assert
     assertThat(result, is(TEST_MAP_A1_A2));
@@ -207,7 +207,7 @@ class TestGenericMapperTest {
         // Act
         () ->
             TestGenericMapper.mapToMap(
-                this.objectMapper, this.mockMvcResult, String.class, TestObjectA.class));
+                this.objectMapper, this.mockMvcResult, String.class, TestObject1.class));
   }
 
   @Test
@@ -250,7 +250,7 @@ class TestGenericMapperTest {
 
   private static Stream<Arguments> provideNullMapToString() {
     return Stream.of(
-        Arguments.of(null, TEST_A1),
+        Arguments.of(null, A1),
         Arguments.of(new ObjectMapper(), null),
         Arguments.of(null, null));
   }
@@ -265,13 +265,13 @@ class TestGenericMapperTest {
         TestGenericMapperException.class,
 
         // Act
-        () -> TestGenericMapper.mapToString(mockObjectMapper, TEST_A1));
+        () -> TestGenericMapper.mapToString(mockObjectMapper, A1));
   }
 
   @Test
   void GIVEN_object_WHEN_mapToString_THEN_return_expect_object() throws Exception {
     // Act
-    var result = TestGenericMapper.mapToString(this.objectMapper, TEST_A1);
+    var result = TestGenericMapper.mapToString(this.objectMapper, A1);
 
     // Assert
     assertThat(result, is(TEST_A1_JSON));

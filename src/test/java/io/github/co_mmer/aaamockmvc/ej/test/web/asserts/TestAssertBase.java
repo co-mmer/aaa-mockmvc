@@ -43,11 +43,11 @@ public abstract class TestAssertBase {
   }
 
   protected void useResultAssertionError() throws Exception {
-    when(this.actions.andExpect(any())).thenThrow(new AssertionError());
+    when(this.actions.andExpect(any())).thenThrow(new AssertionError("test"));
   }
 
   protected void useResultException() throws Exception {
-    when(this.actions.andExpect(any())).thenThrow(new Exception());
+    when(this.actions.andExpect(any())).thenThrow(new Exception("test"));
   }
 
   protected void useHeader() {
