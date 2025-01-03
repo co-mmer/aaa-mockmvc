@@ -1021,6 +1021,11 @@ expected List of objects both in content and order.
 ```
 
 ```
+  A1 = new DemoObject(A, 1);
+  A2 = new DemoObject(A, 2);
+```
+
+```
   @GetMapping(...)
   public ResponseEntity<List<DemoObject>> getAll() {
     return new ResponseEntity<>(List.of(A1, A2), OK);
@@ -1046,6 +1051,11 @@ response matches the expected collection, ignoring the order of the elements.
 
 ```
   public record DemoObject(String name, Integer id) {}
+```
+
+```
+  A1 = new DemoObject(A, 1);
+  A2 = new DemoObject(A, 2);
 ```
 
 ```
@@ -1081,6 +1091,13 @@ exist within the collection returned in the response.
 
 ```
   public record DemoObject(String name, Integer id) {}
+```
+
+```
+  A1 = new DemoObject(A, 1);
+  A2 = new DemoObject(A, 2);
+  A3 = new DemoObject(A, 3);
+  A4 = new DemoObject(A, 4);
 ```
 
 ```
@@ -1135,6 +1152,11 @@ exist within the collection returned in the response.
 
 ```
   public record DemoObject(String name, Integer id) {}
+```
+
+```
+  A1 = new DemoObject(A, 1);
+  A2 = new DemoObject(A, 2);
 ```
 
 ```
@@ -1193,6 +1215,11 @@ for every element in the collection.
 ```
 
 ```
+  A1_NEW = new DemoMatch(A, 1, NEW);
+  A2_NEW = new DemoMatch(A, 2, NEW);
+```
+
+```
   @GetMapping(...)
   public ResponseEntity<List<DemoMatch>> getAll() {
     return new ResponseEntity<>(List.of(A1_NEW, A2_NEW), OK);
@@ -1237,6 +1264,11 @@ conditions.
 
 ```
   public record DemoMatch(String name, Integer id, Status status) {}
+```
+
+```
+  A1_NEW = new DemoMatch(A, 1, NEW);
+  A2_NEW = new DemoMatch(A, 2, NEW);
 ```
 
 ```
@@ -1286,6 +1318,11 @@ conditions, and it will pass if **none of the elements** satisfy the given condi
 ```
 
 ```
+  A1_NEW = new DemoMatch(A, 1, NEW);
+  A2_NEW = new DemoMatch(A, 2, NEW);
+```
+
+```
   @GetMapping(...)
   public ResponseEntity<List<DemoMatch>> getAll() {
     return new ResponseEntity<>(List.of(A1_NEW, A2_NEW), OK);
@@ -1322,31 +1359,98 @@ conditions, and it will pass if **none of the elements** satisfy the given condi
 <details>
 <summary>Assert Map 🔸 (New) </summary>
 
-### Assert Collection Equals (Map)
+- [Not Empty](#assert-map-not-empty)
+- [Empty](#assert-map-empty)
+- [Size](#assert-map-size)
+- [Equals](#assert-map-equals)
 
-In this example, the **`assertCollectionEquals`** method is utilized to assert that the response
-content matches an expected **`map`** of objects.
+### Assert Map Not Empty
 
-- **Class Specifications**:
-    - **Key Class**: The class of the keys in the map must be specified (in this
-      case, `Boolean.class`).
-    - **Value Class:** The class of the values in the map must be specified (in this case,
-      DemoDto.class).
-- **Expected Map**: Alongside the class, a map of expected objects (`EXPECTED_MAP`) is
-  provided, which the response should match. This approach is particularly useful for validating
-  collections of data returned by the API.
+The **`assertMapNotEmpty`** method is used to verify that the map returned in the response is not
+empty. This assertion ensures that the map contains at least one entry.
+
+```
+      get()
+          ...
+          .act()
+          .actPerform()
+          .asserts()
+          .assertMap()
+          .assertMapNotEmpty()
+```
+
+---
+
+### Assert Map Empty
+
+The **`assertMapEmpty`** method is used to verify that the map returned in the response is empty.
+This assertion ensures that the map does not contain any entries.
+
+```
+      get()
+          ...
+          .act()
+          .actPerform()
+          .asserts()
+          .assertMap()
+          .assertMapEmpty()
+```
+
+---
+
+### Assert Map Size
+
+The **`assertMapSize`** method verifies that the map returned in the response contains the expected
+number of entries. This assertion ensures that the map size matches the specified value.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertMap()
+      .assertMapSize(2)
+```
+
+---
+
+### Assert Map Equals
+
+The **`assertMapEquals`** method is used to assert that the content of the response matches an
+expected **`map`** of objects. This allows you to compare the returned map with a predefined one to
+ensure the correct key-value pairs are present.
+
+- **keyClass**: The class type of the keys in the map (e.g., `Integer.class`).
+- **valueClass**: The class type of the values in the map (e.g., `DemoObject.class`).
+- **expectedMap**: The expected map containing the key-value pairs you want to match against the
+  response.
+
+```
+  public record DemoObject(String name, Integer id) {}
+```
+
+```
+  A1 = new DemoObject(A, 1);
+  A2 = new DemoObject(A, 2);
+```
+
+```
+  @GetMapping(...)
+  public ResponseEntity<Map<Integer, DemoObject>> getAll() {
+    return new ResponseEntity<>(Map.of(1, A1, 2, A2), OK);
+  }
+```
 
 ```
 
-// EXPECTED_MAP = Map.of(TRUE, TEST_DTO_1, FALSE, TEST_DTO_2);
-
-get()
-...
-.act()
-.actPerform()
-.asserts()
-.assertCollection()
-.assertCollectionEquals(Boolean.class, DemoDto.class, EXPECTED_MAP);
+  get()
+    ...
+    .act()
+    .actPerform()
+    .asserts()
+    .assertMap()
+    .assertMapEquals(Integer.class, DemoObject.class, Map.of(1, A1, 2, A2));
 
 ```
 
