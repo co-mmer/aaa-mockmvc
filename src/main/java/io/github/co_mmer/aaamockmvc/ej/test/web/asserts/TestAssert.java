@@ -8,49 +8,80 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status;
 
 /**
- * This interface defines a contract for performing various assertions on HTTP response results.
+ * Provides methods for asserting different aspects of an HTTP response.
+ *
+ * <p>This interface defines various assertion methods to validate different components of an HTTP
+ * response. It includes assertions for the response status, content, headers, collections, maps,
+ * and custom logic. These methods return specialized assertion objects that allow for fine-grained
+ * validation of each aspect of the response.
  *
  * @since 1.0.0
  */
 public interface TestAssert {
 
+  /**
+   * Provides assertion methods for validating the HTTP response status.
+   *
+   * <p>This method returns an instance of {@code TestAssert1Status}, which provides assertion
+   * methods for checking the HTTP response status code.
+   *
+   * @return an instance of {@code TestAssert1Status} for asserting the response status
+   * @since 1.0.0
+   */
   TestAssert1Status assertStatus();
 
   /**
-   * Asserts that the HTTP response is valid for content assertions.
+   * Provides assertion methods for validating the HTTP response content.
    *
-   * <p>This method returns an instance of {@code TestAssertContent} for asserting the content of
-   * the HTTP response. It allows various validations of response content, including checks for
-   * emptiness and matching expected values.
+   * <p>This method returns an instance of {@code TestAssertContent}, which provides assertion
+   * methods for validating the content of the HTTP response, such as matching expected values or
+   * checking for emptiness.
    *
-   * @return an instance of {@code TestAssertContent} for further assertions
+   * @return an instance of {@code TestAssertContent} for asserting the response content
    * @since 1.0.0
    */
   TestAssertContent assertContent();
 
+  /**
+   * Provides assertion methods for validating the contents of an HTTP response collection.
+   *
+   * <p>This method returns an instance of {@code TestAssert1Collection}, which provides assertion
+   * methods for validating the contents of an HTTP response when the response is a collection.
+   *
+   * @return an instance of {@code TestAssert1Collection} for asserting the collection response
+   * @since 1.0.0
+   */
   TestAssert1Collection assertCollection();
 
+  /**
+   * Provides assertion methods for validating the contents of an HTTP response map.
+   *
+   * <p>This method returns an instance of {@code TestAssert1Map}, which provides assertion methods
+   * for validating the contents of an HTTP response when the response is a map.
+   *
+   * @return an instance of {@code TestAssert1Map} for asserting the map response
+   * @since 1.4.0
+   */
   TestAssert1Map assertMap();
 
   /**
-   * Asserts that the HTTP response is valid for a HEAD request.
+   * Provides assertion methods for validating the HTTP response headers.
    *
-   * <p>This method returns an instance of {@code TestAssertHead} for asserting the headers of the
-   * HTTP response. It allows various validations of response headers, such as checking for the
-   * presence or absence of specific headers and comparing header values.
+   * <p>This method returns an instance of {@code TestAssertHead}, which provides assertion methods
+   * for validating the headers of the HTTP response, such as checking for the presence or absence
+   * of specific headers and comparing header values.
    *
-   * @return an instance of {@code TestAssertHead} for further assertions on headers
+   * @return an instance of {@code TestAssertHead} for asserting the response headers
    * @since 1.0.0
    */
   TestAssertHead assertHead();
 
   /**
-   * Asserts that the HTTP response matches custom validation logic.
+   * Provides assertion methods for validating the HTTP response based on custom logic.
    *
-   * <p>This method returns an instance of {@code TestAssertCustom} for asserting custom validations
-   * on the HTTP response. It allows users to define their own result matchers or custom logic for
-   * validating the response, giving flexibility beyond standard status, content, and header
-   * assertions.
+   * <p>This method returns an instance of {@code TestAssertCustom}, which allows users to define
+   * custom validation logic or result matchers for the HTTP response, offering flexibility beyond
+   * standard status, content, and header assertions.
    *
    * @return an instance of {@code TestAssertCustom} for custom assertions on the response
    * @since 1.1.0

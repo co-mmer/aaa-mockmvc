@@ -36,8 +36,8 @@ public final class TestAssertImpl implements TestAssert {
    * Constructs an instance of {@code TestAssertImpl} with the provided {@code ResultActions} and
    * {@code ObjectMapper}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
+   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
+   *                     {@code null})
    * @param objectMapper the {@code ObjectMapper} for JSON serialization (must not be {@code null})
    * @throws NullPointerException if either {@code actions} or {@code objectMapper} is {@code null}
    * @since 1.0.0
@@ -48,14 +48,13 @@ public final class TestAssertImpl implements TestAssert {
   }
 
   /**
-   * Asserts that the HTTP response status matches the expected status code.
+   * Provides assertion methods for validating the HTTP response status.
    *
-   * <p>This method returns an instance of {@code TestAssertStatus} for asserting the status of the
-   * HTTP response. It allows various validations of response status codes, ensuring that the
-   * response matches the expected outcomes of the HTTP request.
+   * <p>This method returns an instance of {@code TestAssert1Status}, which provides assertion
+   * methods for checking the HTTP response status code.
    *
-   * @return an instance of {@code TestAssertStatus} for further assertions on the response status
-   * @since 1.1.0
+   * @return an instance of {@code TestAssert1Status} for asserting the response status
+   * @since 1.0.0
    */
   @Override
   public TestAssert1Status assertStatus() {
@@ -63,13 +62,13 @@ public final class TestAssertImpl implements TestAssert {
   }
 
   /**
-   * Asserts that the HTTP response is valid for content assertions.
+   * Provides assertion methods for validating the HTTP response content.
    *
-   * <p>This method returns an instance of {@code TestAssertContent} for asserting the content of
-   * the HTTP response. It allows various validations of response content, including checks for
-   * emptiness and matching expected values.
+   * <p>This method returns an instance of {@code TestAssertContent}, which provides assertion
+   * methods for validating the content of the HTTP response, such as matching expected values or
+   * checking for emptiness.
    *
-   * @return an instance of {@code TestAssertContent} for further assertions
+   * @return an instance of {@code TestAssertContent} for asserting the response content
    * @since 1.0.0
    */
   @Override
@@ -78,7 +77,13 @@ public final class TestAssertImpl implements TestAssert {
   }
 
   /**
-   * @since 1.4.0
+   * Provides assertion methods for validating the contents of an HTTP response collection.
+   *
+   * <p>This method returns an instance of {@code TestAssert1Collection}, which provides assertion
+   * methods for validating the contents of an HTTP response when the response is a collection.
+   *
+   * @return an instance of {@code TestAssert1Collection} for asserting the collection response
+   * @since 1.0.0
    */
   @Override
   public TestAssert1Collection assertCollection() {
@@ -86,6 +91,12 @@ public final class TestAssertImpl implements TestAssert {
   }
 
   /**
+   * Provides assertion methods for validating the contents of an HTTP response map.
+   *
+   * <p>This method returns an instance of {@code TestAssert1Map}, which provides assertion methods
+   * for validating the contents of an HTTP response when the response is a map.
+   *
+   * @return an instance of {@code TestAssert1Map} for asserting the map response
    * @since 1.4.0
    */
   @Override
@@ -94,13 +105,13 @@ public final class TestAssertImpl implements TestAssert {
   }
 
   /**
-   * Asserts that the HTTP response is valid for a HEAD request.
+   * Provides assertion methods for validating the HTTP response headers.
    *
-   * <p>This method returns an instance of {@code TestAssertHead} for asserting the headers of the
-   * HTTP response. It allows various validations of response headers, such as checking for the
-   * presence or absence of specific headers and comparing header values.
+   * <p>This method returns an instance of {@code TestAssertHead}, which provides assertion methods
+   * for validating the headers of the HTTP response, such as checking for the presence or absence
+   * of specific headers and comparing header values.
    *
-   * @return an instance of {@code TestAssertHead} for further assertions on headers
+   * @return an instance of {@code TestAssertHead} for asserting the response headers
    * @since 1.0.0
    */
   @Override
@@ -109,12 +120,11 @@ public final class TestAssertImpl implements TestAssert {
   }
 
   /**
-   * Asserts that the HTTP response matches custom validation logic.
+   * Provides assertion methods for validating the HTTP response based on custom logic.
    *
-   * <p>This method returns an instance of {@code TestAssertCustom} for asserting custom validations
-   * on the HTTP response. It allows users to define their own result matchers or custom logic for
-   * validating the response, giving flexibility beyond standard status, content, and header
-   * assertions.
+   * <p>This method returns an instance of {@code TestAssertCustom}, which allows users to define
+   * custom validation logic or result matchers for the HTTP response, offering flexibility beyond
+   * standard status, content, and header assertions.
    *
    * @return an instance of {@code TestAssertCustom} for custom assertions on the response
    * @since 1.1.0
