@@ -278,14 +278,14 @@ In the provided library, every test follows the AAA structure using the followin
    This enables used to set up the next, creating a seamless flow in
    testing. [For more details, see the example below.](#test-case-update-resource-with-put-and-validate-response-object)
 
-### Arrange Section
+### Arrange
 
 - [Arrange Url](docs/arrange/ArrangeUrl.md)
 - [Arrange Head](docs/arrange/ArrangeHead.md)
 - [Arrange Body Raw](docs/arrange/ArrangeBodyRaw.md)
 - [Arrange Body Binary](docs/arrange/ArrangeBodyBinray.md)
 
-### Assert Section
+### Assert
 
 - [Assert Status](docs/assert/AssertStatus.md)
 - [Assert Content](docs/assert/AssertContent.md)
@@ -294,7 +294,7 @@ In the provided library, every test follows the AAA structure using the followin
 - [Assert Head](docs/assert/AssertHead.md)
 - [Assert Custom](docs/assert/AssertCustom.md)
 
-### Answer Section
+### Answer
 
 - [Answer](docs/answer/Answer.md)
 
