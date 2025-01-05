@@ -4,14 +4,12 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArran
 import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import lombok.NonNull;
-import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
@@ -30,7 +28,6 @@ import org.springframework.test.web.servlet.ResultActions;
  *
  * @since 1.0.0
  */
-@Log4j2
 public final class TestAssertContentImpl implements TestAssertContent {
 
   private final ResultActions actions;
@@ -110,67 +107,6 @@ public final class TestAssertContentImpl implements TestAssertContent {
     try {
       var content = this.response.getContentAsString();
       assertThat(normalizeObject(content), is(normalizeObject(expectedString)));
-    } catch (Exception e) {
-      Assertions.fail(e);
-    }
-    return this;
-  }
-
-  /**
-   * Asserts that the content of the HTTP response as a byte array is not empty.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
-   */
-  @Override
-  public TestAssertContent assertContentByteIsNotEmpty() {
-    try {
-      var content = this.response.getContentAsByteArray();
-      assertThat(content.length, is(not(0)));
-    } catch (Exception e) {
-      Assertions.fail(e);
-    }
-    return this;
-  }
-
-  /**
-   * Asserts that the content of the HTTP response as a byte array is empty.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
-   */
-  @Override
-  public TestAssertContent assertContentByteIsEmpty() {
-    try {
-      var content = this.response.getContentAsByteArray();
-      assertThat(content.length, is(0));
-    } catch (Exception e) {
-      Assertions.fail(e);
-    }
-    return this;
-  }
-
-  /**
-   * Asserts that the content of the HTTP response matches the given byte array.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @param expectedByte the expected byte content of the response (must not be {@code null})
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
-   */
-  @Override
-  public TestAssertContent assertContentEquals(byte[] expectedByte) {
-    try {
-      var content = this.response.getContentAsByteArray();
-      assertThat(content, is(expectedByte));
     } catch (Exception e) {
       Assertions.fail(e);
     }

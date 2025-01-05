@@ -256,9 +256,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useServerWithResponse(TEST_MAP_EMPTY_JSON);
 
       // Act & Assert
-      testAssert
-          .assertMapEmpty()
-          .assertHead();
+      testAssert.assertMapEmpty().assertHead();
     }
   }
 
@@ -272,9 +270,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      testAssert
-          .assertMapSize(2)
-          .assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2);
+      testAssert.assertMapSize(2).assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2);
     }
 
     @Test
@@ -284,9 +280,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      testAssert
-          .assertMapSize(2)
-          .assertHead();
+      testAssert.assertMapSize(2).assertHead();
     }
   }
 }

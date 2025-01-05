@@ -1,0 +1,232 @@
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
+import java.util.stream.Stream;
+import lombok.SneakyThrows;
+import org.apache.logging.log4j.util.Strings;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.opentest4j.AssertionFailedError;
+import org.springframework.test.web.servlet.ResultActions;
+
+class TestAssertBinaryImplTest extends TestAssertBase {
+
+  private static final String EXPECTED_CONTENT = "expected content";
+  private static final String ACTUAL_CONTENT = "actual content";
+  private TestAssertBinaryImpl testAssert;
+
+  @BeforeEach
+  void setUp() {
+    initMockServer();
+    this.testAssert = new TestAssertBinaryImpl(this.actions);
+  }
+
+  @Nested
+  class constructor {
+
+    @ParameterizedTest()
+    @MethodSource("provideNullParameters")
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_provideNullParameters_WHEN_call_constructor_THEN_throw_NullPointerException(
+        ResultActions actions, ObjectMapper objectMapper) {
+
+      assertThrows(
+          NullPointerException.class, () -> new TestAssertContentImpl(actions, objectMapper));
+    }
+
+    private static Stream<Arguments> provideNullParameters() {
+      return Stream.of(
+          Arguments.of(null, new ObjectMapper()),
+          Arguments.of(mock(ResultActions.class), null),
+          Arguments.of(null, null));
+    }
+  }
+
+  @Nested
+  class assertBinaryByteNotEmpty {
+
+    @Test
+    @SneakyThrows
+    void GIVEN_expected_WHEN_assertBinaryByteNotEmpty_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(ACTUAL_CONTENT);
+
+      // Act & Assert
+      testAssert.assertBinaryByteNotEmpty();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {Strings.EMPTY, "[]"})
+    @SneakyThrows
+    void GIVEN_unexpected_WHEN_assertContentByteNotEmpty_THEN_assert_false(String value) {
+      // Arrange
+      useServerWithResponse(value);
+
+      // Act & Assert
+      assertThrows(AssertionError.class, testAssert::assertBinaryByteNotEmpty);
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertContentByteNotEmpty_THEN_assert_false() {
+      // Arrange
+      useServerWithStringException();
+      var testAssertBinary = new TestAssertBinaryImpl(actions);
+
+      // Act & Assert
+      assertThrows(AssertionFailedError.class, testAssertBinary::assertBinaryByteNotEmpty);
+    }
+  }
+
+  @Nested
+  class assertBinaryByteEmpty {
+
+    @ParameterizedTest
+    @ValueSource(strings = {Strings.EMPTY, "[]"})
+    @SneakyThrows
+    void GIVEN_expected_WHEN_assertBinaryByteEmpty_THEN_assert_true(String value) {
+      // Arrange
+      useServerWithResponse(value);
+
+      // Act & Assert
+      testAssert.assertBinaryByteEmpty();
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_unexpected_WHEN_assertBinaryByteIsEmpty_THEN_return_assert_false() {
+      // Arrange
+      useServerWithResponse(ACTUAL_CONTENT);
+
+      // Act & Assert
+      assertThrows(AssertionError.class, testAssert::assertBinaryByteEmpty);
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertBinaryByteEmpty_THEN_assert_false() {
+      // Arrange
+      useServerWithStringException();
+      var testAssertBinary = new TestAssertBinaryImpl(actions);
+
+      // Act & Assert
+      assertThrows(AssertionFailedError.class, testAssertBinary::assertBinaryByteEmpty);
+    }
+  }
+
+  @Nested
+  class assertBinaryByteEquals {
+
+    @Test
+    @SneakyThrows
+    void GIVEN_expected_byte_WHEN_assertBinaryByteEquals_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(EXPECTED_CONTENT);
+
+      // Act & Assert
+      testAssert.assertBinaryByteEquals(EXPECTED_CONTENT.getBytes());
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_unexpected_byte_WHEN_assertContentEquals_THEN_assert_false() {
+      // Arrange
+      useServerWithResponse(ACTUAL_CONTENT);
+
+      // Act & Assert
+      assertThrows(AssertionError.class, () -> testAssert.assertBinaryByteEquals(new byte[1]));
+    }
+
+    @Test
+    void GIVEN_exception_byte_WHEN_assertBinaryByteEquals_THEN_assert_false() {
+      // Arrange
+      useServerWithByteException();
+      var testAssertBinary = new TestAssertBinaryImpl(actions);
+
+      // Act & Assert
+      assertThrows(
+          AssertionFailedError.class, () -> testAssertBinary.assertBinaryByteEquals(new byte[1]));
+    }
+  }
+
+  @Nested
+  class nextStep {
+
+    @Test
+    void WHEN_assertHead_THEN_return_expected_class() {
+      // Arrange
+      useHeader();
+
+      // Act
+      var assertHead = testAssert.assertHead();
+
+      // Assert
+      assertThat(assertHead.getClass(), is(TestAssertHeadImpl.class));
+    }
+  }
+
+  @Nested
+  class combinationNotEmpty {
+
+    @Test
+    @SneakyThrows
+    void notEmpty__equals() {
+      // Arrange
+      useServerWithResponse(EXPECTED_CONTENT);
+
+      // Act & Assert
+      testAssert.assertBinaryByteNotEmpty().assertBinaryByteEquals(EXPECTED_CONTENT.getBytes());
+    }
+
+    @Test
+    @SneakyThrows
+    void notEmpty__head() {
+      // Arrange
+      useServerWithResponse(EXPECTED_CONTENT);
+
+      // Act & Assert
+      testAssert.assertBinaryByteNotEmpty().assertHead();
+    }
+  }
+
+  @Nested
+  class combinationEmpty {
+
+    @Test
+    @SneakyThrows
+    void empty__head() {
+      // Arrange
+      useServerWithResponse(Strings.EMPTY);
+
+      // Act & Assert
+      testAssert.assertBinaryByteEmpty().assertHead();
+    }
+  }
+
+  @Nested
+  class combinationEquals {
+
+    @Test
+    @SneakyThrows
+    void equals__head() {
+      // Arrange
+      useServerWithResponse(EXPECTED_CONTENT);
+
+      // Act & Assert
+      testAssert.assertBinaryByteEquals(EXPECTED_CONTENT.getBytes()).assertHead();
+    }
+  }
+}

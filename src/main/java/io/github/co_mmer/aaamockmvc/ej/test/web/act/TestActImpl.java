@@ -19,8 +19,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
  * results within a testing context. It allows users to assert the response of the HTTP request
  * through the {@link #asserts()} method and access the results via the {@link #answer()} method.
  *
- * <p>Utilizing a {@link TestRequestContext}, it manages request data and integrates with the
- * {@link
+ * <p>Utilizing a {@link TestRequestContext}, it manages request data and integrates with the {@link
  * MockMvc} framework to perform the actual HTTP requests, enabling comprehensive testing
  * strategies.
  *
@@ -39,8 +38,8 @@ public final class TestActImpl implements TestAct1, TestAct2 {
    * <p>This constructor initializes the request and {@code MockMvc} instance that will be used to
    * perform the HTTP request defined in the test context.
    *
-   * @param context the {@link TestRequestContext} containing the request data and
-   *                {@link TestRequestBean} (must not be {@code null})
+   * @param context the {@link TestRequestContext} containing the request data and {@link
+   *     TestRequestBean} (must not be {@code null})
    * @throws NullPointerException if the {@code context} is {@code null}
    * @since 1.0.0
    */

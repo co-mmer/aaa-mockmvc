@@ -1,6 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssert1Binary;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssertBinaryImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCollectionImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
@@ -36,8 +38,8 @@ public final class TestAssertImpl implements TestAssert {
    * Constructs an instance of {@code TestAssertImpl} with the provided {@code ResultActions} and
    * {@code ObjectMapper}.
    *
-   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
-   *                     {@code null})
+   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
+   *     null})
    * @param objectMapper the {@code ObjectMapper} for JSON serialization (must not be {@code null})
    * @throws NullPointerException if either {@code actions} or {@code objectMapper} is {@code null}
    * @since 1.0.0
@@ -77,13 +79,28 @@ public final class TestAssertImpl implements TestAssert {
   }
 
   /**
+   * Provides assertion methods for validating the HTTP response binary.
+   *
+   * <p>This method returns an instance of {@code TestAssertBinary}, which provides assertion
+   * methods for validating the content of the HTTP response, such as matching expected values or
+   * checking for emptiness.
+   *
+   * @return an instance of {@code TestAssertBinary} for asserting the response binary
+   * @since 1.0.0
+   */
+  @Override
+  public TestAssert1Binary assertBinary() {
+    return new TestAssertBinaryImpl(this.actions);
+  }
+
+  /**
    * Provides assertion methods for validating the contents of an HTTP response collection.
    *
    * <p>This method returns an instance of {@code TestAssert1Collection}, which provides assertion
    * methods for validating the contents of an HTTP response when the response is a collection.
    *
    * @return an instance of {@code TestAssert1Collection} for asserting the collection response
-   * @since 1.0.0
+   * @since 1.4.0
    */
   @Override
   public TestAssert1Collection assertCollection() {

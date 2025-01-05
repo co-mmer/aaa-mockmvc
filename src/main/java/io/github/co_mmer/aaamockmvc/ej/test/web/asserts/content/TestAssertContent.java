@@ -55,41 +55,6 @@ public interface TestAssertContent {
   TestAssertContent assertContentEquals(@NonNull String expectedString);
 
   /**
-   * Asserts that the byte array content of the HTTP response is not empty.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
-   */
-  TestAssertContent assertContentByteIsNotEmpty();
-
-  /**
-   * Asserts that the byte array content of the HTTP response is empty.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
-   */
-  TestAssertContent assertContentByteIsEmpty();
-
-  /**
-   * Asserts that the byte array content of the HTTP response matches the expected byte array.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @param expectedByte the expected byte array content (must not be {@code null})
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @throws NullPointerException if the {@code expectedByte} is {@code null}
-   * @since 1.0.0
-   */
-  TestAssertContent assertContentEquals(byte[] expectedByte);
-
-  /**
    * Asserts that the object content of the HTTP response matches the expected object, using the
    * provided deserializer(s).
    *

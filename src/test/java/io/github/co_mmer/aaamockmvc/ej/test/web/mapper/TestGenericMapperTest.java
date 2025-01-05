@@ -250,9 +250,7 @@ class TestGenericMapperTest {
 
   private static Stream<Arguments> provideNullMapToString() {
     return Stream.of(
-        Arguments.of(null, A1),
-        Arguments.of(new ObjectMapper(), null),
-        Arguments.of(null, null));
+        Arguments.of(null, A1), Arguments.of(new ObjectMapper(), null), Arguments.of(null, null));
   }
 
   @Test

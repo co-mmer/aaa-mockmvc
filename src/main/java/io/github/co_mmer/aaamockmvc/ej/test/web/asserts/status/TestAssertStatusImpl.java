@@ -6,6 +6,8 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssert1Binary;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssertBinaryImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCollectionImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
@@ -14,6 +16,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertMapImpl;
 import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -240,13 +244,13 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   }
 
   /**
-   * Asserts that the HTTP response is valid for content assertions.
+   * Provides assertion methods for validating the HTTP response content.
    *
-   * <p>This method returns an instance of {@code TestAssertContent} for asserting the content of
-   * the HTTP response. It allows various validations of response content, including checks for
-   * emptiness and matching expected values.
+   * <p>This method returns an instance of {@code TestAssertContent}, which provides assertion
+   * methods for validating the content of the HTTP response, such as matching expected values or
+   * checking for emptiness.
    *
-   * @return an instance of {@code TestAssertContent} for further assertions
+   * @return an instance of {@code TestAssertContent} for asserting the response content
    * @since 1.1.0
    */
   @Override
@@ -255,6 +259,27 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   }
 
   /**
+   * Provides assertion methods for validating the HTTP response binary.
+   *
+   * <p>This method returns an instance of {@code TestAssertBinary}, which provides assertion
+   * methods for validating the content of the HTTP response, such as matching expected values or
+   * checking for emptiness.
+   *
+   * @return an instance of {@code TestAssertBinary} for asserting the response binary
+   * @since 1.4.0
+   */
+  @Override
+  public TestAssert1Binary assertBinary() {
+    return new TestAssertBinaryImpl(this.actions);
+  }
+
+  /**
+   * Provides assertion methods for validating the contents of an HTTP response collection.
+   *
+   * <p>This method returns an instance of {@code TestAssert1Collection}, which provides assertion
+   * methods for validating the contents of an HTTP response when the response is a collection.
+   *
+   * @return an instance of {@code TestAssert1Collection} for asserting the collection response
    * @since 1.4.0
    */
   @Override
@@ -263,14 +288,28 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   }
 
   /**
-   * Asserts that the HTTP response is valid for a HEAD request.
+   * Provides assertion methods for validating the contents of an HTTP response map.
    *
-   * <p>This method returns an instance of {@code TestAssertHead} for asserting the headers of the
-   * HTTP response. It allows various validations of response headers, such as checking for the
-   * presence or absence of specific headers and comparing header values.
+   * <p>This method returns an instance of {@code TestAssert1Map}, which provides assertion methods
+   * for validating the contents of an HTTP response when the response is a map.
    *
-   * @return an instance of {@code TestAssertHead} c on headers
-   * @since 1.1.0
+   * @return an instance of {@code TestAssert1Map} for asserting the map response
+   * @since 1.4.0
+   */
+  @Override
+  public TestAssert1Map assertMap() {
+    return new TestAssertMapImpl(this.actions, this.objectMapper);
+  }
+
+  /**
+   * Provides assertion methods for validating the HTTP response headers.
+   *
+   * <p>This method returns an instance of {@code TestAssertHead}, which provides assertion methods
+   * for validating the headers of the HTTP response, such as checking for the presence or absence
+   * of specific headers and comparing header values.
+   *
+   * @return an instance of {@code TestAssertHead} for asserting the response headers
+   * @since 1.0.0
    */
   @Override
   public TestAssertHead assertHead() {
@@ -278,12 +317,11 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   }
 
   /**
-   * Asserts that the HTTP response matches custom validation logic.
+   * Provides assertion methods for validating the HTTP response based on custom logic.
    *
-   * <p>This method returns an instance of {@code TestAssertCustom} for asserting custom validations
-   * on the HTTP response. It allows users to define their own result matchers or custom logic for
-   * validating the response, giving flexibility beyond standard status, content, and header
-   * assertions.
+   * <p>This method returns an instance of {@code TestAssertCustom}, which allows users to define
+   * custom validation logic or result matchers for the HTTP response, offering flexibility beyond
+   * standard status, content, and header assertions.
    *
    * @return an instance of {@code TestAssertCustom} for custom assertions on the response
    * @since 1.1.0

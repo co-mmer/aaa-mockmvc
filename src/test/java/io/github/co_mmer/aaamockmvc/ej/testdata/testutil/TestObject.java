@@ -36,11 +36,9 @@ public final class TestObject {
   public static final List<TestObject1> TEST_LIST_A1_A3 = List.of(A1, A3);
   public static final List<TestObject1> TEST_LIST_A3_A1 = List.of(A3, A1);
   public static final Set<TestObject1> TEST_SET_A1_A2 = Set.of(A1, A2);
-  public static final Map<Integer, TestObject1> TEST_MAP_A1_A2 =
-      Map.of(1, A1, 2, A2);
+  public static final Map<Integer, TestObject1> TEST_MAP_A1_A2 = Map.of(1, A1, 2, A2);
 
-  public static final Map<Boolean, TestObject1> TEST_MAP_A1_A3 =
-      Map.of(TRUE, A1, FALSE, A3);
+  public static final Map<Boolean, TestObject1> TEST_MAP_A1_A3 = Map.of(TRUE, A1, FALSE, A3);
   public static final String TEST_A1_JSON = mapToString(A1);
   public static final String TEST_LIST_A1_A2_JSON = mapToString(TEST_LIST_A1_A2);
   public static final String TEST_LIST_A1_A3_JSON = mapToString(TEST_LIST_A1_A3);

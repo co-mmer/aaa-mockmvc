@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssert1Binary;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
@@ -43,13 +44,25 @@ public interface TestAssert {
   TestAssertContent assertContent();
 
   /**
+   * Provides assertion methods for validating the HTTP response binary.
+   *
+   * <p>This method returns an instance of {@code TestAssertBinary}, which provides assertion
+   * methods for validating the content of the HTTP response, such as matching expected values or
+   * checking for emptiness.
+   *
+   * @return an instance of {@code TestAssertBinary} for asserting the response binary
+   * @since 1.4.0
+   */
+  TestAssert1Binary assertBinary();
+
+  /**
    * Provides assertion methods for validating the contents of an HTTP response collection.
    *
    * <p>This method returns an instance of {@code TestAssert1Collection}, which provides assertion
    * methods for validating the contents of an HTTP response when the response is a collection.
    *
    * @return an instance of {@code TestAssert1Collection} for asserting the collection response
-   * @since 1.0.0
+   * @since 1.4.0
    */
   TestAssert1Collection assertCollection();
 
