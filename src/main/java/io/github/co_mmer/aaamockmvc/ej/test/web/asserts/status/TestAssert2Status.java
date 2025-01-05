@@ -2,7 +2,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssert1Binary;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssert1Content;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
@@ -26,7 +26,7 @@ public interface TestAssert2Status {
    * @return an instance of {@code TestAssertContent} for asserting the response content
    * @since 1.1.0
    */
-  TestAssertContent assertContent();
+  TestAssert1Content assertContent();
 
   /**
    * Provides assertion methods for validating the HTTP response binary.

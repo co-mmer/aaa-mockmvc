@@ -10,7 +10,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssert1Binary
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssertBinaryImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCollectionImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssert1Content;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
@@ -29,7 +29,7 @@ import org.springframework.test.web.servlet.ResultActions;
  * <p>This class allows for various assertions on HTTP response status codes, such as verifying
  * specific status codes (e.g., 200 OK, 201 Created), checking status code ranges (e.g., client
  * errors, server errors), and handling common HTTP response scenarios like redirects and access
- * errors.</p>
+ * errors.
  *
  * @since 1.1.0
  */
@@ -49,8 +49,8 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
    * Constructs an instance of {@code TestAssertStatusImpl} with the provided {@code ResultActions}
    * and {@code ObjectMapper}.
    *
-   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
-   *                     {@code null})
+   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
+   *     null})
    * @param objectMapper the {@code ObjectMapper} for JSON serialization (must not be {@code null})
    * @throws NullPointerException if either {@code actions} or {@code objectMapper} is {@code null}
    * @since 1.1.0
@@ -202,9 +202,9 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
    * Asserts that the HTTP response status code is within a specified range.
    *
    * @param minStatusCode the minimum expected status code (must be less than or equal to
-   *                      maxStatusCode)
+   *     maxStatusCode)
    * @param maxStatusCode the maximum expected status code (must be greater than or equal to
-   *                      minStatusCode)
+   *     minStatusCode)
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
    */
@@ -226,7 +226,7 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
    * @since 1.1.0
    */
   @Override
-  public TestAssertContent assertContent() {
+  public TestAssert1Content assertContent() {
     return new TestAssertContentImpl(this.actions, this.objectMapper);
   }
 

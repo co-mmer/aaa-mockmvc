@@ -15,20 +15,16 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
 
 /**
- * Implementation of the {@code TestAssertContent} interface for asserting content of HTTP responses
- * in tests.
+ * Provides methods for asserting HTTP response content in tests.
  *
- * <p>This class provides various methods to assert the content of an HTTP response, including
- * checking for emptiness, matching expected values, and deserializing to specific types. It
- * utilizes the Spring's {@code ResultActions} and {@code MockHttpServletResponse} for handling the
- * HTTP response.
- *
- * <p>Each assertion method returns the current instance of {@code TestAssertContent} to allow for
- * method chaining.
+ * <p>This class enables various assertions on the content of HTTP responses, such as verifying that
+ * the content is empty or not empty, matching specific string values, or comparing against expected
+ * objects.
  *
  * @since 1.0.0
  */
-public final class TestAssertContentImpl implements TestAssertContent {
+public final class TestAssertContentImpl
+    implements TestAssert1Content, TestAssert2Content, TestAssertLContent {
 
   private final ResultActions actions;
   private final MockHttpServletResponse response;
@@ -53,14 +49,11 @@ public final class TestAssertContentImpl implements TestAssertContent {
   /**
    * Asserts that the content of the HTTP response as a string is not empty.
    *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
   @Override
-  public TestAssertContent assertContentNotEmpty() {
+  public TestAssert2Content assertContentNotEmpty() {
     try {
       assertThat(this.response.getContentAsString().isEmpty(), is(false));
     } catch (Exception e) {
@@ -72,14 +65,11 @@ public final class TestAssertContentImpl implements TestAssertContent {
   /**
    * Asserts that the content of the HTTP response as a string is empty.
    *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
   @Override
-  public TestAssertContent assertContentEmpty() {
+  public TestAssertLContent assertContentEmpty() {
     try {
       assertThat(this.response.getContentAsString().isEmpty(), is(true));
     } catch (Exception e) {
@@ -89,10 +79,24 @@ public final class TestAssertContentImpl implements TestAssertContent {
   }
 
   /**
-   * Asserts that the content of the HTTP response matches the given string.
+   * Asserts that the length of the string content of the HTTP response matches the specified value.
    *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
+   * @param length the expected length of the HTTP response content
+   * @return the current instance of {@code TestAssert2Content} for method chaining
+   * @since 1.4.0
+   */
+  @Override
+  public TestAssert2Content assertContentLength(int length) {
+    try {
+      assertThat(this.response.getContentAsString().length(), is(length));
+    } catch (Exception e) {
+      Assertions.fail(e);
+    }
+    return this;
+  }
+
+  /**
+   * Asserts that the content of the HTTP response matches the given string.
    *
    * <p>As of version 1.3.0, both the actual and expected response content are normalized using
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
@@ -103,7 +107,7 @@ public final class TestAssertContentImpl implements TestAssertContent {
    * @since 1.0.0
    */
   @Override
-  public TestAssertContent assertContentEquals(@NonNull String expectedString) {
+  public TestAssertLContent assertContentEquals(@NonNull String expectedString) {
     try {
       var content = this.response.getContentAsString();
       assertThat(normalizeObject(content), is(normalizeObject(expectedString)));
@@ -116,9 +120,6 @@ public final class TestAssertContentImpl implements TestAssertContent {
   /**
    * Asserts that the content of the HTTP response matches the given object of type {@code T}.
    *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
    * <p>As of version 1.3.0, both the actual and expected response content are normalized using
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
    * Unicode formats.
@@ -130,7 +131,7 @@ public final class TestAssertContentImpl implements TestAssertContent {
    * @since 1.0.0
    */
   @Override
-  public <T> TestAssertContent assertContentEquals(
+  public <T> TestAssertLContent assertContentEquals(
       @NonNull Class<T> expectedClass, @NonNull T expectedResponse) {
 
     try {
@@ -144,13 +145,13 @@ public final class TestAssertContentImpl implements TestAssertContent {
   }
 
   /**
-   * Asserts that the HTTP response is valid for a HEAD request.
+   * Provides assertion methods for validating the HTTP response headers.
    *
-   * <p>This method returns an instance of {@code TestAssertHead} for asserting the headers of the
-   * HTTP response. It allows various validations of response headers, such as checking for the
-   * presence or absence of specific headers and comparing header values.
+   * <p>This method returns an instance of {@code TestAssertHead}, which provides assertion methods
+   * for validating the headers of the HTTP response, such as checking for the presence or absence
+   * of specific headers and comparing header values.
    *
-   * @return an instance of {@code TestAssertHead} for further assertions on headers
+   * @return an instance of {@code TestAssertHead} for asserting the response headers
    * @since 1.0.0
    */
   @Override

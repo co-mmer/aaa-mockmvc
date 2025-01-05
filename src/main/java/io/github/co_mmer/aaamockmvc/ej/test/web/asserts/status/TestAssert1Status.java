@@ -106,9 +106,9 @@ public interface TestAssert1Status {
    * Asserts that the HTTP response status code is within a specified range.
    *
    * @param minStatusCode the minimum expected status code (must be less than or equal to
-   *                      maxStatusCode)
+   *     maxStatusCode)
    * @param maxStatusCode the maximum expected status code (must be greater than or equal to
-   *                      minStatusCode)
+   *     minStatusCode)
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
    */

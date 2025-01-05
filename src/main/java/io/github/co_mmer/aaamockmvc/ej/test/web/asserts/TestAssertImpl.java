@@ -5,7 +5,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssert1Binary
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssertBinaryImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCollectionImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssert1Content;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
@@ -37,8 +37,8 @@ public final class TestAssertImpl implements TestAssert {
    * Constructs an instance of {@code TestAssertImpl} with the provided {@code ResultActions} and
    * {@code ObjectMapper}.
    *
-   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
-   *                     {@code null})
+   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
+   *     null})
    * @param objectMapper the {@code ObjectMapper} for JSON serialization (must not be {@code null})
    * @throws NullPointerException if either {@code actions} or {@code objectMapper} is {@code null}
    * @since 1.0.0
@@ -73,7 +73,7 @@ public final class TestAssertImpl implements TestAssert {
    * @since 1.0.0
    */
   @Override
-  public TestAssertContent assertContent() {
+  public TestAssert1Content assertContent() {
     return new TestAssertContentImpl(this.actions, this.objectMapper);
   }
 

@@ -19,6 +19,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
 import java.util.stream.Stream;
+import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -33,12 +34,12 @@ class TestAssertContentImplTest extends TestAssertBase {
 
   private static final String EXPECTED_CONTENT = "expected content";
   private static final String ACTUAL_CONTENT = "actual content";
-  private TestAssertContent testAssert;
+  private TestAssertContentImpl testAssertContent;
 
   @BeforeEach
   void setUp() {
     initMockServer();
-    this.testAssert = new TestAssertContentImpl(this.actions, new ObjectMapper());
+    this.testAssertContent = new TestAssertContentImpl(this.actions, new ObjectMapper());
   }
 
   @Nested
@@ -66,31 +67,34 @@ class TestAssertContentImplTest extends TestAssertBase {
   class assertContentNotEmpty {
 
     @Test
-    void GIVEN_expected_WHEN_assertContentNotEmpty_THEN_assert_true() throws Exception {
+    @SneakyThrows
+    void GIVEN_expected_WHEN_assertContentNotEmpty_THEN_assert_true() {
       // Arrange
       useServerWithResponse(EXPECTED_CONTENT);
 
       // Act & Assert
-      testAssert.assertContentNotEmpty();
+      testAssertContent.assertContentNotEmpty();
     }
 
     @Test
-    void GIVEN_unexpected_WHEN_assertContentNotEmpty_THEN_assert_false() throws Exception {
+    @SneakyThrows
+    void GIVEN_unexpected_WHEN_assertContentNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithResponse(Strings.EMPTY);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertContentNotEmpty);
+      assertThrows(AssertionError.class, testAssertContent::assertContentNotEmpty);
     }
 
     @Test
-    void GIVEN_exception_WHEN_assertContentNotEmpty_THEN_assert_false() throws Exception {
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertContentNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertContent = new TestAssertContentImpl(actions, new ObjectMapper());
+      var testAssertContentException = new TestAssertContentImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertContent::assertContentNotEmpty);
+      assertThrows(AssertionError.class, testAssertContentException::assertContentNotEmpty);
     }
   }
 
@@ -98,31 +102,34 @@ class TestAssertContentImplTest extends TestAssertBase {
   class assertContentEmpty {
 
     @Test
-    void GIVEN_expected_WHEN_assertContentEmpty_THEN_assert_true() throws Exception {
+    @SneakyThrows
+    void GIVEN_expected_WHEN_assertContentEmpty_THEN_assert_true() {
       // Arrange
       useServerWithResponse(Strings.EMPTY);
 
       // Act & Assert
-      testAssert.assertContentEmpty();
+      testAssertContent.assertContentEmpty();
     }
 
     @Test
-    void GIVEN_unexpected_WHEN_assertContentEmpty_THEN_return_assert_false() throws Exception {
+    @SneakyThrows
+    void GIVEN_unexpected_WHEN_assertContentEmpty_THEN_return_assert_false() {
       // Arrange
       useServerWithResponse(ACTUAL_CONTENT);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertContentEmpty);
+      assertThrows(AssertionError.class, testAssertContent::assertContentEmpty);
     }
 
     @Test
-    void GIVEN_exception_WHEN_assertContentEmpty_THEN_assert_false() throws Exception {
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertContentEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertContent = new TestAssertContentImpl(actions, new ObjectMapper());
+      var testAssertContentException = new TestAssertContentImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertContent::assertContentEmpty);
+      assertThrows(AssertionError.class, testAssertContentException::assertContentEmpty);
     }
   }
 
@@ -130,43 +137,48 @@ class TestAssertContentImplTest extends TestAssertBase {
   class assertContentEquals {
 
     @Test
-    void GIVEN_expected_WHEN_assertContentEquals_THEN_assert_true() throws Exception {
+    @SneakyThrows
+    void GIVEN_expected_WHEN_assertContentEquals_THEN_assert_true() {
       // Arrange
       useServerWithResponse(EXPECTED_CONTENT);
 
       // Act & Assert
-      testAssert.assertContentEquals(EXPECTED_CONTENT);
+      testAssertContent.assertContentEquals(EXPECTED_CONTENT);
     }
 
     @Test
-    void GIVEN_unexpected_WHEN_assertContentEquals_THEN_assert_false() throws Exception {
+    @SneakyThrows
+    void GIVEN_unexpected_WHEN_assertContentEquals_THEN_assert_false() {
       // Arrange
       useServerWithResponse(ACTUAL_CONTENT);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert.assertContentEquals(EXPECTED_CONTENT));
+      assertThrows(
+          AssertionError.class, () -> testAssertContent.assertContentEquals(EXPECTED_CONTENT));
     }
 
     @Test
-    void GIVEN_exception_WHEN_assertContentEquals_THEN_assert_false() throws Exception {
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertContentEquals_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertContent = new TestAssertContentImpl(actions, new ObjectMapper());
+      var testAssertContentException = new TestAssertContentImpl(actions, new ObjectMapper());
 
       // Act & Assert
       assertThrows(
           AssertionFailedError.class,
-          () -> testAssertContent.assertContentEquals(EXPECTED_CONTENT));
+          () -> testAssertContentException.assertContentEquals(EXPECTED_CONTENT));
     }
 
     @Test
-    void GIVEN_string_WHEN_assertContentEquals_THEN_normalizeObject_is_called() throws Exception {
+    @SneakyThrows
+    void GIVEN_string_WHEN_assertContentEquals_THEN_normalizeObject_is_called() {
       // Arrange
       var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
       useServerWithResponse(ACTUAL_CONTENT);
 
       // Act
-      testAssert.assertContentEquals(EXPECTED_CONTENT);
+      testAssertContent.assertContentEquals(EXPECTED_CONTENT);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
@@ -174,22 +186,24 @@ class TestAssertContentImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_expected_object_WHEN_assertContentEquals_THEN_assert_is_true() throws Exception {
+    @SneakyThrows
+    void GIVEN_expected_object_WHEN_assertContentEquals_THEN_assert_is_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssert.assertContentEquals(TestObject1.class, A1);
+      testAssertContent.assertContentEquals(TestObject1.class, A1);
     }
 
     @Test
-    void GIVEN_unexpected_object_WHEN_assertContentEquals_THEN_assert_is_false() throws Exception {
+    @SneakyThrows
+    void GIVEN_unexpected_object_WHEN_assertContentEquals_THEN_assert_is_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       assertThrows(
-          AssertionError.class, () -> testAssert.assertContentEquals(TestObject1.class, A2));
+          AssertionError.class, () -> testAssertContent.assertContentEquals(TestObject1.class, A2));
     }
 
     @Test
@@ -202,19 +216,124 @@ class TestAssertContentImplTest extends TestAssertBase {
 
       // Act & Assert
       assertThrows(
-          AssertionFailedError.class, () -> testAssert.assertContentEquals(TestObject1.class, A1));
+          AssertionFailedError.class,
+          () -> testAssertContent.assertContentEquals(TestObject1.class, A1));
 
       mockTestGenericMapper.close();
     }
 
     @Test
-    void GIVEN_object_WHEN_assertContentEquals_THEN_normalizeObject_is_called() throws Exception {
+    @SneakyThrows
+    void GIVEN_object_WHEN_assertContentEquals_THEN_normalizeObject_is_called() {
       // Arrange
       var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
       useServerWithResponse(TEST_A1_JSON);
 
       // Act
-      testAssert.assertContentEquals(TestObject1.class, A1);
+      testAssertContent.assertContentEquals(TestObject1.class, A1);
+
+      // Assert
+      mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
+      mockTestArrangeNormalizer.close();
+    }
+  }
+
+  @Nested
+  class assertContentLength {
+
+    @Test
+    @SneakyThrows
+    void GIVEN_expected_WHEN_assertContentLength_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      testAssertContent.assertContentLength(TEST_A1_JSON.length());
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_unexpected_WHEN_assertContentLength_THEN_assert_false() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      assertThrows(AssertionError.class, () -> testAssertContent.assertContentLength(10));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertContentLength_THEN_assert_false() {
+      // Arrange
+      useServerWithStringException();
+      var testAssertContentException = new TestAssertContentImpl(actions, new ObjectMapper());
+
+      // Act & Assert
+      assertThrows(
+          AssertionFailedError.class, () -> testAssertContentException.assertContentLength(50));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_string_WHEN_assertContentEquals_THEN_normalizeObject_is_called() {
+      // Arrange
+      var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
+      useServerWithResponse(ACTUAL_CONTENT);
+
+      // Act
+      testAssertContent.assertContentEquals(EXPECTED_CONTENT);
+
+      // Assert
+      mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
+      mockTestArrangeNormalizer.close();
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_expected_object_WHEN_assertContentEquals_THEN_assert_is_true() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      testAssertContent.assertContentEquals(TestObject1.class, A1);
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_unexpected_object_WHEN_assertContentEquals_THEN_assert_is_false() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      assertThrows(
+          AssertionError.class, () -> testAssertContent.assertContentEquals(TestObject1.class, A2));
+    }
+
+    @Test
+    void GIVEN_exception_object_WHEN_assertContentEquals_THEN_assert_is_false() {
+      // Arrange
+      var mockTestGenericMapper = mockStatic(TestGenericMapper.class);
+      mockTestGenericMapper
+          .when(() -> TestGenericMapper.mapTo(any(), any(), any()))
+          .thenThrow(new TestGenericMapperException(new Throwable("error")));
+
+      // Act & Assert
+      assertThrows(
+          AssertionFailedError.class,
+          () -> testAssertContent.assertContentEquals(TestObject1.class, A1));
+
+      mockTestGenericMapper.close();
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_object_WHEN_assertContentEquals_THEN_normalizeObject_is_called() {
+      // Arrange
+      var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act
+      testAssertContent.assertContentEquals(TestObject1.class, A1);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
@@ -231,10 +350,120 @@ class TestAssertContentImplTest extends TestAssertBase {
       useHeader();
 
       // Act
-      var assertHead = testAssert.assertHead();
+      var assertHead = testAssertContent.assertHead();
 
       // Assert
       assertThat(assertHead.getClass(), is(TestAssertHeadImpl.class));
+    }
+  }
+
+  @Nested
+  class combinationNotEmpty {
+
+    @Test
+    @SneakyThrows
+    void notEmpty_equals_string() {
+      // Arrange
+      useServerWithResponse(EXPECTED_CONTENT);
+
+      // Act & Assert
+      testAssertContent.assertContentNotEmpty().assertContentEquals(EXPECTED_CONTENT);
+    }
+
+    @Test
+    @SneakyThrows
+    void notEmpty_equals_object() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      testAssertContent.assertContentNotEmpty().assertContentEquals(TestObject1.class, A1);
+    }
+
+    @Test
+    @SneakyThrows
+    void notEmpty_head() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      testAssertContent.assertContentNotEmpty().assertHead();
+    }
+  }
+
+  @Nested
+  class combinationEmpty {
+
+    @Test
+    @SneakyThrows
+    void empty_head() {
+      // Arrange
+      useServerWithResponse(Strings.EMPTY);
+
+      // Act & Assert
+      testAssertContent.assertContentEmpty().assertHead();
+    }
+  }
+
+  @Nested
+  class combinationLength {
+
+    @Test
+    @SneakyThrows
+    void length_equals_string() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      testAssertContent
+          .assertContentLength(TEST_A1_JSON.length())
+          .assertContentEquals(TEST_A1_JSON);
+    }
+
+    @Test
+    @SneakyThrows
+    void length_equals_object() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      testAssertContent
+          .assertContentLength(TEST_A1_JSON.length())
+          .assertContentEquals(TestObject1.class, A1);
+    }
+
+    @Test
+    @SneakyThrows
+    void length_head() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      testAssertContent.assertContentLength(TEST_A1_JSON.length()).assertHead();
+    }
+  }
+
+  @Nested
+  class combinationEquals {
+
+    @Test
+    @SneakyThrows
+    void equals_string_head() {
+      // Arrange
+      useServerWithResponse(EXPECTED_CONTENT);
+
+      // Act & Assert
+      testAssertContent.assertContentEquals(EXPECTED_CONTENT).assertHead();
+    }
+
+    @Test
+    @SneakyThrows
+    void equals_object_head() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      testAssertContent.assertContentEquals(TestObject1.class, A1).assertHead();
     }
   }
 }
