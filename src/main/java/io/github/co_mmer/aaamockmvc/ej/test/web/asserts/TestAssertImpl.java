@@ -19,13 +19,12 @@ import lombok.NonNull;
 import org.springframework.test.web.servlet.ResultActions;
 
 /**
- * This class provides implementation for assertions on HTTP responses in a testing context. It
- * allows various validations of response status, content, headers, and custom assertions.
+ * Provides methods for asserting different aspects of an HTTP response.
  *
- * <p>It is primarily used to validate the results of HTTP requests performed with the {@code
- * MockMvc} framework in a Spring web application context. This class provides specific
- * implementations for asserting the status, content, and headers of an HTTP response, as well as
- * the option to define custom assertions.
+ * <p>This interface defines various assertion methods to validate different components of an HTTP
+ * response. It includes assertions for the response status, content, headers, collections, maps,
+ * and custom logic. These methods return specialized assertion objects that allow for fine-grained
+ * validation of each aspect of the response.
  *
  * @since 1.0.0
  */
@@ -38,8 +37,8 @@ public final class TestAssertImpl implements TestAssert {
    * Constructs an instance of {@code TestAssertImpl} with the provided {@code ResultActions} and
    * {@code ObjectMapper}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
+   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
+   *                     {@code null})
    * @param objectMapper the {@code ObjectMapper} for JSON serialization (must not be {@code null})
    * @throws NullPointerException if either {@code actions} or {@code objectMapper} is {@code null}
    * @since 1.0.0
@@ -86,7 +85,7 @@ public final class TestAssertImpl implements TestAssert {
    * checking for emptiness.
    *
    * @return an instance of {@code TestAssertBinary} for asserting the response binary
-   * @since 1.0.0
+   * @since 1.4.0
    */
   @Override
   public TestAssert1Binary assertBinary() {

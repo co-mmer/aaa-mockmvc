@@ -31,7 +31,7 @@ public interface TestAssert2Status {
   /**
    * Provides assertion methods for validating the HTTP response binary.
    *
-   * <p>This method returns an instance of {@code TestAssertBinary}, which provides assertion
+   * <p>This method returns an instance of {@code TestAssert1Binary}, which provides assertion
    * methods for validating the content of the HTTP response, such as matching expected values or
    * checking for emptiness.
    *
