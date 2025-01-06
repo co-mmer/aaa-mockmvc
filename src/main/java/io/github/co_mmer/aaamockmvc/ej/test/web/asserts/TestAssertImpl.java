@@ -52,8 +52,8 @@ public final class TestAssertImpl implements TestAssert {
    * Constructs an instance of {@code TestAssertImpl} with the provided {@code ResultActions} and
    * {@code ObjectMapper}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
+   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
+   *                     {@code null})
    * @param objectMapper the {@code ObjectMapper} for JSON serialization (must not be {@code null})
    * @throws NullPointerException if either {@code actions} or {@code objectMapper} is {@code null}
    * @since 1.0.0
@@ -93,7 +93,7 @@ public final class TestAssertImpl implements TestAssert {
   }
 
   /**
-   * Provides assertion methods for validating the HTTP response binary.
+   * Provides assertion methods for validating the HTTP response byte.
    *
    * <p>This method returns an instance of {@code TestAssertBinary}, which provides assertion
    * methods for validating the content of the HTTP response, such as matching expected values or
