@@ -218,7 +218,7 @@ public class ControllerTest {
   private AAAMockMvc aaaMockMvc;
 
   @Test
-  void WHEN_calling_endpoint_THEN_return_expected_status() throws Exception {
+  void WHEN_calling_endpoint_THEN_return_expected_status() {
     aaaMockMvc.get()
         .arrange()
         .arrangeUrl(GET_SIMPLE)
@@ -247,7 +247,7 @@ behaviors and reducing boilerplate code in test classes.
 public class ControllerTest extends AAAMockMvcAbstract {
 
   @Test
-  void WHEN_calling_endpoint_THEN_return_expected_content() throws Exception {
+  void WHEN_calling_endpoint_THEN_return_expected_content() {
     get()
         .arrange()
         .arrangeUrl(GET_SIMPLE)
@@ -329,7 +329,7 @@ list of DTOs.
 ```java
 
 @Test
-void WHEN_call_endpoint_THEN_return_expected_list_dto() throws Exception {
+void WHEN_call_endpoint_THEN_return_expected_list_dto() {
 
   get()
       .arrange()
@@ -378,7 +378,7 @@ expected status code.
 ```java
 
 @Test
-void GIVEN_files_WHEN_call_endpoint_THEN_return_expected_status_201() throws Exception {
+void GIVEN_files_WHEN_call_endpoint_THEN_return_expected_status_201() {
 
   post()
       .arrange()
@@ -430,7 +430,7 @@ Step 2: Send the Modify DemoA (PUT)
 ```java
 
 @Test
-void GIVEN_demoA_with_new_name_WHEN_update_THEN_return_expected_object() throws Exception {
+void GIVEN_demoA_with_new_name_WHEN_update_THEN_return_expected_object() {
 
   var demoA = get()
       .arrange()

@@ -5,9 +5,9 @@
 - [URI](#uri)
 - [URL](#url)
 - [Path Variable](#path-variable)
-- [Single Parameter](#single-parameter)
-- [Multiple Parameters](#multiple-parameters)
-- [Parameters as Map](#parameters-as-map)
+- [Single Parameter](#parameter)
+- [Multiple Parameters](#parameter)
+- [Parameters as Map](#parameters-map)
 
 ---
 
