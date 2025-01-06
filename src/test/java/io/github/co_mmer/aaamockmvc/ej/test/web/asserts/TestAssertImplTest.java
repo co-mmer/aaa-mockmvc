@@ -78,13 +78,13 @@ class TestAssertImplTest {
   }
 
   @Test
-  void WHEN_assertBinary_THEN_return_expected_class() {
+  void WHEN_assertByte_THEN_return_expected_class() {
 
     // Act
-    var assertBinary = this.testAssert.assertByte();
+    var assertByte = this.testAssert.assertByte();
 
     // Assert
-    assertThat(assertBinary.getClass(), is(TestAssertByteImpl.class));
+    assertThat(assertByte.getClass(), is(TestAssertByteImpl.class));
   }
 
   @Test

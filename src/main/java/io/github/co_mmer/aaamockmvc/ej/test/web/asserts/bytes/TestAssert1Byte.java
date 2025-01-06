@@ -22,7 +22,7 @@ public interface TestAssert1Byte {
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @return the current instance of {@code TestAssertBinary} for method chaining
+   * @return the current instance of {@code TestAssert2Byte} for method chaining
    * @since 1.4.0
    */
   TestAssert2Byte assertByteNotEmpty();
@@ -33,7 +33,7 @@ public interface TestAssert1Byte {
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @return the current instance of {@code TestAssertBinary} for method chaining
+   * @return the current instance of {@code TestAssertLByte} for method chaining
    * @since 1.4.0
    */
   TestAssertLByte assertByteEmpty();
@@ -45,7 +45,7 @@ public interface TestAssert1Byte {
    * the corresponding exception.
    *
    * @param expectedByte the expected byte array content (must not be {@code null})
-   * @return the current instance of {@code TestAssertBinary} for method chaining
+   * @return the current instance of {@code TestAssertLByte} for method chaining
    * @throws NullPointerException if the {@code expectedByte} is {@code null}
    * @since 1.4.0
    */

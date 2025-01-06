@@ -13,8 +13,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
  * <ul>
  *   <li>{@link #assertContent()}: Provides assertion methods for validating the HTTP response
  *       content.
- *   <li>{@link #assertBinary()}: Provides assertion methods for validating the HTTP response
- *       binary.
+ *   <li>{@link #assertByte()}: Provides assertion methods for validating the HTTP response byte.
  *   <li>{@link #assertCollection()}: Provides assertion methods for validating the contents of an
  *       HTTP response collection.
  *   <li>{@link #assertMap()}: Provides assertion methods for validating the contents of an HTTP
@@ -41,16 +40,16 @@ public interface TestAssert2Status {
   TestAssert1Content assertContent();
 
   /**
-   * Provides assertion methods for validating the HTTP response binary.
+   * Provides assertion methods for validating the HTTP response byte.
    *
-   * <p>This method returns an instance of {@code TestAssert1Binary}, which provides assertion
-   * methods for validating the content of the HTTP response, such as matching expected values or
-   * checking for emptiness.
+   * <p>This method returns an instance of {@code TestAssert1Byte}, which provides assertion methods
+   * for validating the content of the HTTP response, such as matching expected values or checking
+   * for emptiness.
    *
-   * @return an instance of {@code TestAssertBinary} for asserting the response binary
+   * @return an instance of {@code TestAssert1Byte} for asserting the response byte
    * @since 1.4.0
    */
-  TestAssert1Byte assertBinary();
+  TestAssert1Byte assertByte();
 
   /**
    * Provides assertion methods for validating the contents of an HTTP response collection.

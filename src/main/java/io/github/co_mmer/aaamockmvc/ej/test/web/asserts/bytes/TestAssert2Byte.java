@@ -22,7 +22,7 @@ public interface TestAssert2Byte {
    * the corresponding exception.
    *
    * @param expectedByte the expected byte array content (must not be {@code null})
-   * @return the current instance of {@code TestAssertBinary} for method chaining
+   * @return the current instance of {@code TestAssertLByte} for method chaining
    * @throws NullPointerException if the {@code expectedByte} is {@code null}
    * @since 1.4.0
    */

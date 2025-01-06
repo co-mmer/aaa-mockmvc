@@ -324,12 +324,12 @@ class TestAssertStatusImplTest extends TestAssertBase {
     }
 
     @Test
-    void WHEN_assertBinary_THEN_return_expected_class() {
+    void WHEN_assertByte_THEN_return_expected_class() {
       // Act
-      var assertBinary = testAssert2.assertBinary();
+      var assertByte = testAssert2.assertByte();
 
       // Assert
-      assertThat(assertBinary.getClass(), is(TestAssertByteImpl.class));
+      assertThat(assertByte.getClass(), is(TestAssertByteImpl.class));
     }
 
     @Test

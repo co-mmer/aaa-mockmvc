@@ -49,8 +49,7 @@ import org.springframework.test.web.servlet.ResultActions;
  *       within a specified range.
  *   <li>{@link #assertContent()}: Provides assertion methods for validating the HTTP response
  *       content.
- *   <li>{@link #assertBinary()}: Provides assertion methods for validating the HTTP response
- *       binary.
+ *   <li>{@link #assertByte()}: Provides assertion methods for validating the HTTP response binary.
  *   <li>{@link #assertCollection()}: Provides assertion methods for validating the contents of an
  *       HTTP response collection.
  *   <li>{@link #assertMap()}: Provides assertion methods for validating the contents of an HTTP
@@ -260,17 +259,17 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   }
 
   /**
-   * Provides assertion methods for validating the HTTP response binary.
+   * Provides assertion methods for validating the HTTP response byte.
    *
    * <p>This method returns an instance of {@code TestAssertBinary}, which provides assertion
    * methods for validating the content of the HTTP response, such as matching expected values or
    * checking for emptiness.
    *
-   * @return an instance of {@code TestAssertBinary} for asserting the response binary
+   * @return an instance of {@code TestAssert1Byte} for asserting the response binary
    * @since 1.4.0
    */
   @Override
-  public TestAssert1Byte assertBinary() {
+  public TestAssert1Byte assertByte() {
     return new TestAssertByteImpl(this.actions);
   }
 

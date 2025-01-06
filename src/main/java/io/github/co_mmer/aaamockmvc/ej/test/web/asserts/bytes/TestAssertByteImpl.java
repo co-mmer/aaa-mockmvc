@@ -52,7 +52,7 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @return the current instance of {@code TestAssertBinary} for method chaining
+   * @return the current instance of {@code TestAssert2Byte} for method chaining
    * @since 1.4.0
    */
   @Override
@@ -71,7 +71,7 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @return the current instance of {@code TestAssertBinary} for method chaining
+   * @return the current instance of {@code TestAssertLByte} for method chaining
    * @since 1.4.0
    */
   @Override
@@ -91,7 +91,7 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * the corresponding exception.
    *
    * @param expectedByte the expected byte array content (must not be {@code null})
-   * @return the current instance of {@code TestAssertBinary} for method chaining
+   * @return the current instance of {@code TestAssertLByte} for method chaining
    * @since 1.4.0
    */
   @Override

@@ -12,7 +12,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status
  * Provides methods for asserting different aspects of an HTTP response.
  *
  * <p>This class provides various assertion methods for validating the HTTP response, such as
- * checking the status, content, binary data, headers, and custom assertions. Each method returns an
+ * checking the status, content, byte data, headers, and custom assertions. Each method returns an
  * instance of a specific assertion class for further validation.
  *
  * <ul>
@@ -20,7 +20,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status
  *       status.
  *   <li>{@link #assertContent()}: Provides assertion methods for validating the HTTP response
  *       content.
- *   <li>{@link #assertByte()}: Provides assertion methods for validating the HTTP response binary
+ *   <li>{@link #assertByte()}: Provides assertion methods for validating the HTTP response byte
  *       data.
  *   <li>{@link #assertCollection()}: Provides assertion methods for validating the contents of an
  *       HTTP response collection.
@@ -59,13 +59,13 @@ public interface TestAssert {
   TestAssert1Content assertContent();
 
   /**
-   * Provides assertion methods for validating the HTTP response binary.
+   * Provides assertion methods for validating the HTTP response byte.
    *
-   * <p>This method returns an instance of {@code TestAssertBinary}, which provides assertion
-   * methods for validating the content of the HTTP response, such as matching expected values or
-   * checking for emptiness.
+   * <p>This method returns an instance of {@code TestAssert1Byte}, which provides assertion methods
+   * for validating the content of the HTTP response, such as matching expected values or checking
+   * for emptiness.
    *
-   * @return an instance of {@code TestAssertBinary} for asserting the response binary
+   * @return an instance of {@code TestAssert1Byte} for asserting the response byte
    * @since 1.4.0
    */
   TestAssert1Byte assertByte();

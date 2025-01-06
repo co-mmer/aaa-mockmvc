@@ -56,11 +56,11 @@ class TestAssertByteImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertBinaryByteNotEmpty {
+  class assertByteNotEmpty {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertBinaryByteNotEmpty_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertByteNotEmpty_THEN_assert_true() {
       // Arrange
       useServerWithResponse(ACTUAL_CONTENT);
 
@@ -71,7 +71,7 @@ class TestAssertByteImplTest extends TestAssertBase {
     @ParameterizedTest
     @ValueSource(strings = {Strings.EMPTY, "[]"})
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentByteNotEmpty_THEN_assert_false(String value) {
+    void GIVEN_unexpected_WHEN_assertByteNotEmpty_THEN_assert_false(String value) {
       // Arrange
       useServerWithResponse(value);
 
@@ -81,23 +81,23 @@ class TestAssertByteImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentByteNotEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertByteNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertBinary = new TestAssertByteImpl(actions);
+      var testAssertByte = new TestAssertByteImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, testAssertBinary::assertByteNotEmpty);
+      assertThrows(AssertionFailedError.class, testAssertByte::assertByteNotEmpty);
     }
   }
 
   @Nested
-  class assertBinaryByteEmpty {
+  class assertByteEmpty {
 
     @ParameterizedTest
     @ValueSource(strings = {Strings.EMPTY, "[]"})
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertBinaryByteEmpty_THEN_assert_true(String value) {
+    void GIVEN_expected_WHEN_assertByteEmpty_THEN_assert_true(String value) {
       // Arrange
       useServerWithResponse(value);
 
@@ -107,7 +107,7 @@ class TestAssertByteImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertBinaryByteIsEmpty_THEN_return_assert_false() {
+    void GIVEN_unexpected_WHEN_assertByteIsEmpty_THEN_return_assert_false() {
       // Arrange
       useServerWithResponse(ACTUAL_CONTENT);
 
@@ -117,22 +117,22 @@ class TestAssertByteImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertBinaryByteEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertByteEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertBinary = new TestAssertByteImpl(actions);
+      var testAssertByte = new TestAssertByteImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, testAssertBinary::assertByteEmpty);
+      assertThrows(AssertionFailedError.class, testAssertByte::assertByteEmpty);
     }
   }
 
   @Nested
-  class assertBinaryByteEquals {
+  class assertByteEquals {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_byte_WHEN_assertBinaryByteEquals_THEN_assert_true() {
+    void GIVEN_expected_byte_WHEN_assertByteEquals_THEN_assert_true() {
       // Arrange
       useServerWithResponse(EXPECTED_CONTENT);
 
@@ -142,7 +142,7 @@ class TestAssertByteImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_byte_WHEN_assertContentEquals_THEN_assert_false() {
+    void GIVEN_unexpected_byte_WHEN_assertByteEquals_THEN_assert_false() {
       // Arrange
       useServerWithResponse(ACTUAL_CONTENT);
 
@@ -151,14 +151,13 @@ class TestAssertByteImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_exception_byte_WHEN_assertBinaryByteEquals_THEN_assert_false() {
+    void GIVEN_exception_byte_WHEN_assertByteEquals_THEN_assert_false() {
       // Arrange
       useServerWithByteException();
-      var testAssertBinary = new TestAssertByteImpl(actions);
+      var testAssertByte = new TestAssertByteImpl(actions);
 
       // Act & Assert
-      assertThrows(
-          AssertionFailedError.class, () -> testAssertBinary.assertByteEquals(new byte[1]));
+      assertThrows(AssertionFailedError.class, () -> testAssertByte.assertByteEquals(new byte[1]));
     }
   }
 
