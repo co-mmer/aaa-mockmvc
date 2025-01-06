@@ -4,8 +4,9 @@
 
 - [Not Empty](#not-empty)
 - [Empty](#empty)
-- [Equals (byte)](#equals-byte)
-- [Equals (string)](#equals-string)
+- [Length](#length)
+- [Equals (String)](#equals-string)
+- [Equals (Object)](#equals-object)
 
 ---
 
@@ -43,10 +44,10 @@ is empty.
 
 ---
 
-### Equals (Byte)
+### Length
 
-In this example, the **`assertContentEquals`** method is used to assert that the response content
-matches an expected byte array.
+In this example, the **`assertContentLength`** method is used to assert that the response expected
+length.
 
 ```
   get()
@@ -55,7 +56,7 @@ matches an expected byte array.
       .actPerform()
       .asserts()
       .assertContent()
-      .assertContentEquals(EXPECTED_BYTE_ARRAY)
+      .assertContentLength(19)
 ```
 
 ---
@@ -66,13 +67,38 @@ In this example, the **`assertContentEquals`** method is used to assert that the
 matches an expected string.
 
 ```
+A1_JSON = {"id":1,"name":"A"}
+```
+
+```
   get()
       ...
       .act()
       .actPerform()
       .asserts()
       .assertContent()
-      .assertContentEquals(EXPECTED_STRING)
+      .assertContentEquals(A1_JSON)
+```
+
+---
+
+### Equals (Object)
+
+In this example, the **`assertContentEquals`** method is used to assert that the response content
+matches an expected object.
+
+```
+A1 = new DemoSimple(A, 1);
+```
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertContent()
+      .assertContentEquals(DemoSimple.class, A1)
 ```
 
 ---

@@ -289,6 +289,7 @@ In the provided library, every test follows the AAA structure using the followin
 
 - [Assert Status](docs/assert/AssertStatus.md)
 - [Assert Content](docs/assert/AssertContent.md)
+- [Assert Byte](docs/assert/AssertByte.md)
 - [Assert Collection 🔸 (New)](docs/assert/AssertCollection.md)
 - [Assert Map 🔸 (New)](docs/assert/AssertMap.md)
 - [Assert Head](docs/assert/AssertHead.md)
