@@ -46,8 +46,8 @@ is empty.
 
 ### Length
 
-In this example, the **`assertContentLength`** method is used to assert that the response expected
-length.
+In this example, the **`assertContentLength`** method is used to verify the expected length of the
+response.
 
 ```
   get()

@@ -4,6 +4,7 @@
 
 - [Not Empty](#not-empty)
 - [Empty](#empty)
+- [Length](#length)
 - [Equals](#equals)
 
 ---
@@ -38,6 +39,23 @@ is empty.
       .asserts()
       .assertByte()
       .assertByteEmpty()
+```
+
+---
+
+### Length
+
+In this example, the **`assertByteLength`** method is used to verify the expected byte length of the
+response.
+
+```
+  get()
+      ...
+      .act()
+      .actPerform()
+      .asserts()
+      .assertByte()
+      .assertByteLength(5)
 ```
 
 ---

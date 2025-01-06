@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
 
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -128,6 +129,41 @@ class TestAssertByteImplTest extends TestAssertBase {
   }
 
   @Nested
+  class assertByteLength {
+
+    @Test
+    @SneakyThrows
+    void GIVEN_expected_WHEN_assertByteLength_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      testAssert.assertByteLength(TEST_A1_JSON.length());
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_unexpected_WHEN_assertByteLength_THEN_return_assert_false() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      assertThrows(AssertionError.class, () -> testAssert.assertByteLength(1));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertByteEmpty_THEN_assert_false() {
+      // Arrange
+      useServerWithStringException();
+      var testAssertByte = new TestAssertByteImpl(actions);
+
+      // Act & Assert
+      assertThrows(AssertionFailedError.class, () -> testAssertByte.assertByteLength(1));
+    }
+  }
+
+  @Nested
   class assertByteEquals {
 
     @Test
@@ -212,6 +248,30 @@ class TestAssertByteImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssert.assertByteEmpty().assertHead();
+    }
+  }
+
+  @Nested
+  class combinationLength {
+
+    @Test
+    @SneakyThrows
+    void length_equals() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      testAssert.assertByteLength(TEST_A1_JSON.length()).assertByteEquals(TEST_A1_JSON.getBytes());
+    }
+
+    @Test
+    @SneakyThrows
+    void length_head() {
+      // Arrange
+      useServerWithResponse(TEST_A1_JSON);
+
+      // Act & Assert
+      testAssert.assertByteLength(TEST_A1_JSON.length()).assertHead();
     }
   }
 

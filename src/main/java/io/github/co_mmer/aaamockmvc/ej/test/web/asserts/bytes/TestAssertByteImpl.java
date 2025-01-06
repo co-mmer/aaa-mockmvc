@@ -85,6 +85,27 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
   }
 
   /**
+   * Asserts that the length of the byte array content of the HTTP response matches the specified
+   * value.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param length the expected length of the HTTP response content
+   * @return the current instance of {@code TestAssert2Byte} for method chaining
+   * @since 1.4.0
+   */
+  @Override
+  public TestAssert2Byte assertByteLength(int length) {
+    try {
+      assertThat(this.response.getContentAsByteArray().length, is(length));
+    } catch (Exception e) {
+      Assertions.fail(e);
+    }
+    return this;
+  }
+
+  /**
    * Asserts that the byte array content of the HTTP response matches the expected byte array.
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
