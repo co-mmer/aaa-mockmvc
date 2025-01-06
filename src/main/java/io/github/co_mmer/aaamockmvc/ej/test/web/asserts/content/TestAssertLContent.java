@@ -6,7 +6,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
  * Provides methods for asserting HTTP response content in tests.
  *
  * <ul>
- *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.</li>
+ *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  * </ul>
  *
  * @since 1.0.0

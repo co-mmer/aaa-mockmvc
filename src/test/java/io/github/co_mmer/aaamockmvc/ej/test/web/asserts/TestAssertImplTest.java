@@ -9,7 +9,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssertBinaryImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssertByteImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCollectionImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
@@ -81,10 +81,10 @@ class TestAssertImplTest {
   void WHEN_assertBinary_THEN_return_expected_class() {
 
     // Act
-    var assertBinary = this.testAssert.assertBinary();
+    var assertBinary = this.testAssert.assertByte();
 
     // Assert
-    assertThat(assertBinary.getClass(), is(TestAssertBinaryImpl.class));
+    assertThat(assertBinary.getClass(), is(TestAssertByteImpl.class));
   }
 
   @Test

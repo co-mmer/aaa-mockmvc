@@ -8,10 +8,13 @@ import lombok.NonNull;
  * Provides assertion methods for validating HTTP response collections.
  *
  * <ul>
- *   <li>{@link #assertCollectionMatchAll(Class, Predicate)}: Validating that all elements in the collection match a specific condition.</li>
- *   <li>{@link #assertCollectionMatchAny(Class, Predicate)}: Ensuring that at least one element in the collection matches a specified condition.</li>
- *   <li>{@link #assertCollectionMatchNone(Class, Predicate)}: Asserting that none of the elements in the collection match a specific condition.</li>
- *   <li>{@link #assertHead()}: Asserting properties of response headers for HTTP HEAD requests.</li>
+ *   <li>{@link #assertCollectionMatchAll(Class, Predicate)}: Validating that all elements in the
+ *       collection match a specific condition.
+ *   <li>{@link #assertCollectionMatchAny(Class, Predicate)}: Ensuring that at least one element in
+ *       the collection matches a specified condition.
+ *   <li>{@link #assertCollectionMatchNone(Class, Predicate)}: Asserting that none of the elements
+ *       in the collection match a specific condition.
+ *   <li>{@link #assertHead()}: Asserting properties of response headers for HTTP HEAD requests.
  * </ul>
  *
  * @since 1.4.0
@@ -19,8 +22,7 @@ import lombok.NonNull;
 public interface TestAssert3Collection {
 
   /**
-   * Asserts that all elements in the collection in the HTTP response match the specified
-   * condition.
+   * Asserts that all elements in the collection in the HTTP response match the specified condition.
    *
    * <p>This method checks whether **all** elements in the collection satisfy the specified
    * condition. If every element matches the condition, the assertion passes. If any element does
@@ -30,8 +32,8 @@ public interface TestAssert3Collection {
    * current instance of {@code TestAssertLCollection} for further assertions.
    *
    * @param expectedClass the class of the objects in the collection (must not be {@code null})
-   * @param condition     the condition that all elements must match (must not be {@code null})
-   * @param <T>           the type of the objects in the collection
+   * @param condition the condition that all elements must match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
    * @return the current instance of {@code TestAssertLCollection} for further assertions
    * @throws AssertionError if any element in the collection does not match the condition
    * @since 1.4.0
@@ -51,8 +53,8 @@ public interface TestAssert3Collection {
    * the corresponding exception. The conditions are applied to **each element** in the collection.
    *
    * @param expectedClass the class of the objects in the collection (must not be {@code null})
-   * @param conditions    the conditions that the elements must match (must not be {@code null})
-   * @param <T>           the type of the objects in the collection
+   * @param conditions the conditions that the elements must match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
    * @return the current instance of {@code TestAssertLCollection} for further assertions
    * @throws AssertionError if any element in the collection does not match all the conditions
    * @since 1.4.0
@@ -72,9 +74,8 @@ public interface TestAssert3Collection {
    * current instance of {@code TestAssertLCollection} for further assertions.
    *
    * @param expectedClass the class of the objects in the collection (must not be {@code null})
-   * @param condition     the condition that at least one element must match (must not be
-   *                      {@code null})
-   * @param <T>           the type of the objects in the collection
+   * @param condition the condition that at least one element must match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
    * @return the current instance of {@code TestAssertLCollection} for further assertions
    * @throws AssertionError if no element in the collection matches the condition
    * @since 1.4.0
@@ -94,8 +95,8 @@ public interface TestAssert3Collection {
    * the corresponding exception. The conditions are applied to **each element** in the collection.
    *
    * @param expectedClass the class of the objects in the collection (must not be {@code null})
-   * @param conditions    the conditions that the elements must match (must not be {@code null})
-   * @param <T>           the type of the objects in the collection
+   * @param conditions the conditions that the elements must match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
    * @return the current instance of {@code TestAssertLCollection} for further assertions
    * @throws AssertionError if no element in the collection matches all the conditions
    * @since 1.4.0
@@ -116,8 +117,8 @@ public interface TestAssert3Collection {
    * current instance of {@code TestAssertLCollection} for further assertions.
    *
    * @param expectedClass the class of the objects in the collection (must not be {@code null})
-   * @param condition     the condition that the elements must not match (must not be {@code null})
-   * @param <T>           the type of the objects in the collection
+   * @param condition the condition that the elements must not match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
    * @return the current instance of {@code TestAssertLCollection} for further assertions
    * @throws AssertionError if at least one element in the collection matches the condition
    * @since 1.4.0
@@ -129,17 +130,16 @@ public interface TestAssert3Collection {
    * Asserts that none of the elements in the collection in the HTTP response match any of the
    * specified conditions.
    *
-   * <p>This method checks whether **none** of the elements in the collection satisfy **any** of
-   * the specified conditions. If no element matches any of the conditions, the assertion passes. If
-   * at least one element matches any of the conditions, the assertion fails.
+   * <p>This method checks whether **none** of the elements in the collection satisfy **any** of the
+   * specified conditions. If no element matches any of the conditions, the assertion passes. If at
+   * least one element matches any of the conditions, the assertion fails.
    *
-   * <p>The conditions are applied to **each element** in the collection, and the method returns
-   * the current instance of {@code TestAssertLCollection} for further assertions.
+   * <p>The conditions are applied to **each element** in the collection, and the method returns the
+   * current instance of {@code TestAssertLCollection} for further assertions.
    *
    * @param expectedClass the class of the objects in the collection (must not be {@code null})
-   * @param conditions    the conditions that the elements must not match (must not be
-   *                      {@code null})
-   * @param <T>           the type of the objects in the collection
+   * @param conditions the conditions that the elements must not match (must not be {@code null})
+   * @param <T> the type of the objects in the collection
    * @return the current instance of {@code TestAssertLCollection} for further assertions
    * @throws AssertionError if at least one element in the collection matches any of the conditions
    * @since 1.4.0

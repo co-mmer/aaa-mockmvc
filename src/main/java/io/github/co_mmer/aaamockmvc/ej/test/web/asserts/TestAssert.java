@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssert1Binary;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssert1Byte;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssert1Content;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
@@ -16,13 +16,19 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status
  * instance of a specific assertion class for further validation.
  *
  * <ul>
- *   <li>{@link #assertStatus()}: Provides assertion methods for validating the HTTP response status.</li>
- *   <li>{@link #assertContent()}: Provides assertion methods for validating the HTTP response content.</li>
- *   <li>{@link #assertBinary()}: Provides assertion methods for validating the HTTP response binary data.</li>
- *   <li>{@link #assertCollection()}: Provides assertion methods for validating the contents of an HTTP response collection.</li>
- *   <li>{@link #assertMap()}: Provides assertion methods for validating the contents of an HTTP response map.</li>
- *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.</li>
- *   <li>{@link #assertCustom()}: Provides assertion methods for validating the HTTP response with custom logic.</li>
+ *   <li>{@link #assertStatus()}: Provides assertion methods for validating the HTTP response
+ *       status.
+ *   <li>{@link #assertContent()}: Provides assertion methods for validating the HTTP response
+ *       content.
+ *   <li>{@link #assertByte()}: Provides assertion methods for validating the HTTP response binary
+ *       data.
+ *   <li>{@link #assertCollection()}: Provides assertion methods for validating the contents of an
+ *       HTTP response collection.
+ *   <li>{@link #assertMap()}: Provides assertion methods for validating the contents of an HTTP
+ *       response map.
+ *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
+ *   <li>{@link #assertCustom()}: Provides assertion methods for validating the HTTP response with
+ *       custom logic.
  * </ul>
  *
  * @since 1.0.0
@@ -62,7 +68,7 @@ public interface TestAssert {
    * @return an instance of {@code TestAssertBinary} for asserting the response binary
    * @since 1.4.0
    */
-  TestAssert1Binary assertBinary();
+  TestAssert1Byte assertByte();
 
   /**
    * Provides assertion methods for validating the contents of an HTTP response collection.

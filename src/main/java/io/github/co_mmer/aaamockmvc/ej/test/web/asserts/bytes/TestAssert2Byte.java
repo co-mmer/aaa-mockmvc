@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 
@@ -6,13 +6,14 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
  * Provides methods for asserting HTTP response byte content in tests.
  *
  * <ul>
- *   <li>{@link #assertBinaryByteEquals(byte[])}: Asserts that the byte array content of the HTTP response matches the expected byte array.</li>
- *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.</li>
+ *   <li>{@link #assertByteEquals(byte[])}: Asserts that the byte array content of the HTTP response
+ *       matches the expected byte array.
+ *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  * </ul>
  *
  * @since 1.4.0
  */
-public interface TestAssert2Binary {
+public interface TestAssert2Byte {
 
   /**
    * Asserts that the byte array content of the HTTP response matches the expected byte array.
@@ -25,7 +26,7 @@ public interface TestAssert2Binary {
    * @throws NullPointerException if the {@code expectedByte} is {@code null}
    * @since 1.4.0
    */
-  TestAssertLBinary assertBinaryByteEquals(byte[] expectedByte);
+  TestAssertLByte assertByteEquals(byte[] expectedByte);
 
   /**
    * Asserts that the HTTP response is valid for a HEAD request.

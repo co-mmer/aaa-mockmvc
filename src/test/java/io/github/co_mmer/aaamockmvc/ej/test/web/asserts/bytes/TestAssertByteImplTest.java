@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -22,16 +22,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.test.web.servlet.ResultActions;
 
-class TestAssertBinaryImplTest extends TestAssertBase {
+class TestAssertByteImplTest extends TestAssertBase {
 
   private static final String EXPECTED_CONTENT = "expected content";
   private static final String ACTUAL_CONTENT = "actual content";
-  private TestAssertBinaryImpl testAssert;
+  private TestAssertByteImpl testAssert;
 
   @BeforeEach
   void setUp() {
     initMockServer();
-    this.testAssert = new TestAssertBinaryImpl(this.actions);
+    this.testAssert = new TestAssertByteImpl(this.actions);
   }
 
   @Nested
@@ -65,7 +65,7 @@ class TestAssertBinaryImplTest extends TestAssertBase {
       useServerWithResponse(ACTUAL_CONTENT);
 
       // Act & Assert
-      testAssert.assertBinaryByteNotEmpty();
+      testAssert.assertByteNotEmpty();
     }
 
     @ParameterizedTest
@@ -76,7 +76,7 @@ class TestAssertBinaryImplTest extends TestAssertBase {
       useServerWithResponse(value);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertBinaryByteNotEmpty);
+      assertThrows(AssertionError.class, testAssert::assertByteNotEmpty);
     }
 
     @Test
@@ -84,10 +84,10 @@ class TestAssertBinaryImplTest extends TestAssertBase {
     void GIVEN_exception_WHEN_assertContentByteNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertBinary = new TestAssertBinaryImpl(actions);
+      var testAssertBinary = new TestAssertByteImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, testAssertBinary::assertBinaryByteNotEmpty);
+      assertThrows(AssertionFailedError.class, testAssertBinary::assertByteNotEmpty);
     }
   }
 
@@ -102,7 +102,7 @@ class TestAssertBinaryImplTest extends TestAssertBase {
       useServerWithResponse(value);
 
       // Act & Assert
-      testAssert.assertBinaryByteEmpty();
+      testAssert.assertByteEmpty();
     }
 
     @Test
@@ -112,7 +112,7 @@ class TestAssertBinaryImplTest extends TestAssertBase {
       useServerWithResponse(ACTUAL_CONTENT);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertBinaryByteEmpty);
+      assertThrows(AssertionError.class, testAssert::assertByteEmpty);
     }
 
     @Test
@@ -120,10 +120,10 @@ class TestAssertBinaryImplTest extends TestAssertBase {
     void GIVEN_exception_WHEN_assertBinaryByteEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertBinary = new TestAssertBinaryImpl(actions);
+      var testAssertBinary = new TestAssertByteImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, testAssertBinary::assertBinaryByteEmpty);
+      assertThrows(AssertionFailedError.class, testAssertBinary::assertByteEmpty);
     }
   }
 
@@ -137,7 +137,7 @@ class TestAssertBinaryImplTest extends TestAssertBase {
       useServerWithResponse(EXPECTED_CONTENT);
 
       // Act & Assert
-      testAssert.assertBinaryByteEquals(EXPECTED_CONTENT.getBytes());
+      testAssert.assertByteEquals(EXPECTED_CONTENT.getBytes());
     }
 
     @Test
@@ -147,18 +147,18 @@ class TestAssertBinaryImplTest extends TestAssertBase {
       useServerWithResponse(ACTUAL_CONTENT);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert.assertBinaryByteEquals(new byte[1]));
+      assertThrows(AssertionError.class, () -> testAssert.assertByteEquals(new byte[1]));
     }
 
     @Test
     void GIVEN_exception_byte_WHEN_assertBinaryByteEquals_THEN_assert_false() {
       // Arrange
       useServerWithByteException();
-      var testAssertBinary = new TestAssertBinaryImpl(actions);
+      var testAssertBinary = new TestAssertByteImpl(actions);
 
       // Act & Assert
       assertThrows(
-          AssertionFailedError.class, () -> testAssertBinary.assertBinaryByteEquals(new byte[1]));
+          AssertionFailedError.class, () -> testAssertBinary.assertByteEquals(new byte[1]));
     }
   }
 
@@ -188,7 +188,7 @@ class TestAssertBinaryImplTest extends TestAssertBase {
       useServerWithResponse(EXPECTED_CONTENT);
 
       // Act & Assert
-      testAssert.assertBinaryByteNotEmpty().assertBinaryByteEquals(EXPECTED_CONTENT.getBytes());
+      testAssert.assertByteNotEmpty().assertByteEquals(EXPECTED_CONTENT.getBytes());
     }
 
     @Test
@@ -198,7 +198,7 @@ class TestAssertBinaryImplTest extends TestAssertBase {
       useServerWithResponse(EXPECTED_CONTENT);
 
       // Act & Assert
-      testAssert.assertBinaryByteNotEmpty().assertHead();
+      testAssert.assertByteNotEmpty().assertHead();
     }
   }
 
@@ -212,7 +212,7 @@ class TestAssertBinaryImplTest extends TestAssertBase {
       useServerWithResponse(Strings.EMPTY);
 
       // Act & Assert
-      testAssert.assertBinaryByteEmpty().assertHead();
+      testAssert.assertByteEmpty().assertHead();
     }
   }
 
@@ -226,7 +226,7 @@ class TestAssertBinaryImplTest extends TestAssertBase {
       useServerWithResponse(EXPECTED_CONTENT);
 
       // Act & Assert
-      testAssert.assertBinaryByteEquals(EXPECTED_CONTENT.getBytes()).assertHead();
+      testAssert.assertByteEquals(EXPECTED_CONTENT.getBytes()).assertHead();
     }
   }
 }

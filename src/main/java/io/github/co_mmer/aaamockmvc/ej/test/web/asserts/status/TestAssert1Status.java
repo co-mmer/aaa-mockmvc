@@ -7,20 +7,26 @@ import org.springframework.http.HttpStatus;
  * Provides methods for asserting HTTP response statuses in tests.
  *
  * <ul>
- *   <li>{@link #assertStatus(HttpStatus)}: Asserts that the status of the HTTP response matches
- *       the given {@code HttpStatus}.</li>
+ *   <li>{@link #assertStatus(HttpStatus)}: Asserts that the status of the HTTP response matches the
+ *       given {@code HttpStatus}.
  *   <li>{@link #assertStatus(int)}: Asserts that the status of the HTTP response matches the given
- *       status code.</li>
- *   <li>{@link #assertStatusIsOk()}: Asserts that the HTTP response status is 200 OK.</li>
- *   <li>{@link #assertStatusIsCreated()}: Asserts that the HTTP response status is 201 Created.</li>
- *   <li>{@link #assertStatusIsAccepted()}: Asserts that the HTTP response status is 202 Accepted.</li>
- *   <li>{@link #assertStatusIsNotFound()}: Asserts that the HTTP response status is 404 Not Found.</li>
- *   <li>{@link #assertStatusIsClientError()}: Asserts that the HTTP response status indicates a client error (4xx).</li>
- *   <li>{@link #assertStatusIsServerError()}: Asserts that the HTTP response status indicates a server error (5xx).</li>
- *   <li>{@link #assertStatusIsRedirect()}: Asserts that the HTTP response status indicates a redirection (3xx).</li>
- *   <li>{@link #assertStatusIsAccessForbidden()}: Asserts that the HTTP response status is 403 Forbidden.</li>
- *   <li>{@link #assertStatusIsAccessUnauthorized()}: Asserts that the HTTP response status is 401 Unauthorized.</li>
- *   <li>{@link #assertStatusInRange(int, int)}: Asserts that the HTTP response status code is within a specified range.</li>
+ *       status code.
+ *   <li>{@link #assertStatusIsOk()}: Asserts that the HTTP response status is 200 OK.
+ *   <li>{@link #assertStatusIsCreated()}: Asserts that the HTTP response status is 201 Created.
+ *   <li>{@link #assertStatusIsAccepted()}: Asserts that the HTTP response status is 202 Accepted.
+ *   <li>{@link #assertStatusIsNotFound()}: Asserts that the HTTP response status is 404 Not Found.
+ *   <li>{@link #assertStatusIsClientError()}: Asserts that the HTTP response status indicates a
+ *       client error (4xx).
+ *   <li>{@link #assertStatusIsServerError()}: Asserts that the HTTP response status indicates a
+ *       server error (5xx).
+ *   <li>{@link #assertStatusIsRedirect()}: Asserts that the HTTP response status indicates a
+ *       redirection (3xx).
+ *   <li>{@link #assertStatusIsAccessForbidden()}: Asserts that the HTTP response status is 403
+ *       Forbidden.
+ *   <li>{@link #assertStatusIsAccessUnauthorized()}: Asserts that the HTTP response status is 401
+ *       Unauthorized.
+ *   <li>{@link #assertStatusInRange(int, int)}: Asserts that the HTTP response status code is
+ *       within a specified range.
  * </ul>
  *
  * @since 1.1.0
@@ -121,9 +127,9 @@ public interface TestAssert1Status {
    * Asserts that the HTTP response status code is within a specified range.
    *
    * @param minStatusCode the minimum expected status code (must be less than or equal to
-   *                      maxStatusCode)
+   *     maxStatusCode)
    * @param maxStatusCode the maximum expected status code (must be greater than or equal to
-   *                      minStatusCode)
+   *     minStatusCode)
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
    */

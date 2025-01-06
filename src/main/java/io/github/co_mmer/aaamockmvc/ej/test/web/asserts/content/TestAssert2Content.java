@@ -7,9 +7,11 @@ import lombok.NonNull;
  * Provides methods for asserting HTTP response content in tests.
  *
  * <ul>
- *   <li>{@link #assertContentEquals(String)}: Asserts that the content of the HTTP response matches the expected string.</li>
- *   <li>{@link #assertContentEquals(Class, Object)}: Asserts that the content of the HTTP response matches the expected object.</li>
- *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.</li>
+ *   <li>{@link #assertContentEquals(String)}: Asserts that the content of the HTTP response matches
+ *       the expected string.
+ *   <li>{@link #assertContentEquals(Class, Object)}: Asserts that the content of the HTTP response
+ *       matches the expected object.
+ *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  * </ul>
  *
  * @since 1.0.0
@@ -38,8 +40,8 @@ public interface TestAssert2Content {
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
    * Unicode formats.
    *
-   * @param <T>              the type of the expected response object
-   * @param expectedClass    the class of the expected response object (must not be {@code null})
+   * @param <T> the type of the expected response object
+   * @param expectedClass the class of the expected response object (must not be {@code null})
    * @param expectedResponse the expected object (must not be {@code null})
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0

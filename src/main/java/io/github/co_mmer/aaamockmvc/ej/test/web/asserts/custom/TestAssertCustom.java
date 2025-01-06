@@ -7,7 +7,8 @@ import org.springframework.test.web.servlet.ResultMatcher;
  * Provides methods for custom assertions on HTTP responses in tests.
  *
  * <ul>
- *   <li>{@link #assertCustomResultMatcher(ResultMatcher)}: Asserts that the result of the test request matches the given {@link ResultMatcher}.</li>
+ *   <li>{@link #assertCustomResultMatcher(ResultMatcher)}: Asserts that the result of the test
+ *       request matches the given {@link ResultMatcher}.
  * </ul>
  *
  * @since 1.1.0

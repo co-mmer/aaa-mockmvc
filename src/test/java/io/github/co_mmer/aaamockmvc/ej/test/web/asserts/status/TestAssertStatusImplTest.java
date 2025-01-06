@@ -13,7 +13,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary.TestAssertBinaryImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssertByteImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCollectionImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
@@ -329,7 +329,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
       var assertBinary = testAssert2.assertBinary();
 
       // Assert
-      assertThat(assertBinary.getClass(), is(TestAssertBinaryImpl.class));
+      assertThat(assertBinary.getClass(), is(TestAssertByteImpl.class));
     }
 
     @Test

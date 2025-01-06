@@ -1,17 +1,20 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
 
 /**
  * Provides methods for asserting HTTP response byte content in tests.
  *
  * <ul>
- *   <li>{@link #assertBinaryByteNotEmpty()}: Asserts that the byte array content of the HTTP response is not empty.</li>
- *   <li>{@link #assertBinaryByteEmpty()}: Asserts that the byte array content of the HTTP response is empty.</li>
- *   <li>{@link #assertBinaryByteEquals(byte[])}: Asserts that the byte array content of the HTTP response matches the expected byte array.</li>
+ *   <li>{@link #assertByteNotEmpty()}: Asserts that the byte array content of the HTTP response is
+ *       not empty.
+ *   <li>{@link #assertByteEmpty()}: Asserts that the byte array content of the HTTP response is
+ *       empty.
+ *   <li>{@link #assertByteEquals(byte[])}: Asserts that the byte array content of the HTTP response
+ *       matches the expected byte array.
  * </ul>
  *
  * @since 1.4.0
  */
-public interface TestAssert1Binary {
+public interface TestAssert1Byte {
 
   /**
    * Asserts that the byte array content of the HTTP response is not empty.
@@ -22,7 +25,7 @@ public interface TestAssert1Binary {
    * @return the current instance of {@code TestAssertBinary} for method chaining
    * @since 1.4.0
    */
-  TestAssert2Binary assertBinaryByteNotEmpty();
+  TestAssert2Byte assertByteNotEmpty();
 
   /**
    * Asserts that the byte array content of the HTTP response is empty.
@@ -33,7 +36,7 @@ public interface TestAssert1Binary {
    * @return the current instance of {@code TestAssertBinary} for method chaining
    * @since 1.4.0
    */
-  TestAssertLBinary assertBinaryByteEmpty();
+  TestAssertLByte assertByteEmpty();
 
   /**
    * Asserts that the byte array content of the HTTP response matches the expected byte array.
@@ -46,5 +49,5 @@ public interface TestAssert1Binary {
    * @throws NullPointerException if the {@code expectedByte} is {@code null}
    * @since 1.4.0
    */
-  TestAssertLBinary assertBinaryByteEquals(byte[] expectedByte);
+  TestAssertLByte assertByteEquals(byte[] expectedByte);
 }

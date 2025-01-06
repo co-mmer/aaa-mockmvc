@@ -6,9 +6,12 @@ import lombok.NonNull;
  * Provides methods for asserting HTTP response headers in tests.
  *
  * <ul>
- *   <li>{@link #assertHeadContains(String)}: Asserts that the HTTP response contains the specified header.</li>
- *   <li>{@link #assertHeadNotContains(String)}: Asserts that the HTTP response does not contain the specified header.</li>
- *   <li>{@link #assertHeadEquals(String, String)}: Asserts that the specified header in the HTTP response matches the expected value.</li>
+ *   <li>{@link #assertHeadContains(String)}: Asserts that the HTTP response contains the specified
+ *       header.
+ *   <li>{@link #assertHeadNotContains(String)}: Asserts that the HTTP response does not contain the
+ *       specified header.
+ *   <li>{@link #assertHeadEquals(String, String)}: Asserts that the specified header in the HTTP
+ *       response matches the expected value.
  * </ul>
  *
  * @since 1.0.0
@@ -32,8 +35,8 @@ public interface TestAssertHead {
    *
    * <p>This method checks if the response does not include the header with the given key.
    *
-   * @param notExpectedKey the key of the header that should not be present (must not be
-   *                       {@code null})
+   * @param notExpectedKey the key of the header that should not be present (must not be {@code
+   *     null})
    * @return the current instance of {@code TestAssert} for method chaining
    * @throws NullPointerException if the {@code notExpectedKey} is {@code null}
    * @since 1.0.0
@@ -45,7 +48,7 @@ public interface TestAssertHead {
    *
    * <p>This method compares the value of the response header with the expected value.
    *
-   * @param expectedKey   the key of the header to check (must not be {@code null})
+   * @param expectedKey the key of the header to check (must not be {@code null})
    * @param expectedValue the expected value of the header
    * @return the current instance of {@code TestAssert} for method chaining
    * @throws NullPointerException if the {@code expectedKey} is {@code null}
