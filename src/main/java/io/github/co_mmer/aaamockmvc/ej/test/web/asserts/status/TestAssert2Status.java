@@ -8,9 +8,16 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 
 /**
- * This interface defines a set of assertions for validating the status of HTTP responses in a
- * testing context. It allows various checks on the response status, including specific status code
- * assertions and range validations.
+ * Provides methods for asserting HTTP response statuses in tests.
+ *
+ * <ul>
+ *   <li>{@link #assertContent()}: Provides assertion methods for validating the HTTP response content.</li>
+ *   <li>{@link #assertBinary()}: Provides assertion methods for validating the HTTP response binary.</li>
+ *   <li>{@link #assertCollection()}: Provides assertion methods for validating the contents of an HTTP response collection.</li>
+ *   <li>{@link #assertMap()}: Provides assertion methods for validating the contents of an HTTP response map.</li>
+ *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.</li>
+ *   <li>{@link #assertCustom()}: Provides assertion methods for validating the HTTP response based on custom logic.</li>
+ * </ul>
  *
  * @since 1.1.0
  */

@@ -13,6 +13,18 @@ import org.junit.jupiter.api.Assertions;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
 
+/**
+ * Provides methods for asserting HTTP response byte content in tests.
+ *
+ * <ul>
+ *   <li>{@link #assertBinaryByteNotEmpty()}: Asserts that the byte array content of the HTTP response is not empty.</li>
+ *   <li>{@link #assertBinaryByteEmpty()}: Asserts that the byte array content of the HTTP response is empty.</li>
+ *   <li>{@link #assertBinaryByteEquals(byte[])}: Asserts that the byte array content of the HTTP response matches the expected byte array.</li>
+ *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.</li>
+ * </ul>
+ *
+ * @since 1.4.0
+ */
 public final class TestAssertBinaryImpl
     implements TestAssert1Binary, TestAssert2Binary, TestAssertLBinary {
 
@@ -22,8 +34,8 @@ public final class TestAssertBinaryImpl
   /**
    * Constructs an instance of {@code TestAssertContent} with the provided {@code ResultActions}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
+   * @param actions the {@code ResultActions} from a performed HTTP request (must not be
+   *                {@code null})
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.4.0
    */
@@ -83,8 +95,7 @@ public final class TestAssertBinaryImpl
   @Override
   public TestAssertLBinary assertBinaryByteEquals(byte[] expectedByte) {
     try {
-      var content = this.response.getContentAsByteArray();
-      assertThat(content, is(expectedByte));
+      assertThat(this.response.getContentAsByteArray(), is(expectedByte));
     } catch (Exception e) {
       Assertions.fail(e);
     }

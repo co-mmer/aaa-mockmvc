@@ -5,9 +5,13 @@ import lombok.NonNull;
 /**
  * Provides methods for asserting HTTP response content in tests.
  *
- * <p>This class enables various assertions on the content of HTTP responses, such as verifying that
- * the content is empty or not empty, matching specific string values, or comparing against expected
- * objects.
+ * <ul>
+ *   <li>{@link #assertContentNotEmpty()}: Asserts that the content of the HTTP response is not empty.</li>
+ *   <li>{@link #assertContentEmpty()}: Asserts that the content of the HTTP response is empty.</li>
+ *   <li>{@link #assertContentLength(int)}: Asserts that the length of the response content matches the specified length.</li>
+ *   <li>{@link #assertContentEquals(String)}: Asserts that the content of the HTTP response matches the expected string.</li>
+ *   <li>{@link #assertContentEquals(Class, Object)}: Asserts that the content of the HTTP response matches the expected object.</li>
+ * </ul>
  *
  * @since 1.0.0
  */
@@ -30,7 +34,8 @@ public interface TestAssert1Content {
   TestAssertLContent assertContentEmpty();
 
   /**
-   * Asserts that the length of the string content of the HTTP response matches the specified value.
+   * Asserts that the length of the string content of the HTTP response matches the specified
+   * value.
    *
    * @param length the expected length of the HTTP response content
    * @return the current instance of {@code TestAssert2Content} for method chaining
@@ -60,8 +65,8 @@ public interface TestAssert1Content {
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
    * Unicode formats.
    *
-   * @param <T> the type of the expected response object
-   * @param expectedClass the class of the expected response object (must not be {@code null})
+   * @param <T>              the type of the expected response object
+   * @param expectedClass    the class of the expected response object (must not be {@code null})
    * @param expectedResponse the expected object (must not be {@code null})
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0

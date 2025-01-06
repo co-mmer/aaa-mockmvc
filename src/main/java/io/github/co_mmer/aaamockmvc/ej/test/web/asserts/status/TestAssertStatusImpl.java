@@ -26,10 +26,28 @@ import org.springframework.test.web.servlet.ResultActions;
 /**
  * Provides methods for asserting HTTP response statuses in tests.
  *
- * <p>This class allows for various assertions on HTTP response status codes, such as verifying
- * specific status codes (e.g., 200 OK, 201 Created), checking status code ranges (e.g., client
- * errors, server errors), and handling common HTTP response scenarios like redirects and access
- * errors.
+ * <ul>
+ *   <li>{@link #assertStatus(HttpStatus)}: Asserts that the status of the HTTP response matches
+ *       the given {@code HttpStatus}.</li>
+ *   <li>{@link #assertStatus(int)}: Asserts that the status of the HTTP response matches the given
+ *       status code.</li>
+ *   <li>{@link #assertStatusIsOk()}: Asserts that the HTTP response status is 200 OK.</li>
+ *   <li>{@link #assertStatusIsCreated()}: Asserts that the HTTP response status is 201 Created.</li>
+ *   <li>{@link #assertStatusIsAccepted()}: Asserts that the HTTP response status is 202 Accepted.</li>
+ *   <li>{@link #assertStatusIsNotFound()}: Asserts that the HTTP response status is 404 Not Found.</li>
+ *   <li>{@link #assertStatusIsClientError()}: Asserts that the HTTP response status indicates a client error (4xx).</li>
+ *   <li>{@link #assertStatusIsServerError()}: Asserts that the HTTP response status indicates a server error (5xx).</li>
+ *   <li>{@link #assertStatusIsRedirect()}: Asserts that the HTTP response status indicates a redirection (3xx).</li>
+ *   <li>{@link #assertStatusIsAccessForbidden()}: Asserts that the HTTP response status is 403 Forbidden.</li>
+ *   <li>{@link #assertStatusIsAccessUnauthorized()}: Asserts that the HTTP response status is 401 Unauthorized.</li>
+ *   <li>{@link #assertStatusInRange(int, int)}: Asserts that the HTTP response status code is within a specified range.</li>
+ *   <li>{@link #assertContent()}: Provides assertion methods for validating the HTTP response content.</li>
+ *   <li>{@link #assertBinary()}: Provides assertion methods for validating the HTTP response binary.</li>
+ *   <li>{@link #assertCollection()}: Provides assertion methods for validating the contents of an HTTP response collection.</li>
+ *   <li>{@link #assertMap()}: Provides assertion methods for validating the contents of an HTTP response map.</li>
+ *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.</li>
+ *   <li>{@link #assertCustom()}: Provides assertion methods for validating the HTTP response based on custom logic.</li>
+ * </ul>
  *
  * @since 1.1.0
  */
@@ -49,8 +67,8 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
    * Constructs an instance of {@code TestAssertStatusImpl} with the provided {@code ResultActions}
    * and {@code ObjectMapper}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
+   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
+   *                     {@code null})
    * @param objectMapper the {@code ObjectMapper} for JSON serialization (must not be {@code null})
    * @throws NullPointerException if either {@code actions} or {@code objectMapper} is {@code null}
    * @since 1.1.0
@@ -202,9 +220,9 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
    * Asserts that the HTTP response status code is within a specified range.
    *
    * @param minStatusCode the minimum expected status code (must be less than or equal to
-   *     maxStatusCode)
+   *                      maxStatusCode)
    * @param maxStatusCode the maximum expected status code (must be greater than or equal to
-   *     minStatusCode)
+   *                      minStatusCode)
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
    */

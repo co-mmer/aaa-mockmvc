@@ -17,9 +17,14 @@ import org.springframework.test.web.servlet.ResultActions;
 /**
  * Provides methods for asserting HTTP response content in tests.
  *
- * <p>This class enables various assertions on the content of HTTP responses, such as verifying that
- * the content is empty or not empty, matching specific string values, or comparing against expected
- * objects.
+ * <ul>
+ *   <li>{@link #assertContentNotEmpty()}: Asserts that the content of the HTTP response is not empty.</li>
+ *   <li>{@link #assertContentEmpty()}: Asserts that the content of the HTTP response is empty.</li>
+ *   <li>{@link #assertContentLength(int)}: Asserts that the length of the response content matches the specified length.</li>
+ *   <li>{@link #assertContentEquals(String)}: Asserts that the content of the HTTP response matches the expected string.</li>
+ *   <li>{@link #assertContentEquals(Class, Object)}: Asserts that the content of the HTTP response matches the expected object.</li>
+ *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.</li>
+ * </ul>
  *
  * @since 1.0.0
  */
@@ -33,10 +38,10 @@ public final class TestAssertContentImpl
   /**
    * Constructs an instance of {@code TestAssertContent} with the provided {@code ResultActions}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
-   * @param objectMapper the {@link ObjectMapper} used for JSON processing (must not be {@code
-   *     null})
+   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
+   *                     {@code null})
+   * @param objectMapper the {@link ObjectMapper} used for JSON processing (must not be
+   *                     {@code null})
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.0.0
    */
@@ -48,6 +53,9 @@ public final class TestAssertContentImpl
 
   /**
    * Asserts that the content of the HTTP response as a string is not empty.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
    *
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
@@ -65,6 +73,9 @@ public final class TestAssertContentImpl
   /**
    * Asserts that the content of the HTTP response as a string is empty.
    *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
@@ -79,7 +90,11 @@ public final class TestAssertContentImpl
   }
 
   /**
-   * Asserts that the length of the string content of the HTTP response matches the specified value.
+   * Asserts that the length of the string content of the HTTP response matches the specified
+   * value.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
    *
    * @param length the expected length of the HTTP response content
    * @return the current instance of {@code TestAssert2Content} for method chaining
@@ -97,6 +112,9 @@ public final class TestAssertContentImpl
 
   /**
    * Asserts that the content of the HTTP response matches the given string.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
    *
    * <p>As of version 1.3.0, both the actual and expected response content are normalized using
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
@@ -120,13 +138,16 @@ public final class TestAssertContentImpl
   /**
    * Asserts that the content of the HTTP response matches the given object of type {@code T}.
    *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
    * <p>As of version 1.3.0, both the actual and expected response content are normalized using
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
    * Unicode formats.
    *
-   * @param expectedClass the class of the expected object (must not be {@code null})
+   * @param expectedClass    the class of the expected object (must not be {@code null})
    * @param expectedResponse the expected object (must not be {@code null})
-   * @param <T> the type of the expected response
+   * @param <T>              the type of the expected response
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */

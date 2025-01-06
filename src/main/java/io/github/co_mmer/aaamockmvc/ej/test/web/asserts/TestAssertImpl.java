@@ -21,10 +21,19 @@ import org.springframework.test.web.servlet.ResultActions;
 /**
  * Provides methods for asserting different aspects of an HTTP response.
  *
- * <p>This interface defines various assertion methods to validate different components of an HTTP
- * response. It includes assertions for the response status, content, headers, collections, maps,
- * and custom logic. These methods return specialized assertion objects that allow for fine-grained
- * validation of each aspect of the response.
+ * <p>This class provides various assertion methods for validating the HTTP response, such as
+ * checking the status, content, binary data, headers, and custom assertions. Each method returns an
+ * instance of a specific assertion class for further validation.
+ *
+ * <ul>
+ *   <li>{@link #assertStatus()}: Provides assertion methods for validating the HTTP response status.</li>
+ *   <li>{@link #assertContent()}: Provides assertion methods for validating the HTTP response content.</li>
+ *   <li>{@link #assertBinary()}: Provides assertion methods for validating the HTTP response binary data.</li>
+ *   <li>{@link #assertCollection()}: Provides assertion methods for validating the contents of an HTTP response collection.</li>
+ *   <li>{@link #assertMap()}: Provides assertion methods for validating the contents of an HTTP response map.</li>
+ *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.</li>
+ *   <li>{@link #assertCustom()}: Provides assertion methods for validating the HTTP response with custom logic.</li>
+ * </ul>
  *
  * @since 1.0.0
  */
@@ -37,8 +46,8 @@ public final class TestAssertImpl implements TestAssert {
    * Constructs an instance of {@code TestAssertImpl} with the provided {@code ResultActions} and
    * {@code ObjectMapper}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
+   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
+   *                     {@code null})
    * @param objectMapper the {@code ObjectMapper} for JSON serialization (must not be {@code null})
    * @throws NullPointerException if either {@code actions} or {@code objectMapper} is {@code null}
    * @since 1.0.0

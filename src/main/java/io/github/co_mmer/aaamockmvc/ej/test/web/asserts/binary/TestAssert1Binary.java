@@ -1,5 +1,16 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary;
 
+/**
+ * Provides methods for asserting HTTP response byte content in tests.
+ *
+ * <ul>
+ *   <li>{@link #assertBinaryByteNotEmpty()}: Asserts that the byte array content of the HTTP response is not empty.</li>
+ *   <li>{@link #assertBinaryByteEmpty()}: Asserts that the byte array content of the HTTP response is empty.</li>
+ *   <li>{@link #assertBinaryByteEquals(byte[])}: Asserts that the byte array content of the HTTP response matches the expected byte array.</li>
+ * </ul>
+ *
+ * @since 1.4.0
+ */
 public interface TestAssert1Binary {
 
   /**
@@ -9,7 +20,7 @@ public interface TestAssert1Binary {
    * the corresponding exception.
    *
    * @return the current instance of {@code TestAssertBinary} for method chaining
-   * @since 1.0.0
+   * @since 1.4.0
    */
   TestAssert2Binary assertBinaryByteNotEmpty();
 
@@ -20,7 +31,7 @@ public interface TestAssert1Binary {
    * the corresponding exception.
    *
    * @return the current instance of {@code TestAssertBinary} for method chaining
-   * @since 1.0.0
+   * @since 1.4.0
    */
   TestAssertLBinary assertBinaryByteEmpty();
 
@@ -33,7 +44,7 @@ public interface TestAssert1Binary {
    * @param expectedByte the expected byte array content (must not be {@code null})
    * @return the current instance of {@code TestAssertBinary} for method chaining
    * @throws NullPointerException if the {@code expectedByte} is {@code null}
-   * @since 1.0.0
+   * @since 1.4.0
    */
   TestAssertLBinary assertBinaryByteEquals(byte[] expectedByte);
 }

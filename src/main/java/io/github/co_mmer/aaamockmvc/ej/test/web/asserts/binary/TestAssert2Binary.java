@@ -2,6 +2,16 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.binary;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 
+/**
+ * Provides methods for asserting HTTP response byte content in tests.
+ *
+ * <ul>
+ *   <li>{@link #assertBinaryByteEquals(byte[])}: Asserts that the byte array content of the HTTP response matches the expected byte array.</li>
+ *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.</li>
+ * </ul>
+ *
+ * @since 1.4.0
+ */
 public interface TestAssert2Binary {
 
   /**

@@ -20,12 +20,15 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
 
 /**
- * Implementation of {@code TestAssertMap} for asserting the contents of HTTP responses containing
- * maps.
+ * Provides assertion methods for validating HTTP response maps.
  *
- * <p>This class provides various assertion methods to validate that the response body matches the
- * expected collections or maps. It supports checking for empty or non-empty collections, validating
- * the size of collections, and asserting equality of collections.
+ * <ul>
+ *   <li>{@link #assertMapNotEmpty()}: Asserts that the map in the HTTP response is not empty.</li>
+ *   <li>{@link #assertMapEmpty()}: Asserts that the map in the HTTP response is empty.</li>
+ *   <li>{@link #assertMapSize(int)}: Asserts that the size of the map in the HTTP response matches the given size.</li>
+ *   <li>{@link #assertMapEquals(Class, Class, Map)}: Asserts that the map in the HTTP response matches the expected map of key-value pairs.</li>
+ *   <li>{@link #assertHead()}: Asserting properties of response headers for HTTP HEAD requests.</li>*
+ * </ul>
  *
  * @since 1.4.0
  */
@@ -40,10 +43,10 @@ public final class TestAssertMapImpl
    * Constructs a new {@code TestAssertMapImpl} instance with the given {@code ResultActions} and
    * {@code ObjectMapper}.
    *
-   * @param actions the {@code ResultActions} containing the HTTP response (must not be {@code
-   *     null})
-   * @param objectMapper the {@code ObjectMapper} for JSON deserialization (must not be {@code
-   *     null})
+   * @param actions      the {@code ResultActions} containing the HTTP response (must not be
+   *                     {@code null})
+   * @param objectMapper the {@code ObjectMapper} for JSON deserialization (must not be
+   *                     {@code null})
    * @throws NullPointerException if any of the parameters is {@code null}
    * @since 1.4.0
    */
@@ -122,11 +125,11 @@ public final class TestAssertMapImpl
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param keyClass the class of the keys in the map (must not be {@code null})
-   * @param valueClass the class of the values in the map (must not be {@code null})
+   * @param keyClass    the class of the keys in the map (must not be {@code null})
+   * @param valueClass  the class of the values in the map (must not be {@code null})
    * @param expectedMap the expected map of key-value pairs (must not be {@code null})
-   * @param <K> the type of the keys in the map
-   * @param <V> the type of the values in the map
+   * @param <K>         the type of the keys in the map
+   * @param <V>         the type of the values in the map
    * @return the current instance of {@code TestAssertCollection} for further assertions
    * @throws AssertionError if the maps do not match
    * @since 1.4.0
