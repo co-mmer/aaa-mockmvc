@@ -1,14 +1,11 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeObject;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import lombok.NonNull;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -25,8 +22,6 @@ import org.springframework.test.web.servlet.ResultActions;
  *       the specified length.
  *   <li>{@link #assertContentEquals(String)}: Asserts that the content of the HTTP response matches
  *       the expected string.
- *   <li>{@link #assertContentEquals(Class, Object)}: Asserts that the content of the HTTP response
- *       matches the expected object.
  *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  * </ul>
  *
@@ -37,22 +32,18 @@ public final class TestAssertContentImpl
 
   private final ResultActions actions;
   private final MockHttpServletResponse response;
-  private final ObjectMapper objectMapper;
 
   /**
    * Constructs an instance of {@code TestAssertContent} with the provided {@code ResultActions}.
    *
    * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
    *     null})
-   * @param objectMapper the {@link ObjectMapper} used for JSON processing (must not be {@code
-   *     null})
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.0.0
    */
-  public TestAssertContentImpl(@NonNull ResultActions actions, @NonNull ObjectMapper objectMapper) {
+  public TestAssertContentImpl(@NonNull ResultActions actions) {
     this.actions = actions;
     this.response = actions.andReturn().getResponse();
-    this.objectMapper = objectMapper;
   }
 
   /**
@@ -133,36 +124,6 @@ public final class TestAssertContentImpl
       var content = this.response.getContentAsString();
       assertThat(normalizeObject(content), is(normalizeObject(expectedString)));
     } catch (Exception e) {
-      Assertions.fail(e);
-    }
-    return this;
-  }
-
-  /**
-   * Asserts that the content of the HTTP response matches the given object of type {@code T}.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
-   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
-   * Unicode formats.
-   *
-   * @param expectedClass the class of the expected object (must not be {@code null})
-   * @param expectedResponse the expected object (must not be {@code null})
-   * @param <T> the type of the expected response
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
-   */
-  @Override
-  public <T> TestAssertLContent assertContentEquals(
-      @NonNull Class<T> expectedClass, @NonNull T expectedResponse) {
-
-    try {
-      var result = this.actions.andReturn();
-      var actual = mapTo(this.objectMapper, result, expectedClass);
-      assertThat(normalizeObject(actual), is(normalizeObject(expectedResponse)));
-    } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
     return this;

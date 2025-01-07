@@ -6,9 +6,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
@@ -42,17 +40,13 @@ class TestAssertByteImplTest extends TestAssertBase {
     @MethodSource("provideNullParameters")
     @SuppressWarnings("ConstantConditions")
     void GIVEN_provideNullParameters_WHEN_call_constructor_THEN_throw_NullPointerException(
-        ResultActions actions, ObjectMapper objectMapper) {
+        ResultActions actions) {
 
-      assertThrows(
-          NullPointerException.class, () -> new TestAssertContentImpl(actions, objectMapper));
+      assertThrows(NullPointerException.class, () -> new TestAssertByteImpl(actions));
     }
 
     private static Stream<Arguments> provideNullParameters() {
-      return Stream.of(
-          Arguments.of(null, new ObjectMapper()),
-          Arguments.of(mock(ResultActions.class), null),
-          Arguments.of(null, null));
+      return Stream.of(Arguments.of((ResultActions) null), Arguments.of(mock(ResultActions.class)));
     }
   }
 

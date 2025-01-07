@@ -5,16 +5,22 @@ import java.util.function.Predicate;
 import lombok.NonNull;
 
 /**
- * Provides assertion methods for validating HTTP response collections.
+ * Provides assertion methods for validating HTTP response collections and maps.
  *
  * <ul>
- *   <li>{@link #assertCollectionMatchAll(Class, Predicate)}: Validating that all elements in the
- *       collection match a specific condition.
- *   <li>{@link #assertCollectionMatchAny(Class, Predicate)}: Ensuring that at least one element in
- *       the collection matches a specified condition.
- *   <li>{@link #assertCollectionMatchNone(Class, Predicate)}: Asserting that none of the elements
- *       in the collection match a specific condition.
- *   <li>{@link #assertHead()}: Asserting properties of response headers for HTTP HEAD requests.
+ *   <li>{@link #assertCollectionMatchAll(Class, Predicate)}: Asserts that all elements in the
+ *       collection in the HTTP response match the specified condition.
+ *   <li>{@link #assertCollectionMatchAll(Class, Predicate...)}: Asserts that all elements in the
+ *       collection match the specified conditions.
+ *   <li>{@link #assertCollectionMatchAny(Class, Predicate)}: Asserts that at least one element in
+ *       the collection in the HTTP response matches the specified condition.
+ *   <li>{@link #assertCollectionMatchAny(Class, Predicate...)}: Asserts that at least one element
+ *       in the collection matches the specified conditions.
+ *   <li>{@link #assertCollectionMatchNone(Class, Predicate)}: Asserts that none of the elements in
+ *       the collection in the HTTP response match the specified condition.
+ *   <li>{@link #assertCollectionMatchNone(Class, Predicate...)}: Asserts that none of the elements
+ *       in the collection match any of the specified conditions.
+ *   <li>{@link #assertHead()}: Asserting properties of response headers for HTTP HEAD requests.*
  * </ul>
  *
  * @since 1.4.0

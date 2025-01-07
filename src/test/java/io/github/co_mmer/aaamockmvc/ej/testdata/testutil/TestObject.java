@@ -40,6 +40,9 @@ public final class TestObject {
 
   public static final Map<Boolean, TestObject1> TEST_MAP_A1_A3 = Map.of(TRUE, A1, FALSE, A3);
   public static final String TEST_A1_JSON = mapToString(A1);
+  public static final String TEST_A2_JSON = mapToString(A2);
+  public static final String TEST_B1NEW_JSON = mapToString(B1);
+
   public static final String TEST_LIST_A1_A2_JSON = mapToString(TEST_LIST_A1_A2);
   public static final String TEST_LIST_A1_A3_JSON = mapToString(TEST_LIST_A1_A3);
   public static final String TEST_LIST_B1NEW_B2NEW_JSON = mapToString(TEST_LIST_B1NEW_B2NEW);

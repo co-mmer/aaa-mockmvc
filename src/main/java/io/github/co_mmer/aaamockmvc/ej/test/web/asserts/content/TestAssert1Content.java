@@ -13,8 +13,6 @@ import lombok.NonNull;
  *       the specified length.
  *   <li>{@link #assertContentEquals(String)}: Asserts that the content of the HTTP response matches
  *       the expected string.
- *   <li>{@link #assertContentEquals(Class, Object)}: Asserts that the content of the HTTP response
- *       matches the expected object.
  * </ul>
  *
  * @since 1.0.0
@@ -24,6 +22,9 @@ public interface TestAssert1Content {
   /**
    * Asserts that the string content of the HTTP response is not empty.
    *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
@@ -31,6 +32,9 @@ public interface TestAssert1Content {
 
   /**
    * Asserts that the string content of the HTTP response is empty.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
    *
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
@@ -40,6 +44,9 @@ public interface TestAssert1Content {
   /**
    * Asserts that the length of the string content of the HTTP response matches the specified value.
    *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
    * @param length the expected length of the HTTP response content
    * @return the current instance of {@code TestAssert2Content} for method chaining
    * @since 1.4.0
@@ -48,6 +55,9 @@ public interface TestAssert1Content {
 
   /**
    * Asserts that the string content of the HTTP response matches the expected string.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
    *
    * <p>As of version 1.3.0, both the actual and expected response content are normalized using
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
@@ -59,21 +69,4 @@ public interface TestAssert1Content {
    * @since 1.0.0
    */
   TestAssertLContent assertContentEquals(@NonNull String expectedString);
-
-  /**
-   * Asserts that the object content of the HTTP response matches the expected object, using the
-   * provided deserializer(s).
-   *
-   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
-   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
-   * Unicode formats.
-   *
-   * @param <T> the type of the expected response object
-   * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param expectedResponse the expected object (must not be {@code null})
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
-   */
-  <T> TestAssertLContent assertContentEquals(
-      @NonNull Class<T> expectedClass, @NonNull T expectedResponse);
 }

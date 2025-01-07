@@ -1,10 +1,10 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.match.TestMatchType.ALL;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.match.TestMatchType.ANY;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.match.TestMatchType.NONE;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeAsObjects;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeCollection;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.ALL;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.ANY;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.NONE;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
@@ -15,10 +15,10 @@ import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.match.TestMatchAssert;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.match.TestMatchType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchList;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -402,11 +402,11 @@ public final class TestAssertCollectionImpl
   }
 
   private <T> void assertCollectionMatch(
-      TestMatchType matchType, Class<T> expectedClass, List<Predicate<T>> conditions) {
+      TestAssertMatchType matchType, Class<T> expectedClass, List<Predicate<T>> conditions) {
 
     try {
       var actual = mapToList(this.objectMapper, this.actions.andReturn(), expectedClass);
-      TestMatchAssert.assertMatch(matchType, actual, conditions);
+      TestAssertMatchList.assertMatch(matchType, actual, conditions);
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }

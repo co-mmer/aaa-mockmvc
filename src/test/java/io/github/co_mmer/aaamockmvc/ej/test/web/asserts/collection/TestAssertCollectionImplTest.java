@@ -1427,7 +1427,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void match_all_1__match_any_1() {
+    void matchAll_matchAny() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
@@ -1440,7 +1440,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void match_all_1__match_any_2() {
+    void matchAll_matchAny_vararg() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
@@ -1453,7 +1453,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void match_all_1__match_none_1() {
+    void matchAll_matchNone() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
@@ -1466,7 +1466,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void match_all_1__match_none_2() {
+    void matchAll_matchNone_vararg() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
@@ -1477,11 +1477,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
               TestObject1.class, element -> element.id() == 3, element -> element.id() == 4);
     }
 
-    //
-
     @Test
     @SneakyThrows
-    void match_all_2__match_any_1() {
+    void matchAll_vararg_matchAny() {
       // Arrange
       useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
 
@@ -1497,7 +1495,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void match_all_2__match_any_2() {
+    void matchAll_vararg_matchAny_vararg() {
       // Arrange
       useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
 
@@ -1513,7 +1511,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void match_all_2__match_none_1() {
+    void matchAll_vararg_matchNone() {
       // Arrange
       useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
 
@@ -1526,7 +1524,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void match_all_2__match_none_2() {
+    void matchAll_vararg_matchNone_vararg() {
       // Arrange
       useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
 
@@ -1536,6 +1534,33 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           .assertCollectionMatchNone(
               TestObject2.class, element -> element.id() == 3, element -> element.id() == 4);
     }
+
+    @Test
+    @SneakyThrows
+    void matchAll_head() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A))
+          .assertHead();
+    }
+
+    @Test
+    @SneakyThrows
+    void matchAll_vararg_head() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAll(
+              TestObject2.class,
+              element -> element.name().equals(B),
+              element -> element.status().equals(NEW))
+          .assertHead();
+    }
   }
 
   @Nested
@@ -1543,7 +1568,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void match_any_1_match_none_1() {
+    void matchAny_matchNone() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
@@ -1556,7 +1581,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void match_any_1_match_none_2() {
+    void matchAny_matchNone_vararg() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
@@ -1569,7 +1594,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void match_any_2_match_none_1() {
+    void matchAny_vararg_matchNone() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
@@ -1583,7 +1608,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void match_any_2_match_none_2() {
+    void matchAny_vararg_matchNone_vararg() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
@@ -1593,6 +1618,60 @@ class TestAssertCollectionImplTest extends TestAssertBase {
               TestObject1.class, element -> element.id() == 1, element -> element.id() == 2)
           .assertCollectionMatchNone(
               TestObject1.class, element -> element.id() == 3, element -> element.id() == 4);
+    }
+
+    @Test
+    @SneakyThrows
+    void matchAny_head() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAny(TestObject1.class, element -> element.name().equals(A))
+          .assertHead();
+    }
+
+    @Test
+    @SneakyThrows
+    void matchAny_vararg_head() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchAny(
+              TestObject1.class, element -> element.name().equals(A), element -> element.id() == 1)
+          .assertHead();
+    }
+  }
+
+  @Nested
+  class combinationMatchNone {
+
+    @Test
+    @SneakyThrows
+    void matchNone_head() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchNone(TestObject1.class, element -> element.name().equals(B))
+          .assertHead();
+    }
+
+    @Test
+    @SneakyThrows
+    void matchNone_vararg_head() {
+      // Arrange
+      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+
+      // Act & Assert
+      testAssertCollectionImpl
+          .assertCollectionMatchNone(
+              TestObject1.class, element -> element.name().equals(B), element -> element.id() == 3)
+          .assertHead();
     }
   }
 }

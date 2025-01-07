@@ -1,6 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssert1Byte;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert1Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssert1Content;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
@@ -38,6 +39,18 @@ public interface TestAssert2Status {
    * @since 1.1.0
    */
   TestAssert1Content assertContent();
+
+  /**
+   * Provides assertion methods for validating the HTTP response content as class.
+   *
+   * <p>This method returns an instance of {@code TestAssertClass}, which provides assertion methods
+   * for validating the content of the HTTP response, such as matching expected values or checking
+   * for emptiness.
+   *
+   * @return an instance of {@code TestAssertClass} for asserting the response content
+   * @since 1.4.0
+   */
+  TestAssert1Class assertClass();
 
   /**
    * Provides assertion methods for validating the HTTP response byte.
