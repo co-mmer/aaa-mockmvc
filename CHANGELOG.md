@@ -2,6 +2,70 @@
 
 # Changelog
 
+## [1.4.0]
+
+### Added
+
+- Collection Assertion
+    - **`assertCollectionNotEmpty()`**: Asserts that the collection in the HTTP response is not
+      empty.
+    - **`assertCollectionEmpty()`**: Asserts that the collection in the HTTP response is empty.
+    - **`assertCollectionSize(int)`**: Asserts that the size of the collection in the HTTP response
+      matches the given size.
+    - **`assertCollectionEquals(Class, Collection)`**: Asserts that the content of the HTTP response
+      matches the given collection of objects.
+    - **`assertCollectionContains(Class, Collection)`**: Asserts that the collection in the HTTP
+      response contains the expected elements.
+    - **`assertCollectionContains(Class, Object...)`**: Asserts that the collection in the HTTP
+      response
+      contains the specified elements (varargs).
+    - **`assertCollectionContainsAnyOrder(Class, Collection)`**: Asserts that the collection in the
+      HTTP
+      response matches the given collection of objects, ignoring order.
+    - **`assertCollectionNotContains(Class, Collection)`**: Asserts that the collection in the HTTP
+      response does not contain the specified elements.
+    - **`assertCollectionNotContains(Class, Object...)`**: Asserts that the collection in the HTTP
+      response does not contain the specified elements (varargs).
+    - **`assertCollectionMatchAll(Class, Predicate)`**: Asserts that all elements in the collection
+      in
+      the HTTP response match the specified condition.
+    - **`assertCollectionMatchAll(Class, Predicate...)`**: Asserts that all elements in the
+      collection
+      match the specified conditions.
+    - **`assertCollectionMatchAny(Class, Predicate)`**: Asserts that at least one element in the
+      collection in the HTTP response matches the specified condition.
+    - **`assertCollectionMatchAny(Class, Predicate...)`**: Asserts that at least one element in the
+      collection matches the specified conditions.
+    - **`assertCollectionMatchNone(Class, Predicate)`**: Asserts that none of the elements in the
+      collection in the HTTP response match the specified condition.
+    - **`assertCollectionMatchNone(Class, Predicate...)`**: Asserts that none of the elements in the
+      collection match any of the specified conditions.
+
+
+- Map Assertion
+    - **`assertMapNotEmpty()`**: Asserts that the map in the HTTP response is not empty.
+    - **`assertMapEmpty()`**: Asserts that the map in the HTTP response is empty.
+    - **`assertMapSize(int)`**: Asserts that the size of the map in the HTTP response matches the
+      given size.
+    - **`assertMapEquals(Class, Class, Map)`**: Asserts that the map in the HTTP response matches
+      the expected map of key-value pairs.
+
+
+- Byte Array Assertion
+    - **`assertByteNotEmpty()`**: Asserts that the byte array content of the HTTP response is not
+      empty.
+    - **`assertByteEmpty()`**: Asserts that the byte array content of the HTTP response is empty.
+    - **`assertByteEquals(byte[])`**: Asserts that the byte array content of the HTTP response
+      matches
+      the expected byte array.
+
+
+- Content Assertion Enhancements
+    - **`assertContentLength(int)`**: Asserts that the length of the response content matches the
+      specified length.
+
+---
+
 ## [1.3.0]
 
 ### Added
