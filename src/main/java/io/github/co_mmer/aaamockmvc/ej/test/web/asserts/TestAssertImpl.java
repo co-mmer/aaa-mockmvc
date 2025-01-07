@@ -30,16 +30,16 @@ import org.springframework.test.web.servlet.ResultActions;
  * <ul>
  *   <li>{@link #assertStatus()}: Provides assertion methods for validating the HTTP response
  *       status.
- *   <li>{@link #assertContent()}: Provides assertion methods for validating the HTTP response
- *       content.
- *   <li>{@link #assertClass()} ()}: Provides assertion methods for validating the HTTP response
- *       content as class.
- *   <li>{@link #assertByte()}: Provides assertion methods for validating the HTTP response byte
- *       data.
- *   <li>{@link #assertCollection()}: Provides assertion methods for validating the contents of an
- *       HTTP response collection.
- *   <li>{@link #assertMap()}: Provides assertion methods for validating the contents of an HTTP
- *       response map.
+ *   <li>{@link #assertContentAsString()}: Provides assertion methods for validating the HTTP
+ *       response content.
+ *   <li>{@link #assertContentAsClass()} ()}: Provides assertion methods for validating the HTTP
+ *       response content as class.
+ *   <li>{@link #assertContentAsByte()}: Provides assertion methods for validating the HTTP response
+ *       byte data.
+ *   <li>{@link #assertContentAsCollection()}: Provides assertion methods for validating the
+ *       contents of an HTTP response collection.
+ *   <li>{@link #assertContentAsMap()}: Provides assertion methods for validating the contents of an
+ *       HTTP response map.
  *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  *   <li>{@link #assertCustom()}: Provides assertion methods for validating the HTTP response with
  *       custom logic.
@@ -56,8 +56,8 @@ public final class TestAssertImpl implements TestAssert {
    * Constructs an instance of {@code TestAssertImpl} with the provided {@code ResultActions} and
    * {@code ObjectMapper}.
    *
-   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
-   *                     {@code null})
+   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
+   *     null})
    * @param objectMapper the {@code ObjectMapper} for JSON serialization (must not be {@code null})
    * @throws NullPointerException if either {@code actions} or {@code objectMapper} is {@code null}
    * @since 1.0.0
@@ -92,15 +92,14 @@ public final class TestAssertImpl implements TestAssert {
    * @since 1.0.0
    */
   @Override
-  public TestAssert1String assertContent() {
+  public TestAssert1String assertContentAsString() {
     return new TestAssertStringImpl(this.actions);
   }
 
   /**
    * Provides assertion methods for validating the HTTP response content as class.
    *
-   * <p>This method returns an instance of {@code TestAssertClass}, which provides assertion
-   * methods
+   * <p>This method returns an instance of {@code TestAssertClass}, which provides assertion methods
    * for validating the content of the HTTP response, such as matching expected values or checking
    * for emptiness.
    *
@@ -108,15 +107,14 @@ public final class TestAssertImpl implements TestAssert {
    * @since 1.4.0
    */
   @Override
-  public TestAssert1Class assertClass() {
+  public TestAssert1Class assertContentAsClass() {
     return new TestAssertClassImpl(this.actions, this.objectMapper);
   }
 
   /**
    * Provides assertion methods for validating the HTTP response byte.
    *
-   * <p>This method returns an instance of {@code TestAssert1Byte}, which provides assertion
-   * methods
+   * <p>This method returns an instance of {@code TestAssert1Byte}, which provides assertion methods
    * for validating the content of the HTTP response, such as matching expected values or checking
    * for emptiness.
    *
@@ -124,7 +122,7 @@ public final class TestAssertImpl implements TestAssert {
    * @since 1.4.0
    */
   @Override
-  public TestAssert1Byte assertByte() {
+  public TestAssert1Byte assertContentAsByte() {
     return new TestAssertByteImpl(this.actions);
   }
 
@@ -138,7 +136,7 @@ public final class TestAssertImpl implements TestAssert {
    * @since 1.4.0
    */
   @Override
-  public TestAssert1Collection assertCollection() {
+  public TestAssert1Collection assertContentAsCollection() {
     return new TestAssertCollectionImpl(this.actions, this.objectMapper);
   }
 
@@ -152,7 +150,7 @@ public final class TestAssertImpl implements TestAssert {
    * @since 1.4.0
    */
   @Override
-  public TestAssert1Map assertMap() {
+  public TestAssert1Map assertContentAsMap() {
     return new TestAssertMapImpl(this.actions, this.objectMapper);
   }
 

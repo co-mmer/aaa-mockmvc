@@ -7,8 +7,8 @@ import lombok.NonNull;
  * Provides methods for asserting HTTP response content in tests.
  *
  * <ul>
- *   <li>{@link #assertStringEquals(String)} (String)}: Asserts that the content of the HTTP response matches
- *       the expected string.
+ *   <li>{@link #assertStringEquals(String)} (String)}: Asserts that the content of the HTTP
+ *       response matches the expected string.
  *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  * </ul>
  *

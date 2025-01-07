@@ -32,7 +32,7 @@ public final class TestArrangeNormalizer {
    * Normalizes the string representation of a given object to ensure consistent text format.
    *
    * @param actual the object to be normalized (must not be {@code null})
-   * @param <T>    the type of the object being normalized
+   * @param <T> the type of the object being normalized
    * @return a normalized {@code String} representation of the object
    * @throws NullPointerException if {@code actual} is {@code null}
    * @since 1.3.0
@@ -46,7 +46,7 @@ public final class TestArrangeNormalizer {
    * are in a consistent format.
    *
    * @param actual the collection of objects to be normalized (must not be {@code null})
-   * @param <T>    the type of the objects in the list
+   * @param <T> the type of the objects in the list
    * @return a list of normalized {@code String} representations of the objects
    * @throws NullPointerException if {@code actual} is {@code null}
    * @since 1.4.0
@@ -60,7 +60,7 @@ public final class TestArrangeNormalizer {
    * are in a consistent format.
    *
    * @param actual the collection of objects to be normalized (must not be {@code null})
-   * @param <T>    the type of the objects in the list
+   * @param <T> the type of the objects in the list
    * @return a list of normalized {@code String} representations of the objects
    * @throws NullPointerException if {@code actual} is {@code null}
    * @since 1.4.0
@@ -78,8 +78,8 @@ public final class TestArrangeNormalizer {
    * consistent string format.
    *
    * @param actual the map containing key-value pairs to be normalized (must not be {@code null})
-   * @param <K>    the type of the keys in the map
-   * @param <V>    the type of the values in the map
+   * @param <K> the type of the keys in the map
+   * @param <V> the type of the values in the map
    * @return a map of normalized {@code String} keys and values
    * @throws NullPointerException if {@code actual} is {@code null}
    * @since 1.3.0

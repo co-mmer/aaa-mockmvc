@@ -316,48 +316,48 @@ class TestAssertStatusImplTest extends TestAssertBase {
   class nextSteps {
 
     @Test
-    void WHEN_assertContent_THEN_return_expected_class() {
+    void WHEN_assertContentAsStringTHEN_return_expected_class() {
       // Act
-      var assertContent = testAssert2.assertContent();
+      var assertContentAsString = testAssert2.assertContentAsString();
 
       // Assert
-      assertThat(assertContent.getClass(), is(TestAssertStringImpl.class));
+      assertThat(assertContentAsString.getClass(), is(TestAssertStringImpl.class));
     }
 
     @Test
-    void WHEN_assertClass_THEN_return_expected_class() {
+    void WHEN_assertContentAsClass_THEN_return_expected_class() {
       // Act
-      var assertClass = testAssert2.assertClass();
+      var assertContentAsClass = testAssert2.assertContentAsClass();
 
       // Assert
-      assertThat(assertClass.getClass(), is(TestAssertClassImpl.class));
+      assertThat(assertContentAsClass.getClass(), is(TestAssertClassImpl.class));
     }
 
     @Test
-    void WHEN_assertByte_THEN_return_expected_class() {
+    void WHEN_assertContentAsByte_THEN_return_expected_class() {
       // Act
-      var assertByte = testAssert2.assertByte();
+      var assertContentAsByte = testAssert2.assertContentAsByte();
 
       // Assert
-      assertThat(assertByte.getClass(), is(TestAssertByteImpl.class));
+      assertThat(assertContentAsByte.getClass(), is(TestAssertByteImpl.class));
     }
 
     @Test
-    void WHEN_assertCollection_THEN_return_expected_class() {
+    void WHEN_assertContentAsCollection_THEN_return_expected_class() {
       // Act
-      var assertCollection = testAssert2.assertCollection();
+      var assertContentAsCollection = testAssert2.assertContentAsCollection();
 
       // Assert
-      assertThat(assertCollection.getClass(), is(TestAssertCollectionImpl.class));
+      assertThat(assertContentAsCollection.getClass(), is(TestAssertCollectionImpl.class));
     }
 
     @Test
-    void WHEN_assertMap_THEN_return_expected_class() {
+    void WHEN_assertContentAsMap_THEN_return_expected_class() {
       // Act
-      var assertMap = testAssert2.assertMap();
+      var assertContentAsMap = testAssert2.assertContentAsMap();
 
       // Assert
-      assertThat(assertMap.getClass(), is(TestAssertMapImpl.class));
+      assertThat(assertContentAsMap.getClass(), is(TestAssertMapImpl.class));
     }
 
     @Test

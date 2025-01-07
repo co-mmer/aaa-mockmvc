@@ -36,8 +36,8 @@ public final class TestAssertStringImpl
   /**
    * Constructs an instance of {@code TestAssertContent} with the provided {@code ResultActions}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be
-   *                {@code null})
+   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
+   *     null})
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.0.0
    */
@@ -85,8 +85,7 @@ public final class TestAssertStringImpl
   }
 
   /**
-   * Asserts that the length of the string content of the HTTP response matches the specified
-   * value.
+   * Asserts that the length of the string content of the HTTP response matches the specified value.
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.

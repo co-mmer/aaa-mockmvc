@@ -70,49 +70,49 @@ class TestAssertImplTest {
   }
 
   @Test
-  void WHEN_assertContent_THEN_return_expected_class() {
+  void WHEN_assertContentAsString_THEN_return_expected_class() {
     // Act
-    var assertContent = this.testAssert.assertContent();
+    var assertContentAsString = this.testAssert.assertContentAsString();
 
     // Assert
-    assertThat(assertContent.getClass(), is(TestAssertStringImpl.class));
+    assertThat(assertContentAsString.getClass(), is(TestAssertStringImpl.class));
   }
 
   @Test
-  void WHEN_assertClass_THEN_return_expected_class() {
+  void WHEN_assertContentAsClass_THEN_return_expected_class() {
     // Act
-    var assertClass = this.testAssert.assertClass();
+    var assertContentAsClass = this.testAssert.assertContentAsClass();
 
     // Assert
-    assertThat(assertClass.getClass(), is(TestAssertClassImpl.class));
+    assertThat(assertContentAsClass.getClass(), is(TestAssertClassImpl.class));
   }
 
   @Test
-  void WHEN_assertByte_THEN_return_expected_class() {
+  void WHEN_assertContentAsByte_THEN_return_expected_class() {
 
     // Act
-    var assertByte = this.testAssert.assertByte();
+    var assertContentAsByte = this.testAssert.assertContentAsByte();
 
     // Assert
-    assertThat(assertByte.getClass(), is(TestAssertByteImpl.class));
+    assertThat(assertContentAsByte.getClass(), is(TestAssertByteImpl.class));
   }
 
   @Test
-  void WHEN_assertCollection_THEN_return_expected_class() {
+  void WHEN_assertContentAsCollection_THEN_return_expected_class() {
     // Act
-    var assertCollection = this.testAssert.assertCollection();
+    var assertContentAsCollection = this.testAssert.assertContentAsCollection();
 
     // Assert
-    assertThat(assertCollection.getClass(), is(TestAssertCollectionImpl.class));
+    assertThat(assertContentAsCollection.getClass(), is(TestAssertCollectionImpl.class));
   }
 
   @Test
-  void WHEN_assertMap_THEN_return_expected_class() {
+  void WHEN_assertContentAsMap_THEN_return_expected_class() {
     // Act
-    var assertMap = this.testAssert.assertMap();
+    var assertContentAsMap = this.testAssert.assertContentAsMap();
 
     // Assert
-    assertThat(assertMap.getClass(), is(TestAssertMapImpl.class));
+    assertThat(assertContentAsMap.getClass(), is(TestAssertMapImpl.class));
   }
 
   @Test

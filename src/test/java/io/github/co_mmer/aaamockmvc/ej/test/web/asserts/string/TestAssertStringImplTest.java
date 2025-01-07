@@ -289,9 +289,7 @@ class TestAssertStringImplTest extends TestAssertBase {
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertString
-          .assertStringLength(TEST_A1_JSON.length())
-          .assertStringEquals(TEST_A1_JSON);
+      testAssertString.assertStringLength(TEST_A1_JSON.length()).assertStringEquals(TEST_A1_JSON);
     }
 
     @Test

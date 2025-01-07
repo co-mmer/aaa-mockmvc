@@ -49,13 +49,14 @@ import org.springframework.test.web.servlet.ResultActions;
  *       Unauthorized.
  *   <li>{@link #assertStatusInRange(int, int)}: Asserts that the HTTP response status code is
  *       within a specified range.
- *   <li>{@link #assertContent()}: Provides assertion methods for validating the HTTP response
- *       content.
- *   <li>{@link #assertByte()}: Provides assertion methods for validating the HTTP response binary.
- *   <li>{@link #assertCollection()}: Provides assertion methods for validating the contents of an
- *       HTTP response collection.
- *   <li>{@link #assertMap()}: Provides assertion methods for validating the contents of an HTTP
- *       response map.
+ *   <li>{@link #assertContentAsString()}: Provides assertion methods for validating the HTTP
+ *       response content.
+ *   <li>{@link #assertContentAsByte()}: Provides assertion methods for validating the HTTP response
+ *       binary.
+ *   <li>{@link #assertContentAsCollection()}: Provides assertion methods for validating the
+ *       contents of an HTTP response collection.
+ *   <li>{@link #assertContentAsMap()}: Provides assertion methods for validating the contents of an
+ *       HTTP response map.
  *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  *   <li>{@link #assertCustom()}: Provides assertion methods for validating the HTTP response based
  *       on custom logic.
@@ -79,8 +80,8 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
    * Constructs an instance of {@code TestAssertStatusImpl} with the provided {@code ResultActions}
    * and {@code ObjectMapper}.
    *
-   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
-   *                     {@code null})
+   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
+   *     null})
    * @param objectMapper the {@code ObjectMapper} for JSON serialization (must not be {@code null})
    * @throws NullPointerException if either {@code actions} or {@code objectMapper} is {@code null}
    * @since 1.1.0
@@ -232,9 +233,9 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
    * Asserts that the HTTP response status code is within a specified range.
    *
    * @param minStatusCode the minimum expected status code (must be less than or equal to
-   *                      maxStatusCode)
+   *     maxStatusCode)
    * @param maxStatusCode the maximum expected status code (must be greater than or equal to
-   *                      minStatusCode)
+   *     minStatusCode)
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
    */
@@ -256,15 +257,14 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
    * @since 1.1.0
    */
   @Override
-  public TestAssert1String assertContent() {
+  public TestAssert1String assertContentAsString() {
     return new TestAssertStringImpl(this.actions);
   }
 
   /**
    * Provides assertion methods for validating the HTTP response content as class.
    *
-   * <p>This method returns an instance of {@code TestAssertClass}, which provides assertion
-   * methods
+   * <p>This method returns an instance of {@code TestAssertClass}, which provides assertion methods
    * for validating the content of the HTTP response, such as matching expected values or checking
    * for emptiness.
    *
@@ -272,7 +272,7 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
    * @since 1.4.0
    */
   @Override
-  public TestAssert1Class assertClass() {
+  public TestAssert1Class assertContentAsClass() {
     return new TestAssertClassImpl(this.actions, this.objectMapper);
   }
 
@@ -287,7 +287,7 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
    * @since 1.4.0
    */
   @Override
-  public TestAssert1Byte assertByte() {
+  public TestAssert1Byte assertContentAsByte() {
     return new TestAssertByteImpl(this.actions);
   }
 
@@ -301,7 +301,7 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
    * @since 1.4.0
    */
   @Override
-  public TestAssert1Collection assertCollection() {
+  public TestAssert1Collection assertContentAsCollection() {
     return new TestAssertCollectionImpl(this.actions, this.objectMapper);
   }
 
@@ -315,7 +315,7 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
    * @since 1.4.0
    */
   @Override
-  public TestAssert1Map assertMap() {
+  public TestAssert1Map assertContentAsMap() {
     return new TestAssertMapImpl(this.actions, this.objectMapper);
   }
 

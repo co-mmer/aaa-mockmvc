@@ -19,16 +19,16 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String
  * <ul>
  *   <li>{@link #assertStatus()}: Provides assertion methods for validating the HTTP response
  *       status.
- *   <li>{@link #assertContent()}: Provides assertion methods for validating the HTTP response
- *       content.
- *   <li>{@link #assertClass()} ()}: Provides assertion methods for validating the HTTP response
- *       content as class.
- *   <li>{@link #assertByte()}: Provides assertion methods for validating the HTTP response byte
- *       data.
- *   <li>{@link #assertCollection()}: Provides assertion methods for validating the contents of an
- *       HTTP response collection.
- *   <li>{@link #assertMap()}: Provides assertion methods for validating the contents of an HTTP
- *       response map.
+ *   <li>{@link #assertContentAsString()}: Provides assertion methods for validating the HTTP
+ *       response content.
+ *   <li>{@link #assertContentAsClass()} ()}: Provides assertion methods for validating the HTTP
+ *       response content as class.
+ *   <li>{@link #assertContentAsByte()}: Provides assertion methods for validating the HTTP response
+ *       byte data.
+ *   <li>{@link #assertContentAsCollection()}: Provides assertion methods for validating the
+ *       contents of an HTTP response collection.
+ *   <li>{@link #assertContentAsMap()}: Provides assertion methods for validating the contents of an
+ *       HTTP response map.
  *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  *   <li>{@link #assertCustom()}: Provides assertion methods for validating the HTTP response with
  *       custom logic.
@@ -59,33 +59,31 @@ public interface TestAssert {
    * @return an instance of {@code TestAssertContent} for asserting the response content
    * @since 1.0.0
    */
-  TestAssert1String assertContent();
+  TestAssert1String assertContentAsString();
 
   /**
    * Provides assertion methods for validating the HTTP response content as class.
    *
-   * <p>This method returns an instance of {@code TestAssertClass}, which provides assertion
-   * methods
+   * <p>This method returns an instance of {@code TestAssertClass}, which provides assertion methods
    * for validating the content of the HTTP response, such as matching expected values or checking
    * for emptiness.
    *
    * @return an instance of {@code TestAssertClass} for asserting the response content
    * @since 1.4.0
    */
-  TestAssert1Class assertClass();
+  TestAssert1Class assertContentAsClass();
 
   /**
    * Provides assertion methods for validating the HTTP response byte.
    *
-   * <p>This method returns an instance of {@code TestAssert1Byte}, which provides assertion
-   * methods
+   * <p>This method returns an instance of {@code TestAssert1Byte}, which provides assertion methods
    * for validating the content of the HTTP response, such as matching expected values or checking
    * for emptiness.
    *
    * @return an instance of {@code TestAssert1Byte} for asserting the response byte
    * @since 1.4.0
    */
-  TestAssert1Byte assertByte();
+  TestAssert1Byte assertContentAsByte();
 
   /**
    * Provides assertion methods for validating the contents of an HTTP response collection.
@@ -96,7 +94,7 @@ public interface TestAssert {
    * @return an instance of {@code TestAssert1Collection} for asserting the collection response
    * @since 1.4.0
    */
-  TestAssert1Collection assertCollection();
+  TestAssert1Collection assertContentAsCollection();
 
   /**
    * Provides assertion methods for validating the contents of an HTTP response map.
@@ -107,7 +105,7 @@ public interface TestAssert {
    * @return an instance of {@code TestAssert1Map} for asserting the map response
    * @since 1.4.0
    */
-  TestAssert1Map assertMap();
+  TestAssert1Map assertContentAsMap();
 
   /**
    * Provides assertion methods for validating the HTTP response headers.

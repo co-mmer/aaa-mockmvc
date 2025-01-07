@@ -704,7 +704,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     void
-    GIVEN_B1NEW_B2NEW_condition_B_NEW_WHEN_assertCollectionMatchNone_varargs_THEN_assert_false() {
+        GIVEN_B1NEW_B2NEW_condition_B_NEW_WHEN_assertCollectionMatchNone_varargs_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
 
@@ -721,7 +721,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     void
-    GIVEN_B1NEW_B2NEW_condition_B_CLOSE_WHEN_assertCollectionMatchNone_varargs_THEN_assert_false() {
+        GIVEN_B1NEW_B2NEW_condition_B_CLOSE_WHEN_assertCollectionMatchNone_varargs_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
 
@@ -738,7 +738,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     void
-    GIVEN_B1NEW_B2NEW_condition_A_CLOSE_WHEN_assertCollectionMatchNone_varargs_THEN_assert_is_true() {
+        GIVEN_B1NEW_B2NEW_condition_A_CLOSE_WHEN_assertCollectionMatchNone_varargs_THEN_assert_is_true() {
       // Arrange
       useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
 

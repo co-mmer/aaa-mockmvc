@@ -42,8 +42,7 @@ public interface TestAssert1String {
   TestAssertLString assertStringEmpty();
 
   /**
-   * Asserts that the length of the string content of the HTTP response matches the specified
-   * value.
+   * Asserts that the length of the string content of the HTTP response matches the specified value.
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
