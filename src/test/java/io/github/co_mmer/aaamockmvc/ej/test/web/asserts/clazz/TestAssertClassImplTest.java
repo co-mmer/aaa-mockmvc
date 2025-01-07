@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeObject;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeObject;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
@@ -18,8 +18,8 @@ import static org.mockito.Mockito.times;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject2;
 import java.util.stream.Stream;

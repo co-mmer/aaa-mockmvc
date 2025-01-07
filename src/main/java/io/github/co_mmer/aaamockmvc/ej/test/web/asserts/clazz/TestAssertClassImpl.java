@@ -1,9 +1,9 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeObject;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.ALL;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.ANY;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.NONE;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeObject;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -48,10 +48,10 @@ import org.springframework.test.web.servlet.ResultActions;
  */
 public final class TestAssertClassImpl
     implements TestAssert1Class,
-        TestAssert2Class,
-        TestAssert3Class,
-        TestAssert4Class,
-        TestAssertLClass {
+    TestAssert2Class,
+    TestAssert3Class,
+    TestAssert4Class,
+    TestAssertLClass {
 
   private final ResultActions actions;
   private final MockHttpServletResponse response;
@@ -60,10 +60,10 @@ public final class TestAssertClassImpl
   /**
    * Constructs an instance of {@code TestAssertContent} with the provided {@code ResultActions}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
-   * @param objectMapper the {@link ObjectMapper} used for JSON processing (must not be {@code
-   *     null})
+   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
+   *                     {@code null})
+   * @param objectMapper the {@link ObjectMapper} used for JSON processing (must not be
+   *                     {@code null})
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.4.0
    */
@@ -121,9 +121,9 @@ public final class TestAssertClassImpl
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
    * Unicode formats.
    *
-   * @param expectedClass the class of the expected object (must not be {@code null})
+   * @param expectedClass    the class of the expected object (must not be {@code null})
    * @param expectedResponse the expected object (must not be {@code null})
-   * @param <T> the type of the expected response
+   * @param <T>              the type of the expected response
    * @return the current instance of {@code TestAssertLClass} for method chaining
    * @since 1.4.0
    */
@@ -147,9 +147,9 @@ public final class TestAssertClassImpl
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param <T> the type of the expected response object
+   * @param <T>           the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param condition a predicate that the content must match (must not be {@code null})
+   * @param condition     a predicate that the content must match (must not be {@code null})
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
    */
@@ -178,10 +178,10 @@ public final class TestAssertClassImpl
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param <T> the type of the expected response object
+   * @param <T>           the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param conditions a varargs array of predicates that the content must match (must not be {@code
-   *     null})
+   * @param conditions    a varargs array of predicates that the content must match (must not be
+   *                      {@code null})
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
    */
@@ -200,9 +200,9 @@ public final class TestAssertClassImpl
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param <T> the type of the expected response object
+   * @param <T>           the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param condition a predicate that the content may match (must not be {@code null})
+   * @param condition     a predicate that the content may match (must not be {@code null})
    * @return the current instance of {@code TestAssertLClass} for method chaining
    * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
    */
@@ -220,10 +220,10 @@ public final class TestAssertClassImpl
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param <T> the type of the expected response object
+   * @param <T>           the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param conditions a varargs array of predicates that the content may match (must not be {@code
-   *     null})
+   * @param conditions    a varargs array of predicates that the content may match (must not be
+   *                      {@code null})
    * @return the current instance of {@code TestAssertLClass} for method chaining
    * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
    */
@@ -242,9 +242,9 @@ public final class TestAssertClassImpl
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param <T> the type of the expected response object
+   * @param <T>           the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param condition a predicate that the content must not match (must not be {@code null})
+   * @param condition     a predicate that the content must not match (must not be {@code null})
    * @return the current instance of {@code TestAssertLClass} for method chaining
    * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
    */
@@ -262,9 +262,9 @@ public final class TestAssertClassImpl
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @param <T> the type of the expected response object
+   * @param <T>           the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param conditions a predicate that the content must not match (must not be {@code null})
+   * @param conditions    a predicate that the content must not match (must not be {@code null})
    * @return the current instance of {@code TestAssertLClass} for method chaining
    * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
    */

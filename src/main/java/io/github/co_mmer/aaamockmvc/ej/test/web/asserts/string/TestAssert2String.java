@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import lombok.NonNull;
@@ -7,14 +7,14 @@ import lombok.NonNull;
  * Provides methods for asserting HTTP response content in tests.
  *
  * <ul>
- *   <li>{@link #assertContentEquals(String)}: Asserts that the content of the HTTP response matches
+ *   <li>{@link #assertStringEquals(String)} (String)}: Asserts that the content of the HTTP response matches
  *       the expected string.
  *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  * </ul>
  *
  * @since 1.0.0
  */
-public interface TestAssert2Content {
+public interface TestAssert2String {
 
   /**
    * Asserts that the string content of the HTTP response matches the expected string.
@@ -28,7 +28,7 @@ public interface TestAssert2Content {
    * @throws NullPointerException if the {@code expectedString} is {@code null}
    * @since 1.0.0
    */
-  TestAssertLContent assertContentEquals(@NonNull String expectedString);
+  TestAssertLString assertStringEquals(@NonNull String expectedString);
 
   /**
    * Provides assertion methods for validating the HTTP response headers.

@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string;
 
 import lombok.NonNull;
 
@@ -6,18 +6,18 @@ import lombok.NonNull;
  * Provides methods for asserting HTTP response content in tests.
  *
  * <ul>
- *   <li>{@link #assertContentNotEmpty()}: Asserts that the content of the HTTP response is not
+ *   <li>{@link #assertStringNotEmpty()}: Asserts that the content of the HTTP response is not
  *       empty.
- *   <li>{@link #assertContentEmpty()}: Asserts that the content of the HTTP response is empty.
- *   <li>{@link #assertContentLength(int)}: Asserts that the length of the response content matches
+ *   <li>{@link #assertStringEmpty()}: Asserts that the content of the HTTP response is empty.
+ *   <li>{@link #assertStringLength(int)}: Asserts that the length of the response content matches
  *       the specified length.
- *   <li>{@link #assertContentEquals(String)}: Asserts that the content of the HTTP response matches
+ *   <li>{@link #assertStringEquals(String)}: Asserts that the content of the HTTP response matches
  *       the expected string.
  * </ul>
  *
  * @since 1.0.0
  */
-public interface TestAssert1Content {
+public interface TestAssert1String {
 
   /**
    * Asserts that the string content of the HTTP response is not empty.
@@ -28,7 +28,7 @@ public interface TestAssert1Content {
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
-  TestAssert2Content assertContentNotEmpty();
+  TestAssert2String assertStringNotEmpty();
 
   /**
    * Asserts that the string content of the HTTP response is empty.
@@ -39,10 +39,11 @@ public interface TestAssert1Content {
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @since 1.0.0
    */
-  TestAssertLContent assertContentEmpty();
+  TestAssertLString assertStringEmpty();
 
   /**
-   * Asserts that the length of the string content of the HTTP response matches the specified value.
+   * Asserts that the length of the string content of the HTTP response matches the specified
+   * value.
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
@@ -51,7 +52,7 @@ public interface TestAssert1Content {
    * @return the current instance of {@code TestAssert2Content} for method chaining
    * @since 1.4.0
    */
-  TestAssert2Content assertContentLength(int length);
+  TestAssert2String assertStringLength(int length);
 
   /**
    * Asserts that the string content of the HTTP response matches the expected string.
@@ -68,5 +69,5 @@ public interface TestAssert1Content {
    * @throws NullPointerException if the {@code expectedString} is {@code null}
    * @since 1.0.0
    */
-  TestAssertLContent assertContentEquals(@NonNull String expectedString);
+  TestAssertLString assertStringEquals(@NonNull String expectedString);
 }

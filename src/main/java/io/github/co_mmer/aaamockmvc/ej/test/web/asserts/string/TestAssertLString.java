@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 
@@ -11,7 +11,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
  *
  * @since 1.0.0
  */
-public interface TestAssertLContent {
+public interface TestAssertLString {
 
   /**
    * Provides assertion methods for validating the HTTP response headers.

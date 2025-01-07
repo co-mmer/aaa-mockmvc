@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string;
 
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_LIST;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_LIST_NORMALIZED;

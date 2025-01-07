@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeCollection;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeCollection;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
@@ -28,8 +28,8 @@ import static org.mockito.Mockito.times;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject2;
@@ -704,7 +704,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     void
-        GIVEN_B1NEW_B2NEW_condition_B_NEW_WHEN_assertCollectionMatchNone_varargs_THEN_assert_false() {
+    GIVEN_B1NEW_B2NEW_condition_B_NEW_WHEN_assertCollectionMatchNone_varargs_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
 
@@ -721,7 +721,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     void
-        GIVEN_B1NEW_B2NEW_condition_B_CLOSE_WHEN_assertCollectionMatchNone_varargs_THEN_assert_false() {
+    GIVEN_B1NEW_B2NEW_condition_B_CLOSE_WHEN_assertCollectionMatchNone_varargs_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
 
@@ -738,7 +738,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     void
-        GIVEN_B1NEW_B2NEW_condition_A_CLOSE_WHEN_assertCollectionMatchNone_varargs_THEN_assert_is_true() {
+    GIVEN_B1NEW_B2NEW_condition_A_CLOSE_WHEN_assertCollectionMatchNone_varargs_THEN_assert_is_true() {
       // Arrange
       useServerWithResponse(TEST_LIST_B1NEW_B2NEW_JSON);
 

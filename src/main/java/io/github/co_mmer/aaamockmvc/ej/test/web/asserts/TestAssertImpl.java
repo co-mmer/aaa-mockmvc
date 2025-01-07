@@ -7,8 +7,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert1Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssertClassImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCollectionImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssert1Content;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
@@ -17,6 +15,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertMapImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssertStatusImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssertStringImpl;
 import lombok.NonNull;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -56,8 +56,8 @@ public final class TestAssertImpl implements TestAssert {
    * Constructs an instance of {@code TestAssertImpl} with the provided {@code ResultActions} and
    * {@code ObjectMapper}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
+   * @param actions      the {@code ResultActions} from a performed HTTP request (must not be
+   *                     {@code null})
    * @param objectMapper the {@code ObjectMapper} for JSON serialization (must not be {@code null})
    * @throws NullPointerException if either {@code actions} or {@code objectMapper} is {@code null}
    * @since 1.0.0
@@ -92,14 +92,15 @@ public final class TestAssertImpl implements TestAssert {
    * @since 1.0.0
    */
   @Override
-  public TestAssert1Content assertContent() {
-    return new TestAssertContentImpl(this.actions);
+  public TestAssert1String assertContent() {
+    return new TestAssertStringImpl(this.actions);
   }
 
   /**
    * Provides assertion methods for validating the HTTP response content as class.
    *
-   * <p>This method returns an instance of {@code TestAssertClass}, which provides assertion methods
+   * <p>This method returns an instance of {@code TestAssertClass}, which provides assertion
+   * methods
    * for validating the content of the HTTP response, such as matching expected values or checking
    * for emptiness.
    *
@@ -114,7 +115,8 @@ public final class TestAssertImpl implements TestAssert {
   /**
    * Provides assertion methods for validating the HTTP response byte.
    *
-   * <p>This method returns an instance of {@code TestAssert1Byte}, which provides assertion methods
+   * <p>This method returns an instance of {@code TestAssert1Byte}, which provides assertion
+   * methods
    * for validating the content of the HTTP response, such as matching expected values or checking
    * for emptiness.
    *

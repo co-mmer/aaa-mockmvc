@@ -1,6 +1,6 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeObject;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeObject;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -15,20 +15,20 @@ import org.springframework.test.web.servlet.ResultActions;
  * Provides methods for asserting HTTP response content in tests.
  *
  * <ul>
- *   <li>{@link #assertContentNotEmpty()}: Asserts that the content of the HTTP response is not
+ *   <li>{@link #assertStringNotEmpty()}: Asserts that the content of the HTTP response is not
  *       empty.
- *   <li>{@link #assertContentEmpty()}: Asserts that the content of the HTTP response is empty.
- *   <li>{@link #assertContentLength(int)}: Asserts that the length of the response content matches
+ *   <li>{@link #assertStringEmpty()}: Asserts that the content of the HTTP response is empty.
+ *   <li>{@link #assertStringLength(int)}: Asserts that the length of the response content matches
  *       the specified length.
- *   <li>{@link #assertContentEquals(String)}: Asserts that the content of the HTTP response matches
+ *   <li>{@link #assertStringEquals(String)}: Asserts that the content of the HTTP response matches
  *       the expected string.
  *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  * </ul>
  *
  * @since 1.0.0
  */
-public final class TestAssertContentImpl
-    implements TestAssert1Content, TestAssert2Content, TestAssertLContent {
+public final class TestAssertStringImpl
+    implements TestAssert1String, TestAssert2String, TestAssertLString {
 
   private final ResultActions actions;
   private final MockHttpServletResponse response;
@@ -36,12 +36,12 @@ public final class TestAssertContentImpl
   /**
    * Constructs an instance of {@code TestAssertContent} with the provided {@code ResultActions}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
+   * @param actions the {@code ResultActions} from a performed HTTP request (must not be
+   *                {@code null})
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.0.0
    */
-  public TestAssertContentImpl(@NonNull ResultActions actions) {
+  public TestAssertStringImpl(@NonNull ResultActions actions) {
     this.actions = actions;
     this.response = actions.andReturn().getResponse();
   }
@@ -56,7 +56,7 @@ public final class TestAssertContentImpl
    * @since 1.0.0
    */
   @Override
-  public TestAssert2Content assertContentNotEmpty() {
+  public TestAssert2String assertStringNotEmpty() {
     try {
       assertThat(this.response.getContentAsString().isEmpty(), is(false));
     } catch (Exception e) {
@@ -75,7 +75,7 @@ public final class TestAssertContentImpl
    * @since 1.0.0
    */
   @Override
-  public TestAssertLContent assertContentEmpty() {
+  public TestAssertLString assertStringEmpty() {
     try {
       assertThat(this.response.getContentAsString().isEmpty(), is(true));
     } catch (Exception e) {
@@ -85,7 +85,8 @@ public final class TestAssertContentImpl
   }
 
   /**
-   * Asserts that the length of the string content of the HTTP response matches the specified value.
+   * Asserts that the length of the string content of the HTTP response matches the specified
+   * value.
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
@@ -95,7 +96,7 @@ public final class TestAssertContentImpl
    * @since 1.4.0
    */
   @Override
-  public TestAssert2Content assertContentLength(int length) {
+  public TestAssert2String assertStringLength(int length) {
     try {
       assertThat(this.response.getContentAsString().length(), is(length));
     } catch (Exception e) {
@@ -119,7 +120,7 @@ public final class TestAssertContentImpl
    * @since 1.0.0
    */
   @Override
-  public TestAssertLContent assertContentEquals(@NonNull String expectedString) {
+  public TestAssertLString assertStringEquals(@NonNull String expectedString) {
     try {
       var content = this.response.getContentAsString();
       assertThat(normalizeObject(content), is(normalizeObject(expectedString)));

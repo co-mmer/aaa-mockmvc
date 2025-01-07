@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer.normalizeMap;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeMap;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A3;
@@ -17,8 +17,8 @@ import static org.mockito.Mockito.times;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
 import java.util.stream.Stream;
