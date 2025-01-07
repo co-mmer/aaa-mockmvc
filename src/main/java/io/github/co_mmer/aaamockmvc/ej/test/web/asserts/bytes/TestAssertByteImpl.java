@@ -38,8 +38,8 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
   /**
    * Constructs an instance of {@code TestAssertContent} with the provided {@code ResultActions}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be
-   *                {@code null})
+   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
+   *     null})
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.4.0
    */

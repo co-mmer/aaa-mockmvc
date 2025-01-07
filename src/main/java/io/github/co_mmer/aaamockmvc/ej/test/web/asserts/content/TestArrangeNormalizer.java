@@ -6,7 +6,6 @@ import java.text.Normalizer.Form;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -72,22 +71,6 @@ public final class TestArrangeNormalizer {
 
   private static <T> Object normalizAsObject(@NonNull T actual) {
     return normalize(actual.toString(), Form.NFC);
-  }
-
-  /**
-   * Normalizes the string representations of elements in the provided set, ensuring a consistent
-   * text format for each element.
-   *
-   * @param actual the set of objects to be normalized (must not be {@code null})
-   * @param <T> the type of the objects in the set
-   * @return a set of normalized {@code String} representations of the objects
-   * @throws NullPointerException if {@code actual} is {@code null}
-   * @since 1.3.0
-   */
-  public static <T> Set<String> normalizeSet(@NonNull Set<T> actual) {
-    return actual.stream()
-        .map(element -> normalizeObject(element.toString()))
-        .collect(Collectors.toSet());
   }
 
   /**

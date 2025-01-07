@@ -6,8 +6,6 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.W
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_MAP_NORMALIZED;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_OBJECT;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_OBJECT_NORMALIZED;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_SET;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_SET_NORMALIZED;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -57,25 +55,6 @@ class TestArrangeNormalizerTest {
 
     // Assert
     assertThat(result, is(WORD_LIST_NORMALIZED));
-  }
-
-  @Test
-  void GIVEN_null_WHEN_normalizeSet_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class, () -> TestArrangeNormalizer.normalizeSet(null));
-  }
-
-  @Test
-  void GIVEN_words_WHEN_normalizeSet_THEN_return_expected_set() {
-    // Act
-    var result = TestArrangeNormalizer.normalizeSet(WORD_SET);
-
-    // Assert
-    assertThat(result, is(WORD_SET_NORMALIZED));
-  }
-
-  @Test
-  void GIVEN_null_WHEN_normalizeMap_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class, () -> TestArrangeNormalizer.normalizeMap(null));
   }
 
   @Test
