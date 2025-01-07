@@ -23,6 +23,8 @@ import org.springframework.test.web.servlet.ResultActions;
  *       empty.
  *   <li>{@link #assertByteEquals(byte[])}: Asserts that the byte array content of the HTTP response
  *       matches the expected byte array.
+ *   <li>{@link #assertByteLength(int)}: Asserts that the length of the byte array content of the
+ *       HTTP response matches the specified value.
  *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  * </ul>
  *
@@ -36,8 +38,8 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
   /**
    * Constructs an instance of {@code TestAssertContent} with the provided {@code ResultActions}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
-   *     null})
+   * @param actions the {@code ResultActions} from a performed HTTP request (must not be
+   *                {@code null})
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.4.0
    */

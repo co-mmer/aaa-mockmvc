@@ -55,6 +55,8 @@
     - **`assertByteNotEmpty()`**: Asserts that the byte array content of the HTTP response is not
       empty.
     - **`assertByteEmpty()`**: Asserts that the byte array content of the HTTP response is empty.
+    - **`assertByteLength(int)`**: Asserts that the length of the byte array content of the
+      HTTP response matches the specified value.
     - **`assertByteEquals(byte[])`**: Asserts that the byte array content of the HTTP response
       matches
       the expected byte array.
