@@ -20,7 +20,7 @@ is not empty.
       .act()
       .actPerform()
       .asserts()
-      .assertByte()
+      .assertContentAsByte()
       .assertByteNotEmpty()
 ```
 
@@ -37,7 +37,7 @@ is empty.
       .act()
       .actPerform()
       .asserts()
-      .assertByte()
+      .assertContentAsByte()
       .assertByteEmpty()
 ```
 
@@ -54,7 +54,7 @@ response.
       .act()
       .actPerform()
       .asserts()
-      .assertByte()
+      .assertContentAsByte()
       .assertByteLength(5)
 ```
 
@@ -71,7 +71,7 @@ matches an expected byte array.
       .act()
       .actPerform()
       .asserts()
-      .assertByte()
+      .assertContentAsByte()
       .assertByteEquals(EXPECTED_BYTE_ARRAY)
 ```
 

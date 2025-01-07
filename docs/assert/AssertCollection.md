@@ -1,6 +1,6 @@
 #### [← back](../../README.md)
 
-### Assert Collection 🔸 (New)
+### Assert Content As Collection 🔸 (New)
 
 - [Not Empty](#not-empty)
 - [Empty](#empty)
@@ -29,7 +29,7 @@ methods which are contextually appropriate are available.
           .act()
           .actPerform()
           .asserts()
-          .assertCollection()
+          .assertContentAsCollection()
           .assertCollectionNotEmpty()
 ```
 
@@ -47,7 +47,7 @@ be semantically incorrect to validate additional properties on an empty result.
           .act()
           .actPerform()
           .asserts()
-          .assertCollection()
+          .assertContentAsCollection()
           .assertCollectionEmpty();
 ```
 
@@ -69,7 +69,7 @@ check the size after comparing the collection's contents.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionSize(2)
 ```
 
@@ -108,7 +108,7 @@ expected List of objects both in content and order.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionEquals(DemoObject.class, List.of(A1, A2))
 ```
 
@@ -141,7 +141,7 @@ response matches the expected collection, ignoring the order of the elements.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionContainsAnyOrder(DemoObject.class, List.of(A2, A1));
 ```
 
@@ -183,7 +183,7 @@ exist within the collection returned in the response.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionNotContains(DemoObject.class, A3);
 ```
 
@@ -193,7 +193,7 @@ exist within the collection returned in the response.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionNotContains(DemoObject.class, A3, A4, ...);
 ```
 
@@ -203,7 +203,7 @@ exist within the collection returned in the response.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionNotContains(DemoObject.class, List.of(A3, A4));
 ```
 
@@ -242,7 +242,7 @@ exist within the collection returned in the response.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionContains(DemoObject.class, A1);
 ```
 
@@ -252,7 +252,7 @@ exist within the collection returned in the response.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionContains(DemoObject.class, A1, A2, ...);
 ```
 
@@ -262,7 +262,7 @@ exist within the collection returned in the response.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionContains(DemoObject.class, List.of(A1, A2));
 ```
 
@@ -302,7 +302,7 @@ for every element in the collection.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionMatchAll(DemoMatch.class, element -> element.name().equals(A));
 ```
 
@@ -312,7 +312,7 @@ for every element in the collection.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionMatchAll(DemoMatch.class,
             element -> element.name().equals(A),
             element -> element.status().equals(NEW));
@@ -354,7 +354,7 @@ conditions.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionMatchAny(DemoMatch.class, element -> element.name().equals(A));
 ```
 
@@ -364,7 +364,7 @@ conditions.
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionMatchAny(DemoMatch.class,
             element -> element.name().equals(A),
             element -> element.status().equals(CLOSE));
@@ -405,7 +405,7 @@ conditions, and it will pass if **none of the elements** satisfy the given condi
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionMatchNone(DemoMatch.class, element -> element.name().equals(B));
 ```
 
@@ -415,7 +415,7 @@ conditions, and it will pass if **none of the elements** satisfy the given condi
       .act()
       .actPerform()
       .asserts()
-      .assertCollection()
+      .assertContentAsCollection()
       .assertCollectionMatchNone(DemoMatch.class,
             element -> element.name().equals(B),
             element -> element.status().equals(CLOSE));

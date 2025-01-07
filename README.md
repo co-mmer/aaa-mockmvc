@@ -288,10 +288,11 @@ In the provided library, every test follows the AAA structure using the followin
 ### Assert
 
 - [Assert Status](docs/assert/AssertStatus.md)
-- [Assert Content](docs/assert/AssertContent.md)
-- [Assert Byte](docs/assert/AssertByte.md)
-- [Assert Collection 🔸 (New)](docs/assert/AssertCollection.md)
-- [Assert Map 🔸 (New)](docs/assert/AssertMap.md)
+- [Assert ContentAsString](docs/assert/AssertString.md)
+- [Assert ContentAsClass 🔸 (New)](docs/assert/AssertClass.md)
+- [Assert ContentAsByte](docs/assert/AssertByte.md)
+- [Assert ContentAsCollection 🔸 (New)](docs/assert/AssertCollection.md)
+- [Assert ContentAsMap 🔸 (New)](docs/assert/AssertMap.md)
 - [Assert Head](docs/assert/AssertHead.md)
 - [Assert Custom](docs/assert/AssertCustom.md)
 
@@ -315,13 +316,11 @@ parameter. The following steps are executed:
 4. **Act**: The request is executed with the `act()` method, followed by `actPerform()` to send
    the request.
 5. **Assertions**: Several assertions are made to verify the response:
-    - The response is asserted to be non-empty using `assertContentNotEmpty()`.
+    - The response is asserted to be non-empty using `assertCollectionNotEmpty()`.
     - The HTTP status of the response is asserted to be `HttpStatus.OK`, ensuring the request was
       successful.
-    - The response content size is asserted to match the expected number of items
-      using `assertContentSize(2)`, confirming that the correct number of objects is returned.
-    - The response content is asserted to match the expected list of `DemoDto` objects
-      using `assertContentEquals`, confirming that the API returns the correct data structure.
+    - The response content is asserted to match the expected list of `DemoSimple` objects
+      using `assertCollectionEquals`, confirming that the API returns the correct data structure.
 
 This structured approach helps ensure that the endpoint behaves as expected and returns the correct
 list of DTOs.
@@ -341,10 +340,9 @@ void WHEN_call_endpoint_THEN_return_expected_list_dto() {
       .asserts()
       .assertStatus()
       .assertStatusIsOk()
-      .assertContent()
-      .assertContentNotEmpty()
-      .assertContentSize(2)
-      .assertContentEquals(DemoDto.class, EXPECTED_LIST);
+      .assertContentAsCollection()
+      .assertCollectionNotEmpty()
+      .assertCollectionEquals(DemoSimple.class, EXPECTED_LIST);
 }
 ```
 
@@ -405,55 +403,56 @@ Step 1: Send the Request (GET)
 
 1. **Arrange**: The URL for the update endpoint (`GET_DEMO`) is arranged
    using `arrangeUrl`.
-2. **Arrange BODY**: The `DemoA` object, previously updated with a new name (`demoAUpdated`),
-   is serialized into JSON using `arrangeJson` and set as the request body.
+2. **Arrange BODY**: The `DemoSimple` object, previously updated with a new
+   name (`demoSimpleUpdated`), is serialized into JSON using `arrangeJson` and set as the request
+   body.
 3. **Action**: The `PUT` request is executed using `act()` followed by `actPerform()` to send the
    updated resource to the endpoint.
 4. **Answer**: The response is processed using `answer()`, and the content is deserialized into a
-   `DemoA` object using `answerAsObject(DemoA.class)`. This allows the response data to be used in
-   subsequent steps.
+   `DemoSimple` object using `answerAsObject(DemoSimple.class)`. This allows the response data to be
+   used in subsequent steps.
 
 Step 2: Send the Modify DemoA (PUT)
 
 1. **Arrange**: The initial setup is performed, including defining the request URL for the PUT
    endpoint.
 2. **Arrange URL**: The URL is arranged using arrangeUrl, targeting the PUT_EXAMPLE endpoint.
-3. **Arrange BODY**: The body is arranged using `arrangeJson(demoA)`, where the response from the
-   previous request `(demoA)` is serialized and passed as the body of the PUT request.
+3. **Arrange BODY**: The body is arranged using `arrangeJson(demoSimpleUpdated)`, where the response
+   from the previous request `(DemoSimple)` is serialized and passed as the body of the PUT request.
 4. **Action**: The request is executed with the `act()` method, followed by `actPerform()` to send
    the
    request.
-5. **Assertions**: The response status is asserted to be 200 (or the expected status), confirming
+5. **Assertions**: The response status is asserted to be 201 (or the expected status), confirming
    the successful update of the resource. Optionally, the content of the response can be validated
    to ensure it matches the expected result.
 
 ```java
 
 @Test
-void GIVEN_demoA_with_new_name_WHEN_update_THEN_return_expected_object() {
+void WHEN_update_THEN_return_expected_object() {
 
-  var demoA = get()
+  var demoSimple = get()
       .arrange()
       .arrangeUrl(GET_DEMO)
       .act()
       .actPerform()
       .answer()
-      .answerAsObject(DemoA.class);
+      .answerAsObject(DemoSimple.class);
 
-  var demoAUpdated = demoA.withName(TEST_UPDATED);
+  var demoSimpleUpdated = demoSimple.withName(TEST_NEW_NAME);
 
   put()
       .arrange()
       .arrangeUrl(PUT_DEMO)
       .arrangeBody()
-      .arrangeJson(demoAUpdated)
+      .arrangeJson(demoSimpleUpdated)
       .act()
       .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsCreated()
-      .assertContent()
-      .assertContentEquals(DemoA.class, TEST_A1_UPDATED);
+      .assertContentAsClass()
+      .assertClassEquals(DemoSimple.class, A1_UPDATED);
 }
 ```
 

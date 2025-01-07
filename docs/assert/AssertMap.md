@@ -1,6 +1,6 @@
 #### [← back](../../README.md)
 
-### Assert Map 🔸 (New)
+### Assert Content As Map 🔸 (New)
 
 - [Not Empty](#not-empty)
 - [Empty](#empty)
@@ -20,7 +20,7 @@ empty. This assertion ensures that the map contains at least one entry.
           .act()
           .actPerform()
           .asserts()
-          .assertMap()
+          .assertContentAsMap()
           .assertMapNotEmpty()
 ```
 
@@ -37,7 +37,7 @@ This assertion ensures that the map does not contain any entries.
           .act()
           .actPerform()
           .asserts()
-          .assertMap()
+          .assertContentAsMap()
           .assertMapEmpty()
 ```
 
@@ -54,7 +54,7 @@ number of entries. This assertion ensures that the map size matches the specifie
       .act()
       .actPerform()
       .asserts()
-      .assertMap()
+      .assertContentAsMap()
       .assertMapSize(2)
 ```
 
@@ -94,7 +94,7 @@ ensure the correct key-value pairs are present.
     .act()
     .actPerform()
     .asserts()
-    .assertMap()
+    .assertContentAsMap()
     .assertMapEquals(Integer.class, DemoObject.class, Map.of(1, A1, 2, A2));
 
 ```

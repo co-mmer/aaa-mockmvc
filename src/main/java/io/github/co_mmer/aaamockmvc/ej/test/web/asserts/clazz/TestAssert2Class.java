@@ -74,6 +74,7 @@ public interface TestAssert2Class {
    * @return the current instance of {@code TestAssertContent} for method chaining
    * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
    */
+  @SuppressWarnings("unchecked")
   <T> TestAssert3Class assertClassMatchAll(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions);
 
@@ -105,6 +106,7 @@ public interface TestAssert2Class {
    * @return the current instance of {@code TestAssertLClass} for method chaining
    * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
    */
+  @SuppressWarnings("unchecked")
   <T> TestAssert4Class assertClassMatchAny(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions);
 
@@ -136,6 +138,7 @@ public interface TestAssert2Class {
    * @return the current instance of {@code TestAssertLClass} for method chaining
    * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
    */
+  @SuppressWarnings("unchecked")
   <T> TestAssertLClass assertClassMatchNone(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions);
 
