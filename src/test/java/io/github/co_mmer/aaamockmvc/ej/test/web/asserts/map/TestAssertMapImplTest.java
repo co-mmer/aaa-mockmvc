@@ -24,6 +24,7 @@ import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -87,13 +89,30 @@ class TestAssertMapImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_unexpected_WHEN_assertMapNotEmpty_THEN_assert_false() throws Exception {
+    void GIVEN_exception_WHEN_assertMapNotEmpty_THEN_assert_false() throws Exception {
       // Arrange
       useServerWithStringException();
-      var testAssertMap = new TestAssertMapImpl(actions, new ObjectMapper());
+      var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertMap::assertMapNotEmpty);
+      assertThrows(AssertionError.class, testAssertException::assertMapNotEmpty);
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertMapNotEmpty_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertMapNotEmpty();
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
@@ -127,6 +146,23 @@ class TestAssertMapImplTest extends TestAssertBase {
 
       // Act & Assert
       assertThrows(AssertionError.class, testAssertMap::assertMapEmpty);
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertMapEmpty_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertMapEmpty();
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
@@ -164,6 +200,23 @@ class TestAssertMapImplTest extends TestAssertBase {
           () -> testAssert.assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2));
 
       mockTestGenericMapper.close();
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertMapEquals_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
 
     @Test
@@ -211,6 +264,23 @@ class TestAssertMapImplTest extends TestAssertBase {
 
       // Act & Assert
       assertThrows(AssertionFailedError.class, () -> testAssertMap.assertMapSize(1));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertMapSize_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useResultException();
+      var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertMapSize(1);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
