@@ -34,10 +34,6 @@ public interface TestAssert2Status {
   /**
    * Provides assertion methods for validating the HTTP response content.
    *
-   * <p>This method returns an instance of {@code TestAssertContent}, which provides assertion
-   * methods for validating the content of the HTTP response, such as matching expected values or
-   * checking for emptiness.
-   *
    * @return an instance of {@code TestAssertContent} for asserting the response content
    * @since 1.1.0
    */
@@ -45,10 +41,6 @@ public interface TestAssert2Status {
 
   /**
    * Provides assertion methods for validating the HTTP response content as class.
-   *
-   * <p>This method returns an instance of {@code TestAssertClass}, which provides assertion methods
-   * for validating the content of the HTTP response, such as matching expected values or checking
-   * for emptiness.
    *
    * @return an instance of {@code TestAssertClass} for asserting the response content
    * @since 1.4.0
@@ -58,10 +50,6 @@ public interface TestAssert2Status {
   /**
    * Provides assertion methods for validating the HTTP response byte.
    *
-   * <p>This method returns an instance of {@code TestAssert1Byte}, which provides assertion methods
-   * for validating the content of the HTTP response, such as matching expected values or checking
-   * for emptiness.
-   *
    * @return an instance of {@code TestAssert1Byte} for asserting the response byte
    * @since 1.4.0
    */
@@ -69,9 +57,6 @@ public interface TestAssert2Status {
 
   /**
    * Provides assertion methods for validating the contents of an HTTP response collection.
-   *
-   * <p>This method returns an instance of {@code TestAssert1Collection}, which provides assertion
-   * methods for validating the contents of an HTTP response when the response is a collection.
    *
    * @return an instance of {@code TestAssert1Collection} for asserting the collection response
    * @since 1.4.0
@@ -81,9 +66,6 @@ public interface TestAssert2Status {
   /**
    * Provides assertion methods for validating the contents of an HTTP response map.
    *
-   * <p>This method returns an instance of {@code TestAssert1Map}, which provides assertion methods
-   * for validating the contents of an HTTP response when the response is a map.
-   *
    * @return an instance of {@code TestAssert1Map} for asserting the map response
    * @since 1.4.0
    */
@@ -92,10 +74,6 @@ public interface TestAssert2Status {
   /**
    * Provides assertion methods for validating the HTTP response headers.
    *
-   * <p>This method returns an instance of {@code TestAssertHead}, which provides assertion methods
-   * for validating the headers of the HTTP response, such as checking for the presence or absence
-   * of specific headers and comparing header values.
-   *
    * @return an instance of {@code TestAssertHead} for asserting the response headers
    * @since 1.0.0
    */
@@ -103,10 +81,6 @@ public interface TestAssert2Status {
 
   /**
    * Provides assertion methods for validating the HTTP response based on custom logic.
-   *
-   * <p>This method returns an instance of {@code TestAssertCustom}, which allows users to define
-   * custom validation logic or result matchers for the HTTP response, offering flexibility beyond
-   * standard status, content, and header assertions.
    *
    * @return an instance of {@code TestAssertCustom} for custom assertions on the response
    * @since 1.1.0
