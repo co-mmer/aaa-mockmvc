@@ -231,11 +231,10 @@ class TestAssertStringImplTest extends TestAssertBase {
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_assertStringEquals_THEN_throw_NullPointerException() {
       // Arrange
-      var testAssertContentException = new TestAssertStringImpl(actions);
+      var testAssert = new TestAssertStringImpl(actions);
 
       // Act & Assert
-      assertThrows(
-          NullPointerException.class, () -> testAssertContentException.assertStringEquals(null));
+      assertThrows(NullPointerException.class, () -> testAssert.assertStringEquals(null));
     }
   }
 
