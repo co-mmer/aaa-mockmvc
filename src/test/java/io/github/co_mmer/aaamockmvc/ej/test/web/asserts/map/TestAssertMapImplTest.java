@@ -21,6 +21,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
+import java.util.Map;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
@@ -231,6 +232,31 @@ class TestAssertMapImplTest extends TestAssertBase {
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeMap(any()), times(2));
       mockTestArrangeNormalizer.close();
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideNullParameters")
+    @SneakyThrows
+    @SuppressWarnings("all")
+    void GIVEN_null_as_expectedMap_WHEN_assertMapEquals_THEN_throw_NullPointerException(
+        Class<Integer> keyClass,
+        Class<TestObject1> valueClass,
+        Map<Integer, TestObject1> expectedMap) {
+
+      // Arrange
+      var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
+
+      // Act & Assert
+      assertThrows(
+          NullPointerException.class,
+          () -> testAssertException.assertMapEquals(keyClass, valueClass, expectedMap));
+    }
+
+    private static Stream<Arguments> provideNullParameters() {
+      return Stream.of(
+          Arguments.of(Integer.class, TestObject1.class, null),
+          Arguments.of(Integer.class, null, TEST_MAP_A1_A2),
+          Arguments.of(null, TestObject1.class, TEST_MAP_A1_A2));
     }
   }
 

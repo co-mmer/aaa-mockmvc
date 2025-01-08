@@ -225,6 +225,18 @@ class TestAssertStringImplTest extends TestAssertBase {
       mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
       mockTestArrangeNormalizer.close();
     }
+
+    @Test
+    @SneakyThrows
+    @SuppressWarnings("all")
+    void GIVEN_null_WHEN_assertStringEquals_THEN_throw_NullPointerException() {
+      // Arrange
+      var testAssertContentException = new TestAssertStringImpl(actions);
+
+      // Act & Assert
+      assertThrows(
+          NullPointerException.class, () -> testAssertContentException.assertStringEquals(null));
+    }
   }
 
   @Nested
