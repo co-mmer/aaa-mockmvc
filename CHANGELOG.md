@@ -82,11 +82,10 @@
 
 ### Upgraded
 
-- Version Update:
-    - lombok 1.18.34 → 1.18.36
-    - spring-boot-starter-web 3.4.0 → 3.4.1
-    - spring-boot-starter-test 3.4.0 → 3.4.1
-    - mockito-core 5.14.2 → 5.15.2
+- lombok 1.18.34 → 1.18.36
+- spring-boot-starter-web 3.4.0 → 3.4.1
+- spring-boot-starter-test 3.4.0 → 3.4.1
+- mockito-core 5.14.2 → 5.15.2
 
 ---
 
