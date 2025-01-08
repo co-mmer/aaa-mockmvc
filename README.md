@@ -30,7 +30,7 @@ ___
 - [Installation](#Installation)
 - [Setup](#setup)
 - [Writing Tests](#writing-tests)
-- [Examples](#examples)
+- [Example](#example)
 - [License](#License)
 
 ---
@@ -302,159 +302,233 @@ In the provided library, every test follows the AAA structure using the followin
 
 ---
 
-## Examples
+## Example
 
-### Test Case: Validate Response with Expected List of DTOs
+- [Registration Scenario](#registration-scenario)
+- [Test Implementation](#test-implementation)
 
-In this test case, a GET request is made to the specified endpoint using a URL that includes a
-parameter. The following steps are executed:
+This example demonstrates a typical registration process, where the user's email address must first
+be verified by sending a code. After the email verification, the user can proceed with the
+registration, including providing the verification code.
 
-1. **Arrange**: The initial setup is performed, including defining the request URL.
-2. **Arrange URL**: The base URL (`GET_EXAMPLE`) is arranged for the request.
-3. **Arrange PARAM**: A query parameter is added to the request using `arrangeKeyValue`, allowing
-   for dynamic data retrieval.
-4. **Act**: The request is executed with the `act()` method, followed by `actPerform()` to send
-   the request.
-5. **Assertions**: Several assertions are made to verify the response:
-    - The response is asserted to be non-empty using `assertCollectionNotEmpty()`.
-    - The HTTP status of the response is asserted to be `HttpStatus.OK`, ensuring the request was
-      successful.
-    - The response content is asserted to match the expected list of `DemoSimple` objects
-      using `assertCollectionEquals`, confirming that the API returns the correct data structure.
+The process is split into two main steps:
 
-This structured approach helps ensure that the endpoint behaves as expected and returns the correct
-list of DTOs.
+1. **Email Verification**: A verification code is sent to the provided email address.
+2. **Registration**: After receiving the verification code, the user sends it back to the backend
+   for validation, allowing them to complete their registration.
+
+Below are the necessary code snippets to represent this scenario:
+
+## Registration Scenario
+
+### 1. Verification Response Model
+
+The `VerificationResponse` class represents the response that contains the verification code, UUID,
+and email after the verification process:
 
 ```java
+public class VerificationResponse {
 
-@Test
-void WHEN_call_endpoint_THEN_return_expected_list_dto() {
-
-  get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsOk()
-      .assertContentAsCollection()
-      .assertCollectionNotEmpty()
-      .assertCollectionEquals(DemoSimple.class, EXPECTED_LIST);
+  private String code;
+  private String uuid;
+  private String mail;
 }
 ```
 
----
+### 2. Verification Controller
 
-### Test Case: Validate Response Status for File Upload
+The `VerificationController` is responsible for handling the verification request. It receives a
+request with the user's email and generates a verification response containing a unique UUID and a
+dummy verification code sent to the provided email.
 
-In this test case, a POST request is made to the specified endpoint to upload files. The following
-steps are executed:
+```java
 
-1. **Arrange**: The initial setup is performed, including defining the request URL and necessary
-   parameters.
-2. **Arrange URL**: The URL is arranged using `arrangeUrl`, which includes dynamic path
-   variables (`PATH_VARIABLE_USER_ID_8`, `PATH_VARIABLE_PAGE_ID_3`) to target specific resources.
-3. **Arrange PARAM**: A query parameter is added to the request using `arrangeKeyValue`,
-   allowing
-   for additional context in the request.
-4. **Arrange HEAD**: An authorization token is included in the request headers
-   using `arrangeAuth`,
-   which is typically required for secured endpoints.
-5. **Arrange BODY**: The files to be uploaded are arranged using `arrangeFiles`, enabling multiple
-   file uploads in a single request.
-6. **Action**: The request is executed with the `act()` method, followed by `actPerform()` to send
-   the request.
-7. **Assertions**: The response status is asserted to be `201`, indicating that the resource was
-   created successfully.
+@RestController
+@RequestMapping(Api.BASE)
+public class VerificationController {
 
-This structured approach ensures that the endpoint correctly processes file uploads and returns the
-expected status code.
+  @PostMapping(Api.CREATE_VERIFICATION)
+  public ResponseEntity<VerificationResponse> createVerification(
+      @RequestBody VerificationRequest verification) {
+
+    var response = VerificationResponse
+        .builder()
+        .mail(verification.getMail())
+        .uuid(UUID.randomUUID().toString())
+        .build();
+
+    // Simulate sending a verification code to the user's email
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+}
+
+```
+
+### 3. Registration Models
+
+The `RegistrationAddress` class holds the user's address details, while the `RegistrationRequest`
+contains both the address and the verification response (which includes the verification code, UUID,
+and email):
+
+```java
+public class RegistrationAddress {
+
+  private String street;
+  private String houseNumber;
+  private String zip;
+  private String city;
+  private String country;
+}
+
+public class VerificationResponse {
+
+  private String code;
+  private String uuid;
+  private String mail;
+}
+
+public class RegistrationRequest {
+
+  private RegistrationAddress address;
+  private VerificationResponse verification;
+}
+```
+
+### 4. Registration Controller
+
+The `RegistrationController` handles the registration process. Once the user sends the verification
+code, the backend will validate it and, if valid, complete the registration process.
+
+```java
+
+@RestController
+@RequestMapping(Api.BASE)
+public class RegistrationController {
+
+  @PostMapping(Api.CREATE_REGISTRATION)
+  public ResponseEntity<Void> createRegistration(@RequestBody RegistrationRequest registration) {
+    // Simulate the process of verifying the code entered by the user
+    return new ResponseEntity<>(HttpStatus.CREATED);
+  }
+}
+
+```
+
+## Test Implementation
+
+The table below shows the same test scenario written in two different ways. On the left side, the
+test is written using **MockMvc**, which is the traditional way to perform HTTP tests in Spring. On
+the right side, the same test is written using the **AAA-Mock** framework, which is an open-source
+testing framework designed to make the test code more readable and concise.
+
+It is important to note that in both examples, the use of helper private methods has been
+intentionally avoided to keep the tests straightforward and focused on the core testing logic. This
+ensures clarity and helps demonstrate the difference between the two testing approaches.
+
+<table>
+  <tr>
+    <td>
+
+**Test with MockMvc**
+
+```java
+
+@Autowired
+private MockMvc mockMvc;
+
+@Autowired
+private ObjectMapper objectMapper;
+
+@Test
+@SneakyThrows
+void GIVEN_registration_with_valid_verification_WHEN_createRegistration_THEN_return_status_201() {
+
+  var verificationRequest = VerificationRequest.builder()
+      .firstname(FIRSTNAME)
+      .lastname(LASTNAME)
+      .mail(EMAIL)
+      .build();
+
+  var verificationResponseJson = mockMvc.perform(
+          MockMvcRequestBuilders.post(POST_CREATE_VERIFICATION)
+              .contentType(MediaType.APPLICATION_JSON)
+              .content(objectMapper.writeValueAsString(verificationRequest)))
+      .andReturn()
+      .getResponse()
+      .getContentAsString();
+
+  var verificationResponse = objectMapper.readValue(verificationResponseJson,
+      VerificationResponse.class);
+
+  var registrationRequest = RegistrationRequest.builder()
+      .verification(VerificationResponse.builder()
+          .code(VALID_CODE)
+          .mail(verificationResponse.getMail())
+          .uuid(verificationResponse.getUuid())
+          .build())
+      .build();
+
+  mockMvc.perform(MockMvcRequestBuilders.post(POST_CREATE_REGISTRATION)
+          .contentType(MediaType.APPLICATION_JSON)
+          .content(objectMapper.writeValueAsString(registrationRequest)))
+      .andExpect(status().isCreated());
+}
+
+```
+
+</td>
+    <td>
+
+**Test with AAA-MockMvc**
 
 ```java
 
 @Test
-void GIVEN_files_WHEN_call_endpoint_THEN_return_expected_status_201() {
+@SneakyThrows
+void GIVEN_registration_with_valid_verification_WHEN_createRegistration_THEN_return_status_201() {
+
+  var verificationRequest = VerificationRequest.builder()
+      .firstname(FIRSTNAME)
+      .lastname(LASTNAME)
+      .mail(EMAIL)
+      .build();
+
+  var verificationResponse = post()
+      .arrange()
+      .arrangeUrl(POST_CREATE_VERIFICATION)
+      .arrangeBody()
+      .arrangeJson(verificationRequest)
+      .act()
+      .actPerform()
+      .answer()
+      .answerAsObject(VerificationResponse.class);
+
+  var registrationRequest = RegistrationRequest
+      .builder()
+      .verification(VerificationResponse.builder()
+          .code(VALID_CODE)
+          .mail(verificationResponse.getMail())
+          .uuid(verificationResponse.getUuid())
+          .build())
+      .build();
 
   post()
       .arrange()
-      .arrangeUrl(POST_EXAMPLE, PATH_VARIABLE_USER_ID_8, PATH_VARIABLE_PAGE_ID_3)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
-      .arrangeHead()
-      .arrangeAuth(TEST_TOKEN)
+      .arrangeUrl(POST_CREATE_REGISTRATION)
       .arrangeBody()
-      .arrangeFiles(TEST_BODY_FILES)
+      .arrangeJson(registrationRequest)
       .act()
       .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsCreated();
 }
+
 ```
 
----
-
-### Test Case: Update Resource with PUT and Validate Response Object
-
-Step 1: Send the Request (GET)
-
-1. **Arrange**: The URL for the update endpoint (`GET_DEMO`) is arranged
-   using `arrangeUrl`.
-2. **Arrange BODY**: The `DemoSimple` object, previously updated with a new
-   name (`demoSimpleUpdated`), is serialized into JSON using `arrangeJson` and set as the request
-   body.
-3. **Action**: The `PUT` request is executed using `act()` followed by `actPerform()` to send the
-   updated resource to the endpoint.
-4. **Answer**: The response is processed using `answer()`, and the content is deserialized into a
-   `DemoSimple` object using `answerAsObject(DemoSimple.class)`. This allows the response data to be
-   used in subsequent steps.
-
-Step 2: Send the Modify DemoA (PUT)
-
-1. **Arrange**: The initial setup is performed, including defining the request URL for the PUT
-   endpoint.
-2. **Arrange URL**: The URL is arranged using arrangeUrl, targeting the PUT_EXAMPLE endpoint.
-3. **Arrange BODY**: The body is arranged using `arrangeJson(demoSimpleUpdated)`, where the response
-   from the previous request `(DemoSimple)` is serialized and passed as the body of the PUT request.
-4. **Action**: The request is executed with the `act()` method, followed by `actPerform()` to send
-   the
-   request.
-5. **Assertions**: The response status is asserted to be 201 (or the expected status), confirming
-   the successful update of the resource. Optionally, the content of the response can be validated
-   to ensure it matches the expected result.
-
-```java
-
-@Test
-void WHEN_update_THEN_return_expected_object() {
-
-  var demoSimple = get()
-      .arrange()
-      .arrangeUrl(GET_DEMO)
-      .act()
-      .actPerform()
-      .answer()
-      .answerAsObject(DemoSimple.class);
-
-  var demoSimpleUpdated = demoSimple.withName(TEST_NEW_NAME);
-
-  put()
-      .arrange()
-      .arrangeUrl(PUT_DEMO)
-      .arrangeBody()
-      .arrangeJson(demoSimpleUpdated)
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsCreated()
-      .assertContentAsClass()
-      .assertClassEquals(DemoSimple.class, A1_UPDATED);
-}
-```
+</td>
+  </tr>
+</table>
 
 ---
 
