@@ -8,7 +8,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.B;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -21,16 +21,17 @@ import org.mockito.Mockito;
 
 class TestAssertMatchClassTest {
 
-  private static final Predicate<TestObject1> EQUALS_A = element -> element.name().equals(A);
-  private static final Predicate<TestObject1> EQUALS_B = element -> element.name().equals(B);
-  private static final List<Predicate<TestObject1>> LIST_EQUALS_A = List.of(EQUALS_A);
-  private static final List<Predicate<TestObject1>> LIST_EQUALS_B = List.of(EQUALS_B);
+  private static final Predicate<TestObjectSimple> EQUALS_A = element -> element.name().equals(A);
+  private static final Predicate<TestObjectSimple> EQUALS_B = element -> element.name().equals(B);
+  private static final List<Predicate<TestObjectSimple>> LIST_EQUALS_A = List.of(EQUALS_A);
+  private static final List<Predicate<TestObjectSimple>> LIST_EQUALS_B = List.of(EQUALS_B);
 
-  private static final Predicate<TestObject1> EQUALS_1 = element -> element.id() == 1;
-  private static final Predicate<TestObject1> EQUALS_2 = element -> element.id() == 2;
-  private static final List<Predicate<TestObject1>> LIST_EQUALS_1 = List.of(EQUALS_1);
+  private static final Predicate<TestObjectSimple> EQUALS_1 = element -> element.id() == 1;
+  private static final Predicate<TestObjectSimple> EQUALS_2 = element -> element.id() == 2;
+  private static final List<Predicate<TestObjectSimple>> LIST_EQUALS_1 = List.of(EQUALS_1);
 
-  private static final List<Predicate<TestObject1>> LIST_EQUALS_A2 = List.of(EQUALS_A, EQUALS_2);
+  private static final List<Predicate<TestObjectSimple>> LIST_EQUALS_A2 =
+      List.of(EQUALS_A, EQUALS_2);
 
   @Nested
   class notNull {

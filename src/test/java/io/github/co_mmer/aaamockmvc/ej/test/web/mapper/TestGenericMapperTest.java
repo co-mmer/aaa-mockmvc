@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockObjectMapper;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,7 +66,8 @@ class TestGenericMapperTest {
     when(this.mockHttpServletResponse.getContentAsString()).thenReturn(TEST_A1_JSON);
 
     // Act
-    var result = TestGenericMapper.mapTo(this.objectMapper, this.mockMvcResult, TestObject1.class);
+    var result =
+        TestGenericMapper.mapTo(this.objectMapper, this.mockMvcResult, TestObjectSimple.class);
 
     // Assert
     assertThat(result, is(A1));
@@ -101,7 +102,7 @@ class TestGenericMapperTest {
 
     // Act
     var result =
-        TestGenericMapper.mapToList(this.objectMapper, this.mockMvcResult, TestObject1.class);
+        TestGenericMapper.mapToList(this.objectMapper, this.mockMvcResult, TestObjectSimple.class);
 
     // Assert
     assertThat(result, is(TEST_LIST_A1_A2));
@@ -136,7 +137,7 @@ class TestGenericMapperTest {
 
     // Act
     var result =
-        TestGenericMapper.mapToSet(this.objectMapper, this.mockMvcResult, TestObject1.class);
+        TestGenericMapper.mapToSet(this.objectMapper, this.mockMvcResult, TestObjectSimple.class);
 
     // Assert
     assertThat(result, is(TEST_SET_A1_A2));
@@ -189,7 +190,7 @@ class TestGenericMapperTest {
     // Act
     var result =
         TestGenericMapper.mapToMap(
-            this.objectMapper, this.mockMvcResult, Integer.class, TestObject1.class);
+            this.objectMapper, this.mockMvcResult, Integer.class, TestObjectSimple.class);
 
     // Assert
     assertThat(result, is(TEST_MAP_A1_A2));
@@ -207,7 +208,7 @@ class TestGenericMapperTest {
         // Act
         () ->
             TestGenericMapper.mapToMap(
-                this.objectMapper, this.mockMvcResult, String.class, TestObject1.class));
+                this.objectMapper, this.mockMvcResult, String.class, TestObjectSimple.class));
   }
 
   @Test

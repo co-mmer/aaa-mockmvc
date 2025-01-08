@@ -28,7 +28,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestBean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.MockTestRequestStrategyFactory;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testsetup.MockMvcSetup;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -177,7 +177,7 @@ class TestAnswerImplTest {
 
     // Act
     var exception =
-        assertThrows(Exception.class, () -> this.testAnswer.answerAsObject(TestObject1.class));
+        assertThrows(Exception.class, () -> this.testAnswer.answerAsObject(TestObjectSimple.class));
 
     // Assert
     assertThat(exception.getClass(), is(TestAnswerException.class));
@@ -204,7 +204,7 @@ class TestAnswerImplTest {
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Act
-    var result = this.testAnswer.answerAsObject(TestObject1.class);
+    var result = this.testAnswer.answerAsObject(TestObjectSimple.class);
 
     // Assert
     assertThat(result, is(A1));
@@ -223,7 +223,7 @@ class TestAnswerImplTest {
 
     // Act
     var exception =
-        assertThrows(Exception.class, () -> this.testAnswer.answerAsList(TestObject1.class));
+        assertThrows(Exception.class, () -> this.testAnswer.answerAsList(TestObjectSimple.class));
 
     // Assert
     assertThat(exception.getClass(), is(TestAnswerException.class));
@@ -250,7 +250,7 @@ class TestAnswerImplTest {
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Act
-    var result = this.testAnswer.answerAsList(TestObject1.class);
+    var result = this.testAnswer.answerAsList(TestObjectSimple.class);
 
     // Assert
     assertThat(result, is(TEST_LIST_A1_A2));
@@ -269,7 +269,7 @@ class TestAnswerImplTest {
 
     // Act
     var exception =
-        assertThrows(Exception.class, () -> this.testAnswer.answerAsSet(TestObject1.class));
+        assertThrows(Exception.class, () -> this.testAnswer.answerAsSet(TestObjectSimple.class));
 
     // Assert
     assertThat(exception.getClass(), is(TestAnswerException.class));
@@ -296,7 +296,7 @@ class TestAnswerImplTest {
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Act
-    var result = this.testAnswer.answerAsSet(TestObject1.class);
+    var result = this.testAnswer.answerAsSet(TestObjectSimple.class);
 
     // Assert
     assertThat(result, is(TEST_SET_A1_A2));
@@ -328,7 +328,8 @@ class TestAnswerImplTest {
     // Act
     var exception =
         assertThrows(
-            Exception.class, () -> this.testAnswer.answerAsMap(Boolean.class, TestObject1.class));
+            Exception.class,
+            () -> this.testAnswer.answerAsMap(Boolean.class, TestObjectSimple.class));
 
     // Assert
     assertThat(exception.getClass(), is(TestAnswerException.class));
@@ -354,7 +355,7 @@ class TestAnswerImplTest {
   private static Stream<Arguments> wrongClasses() {
     return Stream.of(
         Arguments.of(Boolean.class, String.class),
-        Arguments.of(String.class, TestObject1.class),
+        Arguments.of(String.class, TestObjectSimple.class),
         Arguments.of(String.class, String.class));
   }
 
@@ -365,7 +366,7 @@ class TestAnswerImplTest {
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Act
-    var result = this.testAnswer.answerAsMap(Integer.class, TestObject1.class);
+    var result = this.testAnswer.answerAsMap(Integer.class, TestObjectSimple.class);
 
     // Assert
     assertThat(result, is(TEST_MAP_A1_A2));

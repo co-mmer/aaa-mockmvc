@@ -20,7 +20,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import java.util.Map;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
@@ -176,7 +176,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2);
+      testAssert.assertMapEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
     }
 
     @Test
@@ -187,7 +187,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssert.assertMapEquals(Boolean.class, TestObject1.class, TEST_MAP_A1_A3));
+          () -> testAssert.assertMapEquals(Boolean.class, TestObjectSimple.class, TEST_MAP_A1_A3));
     }
 
     @Test
@@ -198,7 +198,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionFailedError.class,
-          () -> testAssert.assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2));
+          () -> testAssert.assertMapEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2));
 
       mockTestGenericMapper.close();
     }
@@ -213,7 +213,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2);
+      testAssertException.assertMapEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -227,7 +227,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act
-      testAssert.assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2);
+      testAssert.assertMapEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeMap(any()), times(2));
@@ -240,8 +240,8 @@ class TestAssertMapImplTest extends TestAssertBase {
     @SuppressWarnings("all")
     void GIVEN_null_as_expectedMap_WHEN_assertMapEquals_THEN_throw_NullPointerException(
         Class<Integer> keyClass,
-        Class<TestObject1> valueClass,
-        Map<Integer, TestObject1> expectedMap) {
+        Class<TestObjectSimple> valueClass,
+        Map<Integer, TestObjectSimple> expectedMap) {
 
       // Arrange
       var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
@@ -254,9 +254,9 @@ class TestAssertMapImplTest extends TestAssertBase {
 
     private static Stream<Arguments> provideNullParameters() {
       return Stream.of(
-          Arguments.of(Integer.class, TestObject1.class, null),
+          Arguments.of(Integer.class, TestObjectSimple.class, null),
           Arguments.of(Integer.class, null, TEST_MAP_A1_A2),
-          Arguments.of(null, TestObject1.class, TEST_MAP_A1_A2));
+          Arguments.of(null, TestObjectSimple.class, TEST_MAP_A1_A2));
     }
   }
 
@@ -338,7 +338,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       // Act & Assert
       testAssert
           .assertMapNotEmpty()
-          .assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2);
+          .assertMapEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
     }
   }
 
@@ -366,7 +366,9 @@ class TestAssertMapImplTest extends TestAssertBase {
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertMapSize(2).assertMapEquals(Integer.class, TestObject1.class, TEST_MAP_A1_A2);
+      testAssert
+          .assertMapSize(2)
+          .assertMapEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
     }
 
     @Test

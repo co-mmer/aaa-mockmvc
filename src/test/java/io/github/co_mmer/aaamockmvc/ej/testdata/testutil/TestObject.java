@@ -21,24 +21,24 @@ public final class TestObject {
   public static final String NEW = "NEW";
   public static final String CLOSE = "Close";
 
-  public static final TestObject1 A1 = new TestObject1(1, A);
-  public static final TestObject1 A2 = new TestObject1(2, A);
-  public static final TestObject1 A3 = new TestObject1(3, A);
-  public static final TestObject1 A4 = new TestObject1(4, A);
-  public static final TestObject2 B1 = new TestObject2(1, B, NEW);
-  public static final TestObject2 B2 = new TestObject2(2, B, NEW);
-  public static final List<TestObject2> TEST_LIST_B1NEW_B2NEW = List.of(B1, B2);
+  public static final TestObjectSimple A1 = new TestObjectSimple(1, A);
+  public static final TestObjectSimple A2 = new TestObjectSimple(2, A);
+  public static final TestObjectSimple A3 = new TestObjectSimple(3, A);
+  public static final TestObjectSimple A4 = new TestObjectSimple(4, A);
+  public static final TestObjectMatch B1 = new TestObjectMatch(1, B, NEW);
+  public static final TestObjectMatch B2 = new TestObjectMatch(2, B, NEW);
+  public static final List<TestObjectMatch> TEST_LIST_B1NEW_B2NEW = List.of(B1, B2);
 
-  public static final List<TestObject1> TEST_LIST_A1 = List.of(A1);
-  public static final List<TestObject1> TEST_LIST_A3 = List.of(A3);
-  public static final List<TestObject1> TEST_LIST_A1_A2 = List.of(A1, A2);
+  public static final List<TestObjectSimple> TEST_LIST_A1 = List.of(A1);
+  public static final List<TestObjectSimple> TEST_LIST_A3 = List.of(A3);
+  public static final List<TestObjectSimple> TEST_LIST_A1_A2 = List.of(A1, A2);
 
-  public static final List<TestObject1> TEST_LIST_A1_A3 = List.of(A1, A3);
-  public static final List<TestObject1> TEST_LIST_A3_A1 = List.of(A3, A1);
-  public static final Set<TestObject1> TEST_SET_A1_A2 = Set.of(A1, A2);
-  public static final Map<Integer, TestObject1> TEST_MAP_A1_A2 = Map.of(1, A1, 2, A2);
+  public static final List<TestObjectSimple> TEST_LIST_A1_A3 = List.of(A1, A3);
+  public static final List<TestObjectSimple> TEST_LIST_A3_A1 = List.of(A3, A1);
+  public static final Set<TestObjectSimple> TEST_SET_A1_A2 = Set.of(A1, A2);
+  public static final Map<Integer, TestObjectSimple> TEST_MAP_A1_A2 = Map.of(1, A1, 2, A2);
 
-  public static final Map<Boolean, TestObject1> TEST_MAP_A1_A3 = Map.of(TRUE, A1, FALSE, A3);
+  public static final Map<Boolean, TestObjectSimple> TEST_MAP_A1_A3 = Map.of(TRUE, A1, FALSE, A3);
   public static final String TEST_A1_JSON = mapToString(A1);
   public static final String TEST_A2_JSON = mapToString(A2);
   public static final String TEST_B1NEW_JSON = mapToString(B1);

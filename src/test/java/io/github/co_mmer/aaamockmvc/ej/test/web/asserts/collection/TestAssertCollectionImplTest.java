@@ -31,8 +31,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject2;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectMatch;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import java.util.List;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
@@ -248,7 +248,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      testAssertCollectionImpl.assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2);
+      testAssertCollectionImpl.assertCollectionEquals(TestObjectSimple.class, TEST_LIST_A1_A2);
     }
 
     @Test
@@ -261,7 +261,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       assertThrows(
           AssertionError.class,
           () ->
-              testAssertCollectionImpl.assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A3));
+              testAssertCollectionImpl.assertCollectionEquals(
+                  TestObjectSimple.class, TEST_LIST_A1_A3));
     }
 
     @Test
@@ -273,7 +274,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       assertThrows(
           AssertionFailedError.class,
           () ->
-              testAssertCollectionImpl.assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2));
+              testAssertCollectionImpl.assertCollectionEquals(
+                  TestObjectSimple.class, TEST_LIST_A1_A2));
 
       mockTestGenericMapper.close();
     }
@@ -288,7 +290,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2);
+      testAssertException.assertCollectionEquals(TestObjectSimple.class, TEST_LIST_A1_A2);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -304,7 +306,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act
-      testAssertCollectionImpl.assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2);
+      testAssertCollectionImpl.assertCollectionEquals(TestObjectSimple.class, TEST_LIST_A1_A2);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeCollection(any()), times(2));
@@ -323,7 +325,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A3_JSON);
 
       // Act & Assert
-      testAssertCollectionImpl.assertCollectionContainsAnyOrder(TestObject1.class, TEST_LIST_A3_A1);
+      testAssertCollectionImpl.assertCollectionContainsAnyOrder(
+          TestObjectSimple.class, TEST_LIST_A3_A1);
     }
 
     @Test
@@ -337,7 +340,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionContainsAnyOrder(
-                  TestObject1.class, TEST_LIST_A1_A3));
+                  TestObjectSimple.class, TEST_LIST_A1_A3));
     }
 
     @Test
@@ -350,7 +353,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionFailedError.class,
           () ->
               testAssertCollectionImpl.assertCollectionContainsAnyOrder(
-                  TestObject1.class, TEST_LIST_A1_A2));
+                  TestObjectSimple.class, TEST_LIST_A1_A2));
 
       mockTestGenericMapper.close();
     }
@@ -365,7 +368,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertCollectionContainsAnyOrder(TestObject1.class, TEST_LIST_A1_A2);
+      testAssertException.assertCollectionContainsAnyOrder(TestObjectSimple.class, TEST_LIST_A1_A2);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -380,7 +383,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act
-      testAssertCollectionImpl.assertCollectionContainsAnyOrder(TestObject1.class, TEST_LIST_A1_A2);
+      testAssertCollectionImpl.assertCollectionContainsAnyOrder(
+          TestObjectSimple.class, TEST_LIST_A1_A2);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeCollection(any()), times(2));
@@ -398,7 +402,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      testAssertCollectionImpl.assertCollectionContains(TestObject1.class, TEST_LIST_A1);
+      testAssertCollectionImpl.assertCollectionContains(TestObjectSimple.class, TEST_LIST_A1);
     }
 
     @Test
@@ -410,7 +414,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertCollectionImpl.assertCollectionContains(TestObject1.class, TEST_LIST_A3));
+          () ->
+              testAssertCollectionImpl.assertCollectionContains(
+                  TestObjectSimple.class, TEST_LIST_A3));
     }
 
     @Test
@@ -422,7 +428,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertCollectionImpl.assertCollectionContains(TestObject1.class, TEST_LIST_A1));
+          () ->
+              testAssertCollectionImpl.assertCollectionContains(
+                  TestObjectSimple.class, TEST_LIST_A1));
     }
 
     @Test
@@ -435,7 +443,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertCollectionContains(TestObject1.class, TEST_LIST_A1_A2);
+      testAssertException.assertCollectionContains(TestObjectSimple.class, TEST_LIST_A1_A2);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -449,7 +457,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      testAssertCollectionImpl.assertCollectionContains(TestObject1.class, A1);
+      testAssertCollectionImpl.assertCollectionContains(TestObjectSimple.class, A1);
     }
 
     @Test
@@ -461,7 +469,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertCollectionImpl.assertCollectionContains(TestObject1.class, A3));
+          () -> testAssertCollectionImpl.assertCollectionContains(TestObjectSimple.class, A3));
     }
 
     @Test
@@ -473,7 +481,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertCollectionImpl.assertCollectionContains(TestObject1.class, A1));
+          () -> testAssertCollectionImpl.assertCollectionContains(TestObjectSimple.class, A1));
     }
 
     @Test
@@ -486,7 +494,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertCollectionContains(TestObject1.class, A1);
+      testAssertException.assertCollectionContains(TestObjectSimple.class, A1);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -504,7 +512,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      testAssertCollectionImpl.assertCollectionNotContains(TestObject1.class, TEST_LIST_A3);
+      testAssertCollectionImpl.assertCollectionNotContains(TestObjectSimple.class, TEST_LIST_A3);
     }
 
     @Test
@@ -518,7 +526,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionNotContains(
-                  TestObject1.class, TEST_LIST_A1));
+                  TestObjectSimple.class, TEST_LIST_A1));
     }
 
     @Test
@@ -532,7 +540,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionNotContains(
-                  TestObject1.class, TEST_LIST_A3));
+                  TestObjectSimple.class, TEST_LIST_A3));
     }
 
     @Test
@@ -545,7 +553,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertCollectionNotContains(TestObject1.class, TEST_LIST_A3);
+      testAssertException.assertCollectionNotContains(TestObjectSimple.class, TEST_LIST_A3);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -559,7 +567,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      testAssertCollectionImpl.assertCollectionNotContains(TestObject1.class, A3);
+      testAssertCollectionImpl.assertCollectionNotContains(TestObjectSimple.class, A3);
     }
 
     @Test
@@ -572,7 +580,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertCollectionImpl.assertCollectionNotContains(TestObject1.class, A1));
+          () -> testAssertCollectionImpl.assertCollectionNotContains(TestObjectSimple.class, A1));
     }
 
     @Test
@@ -584,7 +592,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertCollectionImpl.assertCollectionNotContains(TestObject1.class, A3));
+          () -> testAssertCollectionImpl.assertCollectionNotContains(TestObjectSimple.class, A3));
     }
 
     @Test
@@ -597,7 +605,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertCollectionNotContains(TestObject1.class, A3);
+      testAssertException.assertCollectionNotContains(TestObjectSimple.class, A3);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -616,7 +624,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl.assertCollectionMatchAll(
-          TestObject1.class, element -> element.name().equals(A));
+          TestObjectSimple.class, element -> element.name().equals(A));
     }
 
     @Test
@@ -630,7 +638,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchAll(
-                  TestObject1.class, element -> element.name().equals(B)));
+                  TestObjectSimple.class, element -> element.name().equals(B)));
     }
 
     @Test
@@ -644,7 +652,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchAll(
-                  TestObject1.class, element -> element.name().equals(A)));
+                  TestObjectSimple.class, element -> element.name().equals(A)));
     }
 
     @Test
@@ -658,7 +666,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act
       testAssertException.assertCollectionMatchAll(
-          TestObject1.class, element -> element.name().equals(A));
+          TestObjectSimple.class, element -> element.name().equals(A));
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -676,7 +684,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchNone(
-                  TestObject2.class,
+                  TestObjectMatch.class,
                   element -> element.name().equals(B),
                   element -> element.status().equals(NEW)));
     }
@@ -693,7 +701,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchAll(
-                  TestObject2.class,
+                  TestObjectMatch.class,
                   element -> element.name().equals(A),
                   element -> element.status().equals(NEW)));
     }
@@ -709,7 +717,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchAll(
-                  TestObject2.class,
+                  TestObjectMatch.class,
                   element -> element.name().equals(A),
                   element -> element.status().equals(CLOSE)));
     }
@@ -725,7 +733,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchAll(
-                  TestObject2.class,
+                  TestObjectMatch.class,
                   element -> element.name().equals(A),
                   element -> element.status().equals(NEW)));
     }
@@ -741,7 +749,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act
       testAssertException.assertCollectionMatchAll(
-          TestObject2.class,
+          TestObjectMatch.class,
           element -> element.name().equals(A),
           element -> element.status().equals(NEW));
 
@@ -762,7 +770,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl.assertCollectionMatchAny(
-          TestObject1.class, element -> element.name().equals(A));
+          TestObjectSimple.class, element -> element.name().equals(A));
     }
 
     @Test
@@ -776,7 +784,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchAny(
-                  TestObject1.class, element -> element.name().equals(B)));
+                  TestObjectSimple.class, element -> element.name().equals(B)));
     }
 
     @Test
@@ -790,7 +798,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchAny(
-                  TestObject1.class, element -> element.name().equals(A)));
+                  TestObjectSimple.class, element -> element.name().equals(A)));
     }
 
     @Test
@@ -804,7 +812,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act
       testAssertException.assertCollectionMatchAny(
-          TestObject1.class, element -> element.name().equals(A));
+          TestObjectSimple.class, element -> element.name().equals(A));
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -819,7 +827,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl.assertCollectionMatchAny(
-          TestObject2.class,
+          TestObjectMatch.class,
           element -> element.name().equals(A),
           element -> element.name().equals(B));
     }
@@ -832,7 +840,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl.assertCollectionMatchAny(
-          TestObject2.class,
+          TestObjectMatch.class,
           element -> element.name().equals(B),
           element -> element.status().equals(NEW));
     }
@@ -848,7 +856,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchAny(
-                  TestObject2.class,
+                  TestObjectMatch.class,
                   element -> element.name().equals(A),
                   element -> element.status().equals(CLOSE)));
     }
@@ -864,7 +872,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchAny(
-                  TestObject2.class,
+                  TestObjectMatch.class,
                   element -> element.name().equals(A),
                   element -> element.status().equals(NEW)));
     }
@@ -880,7 +888,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act
       testAssertException.assertCollectionMatchAny(
-          TestObject2.class,
+          TestObjectMatch.class,
           element -> element.name().equals(A),
           element -> element.status().equals(NEW));
 
@@ -901,7 +909,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl.assertCollectionMatchNone(
-          TestObject1.class, element -> element.name().equals(B));
+          TestObjectSimple.class, element -> element.name().equals(B));
     }
 
     @Test
@@ -915,7 +923,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchNone(
-                  TestObject1.class, element -> element.name().equals(A)));
+                  TestObjectSimple.class, element -> element.name().equals(A)));
     }
 
     @Test
@@ -929,7 +937,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchNone(
-                  TestObject1.class, element -> element.name().equals(A)));
+                  TestObjectSimple.class, element -> element.name().equals(A)));
     }
 
     @Test
@@ -943,7 +951,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act
       testAssertException.assertCollectionMatchNone(
-          TestObject1.class, element -> element.name().equals(A));
+          TestObjectSimple.class, element -> element.name().equals(A));
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -962,7 +970,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchNone(
-                  TestObject2.class,
+                  TestObjectMatch.class,
                   element -> element.name().equals(B),
                   element -> element.status().equals(NEW)));
     }
@@ -979,7 +987,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchNone(
-                  TestObject2.class,
+                  TestObjectMatch.class,
                   element -> element.name().equals(B),
                   element -> element.status().equals(CLOSE)));
     }
@@ -993,7 +1001,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl.assertCollectionMatchNone(
-          TestObject2.class,
+          TestObjectMatch.class,
           element -> element.name().equals(A),
           element -> element.status().equals(CLOSE));
     }
@@ -1009,7 +1017,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           AssertionError.class,
           () ->
               testAssertCollectionImpl.assertCollectionMatchNone(
-                  TestObject2.class,
+                  TestObjectMatch.class,
                   element -> element.name().equals(A),
                   element -> element.status().equals(NEW)));
     }
@@ -1025,7 +1033,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act
       testAssertException.assertCollectionMatchNone(
-          TestObject2.class,
+          TestObjectMatch.class,
           element -> element.name().equals(A),
           element -> element.status().equals(NEW));
 
@@ -1063,7 +1071,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionNotEmpty()
-          .assertCollectionContains(TestObject1.class, A1);
+          .assertCollectionContains(TestObjectSimple.class, A1);
     }
 
     @Test
@@ -1075,7 +1083,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionNotEmpty()
-          .assertCollectionContains(TestObject1.class, A1, A2);
+          .assertCollectionContains(TestObjectSimple.class, A1, A2);
     }
 
     @Test
@@ -1087,7 +1095,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionNotEmpty()
-          .assertCollectionContainsAnyOrder(TestObject1.class, List.of(A2, A1));
+          .assertCollectionContainsAnyOrder(TestObjectSimple.class, List.of(A2, A1));
     }
 
     @Test
@@ -1099,7 +1107,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionNotEmpty()
-          .assertCollectionNotContains(TestObject1.class, A3);
+          .assertCollectionNotContains(TestObjectSimple.class, A3);
     }
 
     @Test
@@ -1111,7 +1119,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionNotEmpty()
-          .assertCollectionNotContains(TestObject1.class, A3, A4);
+          .assertCollectionNotContains(TestObjectSimple.class, A3, A4);
     }
 
     @Test
@@ -1123,7 +1131,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionNotEmpty()
-          .assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2);
+          .assertCollectionEquals(TestObjectSimple.class, TEST_LIST_A1_A2);
     }
 
     @Test
@@ -1135,7 +1143,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionNotEmpty()
-          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+          .assertCollectionMatchAll(TestObjectSimple.class, element -> element.name().equals(A));
     }
 
     @Test
@@ -1149,7 +1157,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       testAssertCollectionImpl
           .assertCollectionNotEmpty()
           .assertCollectionMatchAll(
-              TestObject1.class,
+              TestObjectSimple.class,
               element -> element.name().equals(A),
               element -> element.name().equals(A));
     }
@@ -1163,7 +1171,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionNotEmpty()
-          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+          .assertCollectionMatchAny(TestObjectSimple.class, element -> element.id() == 1);
     }
 
     @Test
@@ -1177,7 +1185,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       testAssertCollectionImpl
           .assertCollectionNotEmpty()
           .assertCollectionMatchAny(
-              TestObject1.class, element -> element.id() == 1, element -> element.id() == 2);
+              TestObjectSimple.class, element -> element.id() == 1, element -> element.id() == 2);
     }
 
     @Test
@@ -1189,7 +1197,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionNotEmpty()
-          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+          .assertCollectionMatchNone(TestObjectSimple.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1203,7 +1211,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       testAssertCollectionImpl
           .assertCollectionNotEmpty()
           .assertCollectionMatchNone(
-              TestObject1.class, element -> element.id() == 3, element -> element.id() == 4);
+              TestObjectSimple.class, element -> element.id() == 3, element -> element.id() == 4);
     }
   }
 
@@ -1219,7 +1227,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionSize(2)
-          .assertCollectionContains(TestObject1.class, A1);
+          .assertCollectionContains(TestObjectSimple.class, A1);
     }
 
     @Test
@@ -1231,7 +1239,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionSize(2)
-          .assertCollectionContains(TestObject1.class, A1, A2);
+          .assertCollectionContains(TestObjectSimple.class, A1, A2);
     }
 
     @Test
@@ -1243,7 +1251,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionSize(2)
-          .assertCollectionContainsAnyOrder(TestObject1.class, List.of(A2, A1));
+          .assertCollectionContainsAnyOrder(TestObjectSimple.class, List.of(A2, A1));
     }
 
     @Test
@@ -1255,7 +1263,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionSize(2)
-          .assertCollectionNotContains(TestObject1.class, A3);
+          .assertCollectionNotContains(TestObjectSimple.class, A3);
     }
 
     @Test
@@ -1267,7 +1275,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionSize(2)
-          .assertCollectionNotContains(TestObject1.class, A3, A4);
+          .assertCollectionNotContains(TestObjectSimple.class, A3, A4);
     }
 
     @Test
@@ -1279,7 +1287,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionSize(2)
-          .assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2);
+          .assertCollectionEquals(TestObjectSimple.class, TEST_LIST_A1_A2);
     }
 
     @Test
@@ -1291,7 +1299,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionSize(2)
-          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+          .assertCollectionMatchAll(TestObjectSimple.class, element -> element.name().equals(A));
     }
 
     @Test
@@ -1305,7 +1313,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       testAssertCollectionImpl
           .assertCollectionSize(2)
           .assertCollectionMatchAll(
-              TestObject1.class,
+              TestObjectSimple.class,
               element -> element.name().equals(A),
               element -> element.name().equals(A));
     }
@@ -1319,7 +1327,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionSize(2)
-          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+          .assertCollectionMatchAny(TestObjectSimple.class, element -> element.id() == 1);
     }
 
     @Test
@@ -1333,7 +1341,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       testAssertCollectionImpl
           .assertCollectionSize(2)
           .assertCollectionMatchAny(
-              TestObject1.class, element -> element.id() == 1, element -> element.id() == 2);
+              TestObjectSimple.class, element -> element.id() == 1, element -> element.id() == 2);
     }
 
     @Test
@@ -1345,7 +1353,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionSize(2)
-          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+          .assertCollectionMatchNone(TestObjectSimple.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1359,7 +1367,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       testAssertCollectionImpl
           .assertCollectionSize(2)
           .assertCollectionMatchNone(
-              TestObject1.class, element -> element.id() == 3, element -> element.id() == 4);
+              TestObjectSimple.class, element -> element.id() == 3, element -> element.id() == 4);
     }
   }
 
@@ -1374,8 +1382,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionContains(TestObject1.class, A1)
-          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+          .assertCollectionContains(TestObjectSimple.class, A1)
+          .assertCollectionMatchAny(TestObjectSimple.class, element -> element.id() == 1);
     }
 
     @Test
@@ -1387,9 +1395,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionContains(TestObject1.class, A1)
+          .assertCollectionContains(TestObjectSimple.class, A1)
           .assertCollectionMatchAny(
-              TestObject1.class, element -> element.id() == 1, element -> element.id() == 2);
+              TestObjectSimple.class, element -> element.id() == 1, element -> element.id() == 2);
     }
 
     @Test
@@ -1400,8 +1408,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionContains(TestObject1.class, A1)
-          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+          .assertCollectionContains(TestObjectSimple.class, A1)
+          .assertCollectionMatchAll(TestObjectSimple.class, element -> element.name().equals(A));
     }
 
     @Test
@@ -1413,9 +1421,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionContains(TestObject1.class, A1)
+          .assertCollectionContains(TestObjectSimple.class, A1)
           .assertCollectionMatchAll(
-              TestObject1.class,
+              TestObjectSimple.class,
               element -> element.name().equals(A),
               element -> element.name().equals(A));
     }
@@ -1428,8 +1436,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionContains(TestObject1.class, A1)
-          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+          .assertCollectionContains(TestObjectSimple.class, A1)
+          .assertCollectionMatchNone(TestObjectSimple.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1441,9 +1449,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionContains(TestObject1.class, A1)
+          .assertCollectionContains(TestObjectSimple.class, A1)
           .assertCollectionMatchNone(
-              TestObject1.class, element -> element.id() == 3, element -> element.id() == 4);
+              TestObjectSimple.class, element -> element.id() == 3, element -> element.id() == 4);
     }
 
     @Test
@@ -1454,8 +1462,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionContains(TestObject1.class, A1, A2)
-          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+          .assertCollectionContains(TestObjectSimple.class, A1, A2)
+          .assertCollectionMatchAny(TestObjectSimple.class, element -> element.id() == 1);
     }
 
     @Test
@@ -1467,9 +1475,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionContains(TestObject1.class, A1, A2)
+          .assertCollectionContains(TestObjectSimple.class, A1, A2)
           .assertCollectionMatchAny(
-              TestObject1.class, element -> element.id() == 1, element -> element.id() == 2);
+              TestObjectSimple.class, element -> element.id() == 1, element -> element.id() == 2);
     }
 
     @Test
@@ -1480,8 +1488,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionContains(TestObject1.class, A1, A2)
-          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+          .assertCollectionContains(TestObjectSimple.class, A1, A2)
+          .assertCollectionMatchAll(TestObjectSimple.class, element -> element.name().equals(A));
     }
 
     @Test
@@ -1493,9 +1501,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionContains(TestObject1.class, A1, A2)
+          .assertCollectionContains(TestObjectSimple.class, A1, A2)
           .assertCollectionMatchAll(
-              TestObject1.class,
+              TestObjectSimple.class,
               element -> element.name().equals(A),
               element -> element.name().equals(A));
     }
@@ -1508,8 +1516,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionContains(TestObject1.class, A1, A2)
-          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+          .assertCollectionContains(TestObjectSimple.class, A1, A2)
+          .assertCollectionMatchNone(TestObjectSimple.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1521,9 +1529,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionContains(TestObject1.class, A1, A2)
+          .assertCollectionContains(TestObjectSimple.class, A1, A2)
           .assertCollectionMatchNone(
-              TestObject1.class, element -> element.id() == 3, element -> element.id() == 4);
+              TestObjectSimple.class, element -> element.id() == 3, element -> element.id() == 4);
     }
   }
 
@@ -1538,8 +1546,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionNotContains(TestObject1.class, A3)
-          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+          .assertCollectionNotContains(TestObjectSimple.class, A3)
+          .assertCollectionMatchAny(TestObjectSimple.class, element -> element.id() == 1);
     }
 
     @Test
@@ -1551,9 +1559,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionNotContains(TestObject1.class, A3)
+          .assertCollectionNotContains(TestObjectSimple.class, A3)
           .assertCollectionMatchAny(
-              TestObject1.class, element -> element.id() == 1, element -> element.id() == 2);
+              TestObjectSimple.class, element -> element.id() == 1, element -> element.id() == 2);
     }
 
     @Test
@@ -1564,8 +1572,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionNotContains(TestObject1.class, A3)
-          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+          .assertCollectionNotContains(TestObjectSimple.class, A3)
+          .assertCollectionMatchAll(TestObjectSimple.class, element -> element.name().equals(A));
     }
 
     @Test
@@ -1577,9 +1585,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionNotContains(TestObject1.class, A3)
+          .assertCollectionNotContains(TestObjectSimple.class, A3)
           .assertCollectionMatchAll(
-              TestObject1.class,
+              TestObjectSimple.class,
               element -> element.name().equals(A),
               element -> element.name().equals(A));
     }
@@ -1592,8 +1600,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionNotContains(TestObject1.class, A3)
-          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+          .assertCollectionNotContains(TestObjectSimple.class, A3)
+          .assertCollectionMatchNone(TestObjectSimple.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1605,9 +1613,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionNotContains(TestObject1.class, A3)
+          .assertCollectionNotContains(TestObjectSimple.class, A3)
           .assertCollectionMatchNone(
-              TestObject1.class, element -> element.id() == 3, element -> element.id() == 4);
+              TestObjectSimple.class, element -> element.id() == 3, element -> element.id() == 4);
     }
 
     @Test
@@ -1618,8 +1626,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionNotContains(TestObject1.class, A3, A4)
-          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+          .assertCollectionNotContains(TestObjectSimple.class, A3, A4)
+          .assertCollectionMatchAny(TestObjectSimple.class, element -> element.id() == 1);
     }
 
     @Test
@@ -1631,9 +1639,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionNotContains(TestObject1.class, A3, A4)
+          .assertCollectionNotContains(TestObjectSimple.class, A3, A4)
           .assertCollectionMatchAny(
-              TestObject1.class, element -> element.id() == 1, element -> element.id() == 2);
+              TestObjectSimple.class, element -> element.id() == 1, element -> element.id() == 2);
     }
 
     @Test
@@ -1644,8 +1652,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionNotContains(TestObject1.class, A3, A4)
-          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A));
+          .assertCollectionNotContains(TestObjectSimple.class, A3, A4)
+          .assertCollectionMatchAll(TestObjectSimple.class, element -> element.name().equals(A));
     }
 
     @Test
@@ -1657,9 +1665,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionNotContains(TestObject1.class, A3, A4)
+          .assertCollectionNotContains(TestObjectSimple.class, A3, A4)
           .assertCollectionMatchAll(
-              TestObject1.class,
+              TestObjectSimple.class,
               element -> element.name().equals(A),
               element -> element.name().equals(A));
     }
@@ -1672,8 +1680,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionNotContains(TestObject1.class, A3, A4)
-          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+          .assertCollectionNotContains(TestObjectSimple.class, A3, A4)
+          .assertCollectionMatchNone(TestObjectSimple.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1685,9 +1693,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionNotContains(TestObject1.class, A3, A4)
+          .assertCollectionNotContains(TestObjectSimple.class, A3, A4)
           .assertCollectionMatchNone(
-              TestObject1.class, element -> element.id() == 3, element -> element.id() == 4);
+              TestObjectSimple.class, element -> element.id() == 3, element -> element.id() == 4);
     }
   }
 
@@ -1702,8 +1710,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A))
-          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1);
+          .assertCollectionMatchAll(TestObjectSimple.class, element -> element.name().equals(A))
+          .assertCollectionMatchAny(TestObjectSimple.class, element -> element.id() == 1);
     }
 
     @Test
@@ -1715,9 +1723,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A))
+          .assertCollectionMatchAll(TestObjectSimple.class, element -> element.name().equals(A))
           .assertCollectionMatchAny(
-              TestObject1.class, element -> element.id() == 1, element -> element.id() == 2);
+              TestObjectSimple.class, element -> element.id() == 1, element -> element.id() == 2);
     }
 
     @Test
@@ -1728,8 +1736,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A))
-          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+          .assertCollectionMatchAll(TestObjectSimple.class, element -> element.name().equals(A))
+          .assertCollectionMatchNone(TestObjectSimple.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1741,9 +1749,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A))
+          .assertCollectionMatchAll(TestObjectSimple.class, element -> element.name().equals(A))
           .assertCollectionMatchNone(
-              TestObject1.class, element -> element.id() == 3, element -> element.id() == 4);
+              TestObjectSimple.class, element -> element.id() == 3, element -> element.id() == 4);
     }
 
     @Test
@@ -1755,10 +1763,10 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionMatchAll(
-              TestObject2.class,
+              TestObjectMatch.class,
               element -> element.name().equals(B),
               element -> element.status().equals(NEW))
-          .assertCollectionMatchAny(TestObject2.class, element -> element.id() == 1);
+          .assertCollectionMatchAny(TestObjectMatch.class, element -> element.id() == 1);
     }
 
     @Test
@@ -1771,11 +1779,11 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionMatchAll(
-              TestObject2.class,
+              TestObjectMatch.class,
               element -> element.name().equals(B),
               element -> element.status().equals(NEW))
           .assertCollectionMatchAny(
-              TestObject2.class, element -> element.id() == 1, element -> element.id() == 2);
+              TestObjectMatch.class, element -> element.id() == 1, element -> element.id() == 2);
     }
 
     @Test
@@ -1786,8 +1794,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionMatchAll(TestObject2.class, element -> element.name().equals(B))
-          .assertCollectionMatchNone(TestObject2.class, element -> element.id() == 3);
+          .assertCollectionMatchAll(TestObjectMatch.class, element -> element.name().equals(B))
+          .assertCollectionMatchNone(TestObjectMatch.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1799,9 +1807,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionMatchAll(TestObject2.class, element -> element.name().equals(B))
+          .assertCollectionMatchAll(TestObjectMatch.class, element -> element.name().equals(B))
           .assertCollectionMatchNone(
-              TestObject2.class, element -> element.id() == 3, element -> element.id() == 4);
+              TestObjectMatch.class, element -> element.id() == 3, element -> element.id() == 4);
     }
 
     @Test
@@ -1812,7 +1820,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionMatchAll(TestObject1.class, element -> element.name().equals(A))
+          .assertCollectionMatchAll(TestObjectSimple.class, element -> element.name().equals(A))
           .assertHead();
     }
 
@@ -1825,7 +1833,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionMatchAll(
-              TestObject2.class,
+              TestObjectMatch.class,
               element -> element.name().equals(B),
               element -> element.status().equals(NEW))
           .assertHead();
@@ -1843,8 +1851,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1)
-          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+          .assertCollectionMatchAny(TestObjectSimple.class, element -> element.id() == 1)
+          .assertCollectionMatchNone(TestObjectSimple.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1856,9 +1864,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionMatchAny(TestObject1.class, element -> element.id() == 1)
+          .assertCollectionMatchAny(TestObjectSimple.class, element -> element.id() == 1)
           .assertCollectionMatchNone(
-              TestObject1.class, element -> element.id() == 3, element -> element.id() == 4);
+              TestObjectSimple.class, element -> element.id() == 3, element -> element.id() == 4);
     }
 
     @Test
@@ -1870,8 +1878,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionMatchAny(
-              TestObject1.class, element -> element.id() == 1, element -> element.id() == 2)
-          .assertCollectionMatchNone(TestObject1.class, element -> element.id() == 3);
+              TestObjectSimple.class, element -> element.id() == 1, element -> element.id() == 2)
+          .assertCollectionMatchNone(TestObjectSimple.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1884,9 +1892,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionMatchAny(
-              TestObject1.class, element -> element.id() == 1, element -> element.id() == 2)
+              TestObjectSimple.class, element -> element.id() == 1, element -> element.id() == 2)
           .assertCollectionMatchNone(
-              TestObject1.class, element -> element.id() == 3, element -> element.id() == 4);
+              TestObjectSimple.class, element -> element.id() == 3, element -> element.id() == 4);
     }
 
     @Test
@@ -1897,7 +1905,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionMatchAny(TestObject1.class, element -> element.name().equals(A))
+          .assertCollectionMatchAny(TestObjectSimple.class, element -> element.name().equals(A))
           .assertHead();
     }
 
@@ -1910,7 +1918,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionMatchAny(
-              TestObject1.class, element -> element.name().equals(A), element -> element.id() == 1)
+              TestObjectSimple.class,
+              element -> element.name().equals(A),
+              element -> element.id() == 1)
           .assertHead();
     }
   }
@@ -1926,7 +1936,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertCollectionImpl
-          .assertCollectionMatchNone(TestObject1.class, element -> element.name().equals(B))
+          .assertCollectionMatchNone(TestObjectSimple.class, element -> element.name().equals(B))
           .assertHead();
     }
 
@@ -1939,7 +1949,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       testAssertCollectionImpl
           .assertCollectionMatchNone(
-              TestObject1.class, element -> element.name().equals(B), element -> element.id() == 3)
+              TestObjectSimple.class,
+              element -> element.name().equals(B),
+              element -> element.id() == 3)
           .assertHead();
     }
   }
