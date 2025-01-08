@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum TestAssertMatchType {
-  ALL("The actual collection does not match the expected condition."),
-  ANY("At least one element should match the condition."),
-  NONE("No element should match the condition, but some did.");
+  ALL("The actual value does not match the expected condition."),
+  ANY("At least one value should match the condition."),
+  NONE("No value should match the condition, but some did.");
 
   private final String reason;
 

@@ -47,7 +47,7 @@ public final class TestAssertMatchList {
           case NONE -> matchNone(conditions, actual);
         };
 
-    assertThat(matchType.getReason() + " Actual list: " + actual, matches, is(true));
+    assertThat(matchType.getReason() + " Actual " + actual, matches, is(true));
   }
 
   private static <T> boolean matchAll(List<Predicate<T>> conditions, List<T> actual) {
