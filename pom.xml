@@ -179,10 +179,6 @@
                   <formats>
                     <format>XML</format>
                   </formats>
-                  <excludes>
-                    <exclude>io/github/co_mmer/aaamockmvc/ej/test/web/asserts/TestAssertImpl*
-                    </exclude>
-                  </excludes>
                 </configuration>
               </execution>
             </executions>

@@ -67,6 +67,8 @@ public final class TestAssertImpl implements TestAssert {
     this.objectMapper = objectMapper;
   }
 
+  // SONAR:IGNORE DUPLICATION START
+
   /**
    * Provides assertion methods for validating the HTTP response status.
    *
@@ -154,4 +156,5 @@ public final class TestAssertImpl implements TestAssert {
   public TestAssertCustom assertCustom() {
     return new TestAssertCustomImpl(this.actions);
   }
+  // SONAR:IGNORE DUPLICATION END
 }
