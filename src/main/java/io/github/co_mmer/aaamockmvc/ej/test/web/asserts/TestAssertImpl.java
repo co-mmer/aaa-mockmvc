@@ -82,7 +82,7 @@ public final class TestAssertImpl implements TestAssert {
   }
 
   /**
-   * Provides assertion methods for validating the HTTP response content.
+   * Provides assertion methods for validating the HTTP response content as String
    *
    * <p>This method returns an instance of {@code TestAssertContent}, which provides assertion
    * methods for validating the content of the HTTP response, such as matching expected values or

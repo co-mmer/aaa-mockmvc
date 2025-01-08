@@ -14,6 +14,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String
  * <ul>
  *   <li>{@link #assertContentAsString()}: Provides assertion methods for validating the HTTP
  *       response content.
+ *   <li>{@link #assertContentAsClass()} ()}: Provides assertion methods for validating the HTTP
+ *       response content as class.
  *   <li>{@link #assertContentAsByte()}: Provides assertion methods for validating the HTTP response
  *       byte.
  *   <li>{@link #assertContentAsCollection()}: Provides assertion methods for validating the

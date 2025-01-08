@@ -51,6 +51,8 @@ import org.springframework.test.web.servlet.ResultActions;
  *       within a specified range.
  *   <li>{@link #assertContentAsString()}: Provides assertion methods for validating the HTTP
  *       response content.
+ *   <li>{@link #assertContentAsClass()} ()}: Provides assertion methods for validating the HTTP
+ *       response content as class.
  *   <li>{@link #assertContentAsByte()}: Provides assertion methods for validating the HTTP response
  *       binary.
  *   <li>{@link #assertContentAsCollection()}: Provides assertion methods for validating the
