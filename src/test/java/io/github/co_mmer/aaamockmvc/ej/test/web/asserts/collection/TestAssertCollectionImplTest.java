@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -107,10 +109,27 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     void GIVEN_exception_WHEN_assertCollectionNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertCollectionException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertCollectionException::assertCollectionNotEmpty);
+      assertThrows(AssertionError.class, testAssertException::assertCollectionNotEmpty);
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionNotEmpty_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionNotEmpty();
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
@@ -148,6 +167,23 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(AssertionError.class, testAssertCollection::assertCollectionEmpty);
     }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionEmpty_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionEmpty();
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
+    }
   }
 
   @Nested
@@ -182,6 +218,23 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionFailedError.class, () -> testAssertCollectionImpl.assertCollectionSize(1));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionSize_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useResultException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionSize(1);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
@@ -223,6 +276,23 @@ class TestAssertCollectionImplTest extends TestAssertBase {
               testAssertCollectionImpl.assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2));
 
       mockTestGenericMapper.close();
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionEquals_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionEquals(TestObject1.class, TEST_LIST_A1_A2);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
 
     @Test
@@ -287,6 +357,23 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionContainsAnyOrder_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionContainsAnyOrder(TestObject1.class, TEST_LIST_A1_A2);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
+    }
+
+    @Test
+    @SneakyThrows
     void GIVEN_list_WHEN_assertCollectionContainsAnyOrder_THEN_normalizeCollection_is_called() {
       // Arrange
       var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
@@ -340,6 +427,23 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionContains_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionContains(TestObject1.class, TEST_LIST_A1_A2);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
+    }
+
+    @Test
+    @SneakyThrows
     void GIVEN_expected_WHEN_assertCollectionContains_varargs_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
@@ -370,6 +474,23 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       assertThrows(
           AssertionError.class,
           () -> testAssertCollectionImpl.assertCollectionContains(TestObject1.class, A1));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionContains_vararg_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionContains(TestObject1.class, A1);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
@@ -416,6 +537,23 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionNotContains_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionNotContains(TestObject1.class, TEST_LIST_A3);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
+    }
+
+    @Test
+    @SneakyThrows
     void GIVEN_expected_WHEN_assertCollectionNotContains_varargs_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
@@ -447,6 +585,23 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       assertThrows(
           AssertionError.class,
           () -> testAssertCollectionImpl.assertCollectionNotContains(TestObject1.class, A3));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionNotContains_vararg_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionNotContains(TestObject1.class, A3);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
@@ -490,6 +645,24 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           () ->
               testAssertCollectionImpl.assertCollectionMatchAll(
                   TestObject1.class, element -> element.name().equals(A)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionMatchAll_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionMatchAll(
+          TestObject1.class, element -> element.name().equals(A));
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
 
     @Test
@@ -556,6 +729,26 @@ class TestAssertCollectionImplTest extends TestAssertBase {
                   element -> element.name().equals(A),
                   element -> element.status().equals(NEW)));
     }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionMatchAll_vararg_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionMatchAll(
+          TestObject2.class,
+          element -> element.name().equals(A),
+          element -> element.status().equals(NEW));
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
+    }
   }
 
   @Nested
@@ -598,6 +791,24 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           () ->
               testAssertCollectionImpl.assertCollectionMatchAny(
                   TestObject1.class, element -> element.name().equals(A)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionMatchAny_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionMatchAny(
+          TestObject1.class, element -> element.name().equals(A));
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
 
     @Test
@@ -657,6 +868,26 @@ class TestAssertCollectionImplTest extends TestAssertBase {
                   element -> element.name().equals(A),
                   element -> element.status().equals(NEW)));
     }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionMatchAny_vararg_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionMatchAny(
+          TestObject2.class,
+          element -> element.name().equals(A),
+          element -> element.status().equals(NEW));
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
+    }
   }
 
   @Nested
@@ -699,6 +930,24 @@ class TestAssertCollectionImplTest extends TestAssertBase {
           () ->
               testAssertCollectionImpl.assertCollectionMatchNone(
                   TestObject1.class, element -> element.name().equals(A)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionMatchNone_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionMatchNone(
+          TestObject1.class, element -> element.name().equals(A));
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
 
     @Test
@@ -763,6 +1012,26 @@ class TestAssertCollectionImplTest extends TestAssertBase {
                   TestObject2.class,
                   element -> element.name().equals(A),
                   element -> element.status().equals(NEW)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertCollectionMatchNone_vararg_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertCollectionMatchNone(
+          TestObject2.class,
+          element -> element.name().equals(A),
+          element -> element.status().equals(NEW));
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
