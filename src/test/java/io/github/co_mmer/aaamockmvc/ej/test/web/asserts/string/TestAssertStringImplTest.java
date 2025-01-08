@@ -16,12 +16,14 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -80,10 +82,27 @@ class TestAssertStringImplTest extends TestAssertBase {
     void GIVEN_exception_WHEN_assertStringNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertContentException = new TestAssertStringImpl(actions);
+      var testAssertException = new TestAssertStringImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertContentException::assertStringNotEmpty);
+      assertThrows(AssertionError.class, testAssertException::assertStringNotEmpty);
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertStringNotEmpty_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithByteException();
+      var testAssertException = new TestAssertStringImpl(actions);
+
+      // Act
+      testAssertException.assertStringNotEmpty();
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
@@ -119,6 +138,23 @@ class TestAssertStringImplTest extends TestAssertBase {
 
       // Act & Assert
       assertThrows(AssertionError.class, testAssertContentException::assertStringEmpty);
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertStringEmpty_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithByteException();
+      var testAssertException = new TestAssertStringImpl(actions);
+
+      // Act
+      testAssertException.assertStringEmpty();
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
@@ -156,6 +192,23 @@ class TestAssertStringImplTest extends TestAssertBase {
       assertThrows(
           AssertionFailedError.class,
           () -> testAssertContentException.assertStringEquals(TEST_A1_JSON));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertStringEquals_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithByteException();
+      var testAssertException = new TestAssertStringImpl(actions);
+
+      // Act
+      testAssertException.assertStringEquals(TEST_A1_JSON);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
 
     @Test
@@ -207,6 +260,23 @@ class TestAssertStringImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionFailedError.class, () -> testAssertContentException.assertStringLength(50));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertStringLength_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithByteException();
+      var testAssertException = new TestAssertStringImpl(actions);
+
+      // Act
+      testAssertException.assertStringLength(50);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
 
     @Test
