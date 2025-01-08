@@ -4,6 +4,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
@@ -11,6 +12,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -79,10 +82,27 @@ class TestAssertByteImplTest extends TestAssertBase {
     void GIVEN_exception_WHEN_assertByteNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
-      var testAssertByte = new TestAssertByteImpl(actions);
+      var testAssertException = new TestAssertByteImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, testAssertByte::assertByteNotEmpty);
+      assertThrows(AssertionFailedError.class, testAssertException::assertByteNotEmpty);
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertByteNotEmpty_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertByteImpl(actions);
+
+      // Act
+      testAssertException.assertByteNotEmpty();
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
@@ -120,6 +140,23 @@ class TestAssertByteImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(AssertionFailedError.class, testAssertByte::assertByteEmpty);
     }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertByteEmpty_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertByteImpl(actions);
+
+      // Act
+      testAssertException.assertByteEmpty();
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
+    }
   }
 
   @Nested
@@ -155,6 +192,23 @@ class TestAssertByteImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(AssertionFailedError.class, () -> testAssertByte.assertByteLength(1));
     }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertByteLength_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertByteImpl(actions);
+
+      // Act
+      testAssertException.assertByteLength(1);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
+    }
   }
 
   @Nested
@@ -184,10 +238,28 @@ class TestAssertByteImplTest extends TestAssertBase {
     void GIVEN_exception_byte_WHEN_assertByteEquals_THEN_assert_false() {
       // Arrange
       useServerWithByteException();
-      var testAssertByte = new TestAssertByteImpl(actions);
+      var testAssertException = new TestAssertByteImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, () -> testAssertByte.assertByteEquals(new byte[1]));
+      assertThrows(
+          AssertionFailedError.class, () -> testAssertException.assertByteEquals(new byte[1]));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertByteLength_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithByteException();
+      var testAssertException = new TestAssertByteImpl(actions);
+
+      // Act
+      testAssertException.assertByteEquals(new byte[1]);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
