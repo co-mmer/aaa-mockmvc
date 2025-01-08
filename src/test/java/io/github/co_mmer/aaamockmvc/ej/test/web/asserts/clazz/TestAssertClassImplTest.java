@@ -152,6 +152,23 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(AssertionError.class, testAssertException::assertClassEmpty);
     }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertClassEmpty_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertClassEmpty();
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
+    }
   }
 
   @Nested
@@ -189,6 +206,23 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionFailedError.class,
           () -> testAssertException.assertClassEquals(TestObject1.class, A1));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertClassEquals_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertClassEquals(TestObject1.class, A1);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
 
     @Test
@@ -251,6 +285,24 @@ class TestAssertClassImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
+    void GIVEN_exception_WHEN_assertClassMatchAll_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertClassMatchAll(
+          TestObject1.class, element -> element.name().equals(A));
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
+    }
+
+    @Test
+    @SneakyThrows
     void GIVEN_expected_WHEN_assertClassMatchAll_vararg_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
@@ -291,6 +343,24 @@ class TestAssertClassImplTest extends TestAssertBase {
                   TestObject1.class,
                   element -> element.name().equals(A),
                   element -> element.id() == 2));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertClassMatchAll_vararg_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertClassMatchAll(
+          TestObject1.class, element -> element.name().equals(A), element -> element.id() == 2);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
@@ -338,6 +408,24 @@ class TestAssertClassImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
+    void GIVEN_exception_WHEN_assertClassMatchAny_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertClassMatchAny(
+          TestObject1.class, element -> element.name().equals(A));
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
+    }
+
+    @Test
+    @SneakyThrows
     void GIVEN_expected_WHEN_assertClassMatchAny_vararg_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
@@ -378,6 +466,24 @@ class TestAssertClassImplTest extends TestAssertBase {
                   TestObject1.class,
                   element -> element.name().equals(A),
                   element -> element.id() == 2));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertClassMatchAny_vararg_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertClassMatchAny(
+          TestObject1.class, element -> element.name().equals(A), element -> element.id() == 2);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
@@ -421,6 +527,24 @@ class TestAssertClassImplTest extends TestAssertBase {
           () ->
               testAssertException.assertClassMatchNone(
                   TestObject1.class, element -> element.name().equals(A)));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertClassMatchNone_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertClassMatchNone(
+          TestObject1.class, element -> element.name().equals(A));
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
 
     @Test
@@ -481,6 +605,24 @@ class TestAssertClassImplTest extends TestAssertBase {
                   TestObject1.class,
                   element -> element.name().equals(A),
                   element -> element.id() == 1));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertClassMatchNone_vararg_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertClassMatchNone(
+          TestObject1.class, element -> element.name().equals(A), element -> element.id() == 1);
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
