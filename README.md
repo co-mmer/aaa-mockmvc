@@ -276,7 +276,7 @@ In the provided library, every test follows the AAA structure using the followin
    allowing for further examination and validation of the response. Additionally, the returned
    object can be passed back as the body of a subsequent request using `arrangeJson(T content)`.
    This enables used to set up the next, creating a seamless flow in
-   testing. [For more details, see the example below.](#test-case-update-resource-with-put-and-validate-response-object)
+   testing. [For more details, see the example below.](#example)
 
 ### Arrange
 
