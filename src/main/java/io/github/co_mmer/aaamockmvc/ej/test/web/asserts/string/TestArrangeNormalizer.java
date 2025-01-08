@@ -69,7 +69,7 @@ public final class TestArrangeNormalizer {
     return actual.stream().map(element -> normalizAsObject(element.toString())).toList();
   }
 
-  private static <T> Object normalizAsObject(@NonNull T actual) {
+  private static <T> Object normalizAsObject(T actual) {
     return normalize(actual.toString(), Form.NFC);
   }
 
