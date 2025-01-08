@@ -25,12 +25,14 @@ import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject2;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -97,6 +99,23 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       assertThrows(AssertionError.class, testAssertException::assertClassNotEmpty);
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_exception_WHEN_assertClassNotEmpty_THEN_Assertions_fail_is_called() {
+      // Arrange
+      var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+      useServerWithStringException();
+      var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
+
+      // Act
+      testAssertException.assertClassNotEmpty();
+
+      // Assert
+      mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+      mockAssertions.close();
     }
   }
 
