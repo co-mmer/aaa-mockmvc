@@ -6,6 +6,25 @@
 
 ### Added
 
+- Class Assertion
+    - **`assertClassNotEmpty()`**: Asserts that the class of the HTTP response is not empty.
+    - **`assertClassEmpty()`**: Asserts that the class of the HTTP response is empty.
+    - **`assertClassEquals(Class, Object)`**: Asserts that the class of the HTTP response matches
+      the expected object.
+    - **`assertClassMatchAll(Class, Predicate)`**: Asserts that the class matches all specified
+      conditions.
+    - **`assertClassMatchAll(Class, Predicate...)`**: Asserts that the class matches all specified
+      conditions.
+    - **`assertClassMatchAny(Class, Predicate)`**: Asserts that the class matches at least one of
+      the specified conditions.
+    - **`assertClassMatchAny(Class, Predicate...)`**: Asserts that the class matches at least one of
+      the specified conditions.
+    - **`assertClassMatchNone(Class, Predicate)`**: Asserts that the class matches none of the
+      specified conditions.
+    - **`assertClassMatchNone(Class, Predicate...)`**: Asserts that the class matches none of the
+      specified conditions.
+
+
 - Collection Assertion
     - **`assertCollectionNotEmpty()`**: Asserts that the collection in the HTTP response is not
       empty.
@@ -60,11 +79,6 @@
     - **`assertByteEquals(byte[])`**: Asserts that the byte array content of the HTTP response
       matches
       the expected byte array.
-
-
-- Content Assertion Enhancements
-    - **`assertContentLength(int)`**: Asserts that the length of the response content matches the
-      specified length.
 
 ---
 
