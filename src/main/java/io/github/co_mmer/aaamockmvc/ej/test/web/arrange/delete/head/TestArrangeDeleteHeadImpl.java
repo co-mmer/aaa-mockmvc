@@ -64,20 +64,6 @@ public final class TestArrangeDeleteHeadImpl extends TestArrangeBaseHead
   }
 
   /**
-   * Arranges the "Content-Type" header for the DELETE request.
-   *
-   * @param contentType the content types to be sent in the request (must not be {@code null})
-   * @return the current instance for further configuration
-   * @throws NullPointerException if the {@code mediaTypes} is {@code null}
-   * @since 1.0.0
-   */
-  @Override
-  public TestArrange4DeleteHead arrangeContentType(@NonNull MediaType... contentType) {
-    setContentTypes(contentType);
-    return this;
-  }
-
-  /**
    * Arranges a custom key-value pair to be added as a header in the DELETE request.
    *
    * @param key the name of the header

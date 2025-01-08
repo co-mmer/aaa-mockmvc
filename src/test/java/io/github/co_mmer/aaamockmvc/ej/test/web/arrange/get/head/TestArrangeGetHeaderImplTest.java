@@ -103,49 +103,6 @@ class TestArrangeGetHeaderImplTest {
 
   @Test
   @SuppressWarnings("ConstantConditions")
-  void GIVEN_null_WHEN_arrangeContentType_THEN_throw_IllegalArgumentException() {
-    assertThrows(
-        IllegalArgumentException.class, () -> this.impl.arrangeContentType((MediaType) null));
-  }
-
-  @Test
-  void WHEN_arrangeContentType_THEN_TestArrangeValidator_is_called() {
-    // Arrange
-    var mockTestArrangeValidator = Mockito.mockStatic(TestArrangeValidator.class);
-
-    // Act
-    this.impl.arrangeContentType(APPLICATION_JSON);
-
-    // Assert
-    mockTestArrangeValidator.verify(
-        () -> TestArrangeValidator.nonNullContentTypes(APPLICATION_JSON));
-    mockTestArrangeValidator.close();
-  }
-
-  @Test
-  void GIVEN_type_WHEN_arrangeContentType_THEN_setContentTypes_is_called() {
-    // Act
-    this.impl.arrangeContentType(APPLICATION_JSON);
-
-    // Assert
-    this.mockTestArrangeHeadUtils.verify(
-        () -> TestArrangeHeadUtils.setContentTypes(this.dto.getHead(), APPLICATION_JSON));
-  }
-
-  @Test
-  void GIVEN_types_WHEN_arrangeContentType_THEN_setContentTypes_is_called() {
-    // Act
-    this.impl.arrangeContentType(APPLICATION_JSON, APPLICATION_PDF);
-
-    // Assert
-    this.mockTestArrangeHeadUtils.verify(
-        () ->
-            TestArrangeHeadUtils.setContentTypes(
-                this.dto.getHead(), APPLICATION_JSON, APPLICATION_PDF));
-  }
-
-  @Test
-  @SuppressWarnings("ConstantConditions")
   void GIVEN_map_null_WHEN_arrangeKeyValue_THEN_throw_NullPointerException() {
     assertThrows(NullPointerException.class, () -> this.impl.arrangeKeyValue(null));
   }

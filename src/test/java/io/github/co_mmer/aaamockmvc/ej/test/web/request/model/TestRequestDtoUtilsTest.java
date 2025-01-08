@@ -1,11 +1,18 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.request.model;
 
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_EMPTY;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_NULL;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_NULL;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_EMPTY;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_NULL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestBodyDto;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,16 +41,15 @@ class TestRequestDtoUtilsTest {
 
   private static Stream<Arguments> useCaseContainsHeadAccepts() {
     return Stream.of(
-        Arguments.of(TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_NULL, false),
-        Arguments.of(TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_EMPTY, false),
-        Arguments.of(TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_1, true));
+        Arguments.of(TEST_REQUEST_HEAD_ACCEPT_NULL, false),
+        Arguments.of(TEST_REQUEST_HEAD_ACCEPT_EMPTY, false),
+        Arguments.of(TEST_REQUEST_HEAD_ACCEPT_1, true));
   }
 
   @Test
   @SuppressWarnings("ConstantConditions")
-  void GIVEN_null_WHEN_isNotEmptyContentTypes_THEN_throw_NullPointerException() {
-    assertThrows(
-        NullPointerException.class, () -> TestRequestDtoUtils.isNotEmptyContentTypes(null));
+  void GIVEN_null_WHEN_isNotNullContentType_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> TestRequestDtoUtils.isNotNullContentType(null));
   }
 
   @ParameterizedTest
@@ -53,7 +59,7 @@ class TestRequestDtoUtilsTest {
           TestRequestHeadDto headDto, boolean expectedBoolean) {
 
     // Act
-    var result = TestRequestDtoUtils.isNotEmptyContentTypes(headDto);
+    var result = TestRequestDtoUtils.isNotNullContentType(headDto);
 
     // Assert
     assertThat(result, is(expectedBoolean));
@@ -61,9 +67,8 @@ class TestRequestDtoUtilsTest {
 
   private static Stream<Arguments> useCaseContainsHeadContentTypes() {
     return Stream.of(
-        Arguments.of(TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_NULL, false),
-        Arguments.of(TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_EMPTY, false),
-        Arguments.of(TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_1, true));
+        Arguments.of(TEST_REQUEST_HEAD_CONTENT_TYPE_NULL, false),
+        Arguments.of(TEST_REQUEST_HEAD_CONTENT_TYPE, true));
   }
 
   @Test
@@ -136,8 +141,8 @@ class TestRequestDtoUtilsTest {
 
   private static Stream<Arguments> useCaseContainsHeadKeyValue() {
     return Stream.of(
-        Arguments.of(TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_NULL, false),
-        Arguments.of(TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_EMPTY, false),
-        Arguments.of(TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_1, true));
+        Arguments.of(TEST_REQUEST_HEAD_KEY_VALUE_NULL, false),
+        Arguments.of(TEST_REQUEST_HEAD_KEY_VALUE_EMPTY, false),
+        Arguments.of(TEST_REQUEST_HEAD_KEY_VALUE_1, true));
   }
 }

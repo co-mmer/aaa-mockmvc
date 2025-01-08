@@ -5,8 +5,8 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestBody.TEST_BO
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestBody.TEST_BODY_XML;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestFiles.TEST_FILE_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestFiles.TEST_FILE_1_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECT_1_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECT_1_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_REQUEST_BEAN;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -132,7 +132,7 @@ class TestArrangeResBodyImplTest {
         ()
 
         // Act
-        -> this.impl.arrangeJson(TEST_OBJECT_1_DTO));
+        -> this.impl.arrangeJson(A1));
 
     mockTestGenericMapper.close();
   }
@@ -140,13 +140,11 @@ class TestArrangeResBodyImplTest {
   @Test
   void GIVEN_T_WHEN_arrangeJson_THEN_addFile_is_setContent() throws Exception {
     // Act
-    this.impl.arrangeJson(TEST_OBJECT_1_DTO);
+    this.impl.arrangeJson(A1);
 
     // Assert
     this.mockTestArrangeBodyUtils.verify(
-        () ->
-            TestArrangeBodyUtils.setContent(
-                this.dto.getBody(), TEST_OBJECT_1_JSON, APPLICATION_JSON));
+        () -> TestArrangeBodyUtils.setContent(this.dto.getBody(), TEST_A1_JSON, APPLICATION_JSON));
   }
 
   @Test()

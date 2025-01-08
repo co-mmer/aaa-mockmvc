@@ -4,9 +4,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestH
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_ACCEPT_NULL;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_EMPTY;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_CONTENT_TYPE_NULL;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_2;
@@ -94,8 +92,7 @@ class TestComponentHeadTest {
     TestComponentHead.apply(this.mockRequestBuilder, TEST_REQUEST_HEAD_ACCEPT_2);
 
     // Assert
-    verify(this.mockRequestBuilder).accept(APPLICATION_JSON);
-    verify(this.mockRequestBuilder).accept(APPLICATION_XML);
+    verify(this.mockRequestBuilder).accept(APPLICATION_JSON, APPLICATION_XML);
     verifyNoMoreInteractions(this.mockRequestBuilder);
   }
 
@@ -109,32 +106,12 @@ class TestComponentHeadTest {
   }
 
   @Test
-  void GIVEN_head_contentType_empty_WHEN_apply_THEN_verifyNoInteractions() {
-    // Act
-    TestComponentHead.apply(this.mockRequestBuilder, TEST_REQUEST_HEAD_CONTENT_TYPE_EMPTY);
-
-    // Assert
-    verifyNoInteractions(this.mockRequestBuilder);
-  }
-
-  @Test
   void GIVEN_head_contentType_1_WHEN_apply_THEN_verify_contentType() {
     // Act
-    TestComponentHead.apply(this.mockRequestBuilder, TEST_REQUEST_HEAD_CONTENT_TYPE_1);
+    TestComponentHead.apply(this.mockRequestBuilder, TEST_REQUEST_HEAD_CONTENT_TYPE);
 
     // Assert
     verify(this.mockRequestBuilder).contentType(APPLICATION_JSON);
-    verifyNoMoreInteractions(this.mockRequestBuilder);
-  }
-
-  @Test
-  void GIVEN_head_contentType_2_WHEN_apply_THEN_verify_contentType() {
-    // Act
-    TestComponentHead.apply(this.mockRequestBuilder, TEST_REQUEST_HEAD_CONTENT_TYPE_2);
-
-    // Assert
-    verify(this.mockRequestBuilder).contentType(APPLICATION_JSON);
-    verify(this.mockRequestBuilder).contentType(APPLICATION_XML);
     verifyNoMoreInteractions(this.mockRequestBuilder);
   }
 

@@ -32,15 +32,15 @@ public final class TestRequestDtoUtils {
   }
 
   /**
-   * Checks if the content types in the provided {@code TestRequestHeadDto} are not empty.
+   * Checks if the content type in the provided {@code TestRequestHeadDto} is not null.
    *
    * @param headDto the {@code TestRequestHeadDto} to be checked (must not be {@code null})
-   * @return {@code true} if the content types are not empty; {@code false} otherwise
+   * @return {@code true} if the content type is not null; {@code false} otherwise
    * @throws NullPointerException if the {@code headDto} is {@code null}
    * @since 1.0.0
    */
-  public static boolean isNotEmptyContentTypes(@NonNull TestRequestHeadDto headDto) {
-    return !CollectionUtils.isEmpty(headDto.getContentTypes());
+  public static boolean isNotNullContentType(@NonNull TestRequestHeadDto headDto) {
+    return headDto.getContentType() != null;
   }
 
   /**

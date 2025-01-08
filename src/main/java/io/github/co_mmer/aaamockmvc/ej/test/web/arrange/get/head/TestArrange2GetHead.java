@@ -3,13 +3,12 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.get.head;
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct1;
 import java.util.Map;
 import lombok.NonNull;
-import org.springframework.http.MediaType;
 
 /**
  * Interface for arranging HTTP headers for a GET request.
  *
- * <p>Provides methods to configure common HTTP headers such as "Authorization", and "Content-Type",
- * as well as custom key-value pairs.
+ * <p>Provides methods to configure common HTTP headers such as "Authorization", as well as custom
+ * key-value pairs.
  *
  * @since 1.0.0
  */
@@ -23,16 +22,6 @@ public interface TestArrange2GetHead {
    * @since 1.0.0
    */
   TestArrange3GetHead arrangeAuth(String token);
-
-  /**
-   * Arranges the "Content-Type" header for the GET request.
-   *
-   * @param mediaTypes the content types for the request (must not be {@code null})
-   * @return the next step in the header arrangement process
-   * @throws NullPointerException if the {@code mediaTypes} is {@code null}
-   * @since 1.0.0
-   */
-  TestArrange4GetHead arrangeContentType(@NonNull MediaType... mediaTypes);
 
   /**
    * Arranges a custom header as a key-value pair for the GET request.

@@ -1,11 +1,11 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string;
 
 import static java.text.Normalizer.normalize;
 
 import java.text.Normalizer.Form;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -45,30 +45,32 @@ public final class TestArrangeNormalizer {
    * Normalizes the string representations of elements in the provided list, ensuring all elements
    * are in a consistent format.
    *
-   * @param actual the list of objects to be normalized (must not be {@code null})
+   * @param actual the collection of objects to be normalized (must not be {@code null})
    * @param <T> the type of the objects in the list
    * @return a list of normalized {@code String} representations of the objects
    * @throws NullPointerException if {@code actual} is {@code null}
-   * @since 1.3.0
+   * @since 1.4.0
    */
-  public static <T> List<String> normalizeList(@NonNull List<T> actual) {
+  public static <T> List<String> normalizeCollection(@NonNull Collection<T> actual) {
     return actual.stream().map(element -> normalizeObject(element.toString())).toList();
   }
 
   /**
-   * Normalizes the string representations of elements in the provided set, ensuring a consistent
-   * text format for each element.
+   * Normalizes the string representations of elements in the provided list, ensuring all elements
+   * are in a consistent format.
    *
-   * @param actual the set of objects to be normalized (must not be {@code null})
-   * @param <T> the type of the objects in the set
-   * @return a set of normalized {@code String} representations of the objects
+   * @param actual the collection of objects to be normalized (must not be {@code null})
+   * @param <T> the type of the objects in the list
+   * @return a list of normalized {@code String} representations of the objects
    * @throws NullPointerException if {@code actual} is {@code null}
-   * @since 1.3.0
+   * @since 1.4.0
    */
-  public static <T> Set<String> normalizeSet(@NonNull Set<T> actual) {
-    return actual.stream()
-        .map(element -> normalizeObject(element.toString()))
-        .collect(Collectors.toSet());
+  public static <T> List<Object> normalizeAsObjects(@NonNull Collection<T> actual) {
+    return actual.stream().map(element -> normalizAsObject(element.toString())).toList();
+  }
+
+  private static <T> Object normalizAsObject(T actual) {
+    return normalize(actual.toString(), Form.NFC);
   }
 
   /**

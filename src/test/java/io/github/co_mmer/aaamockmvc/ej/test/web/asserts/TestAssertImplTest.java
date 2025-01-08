@@ -9,10 +9,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssertByteImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssertClassImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCollectionImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertMapImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssertStatusImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssertStringImpl;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,14 +61,67 @@ class TestAssertImplTest {
 
   @Test
   void WHEN_assertStatus_THEN_return_expected_class() {
-    // Arrange
-    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
 
     // Act
     var assertStatus = this.testAssert.assertStatus();
 
     // Assert
     assertThat(assertStatus.getClass(), is(TestAssertStatusImpl.class));
+  }
+
+  @Test
+  void WHEN_assertContentAsString_THEN_return_expected_class() {
+    // Act
+    var assertContentAsString = this.testAssert.assertContentAsString();
+
+    // Assert
+    assertThat(assertContentAsString.getClass(), is(TestAssertStringImpl.class));
+  }
+
+  @Test
+  void WHEN_assertContentAsClass_THEN_return_expected_class() {
+    // Act
+    var assertContentAsClass = this.testAssert.assertContentAsClass();
+
+    // Assert
+    assertThat(assertContentAsClass.getClass(), is(TestAssertClassImpl.class));
+  }
+
+  @Test
+  void WHEN_assertContentAsByte_THEN_return_expected_class() {
+
+    // Act
+    var assertContentAsByte = this.testAssert.assertContentAsByte();
+
+    // Assert
+    assertThat(assertContentAsByte.getClass(), is(TestAssertByteImpl.class));
+  }
+
+  @Test
+  void WHEN_assertContentAsCollection_THEN_return_expected_class() {
+    // Act
+    var assertContentAsCollection = this.testAssert.assertContentAsCollection();
+
+    // Assert
+    assertThat(assertContentAsCollection.getClass(), is(TestAssertCollectionImpl.class));
+  }
+
+  @Test
+  void WHEN_assertContentAsMap_THEN_return_expected_class() {
+    // Act
+    var assertContentAsMap = this.testAssert.assertContentAsMap();
+
+    // Assert
+    assertThat(assertContentAsMap.getClass(), is(TestAssertMapImpl.class));
+  }
+
+  @Test
+  void WHEN_assertCustom_THEN_return_expected_class() {
+    // Act
+    var assertCustom = this.testAssert.assertCustom();
+
+    // Assert
+    assertThat(assertCustom.getClass(), is(TestAssertCustomImpl.class));
   }
 
   @Test
@@ -77,29 +134,5 @@ class TestAssertImplTest {
 
     // Assert
     assertThat(assertHead.getClass(), is(TestAssertHeadImpl.class));
-  }
-
-  @Test
-  void WHEN_assertContent_THEN_return_expected_class() {
-    // Arrange
-    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
-
-    // Act
-    var assertContent = this.testAssert.assertContent();
-
-    // Assert
-    assertThat(assertContent.getClass(), is(TestAssertContentImpl.class));
-  }
-
-  @Test
-  void WHEN_assertCustom_THEN_return_expected_class() {
-    // Arrange
-    this.response.setHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
-
-    // Act
-    var assertCustom = this.testAssert.assertCustom();
-
-    // Assert
-    assertThat(assertCustom.getClass(), is(TestAssertCustomImpl.class));
   }
 }

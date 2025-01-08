@@ -20,7 +20,7 @@ import org.springframework.http.MediaType;
 public final class TestRequestHeadDto {
 
   private List<MediaType> accepts;
-  private List<MediaType> contentTypes;
+  private MediaType contentType;
   private Map<String, Object> keyValue;
 
   /**
@@ -31,7 +31,6 @@ public final class TestRequestHeadDto {
    */
   public TestRequestHeadDto() {
     this.accepts = new ArrayList<>();
-    this.contentTypes = new ArrayList<>();
     this.keyValue = new HashMap<>();
   }
 }

@@ -7,8 +7,8 @@ import org.springframework.http.MediaType;
 /**
  * Interface for arranging HTTP headers for a GET request.
  *
- * <p>Provides methods to configure common HTTP headers such as "Accept", "Authorization", and
- * "Content-Type", as well as custom key-value pairs.
+ * <p>Provides methods to configure common HTTP headers such as "Accept", "Authorization", as well
+ * as custom key-value pairs.
  *
  * @since 1.0.0
  */
@@ -32,16 +32,6 @@ public interface TestArrange1GetHead {
    * @since 1.0.0
    */
   TestArrange3GetHead arrangeAuth(String token);
-
-  /**
-   * Arranges the "Content-Type" header for the GET request (must not be {@code null})
-   *
-   * @param mediaTypes the content types for the request
-   * @return the next step in the header arrangement process
-   * @throws NullPointerException if the {@code mediaTypes} is {@code null}
-   * @since 1.0.0
-   */
-  TestArrange4GetHead arrangeContentType(@NonNull MediaType... mediaTypes);
 
   /**
    * Arranges a custom header as a key-value pair for the GET request.

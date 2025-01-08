@@ -33,20 +33,16 @@ public final class TestDataRequestHeadDto {
       createRequestHeadDto(null, List.of(APPLICATION_JSON, APPLICATION_XML), null);
   public static final TestRequestHeadDto TEST_REQUEST_HEAD_CONTENT_TYPE_NULL =
       createRequestHeadDto(null, null, null);
-  public static final TestRequestHeadDto TEST_REQUEST_HEAD_CONTENT_TYPE_EMPTY =
-      createRequestHeadDto(null, null, Collections.emptyList());
-  public static final TestRequestHeadDto TEST_REQUEST_HEAD_CONTENT_TYPE_1 =
-      createRequestHeadDto(null, null, List.of(APPLICATION_JSON));
-  public static final TestRequestHeadDto TEST_REQUEST_HEAD_CONTENT_TYPE_2 =
-      createRequestHeadDto(null, null, List.of(APPLICATION_JSON, APPLICATION_XML));
+  public static final TestRequestHeadDto TEST_REQUEST_HEAD_CONTENT_TYPE =
+      createRequestHeadDto(null, null, APPLICATION_JSON);
 
   private static TestRequestHeadDto createRequestHeadDto(
-      Map<String, Object> keyValue, List<MediaType> accepts, List<MediaType> contentTypes) {
+      Map<String, Object> keyValue, List<MediaType> accepts, MediaType contentTypes) {
 
     var requestHeadDto = new TestRequestHeadDto();
     requestHeadDto.setKeyValue(keyValue);
     requestHeadDto.setAccepts(accepts);
-    requestHeadDto.setContentTypes(contentTypes);
+    requestHeadDto.setContentType(contentTypes);
     return requestHeadDto;
   }
 }

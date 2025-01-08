@@ -9,7 +9,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestBean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestDto;
-import org.springframework.lang.NonNull;
+import lombok.NonNull;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;

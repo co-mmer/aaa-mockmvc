@@ -36,12 +36,19 @@ public interface TestArrange1ResHead {
   /**
    * Arranges the "Content-Type" header for the PATCH/POST/PUT request.
    *
-   * @param mediaTypes the content types for the request (must not be {@code null})
+   * <p>When sending a request without a body, the `Content-Type` header may need to be explicitly
+   * set to inform the server about the request's format and how it should be processed. If the
+   * request includes a body, the `Content-Type` is either automatically determined or manually set
+   * by the {@link
+   * io.github.co_mmer.aaamockmvc.ej.test.web.arrange.res.head.TestArrangeResHeadImpl#arrangeBody()}
+   * method.
+   *
+   * @param mediaType the content type for the request (must not be {@code null})
    * @return the next step in the header arrangement process
-   * @throws NullPointerException if the {@code mediaTypes} is {@code null}
+   * @throws NullPointerException if the {@code mediaType} is {@code null}
    * @since 1.0.0
    */
-  TestArrange4ResHead arrangeContentType(@NonNull MediaType... mediaTypes);
+  TestArrange4ResHead arrangeContentType(@NonNull MediaType mediaType);
 
   /**
    * Arranges a custom header as a key-value pair for the PATCH/POST/PUT request.

@@ -30,7 +30,7 @@ ___
 - [Installation](#Installation)
 - [Setup](#setup)
 - [Writing Tests](#writing-tests)
-- [Examples](#examples)
+- [Example](#example)
 - [License](#License)
 
 ---
@@ -46,7 +46,7 @@ documentation of the classes.
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.3.0</version>
+  <version>1.4.0</version>
   <scope>test</scope>
 </dependency>
 
@@ -218,7 +218,7 @@ public class ControllerTest {
   private AAAMockMvc aaaMockMvc;
 
   @Test
-  void WHEN_calling_endpoint_THEN_return_expected_status() throws Exception {
+  void WHEN_calling_endpoint_THEN_return_expected_status() {
     aaaMockMvc.get()
         .arrange()
         .arrangeUrl(GET_SIMPLE)
@@ -247,7 +247,7 @@ behaviors and reducing boilerplate code in test classes.
 public class ControllerTest extends AAAMockMvcAbstract {
 
   @Test
-  void WHEN_calling_endpoint_THEN_return_expected_content() throws Exception {
+  void WHEN_calling_endpoint_THEN_return_expected_content() {
     get()
         .arrange()
         .arrangeUrl(GET_SIMPLE)
@@ -276,1200 +276,259 @@ In the provided library, every test follows the AAA structure using the followin
    allowing for further examination and validation of the response. Additionally, the returned
    object can be passed back as the body of a subsequent request using `arrangeJson(T content)`.
    This enables used to set up the next, creating a seamless flow in
-   testing. [For more details, see the example below.](#test-case-update-resource-with-put-and-validate-response-object)
+   testing. [For more details, see the example below.](#example)
 
-### Arrange Section
+### Arrange
 
-<details>
-<summary>Arrange URL</summary>
+- [Arrange Url](docs/arrange/ArrangeUrl.md)
+- [Arrange Head](docs/arrange/ArrangeHead.md)
+- [Arrange Body Raw](docs/arrange/ArrangeBodyRaw.md)
+- [Arrange Body Binary](docs/arrange/ArrangeBodyBinray.md)
 
-### Arrange URL
+### Assert
 
-In this example, the simplest form of a request is demonstrated, utilizing only the base URL.
+- [Assert Status](docs/assert/AssertStatus.md)
+- [Assert ContentAsString](docs/assert/AssertString.md)
+- [Assert ContentAsClass 🔸 (New)](docs/assert/AssertClass.md)
+- [Assert ContentAsByte](docs/assert/AssertByte.md)
+- [Assert ContentAsCollection 🔸 (New)](docs/assert/AssertCollection.md)
+- [Assert ContentAsMap 🔸 (New)](docs/assert/AssertMap.md)
+- [Assert Head](docs/assert/AssertHead.md)
+- [Assert Custom](docs/assert/AssertCustom.md)
 
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .act()
-      ...
-```
+### Answer
 
----
-
-### Arrange Path Variable
-
-In this example, a URL with a path variable is utilized, which dynamically replaces a segment of the
-URL to retrieve specific data.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE, PATH_VAR_8)
-      .act()
-      ...
-```
+- [Answer](docs/answer/Answer.md)
 
 ---
 
-### Arrange URI
+## Example
 
-In this example, when a complete URL is provided, the request is directed to that specific endpoint.
+- [Registration Scenario](#registration-scenario)
+- [Test Implementation](#test-implementation)
 
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE_URI)
-      .act()
-      ...
-```
+This example demonstrates a typical registration process, where the user's email address must first
+be verified by sending a code. After the email verification, the user can proceed with the
+registration, including providing the verification code.
 
----
+The process is split into two main steps:
 
-### Arrange Parameter
+1. **Email Verification**: A verification code is sent to the provided email address.
+2. **Registration**: After receiving the verification code, the user sends it back to the backend
+   for validation, allowing them to complete their registration.
 
-In this example, a URL is enhanced with a query parameter, commonly used for search or filter
-requests.
+Below are the necessary code snippets to represent this scenario:
 
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
-      .act()
-      ...
-```
+## Registration Scenario
 
----
+### 1. Verification Response Model
 
-### Arrange Parameters
-
-In this example, multiple parameters are appended to the URL, enabling a more detailed query.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
-      .arrangeKeyValue(PARAM_KEY_2, PARAM_VALUE_2)
-      .act()
-      ...
-```
-
----
-
-### Arrange Parameters (Map)
-
-In this example, an entire set of parameters is appended to the URL using a map, which simplifies
-the handling of dynamic parameters.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_MAP)
-      .act()
-      ...
-```
-
----
-
-</details>
-
-
-<details>
-<summary>Arrange HEAD</summary>
-
-### Arrange Header Accept
-
-In this example, the Accept header is set, indicating that the client
-expects a response in JSON format.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeHead()
-      .arrangeAccept(APPLICATION_JSON)
-      .act()
-      ...
-```
-
----
-
-### Arrange Header Auth
-
-In this example, an authorization token is added to the headers, which is typically required for
-secured endpoints.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeHead()
-      .arrangeAuth(TOKEN)
-      .act()
-      ...
-```
-
----
-
-### Arrange Header Content-Type
-
-In this example, the Content-Type header is defined, indicating the format of the data being sent (
-if applicable).
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeHead()
-      .arrangeContentType(APPLICATION_JSON)
-      .act()
-      ...
-```
-
----
-
-### Arrange Header Key-Value
-
-In this example, a single custom header is set, allowing for additional context or control over the
-request.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeHead()
-      .arrangeKeyValue(HEAD_X_CUSTOM_1, HEAD_X_CUSTOM_VALUE_1)
-      .act()
-      ...
-```
-
----
-
-### Arrange Header Key-Value (Multiple)
-
-In this example, this example shows how to set multiple custom headers in a single request, which
-can be necessary for more complex API interactions.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeHead()
-      .arrangeKeyValue(HEAD_X_CUSTOM_1, HEAD_X_CUSTOM_VALUE_1)
-      .arrangeKeyValue(HEAD_X_CUSTOM_2, HEAD_X_CUSTOM_VALUE_2)
-      .act()
-      ...
-```
-
----
-
-### Arrange Header Key-Value (Map)
-
-In this example, using a map to set multiple custom headers allows for a cleaner approach when
-numerous headers are required, making the code more maintainable.
-
-```
- get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeHead()
-      .arrangeKeyValue(HEAD_X_CUSTOM_MAP)
-      .act()
-      ...
-```
-
----
-
-</details>
-
-
-<details>
-<summary>Arrange BODY 🔸 (Extension) </summary>
-
-### Arrange Content Raw
-
-In this example, raw content is sent in the body along with its media type, allowing for versatile
-content submissions beyond standard formats.
-
-```
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeContent(RAW_CONTENT, RAW_MEDIATYPE)
-      .act()
-      ...
-```
-
----
-
-### Arrange Content Json
-
-In this example, JSON data is sent in the request body, demonstrating how to transmit structured
-data to the server.
-
-```
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeJson(JSON_1)
-      .act()
-      ...
-```
-
----
-
-### Arrange Content Json (Generic) 🔸 _(new)_
-
-The `arrangeJson` method allows for easily sending JSON payloads in `POST`, `PUT`, or `PATCH`
-requests. It
-handles various object types, including single objects, lists, sets, and maps. Below are examples
-demonstrating how to use this method:
-
-**Example 1: Sending a Single Object**
-
-In this example, a single `DemoA object` is sent as the JSON body of a POST request.
-
-```
- DemoA demo = new DemoA();
-
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeJson(demo) // Serialize the DemoA object to JSON
-      .act()
-      ...
-```
-
-**Example 2: Sending a List of Objects**
-
-Here, a `List<DemoA>` containing multiple objects is sent as the JSON body.
-
-```
- List<DemoA> demo = List.of(DEMO_A1, DEMO_A2);
-
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeJson(demo) // Serialize the List of DemoA objects to JSON
-      .act()
-      ...
-```
-
-**Example 3: Sending a Set of Objects**
-
-In this case, a `Set<DemoA>` is used, ensuring that no duplicate objects are included in the JSON
-payload.
-
-```
- Set<DemoA> demo = Set.of(DEMO_A1, DEMO_A2);
-
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeJson(demo) // Serialize the Set of DemoA objects to JSON
-      .act()
-      ...
-```
-
-**Example 4: Sending a Map of Objects**
-
-This example demonstrates how to send a `Map<Integer, DemoA>` as the JSON body. The map's keys and
-values are serialized.
-
-```
- Map<Integer, DemoA> demo = Map.of(1L, DEMO_A1, 2L, DEMO_A2);
-
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeJson(demo) // Serialize the Map of DemoA objects to JSON
-      .act()
-      ...
-```
-
----
-
-### Arrange Body File
-
-In this example, one file are added to the request body.
-
-```
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeFile(FILE_1)
-      .act()
-      ...
-```
-
----
-
-### Arrange Body File (Multiple)
-
-In this example, two files are added to the request body.
-
-```
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeFile(FILE_1)
-      .arrangeFile(FILE_2)
-      .act()
-      ...
-```
-
----
-
-### Arrange Body File (List)
-
-In this example, this example illustrates how to upload multiple files using a list. This approach
-simplifies adding multiple files and enhances code readability.
-
-```
- post()
-      .arrange()
-      .arrangeUrl(POST_EXAMPLE)
-      .arrangeBody()
-      .arrangeFiles(List.of(FILE_1, FILE_2))
-      .act()
-      ...
-```
-
----
-
-</details>
-
-### Assert Section
-
-<details>
-<summary>Assert Status</summary>
-
-### Assert Status (Literal)
-
-In this example, the response status is asserted against a specific HTTP status code using
-`assertStatus()`. This literal assertion is useful for cases where an exact status code, such as 200
-for success, is expected and needs to be verified directly.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatus(200)
-```
-
-### Assert Status (Enum)
-
-In this example, the response status is asserted using an `HttpStatus` enum value with
-`assertStatus()`. This approach allows for clearer and more expressive assertions, as common HTTP
-statuses are referenced by their enum names (e.g., HttpStatus.OK), improving readability and
-reducing potential for error with numeric codes.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatus(HttpStatus.OK)
-```
-
----
-
-### Assert Status Is OK
-
-This example shows how to assert that the response status is 200 OK.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsOk()
-```
-
----
-
-### Assert Status Is Created
-
-This example shows how to assert that the response status is 201 Created.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsCreated()
-```
-
----
-
-### Assert Status Is Accepted
-
-This example shows how to assert that the response status is 202 Accepted.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsAccepted()
-```
-
----
-
-### Assert Status Is Not Found
-
-This example shows how to assert that the response status is 404 Not Found.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsNotFound()
-```
-
----
-
-### Assert Status Is Client Error
-
-This example shows how to assert that the response status is within the range of client errors (
-400-499).
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsClientError()
-```
-
----
-
-### Assert Status Is Server Error
-
-This example shows how to assert that the response status is within the range of server errors (
-500-599).
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsServerError()
-```
-
----
-
-### Assert Status Is Redirect
-
-This example shows how to assert that the response status indicates a redirection (3xx).
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsRedirect()
-```
-
----
-
-### Assert Status Is Access Forbidden
-
-This example shows how to assert that the response status is 403 Access Forbidden.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsAccessForbidden()
-```
-
----
-
-### Assert Status Is Access Unauthorized
-
-This example shows how to assert that the response status is 401 Access Unauthorized.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsAccessUnauthorized()
-```
-
----
-
-### Assert Status In Range
-
-This example shows how to assert that the response status is within a specific range.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusInRange(400, 499)
-```
-
----
-
-</details> 
-
-<details>
-<summary>Assert Content</summary>
-
-### Assert Content Not Empty
-
-In this example, the **`assertContentNotEmpty`** method is used to assert that the response content
-is not empty.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentNotEmpty()
-```
-
----
-
-### Assert Content Empty
-
-In this example, the **`assertContentEmpty`** method is used to assert that the response content
-is empty.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentEmpty()
-```
-
----
-
-### Assert Content Equals (Byte)
-
-In this example, the **`assertContentEquals`** method is used to assert that the response content
-matches an expected byte array.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentEquals(EXPECTED_BYTE_ARRAY)
-```
-
----
-
-### Assert Content Equals (String)
-
-In this example, the **`assertContentEquals`** method is used to assert that the response content
-matches an expected string.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentEquals(EXPECTED_STRING)
-```
-
----
-
-</details>
-
-
-
-<details>
-<summary>Assert Content (Collection) </summary>
-
-### Assert Content Equals (List)
-
-In this example, the **`assertContentEquals`** method is used to assert that the response content
-matches an expected **`List`** of objects.
-
-- **Class Specification**: Only the class of the objects contained in the list needs to be
-  specified (in this case, `DemoDto.class`). This informs the framework about the type of object to
-  expect.
-- **Expected Objects**: Alongside the class, a list of expected objects (`EXPECTED_LIST`) is
-  provided, which the response should match. This approach is particularly useful for validating
-  collections of data returned by the API.
-
-```
-  // EXPECTED_LIST = List.of(TEST_DTO_1, TEST_DTO_2);
-  
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentEquals(DemoDto.class, EXPECTED_LIST)
-```
-
-### Assert Content Equals (Set)
-
-In this example, the **`assertContentEquals`** method is used to assert that the response content
-matches an expected **`Set`** of objects.
-
-- **Class Specification**: Only the class of the objects contained in the set needs to be
-  specified (in this case, `DemoDto.class`). This informs the framework about the type of object to
-  expect.
-- **Expected Objects**: Alongside the class, a set of expected objects (`EXPECTED_SET`) is provided,
-  which the response should match. This approach is particularly useful for validating collections
-  of data returned by the API.
-
-```
-  // EXPECTED_SET = Set.of(TEST_DTO_1, TEST_DTO_2);
-  
-    get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentEquals(DemoDto.class, EXPECTED_SET)
-```
-
-### Assert Content Equals (Map)
-
-In this example, the **`assertContentEquals`** method is utilized to assert that the response
-content matches an expected **`map`** of objects.
-
-- **Class Specifications**:
-    - **Key Class**: The class of the keys in the map must be specified (in this
-      case, `Boolean.class`).
-    - **Value Class:** The class of the values in the map must be specified (in this case,
-      DemoDto.class).
-- **Expected Objects**: Alongside the class, a map of expected objects (`EXPECTED_MAP`) is
-  provided, which the response should match. This approach is particularly useful for validating
-  collections of data returned by the API.
-
-```
-  // EXPECTED_MAP = Map.of(TRUE, TEST_DTO_1, FALSE, TEST_DTO_2);
-  
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentEquals(Boolean.class, DemoDto.class, EXPECTED_MAP);
-```
-
----
-
-### Assert Content Size
-
-In this example, the **`assertContentSize`** method is used to assert that the response content size
-matches an expected size.
-
-```
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertContent()
-      .assertContentSize(2)
-```
-
----
-
-</details> 
-
-<details>
-<summary>Assert Head</summary>
-
-### Assert Head Contains
-
-This example asserts that the response contains a specific header.
-
-```
-  head()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertHead()
-      .assertHeadContains(X_HEADER)
-```
-
----
-
-### Assert Head Not Contains
-
-This example asserts that a specific header is not present in the response.
-
-```
-  head()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertHead()
-      .assertHeadNotContains(X_HEADER)
-```
-
----
-
-### Assert Head Equals
-
-This example is used to assert that a specific header key has the expected value.
-
-```
-  head()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertHead()
-      .assertHeadEquals(X_HEAD_KEY, X_HEAD_VALUE)
-```
-
---- 
-</details>
-
-
-<details>
-<summary>Assert Custom</summary>
-
-### Assert Result Matcher
-
-In this example, the **`assertCustomResultMatcher`** method demonstrates how to use custom
-assertions through the `ResultMatcher` interface.
-
-In the provided code snippet, a custom assertion is made to check for the existence
-of a cookie named `"sessionId"` in the response. The syntax `cookie().exists("sessionId")` is a
-specific `ResultMatcher` that verifies if the specified cookie is present in the response.
-
-```  
-  get()
-      ...
-      .act()
-      .actPerform()
-      .asserts()
-      .assertCustom()
-      .assertCustomResultMatcher(cookie().exists("sessionId"))
-```
-
-</details>
-
-### Answer Section
-
-<details>
-<summary>Answer ResultActions</summary>
-
-### Retrieve Result Actions
-
-In this example, the response is captured as ResultActions using the `answerAsResultActions()`
-method. This approach is useful for accessing advanced testing features, such as chaining additional
-assertions directly on the response.
-
-```  
- var answer = get()
-                 ...
-                 .act()
-                 .actPerform()
-                 .answer()
-                 .answerAsResultActions();
-```
-
----
-
-</details>
-
-<details>
-<summary>Answer String</summary>
-
-### Retrieve Response as String
-
-In this example, the response is retrieved as a plain string using the `answerAsString()` method.
-This
-method is ideal when the response data is plain text or JSON that will be processed separately,
-without needing deserialization into a specific object.
-
-```  
- var answer = get()
-                 ...
-                 .act()
-                 .actPerform()
-                 .answer()
-                 .answerAsString();
-```
-
----
-
-</details>
-
-<details>
-<summary>Answer Object 🔸 (New)</summary>
-
-### Retrieve Object
-
-The `answerAsObject` method deserializes the HTTP response content directly into an instance of the
-specified class type `(T)`. In this case, it converts the response data into an object of type
-`DemoA`. This allows for streamlined handling of the response, as it is returned as a fully typed
-object, eliminating the need for additional parsing or casting steps.
-
-```  
-DemoA demoA = get()
-                  .arrange()
-                  .arrangeUrl(GET_DEMO)
-                  .act()
-                  .actPerform()
-                  .answer()
-                  .answerAsObject(DemoA.class);
-```
-
----
-
-</details>
-
-<details>
-<summary>Answer List  🔸 (New) </summary>
-
-### Retrieve List
-
-The `answerAsList` method deserializes the HTTP response content directly into a list of the
-specified class type `(T)`. In this case, it converts the response data into a list of `DemoA`
-objects. This allows for streamlined handling of the response, as it is returned as a fully typed
-list, eliminating the need for additional parsing or casting steps.
-
-```  
-List<DemoA> demoA = get()
-                      .arrange()
-                      .arrangeUrl(GET_DEMO)
-                      .act()
-                      .actPerform()
-                      .answer()
-                      .answerAsList(DemoA.class);
-```
-
----
-
-</details>
-
-<details>
-<summary>Answer Set 🔸 (New) </summary>
-
-### Retrieve Set
-
-The `answerAsSet` method deserializes the HTTP response content directly into a set of the specified
-class type `(T)`. In this case, it converts the response data into a set of `DemoA` objects. This
-allows for streamlined handling of the response, as it is returned as a fully typed set, eliminating
-the need for additional parsing or casting steps.
-
-```  
-Set<DemoA> demoA = get()
-                      .arrange()
-                      .arrangeUrl(GET_DEMO)
-                      .act()
-                      .actPerform()
-                      .answer()
-                      .answerAsSet(DemoA.class);
-```
-
----
-
-</details>
-
-<details>
-<summary>Answer Map 🔸 (New) </summary> 
-
-### Retrieve Map
-
-The `answerAsMap` method deserializes the HTTP response content directly into a map, where the
-specified key and value types are provided as parameters `(K and V)`. In this case, it converts the
-response data into a map with `Integer` as the key type and `DemoA` as the value type. This allows
-for streamlined handling of the response, as it is returned as a fully typed map, eliminating the
-need for additional parsing or casting steps.
-
-```  
-Map<Integer, DemoA> demoA = get()
-                              .arrange()
-                              .arrangeUrl(GET_DEMO)
-                              .act()
-                              .actPerform()
-                              .answer()
-                              .answerAsMap(Integer.class, DemoA.class);
-```
-
----
-
-</details>
-
-<details>
-<summary>Answer Byte</summary>
-
-### Retrieve Response as Byte Array
-
-In this example, the response is retrieved as a byte array using the `answerAsByte()` method. This
-method is particularly useful for handling binary data, such as file downloads or media content,
-where the response content is best represented in raw byte form.
-
-```  
- var answer = get()
-                 ...
-                 .act()
-                 .actPerform()
-                 .answer()
-                 .answerAsByte();
-```
-
----
-
-</details>
-
-<details>
-<summary>Answer Header</summary>
-
-### Retrieve Specific Response Header
-
-This method retrieves the value of a specific response header.
-
-```  
- var answer = get()
-                 ...
-                 .act()
-                 .actPerform()
-                 .answer()
-                 .answerHeader(KEY);
-```
-
----
-
-</details>
-
-
-<details>
-<summary>Answer Void</summary>
-
-### Execute and Discard Response Content
-
-This method retrieves the result of the HTTP request without returning any content. It is used when
-the response is not needed.
-
-```  
-  get()
-      ...
-      .act()
-      .actPerform()
-      .answer()
-      .answerVoid();
-```
-
-</details>
-
----
-
-## Examples
-
-### Test Case: Validate Response with Expected List of DTOs
-
-In this test case, a GET request is made to the specified endpoint using a URL that includes a
-parameter. The following steps are executed:
-
-1. **Arrange**: The initial setup is performed, including defining the request URL.
-2. **Arrange URL**: The base URL (`GET_EXAMPLE`) is arranged for the request.
-3. **Arrange PARAM**: A query parameter is added to the request using `arrangeKeyValue`, allowing
-   for dynamic data retrieval.
-4. **Act**: The request is executed with the `act()` method, followed by `actPerform()` to send
-   the request.
-5. **Assertions**: Several assertions are made to verify the response:
-    - The response is asserted to be non-empty using `assertContentNotEmpty()`.
-    - The HTTP status of the response is asserted to be `HttpStatus.OK`, ensuring the request was
-      successful.
-    - The response content size is asserted to match the expected number of items
-      using `assertContentSize(2)`, confirming that the correct number of objects is returned.
-    - The response content is asserted to match the expected list of `DemoDto` objects
-      using `assertContentEquals`, confirming that the API returns the correct data structure.
-
-This structured approach helps ensure that the endpoint behaves as expected and returns the correct
-list of DTOs.
+The `VerificationResponse` class represents the response that contains the verification code, UUID,
+and email after the verification process:
 
 ```java
+public class VerificationResponse {
 
-@Test
-void WHEN_call_endpoint_THEN_return_expected_list_dto() throws Exception {
-
-  get()
-      .arrange()
-      .arrangeUrl(GET_EXAMPLE)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsOk()
-      .assertContent()
-      .assertContentNotEmpty()
-      .assertContentSize(2)
-      .assertContentEquals(DemoDto.class, EXPECTED_LIST);
+  private String code;
+  private String uuid;
+  private String mail;
 }
 ```
 
----
+### 2. Verification Controller
 
-### Test Case: Validate Response Status for File Upload
+The `VerificationController` is responsible for handling the verification request. It receives a
+request with the user's email and generates a verification response containing a unique UUID and a
+dummy verification code sent to the provided email.
 
-In this test case, a POST request is made to the specified endpoint to upload files. The following
-steps are executed:
+```java
 
-1. **Arrange**: The initial setup is performed, including defining the request URL and necessary
-   parameters.
-2. **Arrange URL**: The URL is arranged using `arrangeUrl`, which includes dynamic path
-   variables (`PATH_VARIABLE_USER_ID_8`, `PATH_VARIABLE_PAGE_ID_3`) to target specific resources.
-3. **Arrange PARAM**: A query parameter is added to the request using `arrangeKeyValue`,
-   allowing
-   for additional context in the request.
-4. **Arrange HEAD**: An authorization token is included in the request headers
-   using `arrangeAuth`,
-   which is typically required for secured endpoints.
-5. **Arrange BODY**: The files to be uploaded are arranged using `arrangeFiles`, enabling multiple
-   file uploads in a single request.
-6. **Action**: The request is executed with the `act()` method, followed by `actPerform()` to send
-   the request.
-7. **Assertions**: The response status is asserted to be `201`, indicating that the resource was
-   created successfully.
+@RestController
+@RequestMapping(Api.BASE)
+public class VerificationController {
 
-This structured approach ensures that the endpoint correctly processes file uploads and returns the
-expected status code.
+  @PostMapping(Api.CREATE_VERIFICATION)
+  public ResponseEntity<VerificationResponse> createVerification(
+      @RequestBody VerificationRequest verification) {
+
+    var response = VerificationResponse
+        .builder()
+        .mail(verification.getMail())
+        .uuid(UUID.randomUUID().toString())
+        .build();
+
+    // Simulate sending a verification code to the user's email
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+}
+
+```
+
+### 3. Registration Models
+
+The `RegistrationAddress` class holds the user's address details, while the `RegistrationRequest`
+contains both the address and the verification response (which includes the verification code, UUID,
+and email):
+
+```java
+public class RegistrationAddress {
+
+  private String street;
+  private String houseNumber;
+  private String zip;
+  private String city;
+  private String country;
+}
+
+public class VerificationResponse {
+
+  private String code;
+  private String uuid;
+  private String mail;
+}
+
+public class RegistrationRequest {
+
+  private RegistrationAddress address;
+  private VerificationResponse verification;
+}
+```
+
+### 4. Registration Controller
+
+The `RegistrationController` handles the registration process. Once the user sends the verification
+code, the backend will validate it and, if valid, complete the registration process.
+
+```java
+
+@RestController
+@RequestMapping(Api.BASE)
+public class RegistrationController {
+
+  @PostMapping(Api.CREATE_REGISTRATION)
+  public ResponseEntity<Void> createRegistration(@RequestBody RegistrationRequest registration) {
+    // Simulate the process of verifying the code entered by the user
+    return new ResponseEntity<>(HttpStatus.CREATED);
+  }
+}
+
+```
+
+## Test Implementation
+
+The table below shows the same test scenario written in two different ways. On the left side, the
+test is written using **MockMvc**, which is the traditional way to perform HTTP tests in Spring. On
+the right side, the same test is written using the **AAA-Mock** framework, which is an open-source
+testing framework designed to make the test code more readable and concise.
+
+It is important to note that in both examples, the use of helper private methods has been
+intentionally avoided to keep the tests straightforward and focused on the core testing logic. This
+ensures clarity and helps demonstrate the difference between the two testing approaches.
+
+<table>
+  <tr>
+    <td>
+
+**Test with MockMvc**
+
+```java
+
+@Autowired
+private MockMvc mockMvc;
+
+@Autowired
+private ObjectMapper objectMapper;
+
+@Test
+@SneakyThrows
+void GIVEN_registration_with_valid_verification_WHEN_createRegistration_THEN_return_status_201() {
+
+  var verificationRequest = VerificationRequest.builder()
+      .firstname(FIRSTNAME)
+      .lastname(LASTNAME)
+      .mail(EMAIL)
+      .build();
+
+  var verificationResponseJson = mockMvc.perform(
+          MockMvcRequestBuilders.post(POST_CREATE_VERIFICATION)
+              .contentType(MediaType.APPLICATION_JSON)
+              .content(objectMapper.writeValueAsString(verificationRequest)))
+      .andReturn()
+      .getResponse()
+      .getContentAsString();
+
+  var verificationResponse = objectMapper.readValue(verificationResponseJson,
+      VerificationResponse.class);
+
+  var registrationRequest = RegistrationRequest.builder()
+      .verification(VerificationResponse.builder()
+          .code(VALID_CODE)
+          .mail(verificationResponse.getMail())
+          .uuid(verificationResponse.getUuid())
+          .build())
+      .build();
+
+  mockMvc.perform(MockMvcRequestBuilders.post(POST_CREATE_REGISTRATION)
+          .contentType(MediaType.APPLICATION_JSON)
+          .content(objectMapper.writeValueAsString(registrationRequest)))
+      .andExpect(status().isCreated());
+}
+
+```
+
+</td>
+    <td>
+
+**Test with AAA-MockMvc**
 
 ```java
 
 @Test
-void GIVEN_files_WHEN_call_endpoint_THEN_return_expected_status_201() throws Exception {
+@SneakyThrows
+void GIVEN_registration_with_valid_verification_WHEN_createRegistration_THEN_return_status_201() {
+
+  var verificationRequest = VerificationRequest.builder()
+      .firstname(FIRSTNAME)
+      .lastname(LASTNAME)
+      .mail(EMAIL)
+      .build();
+
+  var verificationResponse = post()
+      .arrange()
+      .arrangeUrl(POST_CREATE_VERIFICATION)
+      .arrangeBody()
+      .arrangeJson(verificationRequest)
+      .act()
+      .actPerform()
+      .answer()
+      .answerAsObject(VerificationResponse.class);
+
+  var registrationRequest = RegistrationRequest
+      .builder()
+      .verification(VerificationResponse.builder()
+          .code(VALID_CODE)
+          .mail(verificationResponse.getMail())
+          .uuid(verificationResponse.getUuid())
+          .build())
+      .build();
 
   post()
       .arrange()
-      .arrangeUrl(POST_EXAMPLE, PATH_VARIABLE_USER_ID_8, PATH_VARIABLE_PAGE_ID_3)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
-      .arrangeHead()
-      .arrangeAuth(TEST_TOKEN)
+      .arrangeUrl(POST_CREATE_REGISTRATION)
       .arrangeBody()
-      .arrangeFiles(TEST_BODY_FILES)
+      .arrangeJson(registrationRequest)
       .act()
       .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsCreated();
 }
+
 ```
 
----
-
-### Test Case: Update Resource with PUT and Validate Response Object
-
-Step 1: Send the Request (GET)
-
-1. **Arrange**: The URL for the update endpoint (`GET_DEMO`) is arranged
-   using `arrangeUrl`.
-2. **Arrange BODY**: The `DemoA` object, previously updated with a new name (`demoAUpdated`),
-   is serialized into JSON using `arrangeJson` and set as the request body.
-3. **Action**: The `PUT` request is executed using `act()` followed by `actPerform()` to send the
-   updated resource to the endpoint.
-4. **Answer**: The response is processed using `answer()`, and the content is deserialized into a
-   `DemoA` object using `answerAsObject(DemoA.class)`. This allows the response data to be used in
-   subsequent steps.
-
-Step 2: Send the Modify DemoA (PUT)
-
-1. **Arrange**: The initial setup is performed, including defining the request URL for the PUT
-   endpoint.
-2. **Arrange URL**: The URL is arranged using arrangeUrl, targeting the PUT_EXAMPLE endpoint.
-3. **Arrange BODY**: The body is arranged using `arrangeJson(demoA)`, where the response from the
-   previous request `(demoA)` is serialized and passed as the body of the PUT request.
-4. **Action**: The request is executed with the `act()` method, followed by `actPerform()` to send
-   the
-   request.
-5. **Assertions**: The response status is asserted to be 200 (or the expected status), confirming
-   the successful update of the resource. Optionally, the content of the response can be validated
-   to ensure it matches the expected result.
-
-```java
-
-@Test
-void GIVEN_demoA_with_new_name_WHEN_update_THEN_return_expected_object() throws Exception {
-
-  var demoA = get()
-      .arrange()
-      .arrangeUrl(GET_DEMO)
-      .act()
-      .actPerform()
-      .answer()
-      .answerAsObject(DemoA.class);
-
-  var demoAUpdated = demoA.withName(TEST_UPDATED);
-
-  put()
-      .arrange()
-      .arrangeUrl(PUT_DEMO)
-      .arrangeBody()
-      .arrangeJson(demoAUpdated)
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsCreated()
-      .assertContent()
-      .assertContentEquals(DemoA.class, TEST_A1_UPDATED);
-}
-```
+</td>
+  </tr>
+</table>
 
 ---
 

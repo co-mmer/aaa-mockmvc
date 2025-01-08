@@ -3,12 +3,16 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head;
 import lombok.NonNull;
 
 /**
- * This interface defines a set of assertions for validating HTTP response headers in a testing
- * context. It provides methods to check for the presence of specific headers, validate their
- * absence, and assert that their values match expected values.
+ * Provides methods for asserting HTTP response headers in tests.
  *
- * <p>These assertions are particularly useful for verifying the correctness of HTTP responses in a
- * Spring web application context, especially when working with the {@code MockMvc} framework.
+ * <ul>
+ *   <li>{@link #assertHeadContains(String)}: Asserts that the HTTP response contains the specified
+ *       header.
+ *   <li>{@link #assertHeadNotContains(String)}: Asserts that the HTTP response does not contain the
+ *       specified header.
+ *   <li>{@link #assertHeadEquals(String, String)}: Asserts that the specified header in the HTTP
+ *       response matches the expected value.
+ * </ul>
  *
  * @since 1.0.0
  */

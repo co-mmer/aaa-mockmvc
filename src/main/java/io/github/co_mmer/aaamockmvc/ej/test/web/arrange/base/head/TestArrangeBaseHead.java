@@ -64,14 +64,13 @@ public abstract class TestArrangeBaseHead extends TestArrangeBaseAbstract {
    *
    * <p>Specifies the media types for the content being sent by the client.
    *
-   * @param types the content types to be sent in the request (must not be {@code null})
+   * @param type the content types to be sent in the request (must not be {@code null})
    * @throws NullPointerException if the {@code types} is {@code null}
    * @throws IllegalArgumentException if any of the provided types is {@code null}
    * @since 1.0.0
    */
-  protected void setContentTypes(@NonNull MediaType... types) {
-    TestArrangeValidator.nonNullContentTypes(types);
-    TestArrangeHeadUtils.setContentTypes(getHead(), types);
+  protected void setContentTypes(@NonNull MediaType type) {
+    TestArrangeHeadUtils.setContentTypes(getHead(), type);
   }
 
   /**

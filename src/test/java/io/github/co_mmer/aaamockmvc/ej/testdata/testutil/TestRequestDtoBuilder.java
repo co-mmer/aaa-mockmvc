@@ -17,8 +17,7 @@ public final class TestRequestDtoBuilder {
   private Map<String, String> param;
   private Map<String, Object> headerKeyValue;
   private final List<MediaType> headerAccepts;
-  private final List<MediaType> headerContentTypes;
-
+  private MediaType headerContentType;
   private final List<MockMultipartFile> files;
   private String content;
   private MediaType contentType;
@@ -27,7 +26,6 @@ public final class TestRequestDtoBuilder {
     this.param = new HashMap<>();
     this.headerKeyValue = new HashMap<>();
     this.headerAccepts = new ArrayList<>();
-    this.headerContentTypes = new ArrayList<>();
 
     this.files = new ArrayList<>();
   }
@@ -68,7 +66,7 @@ public final class TestRequestDtoBuilder {
   }
 
   public TestRequestDtoBuilder withHeadContentType(MediaType type) {
-    this.headerContentTypes.add(type);
+    this.headerContentType = type;
     return this;
   }
 
@@ -93,7 +91,7 @@ public final class TestRequestDtoBuilder {
     requestDto.getUrl().setParam(this.param);
     requestDto.getHead().setKeyValue(this.headerKeyValue);
     requestDto.getHead().setAccepts(this.headerAccepts);
-    requestDto.getHead().setContentTypes(this.headerContentTypes);
+    requestDto.getHead().setContentType(this.headerContentType);
     requestDto.getBody().setFiles(this.files);
     requestDto.getBody().setContent(this.content);
     requestDto.getBody().setContentType(this.contentType);

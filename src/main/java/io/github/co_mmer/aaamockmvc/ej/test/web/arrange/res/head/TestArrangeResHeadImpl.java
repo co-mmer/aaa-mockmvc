@@ -67,14 +67,19 @@ public final class TestArrangeResHeadImpl extends TestArrangeBaseHead
   /**
    * Arranges the "Content-Type" header for the PATCH/POST/PUT request.
    *
-   * @param mediaTypes the content types to be sent in the request (must not be {@code null})
+   * <p>When sending a request without a body, the `Content-Type` header may need to be explicitly
+   * set to inform the server about the request's format and how it should be processed. If the
+   * request includes a body, the `Content-Type` is either automatically determined or manually set
+   * by the {@link #arrangeBody()} method.
+   *
+   * @param mediaType the content type to be sent in the request (must not be {@code null})
    * @return the current instance for further configuration
-   * @throws NullPointerException if the {@code mediaTypes} is {@code null}
+   * @throws NullPointerException if the {@code mediaType} is {@code null}
    * @since 1.0.0
    */
   @Override
-  public TestArrange4ResHead arrangeContentType(@NonNull MediaType... mediaTypes) {
-    setContentTypes(mediaTypes);
+  public TestArrange4ResHead arrangeContentType(@NonNull MediaType mediaType) {
+    setContentTypes(mediaType);
     return this;
   }
 

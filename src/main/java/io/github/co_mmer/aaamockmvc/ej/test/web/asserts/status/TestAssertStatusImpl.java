@@ -6,21 +6,63 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContentImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssert1Byte;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssertByteImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert1Class;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssertClassImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertCollectionImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustom;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.custom.TestAssertCustomImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertMapImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssertStringImpl;
 import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
 
 /**
- * This class provides implementation for assertions on HTTP response status in a testing context.
- * It allows various validations of the HTTP status of responses obtained from the {@code MockMvc}
- * framework.
+ * Provides methods for asserting HTTP response statuses in tests.
+ *
+ * <ul>
+ *   <li>{@link #assertStatus(HttpStatus)}: Asserts that the status of the HTTP response matches the
+ *       given {@code HttpStatus}.
+ *   <li>{@link #assertStatus(int)}: Asserts that the status of the HTTP response matches the given
+ *       status code.
+ *   <li>{@link #assertStatusIsOk()}: Asserts that the HTTP response status is 200 OK.
+ *   <li>{@link #assertStatusIsCreated()}: Asserts that the HTTP response status is 201 Created.
+ *   <li>{@link #assertStatusIsAccepted()}: Asserts that the HTTP response status is 202 Accepted.
+ *   <li>{@link #assertStatusIsNotFound()}: Asserts that the HTTP response status is 404 Not Found.
+ *   <li>{@link #assertStatusIsClientError()}: Asserts that the HTTP response status indicates a
+ *       client error (4xx).
+ *   <li>{@link #assertStatusIsServerError()}: Asserts that the HTTP response status indicates a
+ *       server error (5xx).
+ *   <li>{@link #assertStatusIsRedirect()}: Asserts that the HTTP response status indicates a
+ *       redirection (3xx).
+ *   <li>{@link #assertStatusIsAccessForbidden()}: Asserts that the HTTP response status is 403
+ *       Forbidden.
+ *   <li>{@link #assertStatusIsAccessUnauthorized()}: Asserts that the HTTP response status is 401
+ *       Unauthorized.
+ *   <li>{@link #assertStatusInRange(int, int)}: Asserts that the HTTP response status code is
+ *       within a specified range.
+ *   <li>{@link #assertContentAsString()}: Provides assertion methods for validating the HTTP
+ *       response content.
+ *   <li>{@link #assertContentAsClass()} ()}: Provides assertion methods for validating the HTTP
+ *       response content as class.
+ *   <li>{@link #assertContentAsByte()}: Provides assertion methods for validating the HTTP response
+ *       binary.
+ *   <li>{@link #assertContentAsCollection()}: Provides assertion methods for validating the
+ *       contents of an HTTP response collection.
+ *   <li>{@link #assertContentAsMap()}: Provides assertion methods for validating the contents of an
+ *       HTTP response map.
+ *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
+ *   <li>{@link #assertCustom()}: Provides assertion methods for validating the HTTP response based
+ *       on custom logic.
+ * </ul>
  *
  * @since 1.1.0
  */
@@ -81,9 +123,6 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   /**
    * Asserts that the HTTP response status is 200 OK.
    *
-   * <p>This method checks if the response status is HTTP 200 (OK). If the status does not match, an
-   * assertion failure is triggered.
-   *
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
    */
@@ -95,9 +134,6 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
 
   /**
    * Asserts that the HTTP response status is 201 Created.
-   *
-   * <p>This method checks if the response status is HTTP 201 (Created). If the status does not
-   * match, an assertion failure is triggered.
    *
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
@@ -111,9 +147,6 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   /**
    * Asserts that the HTTP response status is 202 Accepted.
    *
-   * <p>This method checks if the response status is HTTP 202 (Accepted). If the status does not
-   * match, an assertion failure is triggered.
-   *
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
    */
@@ -126,9 +159,6 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   /**
    * Asserts that the HTTP response status is 404 Not Found.
    *
-   * <p>This method checks if the response status is HTTP 404 (Not Found). If the status does not
-   * match, an assertion failure is triggered.
-   *
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
    */
@@ -140,9 +170,6 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
 
   /**
    * Asserts that the HTTP response status indicates a client error (4xx).
-   *
-   * <p>This method checks if the response status code is within the 400-499 range. If the status
-   * does not match, an assertion failure is triggered.
    *
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
@@ -157,9 +184,6 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   /**
    * Asserts that the HTTP response status indicates a server error (5xx).
    *
-   * <p>This method checks if the response status code is within the 500-599 range. If the status
-   * does not match, an assertion failure is triggered.
-   *
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
    */
@@ -172,9 +196,6 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
 
   /**
    * Asserts that the HTTP response status indicates a redirection (3xx).
-   *
-   * <p>This method checks if the response status code is within the 300-399 range. If the status
-   * does not match, an assertion failure is triggered.
    *
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
@@ -189,9 +210,6 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   /**
    * Asserts that the HTTP response status is 403 Forbidden.
    *
-   * <p>This method checks if the response status is HTTP 403 (Forbidden). If the status does not
-   * match, an assertion failure is triggered.
-   *
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
    */
@@ -204,9 +222,6 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   /**
    * Asserts that the HTTP response status is 401 Unauthorized.
    *
-   * <p>This method checks if the response status is HTTP 401 (Unauthorized). If the status does not
-   * match, an assertion failure is triggered.
-   *
    * @return the current instance of {@code TestAssert2Status} for further assertions
    * @since 1.1.0
    */
@@ -218,10 +233,6 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
 
   /**
    * Asserts that the HTTP response status code is within a specified range.
-   *
-   * <p>This method checks if the status code of the response falls between the specified minimum
-   * and maximum values (inclusive). If the actual status code does not fall within the range, an
-   * assertion failure is triggered.
    *
    * @param minStatusCode the minimum expected status code (must be less than or equal to
    *     maxStatusCode)
@@ -238,29 +249,65 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   }
 
   /**
-   * Asserts that the HTTP response is valid for content assertions.
+   * Provides assertion methods for validating the HTTP response content.
    *
-   * <p>This method returns an instance of {@code TestAssertContent} for asserting the content of
-   * the HTTP response. It allows various validations of response content, including checks for
-   * emptiness and matching expected values.
-   *
-   * @return an instance of {@code TestAssertContent} for further assertions
+   * @return an instance of {@code TestAssertContent} for asserting the response content
    * @since 1.1.0
    */
   @Override
-  public TestAssertContent assertContent() {
-    return new TestAssertContentImpl(this.actions, this.objectMapper);
+  public TestAssert1String assertContentAsString() {
+    return new TestAssertStringImpl(this.actions);
   }
 
   /**
-   * Asserts that the HTTP response is valid for a HEAD request.
+   * Provides assertion methods for validating the HTTP response content as class.
    *
-   * <p>This method returns an instance of {@code TestAssertHead} for asserting the headers of the
-   * HTTP response. It allows various validations of response headers, such as checking for the
-   * presence or absence of specific headers and comparing header values.
+   * @return an instance of {@code TestAssertClass} for asserting the response content
+   * @since 1.4.0
+   */
+  @Override
+  public TestAssert1Class assertContentAsClass() {
+    return new TestAssertClassImpl(this.actions, this.objectMapper);
+  }
+
+  /**
+   * Provides assertion methods for validating the HTTP response byte.
    *
-   * @return an instance of {@code TestAssertHead} c on headers
-   * @since 1.1.0
+   * @return an instance of {@code TestAssert1Byte} for asserting the response binary
+   * @since 1.4.0
+   */
+  @Override
+  public TestAssert1Byte assertContentAsByte() {
+    return new TestAssertByteImpl(this.actions);
+  }
+
+  /**
+   * Provides assertion methods for validating the contents of an HTTP response collection.
+   *
+   * @return an instance of {@code TestAssert1Collection} for asserting the collection response
+   * @since 1.4.0
+   */
+  @Override
+  public TestAssert1Collection assertContentAsCollection() {
+    return new TestAssertCollectionImpl(this.actions, this.objectMapper);
+  }
+
+  /**
+   * Provides assertion methods for validating the contents of an HTTP response map.
+   *
+   * @return an instance of {@code TestAssert1Map} for asserting the map response
+   * @since 1.4.0
+   */
+  @Override
+  public TestAssert1Map assertContentAsMap() {
+    return new TestAssertMapImpl(this.actions, this.objectMapper);
+  }
+
+  /**
+   * Provides assertion methods for validating the HTTP response headers.
+   *
+   * @return an instance of {@code TestAssertHead} for asserting the response headers
+   * @since 1.0.0
    */
   @Override
   public TestAssertHead assertHead() {
@@ -268,12 +315,7 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   }
 
   /**
-   * Asserts that the HTTP response matches custom validation logic.
-   *
-   * <p>This method returns an instance of {@code TestAssertCustom} for asserting custom validations
-   * on the HTTP response. It allows users to define their own result matchers or custom logic for
-   * validating the response, giving flexibility beyond standard status, content, and header
-   * assertions.
+   * Provides assertion methods for validating the HTTP response based on custom logic.
    *
    * @return an instance of {@code TestAssertCustom} for custom assertions on the response
    * @since 1.1.0

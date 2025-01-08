@@ -96,19 +96,11 @@ public final class ScenarioDataRequestPost {
           .withHeadKeyValue(TEST_AUTH_KEY, TEST_AUTH_VALUE)
           .build();
 
-  public static final TestRequestDto POST_REQUEST__HEAD_CONTENT_TYPE_1 =
+  public static final TestRequestDto POST_REQUEST__HEAD_CONTENT_TYPE =
       TestRequestDtoBuilder.builder()
           .withRequestType(TestRequestType.POST)
           .withUri(TEST_URI)
           .withHeadContentType(APPLICATION_JSON)
-          .build();
-
-  public static final TestRequestDto POST_REQUEST__HEAD_CONTENT_TYPE_2 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.POST)
-          .withUri(TEST_URI)
-          .withHeadContentType(APPLICATION_JSON)
-          .withHeadContentType(APPLICATION_PDF)
           .build();
 
   public static final TestRequestDto POST_REQUEST__HEAD_KEY_VALUE_1 =
@@ -230,6 +222,7 @@ public final class ScenarioDataRequestPost {
           .withHeadKeyValue(TEST_AUTH_KEY, TEST_AUTH_VALUE)
           .withHeadContentType(APPLICATION_JSON)
           .build();
+
   public static final TestRequestDto POST_REQUEST__HEAD_AUTH_KEY_VALUE_1 =
       TestRequestDtoBuilder.builder()
           .withRequestType(TestRequestType.POST)

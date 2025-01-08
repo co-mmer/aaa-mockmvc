@@ -78,21 +78,6 @@ public final class ScenarioDataRequestDelete {
           .withHeadAccept(APPLICATION_JSON)
           .build();
 
-  public static final TestRequestDto DEL_REQUEST__HEAD_CONTENT_TYPE_1 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.DELETE)
-          .withUri(TestValue.TEST_URI)
-          .withHeadContentType(APPLICATION_JSON)
-          .build();
-
-  public static final TestRequestDto DEL_REQUEST__HEAD_CONTENT_TYPE_2 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.DELETE)
-          .withUri(TestValue.TEST_URI)
-          .withHeadContentType(APPLICATION_JSON)
-          .withHeadContentType(APPLICATION_XML)
-          .build();
-
   public static final TestRequestDto DEL_REQUEST__HEAD_KEY_VALUE_1 =
       TestRequestDtoBuilder.builder()
           .withRequestType(TestRequestType.DELETE)
@@ -123,14 +108,6 @@ public final class ScenarioDataRequestDelete {
           .withHeadKeyValue(TestHeader.TEST_AUTH_KEY, TestHeader.TEST_AUTH_VALUE)
           .build();
 
-  public static final TestRequestDto DEL_REQUEST__HEAD_ACCEPT_1_CONTENT_TYPE_1 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.DELETE)
-          .withUri(TestValue.TEST_URI)
-          .withHeadAccept(APPLICATION_XML)
-          .withHeadContentType(APPLICATION_JSON)
-          .build();
-
   public static final TestRequestDto DEL_REQUEST__HEAD_ACCEPT_1_KEY_VALUE_1 =
       TestRequestDtoBuilder.builder()
           .withRequestType(TestRequestType.DELETE)
@@ -148,13 +125,6 @@ public final class ScenarioDataRequestDelete {
           .withHeadKeyValue(TestHeader.TEST_HEADER_KEY_2, TestHeader.TEST_HEADER_VALUE_2)
           .build();
 
-  public static final TestRequestDto DEL_REQUEST__HEAD_AUT_CONTENT_TYPE_1 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.DELETE)
-          .withUri(TestValue.TEST_URI)
-          .withHeadKeyValue(TestHeader.TEST_AUTH_KEY, TestHeader.TEST_AUTH_VALUE)
-          .withHeadContentType(APPLICATION_JSON)
-          .build();
   public static final TestRequestDto DEL_REQUEST__HEAD_AUTH_KEY_VALUE_1 =
       TestRequestDtoBuilder.builder()
           .withRequestType(TestRequestType.DELETE)
@@ -176,24 +146,4 @@ public final class ScenarioDataRequestDelete {
       DEL_REQUEST__HEAD_AUTH_KEY_VALUE_2;
   public static final TestRequestDto DEL_REQUEST__HEAD_ACCEPT_1_KEY_VALUE_MAP =
       DEL_REQUEST__HEAD_ACCEPT_1_KEY_VALUE_2;
-
-  public static final TestRequestDto DEL_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_1 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.DELETE)
-          .withUri(TestValue.TEST_URI)
-          .withHeadContentType(APPLICATION_XML)
-          .withHeadKeyValue(TestHeader.TEST_HEADER_KEY_1, TestHeader.TEST_HEADER_VALUE_1)
-          .build();
-
-  public static final TestRequestDto DEL_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_2 =
-      TestRequestDtoBuilder.builder()
-          .withRequestType(TestRequestType.DELETE)
-          .withUri(TestValue.TEST_URI)
-          .withHeadContentType(APPLICATION_XML)
-          .withHeadKeyValue(TestHeader.TEST_HEADER_KEY_1, TestHeader.TEST_HEADER_VALUE_1)
-          .withHeadKeyValue(TestHeader.TEST_HEADER_KEY_2, TestHeader.TEST_HEADER_VALUE_2)
-          .build();
-
-  public static final TestRequestDto DEL_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_MAP =
-      DEL_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_2;
 }

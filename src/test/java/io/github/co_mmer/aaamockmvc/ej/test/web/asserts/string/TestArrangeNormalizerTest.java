@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string;
 
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_LIST;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_LIST_NORMALIZED;
@@ -6,8 +6,6 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.W
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_MAP_NORMALIZED;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_OBJECT;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_OBJECT_NORMALIZED;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_SET;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.WORD_SET_NORMALIZED;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -32,36 +30,31 @@ class TestArrangeNormalizerTest {
   }
 
   @Test
-  void GIVEN_null_WHEN_normalizeList_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class, () -> TestArrangeNormalizer.normalizeList(null));
+  void GIVEN_null_WHEN_normalizeCollection_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> TestArrangeNormalizer.normalizeCollection(null));
   }
 
   @Test
-  void GIVEN_words_WHEN_normalizeList_THEN_return_expected_list() {
+  void GIVEN_words_WHEN_normalizeCollection_THEN_return_expected_list() {
     // Act
-    var result = TestArrangeNormalizer.normalizeList(WORD_LIST);
+    var result = TestArrangeNormalizer.normalizeCollection(WORD_LIST);
 
     // Assert
     assertThat(result, is(WORD_LIST_NORMALIZED));
   }
 
   @Test
-  void GIVEN_null_WHEN_normalizeSet_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class, () -> TestArrangeNormalizer.normalizeSet(null));
+  void GIVEN_null_WHEN_normalizeAsObjects_THEN_throw_NullPointerException() {
+    assertThrows(NullPointerException.class, () -> TestArrangeNormalizer.normalizeAsObjects(null));
   }
 
   @Test
-  void GIVEN_words_WHEN_normalizeSet_THEN_return_expected_set() {
+  void GIVEN_words_WHEN_normalizeAsObjects_THEN_return_expected_list() {
     // Act
-    var result = TestArrangeNormalizer.normalizeSet(WORD_SET);
+    var result = TestArrangeNormalizer.normalizeAsObjects(WORD_LIST);
 
     // Assert
-    assertThat(result, is(WORD_SET_NORMALIZED));
-  }
-
-  @Test
-  void GIVEN_null_WHEN_normalizeMap_THEN_throw_NullPointerException() {
-    assertThrows(NullPointerException.class, () -> TestArrangeNormalizer.normalizeMap(null));
+    assertThat(result, is(WORD_LIST_NORMALIZED));
   }
 
   @Test

@@ -83,15 +83,9 @@ public final class ScenarioDataActPost {
   public static final TestAct1 POST_ARRANGE__HEAD_AUTH =
       POST.arrange().arrangeUrl(TEST_PATH).arrangeHead().arrangeAuth(TEST_AUTH_VALUE).act();
 
-  public static final TestAct1 POST_ARRANGE__HEAD_CONTENT_TYPE_1 =
+  public static final TestAct1 POST_ARRANGE__HEAD_CONTENT_TYPE =
       POST.arrange().arrangeUrl(TEST_PATH).arrangeHead().arrangeContentType(APPLICATION_JSON).act();
 
-  public static final TestAct1 POST_ARRANGE__HEAD_CONTENT_TYPE_2 =
-      POST.arrange()
-          .arrangeUrl(TEST_PATH)
-          .arrangeHead()
-          .arrangeContentType(APPLICATION_JSON, APPLICATION_PDF)
-          .act();
   public static final TestAct1 POST_ARRANGE__HEAD_KEY_VALUE_1 =
       POST.arrange()
           .arrangeUrl(TEST_PATH)

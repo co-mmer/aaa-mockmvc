@@ -4,9 +4,12 @@ import lombok.NonNull;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 /**
- * This interface provides a contract for custom assertions on HTTP responses in a testing context.
- * It allows validation of responses obtained from the {@code MockMvc} framework using custom result
- * matchers.
+ * Provides methods for custom assertions on HTTP responses in tests.
+ *
+ * <ul>
+ *   <li>{@link #assertCustomResultMatcher(ResultMatcher)}: Asserts that the result of the test
+ *       request matches the given {@link ResultMatcher}.
+ * </ul>
  *
  * @since 1.1.0
  */

@@ -4,14 +4,14 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestBody.TEST_BO
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestDto.TEST_REQUEST_DTO;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_1_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_1_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_1_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECT_1_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_OBJECT_1_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_1_DTO;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_1_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_A1_A2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_A1_A2_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_BYTE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -28,7 +28,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestBean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.MockTestRequestStrategyFactory;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testsetup.MockMvcSetup;
-import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject1Dto;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -177,7 +177,7 @@ class TestAnswerImplTest {
 
     // Act
     var exception =
-        assertThrows(Exception.class, () -> this.testAnswer.answerAsObject(TestObject1Dto.class));
+        assertThrows(Exception.class, () -> this.testAnswer.answerAsObject(TestObjectSimple.class));
 
     // Assert
     assertThat(exception.getClass(), is(TestAnswerException.class));
@@ -186,7 +186,7 @@ class TestAnswerImplTest {
   @Test
   void GIVEN_wrong_class_WHEN_answerAsObject_THEN_throw_Exception() throws Exception {
     // Arrange
-    this.setup.mockGetContentAsString(TEST_OBJECT_1_JSON);
+    this.setup.mockGetContentAsString(TEST_A1_JSON);
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Assert
@@ -200,14 +200,14 @@ class TestAnswerImplTest {
   @Test
   void WHEN_answerAsObject_THEN_return_expected_object() throws Exception {
     // Arrange
-    this.setup.mockGetContentAsString(TEST_OBJECT_1_JSON);
+    this.setup.mockGetContentAsString(TEST_A1_JSON);
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Act
-    var result = this.testAnswer.answerAsObject(TestObject1Dto.class);
+    var result = this.testAnswer.answerAsObject(TestObjectSimple.class);
 
     // Assert
-    assertThat(result, is(TEST_OBJECT_1_DTO));
+    assertThat(result, is(A1));
   }
 
   @Test
@@ -223,7 +223,7 @@ class TestAnswerImplTest {
 
     // Act
     var exception =
-        assertThrows(Exception.class, () -> this.testAnswer.answerAsList(TestObject1Dto.class));
+        assertThrows(Exception.class, () -> this.testAnswer.answerAsList(TestObjectSimple.class));
 
     // Assert
     assertThat(exception.getClass(), is(TestAnswerException.class));
@@ -232,7 +232,7 @@ class TestAnswerImplTest {
   @Test
   void GIVEN_wrong_class_WHEN_answerAsList_THEN_throw_Exception() throws Exception {
     // Arrange
-    this.setup.mockGetContentAsString(TEST_LIST_1_JSON);
+    this.setup.mockGetContentAsString(TEST_LIST_A1_A2_JSON);
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Assert
@@ -246,14 +246,14 @@ class TestAnswerImplTest {
   @Test
   void WHEN_answerAsList_THEN_return_expected_list() throws Exception {
     // Arrange
-    this.setup.mockGetContentAsString(TEST_LIST_1_JSON);
+    this.setup.mockGetContentAsString(TEST_LIST_A1_A2_JSON);
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Act
-    var result = this.testAnswer.answerAsList(TestObject1Dto.class);
+    var result = this.testAnswer.answerAsList(TestObjectSimple.class);
 
     // Assert
-    assertThat(result, is(TEST_LIST_1_DTO));
+    assertThat(result, is(TEST_LIST_A1_A2));
   }
 
   @Test
@@ -269,7 +269,7 @@ class TestAnswerImplTest {
 
     // Act
     var exception =
-        assertThrows(Exception.class, () -> this.testAnswer.answerAsSet(TestObject1Dto.class));
+        assertThrows(Exception.class, () -> this.testAnswer.answerAsSet(TestObjectSimple.class));
 
     // Assert
     assertThat(exception.getClass(), is(TestAnswerException.class));
@@ -278,7 +278,7 @@ class TestAnswerImplTest {
   @Test
   void GIVEN_wrong_class_WHEN_answerAsSet_THEN_throw_Exception() throws Exception {
     // Arrange
-    this.setup.mockGetContentAsString(TEST_LIST_1_JSON);
+    this.setup.mockGetContentAsString(TEST_LIST_A1_A2_JSON);
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Assert
@@ -292,14 +292,14 @@ class TestAnswerImplTest {
   @Test
   void WHEN_answerAsSet_THEN_return_expected_set() throws Exception {
     // Arrange
-    this.setup.mockGetContentAsString(TEST_SET_1_JSON);
+    this.setup.mockGetContentAsString(TEST_SET_A1_A2_JSON);
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Act
-    var result = this.testAnswer.answerAsSet(TestObject1Dto.class);
+    var result = this.testAnswer.answerAsSet(TestObjectSimple.class);
 
     // Assert
-    assertThat(result, is(TEST_SET_1_DTO));
+    assertThat(result, is(TEST_SET_A1_A2));
   }
 
   @ParameterizedTest
@@ -329,7 +329,7 @@ class TestAnswerImplTest {
     var exception =
         assertThrows(
             Exception.class,
-            () -> this.testAnswer.answerAsMap(Boolean.class, TestObject1Dto.class));
+            () -> this.testAnswer.answerAsMap(Boolean.class, TestObjectSimple.class));
 
     // Assert
     assertThat(exception.getClass(), is(TestAnswerException.class));
@@ -341,7 +341,7 @@ class TestAnswerImplTest {
       Class<?> targetKeyClass, Class<?> targetValueClass) throws Exception {
 
     // Arrange
-    this.setup.mockGetContentAsString(TEST_LIST_1_JSON);
+    this.setup.mockGetContentAsString(TEST_LIST_A1_A2_JSON);
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Assert
@@ -355,21 +355,21 @@ class TestAnswerImplTest {
   private static Stream<Arguments> wrongClasses() {
     return Stream.of(
         Arguments.of(Boolean.class, String.class),
-        Arguments.of(String.class, TestObject1Dto.class),
+        Arguments.of(String.class, TestObjectSimple.class),
         Arguments.of(String.class, String.class));
   }
 
   @Test
   void WHEN_answerAsMap_THEN_return_expected_map() throws Exception {
     // Arrange
-    this.setup.mockGetContentAsString(TEST_MAP_1_JSON);
+    this.setup.mockGetContentAsString(TEST_MAP_A1_A2_JSON);
     this.testAnswer = new TestAnswerImpl(this.testRequestContext, this.mockRequestBuilder);
 
     // Act
-    var result = this.testAnswer.answerAsMap(Boolean.class, TestObject1Dto.class);
+    var result = this.testAnswer.answerAsMap(Integer.class, TestObjectSimple.class);
 
     // Assert
-    assertThat(result, is(TEST_MAP_1_DTO));
+    assertThat(result, is(TEST_MAP_A1_A2));
   }
 
   @Test

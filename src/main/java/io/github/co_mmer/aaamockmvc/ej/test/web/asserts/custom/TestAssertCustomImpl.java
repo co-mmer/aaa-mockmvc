@@ -6,9 +6,12 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 /**
- * This class provides a custom implementation for asserting HTTP responses in a testing context. It
- * allows for flexible and custom validations using {@link ResultMatcher} to verify the response
- * from test requests performed with the {@code MockMvc} framework.
+ * Provides methods for custom assertions on HTTP responses in tests.
+ *
+ * <ul>
+ *   <li>{@link #assertCustomResultMatcher(ResultMatcher)}: Asserts that the result of the test
+ *       request matches the given {@link ResultMatcher}.
+ * </ul>
  *
  * @since 1.1.0
  */

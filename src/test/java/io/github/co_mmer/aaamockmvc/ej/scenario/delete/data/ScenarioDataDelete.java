@@ -33,12 +33,6 @@ public enum ScenarioDataDelete {
   USE_CASE_09(
       ScenarioDataActDelete.DEL_ARRANGE__HEAD_AUTH,
       ScenarioDataRequestDelete.DEL_REQUEST__HEAD_AUTH),
-  USE_CASE_10(
-      ScenarioDataActDelete.DEL_ARRANGE__HEAD_CONTENT_TYPE_1,
-      ScenarioDataRequestDelete.DEL_REQUEST__HEAD_CONTENT_TYPE_1),
-  USE_CASE_11(
-      ScenarioDataActDelete.DEL_ARRANGE__HEAD_CONTENT_TYPE_2,
-      ScenarioDataRequestDelete.DEL_REQUEST__HEAD_CONTENT_TYPE_2),
   USE_CASE_12(
       ScenarioDataActDelete.DEL_ARRANGE__HEAD_KEY_VALUE_1,
       ScenarioDataRequestDelete.DEL_REQUEST__HEAD_KEY_VALUE_1),
@@ -52,9 +46,6 @@ public enum ScenarioDataDelete {
   USE_CASE_15(
       ScenarioDataActDelete.DEL_ARRANGE__HEAD_ACCEPT_1_AUTH,
       ScenarioDataRequestDelete.DEL_REQUEST__HEAD_ACCEPT_1_AUTH),
-  USE_CASE_16(
-      ScenarioDataActDelete.DEL_ARRANGE__HEAD_ACCEPT_1_CONTENT_TYPE_1,
-      ScenarioDataRequestDelete.DEL_REQUEST__HEAD_ACCEPT_1_CONTENT_TYPE_1),
   USE_CASE_17(
       ScenarioDataActDelete.DEL_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_1,
       ScenarioDataRequestDelete.DEL_REQUEST__HEAD_ACCEPT_1_KEY_VALUE_1),
@@ -64,10 +55,6 @@ public enum ScenarioDataDelete {
   USE_CASE_19(
       ScenarioDataActDelete.DEL_ARRANGE__HEAD_ACCEPT_1_KEY_VALUE_MAP,
       ScenarioDataRequestDelete.DEL_REQUEST__HEAD_ACCEPT_1_KEY_VALUE_MAP),
-
-  USE_CASE_20(
-      ScenarioDataActDelete.DEL_ARRANGE__HEAD_AUT_CONTENT_TYPE_1,
-      ScenarioDataRequestDelete.DEL_REQUEST__HEAD_AUT_CONTENT_TYPE_1),
   USE_CASE_21(
       ScenarioDataActDelete.DEL_ARRANGE__HEAD_AUT_KEY_VALUE_1,
       ScenarioDataRequestDelete.DEL_REQUEST__HEAD_AUTH_KEY_VALUE_1),
@@ -76,17 +63,7 @@ public enum ScenarioDataDelete {
       ScenarioDataRequestDelete.DEL_REQUEST__HEAD_AUTH_KEY_VALUE_2),
   USE_CASE_23(
       ScenarioDataActDelete.DEL_ARRANGE__HEAD_AUT_KEY_VALUE_MAP,
-      ScenarioDataRequestDelete.DEL_REQUEST__HEAD_AUT_KEY_VALUE_MAP),
-
-  USE_CASE_24(
-      ScenarioDataActDelete.DEL_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_1,
-      ScenarioDataRequestDelete.DEL_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_1),
-  USE_CASE_25(
-      ScenarioDataActDelete.DEL_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_2,
-      ScenarioDataRequestDelete.DEL_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_2),
-  USE_CASE_26(
-      ScenarioDataActDelete.DEL_ARRANGE__HEAD_CONTENT_TYPE_KEY_VALUE_MAP,
-      ScenarioDataRequestDelete.DEL_REQUEST__HEAD_CONTENT_TYPE_KEY_VALUE_MAP);
+      ScenarioDataRequestDelete.DEL_REQUEST__HEAD_AUT_KEY_VALUE_MAP);
 
   private final TestAct1 act;
   private final TestRequestDto requestDto;
