@@ -6,7 +6,7 @@
 
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.4.0-SNAPTSHOT</version>
+  <version>1.4.0</version>
   <packaging>jar</packaging>
 
   <name>AAA-MockMvc</name>
