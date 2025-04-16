@@ -1,8 +1,11 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.mapper;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.isBlank;
+
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -55,11 +58,34 @@ public final class TestGenericMapper {
       throws TestGenericMapperException {
 
     try {
-      var jsonContent = result.getResponse().getContentAsString();
-      return objectMapper.readValue(jsonContent, javaType);
+      var content = result.getResponse().getContentAsString();
+      return isBlank(content) ? null : objectMapper.readValue(content, javaType);
     } catch (Exception e) {
       throw new TestGenericMapperException(e);
     }
+  }
+
+  /**
+   * Maps the JSON content of the {@code MvcResult} response to a {@code Collection} of the
+   * specified class type.
+   *
+   * @param objectMapper the {@code ObjectMapper} used for mapping (must not be {@code null})
+   * @param <T> the type of the objects in the collection
+   * @param result the {@code MvcResult} containing the response (must not be {@code null})
+   * @param elementType the expected class of the objects in the collection (must not be {@code
+   *     null})
+   * @return a {@code Collection} of objects of the specified type
+   * @throws NullPointerException if the {@code result}, {@code objectMapper}, or {@code
+   *     elementType} is {@code null}
+   * @throws TestGenericMapperException if an error occurs during mapping
+   * @since 1.4.1
+   */
+  public static <T> Collection<T> mapToCollection(
+      @NonNull ObjectMapper objectMapper, @NonNull MvcResult result, @NonNull Class<T> elementType)
+      throws TestGenericMapperException {
+
+    var javaType = constructParametricType(objectMapper, Collection.class, elementType);
+    return mapToGenericType(objectMapper, result, javaType);
   }
 
   /**
@@ -80,7 +106,7 @@ public final class TestGenericMapper {
       @NonNull ObjectMapper objectMapper, @NonNull MvcResult result, @NonNull Class<T> elementType)
       throws TestGenericMapperException {
 
-    var javaType = objectMapper.getTypeFactory().constructParametricType(List.class, elementType);
+    var javaType = constructParametricType(objectMapper, List.class, elementType);
     return mapToGenericType(objectMapper, result, javaType);
   }
 
@@ -102,8 +128,13 @@ public final class TestGenericMapper {
       @NonNull ObjectMapper objectMapper, @NonNull MvcResult result, @NonNull Class<T> elementType)
       throws TestGenericMapperException {
 
-    var javaType = objectMapper.getTypeFactory().constructParametricType(Set.class, elementType);
+    var javaType = constructParametricType(objectMapper, Set.class, elementType);
     return mapToGenericType(objectMapper, result, javaType);
+  }
+
+  private static <T> JavaType constructParametricType(
+      ObjectMapper objectMapper, Class<?> clazz, Class<T> elementType) {
+    return objectMapper.getTypeFactory().constructParametricType(clazz, elementType);
   }
 
   /**

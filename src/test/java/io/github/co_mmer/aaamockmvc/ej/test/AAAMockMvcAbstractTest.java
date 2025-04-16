@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestDelete;
@@ -9,31 +10,22 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestOption;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPost;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPut;
-import io.github.co_mmer.aaamockmvc.ej.testdata.Application;
-import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.context.WebApplicationContext;
 
+@SpringBootTest(classes = WebApplicationContext.class)
 class AAAMockMvcAbstractTest {
 
   private AAAMockMvcAbstractWrapper wrapper;
-  private ConfigurableApplicationContext context;
+  @Autowired private WebApplicationContext context;
 
   @BeforeEach
   public void setUp() {
-    this.context = SpringApplication.run(Application.class);
-    var webApplicationContext = (WebApplicationContext) context;
-    var aaaMockMvc = new AAAMockMvc(webApplicationContext);
+    var aaaMockMvc = new AAAMockMvc(context);
     this.wrapper = new AAAMockMvcAbstractWrapper(aaaMockMvc);
-  }
-
-  @AfterEach
-  public void clean() {
-    this.context.close();
   }
 
   @Test
@@ -42,7 +34,7 @@ class AAAMockMvcAbstractTest {
     var get = this.wrapper.wrapGet();
 
     // Assert
-    MatcherAssert.assertThat(get.getClass(), is(TestRequestGet.class));
+    assertThat(get.getClass(), is(TestRequestGet.class));
   }
 
   @Test
@@ -51,7 +43,7 @@ class AAAMockMvcAbstractTest {
     var post = this.wrapper.wrapPost();
 
     // Assert
-    MatcherAssert.assertThat(post.getClass(), is(TestRequestPost.class));
+    assertThat(post.getClass(), is(TestRequestPost.class));
   }
 
   @Test
@@ -60,7 +52,7 @@ class AAAMockMvcAbstractTest {
     var put = this.wrapper.wrapPut();
 
     // Assert
-    MatcherAssert.assertThat(put.getClass(), is(TestRequestPut.class));
+    assertThat(put.getClass(), is(TestRequestPut.class));
   }
 
   @Test
@@ -69,7 +61,7 @@ class AAAMockMvcAbstractTest {
     var patch = this.wrapper.wrapPatch();
 
     // Assert
-    MatcherAssert.assertThat(patch.getClass(), is(TestRequestPatch.class));
+    assertThat(patch.getClass(), is(TestRequestPatch.class));
   }
 
   @Test
@@ -78,7 +70,7 @@ class AAAMockMvcAbstractTest {
     var delete = this.wrapper.wrapDelete();
 
     // Assert
-    MatcherAssert.assertThat(delete.getClass(), is(TestRequestDelete.class));
+    assertThat(delete.getClass(), is(TestRequestDelete.class));
   }
 
   @Test
@@ -87,7 +79,7 @@ class AAAMockMvcAbstractTest {
     var options = this.wrapper.wrapOptions();
 
     // Assert
-    MatcherAssert.assertThat(options.getClass(), is(TestRequestOption.class));
+    assertThat(options.getClass(), is(TestRequestOption.class));
   }
 
   @Test
@@ -96,6 +88,6 @@ class AAAMockMvcAbstractTest {
     var head = this.wrapper.wrapHead();
 
     // Assert
-    MatcherAssert.assertThat(head.getClass(), is(TestRequestHead.class));
+    assertThat(head.getClass(), is(TestRequestHead.class));
   }
 }

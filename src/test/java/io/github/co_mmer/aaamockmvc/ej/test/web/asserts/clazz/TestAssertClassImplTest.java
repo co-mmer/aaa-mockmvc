@@ -1,6 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeObject;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
@@ -25,7 +26,6 @@ import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
-import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -92,7 +92,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @SneakyThrows
     void GIVEN_unexpected_WHEN_assertClassNotEmpty_THEN_assert_false() {
       // Arrange
-      useServerWithResponse(Strings.EMPTY);
+      useServerWithResponse(EMPTY);
 
       // Act & Assert
       assertThrows(AssertionError.class, testAssertClass::assertClassNotEmpty);
@@ -134,7 +134,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @SneakyThrows
     void GIVEN_expected_WHEN_assertClassEmpty_THEN_assert_true() {
       // Arrange
-      useServerWithResponse(Strings.EMPTY);
+      useServerWithResponse(EMPTY);
 
       // Act & Assert
       testAssertClass.assertClassEmpty();
@@ -906,7 +906,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @SneakyThrows
     void empty_head() {
       // Arrange
-      useServerWithResponse(Strings.EMPTY);
+      useServerWithResponse(EMPTY);
 
       // Act & Assert
       testAssertClass.assertClassEmpty().assertHead();

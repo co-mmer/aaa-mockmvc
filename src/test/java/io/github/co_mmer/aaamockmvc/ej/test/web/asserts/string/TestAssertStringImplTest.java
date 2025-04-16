@@ -1,6 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeObject;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A2_JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,7 +16,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
-import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -71,7 +71,7 @@ class TestAssertStringImplTest extends TestAssertBase {
     @SneakyThrows
     void GIVEN_unexpected_WHEN_assertStringNotEmpty_THEN_assert_false() {
       // Arrange
-      useServerWithResponse(Strings.EMPTY);
+      useServerWithResponse(EMPTY);
 
       // Act & Assert
       assertThrows(AssertionError.class, testAssertString::assertStringNotEmpty);
@@ -113,7 +113,7 @@ class TestAssertStringImplTest extends TestAssertBase {
     @SneakyThrows
     void GIVEN_expected_WHEN_assertStringEmpty_THEN_assert_true() {
       // Arrange
-      useServerWithResponse(Strings.EMPTY);
+      useServerWithResponse(EMPTY);
 
       // Act & Assert
       testAssertString.assertStringEmpty();
@@ -353,7 +353,7 @@ class TestAssertStringImplTest extends TestAssertBase {
     @SneakyThrows
     void empty_head() {
       // Arrange
-      useServerWithResponse(Strings.EMPTY);
+      useServerWithResponse(EMPTY);
 
       // Act & Assert
       testAssertString.assertStringEmpty().assertHead();

@@ -15,10 +15,10 @@ public class MockTestGenericMapper {
   private static final TestGenericMapperException ERROR =
       new TestGenericMapperException(new Throwable("error"));
 
-  public static MockedStatic<TestGenericMapper> mapToListThrowException() {
+  public static MockedStatic<TestGenericMapper> mapToCollectionThrowException() {
     var mockTestGenericMapper = mockStatic(TestGenericMapper.class);
     mockTestGenericMapper
-        .when(() -> TestGenericMapper.mapToList(any(), any(), any()))
+        .when(() -> TestGenericMapper.mapToCollection(any(), any(), any()))
         .thenThrow(ERROR);
 
     return mockTestGenericMapper;

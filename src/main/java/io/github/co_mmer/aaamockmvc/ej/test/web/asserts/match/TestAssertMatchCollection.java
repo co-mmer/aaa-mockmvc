@@ -3,7 +3,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.function.Predicate;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -18,11 +18,11 @@ import lombok.RequiredArgsConstructor;
  * the conditions should be met for any element in the list.
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class TestAssertMatchList {
+public final class TestAssertMatchCollection {
 
   /**
-   * Performs a match check on a list of objects based on the given conditions. The match can be
-   * performed in three ways: - ALL: All conditions must be met for every element in the list. -
+   * Performs a match check on a collection of objects based on the given conditions. The match can
+   * be performed in three ways: - ALL: All conditions must be met for every element in the list. -
    * ANY: At least one condition must be met for every element in the list. - NONE: None of the
    * conditions should be met for any element in the list.
    *
@@ -37,8 +37,8 @@ public final class TestAssertMatchList {
    */
   public static <T> void assertMatch(
       @NonNull TestAssertMatchType matchType,
-      @NonNull List<T> actual,
-      @NonNull List<Predicate<T>> conditions) {
+      @NonNull Collection<T> actual,
+      @NonNull Collection<Predicate<T>> conditions) {
 
     var matches =
         switch (matchType) {
@@ -50,17 +50,17 @@ public final class TestAssertMatchList {
     assertThat(matchType.getReason() + " Actual " + actual, matches, is(true));
   }
 
-  private static <T> boolean matchAll(List<Predicate<T>> conditions, List<T> actual) {
+  private static <T> boolean matchAll(Collection<Predicate<T>> conditions, Collection<T> actual) {
     return actual.stream()
         .allMatch(item -> conditions.stream().allMatch(condition -> condition.test(item)));
   }
 
-  private static <T> boolean matchAny(List<Predicate<T>> conditions, List<T> actual) {
+  private static <T> boolean matchAny(Collection<Predicate<T>> conditions, Collection<T> actual) {
     return actual.stream()
         .anyMatch(item -> conditions.stream().anyMatch(condition -> condition.test(item)));
   }
 
-  private static <T> boolean matchNone(List<Predicate<T>> conditions, List<T> actual) {
+  private static <T> boolean matchNone(Collection<Predicate<T>> conditions, Collection<T> actual) {
     return actual.stream()
         .noneMatch(item -> conditions.stream().anyMatch(condition -> condition.test(item)));
   }

@@ -2,6 +2,17 @@
 
 # Changelog
 
+## [1.4.1]
+
+### Upgraded
+
+- lombok 1.18.34 → 1.18.38
+- spring-boot 3.4.0 → 3.4.4
+
+### Improved
+
+- reduced number of transitive dependencies
+
 ## [1.4.0]
 
 ### Added

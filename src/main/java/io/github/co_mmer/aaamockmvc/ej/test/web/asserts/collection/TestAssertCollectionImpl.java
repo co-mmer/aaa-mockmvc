@@ -5,7 +5,9 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertM
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.NONE;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeAsObjects;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeCollection;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToList;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToCollection;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY_ARRAY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -17,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchList;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchCollection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import java.util.Arrays;
@@ -26,7 +28,6 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import lombok.NonNull;
-import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
@@ -113,7 +114,7 @@ public final class TestAssertCollectionImpl
   @Override
   public TestAssert2Collection assertCollectionNotEmpty() {
     try {
-      assertThat(this.response.getContentAsString(), not(anyOf(is(Strings.EMPTY), is("[]"))));
+      assertThat(this.response.getContentAsString(), not(anyOf(is(EMPTY), is(EMPTY_ARRAY))));
     } catch (Exception e) {
       Assertions.fail(e);
     }
@@ -133,7 +134,7 @@ public final class TestAssertCollectionImpl
   @Override
   public TestAssertLCollection assertCollectionEmpty() {
     try {
-      assertThat(this.response.getContentAsString(), anyOf(is(Strings.EMPTY), is("[]")));
+      assertThat(this.response.getContentAsString(), anyOf(is(EMPTY), is(EMPTY_ARRAY)));
     } catch (Exception e) {
       Assertions.fail(e);
     }
@@ -193,7 +194,7 @@ public final class TestAssertCollectionImpl
       BiConsumer<Collection<T>, Collection<T>> assertion) {
 
     try {
-      var actual = mapToList(this.objectMapper, this.actions.andReturn(), expectedClass);
+      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
       assertion.accept(actual, expectedResponse);
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
@@ -402,11 +403,11 @@ public final class TestAssertCollectionImpl
   }
 
   private <T> void assertCollectionMatch(
-      TestAssertMatchType matchType, Class<T> expectedClass, List<Predicate<T>> conditions) {
+      TestAssertMatchType matchType, Class<T> expectedClass, Collection<Predicate<T>> conditions) {
 
     try {
-      var actual = mapToList(this.objectMapper, this.actions.andReturn(), expectedClass);
-      TestAssertMatchList.assertMatch(matchType, actual, conditions);
+      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatchCollection.assertMatch(matchType, actual, conditions);
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
