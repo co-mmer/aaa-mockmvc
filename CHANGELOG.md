@@ -15,11 +15,11 @@
 
 ### Fixed
 
-- `answerAsObject(Class<?> expectedClass)` now returns `null` instead of throwing
+- `answerAsObject(Class<T> expectedClass)` now returns `null` instead of throwing
   a `MismatchedInputException` when the HTTP response is `null`.
-- `answerAsList(Class<?> elementType)` now returns `null` instead of throwing
+- `answerAsList(Class<T> elementType)` now returns `null` instead of throwing
   a `MismatchedInputException` when the HTTP response is `null`.
-- `answerAsSet(Class<?> elementType)` now returns `null` instead of throwing
+- `answerAsSet(Class<T> elementType)` now returns `null` instead of throwing
   a `MismatchedInputException` when the HTTP response is `null`.
 - `answerAsMap(Class<K> keyType, Class<V> valueType)` now returns `null` instead of throwing
   a `MismatchedInputException` when the HTTP response is `null`.

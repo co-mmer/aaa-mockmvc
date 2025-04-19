@@ -13,14 +13,14 @@ import lombok.RequiredArgsConstructor;
  * @since 1.4.1
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class StringUtils {
+public final class StringUtils {
 
   /**
    * Checks whether a given string is {@code null}, empty, or contains only whitespace characters.
    *
    * @param str the string to check
-   * @return {@code true} if the string is {@code null}, empty, or blank (only whitespace); {@code
-   *     false} otherwise
+   * @return {@code true} if the string is {@code null}, empty, or blank (only whitespace);
+   * {@code false} otherwise
    * @since 1.4.1
    */
   public static boolean isBlank(String str) {
