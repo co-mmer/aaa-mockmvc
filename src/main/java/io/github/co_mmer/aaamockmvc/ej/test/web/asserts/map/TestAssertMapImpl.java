@@ -2,6 +2,8 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeMap;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToMap;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY_OBJECT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
@@ -14,7 +16,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
 import java.util.Map;
 import lombok.NonNull;
-import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
@@ -71,7 +72,7 @@ public final class TestAssertMapImpl
   @Override
   public TestAssert2Map assertMapNotEmpty() {
     try {
-      assertThat(this.response.getContentAsString(), not(anyOf(is(Strings.EMPTY), is("{}"))));
+      assertThat(this.response.getContentAsString(), not(anyOf(is(EMPTY), is(EMPTY_OBJECT))));
     } catch (Exception e) {
       Assertions.fail(e);
     }
@@ -91,7 +92,7 @@ public final class TestAssertMapImpl
   @Override
   public TestAssertLMap assertMapEmpty() {
     try {
-      assertThat(this.response.getContentAsString(), anyOf(is(Strings.EMPTY), is("{}")));
+      assertThat(this.response.getContentAsString(), anyOf(is(EMPTY), is(EMPTY_OBJECT)));
     } catch (Exception e) {
       Assertions.fail(e);
     }

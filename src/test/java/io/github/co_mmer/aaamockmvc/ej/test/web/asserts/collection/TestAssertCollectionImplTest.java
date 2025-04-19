@@ -1,6 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeCollection;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY_ARRAY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
@@ -36,7 +38,6 @@ import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import java.util.List;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
-import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -94,7 +95,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {Strings.EMPTY, "[]"})
+    @ValueSource(strings = {EMPTY, EMPTY_ARRAY})
     @SneakyThrows
     void GIVEN_empty_WHEN_assertCollectionNotEmpty_THEN_assert_false(String value) {
       // Arrange
@@ -137,7 +138,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
   class assertCollectionEmpty {
 
     @ParameterizedTest
-    @ValueSource(strings = {Strings.EMPTY, "[]"})
+    @ValueSource(strings = {EMPTY, EMPTY_ARRAY})
     @SneakyThrows
     void GIVEN_expected_WHEN_assertCollectionEmpty_THEN_assert_true(String value) {
       // Arrange
@@ -266,9 +267,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_exception_list_WHEN_assertCollectionEquals_THEN_assert_is_false() {
+    void GIVEN_exception_WHEN_assertCollectionEquals_THEN_assert_is_false() {
       // Arrange
-      var mockTestGenericMapper = MockTestGenericMapper.mapToListThrowException();
+      var mockTestGenericMapper = MockTestGenericMapper.mapToCollectionThrowException();
 
       // Act & Assert
       assertThrows(
@@ -344,9 +345,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_exception_list_WHEN_assertCollectionContainsAnyOrder_THEN_assert_is_false() {
+    void GIVEN_exception_WHEN_assertCollectionContainsAnyOrder_THEN_assert_is_false() {
       // Arrange
-      var mockTestGenericMapper = MockTestGenericMapper.mapToListThrowException();
+      var mockTestGenericMapper = MockTestGenericMapper.mapToCollectionThrowException();
 
       // Act & Assert
       assertThrows(

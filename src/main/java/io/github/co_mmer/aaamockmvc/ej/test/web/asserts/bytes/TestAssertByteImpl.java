@@ -1,5 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY_ARRAY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
@@ -8,7 +10,6 @@ import static org.hamcrest.Matchers.not;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import lombok.NonNull;
-import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
@@ -60,7 +61,7 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
   @Override
   public TestAssert2Byte assertByteNotEmpty() {
     try {
-      assertThat(this.response.getContentAsString(), not(anyOf(is(Strings.EMPTY), is("[]"))));
+      assertThat(this.response.getContentAsString(), not(anyOf(is(EMPTY), is(EMPTY_ARRAY))));
     } catch (Exception e) {
       Assertions.fail(e);
     }
@@ -79,7 +80,7 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
   @Override
   public TestAssertLByte assertByteEmpty() {
     try {
-      assertThat(this.response.getContentAsString(), anyOf(is(Strings.EMPTY), is("[]")));
+      assertThat(this.response.getContentAsString(), anyOf(is(EMPTY), is(EMPTY_ARRAY)));
     } catch (Exception e) {
       Assertions.fail(e);
     }
@@ -93,6 +94,9 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
+   * <p>Note: The length refers to the number of bytes in the serialized HTTP response body using
+   * UTF-8 encoding. For example, an empty JSON array {@code []} has a byte length of 2.
+   *
    * @param length the expected length of the HTTP response content
    * @return the current instance of {@code TestAssert2Byte} for method chaining
    * @since 1.4.0
@@ -100,7 +104,7 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
   @Override
   public TestAssert2Byte assertByteLength(int length) {
     try {
-      assertThat(this.response.getContentAsByteArray().length, is(length));
+      assertThat(this.response.getContentAsString().length(), is(length));
     } catch (Exception e) {
       Assertions.fail(e);
     }

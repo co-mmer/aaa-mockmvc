@@ -20,7 +20,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 
-class TestAssertMatchListTest {
+class TestAssertMatchCollectionTest {
 
   private static final Predicate<TestObjectSimple> EQUALS_A = element -> element.name().equals(A);
   private static final Predicate<TestObjectSimple> EQUALS_B = element -> element.name().equals(B);
@@ -46,7 +46,7 @@ class TestAssertMatchListTest {
 
       assertThrows(
           NullPointerException.class,
-          () -> TestAssertMatchList.assertMatch(type, actual, conditions));
+          () -> TestAssertMatchCollection.assertMatch(type, actual, conditions));
     }
 
     private static Stream<Arguments> provideNullParameters() {
@@ -63,14 +63,14 @@ class TestAssertMatchListTest {
 
     @Test
     void GIVEN_A1_A2_match_A_WHEN_assertMatch_THEN_return_true() {
-      TestAssertMatchList.assertMatch(ALL, LIST_A1_A2, LIST_EQUALS_A);
+      TestAssertMatchCollection.assertMatch(ALL, LIST_A1_A2, LIST_EQUALS_A);
     }
 
     @Test
     void GIVEN_A1_A2_match_A2_WHEN_assertMatch_THEN_throw_AssertionError() {
       assertThrows(
           AssertionError.class,
-          () -> TestAssertMatchList.assertMatch(ALL, LIST_A1_A2, LIST_EQUALS_A2));
+          () -> TestAssertMatchCollection.assertMatch(ALL, LIST_A1_A2, LIST_EQUALS_A2));
     }
   }
 
@@ -79,19 +79,19 @@ class TestAssertMatchListTest {
 
     @Test
     void GIVEN_A1_A2_match_1_WHEN_assertMatch_THEN_return_true() {
-      TestAssertMatchList.assertMatch(ANY, LIST_A1_A2, LIST_EQUALS_1);
+      TestAssertMatchCollection.assertMatch(ANY, LIST_A1_A2, LIST_EQUALS_1);
     }
 
     @Test
     void GIVEN_A1_A2_match_A_WHEN_assertMatch_THEN_return_true() {
-      TestAssertMatchList.assertMatch(ANY, LIST_A1_A2, LIST_EQUALS_A);
+      TestAssertMatchCollection.assertMatch(ANY, LIST_A1_A2, LIST_EQUALS_A);
     }
 
     @Test
     void GIVEN_A1_A2_match_B_WHEN_assertMatch_THEN_throw_AssertionError() {
       assertThrows(
           AssertionError.class,
-          () -> TestAssertMatchList.assertMatch(ANY, LIST_A1_A2, LIST_EQUALS_B));
+          () -> TestAssertMatchCollection.assertMatch(ANY, LIST_A1_A2, LIST_EQUALS_B));
     }
   }
 
@@ -100,28 +100,28 @@ class TestAssertMatchListTest {
 
     @Test
     void GIVEN_A1_A2_match_B_WHEN_assertMatch_THEN_return_true() {
-      TestAssertMatchList.assertMatch(NONE, LIST_A1_A2, LIST_EQUALS_B);
+      TestAssertMatchCollection.assertMatch(NONE, LIST_A1_A2, LIST_EQUALS_B);
     }
 
     @Test
     void GIVEN_A1_A2_match_A_WHEN_assertMatch_THEN_throw_AssertionError() {
       assertThrows(
           AssertionError.class,
-          () -> TestAssertMatchList.assertMatch(NONE, LIST_A1_A2, LIST_EQUALS_A));
+          () -> TestAssertMatchCollection.assertMatch(NONE, LIST_A1_A2, LIST_EQUALS_A));
     }
 
     @Test
     void GIVEN_A1_A2_match_1_WHEN_assertMatch_THEN_throw_AssertionError() {
       assertThrows(
           AssertionError.class,
-          () -> TestAssertMatchList.assertMatch(NONE, LIST_A1_A2, LIST_EQUALS_1));
+          () -> TestAssertMatchCollection.assertMatch(NONE, LIST_A1_A2, LIST_EQUALS_1));
     }
 
     @Test
     void GIVEN_A1_A2_match_A2_WHEN_assertMatch_THEN_throw_AssertionError() {
       assertThrows(
           AssertionError.class,
-          () -> TestAssertMatchList.assertMatch(NONE, LIST_A1_A2, LIST_EQUALS_A2));
+          () -> TestAssertMatchCollection.assertMatch(NONE, LIST_A1_A2, LIST_EQUALS_A2));
     }
   }
 }

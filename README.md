@@ -46,7 +46,7 @@ documentation of the classes.
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.4.0</version>
+  <version>1.4.1</version>
   <scope>test</scope>
 </dependency>
 
@@ -191,7 +191,7 @@ public class AAAMockMvcConfig {
 
   @Bean
   public ObjectMapper objectMapper() {
-    // Custom MockMvc configuration
+    // Custom ObjectMapper configuration
     return new ObjectMapper();
   }
 }

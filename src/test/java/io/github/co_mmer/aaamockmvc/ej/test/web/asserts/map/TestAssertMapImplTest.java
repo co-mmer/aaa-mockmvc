@@ -1,6 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeMap;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY_OBJECT;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A3;
@@ -24,7 +26,6 @@ import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import java.util.Map;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
-import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -80,7 +81,7 @@ class TestAssertMapImplTest extends TestAssertBase {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {Strings.EMPTY, "{}"})
+    @ValueSource(strings = {EMPTY, EMPTY_OBJECT})
     void GIVEN_empty_WHEN_assertMapNotEmpty_THEN_assert_false(String value) throws Exception {
       // Arrange
       useServerWithResponse(value);
@@ -121,7 +122,7 @@ class TestAssertMapImplTest extends TestAssertBase {
   class assertMapEmpty {
 
     @ParameterizedTest
-    @ValueSource(strings = {Strings.EMPTY, "{}"})
+    @ValueSource(strings = {EMPTY, EMPTY_OBJECT})
     void GIVEN_expected_WHEN_assertMapEmpty_THEN_assert_true(String value) throws Exception {
       // Arrange
       useServerWithResponse(value);

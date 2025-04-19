@@ -14,35 +14,28 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestOption;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPost;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPut;
-import io.github.co_mmer.aaamockmvc.ej.testdata.Application;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataMockMvc;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+@SpringBootTest(classes = WebApplicationContext.class)
 class AAAMockMvcTest {
 
   private AAAMockMvc aaaMockMvc;
-  private ConfigurableApplicationContext context;
+
+  @Autowired private WebApplicationContext context;
 
   @BeforeEach
-  public void setUp() {
-    this.context = SpringApplication.run(Application.class);
-    var webApplicationContext = (WebApplicationContext) context;
-    this.aaaMockMvc = new AAAMockMvc(webApplicationContext);
-  }
-
-  @AfterEach
-  public void clean() {
-    this.context.close();
+  void setUp() {
+    this.aaaMockMvc = new AAAMockMvc(context);
   }
 
   @Test
@@ -55,23 +48,6 @@ class AAAMockMvcTest {
   @SuppressWarnings("ConstantConditions")
   void GIVEN_MockMvc_null_WHEN_call_constructor_THEN_throw_NullPointerException() {
     assertThrows(NullPointerException.class, () -> new AAAMockMvc((MockMvc) null));
-  }
-
-  @ParameterizedTest()
-  @MethodSource("provideNullContextObjectMapper")
-  @SuppressWarnings("ConstantConditions")
-  void GIVEN_provideNullContextObjectMapper_WHEN_call_constructor_THEN_throw_NullPointerException(
-      WebApplicationContext webApplicationContext, ObjectMapper objectMapper) {
-
-    assertThrows(
-        NullPointerException.class, () -> new AAAMockMvc(webApplicationContext, objectMapper));
-  }
-
-  private static Stream<Arguments> provideNullContextObjectMapper() {
-    return Stream.of(
-        Arguments.of(null, mock(ObjectMapper.class)),
-        Arguments.of(mock(WebApplicationContext.class), null),
-        Arguments.of(null, null));
   }
 
   @ParameterizedTest()
@@ -165,8 +141,7 @@ class AAAMockMvcTest {
   @Test
   void WHEN_call_constructor_context_ObjectMapper_THEN_return_not_null() {
     // Act
-    var aaaMockMvcContext =
-        new AAAMockMvc((WebApplicationContext) this.context, new ObjectMapper());
+    var aaaMockMvcContext = new AAAMockMvc(this.context, new ObjectMapper());
 
     // Assert
     assertThat(aaaMockMvcContext, is(notNullValue()));

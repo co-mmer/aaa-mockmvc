@@ -47,6 +47,9 @@ public interface TestAssert1Byte {
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
+   * <p>Note: The length refers to the number of bytes in the serialized HTTP response body using
+   * UTF-8 encoding. For example, an empty JSON array {@code []} has a byte length of 2.
+   *
    * @param length the expected length of the HTTP response content
    * @return the current instance of {@code TestAssert2Byte} for method chaining
    * @since 1.4.0

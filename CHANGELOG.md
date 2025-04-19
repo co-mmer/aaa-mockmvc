@@ -2,6 +2,28 @@
 
 # Changelog
 
+## [1.4.1]
+
+### Upgraded
+
+- lombok 1.18.34 → 1.18.38
+- spring-boot 3.4.0 → 3.4.4
+
+### Improved
+
+- reduced number of transitive dependencies
+
+### Fixed
+
+- `answerAsObject(Class<T> expectedClass)` now returns `null` instead of throwing
+  a `MismatchedInputException` when the HTTP response is `null`.
+- `answerAsList(Class<T> elementType)` now returns `null` instead of throwing
+  a `MismatchedInputException` when the HTTP response is `null`.
+- `answerAsSet(Class<T> elementType)` now returns `null` instead of throwing
+  a `MismatchedInputException` when the HTTP response is `null`.
+- `answerAsMap(Class<K> keyType, Class<V> valueType)` now returns `null` instead of throwing
+  a `MismatchedInputException` when the HTTP response is `null`.
+
 ## [1.4.0]
 
 ### Added

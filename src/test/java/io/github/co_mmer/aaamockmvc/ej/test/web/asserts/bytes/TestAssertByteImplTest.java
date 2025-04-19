@@ -1,6 +1,9 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY_ARRAY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_EMPTY_BYTE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -11,7 +14,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
-import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -67,7 +69,7 @@ class TestAssertByteImplTest extends TestAssertBase {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {Strings.EMPTY, "[]"})
+    @ValueSource(strings = {EMPTY, EMPTY_ARRAY})
     @SneakyThrows
     void GIVEN_unexpected_WHEN_assertByteNotEmpty_THEN_assert_false(String value) {
       // Arrange
@@ -110,7 +112,7 @@ class TestAssertByteImplTest extends TestAssertBase {
   class assertByteEmpty {
 
     @ParameterizedTest
-    @ValueSource(strings = {Strings.EMPTY, "[]"})
+    @ValueSource(strings = {EMPTY, EMPTY_ARRAY})
     @SneakyThrows
     void GIVEN_expected_WHEN_assertByteEmpty_THEN_assert_true(String value) {
       // Arrange
@@ -208,6 +210,36 @@ class TestAssertByteImplTest extends TestAssertBase {
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
       mockAssertions.close();
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_empty_array_expected_length_2_WHEN_assertByteLength_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(EMPTY_ARRAY);
+
+      // Act & Assert
+      testAssert.assertByteLength(2);
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_empty_byte_expected_length_2_WHEN_assertByteLength_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(TEST_EMPTY_BYTE);
+
+      // Act & Assert
+      testAssert.assertByteLength(2);
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_empty_string_expected_length_0_WHEN_assertByteLength_THEN_assert_true() {
+      // Arrange
+      useServerWithResponse(EMPTY);
+
+      // Act & Assert
+      testAssert.assertByteLength(0);
     }
   }
 
@@ -310,7 +342,7 @@ class TestAssertByteImplTest extends TestAssertBase {
     @SneakyThrows
     void empty__head() {
       // Arrange
-      useServerWithResponse(Strings.EMPTY);
+      useServerWithResponse(EMPTY);
 
       // Act & Assert
       testAssert.assertByteEmpty().assertHead();
