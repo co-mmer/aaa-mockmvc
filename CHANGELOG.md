@@ -13,6 +13,17 @@
 
 - reduced number of transitive dependencies
 
+### Fixed
+
+- `answerAsObject(Class<?> expectedClass)` now returns `null` instead of throwing
+  a `MismatchedInputException` when the HTTP response is `null`.
+- `answerAsList(Class<?> elementType)` now returns `null` instead of throwing
+  a `MismatchedInputException` when the HTTP response is `null`.
+- `answerAsSet(Class<?> elementType)` now returns `null` instead of throwing
+  a `MismatchedInputException` when the HTTP response is `null`.
+- `answerAsMap(Class<K> keyType, Class<V> valueType)` now returns `null` instead of throwing
+  a `MismatchedInputException` when the HTTP response is `null`.
+
 ## [1.4.0]
 
 ### Added
