@@ -23,7 +23,7 @@ class AAAMockMvcAbstractTest {
   @Autowired private WebApplicationContext context;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     var aaaMockMvc = new AAAMockMvc(context);
     this.wrapper = new AAAMockMvcAbstractWrapper(aaaMockMvc);
   }

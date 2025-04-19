@@ -34,7 +34,7 @@ class AAAMockMvcTest {
   @Autowired private WebApplicationContext context;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     this.aaaMockMvc = new AAAMockMvc(context);
   }
 
