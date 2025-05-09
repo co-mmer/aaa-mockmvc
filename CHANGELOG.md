@@ -2,6 +2,14 @@
 
 # Changelog
 
+## [1.4.2]
+
+### Upgraded
+
+- spring-boot 3.4.4 → 3.4.5
+
+---
+
 ## [1.4.1]
 
 ### Upgraded
@@ -23,6 +31,8 @@
   a `MismatchedInputException` when the HTTP response is `null`.
 - `answerAsMap(Class<K> keyType, Class<V> valueType)` now returns `null` instead of throwing
   a `MismatchedInputException` when the HTTP response is `null`.
+
+---
 
 ## [1.4.0]
 
