@@ -14,14 +14,20 @@
 ![Java](https://img.shields.io/badge/Java-17-blueviolet)
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.co-mmer/aaa-mockmvc)
 
-## Overview
+## Description
 
-This project provides a framework for structuring unit tests following the AAA (Arrange, Act,
-Assert) pattern with a focus on clarity and readability. The library offers a fluent API that guides
-the developer through each phase, ensuring that only contextually relevant methods are available at
-each step. This design choice enhances the ease of writing, maintaining, and understanding tests.
-The key goal is to provide a clean separation of concerns within the test, allowing developers to
-express their test logic fluently and naturally.
+A fluent testing framework for Spring's MockMvc that enforces the Arrange-Act-Assert (AAA)
+pattern and reduces boilerplate in controller tests.
+The library guides developers through each testing phase with a strongly-typed,
+step-by-step API, ensuring a consistent and intuitive test structure. Common tasks such as
+request setup, ObjectMapper-based serialization, and response assertions are fully abstracted,
+allowing developers to focus on the test logic itself rather than technical overhead.
+
+___
+
+## See It in Action
+
+<img src="./images/aaa-mockmvc-example1.png" alt="aaa-mockmvc-example1"/>
 
 ___
 
@@ -429,56 +435,6 @@ ensures clarity and helps demonstrate the difference between the two testing app
   <tr>
     <td>
 
-**Test with MockMvc**
-
-```java
-
-@Autowired
-private MockMvc mockMvc;
-
-@Autowired
-private ObjectMapper objectMapper;
-
-@Test
-@SneakyThrows
-void GIVEN_registration_with_valid_verification_WHEN_createRegistration_THEN_return_status_201() {
-
-  var verificationRequest = VerificationRequest.builder()
-      .firstname(FIRSTNAME)
-      .lastname(LASTNAME)
-      .mail(EMAIL)
-      .build();
-
-  var verificationResponseJson = mockMvc.perform(
-          MockMvcRequestBuilders.post(POST_CREATE_VERIFICATION)
-              .contentType(MediaType.APPLICATION_JSON)
-              .content(objectMapper.writeValueAsString(verificationRequest)))
-      .andReturn()
-      .getResponse()
-      .getContentAsString();
-
-  var verificationResponse = objectMapper.readValue(verificationResponseJson,
-      VerificationResponse.class);
-
-  var registrationRequest = RegistrationRequest.builder()
-      .verification(VerificationResponse.builder()
-          .code(VALID_CODE)
-          .mail(verificationResponse.getMail())
-          .uuid(verificationResponse.getUuid())
-          .build())
-      .build();
-
-  mockMvc.perform(MockMvcRequestBuilders.post(POST_CREATE_REGISTRATION)
-          .contentType(MediaType.APPLICATION_JSON)
-          .content(objectMapper.writeValueAsString(registrationRequest)))
-      .andExpect(status().isCreated());
-}
-
-```
-
-</td>
-    <td>
-
 **Test with AAA-MockMvc**
 
 ```java
@@ -522,6 +478,56 @@ void GIVEN_registration_with_valid_verification_WHEN_createRegistration_THEN_ret
       .asserts()
       .assertStatus()
       .assertStatusIsCreated();
+}
+
+```
+
+</td>
+    <td>
+
+**Test with MockMvc**
+
+```java
+
+@Autowired
+private MockMvc mockMvc;
+
+@Autowired
+private ObjectMapper objectMapper;
+
+@Test
+@SneakyThrows
+void GIVEN_registration_with_valid_verification_WHEN_createRegistration_THEN_return_status_201() {
+
+  var verificationRequest = VerificationRequest.builder()
+      .firstname(FIRSTNAME)
+      .lastname(LASTNAME)
+      .mail(EMAIL)
+      .build();
+
+  var verificationResponseJson = mockMvc.perform(
+          MockMvcRequestBuilders.post(POST_CREATE_VERIFICATION)
+              .contentType(MediaType.APPLICATION_JSON)
+              .content(objectMapper.writeValueAsString(verificationRequest)))
+      .andReturn()
+      .getResponse()
+      .getContentAsString();
+
+  var verificationResponse = objectMapper.readValue(verificationResponseJson,
+      VerificationResponse.class);
+
+  var registrationRequest = RegistrationRequest.builder()
+      .verification(VerificationResponse.builder()
+          .code(VALID_CODE)
+          .mail(verificationResponse.getMail())
+          .uuid(verificationResponse.getUuid())
+          .build())
+      .build();
+
+  mockMvc.perform(MockMvcRequestBuilders.post(POST_CREATE_REGISTRATION)
+          .contentType(MediaType.APPLICATION_JSON)
+          .content(objectMapper.writeValueAsString(registrationRequest)))
+      .andExpect(status().isCreated());
 }
 
 ```
