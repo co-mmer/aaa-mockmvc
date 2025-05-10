@@ -436,7 +436,7 @@ private ObjectMapper objectMapper;
 
 @Test
 @SneakyThrows
-void GIVEN_valid_verification_WHEN_registration_THEN_STATUS_201() {
+void GIVEN_valid_code_WHEN_registration_THEN_status_201() {
 
   var verificationRequest = VerificationRequest.builder()
       .firstname(FIRSTNAME)
@@ -453,8 +453,8 @@ void GIVEN_valid_verification_WHEN_registration_THEN_STATUS_201() {
       .getResponse()
       .getContentAsString();
 
-  var verificationResponse = objectMapper.readValue(verificationResponseJson,
-      VerificationResponse.class);
+  var verificationResponse = objectMapper.readValue(
+      verificationResponseJson, VerificationResponse.class);
 
   var registrationRequest = RegistrationRequest.builder()
       .verification(VerificationResponse.builder()
@@ -479,7 +479,7 @@ void GIVEN_valid_verification_WHEN_registration_THEN_STATUS_201() {
 
 @Test
 @SneakyThrows
-void GIVEN_valid_verification_WHEN_registration_THEN_status_201() {
+void GIVEN_valid_code_WHEN_registration_THEN_status_201() {
 
   var verificationRequest = VerificationRequest.builder()
       .firstname(FIRSTNAME)
