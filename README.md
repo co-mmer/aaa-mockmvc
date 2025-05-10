@@ -14,7 +14,7 @@
 ![Java](https://img.shields.io/badge/Java-17-blueviolet)
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.co-mmer/aaa-mockmvc)
 
-## Description
+## Overview
 
 A fluent testing framework for Spring's MockMvc that enforces the Arrange-Act-Assert (AAA)
 pattern and reduces boilerplate in controller tests.
@@ -23,11 +23,7 @@ step-by-step API, ensuring a consistent and intuitive test structure. Common tas
 request setup, ObjectMapper-based serialization, and response assertions are fully abstracted,
 allowing developers to focus on the test logic itself rather than technical overhead.
 
-___
-
-## See It in Action
-
-<img src="./images/aaa-mockmvc-example1.png" alt="aaa-mockmvc-example1"/>
+<img src="./images/aaa-mockmvc-example2.png" alt="aaa-mockmvc-example"/>
 
 ___
 
@@ -44,7 +40,7 @@ ___
 ## Installation
 
 To include AAAMockMvc in the project, add the following dependency to the `pom.xml`.
-The sources can also be downloaded directly within the IDE (e.g., IntelliJ IDEA) to access the
+The sources can also be downloaded directly within the IDE (e.g. IntelliJ IDEA) to access the
 documentation of the classes.
 
 ```xml
@@ -310,22 +306,18 @@ In the provided library, every test follows the AAA structure using the followin
 
 ## Example
 
-- [Registration Scenario](#registration-scenario)
-- [Test Implementation](#test-implementation)
-
-This example demonstrates a typical registration process, where the user's email address must first
+This example demonstrates a registration process, where the user's email address must first
 be verified by sending a code. After the email verification, the user can proceed with the
-registration, including providing the verification code.
-
-The process is split into two main steps:
+registration, including providing the verification code. The process is split into two main steps:
 
 1. **Email Verification**: A verification code is sent to the provided email address.
 2. **Registration**: After receiving the verification code, the user sends it back to the backend
    for validation, allowing them to complete their registration.
 
-Below are the necessary code snippets to represent this scenario:
+## Main Code
 
-## Registration Scenario
+<details>
+<summary>Implementation of Registration Scenario</summary>
 
 ### 1. Verification Response Model
 
@@ -420,28 +412,74 @@ public class RegistrationController {
 
 ```
 
-## Test Implementation
+</details>
 
-The table below shows the same test scenario written in two different ways. On the left side, the
-test is written using **MockMvc**, which is the traditional way to perform HTTP tests in Spring. On
-the right side, the same test is written using the **AAA-Mock** framework, which is an open-source
-testing framework designed to make the test code more readable and concise.
+## Test Code
 
-It is important to note that in both examples, the use of helper private methods has been
-intentionally avoided to keep the tests straightforward and focused on the core testing logic. This
-ensures clarity and helps demonstrate the difference between the two testing approaches.
+The following examples demonstrate the same test scenario written in two different ways. First, the
+test is implemented using MockMvc, the traditional approach for performing HTTP tests in Spring.
+This is followed by the same test written with AAA-MockMvc.
 
-<table>
-  <tr>
-    <td>
+To keep the tests straightforward and focused on the core testing logic, the use of private helper
+methods has been intentionally avoided. This ensures clarity and helps highlight the differences
+between the two testing approaches.
 
-**Test with AAA-MockMvc**
+### Test with MockMvc
+
+```java
+
+@Autowired
+private MockMvc mockMvc;
+
+@Autowired
+private ObjectMapper objectMapper;
+
+@Test
+@SneakyThrows
+void GIVEN_valid_verification_WHEN_registration_THEN_STATUS_201() {
+
+  var verificationRequest = VerificationRequest.builder()
+      .firstname(FIRSTNAME)
+      .lastname(LASTNAME)
+      .mail(EMAIL)
+      .build();
+
+  var content = MockMvcRequestBuilders.post(SEND_MAIL_VERIFICATION)
+      .contentType(MediaType.APPLICATION_JSON)
+      .content(objectMapper.writeValueAsString(verificationRequest));
+
+  var verificationResponseJson = mockMvc.perform(content)
+      .andReturn()
+      .getResponse()
+      .getContentAsString();
+
+  var verificationResponse = objectMapper.readValue(verificationResponseJson,
+      VerificationResponse.class);
+
+  var registrationRequest = RegistrationRequest.builder()
+      .verification(VerificationResponse.builder()
+          .code(VALID_CODE)
+          .mail(verificationResponse.getMail())
+          .uuid(verificationResponse.getUuid())
+          .build())
+      .build();
+
+  content = MockMvcRequestBuilders.post(POST_CREATE_REGISTRATION)
+      .contentType(MediaType.APPLICATION_JSON)
+      .content(objectMapper.writeValueAsString(registrationRequest));
+
+  mockMvc.perform(content).andExpect(status().isCreated());
+}
+
+```
+
+### Test with AAA-MockMvc
 
 ```java
 
 @Test
 @SneakyThrows
-void GIVEN_registration_with_valid_verification_WHEN_createRegistration_THEN_return_status_201() {
+void GIVEN_valid_verification_WHEN_registration_THEN_status_201() {
 
   var verificationRequest = VerificationRequest.builder()
       .firstname(FIRSTNAME)
@@ -451,7 +489,7 @@ void GIVEN_registration_with_valid_verification_WHEN_createRegistration_THEN_ret
 
   var verificationResponse = post()
       .arrange()
-      .arrangeUrl(POST_CREATE_VERIFICATION)
+      .arrangeUrl(SEND_VERIFICATION)
       .arrangeBody()
       .arrangeJson(verificationRequest)
       .act()
@@ -470,7 +508,7 @@ void GIVEN_registration_with_valid_verification_WHEN_createRegistration_THEN_ret
 
   post()
       .arrange()
-      .arrangeUrl(POST_CREATE_REGISTRATION)
+      .arrangeUrl(CREATE_REGISTRATION)
       .arrangeBody()
       .arrangeJson(registrationRequest)
       .act()
@@ -481,60 +519,6 @@ void GIVEN_registration_with_valid_verification_WHEN_createRegistration_THEN_ret
 }
 
 ```
-
-</td>
-    <td>
-
-**Test with MockMvc**
-
-```java
-
-@Autowired
-private MockMvc mockMvc;
-
-@Autowired
-private ObjectMapper objectMapper;
-
-@Test
-@SneakyThrows
-void GIVEN_registration_with_valid_verification_WHEN_createRegistration_THEN_return_status_201() {
-
-  var verificationRequest = VerificationRequest.builder()
-      .firstname(FIRSTNAME)
-      .lastname(LASTNAME)
-      .mail(EMAIL)
-      .build();
-
-  var verificationResponseJson = mockMvc.perform(
-          MockMvcRequestBuilders.post(POST_CREATE_VERIFICATION)
-              .contentType(MediaType.APPLICATION_JSON)
-              .content(objectMapper.writeValueAsString(verificationRequest)))
-      .andReturn()
-      .getResponse()
-      .getContentAsString();
-
-  var verificationResponse = objectMapper.readValue(verificationResponseJson,
-      VerificationResponse.class);
-
-  var registrationRequest = RegistrationRequest.builder()
-      .verification(VerificationResponse.builder()
-          .code(VALID_CODE)
-          .mail(verificationResponse.getMail())
-          .uuid(verificationResponse.getUuid())
-          .build())
-      .build();
-
-  mockMvc.perform(MockMvcRequestBuilders.post(POST_CREATE_REGISTRATION)
-          .contentType(MediaType.APPLICATION_JSON)
-          .content(objectMapper.writeValueAsString(registrationRequest)))
-      .andExpect(status().isCreated());
-}
-
-```
-
-</td>
-  </tr>
-</table>
 
 ---
 
