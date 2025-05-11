@@ -23,7 +23,7 @@ step-by-step API, ensuring a consistent and intuitive test structure. Common tas
 request setup, ObjectMapper-based serialization, and response assertions are fully abstracted,
 allowing developers to focus on the test logic itself rather than technical overhead.
 
-<img src="./images/aaa-mockmvc-example2.png" alt="aaa-mockmvc-example"/>
+<img src="images/aaa-mockmvc-example1.png" alt="aaa-mockmvc-example"/>
 
 ___
 
@@ -111,7 +111,7 @@ to `AAAMockMvc`.
 public class AAAMockMvcConfig {
 
   @Bean
-  AAAMockMvc aaaMockMvc(WebApplicationContext context, ObjectMapper objectMapper) {
+  public AAAMockMvc aaaMockMvc(WebApplicationContext context, ObjectMapper objectMapper) {
     return new AAAMockMvc(context, objectMapper);
   }
 
@@ -143,7 +143,7 @@ The framework will use a default ObjectMapper (`new ObjectMapper()`).
 public class AAAMockMvcConfig {
 
   @Bean
-  AAAMockMvc aaaMockMvc(MockMvc mockMvc) {
+  public AAAMockMvc aaaMockMvc(MockMvc mockMvc) {
     return new AAAMockMvc(mockMvc);
   }
 
@@ -179,7 +179,7 @@ specific configurations.
 public class AAAMockMvcConfig {
 
   @Bean
-  AAAMockMvc aaaMockMvc(WebApplicationContext context, ObjectMapper objectMapper) {
+  public AAAMockMvc aaaMockMvc(WebApplicationContext context, ObjectMapper objectMapper) {
     return new AAAMockMvc(context, objectMapper);
   }
 
@@ -314,7 +314,7 @@ registration, including providing the verification code. The process is split in
 2. **Registration**: After receiving the verification code, the user sends it back to the backend
    for validation, allowing them to complete their registration.
 
-## Main Code
+### Main Code
 
 <details>
 <summary>Implementation of Registration Scenario</summary>
@@ -414,11 +414,11 @@ public class RegistrationController {
 
 </details>
 
-## Test Code
+### Test Code
 
 The following examples demonstrate the same test scenario written in two different ways. First, the
 test is implemented using MockMvc, the traditional approach for performing HTTP tests in Spring.
-This is followed by the same test written with AAA-MockMvc.
+This is followed by the same test written with AAAMockMvc.
 
 To keep the tests straightforward and focused on the core testing logic, the use of private helper
 methods has been intentionally avoided. This ensures clarity and helps highlight the differences
@@ -473,7 +473,7 @@ void GIVEN_valid_code_WHEN_registration_THEN_status_201() {
 
 ```
 
-### Test with AAA-MockMvc
+### Test with AAAMockMvc
 
 ```java
 
