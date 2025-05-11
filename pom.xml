@@ -6,16 +6,17 @@
 
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.4.1</version>
+  <version>1.4.2</version>
   <packaging>jar</packaging>
 
   <name>AAA-MockMvc</name>
-  <description>This project provides a framework for structuring unit tests following the AAA
-    (Arrange, Act, Assert) pattern with a focus on clarity and readability.
-    The library offers a fluent API that guides the developer through each phase,
-    ensuring that only contextually relevant methods are available at each step.
-    The key goal is to provide a clean separation of concerns within the test, allowing developers
-    to express their test logic fluently and naturally.
+  <description>
+    A fluent testing framework for Spring's MockMvc that enforces the Arrange-Act-Assert (AAA)
+    pattern and reduces boilerplate in controller tests.
+    The library guides developers through each testing phase with a strongly-typed,
+    step-by-step API, ensuring a consistent and intuitive test structure. Common tasks such as
+    request setup, ObjectMapper-based serialization, and response assertions are fully abstracted,
+    allowing developers to focus on the test logic itself rather than technical overhead.
   </description>
   <url>https://github.com/co-mmer/aaa-mockmvc</url>
 
@@ -45,7 +46,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.4.4</version>
+    <version>3.4.5</version>
     <relativePath/>
   </parent>
 
@@ -58,7 +59,6 @@
 
   <dependencies>
 
-    <!-- Lombok -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -66,63 +66,14 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- jakarta -->
-    <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <version>6.1.0</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- Spring -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.fasterxml.jackson.module</groupId>
-          <artifactId>jackson-module-parameter-names</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.fasterxml.jackson.datatype</groupId>
-          <artifactId>jackson-datatype-jsr310</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.fasterxml.jackson.datatype</groupId>
-          <artifactId>jackson-datatype-jdk8</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.yaml</groupId>
-          <artifactId>snakeyaml</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-tomcat</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.tomcat.embed</groupId>
-          <artifactId>tomcat-embed-el</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.tomcat.embed</groupId>
-          <artifactId>tomcat-embed-websocket</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-classic</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <scope>provided</scope>
       <exclusions>
         <exclusion>
           <groupId>org.xmlunit</groupId>
