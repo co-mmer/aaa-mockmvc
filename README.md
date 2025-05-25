@@ -30,7 +30,7 @@ ___
 ## Table of Contents
 
 - [Installation](#Installation)
-- [Setup](#setup)
+- [Starting](#starting)
 - [Writing Tests](#writing-tests)
 - [Example](#example)
 - [License](#License)
@@ -48,7 +48,7 @@ documentation of the classes.
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.4.2</version>
+  <version>1.5.0</version>
   <scope>test</scope>
 </dependency>
 
@@ -56,213 +56,98 @@ documentation of the classes.
 
 ---
 
-## Setup
+## Starting
 
-To write tests using this library, certain configurations are necessary. Below are the steps
-required to set up your testing environment effectively.
+### AAAMockMvcAbstract
 
-### Bean
+The base class `AAAMockMvcAbstract` is the preferred entry point for using the AAAMockMvc framework.
 
-To configure `AAAMockMvc` for tests, four main options are available. Each configuration offers
-flexibility in using `AAAMockMvc` within the test setup to interact with the MVC testing framework,
-tailored to the specific project requirements.
+- It provides direct access to all supported HTTP methods via convenient test request objects (
+  e.g., `get()`, `post()`, `put()`, etc.)
+- It automatically configures and injects an internal `AAAMockMvc` instance via Spring's dependency
+  injection mechanism
+- It performs `automatic configuration` by detecting and reusing existing beans (e.g., custom
+  MockMvc
+  or ObjectMapper) from the Spring context
 
-<details>
-<summary>Setup A: WebApplicationContext with Default ObjectMapper</summary>
-
-
-In this option, `AAAMockMvc` is configured using the `WebApplicationContext`.
-The framework will use a default ObjectMapper (`new ObjectMapper()`).
-
-#### Steps:
-
-1. Define a configuration class.
-2. Create a `AAAMockMvc` bean using the `WebApplicationContext`.
+### Example
 
 ```java
 
-@Configuration
-public class AAAMockMvcConfig {
-
-  @Bean
-  public AAAMockMvc aaaMockMvc(WebApplicationContext context) {
-    return new AAAMockMvc(context);
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Setup B: WebApplicationContext with Custom ObjectMapper</summary>
-
-In this option, both the `WebApplicationContext` and a custom `ObjectMapper` can be passed
-to `AAAMockMvc`.
-
-#### Steps:
-
-1. Define a configuration class.
-2. Create a ObjectMapper bean with custom configuration.
-3. Pass the custom ObjectMapper instance to the AAAMockMvc bean
-
-```java
-
-@Configuration
-public class AAAMockMvcConfig {
-
-  @Bean
-  public AAAMockMvc aaaMockMvc(WebApplicationContext context, ObjectMapper objectMapper) {
-    return new AAAMockMvc(context, objectMapper);
-  }
-
-  @Bean
-  public ObjectMapper objectMapper() {
-    // Custom ObjectMapper configuration
-    return new ObjectMapper();
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Setup C: Custom MockMvc and Default ObjectMapper</summary>
-
-This option allows for configuring `AAAMockMvc` with a custom `MockMvc` instance.
-The framework will use a default ObjectMapper (`new ObjectMapper()`).
-
-#### Steps:
-
-1. Define a configuration class.
-2. Create a MockMvc bean with custom configuration.
-3. Pass the custom MockMvc instance to the AAAMockMvc bean
-
-```java
-
-@Configuration
-public class AAAMockMvcConfig {
-
-  @Bean
-  public AAAMockMvc aaaMockMvc(MockMvc mockMvc) {
-    return new AAAMockMvc(mockMvc);
-  }
-
-  @Bean
-  public MockMvc mockMvc(WebApplicationContext context) {
-    // Custom MockMvc configuration
-    return MockMvcBuilders.webAppContextSetup(context)
-        .addFilters(new CharacterEncodingFilter("UTF-8", true))
-        .build();
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Setup D: Custom MockMvc and Custom ObjectMapper</summary>
-
-This option allows for full customization by passing both a custom `MockMvc` instance and a
-custom `ObjectMapper` to `AAAMockMvc`. This provides maximum flexibility for projects that need
-specific configurations.
-
-#### Steps:
-
-1. Define a configuration class.
-2. Create a MockMvc bean with custom configuration.
-3. Create a ObjectMapper bean with custom configuration.
-4. Pass the custom MockMvc and ObjectMapper instance to the AAAMockMvc bean
-
-```java
-
-@Configuration
-public class AAAMockMvcConfig {
-
-  @Bean
-  public AAAMockMvc aaaMockMvc(WebApplicationContext context, ObjectMapper objectMapper) {
-    return new AAAMockMvc(context, objectMapper);
-  }
-
-  @Bean
-  public MockMvc mockMvc(WebApplicationContext context) {
-    // Custom MockMvc configuration
-    return MockMvcBuilders.webAppContextSetup(context)
-        .addFilters(new CharacterEncodingFilter("UTF-8", true))
-        .build();
-  }
-
-  @Bean
-  public ObjectMapper objectMapper() {
-    // Custom ObjectMapper configuration
-    return new ObjectMapper();
-  }
-}
-```
-
-</details>
-
-### Test
-
-There are two options for utilizing the AAAMockMvc in test classes:
-
-<details>
-<summary>Setup A: AAAMockMvc</summary>
-
-AAAMockMvc can be directly autowired into the test class. This method allows the API methods to
-be
-used directly in the tests.
-
-```java
-
-public class ControllerTest {
-
-  @Autowired
-  private AAAMockMvc aaaMockMvc;
+@SpringBootTest
+class ExampleIT extends AAAMockMvcAbstract {
 
   @Test
-  void WHEN_calling_endpoint_THEN_return_expected_status() {
-    aaaMockMvc.get()
-        .arrange()
-        .arrangeUrl(GET_SIMPLE)
-        .act()
-        .actPerform()
-        .asserts()
-        .assertStatus()
-        .assertStatusIsOk();
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Setup B: AAAMockMvcAbstract</summary>
-
-
-Alternatively, extending the abstract class `AAAMockMvcAbstract` is another option, which
-provides all necessary methods like get(), post(), etc. This approach is useful for encapsulating
-common test
-behaviors and reducing boilerplate code in test classes.
-
-```java
-
-public class ControllerTest extends AAAMockMvcAbstract {
-
-  @Test
-  void WHEN_calling_endpoint_THEN_return_expected_content() {
+  @SneakyThrows
+  void GIVEN_defaultObjectMapper_THEN_countryCodeIsInLowercase() {
     get()
         .arrange()
-        .arrangeUrl(GET_SIMPLE)
+        .arrangeUrl(GET_EXAMPLE)
         .act()
         .actPerform()
         .asserts()
-        .assertStatus()
-        .assertStatusIsOk();
+        .assertContentAsClass()
+        .assertClassMatchAll(SimpleObject.class, obj -> obj.countryCode().equals("de"));
   }
 }
 ```
 
-</details>
+```java
+
+@RestController
+@RequestMapping(BASE)
+public class SimpleController {
+
+  @GetMapping(EXAMPLE)
+  public ResponseEntity<SimpleObject> getSimpleObject() {
+    var simpleObject = new SimpleObject("de");
+    return new ResponseEntity<>(simpleObject, HttpStatus.OK);
+  }
+}
+```
+
+### Using Custom ObjectMapper or MockMvc Beans
+
+If the project already defines a custom ObjectMapper or MockMvc bean (e.g. for custom
+serialization), these will automatically be detected and used by AAAMockMvcAbstract.
+This is made possible by the Spring ObjectProvider mechanism used in AAAMockMvcConfig. No additional
+configuration is necessary — the framework automatically picks up the existing beans and integrates
+them internally.
+
+### Example
+
+```java
+
+@SpringBootTest
+class ExampleIT extends AAAMockMvcAbstract {
+
+  @TestConfiguration
+  static class ObjectMapperConfig {
+
+    @Bean
+    public ObjectMapper objectMapper() {
+      var mapper = new ObjectMapper();
+      var module = new SimpleModule();
+      module.addDeserializer(String.class, new UpperCaseStringDeserializer());
+      mapper.registerModule(module);
+      return mapper;
+    }
+  }
+
+  @Test
+  @SneakyThrows
+  void GIVEN_customObjectMapper_THEN_countryCodeIsInUpperCase() {
+    get()
+        .arrange()
+        .arrangeUrl(GET_EXAMPLE)
+        .act()
+        .actPerform()
+        .asserts()
+        .assertContentAsClass()
+        .assertClassMatchAll(SimpleObject.class, obj -> obj.countryCode().equals("DE"));
+  }
+}
+```
 
 ___
 

@@ -10,28 +10,17 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestOption;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPost;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPut;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(classes = WebApplicationContext.class)
-class AAAMockMvcAbstractTest {
-
-  private AAAMockMvcAbstractWrapper wrapper;
-  @Autowired private WebApplicationContext context;
-
-  @BeforeEach
-  void setUp() {
-    var aaaMockMvc = new AAAMockMvc(context);
-    this.wrapper = new AAAMockMvcAbstractWrapper(aaaMockMvc);
-  }
+class AAAMockMvcAbstractTest extends AAAMockMvcAbstract {
 
   @Test
   void WHEN_get_THEN_return_expected_class() {
     // Act
-    var get = this.wrapper.wrapGet();
+    var get = get();
 
     // Assert
     assertThat(get.getClass(), is(TestRequestGet.class));
@@ -40,7 +29,7 @@ class AAAMockMvcAbstractTest {
   @Test
   void WHEN_post_THEN_return_expected_class() {
     // Act
-    var post = this.wrapper.wrapPost();
+    var post = post();
 
     // Assert
     assertThat(post.getClass(), is(TestRequestPost.class));
@@ -49,7 +38,7 @@ class AAAMockMvcAbstractTest {
   @Test
   void WHEN_put_THEN_return_expected_class() {
     // Act
-    var put = this.wrapper.wrapPut();
+    var put = put();
 
     // Assert
     assertThat(put.getClass(), is(TestRequestPut.class));
@@ -58,7 +47,7 @@ class AAAMockMvcAbstractTest {
   @Test
   void WHEN_patch_THEN_return_expected_class() {
     // Act
-    var patch = this.wrapper.wrapPatch();
+    var patch = patch();
 
     // Assert
     assertThat(patch.getClass(), is(TestRequestPatch.class));
@@ -67,7 +56,7 @@ class AAAMockMvcAbstractTest {
   @Test
   void WHEN_delete_THEN_return_expected_class() {
     // Act
-    var delete = this.wrapper.wrapDelete();
+    var delete = delete();
 
     // Assert
     assertThat(delete.getClass(), is(TestRequestDelete.class));
@@ -76,7 +65,7 @@ class AAAMockMvcAbstractTest {
   @Test
   void WHEN_options_THEN_return_expected_class() {
     // Act
-    var options = this.wrapper.wrapOptions();
+    var options = options();
 
     // Assert
     assertThat(options.getClass(), is(TestRequestOption.class));
@@ -85,7 +74,7 @@ class AAAMockMvcAbstractTest {
   @Test
   void WHEN_head_THEN_return_expected_class() {
     // Act
-    var head = this.wrapper.wrapHead();
+    var head = head();
 
     // Assert
     assertThat(head.getClass(), is(TestRequestHead.class));

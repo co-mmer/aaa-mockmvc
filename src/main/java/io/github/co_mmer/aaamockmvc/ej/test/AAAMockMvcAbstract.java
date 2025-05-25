@@ -7,7 +7,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestOption;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPost;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPut;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 
 /**
  * This class serves as an abstract base for performing REST operations using the {@link AAAMockMvc}
@@ -18,10 +19,10 @@ import lombok.RequiredArgsConstructor;
  *
  * @since 1.0.0
  */
-@RequiredArgsConstructor
+@Import(AAAMockMvcConfig.class)
 public abstract class AAAMockMvcAbstract {
 
-  private final AAAMockMvc aaaMockMvc;
+  @Autowired private AAAMockMvc aaaMockMvc;
 
   /**
    * Prepares a GET request.
