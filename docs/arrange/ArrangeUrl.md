@@ -186,17 +186,19 @@ The controller defines an endpoint that expects three query parameters:
 
 The corresponding test arranges the request with all three parameters:
 
-``` java
- get()
-      .arrange()
-      .arrangeUrl(URL_SIMPLE)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
-      .arrangeKeyValue(PARAM_KEY_2, PARAM_VALUE_2)
-      .arrangeKeyValue(PARAM_KEY_3, PARAM_VALUE_3)
-      .act()
-      ...
-```
+<div style="background-color:rgba(255,255,255,0); border-left:5px solid #abc095; margin:10px 0;">
+<pre><code class="language-java">
+get()
+    .arrange()
+    .arrangeUrl(URL_SIMPLE)
+    .arrangeParam()
+    .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
+    .arrangeKeyValue(PARAM_KEY_2, PARAM_VALUE_2)
+    .arrangeKeyValue(PARAM_KEY_3, PARAM_VALUE_3)
+    .act()
+    ...
+</code></pre></div>
+
 
 ---
 
