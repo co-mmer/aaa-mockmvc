@@ -193,7 +193,7 @@ The corresponding test arranges the request with all three parameters:
       .arrangeParam()
       .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
       .arrangeKeyValue(PARAM_KEY_2, PARAM_VALUE_2)
-      .arrangeKeyValue(PARAM_KEY_2, PARAM_VALUE_3)
+      .arrangeKeyValue(PARAM_KEY_3, PARAM_VALUE_3)
       .act()
       ...
 ```
