@@ -6,7 +6,7 @@
 
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.5.0</version>
+  <version>1.5.0-beta</version>
   <packaging>jar</packaging>
 
   <name>AAA-MockMvc</name>
@@ -45,7 +45,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.4.5</version>
+    <version>3.5.0</version>
     <relativePath/>
   </parent>
 

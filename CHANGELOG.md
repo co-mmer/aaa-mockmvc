@@ -14,6 +14,10 @@
     - Uses Spring’s `ObjectProvider` mechanism to detect and inject existing beans.
     - Automatically reuses project-defined `MockMvc` and/or `ObjectMapper` beans if present.
 
+### 📦 Dependency Upgrades
+
+- spring-boot 3.4.5 → 3.5.0
+
 ---
 
 ## [1.4.2]
