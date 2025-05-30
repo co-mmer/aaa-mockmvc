@@ -18,14 +18,14 @@ This example demonstrates how to use a complete URI to direct the request to a s
 First, the following constant is defined:
 
 ``` java
-public static final URI URI_SIMPLE = URI.create(Api.BASE + Api.SIMPLE);
+public static final URI ENDPOINT_URI_SIMPLE = URI.create(BASE + SIMPLE);
 ```
 
 The controller defines an endpoint that handles a simple request at the specified URL:
 
 ``` java
   @GetMapping(SIMPLE)
-  public ResponseEntity<Void> getSimple() {
+  public ResponseEntity<Void> exampleSimple() {
     return ResponseEntity.ok().build();
   }
 ```
@@ -33,11 +33,11 @@ The controller defines an endpoint that handles a simple request at the specifie
 The corresponding test sets up the request using the predefined URL constant:
 
 ``` java
- get()
-      .arrange()
-      .arrangeUri(URI_SIMPLE)
-      .act()
-      ...
+  get()
+    .arrange()
+    .arrangeUri(ENDPOINT_URI_SIMPLE)
+    .act()
+    ...
 ```
 
 ---
@@ -49,14 +49,14 @@ This example shows the simplest form of a request, utilizing only the base URL.
 First, the following constant is defined:
 
 ``` java
- public static final String URL_SIMPLE = Api.BASE + Api.SIMPLE;
+  public static final String ENDPOINT_SIMPLE = BASE + SIMPLE;
 ```
 
 The controller defines an endpoint that handles a simple request at the specified URL:
 
 ``` java
   @GetMapping(SIMPLE)
-  public ResponseEntity<Void> getSimple() {
+  public ResponseEntity<Void> exampleSimple() {
     return ResponseEntity.ok().build();
   }
 ```
@@ -64,11 +64,11 @@ The controller defines an endpoint that handles a simple request at the specifie
 The corresponding test sets up the request using the predefined URL constant:
 
 ``` java
- get()
-      .arrange()
-      .arrangeUrl(URL_SIMPLE)
-      .act()
-      ...
+  get()
+    .arrange()
+    .arrangeUrl(ENDPOINT_SIMPLE)
+    .act()
+    ...
 ```
 
 ---
@@ -78,17 +78,24 @@ The corresponding test sets up the request using the predefined URL constant:
 This example demonstrates how to construct a URL with a path variable, replacing a dynamic segment
 to target a specific resource.
 
-First, the following constant is defined:
+First, the following constants are defined:
 
 ``` java
  public static final String ID_8 = "8";
+ public static final String VALUE_A = "A";
+
+ public static final String PATH_VARIABLE_1 = "simple/{id}";
+ public static final String PATH_VARIABLE_2 = "simple/{id}/{value}";
+ 
+ public static final String ENDPOINT_PATH_VARIABLE_1 = BASE + PATH_VARIABLE_1;
+ public static final String ENDPOINT_PATH_VARIABLE_2 = BASE + PATH_VARIABLE_2;
 ```
 
 The controller defines an endpoint with a path variable to receive the dynamic value:
 
 ``` java
-  @GetMapping(PATH_VARIABLE)
-  public ResponseEntity<Void> examplePathVariable(@PathVariable Integer id) {
+  @GetMapping(PATH_VARIABLE_1)
+  public ResponseEntity<Void> examplePathVariable1(@PathVariable Integer id) {
     return ResponseEntity.ok().build();
   }
 ```
@@ -96,22 +103,32 @@ The controller defines an endpoint with a path variable to receive the dynamic v
 The corresponding test sets up the request using a placeholder for the path variable:
 
 ``` java
- get()
-      .arrange()
-      .arrangeUrl(URL_SIMPLE, ID_8)
-      .act()
-      ...
+  get()
+    .arrange()
+    .arrangeUrl(ENDPOINT_PATH_VARIABLE_1, ID_8)
+    .act()
+    ...
 ```
 
 Note: The method supports a variable number of path variables using varargs. This allows appending
 multiple segments dynamically:
 
+```java
+
+@GetMapping(PATH_VARIABLE_2)
+public ResponseEntity<Void> examplePathVariable2(
+    @PathVariable Integer id, @PathVariable String value) {
+
+  return ResponseEntity.ok().build();
+}
+```
+
 ``` java
  get()
-      .arrange()
-      .arrangeUrl(URL_SIMPLE, ID_8, USER_A, ...)
-      .act()
-      ...
+    .arrange()
+    .arrangeUrl(ENDPOINT_PATH_VARIABLE_2, ID_8, VALUE_A)
+    .act()
+    ...
 ```
 
 ---
@@ -124,19 +141,22 @@ setup.
 First, the following constants are defined:
 
 ``` java
- public static final String PARAM_KEY_1   = "param1";
- public static final String PARAM_VALUE_1 = "value1";
+ public static final String KEY_1 = "key1";
+ public static final String VALUE_1 = "value1";
+
+ public static final String PARAM_1 = "simple/param1";
+ public static final String ENDPOINT_PARAM_1 = BASE + PARAM_1;
 ```
 
 The controller defines an endpoint that accepts a single query parameter:
 
 ``` java
-  @GetMapping(PARAM_1)
-  public ResponseEntity<Void> exampleParameter(
-      @RequestParam(name = PARAM_KEY_1) String value1) {
+  public ResponseEntity<Void> exampleParam3(
+      @RequestParam(name = KEY_1) String value1,
+      @RequestParam(name = KEY_2) int value2,
+      @RequestParam(name = KEY_3) boolean value3) {
 
     return ResponseEntity.ok().build();
-
   }
 ```
 
@@ -144,12 +164,12 @@ The corresponding test configures the request with one key-value pair:
 
 ``` java
  get()
-      .arrange()
-      .arrangeUrl(URL_SIMPLE)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
-      .act()
-      ...
+    .arrange()
+    .arrangeUrl(ENDPOINT_PARAM_1)
+    .arrangeParam()
+    .arrangeKeyValue(KEY_1, VALUE_1)
+    .act()
+    ...
 ```
 
 ---
@@ -161,24 +181,26 @@ This example demonstrates how to add multiple query parameters to a URL in a str
 First, the following constants are defined:
 
 ``` java
- public static final String PARAM_KEY_1   = "param1";
- public static final String PARAM_VALUE_1 = "value1";
-
- public static final String PARAM_KEY_2   = "param2";
- public static final String PARAM_VALUE_2 = "2";
- 
- public static final String PARAM_KEY_3   = "param3";
- public static final String PARAM_VALUE_3 = "true";
+  public static final String KEY_1 = "key1";
+  public static final String KEY_2 = "key2";
+  public static final String KEY_3 = "key3";
+  
+  public static final String VALUE_1 = "value1";
+  public static final String VALUE_2 = "2";
+  public static final String VALUE_3 = "true";
+  
+  public static final String PARAM_3 = "simple/param3";
+  public static final String ENDPOINT_PARAM_3 = BASE + PARAM_3;
 ```
 
 The controller defines an endpoint that expects three query parameters:
 
 ``` java
   @GetMapping(PARAM_3)
-  public ResponseEntity<Void> exampleParameters(
-      @RequestParam(name = PARAM_KEY_1) String value1,
-      @RequestParam(name = PARAM_KEY_2) int value2,
-      @RequestParam(name = PARAM_KEY_3) boolean value3) {
+  public ResponseEntity<Void> exampleParam3(
+      @RequestParam(name = KEY_1) String value1,
+      @RequestParam(name = KEY_2) int value2,
+      @RequestParam(name = KEY_3) boolean value3) {
 
     return ResponseEntity.ok().build();
   }
@@ -187,13 +209,12 @@ The controller defines an endpoint that expects three query parameters:
 The corresponding test arranges the request with all three parameters:
 
 ``` java
-get()
-    .arrange()
-    .arrangeUrl(URL_SIMPLE)
+ get()
+    .arrangeUrl(ENDPOINT_PARAM_3)
     .arrangeParam()
-    .arrangeKeyValue(PARAM_KEY_1, PARAM_VALUE_1)
-    .arrangeKeyValue(PARAM_KEY_2, PARAM_VALUE_2)
-    .arrangeKeyValue(PARAM_KEY_3, PARAM_VALUE_3)
+    .arrangeKeyValue(KEY_1, VALUE_1)
+    .arrangeKeyValue(KEY_2, VALUE_2)
+    .arrangeKeyValue(KEY_3, VALUE_3)
     .act()
     ...
 ```
@@ -208,14 +229,17 @@ setup.
 First, the following constant is defined:
 
 ``` java
- public static final Map<String, String> PARAM_MAP = Map.of(PARAM_KEY_1, PARAM_VALUE_1);
+ public static final Map<String, String> KEY_VALUE = Map.of(KEY_1, VALUE_1);
+ 
+ public static final String PARAM_MAP = "simple/paramMap";
+ public static final String ENDPOINT_PARAM_MAP = BASE + PARAM_MAP;
 ```
 
 The controller defines an endpoint that accepts a dynamic set of query parameters as a map:
 
 ``` java 
   @GetMapping(PARAM_MAP)
-  public ResponseEntity<Void> exampleParameterMap(
+  public ResponseEntity<Void> exampleParamMap(
       @RequestParam Map<String, String> keyValue) {
 
     return ResponseEntity.ok().build();
@@ -227,12 +251,12 @@ The corresponding test arranges the request using the predefined map:
 
 ``` java
  get()
-      .arrange()
-      .arrangeUrl(URL_SIMPLE)
-      .arrangeParam()
-      .arrangeKeyValue(PARAM_MAP)
-      .act()
-      ...
+    .arrange()
+    .arrangeUrl(ENDPOINT_PARAM_MAP)
+    .arrangeParam()
+    .arrangeKeyValue(KEY_VALUE)
+    .act()
+    ...
 ```
 
 ---
