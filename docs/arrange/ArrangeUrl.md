@@ -184,9 +184,9 @@ The controller defines an endpoint that expects three query parameters:
   }
 ```
 
-The corresponding test arranges the request with all three parameters:
-
 <div style="background-color:rgba(255,255,255,0); border-left:5px solid #abc095; margin:10px 0;">
+The corresponding test arranges the request with all three parameters:
+</div>
 
 ```
 get()
@@ -199,9 +199,6 @@ get()
     .act()
     ...
 ```
-
-</div>
-
 
 ---
 
