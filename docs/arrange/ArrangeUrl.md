@@ -184,9 +184,7 @@ The controller defines an endpoint that expects three query parameters:
   }
 ```
 
-<div style="background-color:rgb(255,255,255); border-left:5px solid #abc095; margin:10px 0;">
 The corresponding test arranges the request with all three parameters:
-</div>
 
 ``` java
 get()
