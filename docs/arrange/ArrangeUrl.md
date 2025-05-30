@@ -151,6 +151,7 @@ First, the following constants are defined:
 The controller defines an endpoint that accepts a single query parameter:
 
 ``` java
+  @GetMapping(PARAM_3)
   public ResponseEntity<Void> exampleParam3(
       @RequestParam(name = KEY_1) String value1,
       @RequestParam(name = KEY_2) int value2,
@@ -210,6 +211,7 @@ The corresponding test arranges the request with all three parameters:
 
 ``` java
  get()
+    .arrange()
     .arrangeUrl(ENDPOINT_PARAM_3)
     .arrangeParam()
     .arrangeKeyValue(KEY_1, VALUE_1)
