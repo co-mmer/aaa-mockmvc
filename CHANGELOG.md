@@ -35,7 +35,7 @@
 
 - reduced number of transitive dependencies
 
-### 🐛 Fixed
+### ☂️ Fixed
 
 - `answerAsObject(Class<T> expectedClass)` now returns `null` instead of throwing
   a `MismatchedInputException` when the HTTP response is `null`.
