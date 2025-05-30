@@ -6,17 +6,16 @@
 
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.5.0-beta</version>
+  <version>1.5.0</version>
   <packaging>jar</packaging>
 
   <name>AAA-MockMvc</name>
   <description>
-    A fluent testing framework for Spring's MockMvc that enforces the Arrange-Act-Assert (AAA)
-    pattern and reduces boilerplate in controller tests.
-    The library guides developers through each testing phase with a strongly-typed,
-    step-by-step API, ensuring a consistent and intuitive test structure. Common tasks such as
-    request setup, ObjectMapper-based serialization, and response assertions are fully abstracted,
-    allowing developers to focus on the test logic itself rather than technical overhead.
+    A fluent testing framework for Spring's MockMvc that strictly enforces the Arrange-Act-Assert
+    (AAA) pattern while minimizing boilerplate in controller tests. With a strongly-typed,
+    step-by-step API, it guides developers through all test phases. Common tasks like request setup,
+    ObjectMapper-based serialization, and response validation are abstracted away, allowing full
+    focus on test logic.
   </description>
   <url>https://github.com/co-mmer/aaa-mockmvc</url>
 
