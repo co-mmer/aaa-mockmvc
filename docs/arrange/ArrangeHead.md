@@ -4,6 +4,7 @@
 
 - [Accept](#accept)
 - [Auth](#auth)
+- [Content-Type](#content-type)
 - [Single Key-Value](#key-value-single)
 - [Multiple Key-Value](#key-value-multiple)
 - [Key-Value as Map](#key-value-map)
@@ -17,9 +18,7 @@ the desired media type for the response.
 
 First, the following constants are defined:
 
-``` java
-  MediaType.APPLICATION_PDF
-  
+``` java  
   public static final String HEADER_ACCEPT = "header/accept";
   public static final String ENDPOINT_HEADER_ACCEPT = BASE + HEADER_ACCEPT;
 ```
@@ -84,6 +83,44 @@ predefined token:
     .arrangeUrl(ENDPOINT_HEADER_AUTH)
     .arrangeHead()
     .arrangeAuth(TOKEN)
+    .act()
+    ...
+```
+
+---
+
+### Content-Type
+
+This example demonstrates how to set the Content-Type header explicitly in a structured request
+test.
+
+First, the following constants are defined:
+
+``` java
+  public static final String HEADER_CONTENT_TYPE = "header/contentType";
+  public static final String ENDPOINT_HEADER_CONTENT_TYPE = BASE + HEADER_CONTENT_TYPE;
+```
+
+The controller defines an endpoint that reads the Content-Type header from the incoming request:
+
+``` java 
+  @PostMapping(HEADER_CONTENT_TYPE)
+  public ResponseEntity<Void> exampleContentType(
+      @RequestHeader("Content-Type") String contentType) {
+
+    return ResponseEntity.ok().build();
+  }
+```
+
+The corresponding test sets up the request with the Content-Type header using a predefined media
+type
+
+``` java
+  post()
+    .arrange()
+    .arrangeUrl(ENDPOINT_HEADER_CONTENT_TYPE)
+    .arrangeHead()
+    .arrangeContentType(APPLICATION_PDF)
     .act()
     ...
 ```
