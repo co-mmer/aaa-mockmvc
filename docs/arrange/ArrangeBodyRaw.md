@@ -5,23 +5,43 @@
 - [Content Raw](#content-raw)
 - [Content Json](#content-json)
 - [Content Json (Generic)](#content-json-generic)
-    - [Sending a Single object](#example-1-sending-a-single-object)
-    - [Sending a List of objects](#example-2-sending-a-list-of-objects)
-    - [Sending a Set of objects](#example-3-sending-a-set-of-objects)
-    - [Sending a Map of objects](#example-4-sending-a-map-of-objects)
+- [Content Json (List)](#content-json-list)
+- [Content Json (Set)](#content-json-set)
+- [Content Json (Map)](#content-json-map)
 
 ---
 
 ### Content Raw
 
-This example demonstrates how to send raw content in the body along with its media type.
+This example demonstrates how to send a JSON body in a structured test setup using a request.
 
+First, the following constants are defined:
+
+``` java
+  public static final String SIMPLE_A1_JSON = "{"name":"A","id":1}"
+  
+  public static final String BODY = "simple/body";
+  public static final String ENDPOINT_BODY = BASE + BODY;
 ```
+
+The controller defines an endpoint that receives the request body as a deserialized object:
+
+``` java 
+  @PostMapping(BODY)
+  public ResponseEntity<Void> exampleBody(@RequestBody SimpleObject value) {
+    return ResponseEntity.ok().build();
+  }
+```
+
+The corresponding test sets up the request body using the predefined JSON and specifies the content
+type:
+
+``` java
  post()
       .arrange()
-      .arrangeUrl(POST_EXAMPLE)
+      .arrangeUrl(ENDPOINT_BODY)
       .arrangeBody()
-      .arrangeContent(RAW_CONTENT, RAW_MEDIATYPE)
+      .arrangeContent(SIMPLE_A1_JSON, APPLICATION_JSON)
       .act()
       ...
 ```
@@ -30,18 +50,35 @@ This example demonstrates how to send raw content in the body along with its med
 
 ### Content Json
 
-This example illustrates how to send JSON data in the request body.
+This example demonstrates how to send a JSON body using a simplified method in a structured POST
+request test setup.
 
-```
-JSON_1 = {"name":"A","id":1}
+First, the following constants are defined:
+
+``` java
+  public static final String SIMPLE_A1_JSON = "{"name":"A","id":1}"
+  
+  public static final String BODY = "simple/body";
+  public static final String ENDPOINT_BODY = BASE + BODY;
 ```
 
+The controller defines an endpoint that receives the request body as a deserialized object:
+
+``` java 
+  @PostMapping(BODY)
+  public ResponseEntity<Void> exampleBody(@RequestBody SimpleObject value) {
+    return ResponseEntity.ok().build();
+  }
 ```
+
+The corresponding test sets up the request by directly assigning the JSON content:
+
+``` java
  post()
       .arrange()
-      .arrangeUrl(POST_EXAMPLE)
+      .arrangeUrl(ENDPOINT_BODY)
       .arrangeBody()
-      .arrangeJson(JSON_1)
+      .arrangeJson(SIMPLE_A1_JSON)
       .act()
       ...
 ```
@@ -50,94 +87,159 @@ JSON_1 = {"name":"A","id":1}
 
 ### Content Json (Generic)
 
-The `arrangeJson` method simplifies the process of sending JSON payloads in `POST`, `PUT`,
-or `PATCH` requests. It supports a variety of object types, including single objects, lists, sets,
-and maps. Below are detailed examples showcasing its usage:
+This example demonstrates how to send a Java object as JSON in a structured request test setup.
+The object is automatically serialized to JSON by the test framework.
 
-#### Example 1: Sending a Single Object
+First, the following constants are defined:
 
-This example demonstrates how to send a single `DemoObject` as the JSON body in a POST request.
-
+``` java
+  public static final SimpleObject SIMPLE_A1 = new SimpleObject( "A", 1);
+  
+  public static final String BODY = "simple/body";
+  public static final String ENDPOINT_BODY = BASE + BODY;
 ```
- demo = new DemoObject(A, 1);
+
+The controller defines an endpoint that receives the request body as a deserialized object:
+
+``` java 
+  @PostMapping(BODY)
+  public ResponseEntity<Void> exampleBody(@RequestBody SimpleObject value) {
+    return ResponseEntity.ok().build();
+  }
 ```
 
-```
+The corresponding test sets up the request by providing the Java object, which is internally
+serialized to JSON:
+
+``` java
  post()
       .arrange()
-      .arrangeUrl(POST_EXAMPLE)
+      .arrangeUrl(ENDPOINT_BODY)
       .arrangeBody()
-      .arrangeJson(demo) // Serialize the DemoObject object to JSON
+      .arrangeJson(SIMPLE_A1)
       .act()
       ...
 ```
 
-#### Example 2: Sending a List of Objects
+---
 
-This example shows how to send a `List<DemoObject>` containing multiple objects in the JSON body.
+### Content Json (List)
 
-```
- A1 = new DemoObject(A, 1);
- A2 = new DemoObject(A, 2);
+This example demonstrates how to send a list of Java objects as a JSON array in a structured
+request test setup. The list is automatically serialized to JSON by the test framework.
+
+First, the following constants are defined:
+
+``` java
+  public static final SimpleObject SIMPLE_A1 = new SimpleObject("A", 1);
+  public static final SimpleObject SIMPLE_A2 = new SimpleObject("A", 2);
+  
+  public static final List<SimpleObject> SIMPLE_LIST = List.of(SIMPLE_A1, SIMPLE_A2);
+  
+  public static final String BODY_LIST = "simple/bodyList";
+  public static final String ENDPOINT_BODY_LIST = BASE + BODY_LIST;
 ```
 
-```
- List<DemoObject> demo = List.of(A1, A2);
+The controller defines an endpoint that receives a list of deserialized objects:
+
+``` java 
+  @PostMapping(BODY_LIST)
+  public ResponseEntity<Void> exampleBodyList(@RequestBody List<SimpleObject> value) {
+    return ResponseEntity.ok().build();
+  }
 ```
 
-```
+The corresponding test sets up the request by providing the list, which is internally serialized to
+a JSON array:
+
+``` java
  post()
       .arrange()
-      .arrangeUrl(POST_EXAMPLE)
+      .arrangeUrl(ENDPOINT_BODY_LIST)
       .arrangeBody()
-      .arrangeJson(demo) // Serialize the List of DemoObject objects to JSON
+      .arrangeJson(SIMPLE_LIST)
       .act()
       ...
 ```
 
-### Example 3: Sending a Set of Objects
+---
 
-This example shows how to send a `Set<DemoObject>` containing multiple objects in the JSON body.
+### Content Json (Set)
 
-```
- A1 = new DemoObject(A, 1);
- A2 = new DemoObject(A, 2);
+This example demonstrates how to send a set of Java objects as a JSON array in a structured
+request test setup. The set is automatically serialized to JSON by the test framework.
+
+First, the following constants are defined:
+
+``` java
+  public static final SimpleObject SIMPLE_A1 = new SimpleObject("A", 1);
+  public static final SimpleObject SIMPLE_A2 = new SimpleObject("A", 2);
+  
+  public static final Set<SimpleObject> SIMPLE_SET = Set.of(SIMPLE_A1, SIMPLE_A2);
+  
+  public static final String BODY_SET = "simple/bodySet";
+  public static final String ENDPOINT_BODY_SET = BASE + BODY_SET;
 ```
 
-```
- Set<DemoObject> demo = Set.of(A1, A2);
+The controller defines an endpoint that receives a set of deserialized objects:
+
+``` java 
+  @PostMapping(BODY_SET)
+  public ResponseEntity<Void> exampleBodySet(@RequestBody Set<SimpleObject> value) {
+    return ResponseEntity.ok().build();
+  }
 ```
 
-```
+The corresponding test sets up the request by providing the set, which is internally serialized to a
+JSON array:
+
+``` java
  post()
       .arrange()
-      .arrangeUrl(POST_EXAMPLE)
+      .arrangeUrl(ENDPOINT_BODY_SET)
       .arrangeBody()
-      .arrangeJson(demo) // Serialize the Set of DemoObject objects to JSON
+      .arrangeJson(SIMPLE_SET)
       .act()
       ...
 ```
 
-### Example 4: Sending a Map of Objects
+---
 
-This example demonstrates how to send a `Map<Integer, DemoObject>` as the JSON body. Both keys and
-values are serialized.
+### Content Json (Map)
 
-```
- A1 = new DemoObject(A, 1);
- A2 = new DemoObject(A, 2);
+This example demonstrates how to send a map as a JSON object in a structured request test
+setup. The map is automatically serialized to JSON by the test framework.
+
+First, the following constants are defined:
+
+``` java
+  public static final SimpleObject SIMPLE_A1 = new SimpleObject("A", 1);
+  
+  public static final Map<Integer, SimpleObject> SIMPLE_MAP = Map.of(1, SIMPLE_A1);
+  
+  public static final String BODY_MAP = "simple/bodyMap";
+  public static final String ENDPOINT_BODY_MAP = BASE + BODY_MAP;
 ```
 
-```
- Map<Integer, DemoObject> demo = Map.of(1, A1, 2, A2);
+The controller defines an endpoint that receives the request body as a map, where the key is an
+integer and the value is a deserialized object:
+
+``` java 
+  @PostMapping(BODY_MAP)
+  public ResponseEntity<Void> exampleBodyMap(@RequestBody Map<Integer, SimpleObject> value) {
+    return ResponseEntity.ok().build();
+  }
 ```
 
-```
+The corresponding test sets up the request by providing the map, which is internally serialized to a
+JSON object:
+
+``` java
  post()
       .arrange()
-      .arrangeUrl(POST_EXAMPLE)
+      .arrangeUrl(ENDPOINT_BODY_MAP)
       .arrangeBody()
-      .arrangeJson(demo) // Serialize the Map of DemoObject objects to JSON
+      .arrangeJson(SIMPLE_MAP)
       .act()
       ...
 ```

@@ -2,9 +2,31 @@
 
 # Changelog
 
+## [1.5.0]
+
+### ✨ New Features
+
+- Introduced `AAAMockMvcAbstract` as the recommended base class for writing integration tests.
+    - Provides convenient access to HTTP test request builders (`get()`, `post()`, `put()`, etc.)
+    - Internally injects a fully configured `AAAMockMvc` instance via Spring Dependency Injection.
+
+- Automatic configuration via new `AAAMockMvcConfig`
+    - Uses Spring’s `ObjectProvider` mechanism to detect and inject existing beans.
+    - Automatically reuses project-defined `MockMvc` and/or `ObjectMapper` beans if present.
+
+### 🧹 Improvements
+
+- Revised and improved the arrange section of the documentation for greater clarity and guidance.
+
+### 📦 Dependency Upgrades
+
+- spring-boot 3.4.5 → 3.5.0
+
+---
+
 ## [1.4.2]
 
-### Upgraded
+### 📦 Dependency Upgrades
 
 - spring-boot 3.4.4 → 3.4.5
 
@@ -12,16 +34,16 @@
 
 ## [1.4.1]
 
-### Upgraded
+### 📦 Dependency Upgrades
 
 - lombok 1.18.34 → 1.18.38
 - spring-boot 3.4.0 → 3.4.4
 
-### Improved
+### 🧹 Improvements
 
 - reduced number of transitive dependencies
 
-### Fixed
+### ☂️ Fixed
 
 - `answerAsObject(Class<T> expectedClass)` now returns `null` instead of throwing
   a `MismatchedInputException` when the HTTP response is `null`.
@@ -36,7 +58,7 @@
 
 ## [1.4.0]
 
-### Added
+### ✨ New Features
 
 - Class Assertion
     - **`assertClassNotEmpty()`**: Asserts that the class of the HTTP response is not empty.
@@ -112,7 +134,7 @@
       matches
       the expected byte array.
 
-### Upgraded
+### 📦 Dependency Upgrades
 
 - lombok 1.18.34 → 1.18.36
 - spring-boot-starter-web 3.4.0 → 3.4.1
@@ -123,7 +145,7 @@
 
 ## [1.3.0]
 
-### Added
+### ✨ New Features
 
 - Answer Section Enhancements
     - **`answerAsObject(T resultType)`**: Deserializes the HTTP response directly into an object
@@ -140,7 +162,7 @@
     - **` arrangeJson(T content)`**: A new generic method for setting JSON content in the request
       body for PUT, POST, and PATCH requests.
 
-### Improved
+### 🧹 Improvements
 
 - Content Assertion Methods **`assertContentEquals()`**:
     - Enhanced to normalize both the actual and expected response content using Unicode
@@ -158,7 +180,7 @@
 
 ## [1.2.1]
 
-### Improved
+### 🧹 Improvements
 
 - This release improves general test coverage across the framework, enhancing reliability and
   stability in core functionalities.
@@ -167,7 +189,7 @@
 
 ## [1.2.0]
 
-### Added
+### ✨ New Features
 
 - **TestAnswer**: Introduced for accessing the results of HTTP requests.
     - New method `answer()` in TestAct for retrieving the result of the executed request.
@@ -176,7 +198,7 @@
 
 ## [1.1.0]
 
-### Added
+### ✨ New Features
 
 - **TestAssertCustom**: Introduced for custom assertions.
     - New method `assertCustom()` in `TestAssert` for accessing custom assertions.
@@ -198,6 +220,8 @@
 ---
 
 ## [1.0.0]
+
+### 🌱 Initial Release
 
 - Initial release of the **AAA-MockMvc**
 
