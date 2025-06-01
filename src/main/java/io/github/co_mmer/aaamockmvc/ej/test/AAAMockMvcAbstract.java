@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Import;
  *
  * @since 1.0.0
  */
+@SuppressWarnings("java:S6813")
 @Import(AAAMockMvcConfig.class)
 public abstract class AAAMockMvcAbstract {
 

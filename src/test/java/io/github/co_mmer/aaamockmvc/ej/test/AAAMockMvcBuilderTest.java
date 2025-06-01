@@ -74,22 +74,26 @@ class AAAMockMvcBuilderTest {
   @Test
   void GIVEN_only_objectMapper_WHEN_build_THEN_throw_Exception() {
     // Act
-    var exception =
-        assertThrows(
-            IllegalStateException.class,
-            () -> AAAMockMvcBuilder.builder().withObjectMapper(this.objectMapper).build());
+    var exception = assertThrows(IllegalStateException.class, this::buildOnlyWithObjectMapper);
 
     // Assert
     assertThat(exception.getMessage(), containsString("Neither WebApplicationContext nor MockMvc"));
   }
 
+  private void buildOnlyWithObjectMapper() {
+    AAAMockMvcBuilder.builder().withObjectMapper(this.objectMapper).build();
+  }
+
   @Test
   void GIVEN_nothing_WHEN_build_THEN_throw_Exception() {
     // Act
-    var exception =
-        assertThrows(IllegalStateException.class, () -> AAAMockMvcBuilder.builder().build());
+    var exception = assertThrows(IllegalStateException.class, this::buildWithNothing);
 
     // Assert
     assertThat(exception.getMessage(), containsString("Neither WebApplicationContext nor MockMvc"));
+  }
+
+  private void buildWithNothing() {
+    AAAMockMvcBuilder.builder().build();
   }
 }
