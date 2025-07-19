@@ -1,0 +1,249 @@
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer;
+
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper.mockParseListWithClass;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper.mockParseMapWithClass;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper.mockParseSetWithClass;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper.mockParseWithClass;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_A1_A2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_A1_A2_JSON;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerRuntimeException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.TestAssertBase;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
+import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
+import lombok.SneakyThrows;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+class TestAnswerImplTest extends TestAssertBase {
+
+  private TestAnswer testAnswer;
+
+  @BeforeEach
+  @SneakyThrows
+  void setUp() {
+    var context = TestContext.mockContext();
+    this.useContext(context);
+    this.testAnswer = new TestAnswerImpl(context);
+  }
+
+  @Nested
+  class asString {
+
+    @Test
+    void GIVEN_A1JSON_WHEN_asString_THEN_return_A1JSON() {
+      // Arrange
+      useActResult(TEST_A1_JSON);
+
+      // Act
+      var result = testAnswer.asString();
+
+      // Assert
+      assertThat(result, Matchers.is(TEST_A1_JSON));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_empty_WHEN_asString_THEN_return_empty() {
+      // Arrange
+      useActResult(StringUtils.EMPTY);
+
+      // Act
+      var result = testAnswer.asString();
+
+      // Assert
+      assertThat(result, is(StringUtils.EMPTY));
+    }
+  }
+
+  @Nested
+  class asByte {
+
+    @Test
+    void GIVEN_A1JSON_WHEN_asByte_THEN_return_A1JSON_bytes() {
+      // Arrange
+      useActResult(TEST_A1_JSON.getBytes());
+
+      // Act
+      var result = testAnswer.asByte();
+
+      // Assert
+      MatcherAssert.assertThat(result, Matchers.is(TEST_A1_JSON.getBytes()));
+    }
+  }
+
+  @Nested
+  class asObject {
+
+    @Test
+    void GIVEN_A1_WHEN_asObject_THEN_return_A1() {
+      // Arrange
+      useActResult(TEST_A1_JSON);
+
+      // Act
+      var result = testAnswer.asObject(TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, Matchers.is(A1));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_null_WHEN_asObject_THEN_return_null() {
+      // Arrange
+      useActResult(StringUtils.EMPTY);
+
+      // Act
+      var result = testAnswer.asObject(TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, is(nullValue()));
+    }
+
+    @Test
+    void GIVEN_throws_WHEN_asObject_THEN_throwTestAnswerRuntimeException() {
+      // Arrange
+      var mockTestGenericMapper = mockParseWithClass();
+
+      // Act && Assert
+      assertThrows(
+          TestAnswerRuntimeException.class, () -> testAnswer.asObject(TestObjectSimple.class));
+      mockTestGenericMapper.close();
+    }
+  }
+
+  @Nested
+  class asList {
+
+    @Test
+    void GIVEN_A1_A2_WHEN_asList_THEN_return_A1_A2() {
+      // Arrange
+      useActResult(TEST_LIST_A1_A2_JSON);
+
+      // Act
+      var result = testAnswer.asList(TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, Matchers.is(TEST_LIST_A1_A2));
+    }
+
+    @Test
+    void GIVEN_null_WHEN_asList_THEN_return_null() {
+      // Arrange
+      useActResult(StringUtils.EMPTY);
+
+      // Act
+      var result = testAnswer.asList(TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, is(nullValue()));
+    }
+
+    @Test
+    void GIVEN_throws_WHEN_asList_THEN_throwTestAnswerRuntimeException() {
+      // Arrange
+      var mockTestGenericMapper = mockParseListWithClass();
+
+      // Act && Assert
+      assertThrows(
+          TestAnswerRuntimeException.class, () -> testAnswer.asList(TestObjectSimple.class));
+      mockTestGenericMapper.close();
+    }
+  }
+
+  @Nested
+  class asSet {
+
+    @Test
+    void GIVEN_A1_A2_WHEN_asSet_THEN_return_A1_A2() {
+      // Arrange
+      useActResult(TEST_SET_A1_A2_JSON);
+
+      // Act
+      var result = testAnswer.asSet(TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, Matchers.is(TEST_SET_A1_A2));
+    }
+
+    @Test
+    void GIVEN_null_WHEN_asSet_THEN_return_null() {
+      // Arrange
+      useActResult(StringUtils.EMPTY);
+
+      // Act
+      var result = testAnswer.asSet(TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, is(nullValue()));
+    }
+
+    @Test
+    void GIVEN_throws_WHEN_asSet_THEN_throwTestAnswerRuntimeException() {
+      // Arrange
+      var mockTestGenericMapper = mockParseSetWithClass();
+
+      // Act && Assert
+      assertThrows(
+          TestAnswerRuntimeException.class, () -> testAnswer.asSet(TestObjectSimple.class));
+      mockTestGenericMapper.close();
+    }
+  }
+
+  @Nested
+  class asMap {
+
+    @Test
+    @SneakyThrows
+    void GIVEN_A1_A2_JSON_WHEN_asSet_THEN_return_A1_A2() {
+      // Arrange
+      useActResult(TEST_MAP_A1_A2_JSON);
+
+      // Act
+      var result = testAnswer.asMap(Integer.class, TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, Matchers.is(TEST_MAP_A1_A2));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_null_WHEN_asSet_THEN_return_null() {
+      // Arrange
+      useActResult(StringUtils.EMPTY);
+
+      // Act
+      var result = testAnswer.asMap(Integer.class, TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, is(nullValue()));
+    }
+
+    @Test
+    void GIVEN_throws_WHEN_asMap_THEN_throwTestAnswerRuntimeException() {
+      // Arrange
+      var mockTestGenericMapper = mockParseMapWithClass();
+
+      // Act && Assert
+      assertThrows(
+          TestAnswerRuntimeException.class,
+          () -> testAnswer.asMap(Integer.class, TestObjectSimple.class));
+      mockTestGenericMapper.close();
+    }
+  }
+}

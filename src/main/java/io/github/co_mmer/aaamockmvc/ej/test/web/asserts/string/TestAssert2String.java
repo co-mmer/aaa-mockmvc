@@ -4,41 +4,60 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import lombok.NonNull;
 
 /**
- * Provides methods for asserting HTTP response content in tests.
+ * Assertions for the response body as a {@link String}.
  *
- * <ul>
- *   <li>{@link #assertStringEquals(String)} (String)}: Asserts that the content of the HTTP
- *       response matches the expected string.
- *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
- * </ul>
+ * <p><b>What it does:</b> Provides string-specific checks such as emptiness, length, and equality
+ * on the cached response body produced by {@code actPerform().perform()}.
+ *
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * arrange()
+ *  .get("/api/text");
+ *
+ * actPerform()
+ *  .perform();
+ *
+ * asserts()
+ *  .content()
+ *  .asString()
+ *  .isNotEmpty()
+ *  .isEqualTo("aaa")
+ *  .headers()
+ *  ...
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed. If no body is present,
+ * the cached string representation is empty ({@code ""}).
  *
  * @since 1.0.0
  */
 public interface TestAssert2String {
 
   /**
-   * Asserts that the string content of the HTTP response matches the expected string.
+   * Asserts that the body string is equal to the given {@code expected} string.
    *
-   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
-   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
-   * Unicode formats.
+   * <p>Note: For predictable text comparison, both actual and expected values are normalized using
+   * Unicode Normalization Form C (NFC) where applicable.
    *
-   * @param expectedString the expected content of the response (must not be {@code null})
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @throws NullPointerException if the {@code expectedString} is {@code null}
-   * @since 1.0.0
+   * @param expectedString the expected string; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the strings are not equal
+   * @since 2.0.0
    */
-  TestAssertLString assertStringEquals(@NonNull String expectedString);
+  TestAssertLString isEqualTo(@NonNull String expectedString);
 
   /**
-   * Provides assertion methods for validating the HTTP response headers.
+   * Switches to HTTP header assertions for the same response snapshot.
    *
-   * <p>This method returns an instance of {@code TestAssertHead}, which provides assertion methods
-   * for validating the headers of the HTTP response, such as checking for the presence or absence
-   * of specific headers and comparing header values.
+   * <p>Use this to continue the assertion chain on headers (e.g. {@code containsKey}, {@code
+   * containsEntry}). No additional I/O is performed; the headers captured during {@code
+   * actPerform().perform()} are reused.
    *
-   * @return an instance of {@code TestAssertHead} for asserting the response headers
-   * @since 1.0.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @since 2.0.0
    */
-  TestAssertHead assertHead();
+  TestAssertHead headers();
 }

@@ -3,70 +3,76 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string;
 import lombok.NonNull;
 
 /**
- * Provides methods for asserting HTTP response content in tests.
+ * Assertions for the response body as a {@link String}.
  *
- * <ul>
- *   <li>{@link #assertStringNotEmpty()}: Asserts that the content of the HTTP response is not
- *       empty.
- *   <li>{@link #assertStringEmpty()}: Asserts that the content of the HTTP response is empty.
- *   <li>{@link #assertStringLength(int)}: Asserts that the length of the response content matches
- *       the specified length.
- *   <li>{@link #assertStringEquals(String)}: Asserts that the content of the HTTP response matches
- *       the expected string.
- * </ul>
+ * <p><b>What it does:</b> Provides string-specific checks such as emptiness, length, and equality
+ * on the cached response body produced by {@code actPerform().perform()}.
+ *
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * arrange()
+ *  .get("/api/text");
+ *
+ * actPerform()
+ *  .perform();
+ *
+ * asserts()
+ *  .content()
+ *  .asString()
+ *  .isNotEmpty()
+ *  .isEqualTo("aaa");
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed. If no body is present,
+ * the cached string representation is empty ({@code ""}).
  *
  * @since 1.0.0
  */
 public interface TestAssert1String {
 
   /**
-   * Asserts that the string content of the HTTP response is not empty.
+   * Asserts that the body string is not empty.
    *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the string is empty
+   * @since 2.0.0
    */
-  TestAssert2String assertStringNotEmpty();
+  TestAssert2String isNotEmpty();
 
   /**
-   * Asserts that the string content of the HTTP response is empty.
+   * Asserts that the body string is empty.
    *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.0.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the string is not empty
+   * @since 2.0.0
    */
-  TestAssertLString assertStringEmpty();
+  TestAssertLString isEmpty();
 
   /**
-   * Asserts that the length of the string content of the HTTP response matches the specified value.
+   * Asserts that the body string has the given length (in characters).
    *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @param length the expected length of the HTTP response content
-   * @return the current instance of {@code TestAssert2Content} for method chaining
-   * @since 1.4.0
+   * @param expectedLength the expected number of characters
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the length differs from {@code expectedLength}
+   * @since 2.0.0
    */
-  TestAssert2String assertStringLength(int length);
+  TestAssert2String hasLength(int expectedLength);
 
   /**
-   * Asserts that the string content of the HTTP response matches the expected string.
+   * Asserts that the body string is equal to the given {@code expected} string.
    *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
+   * <p>Note: For predictable text comparison, both actual and expected values are normalized using
+   * Unicode Normalization Form C (NFC) where applicable.
    *
-   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
-   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
-   * Unicode formats.
-   *
-   * @param expectedString the expected content of the response (must not be {@code null})
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @throws NullPointerException if the {@code expectedString} is {@code null}
-   * @since 1.0.0
+   * @param expectedString the expected string; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the strings are not equal
+   * @since 2.0.0
    */
-  TestAssertLString assertStringEquals(@NonNull String expectedString);
+  TestAssertLString isEqualTo(@NonNull String expectedString);
 }

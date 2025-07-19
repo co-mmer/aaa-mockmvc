@@ -6,7 +6,7 @@
 
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.5.0</version>
+  <version>2.0.0</version>
   <packaging>jar</packaging>
 
   <name>AAA-MockMvc</name>
@@ -45,7 +45,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.5.0</version>
+    <version>3.5.4</version>
     <relativePath/>
   </parent>
 
@@ -104,6 +104,33 @@
 
   <profiles>
     <profile>
+      <id>local</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.11.3</version>
+            <configuration>
+              <sourceFileExcludes>
+                <sourceFileExclude>**/io/github/co_mmer/aaamockmvc/ej/test/web/internal/**/*.java
+                </sourceFileExclude>
+              </sourceFileExcludes>
+            </configuration>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
       <id>sonatypeDeploy</id>
       <build>
         <plugins>
@@ -135,7 +162,13 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.10.1</version>
+            <version>3.11.3</version>
+            <configuration>
+              <sourceFileExcludes>
+                <sourceFileExclude>**/io/github/co_mmer/aaamockmvc/ej/test/web/internal/**/*.java
+                </sourceFileExclude>
+              </sourceFileExcludes>
+            </configuration>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
@@ -168,6 +201,7 @@
         </plugins>
       </build>
     </profile>
+
     <profile>
       <id>coverageReport</id>
       <build>

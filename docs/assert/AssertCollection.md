@@ -17,7 +17,7 @@
 
 ### Not Empty
 
-The **`assertCollectionNotEmpty`** method verifies that the collection returned in the response is
+The **`assertContentNotEmpty`** method verifies that the collection returned in the response is
 **not** empty. If it is needed, it must be called first. Once invoked, other collection-related
 assertions can follow. However, if any other assertCollection methods are called before
 assertCollectionNotEmpty, the framework will not provide this method again, as it ensures that only
@@ -27,17 +27,16 @@ methods which are contextually appropriate are available.
       get()
           ...
           .act()
-          .actPerform()
           .asserts()
           .assertContentAsCollection()
-          .assertCollectionNotEmpty()
+          .assertContentNotEmpty()
 ```
 
 ---
 
 ### Empty
 
-The **`assertCollectionEmpty`**  method verifies that the collection returned in the response is
+The **`assertContentEmpty`**  method verifies that the collection returned in the response is
 empty. After this assertion, no further collection-related assertions can be performed, as it would
 be semantically incorrect to validate additional properties on an empty result.
 
@@ -45,39 +44,32 @@ be semantically incorrect to validate additional properties on an empty result.
       get()
           ...
           .act()
-          .actPerform()
           .asserts()
           .assertContentAsCollection()
-          .assertCollectionEmpty();
+          .assertContentEmpty();
 ```
 
 ---
 
 ### Size
 
-The **`assertCollectionSize`** method verifies that the size of the collection returned in the
+The **`assertContentSize`** method verifies that the size of the collection returned in the
 response matches the expected size.
-
-If `assertCollectionSize` and `assertCollectionEquals` are used together, `assertCollectionSize`
-must be called before `assertCollectionEquals`. After calling `assertCollectionEquals`, the
-framework will no longer offer `assertCollectionSize`, as it would not be logically applicable to
-check the size after comparing the collection's contents.
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionSize(2)
+      .assertContentSize(2)
 ```
 
 ---
 
 ### Equals
 
-The **`assertCollectionEquals`** method ensures that the collection returned in the response matches
+The **`assertContentEquals`** method ensures that the collection returned in the response matches
 an
 expected List of objects both in content and order.
 
@@ -106,17 +98,16 @@ expected List of objects both in content and order.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionEquals(DemoObject.class, List.of(A1, A2))
+      .assertContentEquals(DemoObject.class, List.of(A1, A2))
 ```
 
 ---
 
 ### Contains Any Order
 
-The **`assertCollectionContainsAnyOrder`**  method verifies that the collection returned in the
+The **`assertContentContainsAnyOrder`**  method verifies that the collection returned in the
 response matches the expected collection, ignoring the order of the elements.
 
 ```
@@ -139,17 +130,16 @@ response matches the expected collection, ignoring the order of the elements.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionContainsAnyOrder(DemoObject.class, List.of(A2, A1));
+      .assertContentContainsAnyOrder(DemoObject.class, List.of(A2, A1));
 ```
 
 ---
 
 ### Not Contains
 
-The **`assertCollectionNotContains`**  method is used to verify that the specified objects do **not
+The **`assertContentNotContains`**  method is used to verify that the specified objects do **not
 **
 exist within the collection returned in the response.
 
@@ -181,37 +171,34 @@ exist within the collection returned in the response.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionNotContains(DemoObject.class, A3);
+      .assertContentNotContains(DemoObject.class, A3);
 ```
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionNotContains(DemoObject.class, A3, A4, ...);
+      .assertContentNotContains(DemoObject.class, A3, A4, ...);
 ```
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionNotContains(DemoObject.class, List.of(A3, A4));
+      .assertContentNotContains(DemoObject.class, List.of(A3, A4));
 ```
 
 ---
 
 ### Contains
 
-The **`assertCollectionContains`**  method is used to verify that the specified objects do
+The **`assertContentContains`**  method is used to verify that the specified objects do
 exist within the collection returned in the response.
 
 - **Class Specification**: The class type of the objects within the collection (e.g.,
@@ -240,37 +227,34 @@ exist within the collection returned in the response.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionContains(DemoObject.class, A1);
+      .assertContentContains(DemoObject.class, A1);
 ```
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionContains(DemoObject.class, A1, A2, ...);
+      .assertContentContains(DemoObject.class, A1, A2, ...);
 ```
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionContains(DemoObject.class, List.of(A1, A2));
+      .assertContentContains(DemoObject.class, List.of(A1, A2));
 ```
 
 ---
 
 ### Match All
 
-The **`assertCollectionMatchAll`** method is used to verify that all elements in the collection
+The **`assertContentMatchAll`** method is used to verify that all elements in the collection
 match the specified conditions. This assertion allows for checking multiple attributes or conditions
 for every element in the collection.
 
@@ -300,20 +284,18 @@ for every element in the collection.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionMatchAll(DemoMatch.class, element -> element.name().equals(A));
+      .assertContentMatchAll(DemoMatch.class, element -> element.name().equals(A));
 ```
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionMatchAll(DemoMatch.class,
+      .assertContentMatchAll(DemoMatch.class,
             element -> element.name().equals(A),
             element -> element.status().equals(NEW));
 ```
@@ -322,7 +304,7 @@ for every element in the collection.
 
 ### Match Any
 
-The **`assertCollectionMatchAny`** method is used to verify that at least one element in the
+The **`assertContentMatchAny`** method is used to verify that at least one element in the
 collection matches the specified conditions. This assertion allows for checking multiple attributes
 or conditions, and it will pass if **any element** satisfies at least one of the provided
 conditions.
@@ -352,20 +334,18 @@ conditions.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionMatchAny(DemoMatch.class, element -> element.name().equals(A));
+      .assertContentMatchAny(DemoMatch.class, element -> element.name().equals(A));
 ```
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionMatchAny(DemoMatch.class,
+      .assertContentMatchAny(DemoMatch.class,
             element -> element.name().equals(A),
             element -> element.status().equals(CLOSE));
 ```
@@ -374,7 +354,7 @@ conditions.
 
 ### Match None
 
-The **`assertCollectionMatchNone`** method is used to verify that no elements in the collection
+The **`assertContentMatchNone`** method is used to verify that no elements in the collection
 match the specified conditions. This assertion allows for checking multiple attributes or
 conditions, and it will pass if **none of the elements** satisfy the given conditions.
 
@@ -403,20 +383,18 @@ conditions, and it will pass if **none of the elements** satisfy the given condi
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionMatchNone(DemoMatch.class, element -> element.name().equals(B));
+      .assertContentMatchNone(DemoMatch.class, element -> element.name().equals(B));
 ```
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsCollection()
-      .assertCollectionMatchNone(DemoMatch.class,
+      .assertContentMatchNone(DemoMatch.class,
             element -> element.name().equals(B),
             element -> element.status().equals(CLOSE));
 ```

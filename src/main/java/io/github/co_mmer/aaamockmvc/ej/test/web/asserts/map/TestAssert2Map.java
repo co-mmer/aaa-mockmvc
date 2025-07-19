@@ -4,34 +4,44 @@ import java.util.Map;
 import lombok.NonNull;
 
 /**
- * Provides assertion methods for validating HTTP response maps.
+ * Assertions for a deserialized {@link java.util.Map} with keys {@code K} and values {@code V}.
  *
- * <ul>
- *   <li>{@link #assertMapEquals(Class, Class, Map)}: Asserts that the map in the HTTP response
- *       matches the expected map of key-value pairs.
- * </ul>
+ * <p><b>What it does:</b> Provides (non-)emptiness, size, and equality checks on the map produced
+ * by a prior {@code content().asMap(K,V)} step. The response body has already been deserialized
+ * once using the configured mapper and is cached for all subsequent assertions.
+ *
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * arrange()
+ *  .get("/api/stats");
+ *
+ * actPerform()
+ *  .perform();
+ *
+ * asserts()
+ *  .content()
+ *  .asMap(String.class, Integer.class)
+ *  .isNotEmpty()
+ *  .hasSize(3)
+ *  .isEqualTo(Map.of("count", 5, "errors", 0, "warnings", 1));
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed and {@code
+ * content().asMap(K,V)} successfully deserialized a JSON object into a Java map.
  *
  * @since 1.4.0
  */
-public interface TestAssert2Map {
+public interface TestAssert2Map<K, V> {
 
   /**
-   * Asserts that the map in the HTTP response matches the expected map of key-value pairs.
+   * Asserts that the map is equal to the given map (same keys and values).
    *
-   * <p>Both maps are normalized before comparison to ensure consistent results.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @param keyClass the class of the keys in the map (must not be {@code null})
-   * @param valueClass the class of the values in the map (must not be {@code null})
-   * @param expectedMap the expected map of key-value pairs (must not be {@code null})
-   * @param <K> the type of the keys in the map
-   * @param <V> the type of the values in the map
-   * @return the current instance of {@code TestAssertLMap} for further assertions
-   * @throws AssertionError if the maps do not match
-   * @since 1.4.0
+   * @param expectedMap the expected map; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the maps are not equal
+   * @since 2.0.0
    */
-  <K, V> TestAssertLMap assertMapEquals(
-      @NonNull Class<K> keyClass, @NonNull Class<V> valueClass, @NonNull Map<K, V> expectedMap);
+  TestAssertLMap isEqualTo(@NonNull Map<K, V> expectedMap);
 }

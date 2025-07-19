@@ -1,21 +1,50 @@
 package io.github.co_mmer.aaamockmvc.ej.test;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestDelete;
-import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestGet;
-import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestHead;
-import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestOption;
-import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPatch;
-import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPost;
-import io.github.co_mmer.aaamockmvc.ej.test.web.request.TestRequestPut;
+import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
+import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.TestArrange;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.scenario.ScenarioFlow;
+import io.github.co_mmer.aaamockmvc.ej.test.web.scenario.step.TestStep;
+import java.util.function.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 
 /**
- * This class serves as an abstract base for performing REST operations using the {@link AAAMockMvc}
- * instance.
+ * Abstract base for AAA-style MockMvc tests.
  *
- * <p>It provides protected methods for executing various types of HTTP requests such as GET, POST,
- * PUT, PATCH, DELETE, HEAD, and OPTIONS.
+ * <p><b>What it does:</b> Wires {@link AAAMockMvc} into the Spring TestContext (via {@link
+ * AAAMockMvcConfig}) and exposes concise, <em>phase-specific</em> entry points: {@code arrange()} →
+ * {@code actPerform()} → {@code asserts()} (optional {@code answer()}). This class performs no I/O
+ * itself; it simply provides access to the DSL.
+ *
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * @SpringBootTest
+ * class UserApiTest extends AAAMockMvcAbstract {
+ *
+ *   @Test
+ *   void GIVEN_userId_WHEN_get_THEN_200_and_body() {
+ *     arrange()
+ *         .get("/api/users/{id}", 42);
+ *
+ *     actPerform()
+ *         .perform();
+ *
+ *     asserts()
+ *         .status()
+ *         .isOk()
+ *         .content()
+ *         .asClass(User.class)
+ *         .isNotNull();
+ *   }
+ * }
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> Spring arrange is initialized and {@link AAAMockMvcConfig} is imported
+ * so that {@link AAAMockMvc} is available. Subclasses should be standard Spring test classes (e.g.,
+ * {@code @SpringBootTest}).
  *
  * @since 1.0.0
  */
@@ -26,72 +55,61 @@ public abstract class AAAMockMvcAbstract {
   @Autowired private AAAMockMvc aaaMockMvc;
 
   /**
-   * Prepares a GET request.
+   * Starts the <b>arrange</b> phase to build the HTTP request (method, URL, headers, body).
    *
-   * @return an instance of {@link TestRequestGet} to configure the GET request
-   * @since 1.0.0
+   * <p>No network I/O is performed here; this only mutates the request specification that will be
+   * executed later by {@link #act()} → {@code perform()}.
+   *
+   * @return the arrange step, exposing only arrange-appropriate methods based on the current state
+   * @since 2.0.0
    */
-  protected final TestRequestGet get() {
-    return aaaMockMvc.get();
+  protected final TestArrange arrange() {
+    return aaaMockMvc.arrange();
   }
 
   /**
-   * Prepares a POST request.
+   * Enters the <b>actPerform</b> phase to execute the arranged request and capture the response
+   * snapshot.
    *
-   * @return an instance of {@link TestRequestPost} to configure the POST request
-   * @since 1.0.0
+   * <p>The actual execution happens when {@code perform()} is called on the returned object.
+   *
+   * @return the actPerform step, allowing {@code perform()} and optional actPerform-level
+   *     configuration
+   * @since 2.0.0
    */
-  protected final TestRequestPost post() {
-    return aaaMockMvc.post();
+  protected final TestAct act() {
+    return aaaMockMvc.act();
   }
 
   /**
-   * Prepares a PUT request.
+   * Enters the <b>asserts</b> phase to verify the stored response snapshot (status, headers, body).
    *
-   * @return an instance of {@link TestRequestPut} to configure the PUT request
-   * @since 1.0.0
+   * <p>Assertions reuse the immutable snapshot created during the actPerform phase; no additional
+   * I/O occurs.
+   *
+   * @return the root assertion step for status, content, and headers
+   * @since 2.0.0
    */
-  protected final TestRequestPut put() {
-    return aaaMockMvc.put();
+  protected final TestAssert asserts() {
+    return aaaMockMvc.asserts();
   }
 
   /**
-   * Prepares a PATCH request.
+   * Provides <b>answer</b>-style read access to the stored response snapshot (outside the fluent
+   * assertions), e.g., to fetch deserialized data for custom checks or subsequent steps.
    *
-   * @return an instance of {@link TestRequestPatch} to configure the PATCH request
-   * @since 1.0.0
+   * @return the answer API to retrieve the body as string/bytes/object/collection/map
+   * @since 2.0.0
    */
-  protected final TestRequestPatch patch() {
-    return aaaMockMvc.patch();
+  protected final TestAnswer answer() {
+    return aaaMockMvc.answer();
   }
 
-  /**
-   * Prepares a DELETE request.
-   *
-   * @return an instance of {@link TestRequestDelete} to configure the DELETE request
-   * @since 1.0.0
-   */
-  protected final TestRequestDelete delete() {
-    return aaaMockMvc.delete();
+  public <R> R step(String sectionName, Consumer<TestStep> section) {
+    return aaaMockMvc.step(sectionName, section);
   }
 
-  /**
-   * Prepares a HEAD request.
-   *
-   * @return an instance of {@link TestRequestHead} to configure the HEAD request
-   * @since 1.0.0
-   */
-  protected final TestRequestHead head() {
-    return aaaMockMvc.head();
-  }
-
-  /**
-   * Prepares an OPTIONS request.
-   *
-   * @return an instance of {@link TestRequestOption} to configure the OPTIONS request
-   * @since 1.0.0
-   */
-  protected final TestRequestOption options() {
-    return aaaMockMvc.options();
+  public void scenario(String name, Consumer<ScenarioFlow> block) {
+    aaaMockMvc.scenario(name, block);
   }
 }

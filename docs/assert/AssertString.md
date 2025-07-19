@@ -11,58 +11,55 @@
 
 ### Not Empty
 
-In this example, the **`assertStringNotEmpty`** method is used to assert that the response content
+In this example, the **`assertContentNotEmpty`** method is used to assert that the response content
 is not empty.
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsString()
-      .assertStringNotEmpty()
+      .assertContentNotEmpty()
 ```
 
 ---
 
 ### Empty
 
-In this example, the **`assertStringEmpty`** method is used to assert that the response content
+In this example, the **`assertContentEmpty`** method is used to assert that the response content
 is empty.
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsString()
-      .assertStringEmpty()
+      .assertContentEmpty()
 ```
 
 ---
 
 ### Length
 
-In this example, the **`assertStringLength`** method is used to verify the expected length of the
+In this example, the **`assertContentLength`** method is used to verify the expected length of the
 response.
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsString()
-      .assertStringLength(19)
+      .assertContentLength(19)
 ```
 
 ---
 
 ### Equals
 
-In this example, the **`assertStringEquals`** method is used to assert that the response content
+In this example, the **`assertContentEquals`** method is used to assert that the response content
 matches an expected string.
 
 ```
@@ -73,10 +70,9 @@ A1_JSON = {"id":1,"name":"A"}
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsString()
-      .assertStringEquals(A1_JSON)
+      .assertContentEquals(A1_JSON)
 ```
 
 ---

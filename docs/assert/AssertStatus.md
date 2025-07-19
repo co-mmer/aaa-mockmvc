@@ -27,7 +27,6 @@ for success, is expected and needs to be verified directly.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatus(200)
@@ -44,7 +43,6 @@ reducing potential for error with numeric codes.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatus(HttpStatus.OK)
@@ -60,7 +58,6 @@ This example shows how to assert that the response status is 200 OK.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsOk()
@@ -76,7 +73,6 @@ This example shows how to assert that the response status is 201 Created.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsCreated()
@@ -92,7 +88,6 @@ This example shows how to assert that the response status is 202 Accepted.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsAccepted()
@@ -108,7 +103,6 @@ This example shows how to assert that the response status is 404 Not Found.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsNotFound()
@@ -125,7 +119,6 @@ This example shows how to assert that the response status is within the range of
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsClientError()
@@ -142,7 +135,6 @@ This example shows how to assert that the response status is within the range of
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsServerError()
@@ -158,7 +150,6 @@ This example shows how to assert that the response status indicates a redirectio
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsRedirect()
@@ -174,7 +165,6 @@ This example shows how to assert that the response status is 403 Access Forbidde
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsAccessForbidden()
@@ -190,7 +180,6 @@ This example shows how to assert that the response status is 401 Access Unauthor
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsAccessUnauthorized()
@@ -206,7 +195,6 @@ This example shows how to assert that the response status is within a specific r
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusInRange(400, 499)

@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.testdata.testutil;
 
+import java.util.List;
 import java.util.Map;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -15,8 +16,12 @@ public final class TestHeader {
   public static final String TEST_HEADER_VALUE_1 = TestValue.VALUE_1;
   public static final String TEST_HEADER_VALUE_2 = TestValue.VALUE_2;
 
-  public static final Map<String, Object> TEST_HEADER_MAP_1_2 =
-      Map.of(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1, TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2);
+  public static final Map<String, List<Object>> TEST_HEADER_MAP_1_2 =
+      Map.of(
+          TEST_HEADER_KEY_1,
+          List.of(TEST_HEADER_VALUE_1),
+          TEST_HEADER_KEY_2,
+          List.of(TEST_HEADER_VALUE_2));
 
   public static final String TEST_AUTH_KEY = "Authorization";
   public static final String TEST_AUTH_VALUE = "test";

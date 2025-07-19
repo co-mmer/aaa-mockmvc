@@ -1,14 +1,17 @@
 package io.github.co_mmer.aaamockmvc.ej.testdata.testutil;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.url.TestRequestUriMapper;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TestValue {
+
+  public static final String QUERY_KEY_1 = "q";
+  public static final String QUERY_KEY_2 = "page";
+  public static final String QUERY_VALUE_1 = "search";
+  public static final String QUERY_VALUE_2 = "2";
 
   public static final String KEY_0 = "key_0";
   public static final String KEY_1 = "key_1";
@@ -24,12 +27,6 @@ public final class TestValue {
   public static final String VAR_STRING_5 = "var5";
   public static final String VAR_STRING_6 = "var6";
   public static final String TEST_PATH = "/test";
-  public static final String TEST_PATH_VAR_1 = "/test/{id1}";
-  public static final String TEST_PATH_VAR_2 = "/test/{id1}/{id2}";
-  public static final URI TEST_URI_VAR_1 =
-      TestRequestUriMapper.mapTo(TEST_PATH_VAR_1, List.of(VAR_STRING_1));
-  public static final URI TEST_URI_VAR_2 =
-      TestRequestUriMapper.mapTo(TEST_PATH_VAR_2, List.of(VAR_STRING_1, VAR_STRING_2));
   public static final String TEST_URL = "test";
   public static final URI TEST_URI = createUri();
 
@@ -40,6 +37,8 @@ public final class TestValue {
   public static final boolean VAR_BOOLEAN_TRUE = true;
 
   public static final String TEST_PATH_VAR1 = "/test/{" + VAR_STRING_1 + "}";
+  public static final URI TEST_URI_VAR1 = createUriQuery("/test/var1");
+
   public static final String TEST_PATH_VARIABLE_2 =
       "/test/{" + VAR_STRING_1 + "}/{" + VAR_STRING_2 + "}";
   public static final String TEST_PATH_VARIABLE_3 =
@@ -69,17 +68,20 @@ public final class TestValue {
 
   public static final byte[] TEST_BYTE = new byte[0];
 
-  public static final String TEST_HEAD_KEY_1 = "headKey1";
-  public static final String TEST_HEAD_KEY_2 = "headKey2";
+  public static final String TEST_HEAD_KEY_1 = "key1";
+  public static final String TEST_HEAD_KEY_2 = "key2";
 
-  public static final String TEST_HEAD_VALUE_1 = "headValue1";
-  public static final String TEST_HEAD_VALUE_2 = "headValue2";
+  public static final String TEST_HEAD_VALUE_1 = "value1";
+  public static final String TEST_HEAD_VALUE_2 = "value2";
+  public static final String TEST_HEAD_VALUE_3 = "value3";
 
+  @SneakyThrows
   private static URI createUri() {
-    try {
-      return new URI(TEST_PATH);
-    } catch (URISyntaxException e) {
-      throw new RuntimeException(e);
-    }
+    return new URI(TEST_PATH);
+  }
+
+  @SneakyThrows
+  private static URI createUriQuery(String uri) {
+    return new URI(uri);
   }
 }

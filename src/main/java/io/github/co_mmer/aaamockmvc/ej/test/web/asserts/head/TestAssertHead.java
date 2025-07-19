@@ -1,58 +1,84 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head;
 
-import lombok.NonNull;
-
 /**
- * Provides methods for asserting HTTP response headers in tests.
+ * Assertions for HTTP response headers.
  *
- * <ul>
- *   <li>{@link #assertHeadContains(String)}: Asserts that the HTTP response contains the specified
- *       header.
- *   <li>{@link #assertHeadNotContains(String)}: Asserts that the HTTP response does not contain the
- *       specified header.
- *   <li>{@link #assertHeadEquals(String, String)}: Asserts that the specified header in the HTTP
- *       response matches the expected value.
- * </ul>
+ * <p><b>What it does:</b> Provides key and value checks on the headers captured during {@code
+ * actPerform().perform()}. Header names are treated case-insensitively and multi-value headers are
+ * supported.
+ *
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * arrange()
+ *  .get("/api/foo");
+ *
+ * actPerform()
+ *  .perform();
+ *
+ * asserts()
+ *  .headers()
+ *  .containsKey("Content-Type")
+ *  .containsEntry("Content-Type", "application/json")
+ *  .doesNotContainKey("X-Debug");
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed; no additional I/O is
+ * performed, assertions operate on the stored snapshot.
  *
  * @since 1.0.0
  */
 public interface TestAssertHead {
 
   /**
-   * Asserts that the HTTP response contains the specified header.
+   * Asserts that a header with the given name is present (case-insensitive).
    *
-   * <p>This method checks if the response includes the header with the given key.
-   *
-   * @param expectedKey the key of the header to check (must not be {@code null})
-   * @return the current instance of {@code TestAssert} for method chaining
-   * @throws NullPointerException if the {@code expectedKey} is {@code null}
-   * @since 1.0.0
+   * @param expectedKey the header name; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the header is not present
+   * @since 2.0.0
    */
-  TestAssertHead assertHeadContains(@NonNull String expectedKey);
+  TestAssertHead containsKey(String expectedKey);
 
   /**
-   * Asserts that the HTTP response does not contain the specified header.
+   * Asserts that a header with the given name is not present.
    *
-   * <p>This method checks if the response does not include the header with the given key.
-   *
-   * @param notExpectedKey the key of the header that should not be present (must not be {@code
-   *     null})
-   * @return the current instance of {@code TestAssert} for method chaining
-   * @throws NullPointerException if the {@code notExpectedKey} is {@code null}
-   * @since 1.0.0
+   * @param notExpectedKey the header name; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the header is present
+   * @since 2.0.0
    */
-  TestAssertHead assertHeadNotContains(@NonNull String notExpectedKey);
+  TestAssertHead doesNotContainKey(String notExpectedKey);
 
   /**
-   * Asserts that the specified header in the HTTP response matches the expected value.
+   * Asserts that the header exists and that <em>one of its values</em> equals the expected value.
+   * Works with multi-value headers (e.g., {@code Accept}, {@code Cache-Control}, {@code Set-Cookie}
+   * as separate entries).
    *
-   * <p>This method compares the value of the response header with the expected value.
-   *
-   * @param expectedKey the key of the header to check (must not be {@code null})
-   * @param expectedValue the expected value of the header
-   * @return the current instance of {@code TestAssert} for method chaining
-   * @throws NullPointerException if the {@code expectedKey} is {@code null}
-   * @since 1.0.0
+   * @param expectedKey the header name; must not be {@code null}
+   * @param expectedValue one required value for that header; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the header is missing or none of its values equals {@code
+   *     expectedValue}
+   * @since 2.0.0
    */
-  TestAssertHead assertHeadEquals(@NonNull String expectedKey, String expectedValue);
+  TestAssertHead containsEntry(String expectedKey, String expectedValue);
+
+  /**
+   * Asserts that the header's values match <em>exactly</em> the provided list: same values, same
+   * count, and in the <em>same order</em>; no extras.
+   *
+   * @param expectedKey the header name; must not be {@code null}
+   * @param expectedValue the complete, ordered list of expected values; must contain at least one
+   *     value
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the header is missing or its values differ in content, count, or
+   *     order
+   * @since 2.0.0
+   */
+  TestAssertHead containsEntryExactly(String expectedKey, String... expectedValue);
 }

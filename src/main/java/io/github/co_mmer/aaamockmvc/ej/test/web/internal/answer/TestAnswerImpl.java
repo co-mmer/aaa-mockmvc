@@ -1,0 +1,89 @@
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer;
+
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerRuntimeException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAnswerResult;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import lombok.NonNull;
+
+@Since("1.2.0")
+public final class TestAnswerImpl implements TestAnswer {
+
+  private final TestAAAContext context;
+
+  @Since("2.0.0")
+  public TestAnswerImpl(TestAAAContext context) {
+    this.context = context;
+  }
+
+  @Override
+  public String asString() {
+    var content = this.context.getActResult().contentAsString();
+    this.context.setAnswerResult(new TestAnswerResult<>(content));
+    return content;
+  }
+
+  @Override
+  public byte[] asByte() {
+    return this.context.getActResult().contentAsBytes();
+  }
+
+  @Override
+  public <T> T asObject(@NonNull Class<T> resultType) {
+    try {
+      T parse =
+          TestGenericMapper.parse(
+              this.context.getEnvironment().objectMapper(),
+              this.context.getActResult().contentAsString(),
+              resultType);
+
+      this.context.setAnswerResult(new TestAnswerResult<>(parse));
+      return parse;
+    } catch (TestGenericMapperException e) {
+      throw new TestAnswerRuntimeException(e);
+    }
+  }
+
+  @Override
+  public <E> List<E> asList(@NonNull Class<E> elementClass) {
+    try {
+      return TestGenericMapper.parseList(
+          this.context.getEnvironment().objectMapper(),
+          this.context.getActResult().contentAsString(),
+          elementClass);
+    } catch (TestGenericMapperException e) {
+      throw new TestAnswerRuntimeException(e);
+    }
+  }
+
+  @Override
+  public <E> Set<E> asSet(@NonNull Class<E> elementClass) {
+    try {
+      return TestGenericMapper.parseSet(
+          this.context.getEnvironment().objectMapper(),
+          this.context.getActResult().contentAsString(),
+          elementClass);
+    } catch (TestGenericMapperException e) {
+      throw new TestAnswerRuntimeException(e);
+    }
+  }
+
+  @Override
+  public <K, V> Map<K, V> asMap(@NonNull Class<K> keyClass, @NonNull Class<V> valueClass) {
+    try {
+      return TestGenericMapper.parseMap(
+          this.context.getEnvironment().objectMapper(),
+          this.context.getActResult().contentAsString(),
+          keyClass,
+          valueClass);
+    } catch (TestGenericMapperException e) {
+      throw new TestAnswerRuntimeException(e);
+    }
+  }
+}

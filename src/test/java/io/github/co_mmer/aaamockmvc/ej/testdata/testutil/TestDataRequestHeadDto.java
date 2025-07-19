@@ -3,7 +3,7 @@ package io.github.co_mmer.aaamockmvc.ej.testdata.testutil;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestHeadDto;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.TestRequestHeadDto;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,9 @@ public final class TestDataRequestHeadDto {
       createRequestHeadDto(Collections.emptyMap(), null, null);
   public static final TestRequestHeadDto TEST_REQUEST_HEAD_KEY_VALUE_1 =
       createRequestHeadDto(
-          Map.of(TestHeader.TEST_HEADER_KEY_1, TestHeader.TEST_HEADER_VALUE_1), null, null);
+          Map.of(TestHeader.TEST_HEADER_KEY_1, List.of(TestHeader.TEST_HEADER_VALUE_1)),
+          null,
+          null);
   public static final TestRequestHeadDto TEST_REQUEST_HEAD_KEY_VALUE_2 =
       createRequestHeadDto(TestHeader.TEST_HEADER_MAP_1_2, null, null);
   public static final TestRequestHeadDto TEST_REQUEST_HEAD_ACCEPT_NULL =
@@ -37,7 +39,7 @@ public final class TestDataRequestHeadDto {
       createRequestHeadDto(null, null, APPLICATION_JSON);
 
   private static TestRequestHeadDto createRequestHeadDto(
-      Map<String, Object> keyValue, List<MediaType> accepts, MediaType contentTypes) {
+      Map<String, List<Object>> keyValue, List<MediaType> accepts, MediaType contentTypes) {
 
     var requestHeadDto = new TestRequestHeadDto();
     requestHeadDto.setKeyValue(keyValue);
