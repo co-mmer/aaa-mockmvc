@@ -20,7 +20,7 @@ public interface TestArrange4ResParam {
    *
    * <p>This method sets the specified key and value as a query parameter for the request.
    *
-   * @param key   the parameter name
+   * @param key the parameter name
    * @param value the parameter value
    * @return an instance of {@code TestArrange4ResParam} for further configuration
    * @since 1.0.0

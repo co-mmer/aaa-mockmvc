@@ -14,7 +14,7 @@ public interface TestArrange3GetHead {
   /**
    * Arranges a custom header as a key-value pair for the GET request.
    *
-   * @param key   the name of the header
+   * @param key the name of the header
    * @param value the value of the header
    * @return the next step in the header arrangement process
    * @since 1.0.0
@@ -24,8 +24,7 @@ public interface TestArrange3GetHead {
   /**
    * Arranges multiple custom headers as key-value pairs for the GET request.
    *
-   * @param keyValue a map of header names and their corresponding values (must not be
-   *                 {@code null})
+   * @param keyValue a map of header names and their corresponding values (must not be {@code null})
    * @return the next step in the header arrangement process
    * @throws NullPointerException if the {@code keyValue} is {@code null}
    * @since 1.0.0

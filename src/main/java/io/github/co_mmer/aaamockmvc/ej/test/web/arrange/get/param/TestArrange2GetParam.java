@@ -6,8 +6,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.get.head.TestArrange1Get
 /**
  * Interface for arranging parameters for a GET request.
  *
- * <p>Provides methods to configure single key-value pair, headers and execute the GET request
- * based
+ * <p>Provides methods to configure single key-value pair, headers and execute the GET request based
  * on the arranged parameters.
  *
  * @since 1.0.0
@@ -19,7 +18,7 @@ public interface TestArrange2GetParam {
    *
    * <p>This method sets the specified key and value as a query parameter for the request.
    *
-   * @param key   the parameter name
+   * @param key the parameter name
    * @param value the parameter value
    * @return an instance of {@code TestArrange2GetParam} for further configuration
    * @since 1.0.0
