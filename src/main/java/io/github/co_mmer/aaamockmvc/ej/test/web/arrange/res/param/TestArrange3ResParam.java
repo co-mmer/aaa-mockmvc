@@ -22,7 +22,7 @@ public interface TestArrange3ResParam {
    *
    * <p>This method sets the specified key and value as a query parameter for the request.
    *
-   * @param key the parameter name (must not be {@code null})
+   * @param key   the parameter name (must not be {@code null})
    * @param value the parameter value (must not be {@code null})
    * @return an instance of {@code TestArrange4ResParam} for further configuration
    * @since 1.0.0
@@ -34,8 +34,8 @@ public interface TestArrange3ResParam {
    *
    * <p>This method sets the provided map of key-value pairs as query parameters for the request.
    *
-   * @param keyValue a map of parameter names and their corresponding values (must not be {@code
-   *     null})
+   * @param keyValue a map of parameter names and their corresponding values (must not be
+   *                 {@code null})
    * @return an instance of {@code TestArrange5ResParam} for further configuration
    * @throws NullPointerException if the {@code keyValue} is {@code null}
    * @since 1.0.0

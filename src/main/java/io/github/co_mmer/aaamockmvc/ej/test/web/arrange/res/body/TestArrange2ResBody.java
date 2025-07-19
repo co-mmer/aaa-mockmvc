@@ -8,7 +8,8 @@ import org.springframework.mock.web.MockMultipartFile;
 /**
  * Interface for arranging the body of a PATCH/POST/PUT request.
  *
- * <p>Provides methods to configure the request body with a single or multiple file uploads, as well
+ * <p>Provides methods to configure the request body with a single or multiple file uploads, as
+ * well
  * as execute the request.
  *
  * @since 1.0.0

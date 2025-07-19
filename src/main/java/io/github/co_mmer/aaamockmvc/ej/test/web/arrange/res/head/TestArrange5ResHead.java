@@ -16,7 +16,7 @@ public interface TestArrange5ResHead {
   /**
    * Arranges a custom header as a key-value pair for the PATCH/POST/PUT request.
    *
-   * @param key the name of the header
+   * @param key   the name of the header
    * @param value the value of the header
    * @return the next step in the header arrangement process
    * @since 1.0.0
