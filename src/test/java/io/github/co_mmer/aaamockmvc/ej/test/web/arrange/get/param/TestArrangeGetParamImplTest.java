@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.get.param;
 
+import static io.github.co_mmer.aaamockmvc.ej.testdata.MockTestRequestStrategyFactory.mockTestRequestStrategyFactory;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_KEY_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_KEY_VALUE_MAP_1_2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_VALUE_1;
@@ -13,7 +14,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.get.head.TestArrangeGetH
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContextBuilder;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestType;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -86,10 +86,14 @@ class TestArrangeGetParamImplTest {
 
   @Test
   void WHEN_act_expected_class() {
+    // Arrange
+    var mockStrategyFactory = mockTestRequestStrategyFactory();
+
     // Act
     var act = this.impl.act();
 
     // Assert
-    MatcherAssert.assertThat(act.getClass(), is(TestActImpl.class));
+    assertThat(act.getClass(), is(TestActImpl.class));
+    mockStrategyFactory.close();
   }
 }

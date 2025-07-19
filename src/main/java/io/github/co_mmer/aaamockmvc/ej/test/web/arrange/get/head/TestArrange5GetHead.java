@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.get.head;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct1;
+import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
 
 /**
  * Interface for arranging additional custom headers and executing the GET request.
@@ -25,8 +25,8 @@ public interface TestArrange5GetHead {
   /**
    * Executes the GET request.
    *
-   * @return an instance of {@code TestAct1} to execute the request and evaluate the response
+   * @return an instance of {@code TestAct} to execute the request and evaluate the response
    * @since 1.0.0
    */
-  TestAct1 act();
+  TestAct act();
 }

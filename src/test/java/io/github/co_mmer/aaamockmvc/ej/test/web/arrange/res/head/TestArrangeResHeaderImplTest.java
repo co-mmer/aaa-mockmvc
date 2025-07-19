@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.res.head;
 
+import static io.github.co_mmer.aaamockmvc.ej.testdata.MockTestRequestStrategyFactory.mockTestRequestStrategyFactory;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_AUTH_KEY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_AUTH_VALUE;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_1;
@@ -141,10 +142,14 @@ class TestArrangeResHeaderImplTest {
 
   @Test
   void WHEN_act_THEN_expected_class() {
+    // Arrange
+    var mockStrategyFactory = mockTestRequestStrategyFactory();
+
     // Act
     var act = this.impl.act();
 
     // Assert
     assertThat(act.getClass(), is(TestActImpl.class));
+    mockStrategyFactory.close();
   }
 }

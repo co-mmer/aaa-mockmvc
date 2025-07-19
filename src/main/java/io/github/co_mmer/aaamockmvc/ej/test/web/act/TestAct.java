@@ -3,6 +3,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.act;
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.exception.TestActException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestDto;
 
 /**
  * This interface represents a contract for performing actions and obtaining results from HTTP
@@ -13,7 +14,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssert;
  *
  * @since 1.0.0
  */
-public interface TestAct2 {
+public interface TestAct {
 
   /**
    * Retrieves the {@link TestAssert} instance for asserting the response of the HTTP request.
@@ -37,4 +38,16 @@ public interface TestAct2 {
    * @since 1.2.0
    */
   TestAnswer answer();
+
+  /**
+   * Executes the HTTP request defined in the {@link TestRequestDto} and returns the current
+   * instance for further action chaining.
+   *
+   * @return the current instance for further configuration
+   * @since 1.0.0
+   * @deprecated Since version 2.0. This method is automatically called by 'act'. Direct calls to
+   *     {@code actPerform()} are no longer required and should be avoided.
+   */
+  @Deprecated(since = "2.0", forRemoval = true)
+  TestAct actPerform();
 }

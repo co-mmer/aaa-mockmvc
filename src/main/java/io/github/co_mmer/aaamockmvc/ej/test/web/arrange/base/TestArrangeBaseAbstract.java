@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct1;
+import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestActImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestBean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContext;
@@ -83,12 +83,12 @@ public abstract class TestArrangeBaseAbstract {
   }
 
   /**
-   * Creates a new instance of {@code TestAct1} for executing actions.
+   * Creates a new instance of {@code TestAct} for executing actions.
    *
-   * @return a new instance of {@code TestAct1}
-   * @since 1.0.0
+   * @return a new instance of {@code TestAct}
+   * @since 2.0.0
    */
-  protected TestAct1 createActImpl() {
-    return new TestActImpl(getContext());
+  protected TestAct createActImpl() {
+    return new TestActImpl(getContext()).run();
   }
 }

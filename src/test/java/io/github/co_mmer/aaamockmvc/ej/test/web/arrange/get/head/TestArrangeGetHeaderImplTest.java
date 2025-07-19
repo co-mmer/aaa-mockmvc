@@ -1,10 +1,12 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.get.head;
 
+import static io.github.co_mmer.aaamockmvc.ej.testdata.MockTestRequestStrategyFactory.mockTestRequestStrategyFactory;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_AUTH_KEY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_AUTH_VALUE;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_MAP_1_2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_1;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -16,7 +18,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.validation.TestArra
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContextBuilder;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestType;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -131,10 +132,14 @@ class TestArrangeGetHeaderImplTest {
 
   @Test
   void WHEN_act_expected_class() {
+    // Arrange
+    var mockStrategyFactory = mockTestRequestStrategyFactory();
+
     // Act
     var act = this.impl.act();
 
     // Assert
-    MatcherAssert.assertThat(act.getClass(), is(TestActImpl.class));
+    assertThat(act.getClass(), is(TestActImpl.class));
+    mockStrategyFactory.close();
   }
 }

@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.res.body;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct1;
+import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
 import java.util.List;
 import lombok.NonNull;
 import org.springframework.mock.web.MockMultipartFile;
@@ -27,8 +27,8 @@ public interface TestArrange3ResBody {
   /**
    * Executes the PATCH/POST/PUT request.
    *
-   * @return an instance of {@code TestAct1} to execute the request and evaluate the response
+   * @return an instance of {@code TestAct} to execute the request and evaluate the response
    * @since 1.0.0
    */
-  TestAct1 act();
+  TestAct act();
 }

@@ -1,9 +1,11 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.get.url;
 
+import static io.github.co_mmer.aaamockmvc.ej.testdata.MockTestRequestStrategyFactory.mockTestRequestStrategyFactory;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_PATH_VAR1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_URI;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_URL;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.VAR_STRING_1;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestActImpl;
@@ -13,7 +15,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.get.param.TestArrangeGet
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContextBuilder;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestType;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,7 +78,7 @@ class TestArrangeGetUrlImplTest {
     var arrangeParam = this.impl.arrangeParam();
 
     // Assert
-    MatcherAssert.assertThat(arrangeParam.getClass(), is(TestArrangeGetParamImpl.class));
+    assertThat(arrangeParam.getClass(), is(TestArrangeGetParamImpl.class));
   }
 
   @Test
@@ -86,15 +87,19 @@ class TestArrangeGetUrlImplTest {
     var arrangeHead = this.impl.arrangeHead();
 
     // Assert
-    MatcherAssert.assertThat(arrangeHead.getClass(), is(TestArrangeGetHeadImpl.class));
+    assertThat(arrangeHead.getClass(), is(TestArrangeGetHeadImpl.class));
   }
 
   @Test
   void WHEN_act_expected_class() {
+    // Arrange
+    var mockStrategyFactory = mockTestRequestStrategyFactory();
+
     // Act
     var act = this.impl.act();
 
     // Assert
-    MatcherAssert.assertThat(act.getClass(), is(TestActImpl.class));
+    assertThat(act.getClass(), is(TestActImpl.class));
+    mockStrategyFactory.close();
   }
 }

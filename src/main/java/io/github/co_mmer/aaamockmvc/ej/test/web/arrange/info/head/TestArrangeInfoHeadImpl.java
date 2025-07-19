@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.info.head;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct1;
+import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.base.head.TestArrangeBaseHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.request.context.TestRequestContext;
 import java.util.Map;
@@ -95,11 +95,11 @@ public final class TestArrangeInfoHeadImpl extends TestArrangeBaseHead
   /**
    * Executes the HEAD/OPTIONS request.
    *
-   * @return an instance of {@code TestAct1} to execute the request and evaluate the response
+   * @return an instance of {@code TestAct} to execute the request and evaluate the response
    * @since 1.0.0
    */
   @Override
-  public TestAct1 act() {
+  public TestAct act() {
     return createActImpl();
   }
 }

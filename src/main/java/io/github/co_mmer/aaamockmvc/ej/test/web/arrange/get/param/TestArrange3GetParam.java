@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.get.param;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct1;
+import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.get.head.TestArrange1GetHead;
 
 /**
@@ -23,8 +23,8 @@ public interface TestArrange3GetParam {
   /**
    * Executes the GET request.
    *
-   * @return an instance of {@code TestAct1} to execute the request and evaluate the response
+   * @return an instance of {@code TestAct} to execute the request and evaluate the response
    * @since 1.0.0
    */
-  TestAct1 act();
+  TestAct act();
 }

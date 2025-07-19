@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.res.url;
 
+import static io.github.co_mmer.aaamockmvc.ej.testdata.MockTestRequestStrategyFactory.mockTestRequestStrategyFactory;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_PATH_VAR1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_URI;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_URL;
@@ -126,10 +127,14 @@ class TestArrangeResUrlImplTest {
 
   @Test
   void WHEN_act_expected_class() {
+    // Arrange
+    var mockStrategyFactory = mockTestRequestStrategyFactory();
+
     // Act
     var act = this.impl.act();
 
     // Assert
     assertThat(act.getClass(), is(TestActImpl.class));
+    mockStrategyFactory.close();
   }
 }

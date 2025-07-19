@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
  *
  * @since 1.0.0
  */
-public final class TestActImpl implements TestAct1, TestAct2 {
+public final class TestActImpl implements TestAct {
 
   private final TestRequestBean bean;
   private final TestRequestDto request;
@@ -55,9 +55,24 @@ public final class TestActImpl implements TestAct1, TestAct2 {
    *
    * @return the current instance for further configuration
    * @since 1.0.0
+   * @deprecated Since version 2.0. This method is automatically called by 'act'. Direct calls to
+   *     {@code actPerform()} are no longer required and should be avoided.
    */
+  @Deprecated(since = "2.0", forRemoval = true)
   @Override
-  public TestAct2 actPerform() {
+  public TestAct actPerform() {
+    run();
+    return this;
+  }
+
+  /**
+   * Executes the HTTP request defined in the {@link TestRequestDto} and returns the current
+   * instance for further action chaining.
+   *
+   * @return the current instance for further configuration
+   * @since 2.0.0
+   */
+  public TestAct run() {
     var strategy = TestRequestStrategyFactory.resolve(this.request.getType());
     this.requestBuilder = strategy.apply(this.request);
     return this;

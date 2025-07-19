@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.delete.url;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct1;
+import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.delete.head.TestArrange1DeleteHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.delete.param.TestArrange1DeleteParam;
 
@@ -36,8 +36,8 @@ public interface TestArrange2DeleteUrl {
   /**
    * Executes the DELETE request.
    *
-   * @return an instance of {@code TestAct1} to execute the request and evaluate the response
+   * @return an instance of {@code TestAct} to execute the request and evaluate the response
    * @since 1.0.0
    */
-  TestAct1 act();
+  TestAct act();
 }
