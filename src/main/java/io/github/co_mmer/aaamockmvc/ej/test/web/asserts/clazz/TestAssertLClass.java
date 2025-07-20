@@ -20,7 +20,8 @@ public interface TestAssertLClass {
    * for validating the headers of the HTTP response, such as checking for the presence or absence
    * of specific headers and comparing header values.
    *
-   * @return an instance of {@code TestAssertHead} for asserting the response headers
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @since 1.0.0
    */
   TestAssertHead assertHead();

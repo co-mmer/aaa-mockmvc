@@ -25,22 +25,23 @@ import org.springframework.test.web.servlet.ResultActions;
  * Provides methods for asserting HTTP response content in tests.
  *
  * <ul>
- *   <li>{@link #assertClassNotEmpty()}: Asserts that the class of the HTTP response is not empty.
- *   <li>{@link #assertClassEmpty()}: Asserts that the class of the HTTP response is empty.
- *   <li>{@link #assertClassEquals(Class, Object)}: Asserts that the class of the HTTP response
+ *   <li>{@link #assertContentIsNotEmpty()}: Asserts that the class of the HTTP response is not
+ *       empty.
+ *   <li>{@link #assertContentIsEmpty()}: Asserts that the class of the HTTP response is empty.
+ *   <li>{@link #assertContentEquals(Class, Object)}: Asserts that the class of the HTTP response
  *       matches the expected object.
- *   <li>{@link #assertClassMatchAll(Class, Predicate)}: Asserts that the class matches all
+ *   <li>{@link #assertContentMatchAll(Class, Predicate)}: Asserts that the class matches all
  *       specified conditions.
- *   <li>{@link #assertClassMatchAll(Class, Predicate...)}: Asserts that the class matches all
+ *   <li>{@link #assertContentMatchAll(Class, Predicate...)}: Asserts that the class matches all
  *       specified conditions.
- *   <li>{@link #assertClassMatchAny(Class, Predicate)}: Asserts that the class matches at least one
- *       of the specified conditions.
- *   <li>{@link #assertClassMatchAny(Class, Predicate...)}: Asserts that the class matches at least
+ *   <li>{@link #assertContentMatchAny(Class, Predicate)}: Asserts that the class matches at least
  *       one of the specified conditions.
- *   <li>{@link #assertClassMatchNone(Class, Predicate)}: Asserts that the class matches none of the
- *       specified conditions.
- *   <li>{@link #assertClassMatchNone(Class, Predicate...)}: Asserts that the class matches none of
+ *   <li>{@link #assertContentMatchAny(Class, Predicate...)}: Asserts that the class matches at
+ *       least one of the specified conditions.
+ *   <li>{@link #assertContentMatchNone(Class, Predicate)}: Asserts that the class matches none of
  *       the specified conditions.
+ *   <li>{@link #assertContentMatchNone(Class, Predicate...)}: Asserts that the class matches none
+ *       of the specified conditions.
  *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  * </ul>
  *
@@ -74,16 +75,224 @@ public final class TestAssertClassImpl
   }
 
   /**
-   * Asserts that the class of the HTTP response as a string is not empty.
+   * Asserts that the string class of the HTTP response is not empty.
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @return the current instance of {@code TestAssertContent} for method chaining
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @since 1.4.0
+   * @deprecated Use {@link #assertContentIsNotEmpty()} instead.
    */
+  @Deprecated(since = "1.6", forRemoval = true)
   @Override
   public TestAssert2Class assertClassNotEmpty() {
+    assertContentIsNotEmpty();
+    return this;
+  }
+
+  /**
+   * Asserts that the string class of the HTTP response is empty.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.4.0
+   * @deprecated Use {@link #assertContentIsEmpty()} instead.
+   */
+  @Deprecated(since = "1.6", forRemoval = true)
+  @Override
+  public TestAssertLClass assertClassEmpty() {
+    assertContentIsEmpty();
+    return this;
+  }
+
+  /**
+   * Asserts that the object class of the HTTP response matches the expected object, using the
+   * provided deserializer(s).
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * <p>As of version 1.3.0, both the actual and expected response class are normalized using
+   * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
+   * Unicode formats.
+   *
+   * @param <T> the type of the expected response object
+   * @param expectedClass the class of the expected response object (must not be {@code null})
+   * @param expectedResponse the expected object (must not be {@code null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.4.0
+   * @deprecated Use {@link #assertContentEquals(Class, T)} instead.
+   */
+  @Deprecated(since = "1.6", forRemoval = true)
+  @Override
+  public <T> TestAssertLClass assertClassEquals(
+      @NonNull Class<T> expectedClass, @NonNull T expectedResponse) {
+    assertContentEquals(expectedClass, expectedResponse);
+    return this;
+  }
+
+  /**
+   * Asserts that the class matches all specified conditions.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param <T> the type of the expected response object
+   * @param expectedClass the class of the expected response object (must not be {@code null})
+   * @param condition a predicate that the class must match (must not be {@code null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
+   * @since 1.4.0
+   * @deprecated Use {@link #assertContentMatchAll(Class, Predicate)} instead.
+   */
+  @Deprecated(since = "1.6", forRemoval = true)
+  @Override
+  public <T> TestAssert3Class assertClassMatchAll(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
+    assertContentMatchAll(expectedClass, condition);
+    return this;
+  }
+
+  /**
+   * Asserts that the class matches all specified conditions.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param <T> the type of the expected response object
+   * @param expectedClass the class of the expected response object (must not be {@code null})
+   * @param conditions a varargs array of predicates that the class must match (must not be {@code
+   *     null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
+   * @since 1.4.0
+   * @deprecated Use {@link #assertContentMatchAll(Class, Predicate[])} instead.
+   */
+  @Deprecated(since = "1.6", forRemoval = true)
+  @SafeVarargs
+  @Override
+  public final <T> TestAssert3Class assertClassMatchAll(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
+    assertContentMatchAll(expectedClass, conditions);
+    return this;
+  }
+
+  /**
+   * Asserts that the class matches at least one of the specified conditions.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param <T> the type of the expected response object
+   * @param expectedClass the class of the expected response object (must not be {@code null})
+   * @param condition a predicate that the class may match (must not be {@code null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
+   * @since 1.4.0
+   * @deprecated Use {@link #assertContentMatchAny(Class, Predicate)} instead.
+   */
+  @Deprecated(since = "1.6", forRemoval = true)
+  @Override
+  public <T> TestAssert4Class assertClassMatchAny(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
+    assertContentMatchAny(expectedClass, condition);
+    return this;
+  }
+
+  /**
+   * Asserts that the class matches at least one of the specified conditions.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param <T> the type of the expected response object
+   * @param expectedClass the class of the expected response object (must not be {@code null})
+   * @param conditions a varargs array of predicates that the class may match (must not be {@code
+   *     null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
+   * @since 1.4.0
+   * @deprecated Use {@link #assertContentMatchAny(Class, Predicate[])} instead.
+   */
+  @Deprecated(since = "1.6", forRemoval = true)
+  @SafeVarargs
+  @Override
+  public final <T> TestAssert4Class assertClassMatchAny(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
+    assertContentMatchAny(expectedClass, conditions);
+    return this;
+  }
+
+  /**
+   * Asserts that the class matches none of the specified conditions.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param <T> the type of the expected response object
+   * @param expectedClass the class of the expected response object (must not be {@code null})
+   * @param condition a predicate that the class must not match (must not be {@code null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
+   * @since 1.4.0
+   * @deprecated Use {@link #assertContentMatchNone(Class, Predicate)} instead.
+   */
+  @Deprecated(since = "1.6", forRemoval = true)
+  @Override
+  public <T> TestAssertLClass assertClassMatchNone(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
+    assertContentMatchNone(expectedClass, condition);
+    return this;
+  }
+
+  /**
+   * Asserts that the class matches none of the specified conditions.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param <T> the type of the expected response object
+   * @param expectedClass the class of the expected response object (must not be {@code null})
+   * @param conditions a varargs array of predicates that the class must not match (must not be
+   *     {@code null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
+   * @since 1.4.0
+   * @deprecated Use {@link #assertContentMatchNone(Class, Predicate[])} instead.
+   */
+  @Deprecated(since = "1.6", forRemoval = true)
+  @SafeVarargs
+  @Override
+  public final <T> TestAssertLClass assertClassMatchNone(
+      @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
+    assertContentMatchNone(expectedClass, conditions);
+    return this;
+  }
+
+  /**
+   * Asserts that the string class of the HTTP response is not empty.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.6.0
+   */
+  @Override
+  public TestAssert2Class assertContentIsNotEmpty() {
     try {
       assertThat(this.response.getContentAsString().isEmpty(), is(false));
     } catch (Exception e) {
@@ -93,16 +302,17 @@ public final class TestAssertClassImpl
   }
 
   /**
-   * Asserts that the class of the HTTP response as a string is empty.
+   * Asserts that the string class of the HTTP response is empty.
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @return the current instance of {@code TestAssertContent} for method chaining
-   * @since 1.4.0
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.6.0
    */
   @Override
-  public TestAssertLClass assertClassEmpty() {
+  public TestAssertLClass assertContentIsEmpty() {
     try {
       assertThat(this.response.getContentAsString().isEmpty(), is(true));
     } catch (Exception e) {
@@ -112,23 +322,25 @@ public final class TestAssertClassImpl
   }
 
   /**
-   * Asserts that the class of the HTTP response matches the given object of type {@code T}.
+   * Asserts that the object class of the HTTP response matches the expected object, using the
+   * provided deserializer(s).
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * <p>As of version 1.3.0, both the actual and expected response content are normalized using
+   * <p>As of version 1.3.0, both the actual and expected response class are normalized using
    * Unicode Normalization Form C (NFC) to ensure consistent text representation across different
    * Unicode formats.
    *
-   * @param expectedClass the class of the expected object (must not be {@code null})
+   * @param <T> the type of the expected response object
+   * @param expectedClass the class of the expected response object (must not be {@code null})
    * @param expectedResponse the expected object (must not be {@code null})
-   * @param <T> the type of the expected response
-   * @return the current instance of {@code TestAssertLClass} for method chaining
-   * @since 1.4.0
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.6.0
    */
   @Override
-  public <T> TestAssertLClass assertClassEquals(
+  public <T> TestAssertLClass assertContentEquals(
       @NonNull Class<T> expectedClass, @NonNull T expectedResponse) {
 
     try {
@@ -149,12 +361,14 @@ public final class TestAssertClassImpl
    *
    * @param <T> the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param condition a predicate that the content must match (must not be {@code null})
-   * @return the current instance of {@code TestAssertContent} for method chaining
+   * @param condition a predicate that the class must match (must not be {@code null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
+   * @since 1.6.0
    */
   @Override
-  public <T> TestAssert3Class assertClassMatchAll(
+  public <T> TestAssert3Class assertContentMatchAll(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
     assertMatch(ALL, expectedClass, List.of(condition));
@@ -180,14 +394,16 @@ public final class TestAssertClassImpl
    *
    * @param <T> the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param conditions a varargs array of predicates that the content must match (must not be {@code
+   * @param conditions a varargs array of predicates that the class must match (must not be {@code
    *     null})
-   * @return the current instance of {@code TestAssertContent} for method chaining
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
+   * @since 1.6.0
    */
   @SafeVarargs
   @Override
-  public final <T> TestAssert3Class assertClassMatchAll(
+  public final <T> TestAssert3Class assertContentMatchAll(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
 
     assertMatch(ALL, expectedClass, List.of(conditions));
@@ -202,12 +418,14 @@ public final class TestAssertClassImpl
    *
    * @param <T> the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param condition a predicate that the content may match (must not be {@code null})
-   * @return the current instance of {@code TestAssertLClass} for method chaining
+   * @param condition a predicate that the class may match (must not be {@code null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
+   * @since 1.6.0
    */
   @Override
-  public <T> TestAssert4Class assertClassMatchAny(
+  public <T> TestAssert4Class assertContentMatchAny(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
     assertMatch(ANY, expectedClass, List.of(condition));
@@ -222,14 +440,16 @@ public final class TestAssertClassImpl
    *
    * @param <T> the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param conditions a varargs array of predicates that the content may match (must not be {@code
+   * @param conditions a varargs array of predicates that the class may match (must not be {@code
    *     null})
-   * @return the current instance of {@code TestAssertLClass} for method chaining
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
+   * @since 1.6.0
    */
   @SafeVarargs
   @Override
-  public final <T> TestAssert4Class assertClassMatchAny(
+  public final <T> TestAssert4Class assertContentMatchAny(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
 
     assertMatch(ANY, expectedClass, List.of(conditions));
@@ -244,12 +464,14 @@ public final class TestAssertClassImpl
    *
    * @param <T> the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param condition a predicate that the content must not match (must not be {@code null})
-   * @return the current instance of {@code TestAssertLClass} for method chaining
+   * @param condition a predicate that the class must not match (must not be {@code null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
+   * @since 1.6.0
    */
   @Override
-  public <T> TestAssertLClass assertClassMatchNone(
+  public <T> TestAssertLClass assertContentMatchNone(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
     assertMatch(NONE, expectedClass, List.of(condition));
@@ -264,13 +486,16 @@ public final class TestAssertClassImpl
    *
    * @param <T> the type of the expected response object
    * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param conditions a predicate that the content must not match (must not be {@code null})
-   * @return the current instance of {@code TestAssertLClass} for method chaining
-   * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
+   * @param conditions a varargs array of predicates that the class must not match (must not be
+   *     {@code null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
+   * @since 1.6.0
    */
   @SafeVarargs
   @Override
-  public final <T> TestAssertLClass assertClassMatchNone(
+  public final <T> TestAssertLClass assertContentMatchNone(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
 
     assertMatch(NONE, expectedClass, List.of(conditions));

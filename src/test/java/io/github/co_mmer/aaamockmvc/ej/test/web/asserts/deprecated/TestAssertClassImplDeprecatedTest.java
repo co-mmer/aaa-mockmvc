@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.deprecated;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeObject;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY;
@@ -19,6 +19,7 @@ import static org.mockito.Mockito.times;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssertClassImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectMatch;
@@ -37,7 +38,7 @@ import org.mockito.Mockito;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.test.web.servlet.ResultActions;
 
-class TestAssertClassImplTest extends TestAssertBase {
+class TestAssertClassImplDeprecatedTest extends TestAssertBase {
 
   private static final Predicate<TestObjectSimple> PREDICATE_NAME_EQUALS_A =
       element -> element.name().equals(A);
@@ -76,42 +77,42 @@ class TestAssertClassImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentIsNotEmpty {
+  class assertClassNotEmpty {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentIsNotEmpty_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertClassNotEmpty_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentIsNotEmpty();
+      testAssertClass.assertClassNotEmpty();
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentIsNotEmpty_THEN_assert_false() {
+    void GIVEN_unexpected_WHEN_assertClassNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithResponse(EMPTY);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertClass::assertContentIsNotEmpty);
+      assertThrows(AssertionError.class, testAssertClass::assertClassNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertClassNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertException::assertContentIsNotEmpty);
+      assertThrows(AssertionError.class, testAssertException::assertClassNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertClassNotEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -119,7 +120,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentIsNotEmpty();
+      testAssertException.assertClassNotEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -128,42 +129,42 @@ class TestAssertClassImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentIsEmpty {
+  class assertClassEmpty {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentIsEmpty_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertClassEmpty_THEN_assert_true() {
       // Arrange
       useServerWithResponse(EMPTY);
 
       // Act & Assert
-      testAssertClass.assertContentIsEmpty();
+      testAssertClass.assertClassEmpty();
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentIsEmpty_THEN_return_assert_false() {
+    void GIVEN_unexpected_WHEN_assertClassEmpty_THEN_return_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertClass::assertContentIsEmpty);
+      assertThrows(AssertionError.class, testAssertClass::assertClassEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertClassEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertException::assertContentIsEmpty);
+      assertThrows(AssertionError.class, testAssertException::assertClassEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertClassEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -171,7 +172,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentIsEmpty();
+      testAssertException.assertClassEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -180,33 +181,33 @@ class TestAssertClassImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentEquals {
+  class assertClassEquals {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentEquals_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertClassEquals_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentEquals(TestObjectSimple.class, A1);
+      testAssertClass.assertClassEquals(TestObjectSimple.class, A1);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentEquals_THEN_assert_false() {
+    void GIVEN_unexpected_WHEN_assertClassEquals_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertClass.assertContentEquals(TestObjectSimple.class, A2));
+          () -> testAssertClass.assertClassEquals(TestObjectSimple.class, A2));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentEquals_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertClassEquals_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
@@ -214,12 +215,12 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionFailedError.class,
-          () -> testAssertException.assertContentEquals(TestObjectSimple.class, A1));
+          () -> testAssertException.assertClassEquals(TestObjectSimple.class, A1));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentEquals_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertClassEquals_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -227,7 +228,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentEquals(TestObjectSimple.class, A1);
+      testAssertException.assertClassEquals(TestObjectSimple.class, A1);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -238,7 +239,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @MethodSource("provideNullParameters")
     @SneakyThrows
     @SuppressWarnings("all")
-    void GIVEN_null_WHEN_assertContentEquals_THEN_throw_NullPointerException(
+    void GIVEN_null_WHEN_assertClassEquals_THEN_throw_NullPointerException(
         Class<TestObjectSimple> expectedClass, TestObjectSimple expectedResponse) {
 
       // Arrange
@@ -247,7 +248,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           NullPointerException.class,
-          () -> testAssert.assertContentEquals(expectedClass, expectedResponse));
+          () -> testAssert.assertClassEquals(expectedClass, expectedResponse));
     }
 
     private static Stream<Arguments> provideNullParameters() {
@@ -259,13 +260,13 @@ class TestAssertClassImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void GIVEN_object_WHEN_assertContentEquals_THEN_normalizeObject_is_called() {
+    void GIVEN_object_WHEN_assertClassEquals_THEN_normalizeObject_is_called() {
       // Arrange
       var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
       useServerWithResponse(TEST_A1_JSON);
 
       // Act
-      testAssertClass.assertContentEquals(TestObjectSimple.class, A1);
+      testAssertClass.assertClassEquals(TestObjectSimple.class, A1);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
@@ -274,16 +275,16 @@ class TestAssertClassImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentMatchAll {
+  class assertClassMatchAll {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentMatchAll_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertClassMatchAll_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
+      testAssertClass.assertClassMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
     }
 
     @Test
@@ -296,13 +297,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionError.class,
           () ->
-              testAssertClass.assertContentMatchAll(
+              testAssertClass.assertClassMatchAll(
                   TestObjectSimple.class, element -> element.name().equals(B)));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentMatchAll_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertClassMatchAll_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
@@ -311,13 +312,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionFailedError.class,
           () ->
-              testAssertException.assertContentMatchAll(
+              testAssertException.assertClassMatchAll(
                   TestObjectSimple.class, PREDICATE_NAME_EQUALS_A));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentMatchAll_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertClassMatchAll_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -325,7 +326,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
+      testAssertException.assertClassMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -336,7 +337,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @MethodSource("provideNullParameters")
     @SneakyThrows
     @SuppressWarnings("all")
-    void GIVEN_null_WHEN_assertContentMatchAll_THEN_throw_NullPointerException(
+    void GIVEN_null_WHEN_assertClassMatchAll_THEN_throw_NullPointerException(
         Class<TestObjectSimple> expectedClass, Predicate<TestObjectSimple> condition) {
 
       // Arrange
@@ -345,7 +346,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           NullPointerException.class,
-          () -> testAssert.assertContentMatchAll(expectedClass, condition));
+          () -> testAssert.assertClassMatchAll(expectedClass, condition));
     }
 
     private static Stream<Arguments> provideNullParameters() {
@@ -357,18 +358,18 @@ class TestAssertClassImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentMatchAll_vararg_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertClassMatchAll_vararg_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentMatchAll(
+      testAssertClass.assertClassMatchAll(
           TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentMatchAll_vararg_THEN_assert_false() {
+    void GIVEN_unexpected_WHEN_assertClassMatchAll_vararg_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
@@ -376,13 +377,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionError.class,
           () ->
-              testAssertClass.assertContentMatchAll(
+              testAssertClass.assertClassMatchAll(
                   TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_2));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentMatchAll_vararg_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertClassMatchAll_vararg_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
@@ -391,13 +392,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionFailedError.class,
           () ->
-              testAssertException.assertContentMatchAll(
+              testAssertException.assertClassMatchAll(
                   TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_2));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentMatchAll_vararg_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertClassMatchAll_vararg_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -405,7 +406,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentMatchAll(
+      testAssertException.assertClassMatchAll(
           TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_2);
 
       // Assert
@@ -417,7 +418,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @MethodSource("provideNullParametersVararg")
     @SneakyThrows
     @SuppressWarnings("all")
-    void GIVEN_null_WHEN_assertContentMatchAll_vararg_THEN_throw_NullPointerException(
+    void GIVEN_null_WHEN_assertClassMatchAll_vararg_THEN_throw_NullPointerException(
         Class<TestObjectSimple> expectedClass, Predicate<TestObjectSimple>[] condition) {
 
       // Arrange
@@ -426,7 +427,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           NullPointerException.class,
-          () -> testAssert.assertContentMatchAll(expectedClass, condition));
+          () -> testAssert.assertClassMatchAll(expectedClass, condition));
     }
 
     private static Stream<Arguments> provideNullParametersVararg() {
@@ -438,21 +439,21 @@ class TestAssertClassImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentMatchAny {
+  class assertClassMatchAny {
 
     @Test
     @SneakyThrows
-    void GIVEN_A1_match_id1_WHEN_assertContentMatchAny_THEN_assert_true() {
+    void GIVEN_A1_match_id1_WHEN_assertClassMatchAny_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentMatchAny(TestObjectSimple.class, PREDICATE_ID_EQUALS_1);
+      testAssertClass.assertClassMatchAny(TestObjectSimple.class, PREDICATE_ID_EQUALS_1);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentMatchAny_THEN_assert_false() {
+    void GIVEN_unexpected_WHEN_assertClassMatchAny_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
@@ -460,13 +461,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionError.class,
           () ->
-              testAssertClass.assertContentMatchAny(
+              testAssertClass.assertClassMatchAny(
                   TestObjectSimple.class, element -> element.name().equals(B)));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentMatchAny_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertClassMatchAny_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
@@ -475,13 +476,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionFailedError.class,
           () ->
-              testAssertException.assertContentMatchAny(
+              testAssertException.assertClassMatchAny(
                   TestObjectSimple.class, PREDICATE_NAME_EQUALS_A));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentMatchAny_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertClassMatchAny_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -489,7 +490,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentMatchAny(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
+      testAssertException.assertClassMatchAny(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -500,7 +501,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @MethodSource("provideNullParameters")
     @SneakyThrows
     @SuppressWarnings("all")
-    void GIVEN_null_WHEN_assertContentMatchAny_THEN_throw_NullPointerException(
+    void GIVEN_null_WHEN_assertClassMatchAny_THEN_throw_NullPointerException(
         Class<TestObjectSimple> expectedClass, Predicate<TestObjectSimple> condition) {
 
       // Arrange
@@ -509,7 +510,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           NullPointerException.class,
-          () -> testAssert.assertContentMatchAny(expectedClass, condition));
+          () -> testAssert.assertClassMatchAny(expectedClass, condition));
     }
 
     private static Stream<Arguments> provideNullParameters() {
@@ -521,18 +522,18 @@ class TestAssertClassImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentMatchAny_vararg_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertClassMatchAny_vararg_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentMatchAny(
+      testAssertClass.assertClassMatchAny(
           TestObjectSimple.class, element -> element.name().equals(B), PREDICATE_ID_EQUALS_1);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentMatchAny_vararg_THEN_assert_false() {
+    void GIVEN_unexpected_WHEN_assertClassMatchAny_vararg_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
@@ -540,7 +541,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionError.class,
           () ->
-              testAssertClass.assertContentMatchAny(
+              testAssertClass.assertClassMatchAny(
                   TestObjectSimple.class,
                   element -> element.name().equals(B),
                   element -> element.id() == 3));
@@ -548,7 +549,7 @@ class TestAssertClassImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentMatchAny_vararg_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertClassMatchAny_vararg_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
@@ -557,13 +558,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionFailedError.class,
           () ->
-              testAssertException.assertContentMatchAny(
+              testAssertException.assertClassMatchAny(
                   TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_2));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentMatchAny_vararg_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertClassMatchAny_vararg_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -571,7 +572,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentMatchAny(
+      testAssertException.assertClassMatchAny(
           TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_2);
 
       // Assert
@@ -583,7 +584,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @MethodSource("provideNullParametersVararg")
     @SneakyThrows
     @SuppressWarnings("all")
-    void GIVEN_null_WHEN_assertContentMatchAny_vararg_THEN_throw_NullPointerException(
+    void GIVEN_null_WHEN_assertClassMatchAny_vararg_THEN_throw_NullPointerException(
         Class<TestObjectSimple> expectedClass, Predicate<TestObjectSimple>[] condition) {
 
       // Arrange
@@ -592,7 +593,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           NullPointerException.class,
-          () -> testAssert.assertContentMatchAny(expectedClass, condition));
+          () -> testAssert.assertClassMatchAny(expectedClass, condition));
     }
 
     private static Stream<Arguments> provideNullParametersVararg() {
@@ -604,21 +605,21 @@ class TestAssertClassImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentMatchNone {
+  class assertClassMatchNone {
 
     @Test
     @SneakyThrows
-    void GIVEN_A1_match_id2_WHEN_assertContentMatchNone_THEN_assert_true() {
+    void GIVEN_A1_match_id2_WHEN_assertClassMatchNone_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentMatchNone(TestObjectSimple.class, PREDICATE_ID_EQUALS_2);
+      testAssertClass.assertClassMatchNone(TestObjectSimple.class, PREDICATE_ID_EQUALS_2);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentMatchNone_THEN_assert_false() {
+    void GIVEN_unexpected_WHEN_assertClassMatchNone_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
@@ -626,13 +627,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionError.class,
           () ->
-              testAssertClass.assertContentMatchNone(
+              testAssertClass.assertClassMatchNone(
                   TestObjectSimple.class, PREDICATE_NAME_EQUALS_A));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentMatchNone_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertClassMatchNone_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
@@ -641,13 +642,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionFailedError.class,
           () ->
-              testAssertException.assertContentMatchNone(
+              testAssertException.assertClassMatchNone(
                   TestObjectSimple.class, PREDICATE_NAME_EQUALS_A));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentMatchNone_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertClassMatchNone_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -655,7 +656,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentMatchNone(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
+      testAssertException.assertClassMatchNone(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -666,7 +667,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @MethodSource("provideNullParameters")
     @SneakyThrows
     @SuppressWarnings("all")
-    void GIVEN_null_WHEN_assertContentMatchNone_THEN_throw_NullPointerException(
+    void GIVEN_null_WHEN_assertClassMatchNone_THEN_throw_NullPointerException(
         Class<TestObjectSimple> expectedClass, Predicate<TestObjectSimple> condition) {
 
       // Arrange
@@ -675,7 +676,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           NullPointerException.class,
-          () -> testAssert.assertContentMatchNone(expectedClass, condition));
+          () -> testAssert.assertClassMatchNone(expectedClass, condition));
     }
 
     private static Stream<Arguments> provideNullParameters() {
@@ -687,18 +688,18 @@ class TestAssertClassImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentMatchNone_vararg_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertClassMatchNone_vararg_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentMatchNone(
+      testAssertClass.assertClassMatchNone(
           TestObjectSimple.class, element -> element.name().equals(B), PREDICATE_ID_EQUALS_2);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_A1_A3_WHEN_assertContentMatchNone_vararg_THEN_assert_false() {
+    void GIVEN_A1_A3_WHEN_assertClassMatchNone_vararg_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
@@ -706,13 +707,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionError.class,
           () ->
-              testAssertClass.assertContentMatchNone(
+              testAssertClass.assertClassMatchNone(
                   TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, element -> element.id() == 3));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_A1_match_A1_WHEN_assertContentMatchNone_vararg_THEN_assert_false() {
+    void GIVEN_A1_match_A1_WHEN_assertClassMatchNone_vararg_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
@@ -720,13 +721,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionError.class,
           () ->
-              testAssertClass.assertContentMatchNone(
+              testAssertClass.assertClassMatchNone(
                   TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentMatchNone_vararg_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertClassMatchNone_vararg_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
@@ -735,13 +736,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       assertThrows(
           AssertionFailedError.class,
           () ->
-              testAssertException.assertContentMatchNone(
+              testAssertException.assertClassMatchNone(
                   TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentMatchNone_vararg_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertClassMatchNone_vararg_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -749,7 +750,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentMatchNone(
+      testAssertException.assertClassMatchNone(
           TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1);
 
       // Assert
@@ -761,7 +762,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @MethodSource("provideNullParametersVararg")
     @SneakyThrows
     @SuppressWarnings("all")
-    void GIVEN_null_WHEN_assertContentMatchNone_vararg_THEN_throw_NullPointerException(
+    void GIVEN_null_WHEN_assertClassMatchNone_vararg_THEN_throw_NullPointerException(
         Class<TestObjectSimple> expectedClass, Predicate<TestObjectSimple>[] condition) {
 
       // Arrange
@@ -770,7 +771,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           NullPointerException.class,
-          () -> testAssert.assertContentMatchNone(expectedClass, condition));
+          () -> testAssert.assertClassMatchNone(expectedClass, condition));
     }
 
     private static Stream<Arguments> provideNullParametersVararg() {
@@ -798,118 +799,118 @@ class TestAssertClassImplTest extends TestAssertBase {
   }
 
   @Nested
-  class combinationIsNotEmpty {
+  class combinationNotEmpty {
 
     @Test
     @SneakyThrows
-    void isNotEmpty_equals() {
+    void notEmpty_equals() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentIsNotEmpty().assertContentEquals(TestObjectSimple.class, A1);
+      testAssertClass.assertClassNotEmpty().assertClassEquals(TestObjectSimple.class, A1);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_matchAll() {
+    void notEmpty_matchAll() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       testAssertClass
-          .assertContentIsNotEmpty()
-          .assertContentMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
+          .assertClassNotEmpty()
+          .assertClassMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
     }
 
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void isNotEmpty_matchAll_vararg() {
+    void notEmpty_matchAll_vararg() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       testAssertClass
-          .assertContentIsNotEmpty()
-          .assertContentMatchAll(
+          .assertClassNotEmpty()
+          .assertClassMatchAll(
               TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_matchAny() {
+    void notEmpty_matchAny() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       testAssertClass
-          .assertContentIsNotEmpty()
-          .assertContentMatchAny(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
+          .assertClassNotEmpty()
+          .assertClassMatchAny(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
     }
 
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void isNotEmpty_matchAny_vararg() {
+    void notEmpty_matchAny_vararg() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       testAssertClass
-          .assertContentIsNotEmpty()
-          .assertContentMatchAny(
+          .assertClassNotEmpty()
+          .assertClassMatchAny(
               TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_matchNone() {
+    void notEmpty_matchNone() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       testAssertClass
-          .assertContentIsNotEmpty()
-          .assertContentMatchNone(TestObjectSimple.class, element -> element.name().equals(B));
+          .assertClassNotEmpty()
+          .assertClassMatchNone(TestObjectSimple.class, element -> element.name().equals(B));
     }
 
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void isNotEmpty_matchNone_vararg() {
+    void notEmpty_matchNone_vararg() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       testAssertClass
-          .assertContentIsNotEmpty()
-          .assertContentMatchNone(
+          .assertClassNotEmpty()
+          .assertClassMatchNone(
               TestObjectSimple.class, element -> element.name().equals(B), PREDICATE_ID_EQUALS_2);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_head() {
+    void notEmpty_head() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentIsNotEmpty().assertHead();
+      testAssertClass.assertClassNotEmpty().assertHead();
     }
   }
 
   @Nested
-  class combinationIsEmpty {
+  class combinationEmpty {
 
     @Test
     @SneakyThrows
-    void isEmpty_head() {
+    void empty_head() {
       // Arrange
       useServerWithResponse(EMPTY);
 
       // Act & Assert
-      testAssertClass.assertContentIsEmpty().assertHead();
+      testAssertClass.assertClassEmpty().assertHead();
     }
   }
 
@@ -923,7 +924,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentEquals(TestObjectSimple.class, A1).assertHead();
+      testAssertClass.assertClassEquals(TestObjectSimple.class, A1).assertHead();
     }
   }
 
@@ -938,8 +939,8 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A)
-          .assertContentMatchAny(TestObjectSimple.class, PREDICATE_ID_EQUALS_1);
+          .assertClassMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A)
+          .assertClassMatchAny(TestObjectSimple.class, PREDICATE_ID_EQUALS_1);
     }
 
     @Test
@@ -951,8 +952,8 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A)
-          .assertContentMatchAny(
+          .assertClassMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A)
+          .assertClassMatchAny(
               TestObjectSimple.class, PREDICATE_ID_EQUALS_1, PREDICATE_ID_EQUALS_2);
     }
 
@@ -964,8 +965,8 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A)
-          .assertContentMatchNone(TestObjectSimple.class, element -> element.id() == 3);
+          .assertClassMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A)
+          .assertClassMatchNone(TestObjectSimple.class, element -> element.id() == 3);
     }
 
     @Test
@@ -977,8 +978,8 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A)
-          .assertContentMatchNone(
+          .assertClassMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A)
+          .assertClassMatchNone(
               TestObjectSimple.class, element -> element.id() == 3, element -> element.id() == 4);
     }
 
@@ -990,11 +991,11 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAll(
+          .assertClassMatchAll(
               TestObjectMatch.class,
               element -> element.name().equals(B),
               element -> element.status().equals(NEW))
-          .assertContentMatchAny(TestObjectMatch.class, element -> element.id() == 1);
+          .assertClassMatchAny(TestObjectMatch.class, element -> element.id() == 1);
     }
 
     @Test
@@ -1006,11 +1007,11 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAll(
+          .assertClassMatchAll(
               TestObjectMatch.class,
               element -> element.name().equals(B),
               element -> element.status().equals(NEW))
-          .assertContentMatchAny(
+          .assertClassMatchAny(
               TestObjectMatch.class, element -> element.id() == 1, element -> element.id() == 2);
     }
 
@@ -1022,8 +1023,8 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAll(TestObjectMatch.class, element -> element.name().equals(B))
-          .assertContentMatchNone(TestObjectMatch.class, element -> element.id() == 3);
+          .assertClassMatchAll(TestObjectMatch.class, element -> element.name().equals(B))
+          .assertClassMatchNone(TestObjectMatch.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1035,8 +1036,8 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAll(TestObjectMatch.class, element -> element.name().equals(B))
-          .assertContentMatchNone(
+          .assertClassMatchAll(TestObjectMatch.class, element -> element.name().equals(B))
+          .assertClassMatchNone(
               TestObjectMatch.class, element -> element.id() == 3, element -> element.id() == 4);
     }
 
@@ -1048,7 +1049,7 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A)
+          .assertClassMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A)
           .assertHead();
     }
 
@@ -1060,7 +1061,7 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAll(
+          .assertClassMatchAll(
               TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1)
           .assertHead();
     }
@@ -1077,8 +1078,8 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAny(TestObjectSimple.class, PREDICATE_ID_EQUALS_1)
-          .assertContentMatchNone(TestObjectSimple.class, element -> element.id() == 3);
+          .assertClassMatchAny(TestObjectSimple.class, PREDICATE_ID_EQUALS_1)
+          .assertClassMatchNone(TestObjectSimple.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1090,8 +1091,8 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAny(TestObjectSimple.class, PREDICATE_ID_EQUALS_1)
-          .assertContentMatchNone(
+          .assertClassMatchAny(TestObjectSimple.class, PREDICATE_ID_EQUALS_1)
+          .assertClassMatchNone(
               TestObjectSimple.class, element -> element.id() == 3, element -> element.id() == 4);
     }
 
@@ -1103,9 +1104,8 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAny(
-              TestObjectSimple.class, PREDICATE_ID_EQUALS_1, PREDICATE_ID_EQUALS_2)
-          .assertContentMatchNone(TestObjectSimple.class, element -> element.id() == 3);
+          .assertClassMatchAny(TestObjectSimple.class, PREDICATE_ID_EQUALS_1, PREDICATE_ID_EQUALS_2)
+          .assertClassMatchNone(TestObjectSimple.class, element -> element.id() == 3);
     }
 
     @Test
@@ -1117,9 +1117,8 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAny(
-              TestObjectSimple.class, PREDICATE_ID_EQUALS_1, PREDICATE_ID_EQUALS_2)
-          .assertContentMatchNone(
+          .assertClassMatchAny(TestObjectSimple.class, PREDICATE_ID_EQUALS_1, PREDICATE_ID_EQUALS_2)
+          .assertClassMatchNone(
               TestObjectSimple.class, element -> element.id() == 3, element -> element.id() == 4);
     }
 
@@ -1131,7 +1130,7 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAny(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A)
+          .assertClassMatchAny(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A)
           .assertHead();
     }
 
@@ -1143,7 +1142,7 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchAny(
+          .assertClassMatchAny(
               TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1)
           .assertHead();
     }
@@ -1160,7 +1159,7 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchNone(TestObjectSimple.class, element -> element.name().equals(B))
+          .assertClassMatchNone(TestObjectSimple.class, element -> element.name().equals(B))
           .assertHead();
     }
 
@@ -1172,7 +1171,7 @@ class TestAssertClassImplTest extends TestAssertBase {
 
       // Act & Assert
       testAssertClass
-          .assertContentMatchNone(
+          .assertClassMatchNone(
               TestObjectSimple.class, element -> element.name().equals(B), PREDICATE_ID_EQUALS_2)
           .assertHead();
     }
