@@ -36,8 +36,8 @@ public final class TestAssertStringImpl
   /**
    * Constructs an instance of {@code TestAssertContent} with the provided {@code ResultActions}.
    *
-   * @param actions the {@code ResultActions} from a performed HTTP request (must not be
-   *                {@code null})
+   * @param actions the {@code ResultActions} from a performed HTTP request (must not be {@code
+   *     null})
    * @throws NullPointerException if the {@code actions} is {@code null}
    * @since 1.0.0
    */
@@ -53,7 +53,7 @@ public final class TestAssertStringImpl
    * the corresponding exception.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.0.0
    * @deprecated Use {@link #assertContentIsNotEmpty()}} instead.
    */
@@ -71,7 +71,7 @@ public final class TestAssertStringImpl
    * the corresponding exception.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.0.0
    * @deprecated Use {@link #assertContentIsEmpty()}} instead.
    */
@@ -83,15 +83,14 @@ public final class TestAssertStringImpl
   }
 
   /**
-   * Asserts that the length of the string content of the HTTP response matches the specified
-   * value.
+   * Asserts that the length of the string content of the HTTP response matches the specified value.
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
    * @param expectedLength the expected length of the HTTP response content
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.4.0
    * @deprecated Use {@link #assertContentEquals(String)}} instead.
    */
@@ -114,7 +113,7 @@ public final class TestAssertStringImpl
    *
    * @param expectedString the expected content of the response (must not be {@code null})
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.0.0
    * @deprecated Use {@link #assertContentEquals(String)}} instead.
    */
@@ -132,7 +131,7 @@ public final class TestAssertStringImpl
    * the corresponding exception.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.6.0
    */
   @Override
@@ -152,7 +151,7 @@ public final class TestAssertStringImpl
    * the corresponding exception.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.6.0
    */
   @Override
@@ -166,15 +165,14 @@ public final class TestAssertStringImpl
   }
 
   /**
-   * Asserts that the length of the string content of the HTTP response matches the specified
-   * value.
+   * Asserts that the length of the string content of the HTTP response matches the specified value.
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
    * @param expectedLength the expected length of the HTTP response content
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.6.0
    */
   @Override
@@ -199,7 +197,7 @@ public final class TestAssertStringImpl
    *
    * @param expectedString the expected content of the response (must not be {@code null})
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @throws NullPointerException if the {@code expectedString} is {@code null}
    * @since 1.6.0
    */
@@ -222,7 +220,7 @@ public final class TestAssertStringImpl
    * of specific headers and comparing header values.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.0.0
    */
   @Override

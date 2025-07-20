@@ -26,7 +26,7 @@ public interface TestAssert1String {
    * the corresponding exception.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.0.0
    * @deprecated Use {@link #assertContentIsNotEmpty()} instead.
    */
@@ -40,7 +40,7 @@ public interface TestAssert1String {
    * the corresponding exception.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.0.0
    * @deprecated Use {@link #assertContentIsEmpty()} instead.
    */
@@ -48,15 +48,14 @@ public interface TestAssert1String {
   TestAssertLString assertStringEmpty();
 
   /**
-   * Asserts that the length of the string content of the HTTP response matches the specified
-   * value.
+   * Asserts that the length of the string content of the HTTP response matches the specified value.
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
    * @param expectedLength the expected length of the HTTP response content
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.4.0
    * @deprecated Use {@link #assertContentLength(int)} instead.
    */
@@ -75,7 +74,7 @@ public interface TestAssert1String {
    *
    * @param expectedString the expected content of the response (must not be {@code null})
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @throws NullPointerException if the {@code expectedString} is {@code null}
    * @since 1.0.0
    * @deprecated Use {@link #assertContentEquals(String)}} instead.
@@ -90,7 +89,7 @@ public interface TestAssert1String {
    * the corresponding exception.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.6.0
    */
   TestAssert2String assertContentIsNotEmpty();
@@ -102,21 +101,20 @@ public interface TestAssert1String {
    * the corresponding exception.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.6.0
    */
   TestAssertLString assertContentIsEmpty();
 
   /**
-   * Asserts that the length of the string content of the HTTP response matches the specified
-   * value.
+   * Asserts that the length of the string content of the HTTP response matches the specified value.
    *
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
    * @param expectedLength the expected length of the HTTP response content
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.6.0
    */
   TestAssert2String assertContentLength(int expectedLength);
@@ -133,7 +131,7 @@ public interface TestAssert1String {
    *
    * @param expectedString the expected content of the response (must not be {@code null})
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @throws NullPointerException if the {@code expectedString} is {@code null}
    * @since 1.6.0
    */
