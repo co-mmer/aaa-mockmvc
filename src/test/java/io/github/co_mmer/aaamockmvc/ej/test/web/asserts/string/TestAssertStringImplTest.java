@@ -38,6 +38,339 @@ class TestAssertStringImplTest extends TestAssertBase {
   }
 
   @Nested
+  @Deprecated(since = "1.6", forRemoval = true)
+  class deprecatedTests {
+
+    @Nested
+    class assertStringNotEmpty {
+
+      @Test
+      @SneakyThrows
+      void GIVEN_expected_WHEN_assertStringNotEmpty_THEN_assert_true() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        testAssertString.assertStringNotEmpty();
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_unexpected_WHEN_assertStringNotEmpty_THEN_assert_false() {
+        // Arrange
+        useServerWithResponse(EMPTY);
+
+        // Act & Assert
+        assertThrows(AssertionError.class, testAssertString::assertStringNotEmpty);
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertStringNotEmpty_THEN_assert_false() {
+        // Arrange
+        useServerWithStringException();
+        var testAssertException = new TestAssertStringImpl(actions);
+
+        // Act & Assert
+        assertThrows(AssertionError.class, testAssertException::assertStringNotEmpty);
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertStringNotEmpty_THEN_Assertions_fail_is_called() {
+        // Arrange
+        var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+        useServerWithByteException();
+        var testAssertException = new TestAssertStringImpl(actions);
+
+        // Act
+        testAssertException.assertStringNotEmpty();
+
+        // Assert
+        mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+        mockAssertions.close();
+      }
+    }
+
+    @Nested
+    class assertStringEmpty {
+
+      @Test
+      @SneakyThrows
+      void GIVEN_expected_WHEN_assertStringEmpty_THEN_assert_true() {
+        // Arrange
+        useServerWithResponse(EMPTY);
+
+        // Act & Assert
+        testAssertString.assertStringEmpty();
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_unexpected_WHEN_assertStringEmpty_THEN_return_assert_false() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        assertThrows(AssertionError.class, testAssertString::assertStringEmpty);
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertStringEmpty_THEN_assert_false() {
+        // Arrange
+        useServerWithStringException();
+        var testAssertContentException = new TestAssertStringImpl(actions);
+
+        // Act & Assert
+        assertThrows(AssertionError.class, testAssertContentException::assertStringEmpty);
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertStringEmpty_THEN_Assertions_fail_is_called() {
+        // Arrange
+        var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+        useServerWithByteException();
+        var testAssertException = new TestAssertStringImpl(actions);
+
+        // Act
+        testAssertException.assertStringEmpty();
+
+        // Assert
+        mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+        mockAssertions.close();
+      }
+    }
+
+    @Nested
+    class assertStringEquals {
+
+      @Test
+      @SneakyThrows
+      void GIVEN_expected_WHEN_assertStringEquals_THEN_assert_true() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        testAssertString.assertStringEquals(TEST_A1_JSON);
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_unexpected_WHEN_assertStringEquals_THEN_assert_false() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        assertThrows(AssertionError.class, () -> testAssertString.assertStringEquals(TEST_A2_JSON));
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertStringEquals_THEN_assert_false() {
+        // Arrange
+        useServerWithStringException();
+        var testAssertContentException = new TestAssertStringImpl(actions);
+
+        // Act & Assert
+        assertThrows(
+            AssertionFailedError.class,
+            () -> testAssertContentException.assertStringEquals(TEST_A1_JSON));
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertStringEquals_THEN_Assertions_fail_is_called() {
+        // Arrange
+        var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+        useServerWithByteException();
+        var testAssertException = new TestAssertStringImpl(actions);
+
+        // Act
+        testAssertException.assertStringEquals(TEST_A1_JSON);
+
+        // Assert
+        mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+        mockAssertions.close();
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_string_WHEN_assertStringEquals_THEN_normalizeObject_is_called() {
+        // Arrange
+        var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act
+        testAssertString.assertStringEquals(TEST_A1_JSON);
+
+        // Assert
+        mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
+        mockTestArrangeNormalizer.close();
+      }
+
+      @Test
+      @SneakyThrows
+      @SuppressWarnings("all")
+      void GIVEN_null_WHEN_assertStringEquals_THEN_throw_NullPointerException() {
+        // Arrange
+        var testAssert = new TestAssertStringImpl(actions);
+
+        // Act & Assert
+        assertThrows(NullPointerException.class, () -> testAssert.assertStringEquals(null));
+      }
+    }
+
+    @Nested
+    class assertStringLength {
+
+      @Test
+      @SneakyThrows
+      void GIVEN_expected_WHEN_assertStringLength_THEN_assert_true() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        testAssertString.assertStringLength(TEST_A1_JSON.length());
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_unexpected_WHEN_assertStringLength_THEN_assert_false() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        assertThrows(AssertionError.class, () -> testAssertString.assertStringLength(10));
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertStringLength_THEN_assert_false() {
+        // Arrange
+        useServerWithStringException();
+        var testAssertContentException = new TestAssertStringImpl(actions);
+
+        // Act & Assert
+        assertThrows(
+            AssertionFailedError.class, () -> testAssertContentException.assertStringLength(50));
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertStringLength_THEN_Assertions_fail_is_called() {
+        // Arrange
+        var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+        useServerWithByteException();
+        var testAssertException = new TestAssertStringImpl(actions);
+
+        // Act
+        testAssertException.assertStringLength(50);
+
+        // Assert
+        mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+        mockAssertions.close();
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_string_WHEN_assertStringEquals_THEN_normalizeObject_is_called() {
+        // Arrange
+        var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act
+        testAssertString.assertStringEquals(TEST_A1_JSON);
+
+        // Assert
+        mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
+        mockTestArrangeNormalizer.close();
+      }
+    }
+
+    @Nested
+    class combinationNotEmpty {
+
+      @Test
+      @SneakyThrows
+      void notEmpty_equals() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        testAssertString.assertStringNotEmpty().assertStringEquals(TEST_A1_JSON);
+      }
+
+      @Test
+      @SneakyThrows
+      void notEmpty_head() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        testAssertString.assertStringNotEmpty().assertHead();
+      }
+    }
+
+    @Nested
+    class combinationEmpty {
+
+      @Test
+      @SneakyThrows
+      void empty_head() {
+        // Arrange
+        useServerWithResponse(EMPTY);
+
+        // Act & Assert
+        testAssertString.assertStringEmpty().assertHead();
+      }
+    }
+
+    @Nested
+    class combinationLength {
+
+      @Test
+      @SneakyThrows
+      void length_equals() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        testAssertString.assertStringLength(TEST_A1_JSON.length()).assertStringEquals(TEST_A1_JSON);
+      }
+
+      @Test
+      @SneakyThrows
+      void length_head() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        testAssertString.assertStringLength(TEST_A1_JSON.length()).assertHead();
+      }
+    }
+
+    @Nested
+    class combinationEquals {
+
+      @Test
+      @SneakyThrows
+      void equals_string_head() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        testAssertString.assertStringEquals(TEST_A1_JSON).assertHead();
+      }
+    }
+  }
+
+  @Nested
   class constructor {
 
     @ParameterizedTest()
@@ -55,42 +388,42 @@ class TestAssertStringImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertStringNotEmpty {
+  class assertContentIsNotEmpty {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertStringNotEmpty_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertContentIsNotEmpty_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertString.assertStringNotEmpty();
+      testAssertString.assertContentIsNotEmpty();
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertStringNotEmpty_THEN_assert_false() {
+    void GIVEN_unexpected_WHEN_assertContentIsNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithResponse(EMPTY);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertString::assertStringNotEmpty);
+      assertThrows(AssertionError.class, testAssertString::assertContentIsNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertStringNotEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertStringImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertException::assertStringNotEmpty);
+      assertThrows(AssertionError.class, testAssertException::assertContentIsNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertStringNotEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -98,7 +431,7 @@ class TestAssertStringImplTest extends TestAssertBase {
       var testAssertException = new TestAssertStringImpl(actions);
 
       // Act
-      testAssertException.assertStringNotEmpty();
+      testAssertException.assertContentIsNotEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -107,42 +440,42 @@ class TestAssertStringImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertStringEmpty {
+  class assertContentIsEmpty {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertStringEmpty_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertContentIsEmpty_THEN_assert_true() {
       // Arrange
       useServerWithResponse(EMPTY);
 
       // Act & Assert
-      testAssertString.assertStringEmpty();
+      testAssertString.assertContentIsEmpty();
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertStringEmpty_THEN_return_assert_false() {
+    void GIVEN_unexpected_WHEN_assertContentIsEmpty_THEN_return_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertString::assertStringEmpty);
+      assertThrows(AssertionError.class, testAssertString::assertContentIsEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertStringEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertContentException = new TestAssertStringImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertContentException::assertStringEmpty);
+      assertThrows(AssertionError.class, testAssertContentException::assertContentIsEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertStringEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -150,7 +483,7 @@ class TestAssertStringImplTest extends TestAssertBase {
       var testAssertException = new TestAssertStringImpl(actions);
 
       // Act
-      testAssertException.assertStringEmpty();
+      testAssertException.assertContentIsEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -159,31 +492,31 @@ class TestAssertStringImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertStringEquals {
+  class assertContentEquals {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertStringEquals_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertContentEquals_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertString.assertStringEquals(TEST_A1_JSON);
+      testAssertString.assertContentEquals(TEST_A1_JSON);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertStringEquals_THEN_assert_false() {
+    void GIVEN_unexpected_WHEN_assertContentEquals_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssertString.assertStringEquals(TEST_A2_JSON));
+      assertThrows(AssertionError.class, () -> testAssertString.assertContentEquals(TEST_A2_JSON));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertStringEquals_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentEquals_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertContentException = new TestAssertStringImpl(actions);
@@ -191,12 +524,12 @@ class TestAssertStringImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionFailedError.class,
-          () -> testAssertContentException.assertStringEquals(TEST_A1_JSON));
+          () -> testAssertContentException.assertContentEquals(TEST_A1_JSON));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertStringEquals_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentEquals_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -204,7 +537,7 @@ class TestAssertStringImplTest extends TestAssertBase {
       var testAssertException = new TestAssertStringImpl(actions);
 
       // Act
-      testAssertException.assertStringEquals(TEST_A1_JSON);
+      testAssertException.assertContentEquals(TEST_A1_JSON);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -213,13 +546,13 @@ class TestAssertStringImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void GIVEN_string_WHEN_assertStringEquals_THEN_normalizeObject_is_called() {
+    void GIVEN_string_WHEN_assertContentEquals_THEN_normalizeObject_is_called() {
       // Arrange
       var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
       useServerWithResponse(TEST_A1_JSON);
 
       // Act
-      testAssertString.assertStringEquals(TEST_A1_JSON);
+      testAssertString.assertContentEquals(TEST_A1_JSON);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
@@ -229,53 +562,53 @@ class TestAssertStringImplTest extends TestAssertBase {
     @Test
     @SneakyThrows
     @SuppressWarnings("all")
-    void GIVEN_null_WHEN_assertStringEquals_THEN_throw_NullPointerException() {
+    void GIVEN_null_WHEN_assertContentEquals_THEN_throw_NullPointerException() {
       // Arrange
       var testAssert = new TestAssertStringImpl(actions);
 
       // Act & Assert
-      assertThrows(NullPointerException.class, () -> testAssert.assertStringEquals(null));
+      assertThrows(NullPointerException.class, () -> testAssert.assertContentEquals(null));
     }
   }
 
   @Nested
-  class assertStringLength {
+  class assertContentLength {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertStringLength_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertContentLength_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertString.assertStringLength(TEST_A1_JSON.length());
+      testAssertString.assertContentLength(TEST_A1_JSON.length());
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertStringLength_THEN_assert_false() {
+    void GIVEN_unexpected_WHEN_assertContentLength_THEN_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssertString.assertStringLength(10));
+      assertThrows(AssertionError.class, () -> testAssertString.assertContentLength(10));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertStringLength_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentLength_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertContentException = new TestAssertStringImpl(actions);
 
       // Act & Assert
       assertThrows(
-          AssertionFailedError.class, () -> testAssertContentException.assertStringLength(50));
+          AssertionFailedError.class, () -> testAssertContentException.assertContentLength(50));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertStringLength_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentLength_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -283,26 +616,11 @@ class TestAssertStringImplTest extends TestAssertBase {
       var testAssertException = new TestAssertStringImpl(actions);
 
       // Act
-      testAssertException.assertStringLength(50);
+      testAssertException.assertContentLength(50);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
       mockAssertions.close();
-    }
-
-    @Test
-    @SneakyThrows
-    void GIVEN_string_WHEN_assertStringEquals_THEN_normalizeObject_is_called() {
-      // Arrange
-      var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
-      useServerWithResponse(TEST_A1_JSON);
-
-      // Act
-      testAssertString.assertStringEquals(TEST_A1_JSON);
-
-      // Assert
-      mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
-      mockTestArrangeNormalizer.close();
     }
   }
 
@@ -323,40 +641,40 @@ class TestAssertStringImplTest extends TestAssertBase {
   }
 
   @Nested
-  class combinationNotEmpty {
+  class combinationIsNotEmpty {
 
     @Test
     @SneakyThrows
-    void notEmpty_equals() {
+    void isNotEmpty_equals() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertString.assertStringNotEmpty().assertStringEquals(TEST_A1_JSON);
+      testAssertString.assertContentIsNotEmpty().assertContentEquals(TEST_A1_JSON);
     }
 
     @Test
     @SneakyThrows
-    void notEmpty_head() {
+    void isNotEmpty_head() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertString.assertStringNotEmpty().assertHead();
+      testAssertString.assertContentIsNotEmpty().assertHead();
     }
   }
 
   @Nested
-  class combinationEmpty {
+  class combinationIsEmpty {
 
     @Test
     @SneakyThrows
-    void empty_head() {
+    void isEmpty_head() {
       // Arrange
       useServerWithResponse(EMPTY);
 
       // Act & Assert
-      testAssertString.assertStringEmpty().assertHead();
+      testAssertString.assertContentIsEmpty().assertHead();
     }
   }
 
@@ -370,7 +688,7 @@ class TestAssertStringImplTest extends TestAssertBase {
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertString.assertStringLength(TEST_A1_JSON.length()).assertStringEquals(TEST_A1_JSON);
+      testAssertString.assertContentLength(TEST_A1_JSON.length()).assertContentEquals(TEST_A1_JSON);
     }
 
     @Test
@@ -380,7 +698,7 @@ class TestAssertStringImplTest extends TestAssertBase {
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertString.assertStringLength(TEST_A1_JSON.length()).assertHead();
+      testAssertString.assertContentLength(TEST_A1_JSON.length()).assertHead();
     }
   }
 
@@ -394,7 +712,7 @@ class TestAssertStringImplTest extends TestAssertBase {
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertString.assertStringEquals(TEST_A1_JSON).assertHead();
+      testAssertString.assertContentEquals(TEST_A1_JSON).assertHead();
     }
   }
 }
