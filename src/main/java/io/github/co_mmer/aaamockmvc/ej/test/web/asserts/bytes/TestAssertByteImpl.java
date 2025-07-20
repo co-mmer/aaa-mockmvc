@@ -18,13 +18,13 @@ import org.springframework.test.web.servlet.ResultActions;
  * Provides methods for asserting HTTP response byte content in tests.
  *
  * <ul>
- *   <li>{@link #assertByteNotEmpty()}: Asserts that the byte array content of the HTTP response is
- *       not empty.
- *   <li>{@link #assertByteEmpty()}: Asserts that the byte array content of the HTTP response is
- *       empty.
- *   <li>{@link #assertByteEquals(byte[])}: Asserts that the byte array content of the HTTP response
- *       matches the expected byte array.
- *   <li>{@link #assertByteLength(int)}: Asserts that the length of the byte array content of the
+ *   <li>{@link #assertContentIsNotEmpty()}: Asserts that the byte array content of the HTTP
+ *       response is not empty.
+ *   <li>{@link #assertContentIsEmpty()}: Asserts that the byte array content of the HTTP response
+ *       is empty.
+ *   <li>{@link #assertContentEquals(byte[])}: Asserts that the byte array content of the HTTP
+ *       response matches the expected byte array.
+ *   <li>{@link #assertContentLength(int)}: Asserts that the length of the byte array content of the
  *       HTTP response matches the specified value.
  *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
  * </ul>
@@ -55,11 +55,91 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @return the current instance of {@code TestAssert2Byte} for method chaining
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @since 1.4.0
+   * @deprecated Use {@link #assertContentIsNotEmpty()} instead.
    */
+  @Deprecated(since = "1.6", forRemoval = true)
   @Override
   public TestAssert2Byte assertByteNotEmpty() {
+    assertContentIsNotEmpty();
+    return this;
+  }
+
+  /**
+   * Asserts that the byte array content of the HTTP response is empty.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.4.0
+   * @deprecated Use {@link #assertContentIsEmpty()} instead.
+   */
+  @Deprecated(since = "1.6", forRemoval = true)
+  @Override
+  public TestAssertLByte assertByteEmpty() {
+    assertContentIsEmpty();
+    return this;
+  }
+
+  /**
+   * Asserts that the length of the byte array content of the HTTP response matches the specified
+   * value.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * <p>Note: The length refers to the number of bytes in the serialized HTTP response body using
+   * UTF-8 encoding. For example, an empty JSON array {@code []} has a byte length of 2.
+   *
+   * @param expectedLength the expected length of the HTTP response content
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.4.0
+   * @deprecated Use {@link #assertContentLength(int)} instead.
+   */
+  @Deprecated(since = "1.6", forRemoval = true)
+  @Override
+  public TestAssert2Byte assertByteLength(int expectedLength) {
+    assertContentLength(expectedLength);
+    return this;
+  }
+
+  /**
+   * Asserts that the byte array content of the HTTP response matches the expected byte array.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedByte the expected byte array content (must not be {@code null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @throws NullPointerException if the {@code expectedByte} is {@code null}
+   * @since 1.4.0
+   * @deprecated Use {@link #assertContentEquals(byte[])} instead.
+   */
+  @Deprecated(since = "1.6", forRemoval = true)
+  @Override
+  public TestAssertLByte assertByteEquals(byte[] expectedByte) {
+    assertContentEquals(expectedByte);
+    return this;
+  }
+
+  /**
+   * Asserts that the byte array content of the HTTP response is not empty.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.6.0
+   */
+  @Override
+  public TestAssert2Byte assertContentIsNotEmpty() {
     try {
       assertThat(this.response.getContentAsString(), not(anyOf(is(EMPTY), is(EMPTY_ARRAY))));
     } catch (Exception e) {
@@ -74,11 +154,12 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @return the current instance of {@code TestAssertLByte} for method chaining
-   * @since 1.4.0
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.6.0
    */
   @Override
-  public TestAssertLByte assertByteEmpty() {
+  public TestAssertLByte assertContentIsEmpty() {
     try {
       assertThat(this.response.getContentAsString(), anyOf(is(EMPTY), is(EMPTY_ARRAY)));
     } catch (Exception e) {
@@ -97,14 +178,15 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * <p>Note: The length refers to the number of bytes in the serialized HTTP response body using
    * UTF-8 encoding. For example, an empty JSON array {@code []} has a byte length of 2.
    *
-   * @param length the expected length of the HTTP response content
-   * @return the current instance of {@code TestAssert2Byte} for method chaining
-   * @since 1.4.0
+   * @param expectedLength the expected length of the HTTP response content
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.6.0
    */
   @Override
-  public TestAssert2Byte assertByteLength(int length) {
+  public TestAssert2Byte assertContentLength(int expectedLength) {
     try {
-      assertThat(this.response.getContentAsString().length(), is(length));
+      assertThat(this.response.getContentAsString().length(), is(expectedLength));
     } catch (Exception e) {
       Assertions.fail(e);
     }
@@ -118,11 +200,13 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * the corresponding exception.
    *
    * @param expectedByte the expected byte array content (must not be {@code null})
-   * @return the current instance of {@code TestAssertLByte} for method chaining
-   * @since 1.4.0
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @throws NullPointerException if the {@code expectedByte} is {@code null}
+   * @since 1.6.0
    */
   @Override
-  public TestAssertLByte assertByteEquals(byte[] expectedByte) {
+  public TestAssertLByte assertContentEquals(byte[] expectedByte) {
     try {
       assertThat(this.response.getContentAsByteArray(), is(expectedByte));
     } catch (Exception e) {
@@ -138,7 +222,8 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * HTTP response. It allows various validations of response headers, such as checking for the
    * presence or absence of specific headers and comparing header values.
    *
-   * @return an instance of {@code TestAssertHead} for further assertions on headers
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @since 1.4.0
    */
   @Override

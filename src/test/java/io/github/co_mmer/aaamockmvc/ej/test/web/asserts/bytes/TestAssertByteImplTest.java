@@ -39,6 +39,329 @@ class TestAssertByteImplTest extends TestAssertBase {
   }
 
   @Nested
+  @Deprecated(since = "1.6", forRemoval = true)
+  class deprecatedTests {
+
+    @Nested
+    class assertByteNotEmpty {
+
+      @Test
+      @SneakyThrows
+      void GIVEN_expected_WHEN_assertByteNotEmpty_THEN_assert_true() {
+        // Arrange
+        useServerWithResponse(ACTUAL_CONTENT);
+
+        // Act & Assert
+        testAssert.assertByteNotEmpty();
+      }
+
+      @ParameterizedTest
+      @ValueSource(strings = {EMPTY, EMPTY_ARRAY})
+      @SneakyThrows
+      void GIVEN_unexpected_WHEN_assertByteNotEmpty_THEN_assert_false(String value) {
+        // Arrange
+        useServerWithResponse(value);
+
+        // Act & Assert
+        assertThrows(AssertionError.class, testAssert::assertByteNotEmpty);
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertByteNotEmpty_THEN_assert_false() {
+        // Arrange
+        useServerWithStringException();
+        var testAssertException = new TestAssertByteImpl(actions);
+
+        // Act & Assert
+        assertThrows(AssertionFailedError.class, testAssertException::assertByteNotEmpty);
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertByteNotEmpty_THEN_Assertions_fail_is_called() {
+        // Arrange
+        var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+        useServerWithStringException();
+        var testAssertException = new TestAssertByteImpl(actions);
+
+        // Act
+        testAssertException.assertByteNotEmpty();
+
+        // Assert
+        mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+        mockAssertions.close();
+      }
+    }
+
+    @Nested
+    class assertByteEmpty {
+
+      @ParameterizedTest
+      @ValueSource(strings = {EMPTY, EMPTY_ARRAY})
+      @SneakyThrows
+      void GIVEN_expected_WHEN_assertByteEmpty_THEN_assert_true(String value) {
+        // Arrange
+        useServerWithResponse(value);
+
+        // Act & Assert
+        testAssert.assertByteEmpty();
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_unexpected_WHEN_assertByteIsEmpty_THEN_return_assert_false() {
+        // Arrange
+        useServerWithResponse(ACTUAL_CONTENT);
+
+        // Act & Assert
+        assertThrows(AssertionError.class, testAssert::assertByteEmpty);
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertByteEmpty_THEN_assert_false() {
+        // Arrange
+        useServerWithStringException();
+        var testAssertByte = new TestAssertByteImpl(actions);
+
+        // Act & Assert
+        assertThrows(AssertionFailedError.class, testAssertByte::assertByteEmpty);
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertByteEmpty_THEN_Assertions_fail_is_called() {
+        // Arrange
+        var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+        useServerWithStringException();
+        var testAssertException = new TestAssertByteImpl(actions);
+
+        // Act
+        testAssertException.assertByteEmpty();
+
+        // Assert
+        mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+        mockAssertions.close();
+      }
+    }
+
+    @Nested
+    class assertByteLength {
+
+      @Test
+      @SneakyThrows
+      void GIVEN_expected_WHEN_assertByteLength_THEN_assert_true() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        testAssert.assertByteLength(TEST_A1_JSON.length());
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_unexpected_WHEN_assertByteLength_THEN_return_assert_false() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        assertThrows(AssertionError.class, () -> testAssert.assertByteLength(1));
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertByteEmpty_THEN_assert_false() {
+        // Arrange
+        useServerWithStringException();
+        var testAssertByte = new TestAssertByteImpl(actions);
+
+        // Act & Assert
+        assertThrows(AssertionFailedError.class, () -> testAssertByte.assertByteLength(1));
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertByteLength_THEN_Assertions_fail_is_called() {
+        // Arrange
+        var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+        useServerWithStringException();
+        var testAssertException = new TestAssertByteImpl(actions);
+
+        // Act
+        testAssertException.assertByteLength(1);
+
+        // Assert
+        mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+        mockAssertions.close();
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_empty_array_expected_length_2_WHEN_assertByteLength_THEN_assert_true() {
+        // Arrange
+        useServerWithResponse(EMPTY_ARRAY);
+
+        // Act & Assert
+        testAssert.assertByteLength(2);
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_empty_byte_expected_length_2_WHEN_assertByteLength_THEN_assert_true() {
+        // Arrange
+        useServerWithResponse(TEST_EMPTY_BYTE);
+
+        // Act & Assert
+        testAssert.assertByteLength(2);
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_empty_string_expected_length_0_WHEN_assertByteLength_THEN_assert_true() {
+        // Arrange
+        useServerWithResponse(EMPTY);
+
+        // Act & Assert
+        testAssert.assertByteLength(0);
+      }
+    }
+
+    @Nested
+    class assertByteEquals {
+
+      @Test
+      @SneakyThrows
+      void GIVEN_expected_byte_WHEN_assertByteEquals_THEN_assert_true() {
+        // Arrange
+        useServerWithResponse(EXPECTED_CONTENT);
+
+        // Act & Assert
+        testAssert.assertByteEquals(EXPECTED_CONTENT.getBytes());
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_unexpected_byte_WHEN_assertByteEquals_THEN_assert_false() {
+        // Arrange
+        useServerWithResponse(ACTUAL_CONTENT);
+
+        // Act & Assert
+        assertThrows(AssertionError.class, () -> testAssert.assertByteEquals(new byte[1]));
+      }
+
+      @Test
+      void GIVEN_exception_byte_WHEN_assertByteEquals_THEN_assert_false() {
+        // Arrange
+        useServerWithByteException();
+        var testAssertException = new TestAssertByteImpl(actions);
+
+        // Act & Assert
+        assertThrows(
+            AssertionFailedError.class, () -> testAssertException.assertByteEquals(new byte[1]));
+      }
+
+      @Test
+      @SneakyThrows
+      void GIVEN_exception_WHEN_assertByteLength_THEN_Assertions_fail_is_called() {
+        // Arrange
+        var mockAssertions = Mockito.mockStatic(Assertions.class);
+
+        useServerWithByteException();
+        var testAssertException = new TestAssertByteImpl(actions);
+
+        // Act
+        testAssertException.assertByteEquals(new byte[1]);
+
+        // Assert
+        mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
+        mockAssertions.close();
+      }
+    }
+
+    @Nested
+    class combinationNotEmpty {
+
+      @Test
+      @SneakyThrows
+      void notEmpty__equals() {
+        // Arrange
+        useServerWithResponse(EXPECTED_CONTENT);
+
+        // Act & Assert
+        testAssert.assertByteNotEmpty().assertByteEquals(EXPECTED_CONTENT.getBytes());
+      }
+
+      @Test
+      @SneakyThrows
+      void notEmpty__head() {
+        // Arrange
+        useServerWithResponse(EXPECTED_CONTENT);
+
+        // Act & Assert
+        testAssert.assertByteNotEmpty().assertHead();
+      }
+    }
+
+    @Nested
+    class combinationEmpty {
+
+      @Test
+      @SneakyThrows
+      void empty__head() {
+        // Arrange
+        useServerWithResponse(EMPTY);
+
+        // Act & Assert
+        testAssert.assertByteEmpty().assertHead();
+      }
+    }
+
+    @Nested
+    class combinationLength {
+
+      @Test
+      @SneakyThrows
+      void length_equals() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        testAssert
+            .assertByteLength(TEST_A1_JSON.length())
+            .assertByteEquals(TEST_A1_JSON.getBytes());
+      }
+
+      @Test
+      @SneakyThrows
+      void length_head() {
+        // Arrange
+        useServerWithResponse(TEST_A1_JSON);
+
+        // Act & Assert
+        testAssert.assertByteLength(TEST_A1_JSON.length()).assertHead();
+      }
+    }
+
+    @Nested
+    class combinationEquals {
+
+      @Test
+      @SneakyThrows
+      void equals__head() {
+        // Arrange
+        useServerWithResponse(EXPECTED_CONTENT);
+
+        // Act & Assert
+        testAssert.assertByteEquals(EXPECTED_CONTENT.getBytes()).assertHead();
+      }
+    }
+  }
+
+  @Nested
   class constructor {
 
     @ParameterizedTest()
@@ -56,43 +379,43 @@ class TestAssertByteImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertByteNotEmpty {
+  class assertContentIsNotEmpty {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertByteNotEmpty_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertContentIsNotEmpty_THEN_assert_true() {
       // Arrange
       useServerWithResponse(ACTUAL_CONTENT);
 
       // Act & Assert
-      testAssert.assertByteNotEmpty();
+      testAssert.assertContentIsNotEmpty();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {EMPTY, EMPTY_ARRAY})
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertByteNotEmpty_THEN_assert_false(String value) {
+    void GIVEN_unexpected_WHEN_assertContentIsNotEmpty_THEN_assert_false(String value) {
       // Arrange
       useServerWithResponse(value);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertByteNotEmpty);
+      assertThrows(AssertionError.class, testAssert::assertContentIsNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertByteNotEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertByteImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, testAssertException::assertByteNotEmpty);
+      assertThrows(AssertionFailedError.class, testAssertException::assertContentIsNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertByteNotEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -100,7 +423,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       var testAssertException = new TestAssertByteImpl(actions);
 
       // Act
-      testAssertException.assertByteNotEmpty();
+      testAssertException.assertContentIsNotEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -109,43 +432,43 @@ class TestAssertByteImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertByteEmpty {
+  class assertContentIsEmpty {
 
     @ParameterizedTest
     @ValueSource(strings = {EMPTY, EMPTY_ARRAY})
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertByteEmpty_THEN_assert_true(String value) {
+    void GIVEN_expected_WHEN_assertContentIsEmpty_THEN_assert_true(String value) {
       // Arrange
       useServerWithResponse(value);
 
       // Act & Assert
-      testAssert.assertByteEmpty();
+      testAssert.assertContentIsEmpty();
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertByteIsEmpty_THEN_return_assert_false() {
+    void GIVEN_unexpected_WHEN_assertContentIsEmpty_THEN_return_assert_false() {
       // Arrange
       useServerWithResponse(ACTUAL_CONTENT);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertByteEmpty);
+      assertThrows(AssertionError.class, testAssert::assertContentIsEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertByteEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertByte = new TestAssertByteImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, testAssertByte::assertByteEmpty);
+      assertThrows(AssertionFailedError.class, testAssertByte::assertContentIsEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertByteEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -153,7 +476,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       var testAssertException = new TestAssertByteImpl(actions);
 
       // Act
-      testAssertException.assertByteEmpty();
+      testAssertException.assertContentIsEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -162,42 +485,42 @@ class TestAssertByteImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertByteLength {
+  class assertContentLength {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertByteLength_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertContentLength_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssert.assertByteLength(TEST_A1_JSON.length());
+      testAssert.assertContentLength(TEST_A1_JSON.length());
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertByteLength_THEN_return_assert_false() {
+    void GIVEN_unexpected_WHEN_assertContentLength_THEN_return_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert.assertByteLength(1));
+      assertThrows(AssertionError.class, () -> testAssert.assertContentLength(1));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertByteEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentLength_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertByte = new TestAssertByteImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, () -> testAssertByte.assertByteLength(1));
+      assertThrows(AssertionFailedError.class, () -> testAssertByte.assertContentLength(1));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertByteLength_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentLength_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -205,7 +528,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       var testAssertException = new TestAssertByteImpl(actions);
 
       // Act
-      testAssertException.assertByteLength(1);
+      testAssertException.assertContentLength(1);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -214,72 +537,72 @@ class TestAssertByteImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void GIVEN_empty_array_expected_length_2_WHEN_assertByteLength_THEN_assert_true() {
+    void GIVEN_emptyArray_expectedLength2_WHEN_assertContentLength_THEN_assert_true() {
       // Arrange
       useServerWithResponse(EMPTY_ARRAY);
 
       // Act & Assert
-      testAssert.assertByteLength(2);
+      testAssert.assertContentLength(2);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_empty_byte_expected_length_2_WHEN_assertByteLength_THEN_assert_true() {
+    void GIVEN_emptyByte_expectedLength2_WHEN_assertContentLength_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_EMPTY_BYTE);
 
       // Act & Assert
-      testAssert.assertByteLength(2);
+      testAssert.assertContentLength(2);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_empty_string_expected_length_0_WHEN_assertByteLength_THEN_assert_true() {
+    void GIVEN_emptyString_expectedLength0_WHEN_assertContentLength_THEN_assert_true() {
       // Arrange
       useServerWithResponse(EMPTY);
 
       // Act & Assert
-      testAssert.assertByteLength(0);
+      testAssert.assertContentLength(0);
     }
   }
 
   @Nested
-  class assertByteEquals {
+  class assertContentEquals {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_byte_WHEN_assertByteEquals_THEN_assert_true() {
+    void GIVEN_expected_byte_WHEN_assertContentEquals_THEN_assert_true() {
       // Arrange
       useServerWithResponse(EXPECTED_CONTENT);
 
       // Act & Assert
-      testAssert.assertByteEquals(EXPECTED_CONTENT.getBytes());
+      testAssert.assertContentEquals(EXPECTED_CONTENT.getBytes());
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_byte_WHEN_assertByteEquals_THEN_assert_false() {
+    void GIVEN_unexpected_byte_WHEN_assertContentEquals_THEN_assert_false() {
       // Arrange
       useServerWithResponse(ACTUAL_CONTENT);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert.assertByteEquals(new byte[1]));
+      assertThrows(AssertionError.class, () -> testAssert.assertContentEquals(new byte[1]));
     }
 
     @Test
-    void GIVEN_exception_byte_WHEN_assertByteEquals_THEN_assert_false() {
+    void GIVEN_exception_byte_WHEN_assertContentEquals_THEN_assert_false() {
       // Arrange
       useServerWithByteException();
       var testAssertException = new TestAssertByteImpl(actions);
 
       // Act & Assert
       assertThrows(
-          AssertionFailedError.class, () -> testAssertException.assertByteEquals(new byte[1]));
+          AssertionFailedError.class, () -> testAssertException.assertContentEquals(new byte[1]));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertByteLength_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentEquals_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -287,7 +610,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       var testAssertException = new TestAssertByteImpl(actions);
 
       // Act
-      testAssertException.assertByteEquals(new byte[1]);
+      testAssertException.assertContentEquals(new byte[1]);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -316,22 +639,22 @@ class TestAssertByteImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void notEmpty__equals() {
+    void isNotEmpty_equals() {
       // Arrange
       useServerWithResponse(EXPECTED_CONTENT);
 
       // Act & Assert
-      testAssert.assertByteNotEmpty().assertByteEquals(EXPECTED_CONTENT.getBytes());
+      testAssert.assertContentIsNotEmpty().assertContentEquals(EXPECTED_CONTENT.getBytes());
     }
 
     @Test
     @SneakyThrows
-    void notEmpty__head() {
+    void isNotEmpty_head() {
       // Arrange
       useServerWithResponse(EXPECTED_CONTENT);
 
       // Act & Assert
-      testAssert.assertByteNotEmpty().assertHead();
+      testAssert.assertContentIsNotEmpty().assertHead();
     }
   }
 
@@ -340,12 +663,12 @@ class TestAssertByteImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void empty__head() {
+    void isEmpty_head() {
       // Arrange
       useServerWithResponse(EMPTY);
 
       // Act & Assert
-      testAssert.assertByteEmpty().assertHead();
+      testAssert.assertContentIsEmpty().assertHead();
     }
   }
 
@@ -359,7 +682,9 @@ class TestAssertByteImplTest extends TestAssertBase {
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssert.assertByteLength(TEST_A1_JSON.length()).assertByteEquals(TEST_A1_JSON.getBytes());
+      testAssert
+          .assertContentLength(TEST_A1_JSON.length())
+          .assertContentEquals(TEST_A1_JSON.getBytes());
     }
 
     @Test
@@ -369,7 +694,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssert.assertByteLength(TEST_A1_JSON.length()).assertHead();
+      testAssert.assertContentLength(TEST_A1_JSON.length()).assertHead();
     }
   }
 
@@ -383,7 +708,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       useServerWithResponse(EXPECTED_CONTENT);
 
       // Act & Assert
-      testAssert.assertByteEquals(EXPECTED_CONTENT.getBytes()).assertHead();
+      testAssert.assertContentEquals(EXPECTED_CONTENT.getBytes()).assertHead();
     }
   }
 }

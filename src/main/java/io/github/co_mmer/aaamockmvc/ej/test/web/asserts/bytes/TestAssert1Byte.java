@@ -4,14 +4,14 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
  * Provides methods for asserting HTTP response byte content in tests.
  *
  * <ul>
- *   <li>{@link #assertByteNotEmpty()}: Asserts that the byte array content of the HTTP response is
- *       not empty.
- *   <li>{@link #assertByteLength(int)}: Asserts that the length of the byte array matches the
+ *   <li>{@link #assertContentIsNotEmpty()}: Asserts that the byte array content of the HTTP
+ *       response is not empty.
+ *   <li>{@link #assertContentLength(int)}: Asserts that the length of the byte array matches the
  *       specified length.
- *   <li>{@link #assertByteEmpty()}: Asserts that the byte array content of the HTTP response is
- *       empty.
- *   <li>{@link #assertByteEquals(byte[])}: Asserts that the byte array content of the HTTP response
- *       matches the expected byte array.
+ *   <li>{@link #assertContentIsEmpty()}: Asserts that the byte array content of the HTTP response
+ *       is empty.
+ *   <li>{@link #assertContentEquals(byte[])}: Asserts that the byte array content of the HTTP
+ *       response matches the expected byte array.
  * </ul>
  *
  * @since 1.4.0
@@ -24,9 +24,12 @@ public interface TestAssert1Byte {
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @return the current instance of {@code TestAssert2Byte} for method chaining
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @since 1.4.0
+   * @deprecated Use {@link #assertContentIsNotEmpty()} instead.
    */
+  @Deprecated(since = "1.6", forRemoval = true)
   TestAssert2Byte assertByteNotEmpty();
 
   /**
@@ -35,9 +38,12 @@ public interface TestAssert1Byte {
    * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
    * the corresponding exception.
    *
-   * @return the current instance of {@code TestAssertLByte} for method chaining
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @since 1.4.0
+   * @deprecated Use {@link #assertContentIsEmpty()} instead.
    */
+  @Deprecated(since = "1.6", forRemoval = true)
   TestAssertLByte assertByteEmpty();
 
   /**
@@ -50,11 +56,14 @@ public interface TestAssert1Byte {
    * <p>Note: The length refers to the number of bytes in the serialized HTTP response body using
    * UTF-8 encoding. For example, an empty JSON array {@code []} has a byte length of 2.
    *
-   * @param length the expected length of the HTTP response content
-   * @return the current instance of {@code TestAssert2Byte} for method chaining
+   * @param expectedLength the expected length of the HTTP response content
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @since 1.4.0
+   * @deprecated Use {@link #assertContentLength(int)} instead.
    */
-  TestAssert2Byte assertByteLength(int length);
+  @Deprecated(since = "1.6", forRemoval = true)
+  TestAssert2Byte assertByteLength(int expectedLength);
 
   /**
    * Asserts that the byte array content of the HTTP response matches the expected byte array.
@@ -63,9 +72,67 @@ public interface TestAssert1Byte {
    * the corresponding exception.
    *
    * @param expectedByte the expected byte array content (must not be {@code null})
-   * @return the current instance of {@code TestAssertLByte} for method chaining
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @throws NullPointerException if the {@code expectedByte} is {@code null}
    * @since 1.4.0
+   * @deprecated Use {@link #assertContentEquals(byte[])} instead.
    */
+  @Deprecated(since = "1.6", forRemoval = true)
   TestAssertLByte assertByteEquals(byte[] expectedByte);
+
+  /**
+   * Asserts that the byte array content of the HTTP response is not empty.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.6.0
+   */
+  TestAssert2Byte assertContentIsNotEmpty();
+
+  /**
+   * Asserts that the byte array content of the HTTP response is empty.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.6.0
+   */
+  TestAssertLByte assertContentIsEmpty();
+
+  /**
+   * Asserts that the length of the byte array content of the HTTP response matches the specified
+   * value.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * <p>Note: The length refers to the number of bytes in the serialized HTTP response body using
+   * UTF-8 encoding. For example, an empty JSON array {@code []} has a byte length of 2.
+   *
+   * @param expectedLength the expected length of the HTTP response content
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @since 1.6.0
+   */
+  TestAssert2Byte assertContentLength(int expectedLength);
+
+  /**
+   * Asserts that the byte array content of the HTTP response matches the expected byte array.
+   *
+   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
+   * the corresponding exception.
+   *
+   * @param expectedByte the expected byte array content (must not be {@code null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
+   * @throws NullPointerException if the {@code expectedByte} is {@code null}
+   * @since 1.6.0
+   */
+  TestAssertLByte assertContentEquals(byte[] expectedByte);
 }

@@ -28,7 +28,7 @@ public interface TestAssert2String {
    *
    * @param expectedString the expected content of the response (must not be {@code null})
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @throws NullPointerException if the {@code expectedString} is {@code null}
    * @since 1.0.0
    * @deprecated Use {@link #assertContentEquals(String)}} instead.
@@ -48,7 +48,7 @@ public interface TestAssert2String {
    *
    * @param expectedString the expected content of the response (must not be {@code null})
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @throws NullPointerException if the {@code expectedString} is {@code null}
    * @since 1.6.0
    */
@@ -62,7 +62,7 @@ public interface TestAssert2String {
    * of specific headers and comparing header values.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @since 1.0.0
    */
   TestAssertHead assertHead();
