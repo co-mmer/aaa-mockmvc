@@ -20,7 +20,8 @@ public interface TestAssertLCollection {
    * HTTP response. It allows various validations of response headers, such as checking for the
    * presence or absence of specific headers and comparing header values.
    *
-   * @return an instance of {@code TestAssertHead} for further assertions on headers
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state.
    * @since 1.4.0
    */
   TestAssertHead assertHead();
