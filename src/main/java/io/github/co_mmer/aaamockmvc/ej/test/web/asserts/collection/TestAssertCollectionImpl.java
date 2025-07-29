@@ -19,6 +19,7 @@ import static org.hamcrest.Matchers.nullValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchCollection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
@@ -671,9 +672,9 @@ public final class TestAssertCollectionImpl
    * @throws AssertionError if any of the expected elements are missing from the collection
    * @since 1.6.0
    */
-  @SuppressWarnings("unchecked")
+  @SafeVarargs
   @Override
-  public <T> TestAssert3Collection assertContentContains(
+  public final <T> TestAssert3Collection assertContentContains(
       @NonNull Class<T> expectedClass, @NonNull T... expectedElements) {
 
     return assertContentContains(expectedClass, List.of(expectedElements));
@@ -758,9 +759,9 @@ public final class TestAssertCollectionImpl
    * @throws AssertionError if any of the unexpected elements are found in the collection
    * @since 1.6.0
    */
-  @SuppressWarnings("unchecked")
+  @SafeVarargs
   @Override
-  public <T> TestAssert3Collection assertContentNotContains(
+  public final <T> TestAssert3Collection assertContentNotContains(
       @NonNull Class<T> expectedClass, @NonNull T... unexpectedElements) {
 
     return assertContentNotContains(expectedClass, List.of(unexpectedElements));
@@ -792,7 +793,12 @@ public final class TestAssertCollectionImpl
   public <T> TestAssert4Collection assertContentMatchAll(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
-    assertCollectionMatch(ALL, expectedClass, List.of(condition));
+    try {
+      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesAll(condition);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
@@ -824,12 +830,17 @@ public final class TestAssertCollectionImpl
    *     conditions
    * @since 1.6.0
    */
-  @SuppressWarnings("unchecked")
+  @SafeVarargs
   @Override
-  public <T> TestAssert4Collection assertContentMatchAll(
+  public final <T> TestAssert4Collection assertContentMatchAll(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
 
-    assertCollectionMatch(ALL, expectedClass, Arrays.asList(conditions));
+    try {
+      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesAll(conditions);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
@@ -860,7 +871,12 @@ public final class TestAssertCollectionImpl
   public <T> TestAssert5Collection assertContentMatchAny(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
-    assertCollectionMatch(ANY, expectedClass, List.of(condition));
+    try {
+      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesAny(condition);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
@@ -893,12 +909,17 @@ public final class TestAssertCollectionImpl
    *     conditions
    * @since 1.6.0
    */
-  @SuppressWarnings("unchecked")
+  @SafeVarargs
   @Override
-  public <T> TestAssert5Collection assertContentMatchAny(
+  public final <T> TestAssert5Collection assertContentMatchAny(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
 
-    assertCollectionMatch(ANY, expectedClass, Arrays.asList(conditions));
+    try {
+      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesAny(conditions);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
@@ -929,7 +950,12 @@ public final class TestAssertCollectionImpl
   public <T> TestAssertLCollection assertContentMatchNone(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
-    assertCollectionMatch(NONE, expectedClass, List.of(condition));
+    try {
+      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesNone(condition);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
@@ -961,12 +987,17 @@ public final class TestAssertCollectionImpl
    *     conditions
    * @since 1.6.0
    */
-  @SuppressWarnings("unchecked")
+  @SafeVarargs
   @Override
-  public <T> TestAssertLCollection assertContentMatchNone(
+  public final <T> TestAssertLCollection assertContentMatchNone(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
 
-    assertCollectionMatch(NONE, expectedClass, Arrays.asList(conditions));
+    try {
+      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesNone(conditions);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 

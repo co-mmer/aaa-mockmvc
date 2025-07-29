@@ -2,6 +2,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match;
 
 import lombok.Getter;
 
+@Deprecated(since = "1.6", forRemoval = true)
 @Getter
 public enum TestAssertMatchType {
   ALL("The actual value does not match the expected condition."),

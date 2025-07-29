@@ -19,8 +19,11 @@ import lombok.RequiredArgsConstructor;
  *
  * <p>The methods within this class are not intended for direct external use but serve as helper
  * methods for the {@link #assertMatch} method.
+ *
+ * @deprecated Use {@link TestAssertMatchOld} instead.
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@Deprecated(since = "1.6", forRemoval = true)
 public final class TestAssertMatchClass {
 
   /**
@@ -41,7 +44,9 @@ public final class TestAssertMatchClass {
    *     Predicate that tests a single element.
    * @param <T> The type of the objects in the list.
    * @throws AssertionError If the match check fails, an AssertionError is thrown.
+   * @deprecated Use {@link TestAssertMatchOld} instead.
    */
+  @Deprecated(since = "1.6", forRemoval = true)
   public static <T> void assertMatch(
       @NonNull TestAssertMatchType matchType,
       @NonNull T actual,

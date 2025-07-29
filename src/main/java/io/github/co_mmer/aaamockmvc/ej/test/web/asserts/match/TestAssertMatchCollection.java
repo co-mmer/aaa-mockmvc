@@ -16,8 +16,11 @@ import lombok.RequiredArgsConstructor;
  * <p>It offers three types of matches: - ALL: All conditions must be met for every element in the
  * list. - ANY: At least one condition must be met for every element in the list. - NONE: None of
  * the conditions should be met for any element in the list.
+ *
+ * @deprecated Use {@link TestAssertMatchOld} instead.
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@Deprecated(since = "1.6", forRemoval = true)
 public final class TestAssertMatchCollection {
 
   /**
@@ -34,7 +37,9 @@ public final class TestAssertMatchCollection {
    *     Predicate that tests a single element.
    * @param <T> The type of the objects in the list.
    * @throws AssertionError If the match check fails, an AssertionError is thrown.
+   * @deprecated Use {@link TestAssertMatchOld} instead.
    */
+  @Deprecated(since = "1.6", forRemoval = true)
   public static <T> void assertMatch(
       @NonNull TestAssertMatchType matchType,
       @NonNull Collection<T> actual,

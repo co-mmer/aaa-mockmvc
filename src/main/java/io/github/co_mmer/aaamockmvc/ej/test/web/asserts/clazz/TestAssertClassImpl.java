@@ -1,8 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.ALL;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.ANY;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.NONE;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeObject;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -11,10 +8,8 @@ import static org.hamcrest.Matchers.is;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchClass;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
-import java.util.List;
 import java.util.function.Predicate;
 import lombok.NonNull;
 import org.junit.jupiter.api.Assertions;
@@ -371,19 +366,13 @@ public final class TestAssertClassImpl
   public <T> TestAssert3Class assertContentMatchAll(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
-    assertMatch(ALL, expectedClass, List.of(condition));
-    return this;
-  }
-
-  private <T> void assertMatch(
-      TestAssertMatchType matchType, Class<T> expectedClass, List<Predicate<T>> conditions) {
-
     try {
       var actual = mapTo(this.objectMapper, this.actions.andReturn(), expectedClass);
-      TestAssertMatchClass.assertMatch(matchType, actual, conditions);
+      TestAssertMatch.assertThat(actual).matchesAll(condition);
     } catch (TestGenericMapperException e) {
       Assertions.fail(e);
     }
+    return this;
   }
 
   /**
@@ -406,7 +395,12 @@ public final class TestAssertClassImpl
   public final <T> TestAssert3Class assertContentMatchAll(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
 
-    assertMatch(ALL, expectedClass, List.of(conditions));
+    try {
+      var actual = mapTo(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesAll(conditions);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
@@ -428,7 +422,12 @@ public final class TestAssertClassImpl
   public <T> TestAssert4Class assertContentMatchAny(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
-    assertMatch(ANY, expectedClass, List.of(condition));
+    try {
+      var actual = mapTo(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesAny(condition);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
@@ -452,7 +451,12 @@ public final class TestAssertClassImpl
   public final <T> TestAssert4Class assertContentMatchAny(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
 
-    assertMatch(ANY, expectedClass, List.of(conditions));
+    try {
+      var actual = mapTo(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesAny(conditions);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
@@ -474,7 +478,12 @@ public final class TestAssertClassImpl
   public <T> TestAssertLClass assertContentMatchNone(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
-    assertMatch(NONE, expectedClass, List.of(condition));
+    try {
+      var actual = mapTo(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesNone(condition);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
@@ -498,7 +507,12 @@ public final class TestAssertClassImpl
   public final <T> TestAssertLClass assertContentMatchNone(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
 
-    assertMatch(NONE, expectedClass, List.of(conditions));
+    try {
+      var actual = mapTo(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesNone(conditions);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 

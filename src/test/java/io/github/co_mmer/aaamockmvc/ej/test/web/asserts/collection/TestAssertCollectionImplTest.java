@@ -421,7 +421,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
     @SneakyThrows
     void GIVEN_unexpected_WHEN_assertContentMatchAll_THEN_assert_is_false() {
       // Arrange
-      useServerWithResponse(TEST_LIST_A1_A2_JSON);
+      useServerWithStringException();
 
       // Act & Assert
       assertThrows(
