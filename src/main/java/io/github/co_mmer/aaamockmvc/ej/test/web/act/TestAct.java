@@ -48,6 +48,6 @@ public interface TestAct {
    * @deprecated Since version 2.0. This method is automatically called by 'act'. Direct calls to
    *     {@code actPerform()} are no longer required and should be avoided.
    */
-  @Deprecated(since = "2.0", forRemoval = true)
+  @Deprecated(since = "1.6", forRemoval = true)
   TestAct actPerform();
 }
