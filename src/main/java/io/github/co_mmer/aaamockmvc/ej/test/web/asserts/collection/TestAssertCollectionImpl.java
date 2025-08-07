@@ -1,8 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.ALL;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.ANY;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType.NONE;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeAsObjects;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeCollection;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.mapper.TestGenericMapper.mapToCollection;
@@ -20,10 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatch;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchCollection;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.match.TestAssertMatchType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.mapper.exception.TestGenericMapperException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -362,7 +356,7 @@ public final class TestAssertCollectionImpl
   public <T> TestAssert4Collection assertCollectionMatchAll(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
-    assertCollectionMatch(ALL, expectedClass, List.of(condition));
+    assertContentMatchAll(expectedClass, condition);
     return this;
   }
 
@@ -396,17 +390,6 @@ public final class TestAssertCollectionImpl
     return this;
   }
 
-  private <T> void assertCollectionMatch(
-      TestAssertMatchType matchType, Class<T> expectedClass, Collection<Predicate<T>> conditions) {
-
-    try {
-      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
-      TestAssertMatchCollection.assertMatch(matchType, actual, conditions);
-    } catch (TestGenericMapperException e) {
-      Assertions.fail(e);
-    }
-  }
-
   /**
    * Asserts that at least one element in the collection in the HTTP response matches the specified
    * condition.
@@ -431,7 +414,12 @@ public final class TestAssertCollectionImpl
   public <T> TestAssert5Collection assertCollectionMatchAny(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
-    assertCollectionMatch(ANY, expectedClass, List.of(condition));
+    try {
+      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesAny(condition);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
@@ -461,7 +449,12 @@ public final class TestAssertCollectionImpl
   public final <T> TestAssert5Collection assertCollectionMatchAny(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
 
-    assertCollectionMatch(ANY, expectedClass, Arrays.asList(conditions));
+    try {
+      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesAny(conditions);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
@@ -490,7 +483,12 @@ public final class TestAssertCollectionImpl
   public <T> TestAssertLCollection assertCollectionMatchNone(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition) {
 
-    assertCollectionMatch(NONE, expectedClass, List.of(condition));
+    try {
+      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesNone(condition);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
@@ -520,7 +518,12 @@ public final class TestAssertCollectionImpl
   public final <T> TestAssertLCollection assertCollectionMatchNone(
       @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions) {
 
-    assertCollectionMatch(NONE, expectedClass, Arrays.asList(conditions));
+    try {
+      var actual = mapToCollection(this.objectMapper, this.actions.andReturn(), expectedClass);
+      TestAssertMatch.assertThat(actual).matchesNone(conditions);
+    } catch (TestGenericMapperException e) {
+      Assertions.fail(e);
+    }
     return this;
   }
 
