@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
  *
  * @since 1.1.0
  */
+@Deprecated(since = "1.6", forRemoval = true)
 public final class TestAssertCustomImpl implements TestAssertCustom {
 
   private final ResultActions actions;

@@ -149,7 +149,10 @@ public final class TestAssertImpl implements TestAssert {
    *
    * @return an instance of {@code TestAssertCustom} for custom assertions on the response
    * @since 1.1.0
+   * @deprecated This class is deprecated and will be removed in a future release. There is no
+   *     direct replacement.
    */
+  @Deprecated(since = "1.6", forRemoval = true)
   @Override
   public TestAssertCustom assertCustom() {
     return new TestAssertCustomImpl(this.actions);

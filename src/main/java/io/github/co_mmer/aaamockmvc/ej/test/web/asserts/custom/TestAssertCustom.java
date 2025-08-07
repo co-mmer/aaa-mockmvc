@@ -12,7 +12,10 @@ import org.springframework.test.web.servlet.ResultMatcher;
  * </ul>
  *
  * @since 1.1.0
+ * @deprecated This class is deprecated and will be removed in a future release. There is no direct
+ *     replacement.
  */
+@Deprecated(since = "1.6", forRemoval = true)
 public interface TestAssertCustom {
 
   /**
