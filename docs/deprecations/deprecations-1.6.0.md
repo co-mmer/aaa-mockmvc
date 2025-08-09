@@ -1,4 +1,4 @@
-# 🗑️ Deprecations in 1.6.0
+# 🌬️ Deprecations in 1.6.0
 
 Version **1.6.0** introduces a new unified naming convention for all `assert` methods to improve
 readability and consistency.  
