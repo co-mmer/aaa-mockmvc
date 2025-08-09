@@ -2,8 +2,8 @@
 
 ### Assert Content As Map 🔸 (New)
 
-- [Not Empty](#not-empty)
-- [Empty](#empty)
+- [IsNotEmpty](#not-empty)
+- [IsEmpty](#empty)
 - [Size](#size)
 - [Equals](#equals)
 
@@ -11,58 +11,58 @@
 
 ### Not Empty
 
-The **`assertMapNotEmpty`** method is used to verify that the map returned in the response is not
+The **`assertContentIsNotEmpty`** method is used to verify that the map returned in the response is
+not
 empty. This assertion ensures that the map contains at least one entry.
 
 ```
       get()
           ...
           .act()
-          .actPerform()
           .asserts()
           .assertContentAsMap()
-          .assertMapNotEmpty()
+          .assertContentIsNotEmpty()
 ```
 
 ---
 
 ### Empty
 
-The **`assertMapEmpty`** method is used to verify that the map returned in the response is empty.
+The **`assertContentIsEmpty`** method is used to verify that the map returned in the response is
+empty.
 This assertion ensures that the map does not contain any entries.
 
 ```
       get()
           ...
           .act()
-          .actPerform()
           .asserts()
           .assertContentAsMap()
-          .assertMapEmpty()
+          .assertContentIsEmpty()
 ```
 
 ---
 
 ### Size
 
-The **`assertMapSize`** method verifies that the map returned in the response contains the expected
+The **`assertContentSize`** method verifies that the map returned in the response contains the
+expected
 number of entries. This assertion ensures that the map size matches the specified value.
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsMap()
-      .assertMapSize(2)
+      .assertContentSize(2)
 ```
 
 ---
 
 ### Equals
 
-The **`assertMapEquals`** method is used to assert that the content of the response matches an
+The **`assertContentEquals`** method is used to assert that the content of the response matches an
 expected **`map`** of objects. This allows you to compare the returned map with a predefined one to
 ensure the correct key-value pairs are present.
 
@@ -92,10 +92,9 @@ ensure the correct key-value pairs are present.
   get()
     ...
     .act()
-    .actPerform()
     .asserts()
     .assertContentAsMap()
-    .assertMapEquals(Integer.class, DemoObject.class, Map.of(1, A1, 2, A2));
+    .assertContentEquals(Integer.class, DemoObject.class, Map.of(1, A1, 2, A2));
 
 ```
 

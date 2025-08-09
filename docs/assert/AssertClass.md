@@ -2,8 +2,8 @@
 
 ### Assert Content As Class 🔸 (New)
 
-- [Not Empty](#not-empty)
-- [Empty](#empty)
+- [isNotEmpty](#not-empty)
+- [isEmpty](#empty)
 - [Equals](#equals)
 - [Match All](#match-all)
 - [Match Any](#match-any)
@@ -13,41 +13,40 @@
 
 ### Not Empty
 
-In this example, the **`assertClassNotEmpty`** method is used to assert that the response content
+In this example, the **`assertContentIsNotEmpty`** method is used to assert that the response
+content
 is not empty.
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsClass()
-      .assertClassNotEmpty()
+      .assertContentIsNotEmpty()
 ```
 
 ---
 
 ### Empty
 
-In this example, the **`assertClassEmpty`** method is used to assert that the response content
+In this example, the **`assertContentIsEmpty`** method is used to assert that the response content
 is empty.
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsClass()
-      .assertClassEmpty()
+      .assertContentIsEmpty()
 ```
 
 ---
 
 ### Equals
 
-In this example, the **`assertClassEquals`** method is used to assert that the response content
+In this example, the **`assertContentEquals`** method is used to assert that the response content
 matches an expected object.
 
 ```
@@ -58,17 +57,16 @@ A1 = new DemoSimple(A, 1);
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsClass()
-      .assertClassEquals(DemoSimple.class, A1)
+      .assertContentEquals(DemoSimple.class, A1)
 ```
 
 ---
 
 ### Match All
 
-The **`assertClassMatchAll`** method is used to verify that **all specified conditions** are
+The **`assertContentMatchAll`** method is used to verify that **all specified conditions** are
 satisfied for the properties of a given class instance. This assertion allows for checking multiple
 attributes or conditions within the instance, ensuring the instance meets the defined criteria.
 
@@ -97,20 +95,18 @@ attributes or conditions within the instance, ensuring the instance meets the de
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsClass()
-      .assertClassMatchAll(DemoMatch.class, element -> element.name().equals(A));
+      .assertContentMatchAll(DemoMatch.class, element -> element.name().equals(A));
 ```
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsClass()
-      .assertClassMatchAll(DemoMatch.class,
+      .assertContentMatchAll(DemoMatch.class,
             element -> element.name().equals(A),
             element -> element.status().equals(NEW));
 ```
@@ -119,7 +115,7 @@ attributes or conditions within the instance, ensuring the instance meets the de
 
 ### Match Any
 
-The **`assertClassMatchAny`** method is used to verify that **at least one of the specified
+The **`assertContentMatchAny`** method is used to verify that **at least one of the specified
 conditions** is satisfied for the properties of a given class instance. This assertion allows for
 checking multiple attributes or conditions within the instance, passing if **any single condition**
 is met.
@@ -149,20 +145,18 @@ is met.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsClass()
-      .assertClassMatchAny(DemoMatch.class, element -> element.name().equals(A));
+      .assertContentMatchAny(DemoMatch.class, element -> element.name().equals(A));
 ```
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsClass()
-      .assertClassMatchAny(DemoMatch.class,
+      .assertContentMatchAny(DemoMatch.class,
             element -> element.name().equals(A),
             element -> element.status().equals(CLOSE));
 ```
@@ -171,7 +165,7 @@ is met.
 
 ### Match None
 
-The **`assertClassMatchNone`** method is used to verify that **none of the specified conditions**
+The **`assertContentMatchNone`** method is used to verify that **none of the specified conditions**
 are satisfied for the properties of a given class instance. This assertion ensures that the instance
 does not meet any of the defined criteria.
 
@@ -200,20 +194,18 @@ does not meet any of the defined criteria.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsClass()
-      .assertClassMatchNone(DemoMatch.class, element -> element.name().equals(B));
+      .assertContentMatchNone(DemoMatch.class, element -> element.name().equals(B));
 ```
 
 ```
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsClass()
-      .assertClassMatchNone(DemoMatch.class,
+      .assertContentMatchNone(DemoMatch.class,
             element -> element.name().equals(B),
             element -> element.status().equals(CLOSE));
 ```

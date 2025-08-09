@@ -2,16 +2,16 @@
 
 ### Assert Byte
 
-- [Not Empty](#not-empty)
-- [Empty](#empty)
+- [IsNotEmpty](#isNotEmpty)
+- [IsEmpty](#isEmpty)
 - [Length](#length)
 - [Equals](#equals)
 
 ---
 
-### Not Empty
+### isNotEmpty
 
-In this example, the **`assertByteNotEmpty`** method is used to assert that the response byte
+In this example, the **`assertContentIsNotEmpty`** method is used to assert that the response byte
 is not empty.
 
 ```
@@ -21,14 +21,14 @@ is not empty.
       .actPerform()
       .asserts()
       .assertContentAsByte()
-      .assertByteNotEmpty()
+      .assertContentIsNotEmpty()
 ```
 
 ---
 
-### Empty
+### isEmpty
 
-In this example, the **`assertByteEmpty`** method is used to assert that the response byte
+In this example, the **`assertContentIsEmpty`** method is used to assert that the response byte
 is empty.
 
 ```
@@ -38,14 +38,15 @@ is empty.
       .actPerform()
       .asserts()
       .assertContentAsByte()
-      .assertByteEmpty()
+      .assertContentIsEmpty()
 ```
 
 ---
 
 ### Length
 
-In this example, the **`assertByteLength`** method is used to verify the expected byte length of the
+In this example, the **`assertContentLength`** method is used to verify the expected byte length of
+the
 response.
 
 ```
@@ -55,14 +56,14 @@ response.
       .actPerform()
       .asserts()
       .assertContentAsByte()
-      .assertByteLength(5)
+      .assertContentLength(5)
 ```
 
 ---
 
 ### Equals
 
-In this example, the **`assertByteEquals`** method is used to assert that the response byte
+In this example, the **`assertContentEquals`** method is used to assert that the response byte
 matches an expected byte array.
 
 ```
@@ -72,7 +73,7 @@ matches an expected byte array.
       .actPerform()
       .asserts()
       .assertContentAsByte()
-      .assertByteEquals(EXPECTED_BYTE_ARRAY)
+      .assertContentEquals(EXPECTED_BYTE_ARRAY)
 ```
 
 ---

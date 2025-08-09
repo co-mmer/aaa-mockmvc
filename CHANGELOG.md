@@ -2,6 +2,19 @@
 
 # Changelog
 
+## [1.6.0]
+
+### 🧹 Improvements
+
+- Removed all `actPerform()` calls to simplify the test "Act" step.
+- Introduced new unified `assert` method names (`assertContent...`) for improved readability and
+  consistency.
+- Old method names have been marked as deprecated and will be removed in **2.0.0**.
+- See [Deprecations in 1.6.0](docs/deprecations/deprecations-1.6.0.md) for the full list of renamed
+  methods.
+
+---
+
 ## [1.5.0]
 
 ### ✨ New Features

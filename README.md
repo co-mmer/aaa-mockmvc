@@ -23,7 +23,7 @@ step-by-step API, ensuring a consistent and intuitive test structure. Common tas
 request setup, ObjectMapper-based serialization, and response assertions are fully abstracted,
 allowing developers to focus on the test logic itself rather than technical overhead.
 
-<img src="images/aaa-mockmvc-example1.png" alt="aaa-mockmvc-example"/>
+<img src="images/aaa-mockmvc-example2.png" alt="aaa-mockmvc-example"/>
 
 ___
 
@@ -48,7 +48,7 @@ documentation of the classes.
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.5.0</version>
+  <version>1.6.0</version>
   <scope>test</scope>
 </dependency>
 
@@ -84,10 +84,9 @@ class ExampleIT extends AAAMockMvcAbstract {
         .arrange()
         .arrangeUrl(GET_EXAMPLE)
         .act()
-        .actPerform()
         .asserts()
         .assertContentAsClass()
-        .assertClassMatchAll(SimpleObject.class, obj -> obj.countryCode().equals("de"));
+        .assertContentMatchAll(SimpleObject.class, obj -> obj.countryCode().equals("de"));
   }
 }
 ```
@@ -141,10 +140,9 @@ class ExampleIT extends AAAMockMvcAbstract {
         .arrange()
         .arrangeUrl(GET_EXAMPLE)
         .act()
-        .actPerform()
         .asserts()
         .assertContentAsClass()
-        .assertClassMatchAll(SimpleObject.class, obj -> obj.countryCode().equals("DE"));
+        .assertContentMatchAll(SimpleObject.class, obj -> obj.countryCode().equals("DE"));
   }
 }
 ```
@@ -378,7 +376,6 @@ void GIVEN_valid_code_WHEN_registration_THEN_status_201() {
       .arrangeBody()
       .arrangeJson(verificationRequest)
       .act()
-      .actPerform()
       .answer()
       .answerAsObject(VerificationResponse.class);
 
@@ -397,7 +394,6 @@ void GIVEN_valid_code_WHEN_registration_THEN_status_201() {
       .arrangeBody()
       .arrangeJson(registrationRequest)
       .act()
-      .actPerform()
       .asserts()
       .assertStatus()
       .assertStatusIsCreated();
