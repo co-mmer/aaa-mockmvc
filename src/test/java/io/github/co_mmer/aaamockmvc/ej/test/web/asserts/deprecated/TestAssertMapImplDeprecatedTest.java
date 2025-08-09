@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.deprecated;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer.normalizeMap;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.utils.StringUtils.EMPTY;
@@ -20,6 +20,7 @@ import static org.mockito.Mockito.times;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertMapImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
@@ -38,7 +39,7 @@ import org.mockito.Mockito;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.test.web.servlet.ResultActions;
 
-class TestAssertMapImplTest extends TestAssertBase {
+class TestAssertMapImplDeprecatedTest extends TestAssertBase {
 
   private TestAssertMapImpl testAssert;
 
@@ -69,40 +70,40 @@ class TestAssertMapImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentIsNotEmpty {
+  class assertMapNotEmpty {
 
     @Test
-    void GIVEN_expected_WHEN_assertContentIsNotEmpty_THEN_assert_true() throws Exception {
+    void GIVEN_expected_WHEN_assertMapNotEmpty_THEN_assert_true() throws Exception {
       // Arrange
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertContentIsNotEmpty();
+      testAssert.assertMapNotEmpty();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {EMPTY, EMPTY_OBJECT})
-    void GIVEN_empty_WHEN_assertContentIsNotEmpty_THEN_assert_false(String value) throws Exception {
+    void GIVEN_empty_WHEN_assertMapNotEmpty_THEN_assert_false(String value) throws Exception {
       // Arrange
       useServerWithResponse(value);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertContentIsNotEmpty);
+      assertThrows(AssertionError.class, testAssert::assertMapNotEmpty);
     }
 
     @Test
-    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_assert_false() throws Exception {
+    void GIVEN_exception_WHEN_assertMapNotEmpty_THEN_assert_false() throws Exception {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertException::assertContentIsNotEmpty);
+      assertThrows(AssertionError.class, testAssertException::assertMapNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertMapNotEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -110,7 +111,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentIsNotEmpty();
+      testAssertException.assertMapNotEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -119,40 +120,40 @@ class TestAssertMapImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentEmpty {
+  class assertMapEmpty {
 
     @ParameterizedTest
     @ValueSource(strings = {EMPTY, EMPTY_OBJECT})
-    void GIVEN_expected_WHEN_assertContentIsEmpty_THEN_assert_true(String value) throws Exception {
+    void GIVEN_expected_WHEN_assertMapEmpty_THEN_assert_true(String value) throws Exception {
       // Arrange
       useServerWithResponse(value);
 
       // Act & Assert
-      testAssert.assertContentIsEmpty();
+      testAssert.assertMapEmpty();
     }
 
     @Test
-    void GIVEN_unexpected_WHEN_assertContentIsEmpty_THEN_return_assert_false() throws Exception {
+    void GIVEN_unexpected_WHEN_assertMapEmpty_THEN_return_assert_false() throws Exception {
       // Arrange
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertContentIsEmpty);
+      assertThrows(AssertionError.class, testAssert::assertMapEmpty);
     }
 
     @Test
-    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_assert_false() throws Exception {
+    void GIVEN_exception_WHEN_assertMapEmpty_THEN_assert_false() throws Exception {
       // Arrange
       useServerWithStringException();
       var testAssertMap = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertMap::assertContentIsEmpty);
+      assertThrows(AssertionError.class, testAssertMap::assertMapEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertMapEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -160,7 +161,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentIsEmpty();
+      testAssertException.assertMapEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -169,48 +170,44 @@ class TestAssertMapImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentEquals {
+  class assertMapEquals {
 
     @Test
-    void GIVEN_expected_map_WHEN_assertContentEquals_THEN_assert_is_true() throws Exception {
+    void GIVEN_expected_map_WHEN_assertMapEquals_THEN_assert_is_true() throws Exception {
       // Arrange
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertContentEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
+      testAssert.assertMapEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
     }
 
     @Test
-    void GIVEN_unexpected_map_WHEN_assertContentEquals_THEN_assert_is_false() throws Exception {
+    void GIVEN_unexpected_map_WHEN_assertMapEquals_THEN_assert_is_false() throws Exception {
       // Arrange
       useServerWithResponse(TEST_SET_A1_A2_JSON);
 
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () ->
-              testAssert.assertContentEquals(
-                  Boolean.class, TestObjectSimple.class, TEST_MAP_A1_A3));
+          () -> testAssert.assertMapEquals(Boolean.class, TestObjectSimple.class, TEST_MAP_A1_A3));
     }
 
     @Test
-    void GIVEN_exception_map_WHEN_assertContentEquals_THEN_assert_is_false() {
+    void GIVEN_exception_map_WHEN_assertMapEquals_THEN_assert_is_false() {
       // Arrange
       var mockTestGenericMapper = MockTestGenericMapper.mapToMapThrowException();
 
       // Act & Assert
       assertThrows(
           AssertionFailedError.class,
-          () ->
-              testAssert.assertContentEquals(
-                  Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2));
+          () -> testAssert.assertMapEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2));
 
       mockTestGenericMapper.close();
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentEquals_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertMapEquals_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -218,8 +215,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentEquals(
-          Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
+      testAssertException.assertMapEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -227,13 +223,13 @@ class TestAssertMapImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_map_WHEN_assertContentEquals_THEN_normalizeMap_is_called() throws Exception {
+    void GIVEN_map_WHEN_assertMapEquals_THEN_normalizeMap_is_called() throws Exception {
       // Arrange
       var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act
-      testAssert.assertContentEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
+      testAssert.assertMapEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeMap(any()), times(2));
@@ -244,7 +240,7 @@ class TestAssertMapImplTest extends TestAssertBase {
     @MethodSource("provideNullParameters")
     @SneakyThrows
     @SuppressWarnings("all")
-    void GIVEN_null_as_expectedMap_WHEN_assertContentEquals_THEN_throw_NullPointerException(
+    void GIVEN_null_as_expectedMap_WHEN_assertMapEquals_THEN_throw_NullPointerException(
         Class<Integer> keyClass,
         Class<TestObjectSimple> valueClass,
         Map<Integer, TestObjectSimple> expectedMap) {
@@ -255,7 +251,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           NullPointerException.class,
-          () -> testAssertException.assertContentEquals(keyClass, valueClass, expectedMap));
+          () -> testAssertException.assertMapEquals(keyClass, valueClass, expectedMap));
     }
 
     private static Stream<Arguments> provideNullParameters() {
@@ -267,40 +263,40 @@ class TestAssertMapImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentSize {
+  class assertMapSize {
 
     @Test
-    void GIVEN_expected_WHEN_assertContentSize_THEN_assert_is_true() throws Exception {
+    void GIVEN_expected_WHEN_assertMapSize_THEN_assert_is_true() throws Exception {
       // Arrange
       useServerWithResponse(TEST_MAP_A1_A3_JSON);
 
       // Act & Assert
-      testAssert.assertContentSize(2);
+      testAssert.assertMapSize(2);
     }
 
     @Test
-    void GIVEN_unexpected_WHEN_assertContentSize_THEN_assert_is_false() throws Exception {
+    void GIVEN_unexpected_WHEN_assertMapSize_THEN_assert_is_false() throws Exception {
       // Arrange
       useResultAssertionError();
       var testAssertMap = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssertMap.assertContentSize(1));
+      assertThrows(AssertionError.class, () -> testAssertMap.assertMapSize(1));
     }
 
     @Test
-    void GIVEN_exception_WHEN_assertContentSize_THEN_assert_is_false() throws Exception {
+    void GIVEN_exception_WHEN_assertMapSize_THEN_assert_is_false() throws Exception {
       // Arrange
       useResultException();
       var testAssertMap = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, () -> testAssertMap.assertContentSize(1));
+      assertThrows(AssertionFailedError.class, () -> testAssertMap.assertMapSize(1));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentSize_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertMapSize_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -308,7 +304,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentSize(1);
+      testAssertException.assertMapSize(1);
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -333,32 +329,32 @@ class TestAssertMapImplTest extends TestAssertBase {
   }
 
   @Nested
-  class combinationIsNotEmpty {
+  class combinationNotEmpty {
 
     @Test
     @SneakyThrows
-    void isNotEmpty_equals() {
+    void not_empty__equals() {
       // Arrange
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
       testAssert
-          .assertContentIsNotEmpty()
-          .assertContentEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
+          .assertMapNotEmpty()
+          .assertMapEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
     }
   }
 
   @Nested
-  class combinationIsEmpty {
+  class combinationEmpty {
 
     @Test
     @SneakyThrows
-    void isEmpty_head() {
+    void empty__head() {
       // Arrange
       useServerWithResponse(TEST_MAP_EMPTY_JSON);
 
       // Act & Assert
-      testAssert.assertContentIsEmpty().assertHead();
+      testAssert.assertMapEmpty().assertHead();
     }
   }
 
@@ -367,24 +363,24 @@ class TestAssertMapImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void size_equals() {
+    void size__equals() {
       // Arrange
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
       testAssert
-          .assertContentSize(2)
-          .assertContentEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
+          .assertMapSize(2)
+          .assertMapEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
     }
 
     @Test
     @SneakyThrows
-    void size_head() {
+    void size__head() {
       // Arrange
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertContentSize(2).assertHead();
+      testAssert.assertMapSize(2).assertHead();
     }
   }
 }
