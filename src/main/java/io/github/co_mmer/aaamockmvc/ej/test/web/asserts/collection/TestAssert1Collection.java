@@ -8,9 +8,9 @@ import lombok.NonNull;
  * Provides assertion methods for validating HTTP response collections and maps.
  *
  * <ul>
- *   <li>{@link #assertContentIsNotEmpty()}: Asserts that the collection in the HTTP response is not
+ *   <li>{@link #assertContentNotEmpty()}: Asserts that the collection in the HTTP response is not
  *       empty.
- *   <li>{@link #assertContentIsEmpty()}: Asserts that the collection in the HTTP response is empty.
+ *   <li>{@link #assertContentEmpty()}: Asserts that the collection in the HTTP response is empty.
  *   <li>{@link #assertContentSize(int)}: Asserts that the size of the collection in the HTTP
  *       response matches the given size.
  *   <li>{@link #assertContentEquals(Class, Collection)}: Asserts that the content of the HTTP
@@ -53,7 +53,7 @@ public interface TestAssert1Collection {
    *     based on the current state.
    * @throws AssertionError if the response collection is empty or invalid
    * @since 1.4.0
-   * @deprecated Use {@link #assertContentIsNotEmpty} instead.
+   * @deprecated Use {@link #assertContentNotEmpty} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   TestAssert2Collection assertCollectionNotEmpty();
@@ -68,7 +68,7 @@ public interface TestAssert1Collection {
    *     based on the current state.
    * @throws AssertionError if the response collection is not empty
    * @since 1.4.0
-   * @deprecated Use {@link #assertContentIsEmpty} instead.
+   * @deprecated Use {@link #assertContentEmpty} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   TestAssertLCollection assertCollectionEmpty();
@@ -384,7 +384,7 @@ public interface TestAssert1Collection {
    * @throws AssertionError if the collection is empty
    * @since 1.6.0
    */
-  TestAssert2Collection assertContentIsNotEmpty();
+  TestAssert2Collection assertContentNotEmpty();
 
   /**
    * Asserts that the collection is empty.
@@ -397,7 +397,7 @@ public interface TestAssert1Collection {
    * @throws AssertionError if the collection is not empty
    * @since 1.6.0
    */
-  TestAssertLCollection assertContentIsEmpty();
+  TestAssertLCollection assertContentEmpty();
 
   /**
    * Asserts that the collection has the specified size.

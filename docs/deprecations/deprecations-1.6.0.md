@@ -16,22 +16,22 @@ The old method names are **deprecated** as of 1.6.0 and will be removed in **2.0
 
 | Old Method Name                    | New Method Name                 |
 |------------------------------------|---------------------------------|
-| `assertStringNotEmpty`             | `assertContentIsNotEmpty`       |
-| `assertStringEmpty`                | `assertContentIsEmpty`          |
+| `assertStringNotEmpty`             | `assertContentNotEmpty`         |
+| `assertStringEmpty`                | `assertContentEmpty`            |
 | `assertStringLength`               | `assertContentLength`           |
 | `assertStringEquals`               | `assertContentEquals`           |
-| `assertByteNotEmpty`               | `assertContentIsNotEmpty`       |
-| `assertByteEmpty`                  | `assertContentIsEmpty`          |
+| `assertByteNotEmpty`               | `assertContentNotEmpty`         |
+| `assertByteEmpty`                  | `assertContentEmpty`            |
 | `assertByteLength`                 | `assertContentLength`           |
 | `assertByteEquals`                 | `assertContentEquals`           |
-| `assertClassNotEmpty`              | `assertContentIsNotEmpty`       |
-| `assertClassEmpty`                 | `assertContentIsEmpty`          |
+| `assertClassNotEmpty`              | `assertContentNotEmpty`         |
+| `assertClassEmpty`                 | `assertContentEmpty`            |
 | `assertClassEquals`                | `assertContentEquals`           |
 | `assertClassMatchAll`              | `assertContentMatchAll`         |
 | `assertClassMatchAny`              | `assertContentMatchAny`         |
 | `assertClassMatchNone`             | `assertContentMatchNone`        |
-| `assertCollectionNotEmpty`         | `assertContentIsNotEmpty`       |
-| `assertCollectionEmpty`            | `assertContentIsEmpty`          |
+| `assertCollectionNotEmpty`         | `assertContentNotEmpty`         |
+| `assertCollectionEmpty`            | `assertContentEmpty`            |
 | `assertCollectionSize`             | `assertContentSize`             |
 | `assertCollectionEquals`           | `assertContentEquals`           |
 | `assertCollectionContains`         | `assertContentContains`         |
@@ -40,8 +40,8 @@ The old method names are **deprecated** as of 1.6.0 and will be removed in **2.0
 | `assertCollectionMatchAll`         | `assertContentMatchAll`         |
 | `assertCollectionMatchAny`         | `assertContentMatchAny`         |
 | `assertCollectionMatchNone`        | `assertContentMatchNone`        |
-| `assertMapNotEmpty`                | `assertContentIsNotEmpty`       |
-| `assertMapEmpty`                   | `assertContentIsEmpty`          |
+| `assertMapNotEmpty`                | `assertContentNotEmpty`         |
+| `assertMapEmpty`                   | `assertContentEmpty`            |
 | `assertMapSize`                    | `assertContentSize`             |
 | `assertMapEquals`                  | `assertContentEquals`           |
 

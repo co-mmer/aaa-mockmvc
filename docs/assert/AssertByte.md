@@ -2,16 +2,16 @@
 
 ### Assert Byte
 
-- [IsNotEmpty](#isNotEmpty)
-- [IsEmpty](#isEmpty)
+- [Not Empty](#Not-Empty)
+- [Empty](#Empty)
 - [Length](#length)
 - [Equals](#equals)
 
 ---
 
-### isNotEmpty
+### Not Empty
 
-In this example, the **`assertContentIsNotEmpty`** method is used to assert that the response byte
+In this example, the **`assertContentNotEmpty`** method is used to assert that the response byte
 is not empty.
 
 ```
@@ -21,14 +21,14 @@ is not empty.
       .actPerform()
       .asserts()
       .assertContentAsByte()
-      .assertContentIsNotEmpty()
+      .assertContentNotEmpty()
 ```
 
 ---
 
-### isEmpty
+### Empty
 
-In this example, the **`assertContentIsEmpty`** method is used to assert that the response byte
+In this example, the **`assertContentEmpty`** method is used to assert that the response byte
 is empty.
 
 ```
@@ -38,7 +38,7 @@ is empty.
       .actPerform()
       .asserts()
       .assertContentAsByte()
-      .assertContentIsEmpty()
+      .assertContentEmpty()
 ```
 
 ---

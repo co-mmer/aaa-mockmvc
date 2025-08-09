@@ -20,9 +20,8 @@ import org.springframework.test.web.servlet.ResultActions;
  * Provides methods for asserting HTTP response content in tests.
  *
  * <ul>
- *   <li>{@link #assertContentIsNotEmpty()}: Asserts that the class of the HTTP response is not
- *       empty.
- *   <li>{@link #assertContentIsEmpty()}: Asserts that the class of the HTTP response is empty.
+ *   <li>{@link #assertContentNotEmpty()}: Asserts that the class of the HTTP response is not empty.
+ *   <li>{@link #assertContentEmpty()}: Asserts that the class of the HTTP response is empty.
  *   <li>{@link #assertContentEquals(Class, Object)}: Asserts that the class of the HTTP response
  *       matches the expected object.
  *   <li>{@link #assertContentMatchAll(Class, Predicate)}: Asserts that the class matches all
@@ -78,12 +77,12 @@ public final class TestAssertClassImpl
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
    *     based on the current state.
    * @since 1.4.0
-   * @deprecated Use {@link #assertContentIsNotEmpty()} instead.
+   * @deprecated Use {@link #assertContentNotEmpty()} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   @Override
   public TestAssert2Class assertClassNotEmpty() {
-    assertContentIsNotEmpty();
+    assertContentNotEmpty();
     return this;
   }
 
@@ -96,12 +95,12 @@ public final class TestAssertClassImpl
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
    *     based on the current state.
    * @since 1.4.0
-   * @deprecated Use {@link #assertContentIsEmpty()} instead.
+   * @deprecated Use {@link #assertContentEmpty()} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   @Override
   public TestAssertLClass assertClassEmpty() {
-    assertContentIsEmpty();
+    assertContentEmpty();
     return this;
   }
 
@@ -287,7 +286,7 @@ public final class TestAssertClassImpl
    * @since 1.6.0
    */
   @Override
-  public TestAssert2Class assertContentIsNotEmpty() {
+  public TestAssert2Class assertContentNotEmpty() {
     try {
       assertThat(this.response.getContentAsString().isEmpty(), is(false));
     } catch (Exception e) {
@@ -307,7 +306,7 @@ public final class TestAssertClassImpl
    * @since 1.6.0
    */
   @Override
-  public TestAssertLClass assertContentIsEmpty() {
+  public TestAssertLClass assertContentEmpty() {
     try {
       assertThat(this.response.getContentAsString().isEmpty(), is(true));
     } catch (Exception e) {

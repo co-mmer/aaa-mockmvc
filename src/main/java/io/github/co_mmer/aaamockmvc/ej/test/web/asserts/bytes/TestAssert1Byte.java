@@ -4,12 +4,12 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
  * Provides methods for asserting HTTP response byte content in tests.
  *
  * <ul>
- *   <li>{@link #assertContentIsNotEmpty()}: Asserts that the byte array content of the HTTP
- *       response is not empty.
+ *   <li>{@link #assertContentNotEmpty()}: Asserts that the byte array content of the HTTP response
+ *       is not empty.
  *   <li>{@link #assertContentLength(int)}: Asserts that the length of the byte array matches the
  *       specified length.
- *   <li>{@link #assertContentIsEmpty()}: Asserts that the byte array content of the HTTP response
- *       is empty.
+ *   <li>{@link #assertContentEmpty()}: Asserts that the byte array content of the HTTP response is
+ *       empty.
  *   <li>{@link #assertContentEquals(byte[])}: Asserts that the byte array content of the HTTP
  *       response matches the expected byte array.
  * </ul>
@@ -27,7 +27,7 @@ public interface TestAssert1Byte {
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
    *     based on the current state.
    * @since 1.4.0
-   * @deprecated Use {@link #assertContentIsNotEmpty()} instead.
+   * @deprecated Use {@link #assertContentNotEmpty()} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   TestAssert2Byte assertByteNotEmpty();
@@ -41,7 +41,7 @@ public interface TestAssert1Byte {
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
    *     based on the current state.
    * @since 1.4.0
-   * @deprecated Use {@link #assertContentIsEmpty()} instead.
+   * @deprecated Use {@link #assertContentEmpty()} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   TestAssertLByte assertByteEmpty();
@@ -91,7 +91,7 @@ public interface TestAssert1Byte {
    *     based on the current state.
    * @since 1.6.0
    */
-  TestAssert2Byte assertContentIsNotEmpty();
+  TestAssert2Byte assertContentNotEmpty();
 
   /**
    * Asserts that the byte array content of the HTTP response is empty.
@@ -103,7 +103,7 @@ public interface TestAssert1Byte {
    *     based on the current state.
    * @since 1.6.0
    */
-  TestAssertLByte assertContentIsEmpty();
+  TestAssertLByte assertContentEmpty();
 
   /**
    * Asserts that the length of the byte array content of the HTTP response matches the specified

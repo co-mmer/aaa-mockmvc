@@ -2,8 +2,8 @@
 
 ### Assert Content As Class 🔸 (New)
 
-- [isNotEmpty](#not-empty)
-- [isEmpty](#empty)
+- [Not Empty](#not-empty)
+- [Empty](#empty)
 - [Equals](#equals)
 - [Match All](#match-all)
 - [Match Any](#match-any)
@@ -13,7 +13,7 @@
 
 ### Not Empty
 
-In this example, the **`assertContentIsNotEmpty`** method is used to assert that the response
+In this example, the **`assertContentNotEmpty`** method is used to assert that the response
 content
 is not empty.
 
@@ -23,14 +23,14 @@ is not empty.
       .act()
       .asserts()
       .assertContentAsClass()
-      .assertContentIsNotEmpty()
+      .assertContentNotEmpty()
 ```
 
 ---
 
 ### Empty
 
-In this example, the **`assertContentIsEmpty`** method is used to assert that the response content
+In this example, the **`assertContentEmpty`** method is used to assert that the response content
 is empty.
 
 ```
@@ -39,7 +39,7 @@ is empty.
       .act()
       .asserts()
       .assertContentAsClass()
-      .assertContentIsEmpty()
+      .assertContentEmpty()
 ```
 
 ---

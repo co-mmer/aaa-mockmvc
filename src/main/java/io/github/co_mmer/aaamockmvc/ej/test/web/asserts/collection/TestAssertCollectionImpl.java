@@ -31,9 +31,9 @@ import org.springframework.test.web.servlet.ResultActions;
  * Provides assertion methods for validating HTTP response collections and maps.
  *
  * <ul>
- *   <li>{@link #assertContentIsNotEmpty()}: Asserts that the collection in the HTTP response is not
+ *   <li>{@link #assertContentNotEmpty()}: Asserts that the collection in the HTTP response is not
  *       empty.
- *   <li>{@link #assertContentIsEmpty()}: Asserts that the collection in the HTTP response is empty.
+ *   <li>{@link #assertContentEmpty()}: Asserts that the collection in the HTTP response is empty.
  *   <li>{@link #assertContentSize(int)}: Asserts that the size of the collection in the HTTP
  *       response matches the given size.
  *   <li>{@link #assertContentEquals(Class, Collection)}: Asserts that the content of the HTTP
@@ -105,12 +105,12 @@ public final class TestAssertCollectionImpl
    *     based on the current state.
    * @throws AssertionError if the response collection is empty or invalid
    * @since 1.4.0
-   * @deprecated Use {@link #assertContentIsNotEmpty} instead.
+   * @deprecated Use {@link #assertContentNotEmpty} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   @Override
   public TestAssert2Collection assertCollectionNotEmpty() {
-    assertContentIsNotEmpty();
+    assertContentNotEmpty();
     return this;
   }
 
@@ -124,12 +124,12 @@ public final class TestAssertCollectionImpl
    *     based on the current state.
    * @throws AssertionError if the response collection is not empty
    * @since 1.4.0
-   * @deprecated Use {@link #assertContentIsEmpty} instead.
+   * @deprecated Use {@link #assertContentEmpty} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   @Override
   public TestAssertLCollection assertCollectionEmpty() {
-    assertContentIsEmpty();
+    assertContentEmpty();
     return this;
   }
 
@@ -539,7 +539,7 @@ public final class TestAssertCollectionImpl
    * @since 1.6.0
    */
   @Override
-  public TestAssert2Collection assertContentIsNotEmpty() {
+  public TestAssert2Collection assertContentNotEmpty() {
     try {
       assertThat(this.response.getContentAsString(), not(anyOf(is(EMPTY), is(EMPTY_ARRAY))));
     } catch (Exception e) {
@@ -560,7 +560,7 @@ public final class TestAssertCollectionImpl
    * @since 1.6.0
    */
   @Override
-  public TestAssertLCollection assertContentIsEmpty() {
+  public TestAssertLCollection assertContentEmpty() {
     try {
       assertThat(this.response.getContentAsString(), anyOf(is(EMPTY), is(EMPTY_ARRAY)));
     } catch (Exception e) {

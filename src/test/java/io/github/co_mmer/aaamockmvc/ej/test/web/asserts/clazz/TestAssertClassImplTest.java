@@ -76,42 +76,42 @@ class TestAssertClassImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentIsNotEmpty {
+  class assertContentNotEmpty {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentIsNotEmpty_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertContentNotEmpty_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentIsNotEmpty();
+      testAssertClass.assertContentNotEmpty();
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentIsNotEmpty_THEN_assert_false() {
+    void GIVEN_unexpected_WHEN_assertContentNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithResponse(EMPTY);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertClass::assertContentIsNotEmpty);
+      assertThrows(AssertionError.class, testAssertClass::assertContentNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertException::assertContentIsNotEmpty);
+      assertThrows(AssertionError.class, testAssertException::assertContentNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentNotEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -119,7 +119,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentIsNotEmpty();
+      testAssertException.assertContentNotEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -128,42 +128,42 @@ class TestAssertClassImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentIsEmpty {
+  class assertContentEmpty {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentIsEmpty_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertContentEmpty_THEN_assert_true() {
       // Arrange
       useServerWithResponse(EMPTY);
 
       // Act & Assert
-      testAssertClass.assertContentIsEmpty();
+      testAssertClass.assertContentEmpty();
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentIsEmpty_THEN_return_assert_false() {
+    void GIVEN_unexpected_WHEN_assertContentEmpty_THEN_return_assert_false() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertClass::assertContentIsEmpty);
+      assertThrows(AssertionError.class, testAssertClass::assertContentEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertException::assertContentIsEmpty);
+      assertThrows(AssertionError.class, testAssertException::assertContentEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -171,7 +171,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       var testAssertException = new TestAssertClassImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentIsEmpty();
+      testAssertException.assertContentEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -798,118 +798,118 @@ class TestAssertClassImplTest extends TestAssertBase {
   }
 
   @Nested
-  class combinationIsNotEmpty {
+  class combinationNotEmpty {
 
     @Test
     @SneakyThrows
-    void isNotEmpty_equals() {
+    void notEmpty_equals() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentIsNotEmpty().assertContentEquals(TestObjectSimple.class, A1);
+      testAssertClass.assertContentNotEmpty().assertContentEquals(TestObjectSimple.class, A1);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_matchAll() {
+    void notEmpty_matchAll() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       testAssertClass
-          .assertContentIsNotEmpty()
+          .assertContentNotEmpty()
           .assertContentMatchAll(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
     }
 
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void isNotEmpty_matchAll_vararg() {
+    void notEmpty_matchAll_vararg() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       testAssertClass
-          .assertContentIsNotEmpty()
+          .assertContentNotEmpty()
           .assertContentMatchAll(
               TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_matchAny() {
+    void notEmpty_matchAny() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       testAssertClass
-          .assertContentIsNotEmpty()
+          .assertContentNotEmpty()
           .assertContentMatchAny(TestObjectSimple.class, PREDICATE_NAME_EQUALS_A);
     }
 
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void isNotEmpty_matchAny_vararg() {
+    void notEmpty_matchAny_vararg() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       testAssertClass
-          .assertContentIsNotEmpty()
+          .assertContentNotEmpty()
           .assertContentMatchAny(
               TestObjectSimple.class, PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_matchNone() {
+    void notEmpty_matchNone() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       testAssertClass
-          .assertContentIsNotEmpty()
+          .assertContentNotEmpty()
           .assertContentMatchNone(TestObjectSimple.class, element -> element.name().equals(B));
     }
 
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void isNotEmpty_matchNone_vararg() {
+    void notEmpty_matchNone_vararg() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
       testAssertClass
-          .assertContentIsNotEmpty()
+          .assertContentNotEmpty()
           .assertContentMatchNone(
               TestObjectSimple.class, element -> element.name().equals(B), PREDICATE_ID_EQUALS_2);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_head() {
+    void notEmpty_head() {
       // Arrange
       useServerWithResponse(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertClass.assertContentIsNotEmpty().assertHead();
+      testAssertClass.assertContentNotEmpty().assertHead();
     }
   }
 
   @Nested
-  class combinationIsEmpty {
+  class combinationEmpty {
 
     @Test
     @SneakyThrows
-    void isEmpty_head() {
+    void empty_head() {
       // Arrange
       useServerWithResponse(EMPTY);
 
       // Act & Assert
-      testAssertClass.assertContentIsEmpty().assertHead();
+      testAssertClass.assertContentEmpty().assertHead();
     }
   }
 

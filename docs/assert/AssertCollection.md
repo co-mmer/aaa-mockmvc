@@ -2,8 +2,8 @@
 
 ### Assert Content As Collection 🔸 (New)
 
-- [isNotEmpty](#not-empty)
-- [isEmpty](#empty)
+- [Not Empty](#not-empty)
+- [Empty](#empty)
 - [Size](#size)
 - [Equals](#equals)
 - [Contains Any Order](#contains-any-order)
@@ -17,7 +17,7 @@
 
 ### Not Empty
 
-The **`assertContentIsNotEmpty`** method verifies that the collection returned in the response is
+The **`assertContentNotEmpty`** method verifies that the collection returned in the response is
 **not** empty. If it is needed, it must be called first. Once invoked, other collection-related
 assertions can follow. However, if any other assertCollection methods are called before
 assertCollectionNotEmpty, the framework will not provide this method again, as it ensures that only
@@ -29,14 +29,14 @@ methods which are contextually appropriate are available.
           .act()
           .asserts()
           .assertContentAsCollection()
-          .assertContentIsNotEmpty()
+          .assertContentNotEmpty()
 ```
 
 ---
 
 ### Empty
 
-The **`assertContentIsEmpty`**  method verifies that the collection returned in the response is
+The **`assertContentEmpty`**  method verifies that the collection returned in the response is
 empty. After this assertion, no further collection-related assertions can be performed, as it would
 be semantically incorrect to validate additional properties on an empty result.
 
@@ -46,7 +46,7 @@ be semantically incorrect to validate additional properties on an empty result.
           .act()
           .asserts()
           .assertContentAsCollection()
-          .assertContentIsEmpty();
+          .assertContentEmpty();
 ```
 
 ---

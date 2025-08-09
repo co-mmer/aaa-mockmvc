@@ -2,7 +2,7 @@
 
 ### Assert Content As String
 
-- [isNotEmpty](#not-empty)
+- [Not Empty](#not-empty)
 - [Empty](#empty)
 - [Length](#length)
 - [Equals ](#equals)
@@ -20,14 +20,14 @@ is not empty.
       .act()
       .asserts()
       .assertContentAsString()
-      .assertContentIsNotEmpty()
+      .assertContentNotEmpty()
 ```
 
 ---
 
 ### Empty
 
-In this example, the **`assertContentIsEmpty`** method is used to assert that the response content
+In this example, the **`assertContentEmpty`** method is used to assert that the response content
 is empty.
 
 ```
@@ -36,7 +36,7 @@ is empty.
       .act()
       .asserts()
       .assertContentAsString()
-      .assertContentIsEmpty()
+      .assertContentEmpty()
 ```
 
 ---

@@ -379,43 +379,43 @@ class TestAssertByteImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentIsNotEmpty {
+  class assertContentNotEmpty {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentIsNotEmpty_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertContentNotEmpty_THEN_assert_true() {
       // Arrange
       useServerWithResponse(ACTUAL_CONTENT);
 
       // Act & Assert
-      testAssert.assertContentIsNotEmpty();
+      testAssert.assertContentNotEmpty();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {EMPTY, EMPTY_ARRAY})
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentIsNotEmpty_THEN_assert_false(String value) {
+    void GIVEN_unexpected_WHEN_assertContentNotEmpty_THEN_assert_false(String value) {
       // Arrange
       useServerWithResponse(value);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertContentIsNotEmpty);
+      assertThrows(AssertionError.class, testAssert::assertContentNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertByteImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, testAssertException::assertContentIsNotEmpty);
+      assertThrows(AssertionFailedError.class, testAssertException::assertContentNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentNotEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -423,7 +423,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       var testAssertException = new TestAssertByteImpl(actions);
 
       // Act
-      testAssertException.assertContentIsNotEmpty();
+      testAssertException.assertContentNotEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -432,43 +432,43 @@ class TestAssertByteImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentIsEmpty {
+  class assertContentEmpty {
 
     @ParameterizedTest
     @ValueSource(strings = {EMPTY, EMPTY_ARRAY})
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentIsEmpty_THEN_assert_true(String value) {
+    void GIVEN_expected_WHEN_assertContentEmpty_THEN_assert_true(String value) {
       // Arrange
       useServerWithResponse(value);
 
       // Act & Assert
-      testAssert.assertContentIsEmpty();
+      testAssert.assertContentEmpty();
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentIsEmpty_THEN_return_assert_false() {
+    void GIVEN_unexpected_WHEN_assertContentEmpty_THEN_return_assert_false() {
       // Arrange
       useServerWithResponse(ACTUAL_CONTENT);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertContentIsEmpty);
+      assertThrows(AssertionError.class, testAssert::assertContentEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertByte = new TestAssertByteImpl(actions);
 
       // Act & Assert
-      assertThrows(AssertionFailedError.class, testAssertByte::assertContentIsEmpty);
+      assertThrows(AssertionFailedError.class, testAssertByte::assertContentEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -476,7 +476,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       var testAssertException = new TestAssertByteImpl(actions);
 
       // Act
-      testAssertException.assertContentIsEmpty();
+      testAssertException.assertContentEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -639,22 +639,22 @@ class TestAssertByteImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void isNotEmpty_equals() {
+    void notEmpty_equals() {
       // Arrange
       useServerWithResponse(EXPECTED_CONTENT);
 
       // Act & Assert
-      testAssert.assertContentIsNotEmpty().assertContentEquals(EXPECTED_CONTENT.getBytes());
+      testAssert.assertContentNotEmpty().assertContentEquals(EXPECTED_CONTENT.getBytes());
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_head() {
+    void notEmpty_head() {
       // Arrange
       useServerWithResponse(EXPECTED_CONTENT);
 
       // Act & Assert
-      testAssert.assertContentIsNotEmpty().assertHead();
+      testAssert.assertContentNotEmpty().assertHead();
     }
   }
 
@@ -663,12 +663,12 @@ class TestAssertByteImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void isEmpty_head() {
+    void empty_head() {
       // Arrange
       useServerWithResponse(EMPTY);
 
       // Act & Assert
-      testAssert.assertContentIsEmpty().assertHead();
+      testAssert.assertContentEmpty().assertHead();
     }
   }
 

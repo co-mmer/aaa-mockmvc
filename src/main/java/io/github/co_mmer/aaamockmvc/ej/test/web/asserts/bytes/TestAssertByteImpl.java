@@ -18,10 +18,10 @@ import org.springframework.test.web.servlet.ResultActions;
  * Provides methods for asserting HTTP response byte content in tests.
  *
  * <ul>
- *   <li>{@link #assertContentIsNotEmpty()}: Asserts that the byte array content of the HTTP
- *       response is not empty.
- *   <li>{@link #assertContentIsEmpty()}: Asserts that the byte array content of the HTTP response
- *       is empty.
+ *   <li>{@link #assertContentNotEmpty()}: Asserts that the byte array content of the HTTP response
+ *       is not empty.
+ *   <li>{@link #assertContentEmpty()}: Asserts that the byte array content of the HTTP response is
+ *       empty.
  *   <li>{@link #assertContentEquals(byte[])}: Asserts that the byte array content of the HTTP
  *       response matches the expected byte array.
  *   <li>{@link #assertContentLength(int)}: Asserts that the length of the byte array content of the
@@ -58,12 +58,12 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
    *     based on the current state.
    * @since 1.4.0
-   * @deprecated Use {@link #assertContentIsNotEmpty()} instead.
+   * @deprecated Use {@link #assertContentNotEmpty()} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   @Override
   public TestAssert2Byte assertByteNotEmpty() {
-    assertContentIsNotEmpty();
+    assertContentNotEmpty();
     return this;
   }
 
@@ -76,12 +76,12 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
    *     based on the current state.
    * @since 1.4.0
-   * @deprecated Use {@link #assertContentIsEmpty()} instead.
+   * @deprecated Use {@link #assertContentEmpty()} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   @Override
   public TestAssertLByte assertByteEmpty() {
-    assertContentIsEmpty();
+    assertContentEmpty();
     return this;
   }
 
@@ -139,7 +139,7 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * @since 1.6.0
    */
   @Override
-  public TestAssert2Byte assertContentIsNotEmpty() {
+  public TestAssert2Byte assertContentNotEmpty() {
     try {
       assertThat(this.response.getContentAsString(), not(anyOf(is(EMPTY), is(EMPTY_ARRAY))));
     } catch (Exception e) {
@@ -159,7 +159,7 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
    * @since 1.6.0
    */
   @Override
-  public TestAssertLByte assertContentIsEmpty() {
+  public TestAssertLByte assertContentEmpty() {
     try {
       assertThat(this.response.getContentAsString(), anyOf(is(EMPTY), is(EMPTY_ARRAY)));
     } catch (Exception e) {

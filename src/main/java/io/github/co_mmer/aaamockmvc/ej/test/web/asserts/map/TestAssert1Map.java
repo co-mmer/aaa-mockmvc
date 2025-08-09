@@ -7,8 +7,8 @@ import lombok.NonNull;
  * Provides assertion methods for validating HTTP response maps.
  *
  * <ul>
- *   <li>{@link #assertContentIsNotEmpty()}: Asserts that the map in the HTTP response is not empty.
- *   <li>{@link #assertContentIsEmpty()}: Asserts that the map in the HTTP response is empty.
+ *   <li>{@link #assertContentNotEmpty()}: Asserts that the map in the HTTP response is not empty.
+ *   <li>{@link #assertContentEmpty()}: Asserts that the map in the HTTP response is empty.
  *   <li>{@link #assertContentSize(int)}: Asserts that the size of the map in the HTTP response
  *       matches the given size.
  *   <li>{@link #assertContentEquals(Class, Class, Map)}: Asserts that the map in the HTTP response
@@ -28,7 +28,7 @@ public interface TestAssert1Map {
    * @return the current instance of {@code TestAssert2Map} for further assertions
    * @throws AssertionError if the response collection is empty or invalid
    * @since 1.4.0
-   * @deprecated Use {@link #assertContentIsNotEmpty()} instead.
+   * @deprecated Use {@link #assertContentNotEmpty()} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   TestAssert2Map assertMapNotEmpty();
@@ -42,7 +42,7 @@ public interface TestAssert1Map {
    * @return the current instance of {@code TestAssertLMap} for further assertions
    * @throws AssertionError if the response collection is not empty
    * @since 1.4.0
-   * @deprecated Use {@link #assertContentIsEmpty()} instead.
+   * @deprecated Use {@link #assertContentEmpty()} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   TestAssertLMap assertMapEmpty();
@@ -95,7 +95,7 @@ public interface TestAssert1Map {
    * @throws AssertionError if the response is empty or invalid
    * @since 1.6.0
    */
-  TestAssert2Map assertContentIsNotEmpty();
+  TestAssert2Map assertContentNotEmpty();
 
   /**
    * Asserts that the map in the HTTP response is empty.
@@ -108,7 +108,7 @@ public interface TestAssert1Map {
    * @throws AssertionError if the response is not empty
    * @since 1.6.0
    */
-  TestAssertLMap assertContentIsEmpty();
+  TestAssertLMap assertContentEmpty();
 
   /**
    * Asserts that the size of the map in the HTTP response matches the given size.

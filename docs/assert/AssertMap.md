@@ -2,8 +2,8 @@
 
 ### Assert Content As Map 🔸 (New)
 
-- [IsNotEmpty](#not-empty)
-- [IsEmpty](#empty)
+- [NotEmpty](#not-empty)
+- [Empty](#empty)
 - [Size](#size)
 - [Equals](#equals)
 
@@ -11,7 +11,7 @@
 
 ### Not Empty
 
-The **`assertContentIsNotEmpty`** method is used to verify that the map returned in the response is
+The **`assertContentNotEmpty`** method is used to verify that the map returned in the response is
 not
 empty. This assertion ensures that the map contains at least one entry.
 
@@ -21,14 +21,14 @@ empty. This assertion ensures that the map contains at least one entry.
           .act()
           .asserts()
           .assertContentAsMap()
-          .assertContentIsNotEmpty()
+          .assertContentNotEmpty()
 ```
 
 ---
 
 ### Empty
 
-The **`assertContentIsEmpty`** method is used to verify that the map returned in the response is
+The **`assertContentEmpty`** method is used to verify that the map returned in the response is
 empty.
 This assertion ensures that the map does not contain any entries.
 
@@ -38,7 +38,7 @@ This assertion ensures that the map does not contain any entries.
           .act()
           .asserts()
           .assertContentAsMap()
-          .assertContentIsEmpty()
+          .assertContentEmpty()
 ```
 
 ---

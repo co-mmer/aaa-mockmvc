@@ -15,9 +15,9 @@ import org.springframework.test.web.servlet.ResultActions;
  * Provides methods for asserting HTTP response content in tests.
  *
  * <ul>
- *   <li>{@link #assertContentIsNotEmpty()}: Asserts that the content of the HTTP response is not
+ *   <li>{@link #assertContentNotEmpty()}: Asserts that the content of the HTTP response is not
  *       empty.
- *   <li>{@link #assertContentIsEmpty()}: Asserts that the content of the HTTP response is empty.
+ *   <li>{@link #assertContentEmpty()}: Asserts that the content of the HTTP response is empty.
  *   <li>{@link #assertContentLength(int)}: Asserts that the length of the response content matches
  *       the specified length.
  *   <li>{@link #assertContentEquals(String)}: Asserts that the content of the HTTP response matches
@@ -55,12 +55,12 @@ public final class TestAssertStringImpl
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
    *     based on the current state.
    * @since 1.0.0
-   * @deprecated Use {@link #assertContentIsNotEmpty()}} instead.
+   * @deprecated Use {@link #assertContentNotEmpty()}} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   @Override
   public TestAssert2String assertStringNotEmpty() {
-    assertContentIsNotEmpty();
+    assertContentNotEmpty();
     return this;
   }
 
@@ -73,12 +73,12 @@ public final class TestAssertStringImpl
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
    *     based on the current state.
    * @since 1.0.0
-   * @deprecated Use {@link #assertContentIsEmpty()}} instead.
+   * @deprecated Use {@link #assertContentEmpty()}} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   @Override
   public TestAssertLString assertStringEmpty() {
-    assertContentIsEmpty();
+    assertContentEmpty();
     return this;
   }
 
@@ -135,7 +135,7 @@ public final class TestAssertStringImpl
    * @since 1.6.0
    */
   @Override
-  public TestAssert2String assertContentIsNotEmpty() {
+  public TestAssert2String assertContentNotEmpty() {
     try {
       assertThat(this.response.getContentAsString().isEmpty(), is(false));
     } catch (Exception e) {
@@ -155,7 +155,7 @@ public final class TestAssertStringImpl
    * @since 1.6.0
    */
   @Override
-  public TestAssertLString assertContentIsEmpty() {
+  public TestAssertLString assertContentEmpty() {
     try {
       assertThat(this.response.getContentAsString().isEmpty(), is(true));
     } catch (Exception e) {

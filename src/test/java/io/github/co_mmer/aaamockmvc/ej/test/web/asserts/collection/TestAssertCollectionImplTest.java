@@ -79,74 +79,74 @@ class TestAssertCollectionImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentIsNotEmpty {
+  class assertContentNotEmpty {
 
     @Test
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentIsNotEmpty_THEN_assert_true() {
+    void GIVEN_expected_WHEN_assertContentNotEmpty_THEN_assert_true() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty();
+      impl.assertContentNotEmpty();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {EMPTY, EMPTY_ARRAY})
     @SneakyThrows
-    void GIVEN_empty_WHEN_assertContentIsNotEmpty_THEN_assert_false(String value) {
+    void GIVEN_empty_WHEN_assertContentNotEmpty_THEN_assert_false(String value) {
       // Arrange
       useServerWithResponse(value);
 
       // Act & Assert
-      assertThrows(AssertionError.class, impl::assertContentIsNotEmpty);
+      assertThrows(AssertionError.class, impl::assertContentNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentNotEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertException::assertContentIsNotEmpty);
+      assertThrows(AssertionError.class, testAssertException::assertContentNotEmpty);
     }
   }
 
   @Nested
-  class assertContentIsEmpty {
+  class assertContentEmpty {
 
     @ParameterizedTest
     @ValueSource(strings = {EMPTY, EMPTY_ARRAY})
     @SneakyThrows
-    void GIVEN_expected_WHEN_assertContentIsEmpty_THEN_assert_true(String value) {
+    void GIVEN_expected_WHEN_assertContentEmpty_THEN_assert_true(String value) {
       // Arrange
       useServerWithResponse(value);
 
       // Act & Assert
-      impl.assertContentIsEmpty();
+      impl.assertContentEmpty();
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_assertContentIsEmpty_THEN_return_assert_false() {
+    void GIVEN_unexpected_WHEN_assertContentEmpty_THEN_return_assert_false() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, impl::assertContentIsEmpty);
+      assertThrows(AssertionError.class, impl::assertContentEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_assert_false() {
+    void GIVEN_exception_WHEN_assertContentEmpty_THEN_assert_false() {
       // Arrange
       useServerWithStringException();
       var testAssertCollection = new TestAssertCollectionImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertCollection::assertContentIsEmpty);
+      assertThrows(AssertionError.class, testAssertCollection::assertContentEmpty);
     }
   }
 
@@ -733,89 +733,89 @@ class TestAssertCollectionImplTest extends TestAssertBase {
   }
 
   @Nested
-  class combinationIsNotEmpty {
+  class combinationNotEmpty {
 
     @Test
     @SneakyThrows
-    void isNotEmpty_contains_1() {
+    void NotEmpty_contains_1() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty().assertContentContains(TestObjectSimple.class, A1);
+      impl.assertContentNotEmpty().assertContentContains(TestObjectSimple.class, A1);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_contains_2() {
+    void notEmpty_contains_2() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty().assertContentContains(TestObjectSimple.class, A1, A2);
+      impl.assertContentNotEmpty().assertContentContains(TestObjectSimple.class, A1, A2);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_containsAnyOrder() {
+    void notEmpty_containsAnyOrder() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty()
+      impl.assertContentNotEmpty()
           .assertContentContainsAnyOrder(TestObjectSimple.class, List.of(A2, A1));
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_notContains_1() {
+    void notEmpty_notContains_1() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty().assertContentNotContains(TestObjectSimple.class, A3);
+      impl.assertContentNotEmpty().assertContentNotContains(TestObjectSimple.class, A3);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_notContains_2() {
+    void notEmpty_notContains_2() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty().assertContentNotContains(TestObjectSimple.class, A3, A4);
+      impl.assertContentNotEmpty().assertContentNotContains(TestObjectSimple.class, A3, A4);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_equals() {
+    void notEmpty_equals() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty().assertContentEquals(TestObjectSimple.class, TEST_LIST_A1_A2);
+      impl.assertContentNotEmpty().assertContentEquals(TestObjectSimple.class, TEST_LIST_A1_A2);
     }
 
     @Test
     @SneakyThrows
-    void isNotEmpty_matchAll_1() {
+    void notEmpty_matchAll_1() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty()
+      impl.assertContentNotEmpty()
           .assertContentMatchAll(TestObjectSimple.class, element -> element.name().equals(A));
     }
 
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void isNotEmpty_matchAll_2() {
+    void notEmpty_matchAll_2() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty()
+      impl.assertContentNotEmpty()
           .assertContentMatchAll(
               TestObjectSimple.class,
               element -> element.name().equals(A),
@@ -824,24 +824,24 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void isNotEmpty_matchAny_1() {
+    void notEmpty_matchAny_1() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty()
+      impl.assertContentNotEmpty()
           .assertContentMatchAny(TestObjectSimple.class, element -> element.id() == ID1);
     }
 
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void isNotEmpty_matchAny_2() {
+    void notEmpty_matchAny_2() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty()
+      impl.assertContentNotEmpty()
           .assertContentMatchAny(
               TestObjectSimple.class,
               element -> element.id() == ID1,
@@ -850,24 +850,24 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void isNotEmpty_matchNone_1() {
+    void notEmpty_matchNone_1() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty()
+      impl.assertContentNotEmpty()
           .assertContentMatchNone(TestObjectSimple.class, element -> element.id() == ID3);
     }
 
     @Test
     @SneakyThrows
     @SuppressWarnings("unchecked")
-    void isNotEmpty_matchNone_2() {
+    void notEmpty_matchNone_2() {
       // Arrange
       useServerWithResponse(TEST_LIST_A1_A2_JSON);
 
       // Act & Assert
-      impl.assertContentIsNotEmpty()
+      impl.assertContentNotEmpty()
           .assertContentMatchNone(
               TestObjectSimple.class,
               element -> element.id() == ID3,

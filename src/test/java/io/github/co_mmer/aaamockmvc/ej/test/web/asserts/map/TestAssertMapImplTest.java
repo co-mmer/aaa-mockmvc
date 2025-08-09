@@ -69,40 +69,40 @@ class TestAssertMapImplTest extends TestAssertBase {
   }
 
   @Nested
-  class assertContentIsNotEmpty {
+  class assertContentNotEmpty {
 
     @Test
-    void GIVEN_expected_WHEN_assertContentIsNotEmpty_THEN_assert_true() throws Exception {
+    void GIVEN_expected_WHEN_assertContentNotEmpty_THEN_assert_true() throws Exception {
       // Arrange
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.assertContentIsNotEmpty();
+      testAssert.assertContentNotEmpty();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {EMPTY, EMPTY_OBJECT})
-    void GIVEN_empty_WHEN_assertContentIsNotEmpty_THEN_assert_false(String value) throws Exception {
+    void GIVEN_empty_WHEN_assertContentNotEmpty_THEN_assert_false(String value) throws Exception {
       // Arrange
       useServerWithResponse(value);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertContentIsNotEmpty);
+      assertThrows(AssertionError.class, testAssert::assertContentNotEmpty);
     }
 
     @Test
-    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_assert_false() throws Exception {
+    void GIVEN_exception_WHEN_assertContentNotEmpty_THEN_assert_false() throws Exception {
       // Arrange
       useServerWithStringException();
       var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertException::assertContentIsNotEmpty);
+      assertThrows(AssertionError.class, testAssertException::assertContentNotEmpty);
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_exception_WHEN_assertContentIsNotEmpty_THEN_Assertions_fail_is_called() {
+    void GIVEN_exception_WHEN_assertContentNotEmpty_THEN_Assertions_fail_is_called() {
       // Arrange
       var mockAssertions = Mockito.mockStatic(Assertions.class);
 
@@ -110,7 +110,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentIsNotEmpty();
+      testAssertException.assertContentNotEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -123,31 +123,31 @@ class TestAssertMapImplTest extends TestAssertBase {
 
     @ParameterizedTest
     @ValueSource(strings = {EMPTY, EMPTY_OBJECT})
-    void GIVEN_expected_WHEN_assertContentIsEmpty_THEN_assert_true(String value) throws Exception {
+    void GIVEN_expected_WHEN_assertContentEmpty_THEN_assert_true(String value) throws Exception {
       // Arrange
       useServerWithResponse(value);
 
       // Act & Assert
-      testAssert.assertContentIsEmpty();
+      testAssert.assertContentEmpty();
     }
 
     @Test
-    void GIVEN_unexpected_WHEN_assertContentIsEmpty_THEN_return_assert_false() throws Exception {
+    void GIVEN_unexpected_WHEN_assertContentEmpty_THEN_return_assert_false() throws Exception {
       // Arrange
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::assertContentIsEmpty);
+      assertThrows(AssertionError.class, testAssert::assertContentEmpty);
     }
 
     @Test
-    void GIVEN_exception_WHEN_assertContentIsEmpty_THEN_assert_false() throws Exception {
+    void GIVEN_exception_WHEN_assertContentEmpty_THEN_assert_false() throws Exception {
       // Arrange
       useServerWithStringException();
       var testAssertMap = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertMap::assertContentIsEmpty);
+      assertThrows(AssertionError.class, testAssertMap::assertContentEmpty);
     }
 
     @Test
@@ -160,7 +160,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       var testAssertException = new TestAssertMapImpl(actions, new ObjectMapper());
 
       // Act
-      testAssertException.assertContentIsEmpty();
+      testAssertException.assertContentEmpty();
 
       // Assert
       mockAssertions.verify(() -> Assertions.fail(any(Throwable.class)));
@@ -333,32 +333,32 @@ class TestAssertMapImplTest extends TestAssertBase {
   }
 
   @Nested
-  class combinationIsNotEmpty {
+  class combinationNotEmpty {
 
     @Test
     @SneakyThrows
-    void isNotEmpty_equals() {
+    void notEmpty_equals() {
       // Arrange
       useServerWithResponse(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
       testAssert
-          .assertContentIsNotEmpty()
+          .assertContentNotEmpty()
           .assertContentEquals(Integer.class, TestObjectSimple.class, TEST_MAP_A1_A2);
     }
   }
 
   @Nested
-  class combinationIsEmpty {
+  class combinationEmpty {
 
     @Test
     @SneakyThrows
-    void isEmpty_head() {
+    void empty_head() {
       // Arrange
       useServerWithResponse(TEST_MAP_EMPTY_JSON);
 
       // Act & Assert
-      testAssert.assertContentIsEmpty().assertHead();
+      testAssert.assertContentEmpty().assertHead();
     }
   }
 

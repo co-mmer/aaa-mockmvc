@@ -6,9 +6,9 @@ import lombok.NonNull;
  * Provides methods for asserting HTTP response content in tests.
  *
  * <ul>
- *   <li>{@link #assertContentIsNotEmpty()}: Asserts that the content of the HTTP response is not
+ *   <li>{@link #assertContentNotEmpty()}: Asserts that the content of the HTTP response is not
  *       empty.
- *   <li>{@link #assertContentIsEmpty()}: Asserts that the content of the HTTP response is empty.
+ *   <li>{@link #assertContentEmpty()}: Asserts that the content of the HTTP response is empty.
  *   <li>{@link #assertContentLength(int)}: Asserts that the length of the response content matches
  *       the specified length.
  *   <li>{@link #assertContentEquals(String)}: Asserts that the content of the HTTP response matches
@@ -28,7 +28,7 @@ public interface TestAssert1String {
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
    *     based on the current state.
    * @since 1.0.0
-   * @deprecated Use {@link #assertContentIsNotEmpty()} instead.
+   * @deprecated Use {@link #assertContentNotEmpty()} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   TestAssert2String assertStringNotEmpty();
@@ -42,7 +42,7 @@ public interface TestAssert1String {
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
    *     based on the current state.
    * @since 1.0.0
-   * @deprecated Use {@link #assertContentIsEmpty()} instead.
+   * @deprecated Use {@link #assertContentEmpty()} instead.
    */
   @Deprecated(since = "1.6", forRemoval = true)
   TestAssertLString assertStringEmpty();
@@ -92,7 +92,7 @@ public interface TestAssert1String {
    *     based on the current state.
    * @since 1.6.0
    */
-  TestAssert2String assertContentIsNotEmpty();
+  TestAssert2String assertContentNotEmpty();
 
   /**
    * Asserts that the string content of the HTTP response is empty.
@@ -104,7 +104,7 @@ public interface TestAssert1String {
    *     based on the current state.
    * @since 1.6.0
    */
-  TestAssertLString assertContentIsEmpty();
+  TestAssertLString assertContentEmpty();
 
   /**
    * Asserts that the length of the string content of the HTTP response matches the specified value.
