@@ -6,10 +6,10 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
  * <ul>
  *   <li>{@link #assertContentNotEmpty()}: Asserts that the byte array content of the HTTP response
  *       is not empty.
- *   <li>{@link #assertContentLength(int)}: Asserts that the length of the byte array matches the
- *       specified length.
  *   <li>{@link #assertContentEmpty()}: Asserts that the byte array content of the HTTP response is
  *       empty.
+ *   <li>{@link #assertContentLength(int)}: Asserts that the length of the byte array matches the
+ *       specified length.
  *   <li>{@link #assertContentEquals(byte[])}: Asserts that the byte array content of the HTTP
  *       response matches the expected byte array.
  * </ul>

@@ -100,5 +100,6 @@ public interface TestAssert {
    * @return an instance of {@code TestAssertCustom} for custom assertions on the response
    * @since 1.1.0
    */
+  @Deprecated(since = "1.6", forRemoval = true)
   TestAssertCustom assertCustom();
 }

@@ -13,6 +13,10 @@
 - See [Deprecations in 1.6.0](docs/deprecations/deprecations-1.6.0.md) for the full list of renamed
   methods.
 
+### 📦 Dependency Upgrades
+
+- spring-boot 3.5.0 → 3.5.4
+
 ---
 
 ## [1.5.0]
