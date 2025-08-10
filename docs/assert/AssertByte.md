@@ -18,7 +18,6 @@ is not empty.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsByte()
       .assertContentNotEmpty()
@@ -35,7 +34,6 @@ is empty.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsByte()
       .assertContentEmpty()
@@ -53,7 +51,6 @@ response.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsByte()
       .assertContentLength(5)
@@ -70,7 +67,6 @@ matches an expected byte array.
   get()
       ...
       .act()
-      .actPerform()
       .asserts()
       .assertContentAsByte()
       .assertContentEquals(EXPECTED_BYTE_ARRAY)

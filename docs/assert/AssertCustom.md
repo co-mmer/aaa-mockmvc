@@ -20,7 +20,6 @@ specific `ResultMatcher` that verifies if the specified cookie is present in the
 get()
     ...
     .act()
-    .actPerform()
     .asserts()
     .assertCustom()
     .assertCustomResultMatcher(cookie().exists("sessionId"))

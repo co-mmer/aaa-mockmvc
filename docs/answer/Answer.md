@@ -25,7 +25,6 @@ assertions directly on the response.
 var answer = get()
                 ...
                 .act()
-                .actPerform()
                 .answer()
                 .answerAsResultActions();
 
@@ -45,7 +44,6 @@ without needing deserialization into a specific object.
 var answer = get()
                 ...
                 .act()
-                .actPerform()
                 .answer()
                 .answerAsString();
 
@@ -66,7 +64,6 @@ DemoObject demo = get()
                    .arrange()
                    .arrangeUrl(GET_DEMO)
                    .act()
-                   .actPerform()
                    .answer()
                    .answerAsObject(DemoObject.class);
 
@@ -87,7 +84,6 @@ List<DemoObject> demo = get()
                          .arrange()
                          .arrangeUrl(GET_DEMO)
                          .act()
-                         .actPerform()
                          .answer()
                          .answerAsList(DemoObject.class);
 
@@ -108,7 +104,6 @@ Set<DemoObject> demo = get()
                           .arrange()
                           .arrangeUrl(GET_DEMO)
                           .act()
-                          .actPerform()
                           .answer()
                           .answerAsSet(DemoObject.class);
 
@@ -130,7 +125,6 @@ Map<Integer, DemoObject> demoA = get()
                                    .arrange()
                                    .arrangeUrl(GET_DEMO)
                                    .act()
-                                   .actPerform()
                                    .answer()
                                    .answerAsMap(Integer.class, DemoObject.class);
 
@@ -149,7 +143,6 @@ where the response content is best represented in raw byte form.
 var answer = get()
                ...
                .act()
-               .actPerform()
                .answer()
                .answerAsByte();
 
@@ -166,7 +159,6 @@ This method retrieves the value of a specific response header.
 var answer = get()
                 ...
                 .act()
-                .actPerform()
                 .answer()
                 .answerHeader(KEY);
 
@@ -184,7 +176,6 @@ the response is not needed.
 get()
     ...
     .act()
-    .actPerform()
     .answer()
     .answerVoid();
 
