@@ -21,7 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
  *
  * <pre>{@code
  * @SpringBootTest
- * @Import(AAAMockMvcConfig.class) // or extend AAAMockMvcAbstract which already imports it
+ * @Import(AAAMockMvcConfig.class) // or extend AAAMockMvcTestSupport which already imports it
  * class UserApiTest { ... }
  * }</pre>
  *

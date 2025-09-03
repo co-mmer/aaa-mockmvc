@@ -5,15 +5,11 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.TestArrange;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssert;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.error.TestPreconditionsValidator;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestEnvironment;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepMetadata;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.section.TestStepImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.scenario.ScenarioFlow;
-import io.github.co_mmer.aaamockmvc.ej.test.web.scenario.ScenarioFlowImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.scenario.step.TestStep;
-import java.util.function.Consumer;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.precondition.TestPreconditionsValidator;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepImpl;
 import lombok.NonNull;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -147,11 +143,15 @@ public final class AAAMockMvc {
    * @since 2.0.0
    */
   public TestArrange arrange() {
-    TestPreconditionsValidator.arrange(CURRENT.get());
+    var current = CURRENT.get();
+    return current != null ? current.arrange() : newArrange();
+  }
+
+  private TestArrange newArrange() {
     var context = new TestAAAContext(this.environment);
-    var section = new TestStepImpl(context);
-    CURRENT.set(section);
-    return section.arrange();
+    var step = new TestStepImpl(context);
+    CURRENT.set(step);
+    return step.arrange();
   }
 
   /**
@@ -223,36 +223,36 @@ public final class AAAMockMvc {
    * <p><b>Typical usage — with implicit return:</b>
    *
    * <pre>{@code
-   * UserResponse created = step("Create user", s -> {
-   *   s.arrange()
-   *       .post("/api/users")
-   *       .body()
-   *       .json(new User("alice"));
-   *   s.act()
+   * UserResponse created = step("Create user", () -> {
+   *   arrange()
+   *      .post("/api/users")
+   *      .body()
+   *      .json(new User("alice"));
+   *   act()
    *      .perform();
-   *   s.asserts()
-   *       .status()
-   *       .isCreated()
-   *       .content()
-   *       .asClass(UserResponse.class)
-   *       .isNotNull();
-   *   s.answer().asObject(UserResponse.class);
+   *   asserts()
+   *      .status()
+   *      .isCreated()
+   *      .content()
+   *      .asClass(UserResponse.class)
+   *      .isNotNull();
+   *   answer().asObject(UserResponse.class);
    * });
    * }</pre>
    *
    * <p><b>Typical usage — no answer captured:</b>
    *
    * <pre>{@code
-   * step("Update user", s -> {
-   *   s.arrange()
-   *        .put("/api/users/{id}", 42)
-   *        .body()
-   *        .json(new UpdateUser("alice", "active"));
-   *   s.act()
-   *        .perform();
-   *   s.asserts()
-   *        .status()
-   *        .isOk();
+   * step("Update user", () -> {
+   *   arrange()
+   *      .put("/api/users/{id}", 42)
+   *      .body()
+   *      .json(new UpdateUser("alice", "active"));
+   *   act()
+   *     .perform();
+   *   asserts()
+   *      .status()
+   *      .isOk();
    * });
    * }</pre>
    *
@@ -262,42 +262,43 @@ public final class AAAMockMvc {
    *
    * @param stepName human-readable step name used in logs and error messages (must not be {@code
    *     null} or blank)
-   * @param step the step body; declare {@code arrange()}, execute with {@code act().perform()}, and
-   *     optionally capture an answer via {@code s.answer().asXxx(...)}
+   * @param block the step body; declare {@code arrange()}, execute with {@code act().perform()},
+   *     and optionally capture an answer via {@code s.answer().asXxx(...)}
    * @param <R> the expected return type inferred from the assignment context
    * @return the value produced by the last answer call inside the block (one of):
    *     <ul>
-   *       <li>{@code s.answer().asObject(Class)}
-   *       <li>{@code s.answer().asList(Class)}
-   *       <li>{@code s.answer().asSet(Class)}
-   *       <li>{@code s.answer().asMap(Class, Class)}
-   *       <li>{@code s.answer().asString()}
-   *       <li>{@code s.answer().asByte()}
+   *       <li>{@code answer().asObject(Class)}
+   *       <li>{@code answer().asList(Class)}
+   *       <li>{@code answer().asSet(Class)}
+   *       <li>{@code answer().asMap(Class, Class)}
+   *       <li>{@code answer().asString()}
+   *       <li>{@code answer().asByte()}
    *     </ul>
    *     or {@code null} if no answer was captured
    * @throws ClassCastException if the captured answer cannot be cast to {@code R}
    * @since 2.0.0
    */
-  public <R> R step(String stepName, Consumer<TestStep> step) {
+  public <R> R step(String stepName, @NonNull Runnable block) {
     var context = new TestAAAContext(this.environment);
     context.setStep(new TestStepMetadata(stepName));
+    var step = new TestStepImpl(context);
 
-    step.accept(new TestStepImpl(context));
+    var prev = CURRENT.get();
+    try {
+      CURRENT.set(step);
+      block.run();
+    } finally {
+      CURRENT.set(prev);
+    }
 
     var answerResult = context.getAnswerResult();
     if (answerResult == null) {
       return null;
     }
 
-    var actualContent = answerResult.actualContent();
     @SuppressWarnings("unchecked")
-    R result = (R) actualContent;
+    R result = (R) answerResult.actualContent();
     return result;
-  }
-
-  public void scenario(String name, Consumer<ScenarioFlow> block) {
-    var step = new ScenarioFlowImpl(name, this.environment);
-    block.accept(step);
   }
 
   /**

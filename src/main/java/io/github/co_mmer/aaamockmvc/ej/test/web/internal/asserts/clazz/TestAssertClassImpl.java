@@ -41,7 +41,7 @@ public final class TestAssertClassImpl<T>
   }
 
   @Override
-  public TestAssert2Class<T> isNull() {
+  public TestAssertLClass isNull() {
     assertThat(this.context.getAssertResult().actualContent(), is(nullValue()));
     return this;
   }

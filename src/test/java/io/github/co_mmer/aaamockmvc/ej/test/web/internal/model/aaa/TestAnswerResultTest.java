@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class TestAnswerResultTest {
 
   @Test
-  void GIVEN_value_WHEN_create_THEN_actualContent_is_value() {
+  void GIVEN_value_WHEN_constructor_THEN_actualContent_is_value() {
     // Arrange
     var value = "test";
 
@@ -21,7 +21,7 @@ class TestAnswerResultTest {
   }
 
   @Test
-  void GIVEN_null_WHEN_create_THEN_actualContent_is_null() {
+  void GIVEN_null_WHEN_constructor_THEN_actualContent_is_null() {
     // Act
     var res = new TestAnswerResult<>(null);
 

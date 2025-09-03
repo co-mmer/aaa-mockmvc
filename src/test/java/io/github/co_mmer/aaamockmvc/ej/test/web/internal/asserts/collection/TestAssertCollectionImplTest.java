@@ -4,15 +4,9 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtil
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_ARRAY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A3;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A4;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.B;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.CLOSE;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.ID1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.ID2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.ID3;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.ID4;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.NEW;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2_JSON;
@@ -21,15 +15,19 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A3_A4;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_B1NEW_B2NEW;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.verify;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertMatch;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectMatch;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
-import java.util.List;
+import java.util.function.Predicate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -38,6 +36,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 @SuppressWarnings("unchecked")
 class TestAssertCollectionImplTest extends TestAssertBase {
+
+  private static final Predicate<TestObjectSimple> PREDICATE_A =
+      element -> element.name().equals(A);
+  private static final Predicate<TestObjectSimple> PREDICATE_B =
+      element -> element.name().equals(B);
 
   private TestAssertCollectionImpl<TestObjectSimple> impl;
   private TestAssertCollectionImpl<TestObjectMatch> implObjectMatch;
@@ -55,7 +58,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throwException() {
+    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> new TestAssertCollectionImpl<>(null));
     }
   }
@@ -261,7 +264,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      impl.matchAll(element -> element.name().equals(A));
+      impl.matchAll(PREDICATE_A);
     }
 
     @Test
@@ -308,6 +311,32 @@ class TestAssertCollectionImplTest extends TestAssertBase {
               implObjectMatch.matchAll(
                   element -> element.name().equals(A), element -> element.status().equals(CLOSE)));
     }
+
+    @Test
+    void GIVEN_A1_A2_WHEN_matchAll_N_Predicate_THEN_success() {
+      // Arrange
+      var mocked = mockStatic(TestAssertMatch.class);
+      var match = mock(TestAssertMatch.class);
+      mocked.when(() -> TestAssertMatch.assertThat(TEST_LIST_A1_A2)).thenReturn(match);
+      useAssertResult(TEST_LIST_A1_A2);
+
+      // Act
+      impl.matchAll(PREDICATE_B);
+
+      // Assert
+      var p1 = new Predicate[] {PREDICATE_B};
+      verify(match).matchAll(p1);
+
+      impl.matchAll(PREDICATE_B, PREDICATE_B);
+      var p2 = new Predicate[] {PREDICATE_B, PREDICATE_B};
+      verify(match).matchAll(p2);
+
+      impl.matchAll(PREDICATE_B, PREDICATE_B, PREDICATE_B);
+      var p3 = new Predicate[] {PREDICATE_B, PREDICATE_B, PREDICATE_B};
+      verify(match).matchAll(p3);
+
+      mocked.close();
+    }
   }
 
   @Nested
@@ -319,7 +348,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      impl.matchAny(element -> element.name().equals(A));
+      impl.matchAny(PREDICATE_A);
     }
 
     @Test
@@ -363,6 +392,32 @@ class TestAssertCollectionImplTest extends TestAssertBase {
               implObjectMatch.matchAny(
                   element -> element.name().equals(A), element -> element.status().equals(CLOSE)));
     }
+
+    @Test
+    void GIVEN_A1_A2_WHEN_matchAny_N_Predicate_THEN_success() {
+      // Arrange
+      var mocked = mockStatic(TestAssertMatch.class);
+      var match = mock(TestAssertMatch.class);
+      mocked.when(() -> TestAssertMatch.assertThat(TEST_LIST_A1_A2)).thenReturn(match);
+      useAssertResult(TEST_LIST_A1_A2);
+
+      // Act
+      impl.matchAny(PREDICATE_B);
+
+      // Assert
+      var p1 = new Predicate[] {PREDICATE_B};
+      verify(match).matchAny(p1);
+
+      impl.matchAny(PREDICATE_B, PREDICATE_B);
+      var p2 = new Predicate[] {PREDICATE_B, PREDICATE_B};
+      verify(match).matchAny(p2);
+
+      impl.matchAny(PREDICATE_B, PREDICATE_B, PREDICATE_B);
+      var p3 = new Predicate[] {PREDICATE_B, PREDICATE_B, PREDICATE_B};
+      verify(match).matchAny(p3);
+
+      mocked.close();
+    }
   }
 
   @Nested
@@ -383,7 +438,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.matchNone(element -> element.name().equals(A)));
+      assertThrows(AssertionError.class, () -> impl.matchNone(PREDICATE_A));
     }
 
     @Test
@@ -421,6 +476,32 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       implObjectMatch.matchNone(
           element -> element.name().equals(A), element -> element.status().equals(CLOSE));
     }
+
+    @Test
+    void GIVEN_A1_A2_WHEN_matchNone_B_Predicate_THEN_success() {
+      // Arrange
+      var mocked = mockStatic(TestAssertMatch.class);
+      var match = mock(TestAssertMatch.class);
+      mocked.when(() -> TestAssertMatch.assertThat(TEST_LIST_A1_A2)).thenReturn(match);
+      useAssertResult(TEST_LIST_A1_A2);
+
+      // Act
+      impl.matchNone(PREDICATE_B);
+
+      // Assert
+      var p1 = new Predicate[] {PREDICATE_B};
+      verify(match).matchNone(p1);
+
+      impl.matchNone(PREDICATE_B, PREDICATE_B);
+      var p2 = new Predicate[] {PREDICATE_B, PREDICATE_B};
+      verify(match).matchNone(p2);
+
+      impl.matchNone(PREDICATE_B, PREDICATE_B, PREDICATE_B);
+      var p3 = new Predicate[] {PREDICATE_B, PREDICATE_B, PREDICATE_B};
+      verify(match).matchNone(p3);
+
+      mocked.close();
+    }
   }
 
   @Nested
@@ -432,667 +513,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var headers = impl.headers();
 
       // Assert
-      assertThat(headers.getClass(), is(TestAssertHeadImpl.class));
-    }
-  }
-
-  @Nested
-  class combinationNotEmpty {
-
-    @Test
-    void isNotEmpty_contains1() {
-      // Arrange
-      useActResult(TEST_LIST_A1_A2_JSON.getBytes());
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.isNotEmpty().contains(A1);
-    }
-
-    @Test
-    void isNotEmpty_contains2() {
-      // Arrange
-      useActResult(TEST_LIST_A1_A2_JSON.getBytes());
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.isNotEmpty().contains(A1, A2);
-    }
-
-    @Test
-    void isNotEmpty_containsAnyOrder() {
-      // Arrange
-      useActResult(TEST_LIST_A1_A2_JSON.getBytes());
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.isNotEmpty().containsAnyOrder(List.of(A2, A1));
-    }
-
-    @Test
-    void isNotEmpty_notContains1() {
-      // Arrange
-      useActResult(TEST_LIST_A1_A2_JSON.getBytes());
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.isNotEmpty().notContains(A3);
-    }
-
-    @Test
-    void isNotEmpty_notContains2() {
-      // Arrange
-      useActResult(TEST_LIST_A1_A2_JSON.getBytes());
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.isNotEmpty().notContains(A3, A4);
-    }
-
-    @Test
-    void isNotEmpty_equals() {
-      // Arrange
-      useActResult(TEST_LIST_A1_A2_JSON.getBytes());
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.isNotEmpty().isEqualTo(TEST_LIST_A1_A2);
-    }
-
-    @Test
-    void isNotEmpty_matchAll1() {
-      // Arrange
-      useActResult(TEST_LIST_A1_A2_JSON.getBytes());
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.isNotEmpty().matchAll(element -> element.name().equals(A));
-    }
-
-    @Test
-    void isNotEmpty_matchAll2() {
-      // Arrange
-      useActResult(TEST_LIST_A1_A2_JSON.getBytes());
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.isNotEmpty()
-          .matchAll(element -> element.name().equals(A), element -> element.name().equals(A));
-    }
-
-    @Test
-    void isNotEmpty_matchAny1() {
-      // Arrange
-      useActResult(TEST_LIST_A1_A2_JSON.getBytes());
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.isNotEmpty().matchAny(element -> element.id() == ID1);
-    }
-
-    @Test
-    void isNotEmpty_matchAny2() {
-      // Arrange
-      useActResult(TEST_LIST_A1_A2_JSON.getBytes());
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.isNotEmpty().matchAny(element -> element.id() == ID1, element -> element.id() == ID2);
-    }
-
-    @Test
-    void isNotEmpty_matchNone1() {
-      // Arrange
-      useActResult(TEST_LIST_A1_A2_JSON.getBytes());
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.isNotEmpty().matchNone(element -> element.id() == ID3);
-    }
-
-    @Test
-    void isNotEmpty_matchNone2() {
-      // Arrange
-      useActResult(TEST_LIST_A1_A2_JSON.getBytes());
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.isNotEmpty().matchNone(element -> element.id() == ID3, element -> element.id() == ID4);
-    }
-  }
-
-  @Nested
-  class combinationSize {
-
-    @Test
-    void hasSize_contains1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.hasSize(2).contains(A1);
-    }
-
-    @Test
-    void hasSize_contains2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.hasSize(2).contains(A1, A2);
-    }
-
-    @Test
-    void hasSize_containsAnyOrder() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.hasSize(2).containsAnyOrder(List.of(A2, A1));
-    }
-
-    @Test
-    void hasSize_notContains1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.hasSize(2).notContains(A3);
-    }
-
-    @Test
-    void hasSize_notContains2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.hasSize(2).notContains(A3, A4);
-    }
-
-    @Test
-    void hasSize_isEqualTo() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.hasSize(2).isEqualTo(TEST_LIST_A1_A2);
-    }
-
-    @Test
-    void hasSize_matchAll1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.hasSize(2).matchAll(element -> element.name().equals(A));
-    }
-
-    @Test
-    void hasSize_matchAll2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.hasSize(2)
-          .matchAll(element -> element.name().equals(A), element -> element.name().equals(A));
-    }
-
-    @Test
-    void hasSize_matchAny1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.hasSize(2).matchAny(element -> element.id() == ID1);
-    }
-
-    @Test
-    void hasSize_matchAny2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.hasSize(2).matchAny(element -> element.id() == ID1, element -> element.id() == ID2);
-    }
-
-    @Test
-    void hasSize_matchNone1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.hasSize(2).matchNone(element -> element.id() == ID3);
-    }
-
-    @Test
-    void hasSize_matchNone_2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.hasSize(2).matchNone(element -> element.id() == ID3, element -> element.id() == ID4);
-    }
-  }
-
-  @Nested
-  class combinationContains {
-
-    @Test
-    void contains1_matchAny1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.contains(A1).matchAny(element -> element.id() == ID1);
-    }
-
-    @Test
-    void contains1_matchAny2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.contains(A1).matchAny(element -> element.id() == ID1, element -> element.id() == ID2);
-    }
-
-    @Test
-    void contains1_matchAll1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.contains(A1).matchAll(element -> element.name().equals(A));
-    }
-
-    @Test
-    void contains1_matchAll2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.contains(A1)
-          .matchAll(element -> element.name().equals(A), element -> element.name().equals(A));
-    }
-
-    @Test
-    void contains1_matchNone1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.contains(A1).matchNone(element -> element.id() == ID3);
-    }
-
-    @Test
-    void contains1_matchNone2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.contains(A1).matchNone(element -> element.id() == ID3, element -> element.id() == ID4);
-    }
-
-    @Test
-    void contains2_matchAny1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.contains(A1, A2).matchAny(element -> element.id() == ID1);
-    }
-
-    @Test
-    void contains2_matchAny2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.contains(A1, A2)
-          .matchAny(element -> element.id() == ID1, element -> element.id() == ID2);
-    }
-
-    @Test
-    void contains2_matchAll1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.contains(A1, A2).matchAll(element -> element.name().equals(A));
-    }
-
-    @Test
-    void contains2_matchAll2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.contains(A1, A2)
-          .matchAll(element -> element.name().equals(A), element -> element.name().equals(A));
-    }
-
-    @Test
-    void contains2_matchNone1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.contains(A1, A2).matchNone(element -> element.id() == ID3);
-    }
-
-    @Test
-    void contains_2_matchNone_2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.contains(A1, A2)
-          .matchNone(element -> element.id() == ID3, element -> element.id() == ID4);
-    }
-  }
-
-  @Nested
-  class combinationNotContains {
-
-    @Test
-    void notContains1_matchAny1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.notContains(A3).matchAny(element -> element.id() == ID1);
-    }
-
-    @Test
-    void notContains1_matchAny2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.notContains(A3).matchAny(element -> element.id() == ID1, element -> element.id() == ID2);
-    }
-
-    @Test
-    void notContains1_matchAll1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.notContains(A3).matchAll(element -> element.name().equals(A));
-    }
-
-    @Test
-    void notContains1_matchAll2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.notContains(A3)
-          .matchAll(element -> element.name().equals(A), element -> element.name().equals(A));
-    }
-
-    @Test
-    void notContains1_matchNone1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.notContains(A3).matchNone(element -> element.id() == ID3);
-    }
-
-    @Test
-    void notContains1_matchNone2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.notContains(A3)
-          .matchNone(element -> element.id() == ID3, element -> element.id() == ID4);
-    }
-
-    @Test
-    void notContains2_matchAny1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.notContains(A3, A4).matchAny(element -> element.id() == ID1);
-    }
-
-    @Test
-    void notContains2_matchAny2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.notContains(A3, A4)
-          .matchAny(element -> element.id() == ID1, element -> element.id() == ID2);
-    }
-
-    @Test
-    void notContains2_matchAll1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.notContains(A3, A4).matchAll(element -> element.name().equals(A));
-    }
-
-    @Test
-    void notContains2_matchAll2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.notContains(A3, A4)
-          .matchAll(element -> element.name().equals(A), element -> element.name().equals(A));
-    }
-
-    @Test
-    void notContains2_matchNone1() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.notContains(A3, A4).matchNone(element -> element.id() == ID3);
-    }
-
-    @Test
-    void notContains2_matchNone2() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.notContains(A3, A4)
-          .matchNone(element -> element.id() == ID3, element -> element.id() == ID4);
-    }
-  }
-
-  @Nested
-  class combinationMatchAll {
-
-    @Test
-    void matchAll_matchAny() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchAll(element -> element.name().equals(A)).matchAny(element -> element.id() == ID1);
-    }
-
-    @Test
-    void matchAll_matchAny_vararg() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchAll(element -> element.name().equals(A))
-          .matchAny(element -> element.id() == ID1, element -> element.id() == ID2);
-    }
-
-    @Test
-    void matchAll_matchNone() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchAll(element -> element.name().equals(A)).matchNone(element -> element.id() == ID3);
-    }
-
-    @Test
-    void matchAll_matchNone_vararg() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchAll(element -> element.name().equals(A))
-          .matchNone(element -> element.id() == ID3, element -> element.id() == ID4);
-    }
-
-    @Test
-    void matchAll_vararg_matchAny() {
-      // Arrange
-      useAssertResult(TEST_LIST_B1NEW_B2NEW);
-
-      // Act & Assert
-      implObjectMatch
-          .matchAll(element -> element.name().equals(B), element -> element.status().equals(NEW))
-          .matchAny(element -> element.id() == ID1);
-    }
-
-    @Test
-    void matchAll_vararg_matchAny_vararg() {
-      // Arrange
-      useAssertResult(TEST_LIST_B1NEW_B2NEW);
-
-      // Act & Assert
-      implObjectMatch
-          .matchAll(element -> element.name().equals(B), element -> element.status().equals(NEW))
-          .matchAny(element -> element.id() == ID1, element -> element.id() == ID2);
-    }
-
-    @Test
-    void matchAll_vararg_matchNone() {
-      // Arrange
-      useAssertResult(TEST_LIST_B1NEW_B2NEW);
-
-      // Act & Assert
-      implObjectMatch
-          .matchAll(element -> element.name().equals(B))
-          .matchNone(element -> element.id() == ID3);
-    }
-
-    @Test
-    void matchAll_vararg_matchNone_vararg() {
-      // Arrange
-      useAssertResult(TEST_LIST_B1NEW_B2NEW);
-
-      // Act & Assert
-      implObjectMatch
-          .matchAll(element -> element.name().equals(B))
-          .matchNone(element -> element.id() == ID3, element -> element.id() == ID4);
-    }
-
-    @Test
-    void matchAll_head() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchAll(element -> element.name().equals(A)).headers();
-    }
-
-    @Test
-    void matchAll_vararg_headers() {
-      // Arrange
-      useAssertResult(TEST_LIST_B1NEW_B2NEW);
-
-      // Act & Assert
-      implObjectMatch
-          .matchAll(element -> element.name().equals(B), element -> element.status().equals(NEW))
-          .headers();
-    }
-  }
-
-  @Nested
-  class combinationMatchAny {
-
-    @Test
-    void matchAny_matchNone() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchAny(element -> element.id() == ID1).matchNone(element -> element.id() == ID3);
-    }
-
-    @Test
-    void matchAny_matchNone_vararg() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchAny(element -> element.id() == ID1)
-          .matchNone(element -> element.id() == ID3, element -> element.id() == ID4);
-    }
-
-    @Test
-    void matchAny_vararg_matchNone() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchAny(element -> element.id() == ID1, element -> element.id() == ID2)
-          .matchNone(element -> element.id() == ID3);
-    }
-
-    @Test
-    void matchAny_vararg_matchNone_vararg() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchAny(element -> element.id() == ID1, element -> element.id() == ID2)
-          .matchNone(element -> element.id() == ID3, element -> element.id() == ID4);
-    }
-
-    @Test
-    void matchAny_headers() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchAny(element -> element.name().equals(A)).headers();
-    }
-
-    @Test
-    void matchAny_vararg_headers() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchAny(element -> element.name().equals(A), element -> element.id() == ID1).headers();
-    }
-  }
-
-  @Nested
-  class combinationMatchNone {
-
-    @Test
-    void matchNone_headers() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchNone(element -> element.name().equals(B)).headers();
-    }
-
-    @Test
-    void matchNone_vararg_headers() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      impl.matchNone(element -> element.name().equals(B), element -> element.id() == ID3).headers();
+      assertThat(headers, instanceOf(TestAssertHeadImpl.class));
     }
   }
 }

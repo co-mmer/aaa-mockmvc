@@ -45,8 +45,4 @@ public final class TestActFailedError extends AssertionFailedError {
   public TestActFailedError(String message, Throwable cause) {
     super(message, cause);
   }
-
-  public TestActFailedError(String message) {
-    super(message);
-  }
 }

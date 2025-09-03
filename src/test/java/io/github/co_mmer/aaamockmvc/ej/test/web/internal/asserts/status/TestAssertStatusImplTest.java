@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.status;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.http.HttpStatus.ACCEPTED;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -45,7 +45,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throwException() {
+    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> new TestAssertStatusImpl(null));
     }
   }
@@ -55,7 +55,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_is_THEN_throwException() {
+    void GIVEN_null_WHEN_is_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> testAssert1.is(null));
     }
 
@@ -304,7 +304,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
       var content = testAssert2.content();
 
       // Assert
-      assertThat(content.getClass(), is(TestAssertContentImpl.class));
+      assertThat(content, instanceOf(TestAssertContentImpl.class));
     }
 
     @Test
@@ -313,7 +313,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
       var headers = testAssert2.headers();
 
       // Assert
-      assertThat(headers.getClass(), is(TestAssertHeadImpl.class));
+      assertThat(headers, instanceOf(TestAssertHeadImpl.class));
     }
   }
 }

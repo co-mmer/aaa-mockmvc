@@ -3,8 +3,8 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.strategy.component
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestUrlDto.TEST_REQUEST_URL_QUERY1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestUrlDto.TEST_REQUEST_URL_QUERY_EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestUrlDto.TEST_REQUEST_URL_QUERY_NULL;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_QUERY_KEY_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_QUERY_VALUE_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_KEY_SEARCH;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_VALUE_SEARCH_TERM;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -71,7 +71,7 @@ class TestComponentUrlTest {
     TestComponentUrl.apply(this.mockRequestBuilder, TEST_REQUEST_URL_QUERY1);
 
     // Assert
-    verify(this.mockRequestBuilder).param(TEST_QUERY_KEY_1, TEST_QUERY_VALUE_1);
+    verify(this.mockRequestBuilder).param(QUERY_KEY_SEARCH, QUERY_VALUE_SEARCH_TERM);
     verifyNoMoreInteractions(this.mockRequestBuilder);
   }
 }

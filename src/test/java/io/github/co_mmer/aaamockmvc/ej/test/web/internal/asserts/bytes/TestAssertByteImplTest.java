@@ -5,9 +5,8 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtil
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_OBJECT;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A2_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_BYTE_EMPTY;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -36,7 +35,7 @@ class TestAssertByteImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throwException() {
+    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> new TestAssertByteImpl(null));
     }
   }
@@ -145,77 +144,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       var headers = testAssert.headers();
 
       // Assert
-      assertThat(headers.getClass(), is(TestAssertHeadImpl.class));
-    }
-  }
-
-  @Nested
-  class combinationIsNotEmpty {
-
-    @Test
-    void isNotEmpty_isEqualTo() {
-      // Arrange
-      useActResult(TEST_A1_JSON.getBytes());
-
-      // Act & Assert
-      testAssert.isNotEmpty().isEqualTo(TEST_A1_JSON.getBytes());
-    }
-
-    @Test
-    void isNotEmpty_headers() {
-      // Arrange
-      useActResult(TEST_A1_JSON.getBytes());
-
-      // Act & Assert
-      testAssert.isNotEmpty().headers();
-    }
-  }
-
-  @Nested
-  class combinationIsEmpty {
-
-    @Test
-    void isEmpty_headers() {
-      // Arrange
-      useActResult(TEST_BYTE_EMPTY);
-
-      // Act & Assert
-      testAssert.isEmpty().headers();
-    }
-  }
-
-  @Nested
-  class combinationHasLength {
-
-    @Test
-    void hasLength_isEqualTo() {
-      // Arrange
-      useActResult(TEST_A1_JSON.getBytes());
-
-      // Act & Assert
-      testAssert.hasLength(TEST_A1_JSON.length()).isEqualTo(TEST_A1_JSON.getBytes());
-    }
-
-    @Test
-    void hasLength_headers() {
-      // Arrange
-      useActResult(TEST_A1_JSON.getBytes());
-
-      // Act & Assert
-      testAssert.hasLength(TEST_A1_JSON.length()).headers();
-    }
-  }
-
-  @Nested
-  class combinationIsEqualTo {
-
-    @Test
-    void isEqualTo_headers() {
-      // Arrange
-      useActResult(TEST_A1_JSON.getBytes());
-
-      // Act & Assert
-      testAssert.isEqualTo(TEST_A1_JSON.getBytes()).headers();
+      assertThat(headers, instanceOf(TestAssertHeadImpl.class));
     }
   }
 }

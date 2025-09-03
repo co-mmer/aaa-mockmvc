@@ -10,10 +10,10 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestH
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataRequestHeadDto.TEST_REQUEST_HEAD_KEY_VALUE_NULL;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_2;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -139,7 +139,7 @@ class TestComponentHeadTest {
     TestComponentHead.apply(this.mockRequestBuilder, TEST_REQUEST_HEAD_KEY_VALUE_1);
 
     // Assert
-    verify(this.mockRequestBuilder).header(TEST_HEADER_KEY_1, List.of(TEST_HEADER_VALUE_1));
+    verify(this.mockRequestBuilder).header(HEADER_KEY_1, List.of(HEADER_VALUE_1));
     verifyNoMoreInteractions(this.mockRequestBuilder);
   }
 
@@ -149,8 +149,8 @@ class TestComponentHeadTest {
     TestComponentHead.apply(this.mockRequestBuilder, TEST_REQUEST_HEAD_KEY_VALUE_2);
 
     // Assert
-    verify(this.mockRequestBuilder).header(TEST_HEADER_KEY_1, List.of(TEST_HEADER_VALUE_1));
-    verify(this.mockRequestBuilder).header(TEST_HEADER_KEY_2, List.of(TEST_HEADER_VALUE_2));
+    verify(this.mockRequestBuilder).header(HEADER_KEY_1, List.of(HEADER_VALUE_1));
+    verify(this.mockRequestBuilder).header(HEADER_KEY_2, List.of(HEADER_VALUE_2));
     verifyNoMoreInteractions(this.mockRequestBuilder);
   }
 }

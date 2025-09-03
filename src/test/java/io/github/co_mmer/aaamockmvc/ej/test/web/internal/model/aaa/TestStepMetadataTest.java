@@ -13,7 +13,7 @@ public class TestStepMetadataTest {
 
   @ParameterizedTest
   @NullAndEmptySource
-  void GIVEN_blank_WHEN_name_THEN_default_name(String name) {
+  void GIVEN_blank_WHEN_name_THEN_return_default_name(String name) {
     // Arrange
     var metadata = new TestStepMetadata(name);
 
@@ -25,7 +25,7 @@ public class TestStepMetadataTest {
   }
 
   @Test
-  void GIVEN_name_WHEN_name_THEN_name() {
+  void GIVEN_name_WHEN_name_THEN_return_name() {
     // Arrange
     var metadata = new TestStepMetadata(UPDATE_USER);
 

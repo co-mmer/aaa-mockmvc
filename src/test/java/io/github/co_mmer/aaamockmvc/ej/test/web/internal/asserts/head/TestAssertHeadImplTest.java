@@ -1,9 +1,9 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.head;
 
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_KEY_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_VALUE_2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_AUTH;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_CONTENT_TYPE;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_TOKEN;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
@@ -29,7 +29,7 @@ class TestAssertHeadImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throwException() {
+    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> new TestAssertHeadImpl(null));
     }
   }
@@ -39,26 +39,26 @@ class TestAssertHeadImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_containsKey_THEN_throwException() {
+    void GIVEN_null_WHEN_containsKey_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> testAssert.containsKey(null));
     }
 
     @Test
     void GIVEN_key1_value1_WHEN_containsKey_key1_THEN_success() {
       // Arrange
-      useActResult(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
 
       // Act & Assert
-      testAssert.containsKey(TEST_HEAD_KEY_1);
+      testAssert.containsKey(HEADER_KEY_AUTH);
     }
 
     @Test
     void GIVEN_key1_value1_WHEN_containsKey_key2_THEN_failed() {
       // Arrange
-      useActResult(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert.containsKey(TEST_HEAD_KEY_2));
+      assertThrows(AssertionError.class, () -> testAssert.containsKey(HEADER_KEY_CONTENT_TYPE));
     }
   }
 
@@ -67,26 +67,26 @@ class TestAssertHeadImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_doesNotContainKey_THEN_throwException() {
+    void GIVEN_null_WHEN_doesNotContainKey_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> testAssert.doesNotContainKey(null));
     }
 
     @Test
     void GIVEN_key1_value1_WHEN_doesNotContainKey_key2_THEN_success() {
       // Arrange
-      useActResult(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
 
       // Act & Assert
-      testAssert.doesNotContainKey(TEST_HEAD_KEY_2);
+      testAssert.doesNotContainKey(HEADER_KEY_CONTENT_TYPE);
     }
 
     @Test
     void GIVEN_key1_value1_WHEN_doesNotContainKey_key1_THEN_failed() {
       // Arrange
-      useActResult(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert.doesNotContainKey(TEST_HEAD_KEY_1));
+      assertThrows(AssertionError.class, () -> testAssert.doesNotContainKey(HEADER_KEY_AUTH));
     }
   }
 
@@ -96,30 +96,31 @@ class TestAssertHeadImplTest extends TestAssertBase {
     @Test
     void GIVEN_key1_value1_WHEN_containsEntry_key1_value1_THEN_success() {
       // Arrange
-      useActResult(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
 
       // Act & Assert
-      testAssert.containsEntry(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+      testAssert.containsEntry(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
     }
 
     @Test
     void GIVEN_key1_value1_WHEN_containsEntry_key1_value2_THEN_failed() {
       // Arrange
-      useActResult(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
 
       // Act & Assert
       assertThrows(
-          AssertionError.class, () -> testAssert.containsEntry(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_2));
+          AssertionError.class, () -> testAssert.containsEntry(HEADER_KEY_AUTH, HEADER_VALUE_JSON));
     }
 
     @Test
     void GIVEN_key1_value1_WHEN_containsEntry_key2_value1_THEN_failed() {
       // Arrange
-      useActResult(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
+      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
 
       // Act & Assert
       assertThrows(
-          AssertionError.class, () -> testAssert.containsEntry(TEST_HEAD_KEY_2, TEST_HEAD_VALUE_1));
+          AssertionError.class,
+          () -> testAssert.containsEntry(HEADER_KEY_CONTENT_TYPE, HEADER_VALUE_TOKEN));
     }
   }
 
@@ -129,52 +130,52 @@ class TestAssertHeadImplTest extends TestAssertBase {
     @Test
     void GIVEN_key1_value1_value2_WHEN_containsEntryExactly_key1_value1_value2_THEN_success() {
       // Arrange
-      useActResult(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1, TEST_HEAD_VALUE_2);
+      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
 
       // Act & Assert
-      testAssert.containsEntryExactly(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1, TEST_HEAD_VALUE_2);
+      testAssert.containsEntryExactly(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
     }
 
     @Test
     void GIVEN_key1_value1_value2_WHEN_containsEntryExactly_key1_value2_value1_THEN_success() {
       // Arrange
-      useActResult(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1, TEST_HEAD_VALUE_2);
+      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
 
       // Act & Assert
-      testAssert.containsEntryExactly(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_2, TEST_HEAD_VALUE_1);
+      testAssert.containsEntryExactly(HEADER_KEY_AUTH, HEADER_VALUE_JSON, HEADER_VALUE_TOKEN);
     }
 
     @Test
     void GIVEN_key1_value1_value2_WHEN_containsEntryExactly_key1_value1_THEN_failed() {
       // Arrange
-      useActResult(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1, TEST_HEAD_VALUE_2);
+      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
 
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssert.containsEntryExactly(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1));
+          () -> testAssert.containsEntryExactly(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN));
     }
 
     @Test
     void GIVEN_key1_value1_value2_WHEN_containsEntryExactly_key2_value1_value2_THEN_failed() {
       // Arrange
-      useActResult(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1, TEST_HEAD_VALUE_2);
+      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
 
       // Act & Assert
       assertThrows(
           AssertionError.class,
           () ->
               testAssert.containsEntryExactly(
-                  TEST_HEAD_KEY_2, TEST_HEAD_VALUE_1, TEST_HEAD_VALUE_2));
+                  HEADER_KEY_CONTENT_TYPE, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON));
     }
 
     @Test
     void GIVEN_key1_value1_value2_WHEN_containsEntryExactly_key1_THEN_failed() {
       // Arrange
-      useActResult(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1, TEST_HEAD_VALUE_2);
+      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert.containsEntryExactly(TEST_HEAD_KEY_1));
+      assertThrows(AssertionError.class, () -> testAssert.containsEntryExactly(HEADER_KEY_AUTH));
     }
   }
 }

@@ -3,11 +3,11 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.act;
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.error.TestActFailedError;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.error.TestActFailedErrorMessage;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.error.TestPreconditionsValidator;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.mapper.TestActResultMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.strategy.TestRequestStrategyFactory;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.precondition.TestPreconditionsValidator;
 import org.springframework.test.web.servlet.ResultActions;
 
 @Since("1.0.0")

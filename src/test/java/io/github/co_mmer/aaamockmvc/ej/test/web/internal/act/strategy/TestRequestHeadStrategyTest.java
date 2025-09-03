@@ -1,12 +1,12 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.strategy;
 
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_KEY_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_KEY_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_VALUE_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_VALUE_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_URI;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_URI;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_AUTH;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_TOKEN;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_KEY_PAGE;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_KEY_SEARCH;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_VALUE_PAGE_NUMBER;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_VALUE_SEARCH_TERM;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.HttpMethod.HEAD;
@@ -34,27 +34,27 @@ class TestRequestHeadStrategyTest {
 
     // Assert
     assertThat(request.getMethod(), is(HEAD.toString()));
-    assertThat(request.getRequestURI(), is(TEST_URI.toString()));
+    assertThat(request.getRequestURI(), is(BASE_URI.toString()));
 
-    assertThat(request.getParameter(QUERY_KEY_1), is(QUERY_VALUE_1));
-    assertThat(request.getParameter(QUERY_KEY_2), is(QUERY_VALUE_2));
+    assertThat(request.getParameter(QUERY_KEY_SEARCH), is(QUERY_VALUE_SEARCH_TERM));
+    assertThat(request.getParameter(QUERY_KEY_PAGE), is(QUERY_VALUE_PAGE_NUMBER));
 
     assertThat(request.getHeader("Accept"), is("application/json, application/xml"));
     assertThat(request.getHeader("Content-Type"), is("application/json"));
-    assertThat(request.getHeader(TEST_HEAD_KEY_1), is(TEST_HEAD_VALUE_1));
+    assertThat(request.getHeader(HEADER_KEY_AUTH), is(HEADER_VALUE_TOKEN));
   }
 
   private static TestArrangeResult createTestArrangeResult() {
     var context = new TestArrangeResult();
 
     context.getUrl().setMethod(HEAD);
-    context.getUrl().setUri(TEST_URI);
-    context.getUrl().getQuery().put(QUERY_KEY_1, QUERY_VALUE_1);
-    context.getUrl().getQuery().put(QUERY_KEY_2, QUERY_VALUE_2);
+    context.getUrl().setUri(BASE_URI);
+    context.getUrl().getQuery().put(QUERY_KEY_SEARCH, QUERY_VALUE_SEARCH_TERM);
+    context.getUrl().getQuery().put(QUERY_KEY_PAGE, QUERY_VALUE_PAGE_NUMBER);
 
     context.getHead().setAccepts(List.of(APPLICATION_JSON, APPLICATION_XML));
     context.getHead().setContentType(APPLICATION_JSON);
-    context.getHead().setKeyValue(Map.of(TEST_HEAD_KEY_1, List.of(TEST_HEAD_VALUE_1)));
+    context.getHead().setKeyValue(Map.of(HEADER_KEY_AUTH, List.of(HEADER_VALUE_TOKEN)));
     return context;
   }
 }

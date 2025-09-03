@@ -1,11 +1,10 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.section;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.TestArrange;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.TestActImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.error.TestPreconditionsValidator;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer.TestAnswerImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.TestArrangeImpl;
@@ -24,25 +23,21 @@ public class TestStepImpl implements TestStep {
 
   @Override
   public TestArrange arrange() {
-    TestPreconditionsValidator.arrange(this.context);
     return new TestArrangeImpl(this.context);
   }
 
   @Override
   public TestAct act() {
-    TestPreconditionsValidator.act(this.context);
     return new TestActImpl(this.context);
   }
 
   @Override
   public TestAssert asserts() {
-    TestPreconditionsValidator.asserts(context);
     return new TestAssertImpl(this.context);
   }
 
   @Override
   public TestAnswer answer() {
-    TestPreconditionsValidator.answer(this.context);
     return new TestAnswerImpl(this.context);
   }
 }

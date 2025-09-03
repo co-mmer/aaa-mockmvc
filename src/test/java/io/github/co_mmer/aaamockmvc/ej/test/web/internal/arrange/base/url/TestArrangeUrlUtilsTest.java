@@ -1,24 +1,25 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.url;
 
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_KEY_0;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_KEY_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_KEY_VALUE_MAP_1_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_VALUE_0;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_PARAM_VALUE_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_QUERY_KEY_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestParameter.TEST_QUERY_VALUE_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_PATH;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_PATH_VAR1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_PATH_VARIABLE_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_PATH_VARIABLE_3;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_PATH_VARIABLE_6;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_URI;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.VAR_BOOLEAN_TRUE;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.VAR_CHAR_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.VAR_DOUBLE_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.VAR_FLOAT_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.VAR_INT_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.VAR_STRING_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_PATH;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_URI;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_VARIABLE_USER_ID;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_WITH_USER_AND_ORDER;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_WITH_USER_ID;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_WITH_USER_ORDER_AND_PRODUCT;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_WITH_USER_ORDER_PRODUCT_CATEGORY_SESSION_REQUEST;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_KEY_2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_KEY_PAGE;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_KEY_SEARCH;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_MAP_1_2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_MAP_SEARCH_PAGE;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_VALUE_2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_VALUE_PAGE_NUMBER;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_VALUE_SEARCH_TERM;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.SAMPLE_BOOLEAN_TRUE;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.SAMPLE_CHAR_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.SAMPLE_DOUBLE_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.SAMPLE_FLOAT_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.SAMPLE_INT_1;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -37,10 +38,10 @@ class TestArrangeUrlUtilsTest {
     var urlDto = new TestRequestUrlDto();
 
     // Act
-    TestArrangeUrlUtils.setUri(urlDto, GET, TEST_PATH);
+    TestArrangeUrlUtils.setUri(urlDto, GET, BASE_PATH);
 
     // Assert
-    assertThat(urlDto.getUri(), is(TEST_URI));
+    assertThat(urlDto.getUri(), is(BASE_URI));
   }
 
   @Test
@@ -49,10 +50,10 @@ class TestArrangeUrlUtilsTest {
     var urlDto = new TestRequestUrlDto();
 
     // Act
-    TestArrangeUrlUtils.setUri(urlDto, GET, TEST_PATH_VAR1, VAR_STRING_1);
+    TestArrangeUrlUtils.setUri(urlDto, GET, PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
     // Assert
-    assertThat(urlDto.getUri().toString(), is(TEST_PATH + "/" + VAR_STRING_1));
+    assertThat(urlDto.getUri().toString(), is(BASE_PATH + "/" + PATH_VARIABLE_USER_ID));
   }
 
   @SuppressWarnings("all")
@@ -68,7 +69,7 @@ class TestArrangeUrlUtilsTest {
         // Act
         () ->
             TestArrangeUrlUtils.setUri(
-                urlDto, GET, TEST_PATH_VARIABLE_3, List.of(1), Map.of("k", 1)));
+                urlDto, GET, PATH_WITH_USER_ORDER_AND_PRODUCT, List.of(1), Map.of("k", 1)));
   }
 
   @Test
@@ -79,11 +80,17 @@ class TestArrangeUrlUtilsTest {
 
     // Act
     TestArrangeUrlUtils.setUri(
-        urlDto, GET, TEST_PATH_VARIABLE_2, List.of(1), Map.of("k", 1), VAR_INT_1, VAR_STRING_1);
+        urlDto,
+        GET,
+        PATH_WITH_USER_AND_ORDER,
+        List.of(1),
+        Map.of("k", 1),
+        SAMPLE_INT_1,
+        PATH_VARIABLE_USER_ID);
 
     // Assert
     var uri = urlDto.getUri().toString();
-    assertThat(uri, is(TEST_PATH + "/" + VAR_INT_1 + "/" + VAR_STRING_1));
+    assertThat(uri, is(BASE_PATH + "/" + SAMPLE_INT_1 + "/" + PATH_VARIABLE_USER_ID));
   }
 
   @Test
@@ -95,73 +102,73 @@ class TestArrangeUrlUtilsTest {
     TestArrangeUrlUtils.setUri(
         urlDto,
         GET,
-        TEST_PATH_VARIABLE_6,
-        VAR_STRING_1,
-        VAR_CHAR_1,
-        VAR_INT_1,
-        VAR_DOUBLE_1,
-        VAR_FLOAT_1,
-        VAR_BOOLEAN_TRUE);
+        PATH_WITH_USER_ORDER_PRODUCT_CATEGORY_SESSION_REQUEST,
+        PATH_VARIABLE_USER_ID,
+        SAMPLE_CHAR_1,
+        SAMPLE_INT_1,
+        SAMPLE_DOUBLE_1,
+        SAMPLE_FLOAT_1,
+        SAMPLE_BOOLEAN_TRUE);
 
     // Assert
     var uri = urlDto.getUri().toString();
     assertThat(
         uri,
         is(
-            TEST_PATH
+            BASE_PATH
                 + "/"
-                + VAR_STRING_1
+                + PATH_VARIABLE_USER_ID
                 + "/"
-                + VAR_CHAR_1
+                + SAMPLE_CHAR_1
                 + "/"
-                + VAR_INT_1
+                + SAMPLE_INT_1
                 + "/"
-                + VAR_DOUBLE_1
+                + SAMPLE_DOUBLE_1
                 + "/"
-                + VAR_FLOAT_1
+                + SAMPLE_FLOAT_1
                 + "/"
-                + VAR_BOOLEAN_TRUE));
+                + SAMPLE_BOOLEAN_TRUE));
   }
 
   @Test
-  void GIVEN_key_value_WHEN_addParam_THEN_getParam_returned_expected_value() {
+  void GIVEN_key_value_WHEN_addQuery_THEN_getQuery_returned_expected_value() {
     // Arrange
     var testRequestUrlDto = new TestRequestUrlDto();
 
     // Act
-    TestArrangeUrlUtils.addQuery(testRequestUrlDto, TEST_QUERY_KEY_1, TEST_QUERY_VALUE_1);
+    TestArrangeUrlUtils.addQuery(testRequestUrlDto, QUERY_KEY_SEARCH, QUERY_VALUE_SEARCH_TERM);
 
     // Assert
     assertThat(testRequestUrlDto.getQuery().size(), is(1));
-    assertThat(testRequestUrlDto.getQuery().get(TEST_QUERY_KEY_1), is(TEST_QUERY_VALUE_1));
+    assertThat(testRequestUrlDto.getQuery().get(QUERY_KEY_SEARCH), is(QUERY_VALUE_SEARCH_TERM));
   }
 
   @Test
-  void GIVEN_key_value_map_WHEN_addParam_THEN_getParam_returned_expected_value() {
+  void GIVEN_key_value_map_WHEN_addQuery_THEN_getQuery_returned_expected_value() {
     // Arrange
     var testRequestUrlDto = new TestRequestUrlDto();
 
     // Act
-    TestArrangeUrlUtils.addQuery(testRequestUrlDto, TEST_PARAM_KEY_VALUE_MAP_1_2);
+    TestArrangeUrlUtils.addQuery(testRequestUrlDto, QUERY_MAP_SEARCH_PAGE);
 
     // Assert
-    assertThat(testRequestUrlDto.getQuery(), is(TEST_PARAM_KEY_VALUE_MAP_1_2));
+    assertThat(testRequestUrlDto.getQuery(), is(QUERY_MAP_SEARCH_PAGE));
   }
 
   @Test
   void
-      GIVEN_addParam_key_0_WHEN_addParam_with_map_key_1_2_THEN_getParam_returned_expected_values() {
+      GIVEN_addQuery_key_0_WHEN_addQuery_with_map_key_1_2_THEN_getQuery_returned_expected_values() {
     // Arrange
     var testRequestUrlDto = new TestRequestUrlDto();
-    TestArrangeUrlUtils.addQuery(testRequestUrlDto, TEST_PARAM_KEY_0, TEST_PARAM_VALUE_0);
+    TestArrangeUrlUtils.addQuery(testRequestUrlDto, QUERY_KEY_SEARCH, QUERY_VALUE_SEARCH_TERM);
 
     // Act
-    TestArrangeUrlUtils.addQuery(testRequestUrlDto, TEST_PARAM_KEY_VALUE_MAP_1_2);
+    TestArrangeUrlUtils.addQuery(testRequestUrlDto, QUERY_MAP_1_2);
 
     // Assert
     assertThat(testRequestUrlDto.getQuery().size(), is(3));
-    assertThat(testRequestUrlDto.getQuery().get(TEST_PARAM_KEY_0), is(TEST_PARAM_VALUE_0));
-    assertThat(testRequestUrlDto.getQuery().get(TEST_QUERY_KEY_1), is(TEST_QUERY_VALUE_1));
-    assertThat(testRequestUrlDto.getQuery().get(TEST_PARAM_KEY_2), is(TEST_PARAM_VALUE_2));
+    assertThat(testRequestUrlDto.getQuery().get(QUERY_KEY_SEARCH), is(QUERY_VALUE_SEARCH_TERM));
+    assertThat(testRequestUrlDto.getQuery().get(QUERY_KEY_PAGE), is(QUERY_VALUE_PAGE_NUMBER));
+    assertThat(testRequestUrlDto.getQuery().get(QUERY_KEY_2), is(QUERY_VALUE_2));
   }
 }

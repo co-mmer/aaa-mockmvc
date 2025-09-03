@@ -3,13 +3,13 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.head;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils.addKeyValue;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils.setAccepts;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils.setContentTypes;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_0;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_MAP_1_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_0;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_0;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_MAP_1_2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_0;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_2;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -124,8 +124,7 @@ class TestArrangeHeadUtilsTest {
     @SuppressWarnings("ConstantConditions")
     void GIVEN_null_WHEN_addKeyValue_THEN_throw_NullPointerException() {
       assertThrows(
-          NullPointerException.class,
-          () -> addKeyValue(null, TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1));
+          NullPointerException.class, () -> addKeyValue(null, HEADER_KEY_1, HEADER_VALUE_1));
     }
 
     @Test
@@ -134,12 +133,11 @@ class TestArrangeHeadUtilsTest {
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
-      addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1);
+      addKeyValue(testRequestHeadDto, HEADER_KEY_1, HEADER_VALUE_1);
 
       // Assert
       assertThat(testRequestHeadDto.getKeyValue().size(), is(1));
-      assertThat(
-          testRequestHeadDto.getKeyValue().get(TEST_HEADER_KEY_1), contains(TEST_HEADER_VALUE_1));
+      assertThat(testRequestHeadDto.getKeyValue().get(HEADER_KEY_1), contains(HEADER_VALUE_1));
     }
 
     @Test
@@ -148,15 +146,13 @@ class TestArrangeHeadUtilsTest {
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
-      addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1);
-      addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_2, TEST_HEADER_VALUE_2);
+      addKeyValue(testRequestHeadDto, HEADER_KEY_1, HEADER_VALUE_1);
+      addKeyValue(testRequestHeadDto, HEADER_KEY_2, HEADER_VALUE_2);
 
       // Assert
       assertThat(testRequestHeadDto.getKeyValue().size(), is(2));
-      assertThat(
-          testRequestHeadDto.getKeyValue().get(TEST_HEADER_KEY_1), contains(TEST_HEADER_VALUE_1));
-      assertThat(
-          testRequestHeadDto.getKeyValue().get(TEST_HEADER_KEY_2), contains(TEST_HEADER_VALUE_2));
+      assertThat(testRequestHeadDto.getKeyValue().get(HEADER_KEY_1), contains(HEADER_VALUE_1));
+      assertThat(testRequestHeadDto.getKeyValue().get(HEADER_KEY_2), contains(HEADER_VALUE_2));
     }
 
     @ParameterizedTest()
@@ -170,7 +166,7 @@ class TestArrangeHeadUtilsTest {
 
     private static Stream<Arguments> provideNull() {
       return Stream.of(
-          Arguments.of(null, TEST_HEADER_MAP_1_2),
+          Arguments.of(null, HEADER_MAP_1_2),
           Arguments.of(mock(TestRequestHeadDto.class), null),
           Arguments.of(null, null));
     }
@@ -181,10 +177,10 @@ class TestArrangeHeadUtilsTest {
       var testRequestHeadDto = new TestRequestHeadDto();
 
       // Act
-      addKeyValue(testRequestHeadDto, TEST_HEADER_MAP_1_2);
+      addKeyValue(testRequestHeadDto, HEADER_MAP_1_2);
 
       // Assert
-      assertThat(testRequestHeadDto.getKeyValue(), is(TEST_HEADER_MAP_1_2));
+      assertThat(testRequestHeadDto.getKeyValue(), is(HEADER_MAP_1_2));
     }
 
     @Test
@@ -192,13 +188,13 @@ class TestArrangeHeadUtilsTest {
         GIVEN_addKeyValue_key_0_WHEN_addKeyValue_with_map_key_1_2_THEN_getKeyValue_returned_expected_values() {
       // Arrange
       var testRequestHeadDto = new TestRequestHeadDto();
-      addKeyValue(testRequestHeadDto, TEST_HEADER_KEY_0, TEST_HEADER_VALUE_0);
+      addKeyValue(testRequestHeadDto, HEADER_KEY_0, HEADER_VALUE_0);
 
       // Act
-      addKeyValue(testRequestHeadDto, TEST_HEADER_MAP_1_2);
+      addKeyValue(testRequestHeadDto, HEADER_MAP_1_2);
 
       // Assert
-      assertThat(testRequestHeadDto.getKeyValue(), is(TEST_HEADER_MAP_1_2));
+      assertThat(testRequestHeadDto.getKeyValue(), is(HEADER_MAP_1_2));
     }
   }
 }

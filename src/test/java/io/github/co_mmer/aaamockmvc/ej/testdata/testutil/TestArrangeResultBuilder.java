@@ -19,11 +19,9 @@ public final class TestArrangeResultBuilder {
   private HttpMethod method;
   private URI uri;
   private final Map<String, String> query = new HashMap<>();
-
   private final List<MediaType> accepts = new ArrayList<>();
   private MediaType contentType;
   private final Map<String, List<Object>> headers = new HashMap<>();
-
   private String bodyContent;
   private MediaType bodyContentType;
   private final List<MockMultipartFile> files = new ArrayList<>();
@@ -32,7 +30,6 @@ public final class TestArrangeResultBuilder {
     return new TestArrangeResultBuilder();
   }
 
-  // ==== URL ====
   public TestArrangeResultBuilder withMethod(HttpMethod method) {
     this.method = method;
     return this;
@@ -48,7 +45,6 @@ public final class TestArrangeResultBuilder {
     return this;
   }
 
-  // ==== Header ====
   public TestArrangeResultBuilder withAccept(MediaType mediaType) {
     this.accepts.add(mediaType);
     return this;
@@ -69,7 +65,6 @@ public final class TestArrangeResultBuilder {
     return this;
   }
 
-  // ==== Body ====
   public TestArrangeResultBuilder withBodyContent(String content, MediaType contentType) {
     this.bodyContent = content;
     this.bodyContentType = contentType;
@@ -89,17 +84,14 @@ public final class TestArrangeResultBuilder {
   public TestArrangeResult build() {
     var result = new TestArrangeResult();
 
-    // URL
     result.getUrl().setMethod(method);
     result.getUrl().setUri(uri);
     result.getUrl().getQuery().putAll(query);
 
-    // Header
     result.getHead().getAccepts().addAll(accepts);
     result.getHead().setContentType(contentType);
     result.getHead().getKeyValue().putAll(headers);
 
-    // Body
     result.getBody().setContent(bodyContent);
     result.getBody().setContentType(bodyContentType);
     result.getBody().getFiles().addAll(files);

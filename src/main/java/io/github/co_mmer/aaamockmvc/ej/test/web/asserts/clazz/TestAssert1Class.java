@@ -51,7 +51,7 @@ public interface TestAssert1Class<T> {
    * @throws AssertionError if the value is not {@code null}
    * @since 2.0.0
    */
-  TestAssert2Class<T> isNull();
+  TestAssertLClass isNull();
 
   /**
    * Asserts that the deserialized value is equal to the given {@code expected} value.

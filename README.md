@@ -50,14 +50,14 @@ public class UserController {
 }
 
 @SpringBootTest
-class UserIT extends AAAMockMvcAbstract {
+class UserIT extends AAAMockMvcTestSupport {
 
   @Test
   void GIVEN_newUser_WHEN_createUser_THEN_pendingUserIsCreated() {
     arrange()
         .post(BASE + CREATE_USER)
         .body()
-        .json(new User("user"));
+        .json(new User("Napoleon"));
 
     act()
         .perform();
@@ -92,21 +92,18 @@ class UserIT extends AAAMockMvcAbstract {
 
 ## News
 
-<details>
-<summary>Release 2.0</summary>
+### 🌿 Release v2.0.0
 
-Oct 19, 2024
+This is a quality-of-life release poured with a lot of care tests read cleaner and fail clearer.
 
-🌱
-</details>
+#### What’s new
 
-<details>
-<summary>Release 1.0</summary>
-
-🌱 19 Oct 2024 - AAA-MockMvc is alive
-
-
-</details>
+- AAA blocks are now much simpler — shorter and easier to follow.
+- The phases are clearly separated, making each test easier to scan.
+- New steps let you group multiple AAA blocks in one test and put a clear name on error messages.
+- Sharper snapshot behavior: act().perform() runs once; assertions and answers stay pure (no extra
+  I/O).
+- See full details in the [Changelog](./CHANGELOG.md#200)
 
 ---
 
@@ -114,7 +111,7 @@ Oct 19, 2024
 
 - [1. Installation](#1-installation)
 - [2. Getting Starting](#2-getting-started)
-- [3. Create Test](#3-creating-a-test)
+- [3. Creating a Test](#3-creating-a-test)
     - [3.1. Phase Arrange](#31-phase-arrange)
     - [3.2. Phase Act](#32-phase-act)
     - [3.3. Phase Assert](#33-phase-assert)
@@ -122,9 +119,13 @@ Oct 19, 2024
 - [4. Working with Steps ](#4-working-with-steps)
     - [4.1. Using steps](#41-using-step)
     - [4.2. Using steps with return-object](#42-using-step-with-answer)
-- [5. Using Custom Bean ](#5-using-custom-objectmapper-and-mockmvc)
+- [5. Using Custom Bean ](#5-using-custom-beans)
     - [ObjectMapper](#51-objectmapper)
     - [MockMvc](#52-mockmvc)
+- [6. Manuel Setup](#6-manuel-setup)
+    - [Getting Starting](#61-getting-starting)
+    - [Creating a Test](#62-creating-a-test)
+    - [Working with Steps](#63-using-steps)
 
 ---
 
@@ -165,15 +166,15 @@ do **not** offer a request body, while `POST/PUT/PATCH` do.
 
 ## 3. Creating a Test
 
-To use AAA-MockMvc, the test class must first inherit from '**AAAMockMvcAbstract**'
+To use AAA-MockMvc, the test class must first inherit from '**AAAMockMvcTestSupport**'
 
-`AAAMockMvcAbstract` exposes the AAA entry
+`AAAMockMvcTestSupport` exposes the AAA entry
 points (`arrange()`, `act()`, `asserts()`, `answer()` , `step()`)
 
 ``` java
 
 @SpringBootTest
-class MyTest extends AAAMockMvcAbstract {
+class MyTest extends AAAMockMvcTestSupport {
 
 }
 ```
@@ -191,7 +192,7 @@ later in `act().perform()`.
 ```java
 
 @SpringBootTest
-class MyTest extends AAAMockMvcAbstract {
+class MyTest extends AAAMockMvcTestSupport {
 
   @Test
   void GIVEN_newUser_WHEN_createUser_THEN_pendingUserIsCreated() {
@@ -218,7 +219,7 @@ No assertions are performed here; verification happens in the next phase.
 
 ``` java
 @SpringBootTest
-class MyTest extends AAAMockMvcAbstract {
+class MyTest extends AAAMockMvcTestSupport {
 
   @Test
   void GIVEN_newUser_WHEN_createUser_THEN_pendingUserIsCreated() {
@@ -256,7 +257,7 @@ Verify the response **snapshot** captured in `act().perform()`. No additional I/
 ```java
 
 @SpringBootTest
-class MyTest extends AAAMockMvcAbstract {
+class MyTest extends AAAMockMvcTestSupport {
 
   @Test
   void GIVEN_newUser_WHEN_createUser_THEN_pendingUserIsCreated() {
@@ -299,7 +300,7 @@ performed. Use this to drive follow-up steps (e.g., IDs, payloads, or full objec
 ```java
 
 @SpringBootTest
-class MyTest extends AAAMockMvcAbstract {
+class MyTest extends AAAMockMvcTestSupport {
 
   @Test
   void GIVEN_newUser_WHEN_createUser_THEN_pendingUserIsCreated() {
@@ -351,35 +352,35 @@ This example shows multiple steps **without** using `answer()`.
 ```java
 
 @SpringBootTest
-class UserIT extends AAAMockMvcAbstract {
+class UserIT extends AAAMockMvcTestSupport {
 
   @Test
   void GIVEN_addTwiceUser_WHEN_loadUsers_THEN_containExpectedUsers() {
 
     step(
-        "Add Napoleon",
-        s -> {
-          s.arrange().post(BASE + CREATE_USER).body().json(new User("Napoleon"));
-          s.act().perform();
-          s.asserts().status().isCreated();
+        "Add Napoleon", () -> {
+          arrange()
+              .post(BASE + CREATE_USER)
+              .body().json(new User("Napoleon"));
+          act().perform();
+          asserts().status().isCreated();
         });
 
     step(
-        "Add Gandolf",
-        s -> {
-          s.arrange().post(BASE + CREATE_USER).body().json(new User("Gandolf"));
-          s.act().perform();
-          s.asserts().status().isCreated();
+        "Add Gandolf", () -> {
+          arrange()
+              .post(BASE + CREATE_USER)
+              .body().json(new User("Gandolf"));
+          act().perform();
+          asserts().status().isCreated();
         });
 
     step(
-        "Napoleon and Gandolf are saved",
-        s -> {
-          s.arrange().get(BASE + USERS);
-          s.act().perform();
-          s.asserts()
-              .content()
-              .asList(User.class)
+        "Napoleon and Gandolf are saved", () -> {
+          arrange().get(BASE + USERS);
+          act().perform();
+          asserts()
+              .content().asList(User.class)
               .hasSize(2)
               .matchAny(
                   user -> user.name().equals("Napoleon"),
@@ -402,39 +403,39 @@ The result type is simply inferred from where you assign it.
 ```java
 
 @SpringBootTest
-class UserIT extends AAAMockMvcAbstract {
+class UserIT extends AAAMockMvcTestSupport {
 
   @Test
-  void GIVEN_addTwiceUser_WHEN_loadUsers_THEN_containExpectedUsers2() {
+  void GIVEN_two_users_WHEN_list_THEN_contains_both() {
     step(
-        "Add Napoleon",
-        s -> {
-          s.arrange().post(BASE + CREATE_USER).body().json(new User("Napoleon"));
-          s.act().perform();
-          s.asserts().status().isCreated();
+        "Add Napoleon", () -> {
+          arrange()
+              .post(BASE + CREATE_USER)
+              .body().json(new User("Napoleon"));
+          act().perform();
+          asserts().status().isCreated();
         });
 
     step(
-        "Add Gandolf",
-        s -> {
-          s.arrange().post(BASE + CREATE_USER).body().json(new User("Gandolf"));
-          s.act().perform();
-          s.asserts().status().isCreated();
+        "Add Gandolf", () -> {
+          arrange()
+              .post(BASE + CREATE_USER)
+              .body().json(new User("Gandolf"));
+          act().perform();
+          asserts().status().isCreated();
         });
 
     List<User> users = step(
-        "Napoleon and Gandolf are saved",
-        s -> {
-          s.arrange().get(BASE + USERS);
-          s.act().perform();
-          s.asserts()
-              .content()
-              .asList(User.class)
+        "Napoleon and Gandolf are saved", () -> {
+          arrange().get(BASE + USERS);
+          act().perform();
+          asserts()
+              .content().asList(User.class)
               .hasSize(2)
               .matchAny(
                   user -> user.name().equals("Napoleon"),
                   user -> user.name().equals("Gandolf"));
-          s.answer().asList(User.class);
+          answer().asList(User.class);
         });
   }
 }
@@ -459,7 +460,7 @@ Provide a Spring bean and AAA-MockMvc will use it automatically.
 ```java
 
 @SpringBootTest
-class BeanObjectMapperCustomIT extends AAAMockMvcAbstract {
+class BeanObjectMapperCustomIT extends AAAMockMvcTestSupport {
 
   @TestConfiguration
   static class ObjectMapperConfig {
@@ -497,7 +498,7 @@ Expose a preconfigured MockMvc bean — filters, interceptors, and default actio
 ```java
 
 @SpringBootTest
-class BeanMockMvcCustomIT extends AAAMockMvcAbstract {
+class BeanMockMvcCustomIT extends AAAMockMvcTestSupport {
 
   @TestConfiguration
   static class MockMvcConfig {
@@ -534,6 +535,114 @@ class BeanMockMvcCustomIT extends AAAMockMvcAbstract {
         .containsEntry("X-Custom-MockMvc", "active");
   }
 }
+```
+
+---
+
+## 6. Manuel Setup
+
+While the recommended entry point is `AAAMockMvcTestSupport` (it auto-wires everything and keeps
+tests
+lean), you can also use the framework without extending it.
+Simply import the Spring configuration and inject `AAAMockMvc` yourself.
+
+### 6.1 Getting Starting
+
+To use AAA-MockMvc without `AAAMockMvcTestSupport`, add `@ExtendWith(AAAMockMvcExtension.class)`
+and `@Import(AAAMockMvcConfig.class)` to your test and autowire an `AAAMockMvc` field.
+
+``` java
+
+@ExtendWith(AAAMockMvcExtension.class)
+@Import(AAAMockMvcConfig.class)
+@SpringBootTest
+class MyTest {
+
+  @Autowired
+  private AAAMockMvc aaa;
+
+}
+```
+
+### 6.2 Creating a Test
+
+For a deeper dive into AAA, see Chapter 3 – [Creating a Test](#3-creating-a-test)
+
+``` java
+
+@ExtendWith(AAAMockMvcExtension.class)
+@Import({AAAMockMvcConfig.class})
+@SpringBootTest
+class UserIT {
+
+  @Autowired
+  private AAAMockMvc aaa;
+
+  @Test
+  void GIVEN_user_WHEN_create_THEN_status_is_created() {
+    aaa.arrange()
+        .post(BASE + CREATE_USER)
+        .body()
+        .json(new User("Napoleon"));
+
+    aaa.act()
+        .perform();
+
+    aaa.asserts()
+        .status()
+        .isCreated();
+  }
+}
+
+```
+
+### 6.3 Using steps
+
+For a deeper dive into steps, see Chapter 4 – [Working with Steps](#4-working-with-steps)
+
+``` java
+
+@ExtendWith(AAAMockMvcExtension.class)
+@Import({AAAMockMvcConfig.class})
+@SpringBootTest
+class UserIT {
+
+  @Autowired
+  private AAAMockMvc aaa;
+
+  @Test
+  void GIVEN_two_users_WHEN_list_THEN_contains_both() {
+    aaa.step("Add Napoleon", () -> {
+      aaa.arrange()
+          .post(BASE + CREATE_USER)
+          .body().json(new User("Napoleon"));
+      aaa.act().perform();
+      aaa.asserts().status().isCreated();
+    });
+
+    aaa.step("Add Gandalf", () -> {
+      aaa.arrange()
+          .post(BASE + CREATE_USER)
+          .body().json(new User("Gandalf"));
+      aaa.act().perform();
+      aaa.asserts().status().isCreated();
+    });
+
+    List<User> users = aaa.step("Napoleon and Gandolf are saved", () -> {
+      aaa.arrange().get(BASE + USERS);
+      aaa.act().perform();
+      aaa.asserts()
+          .content().asList(User.class)
+          .hasSize(2)
+          .matchAny(
+              u -> u.name().equals("Napoleon"),
+              u -> u.name().equals("Gandalf"));
+      aaa.answer().asList(User.class); 
+    });
+  }
+}
+
+
 ```
 
 ---

@@ -1,11 +1,11 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.options.header;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils.addKeyValue;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_AUTH_KEY;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_AUTH_VALUE;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_KEY_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_MAP_1_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestHeader.TEST_HEADER_VALUE_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_MAP_1_2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_1;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_AUTH_KEY;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_AUTH_VALUE;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils;
@@ -66,23 +66,21 @@ class TestArrangeHeadHeaderImplTest {
     @Test
     void GIVEN_key_value_WHEN_add_THEN_addKeyValueIsCalled() {
       // Act
-      impl.add(TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1);
+      impl.add(HEADER_KEY_1, HEADER_VALUE_1);
 
       // Assert
       mockTestArrangeHeadUtils.verify(
-          () ->
-              addKeyValue(
-                  context.getArrangeResult().getHead(), TEST_HEADER_KEY_1, TEST_HEADER_VALUE_1));
+          () -> addKeyValue(context.getArrangeResult().getHead(), HEADER_KEY_1, HEADER_VALUE_1));
     }
 
     @Test
     void GIVEN_map_WHEN_set_THEN_addKeyValueIsCalled() {
       // Act
-      impl.set(TEST_HEADER_MAP_1_2);
+      impl.set(HEADER_MAP_1_2);
 
       // Assert
       mockTestArrangeHeadUtils.verify(
-          () -> addKeyValue(context.getArrangeResult().getHead(), TEST_HEADER_MAP_1_2));
+          () -> addKeyValue(context.getArrangeResult().getHead(), HEADER_MAP_1_2));
     }
   }
 }

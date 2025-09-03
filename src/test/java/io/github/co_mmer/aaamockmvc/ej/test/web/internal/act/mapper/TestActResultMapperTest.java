@@ -1,11 +1,11 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.mapper;
 
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_BYTE;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_KEY_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_KEY_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_VALUE_1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_VALUE_2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_HEAD_VALUE_3;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.EMPTY_BYTE_ARRAY;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_AUTH;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_CONTENT_TYPE;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_TOKEN;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_XML;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -47,7 +47,7 @@ class TestActResultMapperTest {
 
     // Assert
     assertThat(result.charset(), is(StandardCharsets.UTF_8));
-    assertThat(result.contentAsBytes(), is(TEST_BYTE));
+    assertThat(result.contentAsBytes(), is(EMPTY_BYTE_ARRAY));
   }
 
   @Test
@@ -67,8 +67,8 @@ class TestActResultMapperTest {
 
     // Assert
     var headers = result.headers();
-    assertThat(headers.get(TEST_HEAD_KEY_1), contains(TEST_HEAD_VALUE_1, TEST_HEAD_VALUE_2));
-    assertThat(headers.get(TEST_HEAD_KEY_2), contains(TEST_HEAD_VALUE_3));
+    assertThat(headers.get(HEADER_KEY_AUTH), contains(HEADER_VALUE_TOKEN, HEADER_VALUE_JSON));
+    assertThat(headers.get(HEADER_KEY_CONTENT_TYPE), contains(HEADER_VALUE_XML));
   }
 
   @Test
@@ -77,7 +77,7 @@ class TestActResultMapperTest {
     var result = TestActResultMapper.mapTo(ACT_CHARSET_NULL);
 
     // Assert
-    assertThat(result.contentAsBytes(), is(TEST_BYTE));
+    assertThat(result.contentAsBytes(), is(EMPTY_BYTE_ARRAY));
   }
 
   @SneakyThrows
@@ -94,7 +94,7 @@ class TestActResultMapperTest {
     var response = mock(MockHttpServletResponse.class);
     Mockito.when(response.getStatus()).thenReturn(200);
     Mockito.when(response.getCharacterEncoding()).thenReturn(null);
-    Mockito.when(response.getContentAsByteArray()).thenReturn(TEST_BYTE);
+    Mockito.when(response.getContentAsByteArray()).thenReturn(EMPTY_BYTE_ARRAY);
     return response;
   }
 
@@ -110,9 +110,9 @@ class TestActResultMapperTest {
   private static MockHttpServletResponse respHeaders() {
     var response = new MockHttpServletResponse();
     response.setStatus(204);
-    response.addHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_1);
-    response.addHeader(TEST_HEAD_KEY_1, TEST_HEAD_VALUE_2);
-    response.addHeader(TEST_HEAD_KEY_2, TEST_HEAD_VALUE_3);
+    response.addHeader(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
+    response.addHeader(HEADER_KEY_AUTH, HEADER_VALUE_JSON);
+    response.addHeader(HEADER_KEY_CONTENT_TYPE, HEADER_VALUE_XML);
     return response;
   }
 

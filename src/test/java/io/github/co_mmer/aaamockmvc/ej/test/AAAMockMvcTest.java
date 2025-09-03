@@ -2,7 +2,7 @@ package io.github.co_mmer.aaamockmvc.ej.test;
 
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestDataMockMvc.MOCK_MVC;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_URI;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_URI;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -10,23 +10,21 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.mapper.TestActResultMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestEnvironment;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestActResultMapper;
 import java.util.stream.Stream;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
@@ -47,7 +45,7 @@ class AAAMockMvcTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WebApplicationContext_WHEN_ctor_THEN_NPE() {
+    void WHEN_constructor_with_null_WebApplicationContext_THEN_throws_NullPointerException() {
       // Arrange
 
       // Act & Assert
@@ -56,7 +54,7 @@ class AAAMockMvcTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_MockMvc_WHEN_ctor_THEN_NPE() {
+    void WHEN_constructor_with_null_MockMvc_THEN_throws_NullPointerException() {
       // Arrange
 
       // Act & Assert
@@ -66,7 +64,8 @@ class AAAMockMvcTest {
     @ParameterizedTest
     @MethodSource("provideNullMockMvcObjectMapper")
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_nulls_for_MockMvc_or_ObjectMapper_WHEN_ctor_THEN_NPE(MockMvc mvc, ObjectMapper om) {
+    void WHEN_constructor_with_null_MockMvc_or_null_ObjectMapper_THEN_throws_NullPointerException(
+        MockMvc mvc, ObjectMapper om) {
       // Arrange
 
       // Act & Assert
@@ -81,7 +80,7 @@ class AAAMockMvcTest {
     }
 
     @Test
-    void GIVEN_WebApplicationContext_WHEN_ctor_THEN_notNull() {
+    void WHEN_constructor_with_WebApplicationContext_THEN_returns_nonNull_instance() {
       // Arrange
 
       // Act
@@ -92,7 +91,8 @@ class AAAMockMvcTest {
     }
 
     @Test
-    void GIVEN_WebApplicationContext_and_ObjectMapper_WHEN_ctor_THEN_notNull() {
+    void
+        WHEN_constructor_with_WebApplicationContext_and_ObjectMapper_THEN_returns_nonNull_instance() {
       // Arrange
 
       // Act
@@ -103,7 +103,7 @@ class AAAMockMvcTest {
     }
 
     @Test
-    void GIVEN_MockMvc_WHEN_ctor_THEN_notNull() {
+    void WHEN_constructor_with_MockMvc_THEN_returns_nonNull_instance() {
       // Arrange
 
       // Act
@@ -114,7 +114,7 @@ class AAAMockMvcTest {
     }
 
     @Test
-    void GIVEN_MockMvc_and_ObjectMapper_WHEN_ctor_THEN_notNull() {
+    void WHEN_constructor_with_MockMvc_and_ObjectMapper_THEN_returns_nonNull_instance() {
       // Arrange
 
       // Act
@@ -183,153 +183,476 @@ class AAAMockMvcTest {
       assertThat(context, is(notNullValue()));
       assertThat(context.getStep(), is(nullValue()));
     }
-  }
-
-  @Nested
-  class ArrangePreconditions {
 
     @Test
-    void GIVEN_no_arrange_WHEN_asserts_THEN_IllegalState_with_message() {
+    void GIVEN_stepContext_WHEN_arrange_THEN_reuseExistingStepAndKeepMetadata() {
       // Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
 
-      // Act & Assert
-      var ex = assertThrows(IllegalStateException.class, aaa::asserts);
-      assertThat(
-          ex.getMessage(),
-          is(
-              "Assert error: No 'arrange()' step configured. Call arrange().get|post|put|patch|delete|head|options(...) before 'asserts()'"));
+      aaa.step(
+          "Add Napoleon",
+          () -> {
+            var stepBefore = getCurrentStep();
+            assertThat(stepBefore, is(notNullValue()));
+
+            // Act
+            aaa.arrange();
+
+            // Assert
+            var stepAfter = getCurrentStep();
+            assertThat(stepAfter, sameInstance(stepBefore));
+
+            var context = getField(stepAfter, "context", TestAAAContext.class);
+            assertThat(context, is(notNullValue()));
+            assertThat(context.getStep(), is(notNullValue()));
+            assertThat(context.getStep().name(), is("Add Napoleon"));
+
+            var envFromAaa = getField(aaa, "environment", TestEnvironment.class);
+            assertThat(context.getEnvironment(), sameInstance(envFromAaa));
+          });
     }
 
-    @Test
-    void GIVEN_no_arrange_WHEN_answer_THEN_IllegalState_with_message() {
-      // Arrange
-      var aaa = new AAAMockMvc(MOCK_MVC);
-
-      // Act & Assert
-      var ex = assertThrows(IllegalStateException.class, aaa::answer);
-      assertThat(
-          ex.getMessage(),
-          is(
-              "Answer error: No arrange step configured. Call arrange().get|post|put|patch|delete|head|options(...) before 'answer()'"));
+    @SneakyThrows
+    private static Object getCurrentStep() {
+      var f = AAAMockMvc.class.getDeclaredField("CURRENT");
+      f.setAccessible(true);
+      @SuppressWarnings("unchecked")
+      var tl = (ThreadLocal<Object>) f.get(null);
+      return tl.get();
     }
 
-    @Test
-    void GIVEN_arrange_active_WHEN_arrange_again_THEN_IllegalState_with_message() {
-      // Arrange
-      var aaa = new AAAMockMvc(MOCK_MVC);
-      aaa.arrange();
-
-      // Act & Assert
-      var ex = assertThrows(IllegalStateException.class, aaa::arrange);
-      assertThat(ex.getMessage(), is("Arrange error: Arrange phase already started"));
-    }
-  }
-
-  @Nested
-  class ActPreconditions {
-
-    @Test
-    void GIVEN_no_arranged_called_WHEN_act_THEN_throwIllegalStateWithMessage() {
-      // Arrange
-      var aaa = new AAAMockMvc(MOCK_MVC);
-
-      // Act & Assert
-      var ex = assertThrows(IllegalStateException.class, aaa::act);
-      assertThat(
-          ex.getMessage(),
-          is(
-              "Act error: No arrange step configured. Call arrange().get|post|put|patch|delete|head|options(...) before act().perform()"));
-    }
-
-    @Test
-    void GIVEN_arranged_called_WHEN_act_called_THEN_throwNoException() {
-      // Arrange
-      var aaa = new AAAMockMvc(MOCK_MVC);
-      aaa.arrange();
-
-      // Act & Assert
-      assertDoesNotThrow(aaa::act);
+    @SneakyThrows
+    private static <T> T getField(Object target, String name, Class<T> type) {
+      var f = target.getClass().getDeclaredField(name);
+      f.setAccessible(true);
+      return type.cast(f.get(target));
     }
   }
 
   @Nested
-  class AssertPreconditions {
+  class InternalStepPreconditionsSuccess {
 
     @Test
-    void GIVEN_no_act_perform_WHEN_asserts_THEN_IllegalState_with_message() {
+    void WHEN_arrange_THEN_not_throwException() {
       // Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
-      aaa.arrange();
-      aaa.act();
 
       // Act & Assert
-      var ex = assertThrows(IllegalStateException.class, aaa::asserts);
-      assertThat(
-          ex.getMessage(),
-          is(
-              "Assert error: No 'act()' step configured. Call 'act().perform()' before 'asserts()'"));
+      assertDoesNotThrow(aaa::arrange);
     }
 
     @Test
-    void GIVEN_full_flow_WHEN_asserts_THEN_returns_api() {
+    void WHEN_arrange_act_THEN_not_throwException() {
       // Arrange
-      var mockResult = Mockito.mock(TestActResult.class);
-      var mockTestActResultMapper = Mockito.mockStatic(TestActResultMapper.class);
-      mockTestActResultMapper.when(() -> TestActResultMapper.mapTo(any())).thenReturn(mockResult);
-
       var aaa = new AAAMockMvc(MOCK_MVC);
-      aaa.arrange().get("/any");
 
-      // Act
-      aaa.act().perform();
+      // Act & Assert
+      assertDoesNotThrow(
+          () -> {
+            aaa.arrange().get(BASE_URI);
+            aaa.act();
+          });
+    }
 
-      // Assert
-      var asserts = aaa.asserts();
-      assertThat(asserts, is(notNullValue()));
+    @Test
+    void WHEN_arrange_act_perform_asserts_THEN_not_throwException() {
+      // Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act & Assert
+      assertDoesNotThrow(
+          () -> {
+            aaa.arrange().get(BASE_URI);
+            aaa.act().perform();
+            aaa.asserts().status().isOk();
+          });
+
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void WHEN_arrange_act_perform_asserts_answer_THEN_not_throwException() {
+      // Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act & Assert
+      assertDoesNotThrow(
+          () -> {
+            aaa.arrange().get(BASE_URI);
+            aaa.act().perform();
+            aaa.asserts().status().isOk();
+            aaa.answer().asString();
+          });
+
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void WHEN_arrange_act_perform_answer_THEN_not_throwException() {
+      // Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act & Assert
+      assertDoesNotThrow(
+          () -> {
+            aaa.arrange().get(BASE_URI);
+            aaa.act().perform();
+            aaa.answer().asString();
+          });
+
       mockTestActResultMapper.close();
     }
   }
 
   @Nested
-  class AnswerPreconditions {
+  class InternalStepPreconditionsFailed {
 
     @Test
-    void GIVEN_no_act_perform_WHEN_answer_THEN_IllegalState_with_message() {
+    void WHEN_act_THEN_noArrangeException() {
       // Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
-      aaa.arrange();
-      aaa.act();
 
-      // Act & Assert
-      var ex = assertThrows(IllegalStateException.class, aaa::answer);
+      // Act
+      var exception = assertThrows(IllegalStateException.class, aaa::act);
+
+      // Assert
       assertThat(
-          ex.getMessage(),
-          is("Answer error: No 'act()' step configured. Call 'act().perform()' before 'answer()'"));
+          exception.getMessage(),
+          is(
+              "Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
     }
 
     @Test
-    void GIVEN_full_flow_WHEN_answer_THEN_returns_api() {
+    void WHEN_act_perform_THEN_noArrangeException() {
       // Arrange
-      var mockResult = Mockito.mock(TestActResult.class);
-      var mockTestActResultMapper = Mockito.mockStatic(TestActResultMapper.class);
-      mockTestActResultMapper.when(() -> TestActResultMapper.mapTo(any())).thenReturn(mockResult);
-
       var aaa = new AAAMockMvc(MOCK_MVC);
-      aaa.arrange().get("/any");
 
       // Act
-      aaa.act().perform();
+      var exception = assertThrows(IllegalStateException.class, () -> aaa.act().perform());
 
       // Assert
-      var answer = aaa.answer();
-      assertThat(answer, is(notNullValue()));
-      mockTestActResultMapper.close();
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+    }
+
+    @Test
+    void WHEN_act_assert_THEN_noArrangeException() {
+      // Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+
+      // Act
+      var exception =
+          assertThrows(
+              IllegalStateException.class,
+              () -> {
+                aaa.act();
+                aaa.asserts();
+              });
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+    }
+
+    @Test
+    void WHEN_act_answer_THEN_noArrangeException() {
+      // Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+
+      // Act
+      var exception =
+          assertThrows(
+              IllegalStateException.class,
+              () -> {
+                aaa.act();
+                aaa.answer();
+              });
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+    }
+
+    @Test
+    void WHEN_assert_THEN_noAssertException() {
+      // Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+
+      // Act
+      var exception = assertThrows(IllegalStateException.class, () -> aaa.asserts());
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Assert error: No 'arrange()' / 'act()' steps configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' followed by 'act().perform()' before 'asserts()'"));
+    }
+
+    @Test
+    void WHEN_answer_THEN_noAssertException() {
+      // Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+
+      // Act
+      var exception = assertThrows(IllegalStateException.class, () -> aaa.answer());
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Answer error: No 'arrange()' / 'act()' steps configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' followed by 'act().perform()' before 'answer()'"));
     }
   }
 
   @Nested
   class Step {
+
+    @Test
+    void GIVEN_emptyStepName_WHEN_step_THEN_message_used_unnamed_step() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act
+      var exception = assertThrows(IllegalStateException.class, () -> aaa.step("", aaa::act));
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Step '<unnamed step>' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void GIVEN_arrangeUrl_WHEN_step_THEN_not_throwException() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act & Assert
+      assertDoesNotThrow(callStep(aaa, true, false, false, false, false));
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void GIVEN_arrangeUrl_act_WHEN_step_THEN_not_throwException() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act & Assert
+      assertDoesNotThrow(callStep(aaa, true, false, true, false, false));
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void GIVEN_arrangeUrl_act_assert_WHEN_step_THEN_not_throwException() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act & Assert
+      assertDoesNotThrow(callStep(aaa, true, false, true, true, false));
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void GIVEN_arrangeUrl_act_answer_WHEN_step_THEN_not_throwException() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act & Assert
+      assertDoesNotThrow(callStep(aaa, true, false, true, false, true));
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void GIVEN_arrange_act_WHEN_step_THEN_not_throwException() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act
+      var exception =
+          assertThrows(IllegalStateException.class, callStep(aaa, false, true, true, false, false));
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Step 'StepTest' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void GIVEN_act_WHEN_step_THEN_throw_IllegalStateException() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act
+      var exception =
+          assertThrows(
+              IllegalStateException.class, callStep(aaa, false, false, true, false, false));
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Step 'StepTest' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void GIVEN_act_assert_WHEN_step_THEN_throw_IllegalStateException() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act
+      var exception =
+          assertThrows(IllegalStateException.class, callStep(aaa, false, false, true, true, false));
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Step 'StepTest' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void GIVEN_act_answer_WHEN_step_THEN_throw_IllegalStateException() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act
+      var exception =
+          assertThrows(IllegalStateException.class, callStep(aaa, false, false, true, false, true));
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Step 'StepTest' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void GIVEN_assert_WHEN_step_THEN_throw_IllegalStateException() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act
+      var exception =
+          assertThrows(
+              IllegalStateException.class, callStep(aaa, false, false, false, true, false));
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Step 'StepTest' · Assert error: No 'act()' step configured. Call 'act().perform()' before 'asserts()'"));
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void GIVEN_arrange_assert_WHEN_step_THEN_throw_IllegalStateException() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act
+      var exception =
+          assertThrows(IllegalStateException.class, callStep(aaa, true, false, false, true, false));
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Step 'StepTest' · Assert error: No 'act()' step configured. Call 'act().perform()' before 'asserts()'"));
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void GIVEN_answer_WHEN_step_THEN_throw_IllegalStateException() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act
+      var exception =
+          assertThrows(
+              IllegalStateException.class, callStep(aaa, false, false, false, false, true));
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Step 'StepTest' · Answer error: No 'act()' step configured. Call 'act().perform()' before 'answer()'"));
+      mockTestActResultMapper.close();
+    }
+
+    @Test
+    void GIVEN_arrange_answer_WHEN_step_THEN_throw_IllegalStateException() {
+      //  Arrange
+      var aaa = new AAAMockMvc(MOCK_MVC);
+      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+
+      // Act
+      var exception =
+          assertThrows(IllegalStateException.class, callStep(aaa, true, false, false, false, true));
+
+      // Assert
+      assertThat(
+          exception.getMessage(),
+          is(
+              "Step 'StepTest' · Answer error: No 'act()' step configured. Call 'act().perform()' before 'answer()'"));
+      mockTestActResultMapper.close();
+    }
+
+    private static Executable callStep(
+        AAAMockMvc aaa,
+        boolean withArrangeUrl,
+        boolean withArrange,
+        boolean withAct,
+        boolean withAssert,
+        boolean withAnswer) {
+
+      return () ->
+          aaa.step(
+              "StepTest",
+              () -> {
+                if (withArrangeUrl) {
+                  aaa.arrange().get(BASE_URI);
+                }
+                if (withArrange) {
+                  aaa.arrange();
+                }
+                if (withAct) {
+                  aaa.act().perform();
+                }
+                if (withAssert) {
+                  aaa.asserts().status().isOk();
+                }
+                if (withAnswer) {
+                  aaa.answer().asString();
+                }
+              });
+    }
 
     @Test
     void GIVEN_no_answer_was_captured_WHEN_step_THEN_return_null() {
@@ -341,10 +664,10 @@ class AAAMockMvcTest {
       String result =
           aaa.step(
               "No answer",
-              s -> {
-                s.arrange().get(TEST_URI);
-                s.act().perform();
-                s.asserts().status().isOk();
+              () -> {
+                aaa.arrange().get(BASE_URI);
+                aaa.act().perform();
+                aaa.asserts().status().isOk();
               });
 
       // Assert
@@ -362,11 +685,11 @@ class AAAMockMvcTest {
       String result =
           aaa.step(
               "With answer",
-              s -> {
-                s.arrange().get(TEST_URI);
-                s.act().perform();
-                s.asserts().status().isOk();
-                s.answer().asString();
+              () -> {
+                aaa.arrange().get(BASE_URI);
+                aaa.act().perform();
+                aaa.asserts().status().isOk();
+                aaa.answer().asString();
               });
 
       // Assert
@@ -375,7 +698,7 @@ class AAAMockMvcTest {
     }
 
     @Test
-    void cast_mismatch_surfaces_as_ClassCastException_at_assignment_site() {
+    void GIVEN_cast_mismatch_WHEN_step_THEN_throw_ClassCastException() {
       //  Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
       var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
@@ -388,11 +711,11 @@ class AAAMockMvcTest {
             Integer wrong =
                 aaa.step(
                     "Type mismatch",
-                    s -> {
-                      s.arrange().get(TEST_URI);
-                      s.act().perform();
-                      s.asserts().status().isOk();
-                      s.answer().asString();
+                    () -> {
+                      aaa.arrange().get(BASE_URI);
+                      aaa.act().perform();
+                      aaa.asserts().status().isOk();
+                      aaa.answer().asString();
                     });
           });
 

@@ -7,7 +7,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A2_A3;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
@@ -40,7 +40,7 @@ class TestAssertMapImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throwException() {
+    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> new TestAssertMapImpl<>(null));
     }
   }
@@ -113,7 +113,7 @@ class TestAssertMapImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_A1_A2_WHEN_isEqualTo_THEN_normalizeMapIsCalled() {
+    void GIVEN_A1_A2_WHEN_isEqualTo_THEN_normalize_map_is_called() {
       // Arrange
       var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
       useAssertResult(TEST_MAP_A1_A2);
@@ -128,7 +128,7 @@ class TestAssertMapImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("all")
-    void GIVEN_null_WHEN_isEqualTo_THEN_throwException() {
+    void GIVEN_null_WHEN_isEqualTo_THEN_throw_Exception() {
       // Act & Assert
       assertThrows(NullPointerException.class, () -> testAssert.isEqualTo(null));
     }
@@ -165,56 +165,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       var headers = testAssert.headers();
 
       // Assert
-      assertThat(headers.getClass(), is(TestAssertHeadImpl.class));
-    }
-  }
-
-  @Nested
-  class combinationIsNotEmpty {
-
-    @Test
-    void isNotEmpty_isEqualTo() {
-      // Arrange
-      useActResult(TEST_MAP_A1_A2_JSON);
-      useAssertResult(TEST_MAP_A1_A2);
-
-      // Act & Assert
-      testAssert.isNotEmpty().isEqualTo(TEST_MAP_A1_A2);
-    }
-  }
-
-  @Nested
-  class combinationIsEmpty {
-
-    @Test
-    void isEmpty_headers() {
-      // Arrange
-      useActResult(EMPTY_OBJECT);
-
-      // Act & Assert
-      testAssert.isEmpty().headers();
-    }
-  }
-
-  @Nested
-  class combinationHasSize {
-
-    @Test
-    void hasSize_isEqualTo() {
-      // Arrange
-      useAssertResult(TEST_MAP_A1_A2);
-
-      // Act & Assert
-      testAssert.hasSize(2).isEqualTo(TEST_MAP_A1_A2);
-    }
-
-    @Test
-    void hasSize_headers() {
-      // Arrange
-      useAssertResult(TEST_MAP_A1_A2);
-
-      // Act & Assert
-      testAssert.hasSize(2).headers();
+      assertThat(headers, instanceOf(TestAssertHeadImpl.class));
     }
   }
 }

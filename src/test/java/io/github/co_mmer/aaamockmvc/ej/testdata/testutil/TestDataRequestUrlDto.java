@@ -1,5 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.testdata.testutil;
 
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_KEY_SEARCH;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_VALUE_SEARCH_TERM;
+
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.TestRequestUrlDto;
 import java.util.Collections;
 import java.util.Map;
@@ -14,12 +17,11 @@ public final class TestDataRequestUrlDto {
       createTestRequestUrlDto(Collections.emptyMap());
 
   public static final TestRequestUrlDto TEST_REQUEST_URL_QUERY1 =
-      createTestRequestUrlDto(
-          Map.of(TestParameter.TEST_QUERY_KEY_1, TestParameter.TEST_QUERY_VALUE_1));
+      createTestRequestUrlDto(Map.of(QUERY_KEY_SEARCH, QUERY_VALUE_SEARCH_TERM));
 
   private static TestRequestUrlDto createTestRequestUrlDto(Map<String, String> param) {
     var requestHeadDto = new TestRequestUrlDto();
-    requestHeadDto.setUri(TestValue.TEST_URI);
+    requestHeadDto.setUri(TestValue.BASE_URI);
     requestHeadDto.setQuery(param);
     return requestHeadDto;
   }

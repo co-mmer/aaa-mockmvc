@@ -85,7 +85,7 @@ public final class TestAssertCollectionImpl<E>
     return contains(List.of(expectedElements));
   }
 
-  public TestAssertLCollection containsAnyOrder(@NonNull Collection<E> expectedCollection) {
+  public TestAssert3Collection<E> containsAnyOrder(@NonNull Collection<E> expectedCollection) {
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
     var normalizeExpected = normalizeAsObjects(expectedCollection);
@@ -111,9 +111,28 @@ public final class TestAssertCollectionImpl<E>
   @Override
   public TestAssert4Collection<E> matchAll(@NonNull Predicate<E> condition) {
     @SuppressWarnings("unchecked")
-    var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    TestAssertMatch.assertThat(actual).matchAll(condition);
-    return this;
+    Predicate<E>[] predicates = new Predicate[] {condition};
+    return matchAll(predicates);
+  }
+
+  @Override
+  public TestAssert4Collection<E> matchAll(
+      @NonNull Predicate<E> condition1, @NonNull Predicate<E> condition2) {
+
+    @SuppressWarnings("unchecked")
+    Predicate<E>[] predicates = new Predicate[] {condition1, condition2};
+    return matchAll(predicates);
+  }
+
+  @Override
+  public TestAssert4Collection<E> matchAll(
+      @NonNull Predicate<E> condition1,
+      @NonNull Predicate<E> condition2,
+      @NonNull Predicate<E> condition3) {
+
+    @SuppressWarnings("unchecked")
+    Predicate<E>[] predicates = new Predicate[] {condition1, condition2, condition3};
+    return matchAll(predicates);
   }
 
   @SafeVarargs
@@ -128,9 +147,26 @@ public final class TestAssertCollectionImpl<E>
   @Override
   public TestAssert5Collection<E> matchAny(@NonNull Predicate<E> condition) {
     @SuppressWarnings("unchecked")
-    var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    TestAssertMatch.assertThat(actual).matchAny(condition);
-    return this;
+    Predicate<E>[] predicates = new Predicate[] {condition};
+    return this.matchAny(predicates);
+  }
+
+  @Override
+  public TestAssert5Collection<E> matchAny(
+      @NonNull Predicate<E> condition1, @NonNull Predicate<E> condition2) {
+    @SuppressWarnings("unchecked")
+    Predicate<E>[] predicates = new Predicate[] {condition1, condition2};
+    return this.matchAny(predicates);
+  }
+
+  @Override
+  public TestAssert5Collection<E> matchAny(
+      @NonNull Predicate<E> condition1,
+      @NonNull Predicate<E> condition2,
+      @NonNull Predicate<E> condition3) {
+    @SuppressWarnings("unchecked")
+    Predicate<E>[] predicates = new Predicate[] {condition1, condition2, condition3};
+    return this.matchAny(predicates);
   }
 
   @SafeVarargs
@@ -145,9 +181,26 @@ public final class TestAssertCollectionImpl<E>
   @Override
   public TestAssertLCollection matchNone(@NonNull Predicate<E> condition) {
     @SuppressWarnings("unchecked")
-    var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    TestAssertMatch.assertThat(actual).matchNone(condition);
-    return this;
+    Predicate<E>[] predicates = new Predicate[] {condition};
+    return this.matchNone(predicates);
+  }
+
+  @Override
+  public TestAssertLCollection matchNone(
+      @NonNull Predicate<E> condition1, @NonNull Predicate<E> condition2) {
+    @SuppressWarnings("unchecked")
+    Predicate<E>[] predicates = new Predicate[] {condition1, condition2};
+    return this.matchNone(predicates);
+  }
+
+  @Override
+  public TestAssertLCollection matchNone(
+      @NonNull Predicate<E> condition1,
+      @NonNull Predicate<E> condition2,
+      @NonNull Predicate<E> condition3) {
+    @SuppressWarnings("unchecked")
+    Predicate<E>[] predicates = new Predicate[] {condition1, condition2, condition3};
+    return this.matchNone(predicates);
   }
 
   @SafeVarargs
