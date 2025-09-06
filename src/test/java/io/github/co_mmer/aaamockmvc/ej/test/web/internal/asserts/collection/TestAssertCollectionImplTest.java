@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"java:S2699", "unchecked"})
 class TestAssertCollectionImplTest extends TestAssertBase {
 
   private static final Predicate<TestObjectSimple> PREDICATE_A =

@@ -61,16 +61,6 @@ class TestGenericMapperTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_WHEN_parse_THEN_return_null(String content) {
-      // Act
-      var result = TestGenericMapper.parse(om, content, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
     void GIVEN_blank_string_WHEN_parse_THEN_return_null(String content) {
@@ -112,19 +102,6 @@ class TestGenericMapperTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_empty_string_WHEN_parse_THEN_return_null(String response) {
-      // Arrange
-      when(mockHttpServletResponse.getContentAsString()).thenReturn(response);
-
-      // Act
-      var result = TestGenericMapper.parse(om, mockMvcResult, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
     void GIVEN_blank_WHEN_parse_THEN_return_null(String response) {
@@ -179,16 +156,6 @@ class TestGenericMapperTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_WHEN_parseList_THEN_return_null(String content) {
-      // Act
-      var result = TestGenericMapper.parseList(om, content, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
     void GIVEN_blank_string_WHEN_parseList_THEN_return_null(String content) {
@@ -245,19 +212,6 @@ class TestGenericMapperTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_WHEN_parseList_THEN_return_null(String response) {
-      // Arrange
-      when(mockHttpServletResponse.getContentAsString()).thenReturn(response);
-
-      // Act
-      var result = TestGenericMapper.parseList(om, mockMvcResult, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
     void GIVEN_blank_WHEN_parseList_THEN_return_null(String response) {
@@ -324,16 +278,6 @@ class TestGenericMapperTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_WHEN_parseSet_THEN_return_null(String content) {
-      // Act
-      var result = TestGenericMapper.parseSet(om, content, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
     void GIVEN_blank_string_WHEN_parseSet_THEN_return_null(String content) {
@@ -390,19 +334,6 @@ class TestGenericMapperTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_WHEN_parseSet_THEN_return_null(String response) {
-      // Arrange
-      when(mockHttpServletResponse.getContentAsString()).thenReturn(response);
-
-      // Act
-      var result = TestGenericMapper.parseSet(om, mockMvcResult, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
     void GIVEN_blank_WHEN_parseSet_THEN_return_null(String response) {
@@ -471,16 +402,6 @@ class TestGenericMapperTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_WHEN_parseMap_THEN_return_null(String content) {
-      // Act
-      var result = TestGenericMapper.parseMap(om, content, Integer.class, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
     void GIVEN_blank_string_WHEN_parseMap_THEN_return_null(String content) {
@@ -561,20 +482,6 @@ class TestGenericMapperTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_WHEN_parseMap_THEN_return_null(String response) {
-      // Arrange
-      when(mockHttpServletResponse.getContentAsString()).thenReturn(response);
-
-      // Act
-      var result =
-          TestGenericMapper.parseMap(om, mockMvcResult, Integer.class, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
     void GIVEN_blank_WHEN_parseMap_THEN_return_null(String response) {
@@ -684,18 +591,7 @@ class TestGenericMapperTest {
       assertThat(result, is(TEST_LIST_A1_A2));
     }
 
-    @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_WHEN_parseCollection_THEN_return_null(String content) {
-      // Act
-      var result = TestGenericMapper.parseCollection(om, content, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
     void GIVEN_blank_string_WHEN_parseCollection_THEN_return_null(String content) {
@@ -754,21 +650,6 @@ class TestGenericMapperTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_WHEN_parseCollection_THEN_return_null(String response) {
-      // Arrange
-      when(mockHttpServletResponse.getContentAsString()).thenReturn(response);
-
-      // Act
-      var result =
-          TestGenericMapper.parseCollection(
-              om, mockMvcResult.getResponse().getContentAsString(), TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
     void GIVEN_blank_WHEN_parseCollection_THEN_return_null(String response) {

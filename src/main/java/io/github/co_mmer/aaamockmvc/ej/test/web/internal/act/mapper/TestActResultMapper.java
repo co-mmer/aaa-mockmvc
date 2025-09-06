@@ -33,6 +33,7 @@ public class TestActResultMapper {
     return headers;
   }
 
+  @SuppressWarnings("all")
   private static Charset resolveCharset(MockHttpServletResponse response) {
     try {
       var encoding = response.getCharacterEncoding();

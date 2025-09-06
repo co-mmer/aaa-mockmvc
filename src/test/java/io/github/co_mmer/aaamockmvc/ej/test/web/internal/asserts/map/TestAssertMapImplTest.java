@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+@SuppressWarnings("java:S2699")
 class TestAssertMapImplTest extends TestAssertBase {
 
   private TestAssertMapImpl<Integer, TestObjectSimple> testAssert;

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 @Since("2.0.0")
+@SuppressWarnings("java:S6218")
 public record TestActResult(
     int status, Map<String, List<String>> headers, byte[] content, Charset charset) {
 

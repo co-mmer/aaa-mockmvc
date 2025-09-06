@@ -44,7 +44,7 @@ class AAAMockMvcConfigTest {
   @Test
   void WHEN_aaaMockMvc_called_THEN_builder_is_used() {
     // Arrange
-    var mockAAAMockMvcBuilder = createMockAAAMockMvcBuilder();
+    var mockStaticAAAMockMvcBuilder = createMockAAAMockMvcBuilder();
 
     // Act
     var result =
@@ -53,23 +53,25 @@ class AAAMockMvcConfigTest {
 
     // Assert
     assertThat(result, is(this.mockAAAMockMvc));
-    mockAAAMockMvcBuilder.verify(AAAMockMvcBuilder::builder);
+    mockStaticAAAMockMvcBuilder.verify(AAAMockMvcBuilder::builder);
     verify(this.mockAAAMockMvcBuilder).withWebApplicationContext(this.mockWebApplicationContext);
     verify(this.mockAAAMockMvcBuilder).build();
 
     // Cleanup
-    mockAAAMockMvcBuilder.close();
+    mockStaticAAAMockMvcBuilder.close();
   }
 
   private MockedStatic<AAAMockMvcBuilder> createMockAAAMockMvcBuilder() {
-    var mockAAAMockMvcBuilder = mockStatic(AAAMockMvcBuilder.class);
-    mockAAAMockMvcBuilder.when(AAAMockMvcBuilder::builder).thenReturn(this.mockAAAMockMvcBuilder);
+    var mockStaticAAAMockMvcBuilder = mockStatic(AAAMockMvcBuilder.class);
+    mockStaticAAAMockMvcBuilder
+        .when(AAAMockMvcBuilder::builder)
+        .thenReturn(this.mockAAAMockMvcBuilder);
 
     when(this.mockAAAMockMvcBuilder.withWebApplicationContext(this.mockWebApplicationContext))
         .thenReturn(this.mockAAAMockMvcBuilder);
     when(this.mockAAAMockMvcBuilder.withMockMvc(null)).thenReturn(this.mockAAAMockMvcBuilder);
     when(this.mockAAAMockMvcBuilder.withObjectMapper(null)).thenReturn(this.mockAAAMockMvcBuilder);
     when(this.mockAAAMockMvcBuilder.build()).thenReturn(this.mockAAAMockMvc);
-    return mockAAAMockMvcBuilder;
+    return mockStaticAAAMockMvcBuilder;
   }
 }

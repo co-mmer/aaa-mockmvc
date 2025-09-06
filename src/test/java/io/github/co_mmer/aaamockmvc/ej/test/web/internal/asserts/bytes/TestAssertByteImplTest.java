@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+@SuppressWarnings("java:S2699")
 class TestAssertByteImplTest extends TestAssertBase {
 
   private TestAssertByteImpl testAssert;
@@ -124,6 +125,7 @@ class TestAssertByteImplTest extends TestAssertBase {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_unexpected_byte_WHEN_isEqualTo_THEN_failed() {
       // Arrange
       useActResult(TEST_A1_JSON.getBytes());

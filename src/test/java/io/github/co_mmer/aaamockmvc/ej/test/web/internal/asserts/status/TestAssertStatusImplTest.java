@@ -27,6 +27,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpStatus;
 
+@SuppressWarnings("java:S2699")
 class TestAssertStatusImplTest extends TestAssertBase {
 
   private TestAssert1Status testAssert1;
@@ -132,6 +133,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
 
     @ParameterizedTest
     @MethodSource("useCaseHttpStatus")
+    @SuppressWarnings("java:S5778")
     void GIVEN_unexpected_HttpStatus_WHEN_assert_THEN_failed(HttpStatus status) {
       // Arrange
       useActResult(1);

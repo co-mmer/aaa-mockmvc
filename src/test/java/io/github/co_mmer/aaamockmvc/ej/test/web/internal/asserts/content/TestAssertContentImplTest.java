@@ -62,21 +62,6 @@ class TestAssertContentImplTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_body_WHEN_asString_THEN_store_value_in_assertResult(String body) {
-      // Arrange
-      when(context.getActResult().contentAsString()).thenReturn(body);
-
-      // Act
-      impl.asString();
-
-      // Assert
-      var stored = context.getAssertResult();
-      assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), is(body));
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     @SneakyThrows
     void GIVEN_blank_body_WHEN_asString_THEN_store_blank_in_assertResult(String body) {
@@ -164,21 +149,6 @@ class TestAssertContentImplTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_body_WHEN_asClass_THEN_store_null_in_assertResult(String body) {
-      // Arrange
-      when(context.getActResult().contentAsString()).thenReturn(body);
-
-      // Act
-      impl.asClass(TestObjectSimple.class);
-
-      // Assert
-      var stored = context.getAssertResult();
-      assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), nullValue());
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     @SneakyThrows
     void GIVEN_blank_body_WHEN_asClass_THEN_store_null_in_assertResult(String body) {
@@ -231,21 +201,6 @@ class TestAssertContentImplTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_body_WHEN_asCollection_THEN_store_null_in_assertResult(String body) {
-      // Arrange
-      when(context.getActResult().contentAsString()).thenReturn(body);
-
-      // Act
-      impl.asCollection(TestObjectSimple.class);
-
-      // Assert
-      var stored = context.getAssertResult();
-      assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), nullValue());
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     @SneakyThrows
     void GIVEN_blank_body_WHEN_asCollection_THEN_store_null_in_assertResult(String body) {
@@ -317,21 +272,6 @@ class TestAssertContentImplTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_body_WHEN_asList_THEN_store_null_in_assertResult(String body) {
-      // Arrange
-      when(context.getActResult().contentAsString()).thenReturn(body);
-
-      // Act
-      impl.asList(TestObjectSimple.class);
-
-      // Assert
-      var stored = context.getAssertResult();
-      assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), nullValue());
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     @SneakyThrows
     void GIVEN_blank_body_WHEN_asList_THEN_store_null_in_assertResult(String body) {
@@ -416,21 +356,6 @@ class TestAssertContentImplTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_body_WHEN_asSet_THEN_store_null_in_assertResult(String body) {
-      // Arrange
-      when(context.getActResult().contentAsString()).thenReturn(body);
-
-      // Act
-      impl.asSet(TestObjectSimple.class);
-
-      // Assert
-      var stored = context.getAssertResult();
-      assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), nullValue());
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     @SneakyThrows
     void GIVEN_blank_body_WHEN_asSet_THEN_store_null_in_assertResult(String body) {
@@ -515,21 +440,6 @@ class TestAssertContentImplTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    @SneakyThrows
-    void GIVEN_null_or_empty_body_WHEN_asMap_THEN_store_null_in_assertResult(String body) {
-      // Arrange
-      when(context.getActResult().contentAsString()).thenReturn(body);
-
-      // Act
-      impl.asMap(Integer.class, TestObjectSimple.class);
-
-      // Assert
-      var stored = context.getAssertResult();
-      assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), nullValue());
-    }
-
-    @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     @SneakyThrows
     void GIVEN_blank_body_WHEN_asMap_THEN_store_null_in_assertResult(String body) {

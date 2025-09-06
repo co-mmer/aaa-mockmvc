@@ -33,7 +33,7 @@ public class TestAssertMatchTest {
 
       @ParameterizedTest
       @MethodSource("provideNullParameters")
-      @SuppressWarnings("ConstantConditions")
+      @SuppressWarnings({"ConstantConditions", "java:S5778"})
       void GIVEN_provideNullParameters_WHEN_assertMatch_THEN_throw_NullPointerException(
           List<String> actual, Predicate<String>[] conditions) {
         assertThrows(
@@ -59,6 +59,7 @@ public class TestAssertMatchTest {
       }
 
       @Test
+      @SuppressWarnings("java:S5778")
       void GIVEN_A1_A2_match_A2_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
             AssertionError.class,
@@ -80,6 +81,7 @@ public class TestAssertMatchTest {
       }
 
       @Test
+      @SuppressWarnings("java:S5778")
       void GIVEN_A1_A2_match_B_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
             AssertionError.class, () -> TestAssertMatch.assertThat(LIST_A1_A2).matchAny(EQUALS_B));
@@ -95,18 +97,21 @@ public class TestAssertMatchTest {
       }
 
       @Test
+      @SuppressWarnings("java:S5778")
       void GIVEN_A1_A2_match_A_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
             AssertionError.class, () -> TestAssertMatch.assertThat(LIST_A1_A2).matchNone(EQUALS_A));
       }
 
       @Test
+      @SuppressWarnings("java:S5778")
       void GIVEN_A1_A2_match_1_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
             AssertionError.class, () -> TestAssertMatch.assertThat(LIST_A1_A2).matchNone(EQUALS_1));
       }
 
       @Test
+      @SuppressWarnings("java:S5778")
       void GIVEN_A1_A2_match_A2_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
             AssertionError.class,
@@ -123,7 +128,7 @@ public class TestAssertMatchTest {
 
       @ParameterizedTest
       @MethodSource("provideNullParameters")
-      @SuppressWarnings("ConstantConditions")
+      @SuppressWarnings({"ConstantConditions", "java:S5778"})
       void GIVEN_provideNullParameters_WHEN_assertMatch_THEN_throw_NullPointerException(
           String actual, Predicate<String>[] conditions) {
         assertThrows(
@@ -149,6 +154,7 @@ public class TestAssertMatchTest {
       }
 
       @Test
+      @SuppressWarnings("java:S5778")
       void GIVEN_A1_match_A2_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
             AssertionError.class,
@@ -170,12 +176,14 @@ public class TestAssertMatchTest {
       }
 
       @Test
+      @SuppressWarnings("java:S5778")
       void GIVEN_A1_match_B_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(AssertionError.class, () -> TestAssertMatch.assertThat(A1).matchAny(EQUALS_B));
       }
     }
 
     @Nested
+    @SuppressWarnings("java:S5778")
     class matchNone {
 
       @Test

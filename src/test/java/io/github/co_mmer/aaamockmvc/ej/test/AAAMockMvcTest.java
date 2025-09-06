@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,7 +34,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest(classes = WebApplicationContext.class)
 class AAAMockMvcTest {
 
-  @Autowired private WebApplicationContext context;
+  @Autowired private WebApplicationContext applicationContext;
 
   @AfterEach
   void tearDown() {
@@ -84,7 +85,7 @@ class AAAMockMvcTest {
       // Arrange
 
       // Act
-      var aaa = new AAAMockMvc(context);
+      var aaa = new AAAMockMvc(applicationContext);
 
       // Assert
       assertThat(aaa, is(notNullValue()));
@@ -96,7 +97,7 @@ class AAAMockMvcTest {
       // Arrange
 
       // Act
-      var aaa = new AAAMockMvc(context, new ObjectMapper());
+      var aaa = new AAAMockMvc(applicationContext, new ObjectMapper());
 
       // Assert
       assertThat(aaa, is(notNullValue()));
@@ -326,6 +327,7 @@ class AAAMockMvcTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void WHEN_act_perform_THEN_noArrangeException() {
       // Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
@@ -341,6 +343,7 @@ class AAAMockMvcTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void WHEN_act_assert_THEN_noArrangeException() {
       // Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
@@ -362,6 +365,7 @@ class AAAMockMvcTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void WHEN_act_answer_THEN_noArrangeException() {
       // Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
@@ -388,7 +392,7 @@ class AAAMockMvcTest {
       var aaa = new AAAMockMvc(MOCK_MVC);
 
       // Act
-      var exception = assertThrows(IllegalStateException.class, () -> aaa.asserts());
+      var exception = assertThrows(IllegalStateException.class, aaa::asserts);
 
       // Assert
       assertThat(
@@ -403,7 +407,7 @@ class AAAMockMvcTest {
       var aaa = new AAAMockMvc(MOCK_MVC);
 
       // Act
-      var exception = assertThrows(IllegalStateException.class, () -> aaa.answer());
+      var exception = assertThrows(IllegalStateException.class, aaa::answer);
 
       // Assert
       assertThat(
@@ -433,48 +437,23 @@ class AAAMockMvcTest {
       mockTestActResultMapper.close();
     }
 
-    @Test
-    void GIVEN_arrangeUrl_WHEN_step_THEN_not_throwException() {
-      //  Arrange
+    @ParameterizedTest(name = "arrangeUrl=true, arrange=false, act={0}, assert={1}, answer={2}")
+    @CsvSource({
+      "false, false, false", // GIVEN_arrangeUrl
+      "true,  false, false", // GIVEN_arrangeUrl_act
+      "true,  true,  false", // GIVEN_arrangeUrl_act_assert
+      "true,  false, true" // GIVEN_arrangeUrl_act_answer
+    })
+    void GIVEN_arrangeUrl_variants_WHEN_step_THEN_not_throwException(
+        boolean act, boolean assertStep, boolean answer) {
+
+      // Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
-      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
+      var mock = MockTestActResultMapper.mockWithResult();
 
       // Act & Assert
-      assertDoesNotThrow(callStep(aaa, true, false, false, false, false));
-      mockTestActResultMapper.close();
-    }
-
-    @Test
-    void GIVEN_arrangeUrl_act_WHEN_step_THEN_not_throwException() {
-      //  Arrange
-      var aaa = new AAAMockMvc(MOCK_MVC);
-      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
-
-      // Act & Assert
-      assertDoesNotThrow(callStep(aaa, true, false, true, false, false));
-      mockTestActResultMapper.close();
-    }
-
-    @Test
-    void GIVEN_arrangeUrl_act_assert_WHEN_step_THEN_not_throwException() {
-      //  Arrange
-      var aaa = new AAAMockMvc(MOCK_MVC);
-      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
-
-      // Act & Assert
-      assertDoesNotThrow(callStep(aaa, true, false, true, true, false));
-      mockTestActResultMapper.close();
-    }
-
-    @Test
-    void GIVEN_arrangeUrl_act_answer_WHEN_step_THEN_not_throwException() {
-      //  Arrange
-      var aaa = new AAAMockMvc(MOCK_MVC);
-      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
-
-      // Act & Assert
-      assertDoesNotThrow(callStep(aaa, true, false, true, false, true));
-      mockTestActResultMapper.close();
+      assertDoesNotThrow(callStep(aaa, true, false, act, assertStep, answer));
+      mock.close();
     }
 
     @Test

@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("java:S2699")
 class TestAssertStringImplTest extends TestAssertBase {
 
   private TestAssertStringImpl testAssertString;

@@ -28,7 +28,7 @@ class AAAMockMvcExtensionTest {
   @Test
   void WHEN_beforeEach_THEN_clearContext_is_called() {
     // Act
-    this.extension.afterEach(this.mockExtensionContext);
+    this.extension.beforeEach(this.mockExtensionContext);
 
     // Act
     this.mockAAAMockMvc.verify(AAAMockMvc::clearContext);

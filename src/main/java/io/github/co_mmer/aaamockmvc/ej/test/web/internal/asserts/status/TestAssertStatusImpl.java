@@ -19,12 +19,12 @@ import org.springframework.http.HttpStatus;
 @Since("1.1.0")
 public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert2Status {
 
-  private record status(int min, int max) {}
+  private record Status(int min, int max) {}
 
-  private static final status SUCCESSFUL = new status(200, 299);
-  private static final status REDIRECT = new status(300, 399);
-  private static final status CLIENT = new status(400, 499);
-  private static final status SERVER = new status(500, 599);
+  private static final Status SUCCESSFUL = new Status(200, 299);
+  private static final Status REDIRECT = new Status(300, 399);
+  private static final Status CLIENT = new Status(400, 499);
+  private static final Status SERVER = new Status(500, 599);
   private final TestAAAContext context;
 
   @Since("2.0.0")
