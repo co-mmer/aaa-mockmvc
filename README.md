@@ -25,7 +25,7 @@ allowing developers to focus on the test logic itself rather than technical over
 
 ### Example
 
-<img src="images/aaa-mockmvc-example4.png" alt="aaa-mockmvc-example"/>
+<img src="images/aaa-mockmvc-example5.png" alt="aaa-mockmvc-example"/>
 <details>
 <summary>Code</summary>
 
