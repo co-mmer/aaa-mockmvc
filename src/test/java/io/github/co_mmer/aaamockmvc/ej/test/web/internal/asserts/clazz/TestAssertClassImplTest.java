@@ -20,7 +20,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.TestArra
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import java.util.function.Predicate;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -60,7 +59,6 @@ class TestAssertClassImplTest extends TestAssertBase {
   class isNotNull {
 
     @Test
-    @SneakyThrows
     void GIVEN_A1_WHEN_isNotNull_THEN_assert_true() {
       // Arrange
       useAssertResult(A1);
@@ -70,7 +68,6 @@ class TestAssertClassImplTest extends TestAssertBase {
     }
 
     @Test
-    @SneakyThrows
     void GIVEN_null_WHEN_isNotNull_THEN_assert_false() {
       // Arrange
       useAssertResult(null);
@@ -84,7 +81,6 @@ class TestAssertClassImplTest extends TestAssertBase {
   class isNull {
 
     @Test
-    @SneakyThrows
     void GIVEN_null_WHEN_isNull_THEN_assert_true() {
       // Arrange
       useAssertResult(null);
@@ -94,7 +90,6 @@ class TestAssertClassImplTest extends TestAssertBase {
     }
 
     @Test
-    @SneakyThrows
     void GIVEN_A1_WHEN_isNull_THEN_return_assert_false() {
       // Arrange
       useAssertResult(A1);
@@ -108,7 +103,6 @@ class TestAssertClassImplTest extends TestAssertBase {
   class isEqualTo {
 
     @Test
-    @SneakyThrows
     void GIVEN_A1_WHEN_isEqualTo_A1_THEN_assert_true() {
       // Arrange
       useAssertResult(A1);

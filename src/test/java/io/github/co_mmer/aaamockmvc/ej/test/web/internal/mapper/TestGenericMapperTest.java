@@ -72,7 +72,6 @@ class TestGenericMapperTest {
     }
 
     @Test
-    @SneakyThrows
     void GIVEN_invalid_json_WHEN_parse_THEN_throw_Exception() {
       // Arrange
       var invalid = "{not-valid-json";
@@ -591,6 +590,7 @@ class TestGenericMapperTest {
       assertThat(result, is(TEST_LIST_A1_A2));
     }
 
+    @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows

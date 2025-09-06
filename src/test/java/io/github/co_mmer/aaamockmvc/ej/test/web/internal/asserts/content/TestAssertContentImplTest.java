@@ -2,6 +2,8 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.content;
 
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_BOOLEAN;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_BOOLEAN_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2;
@@ -23,7 +25,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContex
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import java.nio.charset.StandardCharsets;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -43,10 +44,58 @@ class TestAssertContentImplTest {
   }
 
   @Nested
+  class asBoolean {
+
+    @Test
+    void GIVEN_valid_json_AND_expectedClass_WHEN_asBoolean_THEN_store_assertResult() {
+      // Arrange
+      when(context.getActResult().contentAsString()).thenReturn(TEST_BOOLEAN_JSON);
+
+      // Act
+      impl.asBoolean();
+
+      // Assert
+      var stored = context.getAssertResult();
+      assertThat(stored, notNullValue());
+      assertThat(stored.actualContent(), is(TEST_BOOLEAN));
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" ", "\t", "\n", "   "})
+    void GIVEN_blank_body_WHEN_asBoolean_THEN_store_null_in_assertResult(String body) {
+      // Arrange
+      when(context.getActResult().contentAsString()).thenReturn(body);
+
+      // Act
+      impl.asBoolean();
+
+      // Assert
+      var stored = context.getAssertResult();
+      assertThat(stored, notNullValue());
+      assertThat(stored.actualContent(), nullValue());
+    }
+
+    @Test
+    void
+        GIVEN_invalid_mapping_WHEN_asBoolean_THEN_throw_TestAssertFailedError_wrapping_TestGenericMapperException() {
+      when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
+
+      // Act
+      var ex = assertThrows(TestAssertFailedError.class, () -> impl.asBoolean());
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asBoolean"));
+      assertThat(ex.getMessage(), containsString("Boolean"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(context.getAssertResult(), nullValue());
+    }
+  }
+
+  @Nested
   class asString {
 
     @Test
-    @SneakyThrows
     void GIVEN_valid_string_WHEN_asString_THEN_store_assertResult() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
@@ -63,7 +112,6 @@ class TestAssertContentImplTest {
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {" ", "\t", "\n", "   "})
-    @SneakyThrows
     void GIVEN_blank_body_WHEN_asString_THEN_store_blank_in_assertResult(String body) {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(body);
@@ -82,7 +130,6 @@ class TestAssertContentImplTest {
   class asBytes {
 
     @Test
-    @SneakyThrows
     void GIVEN_valid_bytes_WHEN_asBytes_THEN_store_assertResult() {
       // Arrange
       var bytes = TEST_A1_JSON.getBytes(StandardCharsets.UTF_8);
@@ -98,7 +145,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void GIVEN_empty_bytes_WHEN_asBytes_THEN_store_empty_array() {
       // Arrange
       var bytes = new byte[0];
@@ -114,7 +160,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void GIVEN_null_bytes_WHEN_asBytes_THEN_store_null() {
       // Arrange
       when(context.getActResult().contentAsBytes()).thenReturn(null);
@@ -133,7 +178,6 @@ class TestAssertContentImplTest {
   class asClass {
 
     @Test
-    @SneakyThrows
     void GIVEN_valid_json_AND_expectedClass_WHEN_asClass_THEN_store_assertResult() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
@@ -150,7 +194,6 @@ class TestAssertContentImplTest {
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {" ", "\t", "\n", "   "})
-    @SneakyThrows
     void GIVEN_blank_body_WHEN_asClass_THEN_store_null_in_assertResult(String body) {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(body);
@@ -165,7 +208,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void
         GIVEN_invalid_mapping_WHEN_asClass_THEN_throw_TestAssertFailedError_wrapping_TestGenericMapperException() {
       when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
@@ -185,7 +227,6 @@ class TestAssertContentImplTest {
   class asCollection {
 
     @Test
-    @SneakyThrows
     void GIVEN_list_json_AND_elementClass_WHEN_asCollection_THEN_store_assertResult() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
@@ -202,7 +243,6 @@ class TestAssertContentImplTest {
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {" ", "\t", "\n", "   "})
-    @SneakyThrows
     void GIVEN_blank_body_WHEN_asCollection_THEN_store_null_in_assertResult(String body) {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(body);
@@ -217,7 +257,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void
         GIVEN_invalid_mapping_WHEN_asCollection_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
       // Arrange
@@ -234,7 +273,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void
         GIVEN_invalid_json_WHEN_asCollection_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
       // Arrange
@@ -256,7 +294,6 @@ class TestAssertContentImplTest {
   class asList {
 
     @Test
-    @SneakyThrows
     void GIVEN_list_json_AND_elementClass_WHEN_asList_THEN_store_assertResult() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
@@ -273,7 +310,6 @@ class TestAssertContentImplTest {
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {" ", "\t", "\n", "   "})
-    @SneakyThrows
     void GIVEN_blank_body_WHEN_asList_THEN_store_null_in_assertResult(String body) {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(body);
@@ -288,7 +324,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void
         GIVEN_invalid_elementClass_WHEN_asList_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
       // Arrange
@@ -305,7 +340,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void
         GIVEN_invalid_json_WHEN_asList_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
       // Arrange
@@ -321,7 +355,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void GIVEN_object_json_instead_of_array_WHEN_asList_THEN_throwTestAssertFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
@@ -340,7 +373,6 @@ class TestAssertContentImplTest {
   class asSet {
 
     @Test
-    @SneakyThrows
     void GIVEN_set_json_AND_elementClass_WHEN_asSet_THEN_store_assertResult() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_SET_A1_A2_JSON);
@@ -357,7 +389,6 @@ class TestAssertContentImplTest {
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {" ", "\t", "\n", "   "})
-    @SneakyThrows
     void GIVEN_blank_body_WHEN_asSet_THEN_store_null_in_assertResult(String body) {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(body);
@@ -372,7 +403,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void
         GIVEN_invalid_elementClass_WHEN_asSet_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
       // Arrange
@@ -389,7 +419,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void
         GIVEN_invalid_json_WHEN_asSet_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
       // Arrange
@@ -405,7 +434,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void GIVEN_object_json_instead_of_array_WHEN_asSet_THEN_throwTestAssertFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
@@ -424,7 +452,6 @@ class TestAssertContentImplTest {
   class asMap {
 
     @Test
-    @SneakyThrows
     void GIVEN_map_json_AND_keyClass_valueClass_WHEN_asMap_THEN_store_assertResult() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_MAP_A1_A2_JSON);
@@ -441,7 +468,6 @@ class TestAssertContentImplTest {
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {" ", "\t", "\n", "   "})
-    @SneakyThrows
     void GIVEN_blank_body_WHEN_asMap_THEN_store_null_in_assertResult(String body) {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(body);
@@ -456,7 +482,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void
         GIVEN_wrong_keyClass_WHEN_asMap_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
       // Arrange
@@ -475,7 +500,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void
         GIVEN_wrong_valueClass_WHEN_asMap_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
       // Arrange
@@ -493,7 +517,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void
         GIVEN_wrong_key_and_value_class_WHEN_asMap_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
       // Arrange
@@ -510,7 +533,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void
         GIVEN_invalid_json_WHEN_asMap_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
       // Arrange
@@ -528,7 +550,6 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    @SneakyThrows
     void GIVEN_array_json_instead_of_object_WHEN_asMap_THEN_throwTestAssertFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);

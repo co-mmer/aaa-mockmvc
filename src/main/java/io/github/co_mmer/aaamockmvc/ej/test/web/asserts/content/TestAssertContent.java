@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert1Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssert1Byte;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert1Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
@@ -39,6 +40,15 @@ import lombok.NonNull;
  * @since 2.0.0
  */
 public interface TestAssertContent {
+
+  /**
+   * Interprets the response body as a {@link Boolean}
+   *
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @since 2.0.0
+   */
+  TestAssert1Boolean asBoolean();
 
   /**
    * Interprets the response body as a {@link String} using the response charset (or UTF-8 if not

@@ -52,7 +52,6 @@ class TestAnswerImplTest extends TestAssertBase {
   @Nested
   class asInteger {
 
-
     @Test
     void GIVEN_1_JSON_WHEN_asInteger_THEN_return_1() {
       // Arrange
@@ -91,7 +90,6 @@ class TestAnswerImplTest extends TestAssertBase {
 
   @Nested
   class asFloat {
-
 
     @Test
     void GIVEN_1_JSON_WHEN_asFloat_THEN_return_1() {
@@ -132,7 +130,6 @@ class TestAnswerImplTest extends TestAssertBase {
   @Nested
   class asDouble {
 
-
     @Test
     void GIVEN_1_JSON_WHEN_asDouble_THEN_return_1() {
       // Arrange
@@ -171,7 +168,6 @@ class TestAnswerImplTest extends TestAssertBase {
 
   @Nested
   class asBoolean {
-
 
     @Test
     void GIVEN_True_JSON_WHEN_asBoolean_THEN_return_1() {
@@ -417,7 +413,6 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    @SneakyThrows
     void GIVEN_null_WHEN_asMap_THEN_return_null() {
       // Arrange
       useActResult(EMPTY);

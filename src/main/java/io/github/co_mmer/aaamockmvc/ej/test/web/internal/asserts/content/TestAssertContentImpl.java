@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.content;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert1Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssert1Byte;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert1Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
@@ -8,6 +9,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertFailed
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.bool.TestAssertBooleanImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.bytes.TestAssertByteImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.clazz.TestAssertClassImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.collection.TestAssertCollectionImpl;
@@ -25,6 +27,20 @@ import lombok.RequiredArgsConstructor;
 public class TestAssertContentImpl implements TestAssertContent {
 
   private final TestAAAContext context;
+
+  @Override
+  public TestAssert1Boolean asBoolean() {
+    var content = this.context.getActResult().contentAsString();
+    var mapper = this.context.getEnvironment().objectMapper();
+
+    try {
+      var actual = TestGenericMapper.parse(mapper, content, Boolean.class);
+      this.context.setAssertResult(new TestAssertResult<>(actual));
+      return new TestAssertBooleanImpl(this.context);
+    } catch (TestGenericMapperException e) {
+      throw new TestAssertFailedError("asBoolean", content, Boolean.class.getSimpleName(), e);
+    }
+  }
 
   @Override
   public TestAssert1String asString() {
@@ -45,10 +61,10 @@ public class TestAssertContentImpl implements TestAssertContent {
       throws TestAssertFailedError {
 
     var content = this.context.getActResult().contentAsString();
-    var objectMapper = this.context.getEnvironment().objectMapper();
+    var mapper = this.context.getEnvironment().objectMapper();
 
     try {
-      var actual = TestGenericMapper.parse(objectMapper, content, expectedClass);
+      var actual = TestGenericMapper.parse(mapper, content, expectedClass);
       this.context.setAssertResult(new TestAssertResult<>(actual));
     } catch (TestGenericMapperException e) {
       throw new TestAssertFailedError("asClass", content, expectedClass.getSimpleName(), e);
@@ -59,10 +75,10 @@ public class TestAssertContentImpl implements TestAssertContent {
   @Override
   public <E> TestAssert1Collection<E> asCollection(@NonNull Class<E> elementClass) {
     var content = this.context.getActResult().contentAsString();
-    var objectMapper = this.context.getEnvironment().objectMapper();
+    var mapper = this.context.getEnvironment().objectMapper();
 
     try {
-      var actual = TestGenericMapper.parseCollection(objectMapper, content, elementClass);
+      var actual = TestGenericMapper.parseCollection(mapper, content, elementClass);
       this.context.setAssertResult(new TestAssertResult<>(actual));
     } catch (TestGenericMapperException e) {
       throw new TestAssertFailedError("asCollection", content, elementClass.getSimpleName(), e);
@@ -73,10 +89,10 @@ public class TestAssertContentImpl implements TestAssertContent {
   @Override
   public <E> TestAssert1Collection<E> asList(@NonNull Class<E> elementClass) {
     var content = this.context.getActResult().contentAsString();
-    var objectMapper = this.context.getEnvironment().objectMapper();
+    var mapper = this.context.getEnvironment().objectMapper();
 
     try {
-      var actual = TestGenericMapper.parseList(objectMapper, content, elementClass);
+      var actual = TestGenericMapper.parseList(mapper, content, elementClass);
       this.context.setAssertResult(new TestAssertResult<>(actual));
     } catch (TestGenericMapperException e) {
       throw new TestAssertFailedError("asList", content, elementClass.getSimpleName(), e);
@@ -87,10 +103,10 @@ public class TestAssertContentImpl implements TestAssertContent {
   @Override
   public <E> TestAssert1Collection<E> asSet(@NonNull Class<E> elementClass) {
     var content = this.context.getActResult().contentAsString();
-    var objectMapper = this.context.getEnvironment().objectMapper();
+    var mapper = this.context.getEnvironment().objectMapper();
 
     try {
-      var actual = TestGenericMapper.parseSet(objectMapper, content, elementClass);
+      var actual = TestGenericMapper.parseSet(mapper, content, elementClass);
       this.context.setAssertResult(new TestAssertResult<>(actual));
     } catch (TestGenericMapperException e) {
       throw new TestAssertFailedError("asSet", content, elementClass.getSimpleName(), e);
@@ -103,9 +119,9 @@ public class TestAssertContentImpl implements TestAssertContent {
       @NonNull Class<K> keyClass, @NonNull Class<V> valueClass) {
 
     var content = this.context.getActResult().contentAsString();
-    var objectMapper = this.context.getEnvironment().objectMapper();
+    var mapper = this.context.getEnvironment().objectMapper();
     try {
-      var actual = TestGenericMapper.parseMap(objectMapper, content, keyClass, valueClass);
+      var actual = TestGenericMapper.parseMap(mapper, content, keyClass, valueClass);
       this.context.setAssertResult(new TestAssertResult<>(actual));
       return new TestAssertMapImpl<>(this.context);
     } catch (TestGenericMapperException e) {
