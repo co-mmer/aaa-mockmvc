@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.springframework.http.MediaType;
 
 class TestArrangeDeleteHeaderImplTest {
 
@@ -56,12 +55,12 @@ class TestArrangeDeleteHeaderImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_accept_THEN_throwException() {
-      assertThrows(IllegalArgumentException.class, () -> impl.accept((MediaType) null));
+    void GIVEN_null_WHEN_accept_THEN_throw_NullPointerException() {
+      assertThrows(IllegalArgumentException.class, () -> impl.accept(null, null));
     }
 
     @Test
-    void WHEN_accept_THEN_TestArrangeValidatorIsCalled() {
+    void WHEN_accept_THEN_TestArrangeValidator_isCalled() {
       // Arrange
       var mockTestArrangeValidator = Mockito.mockStatic(TestArrangeValidator.class);
 
@@ -74,7 +73,7 @@ class TestArrangeDeleteHeaderImplTest {
     }
 
     @Test
-    void GIVEN_type_WHEN_accept_THEN_setAcceptsIsCalled() {
+    void GIVEN_type_WHEN_accept_THEN_setAccepts_isCalled() {
       // Act
       impl.accept(APPLICATION_JSON);
 
@@ -84,7 +83,7 @@ class TestArrangeDeleteHeaderImplTest {
     }
 
     @Test
-    void GIVEN_types_WHEN_accept_THEN_setAcceptsIsCalled() {
+    void GIVEN_types_WHEN_accept_THEN_setAccepts_isCalled() {
       // Act
       impl.accept(APPLICATION_JSON, APPLICATION_PDF);
 
@@ -99,7 +98,7 @@ class TestArrangeDeleteHeaderImplTest {
   class auth {
 
     @Test
-    void GIVEN_token_WHEN_auth_THEN_addKeyValueIsCalled() {
+    void GIVEN_token_WHEN_auth_THEN_addKeyValue_isCalled() {
       // Act
       impl.auth(TEST_AUTH_VALUE);
 
@@ -113,7 +112,7 @@ class TestArrangeDeleteHeaderImplTest {
   class add {
 
     @Test
-    void GIVEN_key_value_WHEN_add_THEN_addKeyValueIsCalled() {
+    void GIVEN_key_value_WHEN_add_THEN_addKeyValue_isCalled() {
       // Act
       impl.add(HEADER_KEY_1, HEADER_VALUE_1);
 
@@ -121,9 +120,20 @@ class TestArrangeDeleteHeaderImplTest {
       mockTestArrangeHeadUtils.verify(
           () -> addKeyValue(context.getArrangeResult().getHead(), HEADER_KEY_1, HEADER_VALUE_1));
     }
+  }
+
+  @Nested
+  class set {
 
     @Test
-    void GIVEN_map_WHEN_set_THEN_addKeyValueIsCalled() {
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_null_WHEN_set_THEN_throw_NullPointerException() {
+      // Act & Arrange
+      assertThrows(NullPointerException.class, () -> impl.set(null));
+    }
+
+    @Test
+    void GIVEN_map_WHEN_set_THEN_addKeyValue_isCalled() {
       // Act
       impl.set(HEADER_MAP_1_2);
 

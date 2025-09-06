@@ -1,5 +1,6 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.precondition;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.validator;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.validator.TestActPreconditionsValidator.verifyPerform;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -8,20 +9,16 @@ import static org.mockito.Mockito.when;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepMetadata;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TestPreconditionsValidatorTest {
+class TestActPreconditionsValidatorTest {
 
-  private TestStepImpl mockStepImpl;
   private TestAAAContext mockAAAContext;
 
   @BeforeEach
   void setUp() {
-    this.mockStepImpl = mock(TestStepImpl.class);
     this.mockAAAContext = mock(TestAAAContext.class);
-    when(this.mockStepImpl.getContext()).thenReturn(this.mockAAAContext);
     when(this.mockAAAContext.getArrangeResult()).thenReturn(null);
   }
 
@@ -32,15 +29,13 @@ class TestPreconditionsValidatorTest {
 
     // Act
     var exception =
-        assertThrows(
-            IllegalStateException.class, () -> TestPreconditionsValidator.act(this.mockStepImpl));
+        assertThrows(IllegalStateException.class, () -> verifyPerform(this.mockAAAContext));
 
     // Assert
     assertThat(
         exception.getMessage(),
         is(
-            "Act error: No 'arrange()' step configured. "
-                + "Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+            "Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'"));
   }
 
   @Test
@@ -52,14 +47,12 @@ class TestPreconditionsValidatorTest {
 
     // Act
     var exception =
-        assertThrows(
-            IllegalStateException.class, () -> TestPreconditionsValidator.act(mockStepImpl));
+        assertThrows(IllegalStateException.class, () -> verifyPerform(this.mockAAAContext));
 
     // Assert
     assertThat(
         exception.getMessage(),
         is(
-            "Step 'MyStep' · Act error: No 'arrange()' step configured. "
-                + "Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+            "Step 'MyStep' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'"));
   }
 }

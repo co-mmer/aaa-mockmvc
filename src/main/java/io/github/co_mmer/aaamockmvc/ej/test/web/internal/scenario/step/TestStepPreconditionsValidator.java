@@ -1,24 +1,18 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.precondition;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @Since("2.0.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class TestPreconditionsValidator {
+public class TestStepPreconditionsValidator {
 
   private static final String MISSING_ARRANGE_BEFORE_ACT =
       "Act error: No 'arrange()' step configured. "
           + "Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'";
-
-  private static final String MISSING_ARRANGE_BEFORE_ACT_PERFORM =
-      "Act error: No 'arrange()' step configured. "
-          + "Call 'arrange().get|post|put|patch|delete|head|options(...)' "
-          + "before 'act().perform()'";
 
   private static final String MISSING_ARRANGE_ACT_BEFORE_ASSERTS =
       "Assert error: No 'arrange()' / 'act()' steps configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' followed by 'act().perform()' before 'asserts()'";
@@ -31,6 +25,7 @@ public class TestPreconditionsValidator {
   private static final String MISSING_ACT_BEFORE_ANSWER =
       "Answer error: No 'act()' step configured. Call 'act().perform()' before 'answer()'";
 
+  @Since("2.0.0")
   public static void act(TestStepImpl step) {
     verifyActStepInternal(step);
     verifyActStepCustom(step);
@@ -49,13 +44,7 @@ public class TestPreconditionsValidator {
     }
   }
 
-  public static void actPerform(TestAAAContext context) {
-    if (context.getArrangeResult() == null) {
-      var stepPrefix = createStepPrefix(context);
-      throw new IllegalStateException(stepPrefix + MISSING_ARRANGE_BEFORE_ACT_PERFORM);
-    }
-  }
-
+  @Since("2.0.0")
   public static void asserts(TestStepImpl step) {
     verifyAssertsStepInternal(step);
     verifyAssertsStepCustom(step);
@@ -74,6 +63,7 @@ public class TestPreconditionsValidator {
     }
   }
 
+  @Since("2.0.0")
   public static void answer(TestStepImpl step) {
     verifyAnswerStepInternal(step);
     verifyAnswerStepCustom(step);

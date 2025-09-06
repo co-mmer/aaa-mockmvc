@@ -55,7 +55,7 @@ class TestArrangeOptionsUrlImplTest {
     @ParameterizedTest()
     @MethodSource("provideNullOnContextUrl")
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_provideNullOnContextUrl_WHEN_call_constructor_THEN_throwException(
+    void GIVEN_provideNullOnContextUrl_WHEN_call_constructor_THEN_throw_Exception(
         TestAAAContext context, String url) {
 
       assertThrows(NullPointerException.class, () -> new TestArrangeOptionsUrlImpl(context, url));
@@ -93,7 +93,7 @@ class TestArrangeOptionsUrlImplTest {
     @ParameterizedTest()
     @MethodSource("provideNullOnContextUri")
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_provideNullOnContextUri_WHEN_call_constructor_THEN_throwException(
+    void GIVEN_provideNullOnContextUri_WHEN_call_constructor_THEN_throw_Exception(
         TestAAAContext context, URI uri) {
 
       assertThrows(NullPointerException.class, () -> new TestArrangeOptionsUrlImpl(context, uri));
@@ -122,7 +122,7 @@ class TestArrangeOptionsUrlImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_nullAsKey_WHEN_query_THEN_throwException() {
+    void GIVEN_nullAsKey_WHEN_query_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> impl.query(null, QUERY_VALUE_SEARCH_TERM));
     }
 
@@ -141,7 +141,7 @@ class TestArrangeOptionsUrlImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_nullAsMap_WHEN_query_THEN_throwException() {
+    void GIVEN_nullAsMap_WHEN_query_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> impl.query(null));
     }
 

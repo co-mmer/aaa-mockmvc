@@ -24,7 +24,7 @@ class TestAssertImplTest extends TestAssertBase {
 
   @Test
   @SuppressWarnings("ConstantConditions")
-  void GIVEN_null_WHEN_call_constructor_THEN_throwException() {
+  void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
     assertThrows(NullPointerException.class, () -> new TestAssertImpl(null));
   }
 

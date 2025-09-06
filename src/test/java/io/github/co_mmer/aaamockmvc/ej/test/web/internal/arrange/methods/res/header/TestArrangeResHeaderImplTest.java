@@ -9,7 +9,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_AUTH_KEY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_AUTH_VALUE;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_PDF;
@@ -60,12 +60,12 @@ class TestArrangeResHeaderImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_accept_THEN_throwException() {
+    void GIVEN_null_WHEN_accept_THEN_throw_Exception() {
       assertThrows(IllegalArgumentException.class, () -> impl.accept((MediaType) null));
     }
 
     @Test
-    void WHEN_accept_THEN_TestArrangeValidatorIsCalled() {
+    void WHEN_accept_THEN_TestArrangeValidator_isCalled() {
       // Arrange
       var mockTestArrangeValidator = Mockito.mockStatic(TestArrangeValidator.class);
 
@@ -78,7 +78,7 @@ class TestArrangeResHeaderImplTest {
     }
 
     @Test
-    void GIVEN_type_WHEN_accept_THEN_setAcceptsIsCalled() {
+    void GIVEN_type_WHEN_accept_THEN_setAccepts_isCalled() {
       // Act
       impl.accept(APPLICATION_JSON);
 
@@ -88,7 +88,7 @@ class TestArrangeResHeaderImplTest {
     }
 
     @Test
-    void GIVEN_types_WHEN_accept_THEN_setAcceptsIsCalled() {
+    void GIVEN_types_WHEN_accept_THEN_setAccepts_isCalled() {
       // Act
       impl.accept(APPLICATION_JSON, APPLICATION_PDF);
 
@@ -103,7 +103,7 @@ class TestArrangeResHeaderImplTest {
   class auth {
 
     @Test
-    void GIVEN_token_WHEN_auth_THEN_addKeyValueIsCalled() {
+    void GIVEN_token_WHEN_auth_THEN_addKeyValue_isCalled() {
       // Act
       impl.auth(TEST_AUTH_VALUE);
 
@@ -117,7 +117,7 @@ class TestArrangeResHeaderImplTest {
   class contentType {
 
     @Test
-    void GIVEN_mediaType_WHEN_contentType_THEN_setContentTypesIsCalled() {
+    void GIVEN_mediaType_WHEN_contentType_THEN_setContentTypes_isCalled() {
       // Act
       impl.contentType(APPLICATION_PDF);
 
@@ -131,7 +131,7 @@ class TestArrangeResHeaderImplTest {
   class add {
 
     @Test
-    void GIVEN_key_value_WHEN_add_THEN_addKeyValueIsCalled() {
+    void GIVEN_key_value_WHEN_add_THEN_addKeyValue_isCalled() {
       // Act
       impl.add(HEADER_KEY_1, HEADER_VALUE_1);
 
@@ -145,7 +145,14 @@ class TestArrangeResHeaderImplTest {
   class set {
 
     @Test
-    void GIVEN_map_WHEN_set_THEN_addKeyValueIsCalled() {
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_null_WHEN_set_THEN_throw_NullPointerException() {
+      // Act & Arrange
+      assertThrows(NullPointerException.class, () -> impl.set(null));
+    }
+
+    @Test
+    void GIVEN_map_WHEN_set_THEN_addKeyValue_isCalled() {
       // Act
       impl.set(HEADER_MAP_1_2);
 
@@ -164,7 +171,7 @@ class TestArrangeResHeaderImplTest {
       var body = impl.body();
 
       // Assert
-      assertThat(body.getClass(), is(TestArrangeResBodyImpl.class));
+      assertThat(body, instanceOf(TestArrangeResBodyImpl.class));
     }
   }
 }

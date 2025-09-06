@@ -5,9 +5,9 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.act.error.TestActFailedError;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.error.TestActFailedErrorMessage;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.mapper.TestActResultMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.strategy.TestRequestStrategyFactory;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.validator.TestActPreconditionsValidator;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.precondition.TestPreconditionsValidator;
 import org.springframework.test.web.servlet.ResultActions;
 
 @Since("1.0.0")
@@ -31,7 +31,7 @@ public final class TestActImpl implements TestAct {
 
   private ResultActions performRequest() {
     var result = this.context.getArrangeResult();
-    TestPreconditionsValidator.actPerform(this.context);
+    TestActPreconditionsValidator.verifyPerform(this.context);
 
     var strategy = TestRequestStrategyFactory.resolve(result.getUrl().getMethod());
     var requestBuilder = strategy.apply(result);

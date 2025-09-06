@@ -8,8 +8,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestEnvironment;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepMetadata;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.precondition.TestPreconditionsValidator;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepPreconditionsValidator;
 import lombok.NonNull;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -165,7 +165,7 @@ public final class AAAMockMvc {
    * @since 2.0.0
    */
   public TestAct act() {
-    TestPreconditionsValidator.act(CURRENT.get());
+    TestStepPreconditionsValidator.act(CURRENT.get());
     var section = CURRENT.get();
     return section.act();
   }
@@ -180,7 +180,7 @@ public final class AAAMockMvc {
    * @since 2.0.0
    */
   public TestAssert asserts() {
-    TestPreconditionsValidator.asserts(CURRENT.get());
+    TestStepPreconditionsValidator.asserts(CURRENT.get());
     var section = CURRENT.get();
     return section.asserts();
   }
@@ -194,7 +194,7 @@ public final class AAAMockMvc {
    * @since 2.0.0
    */
   public TestAnswer answer() {
-    TestPreconditionsValidator.answer(CURRENT.get());
+    TestStepPreconditionsValidator.answer(CURRENT.get());
     var section = CURRENT.get();
     return section.answer();
   }

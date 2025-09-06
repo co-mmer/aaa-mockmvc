@@ -57,14 +57,14 @@ class TestArrangeImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_String_url_WHEN_get_THEN_throwException() {
+    void GIVEN_null_String_url_WHEN_get_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.get(null, PATH_VARIABLE_USER_ID));
     }
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_URI_WHEN_get_THEN_throwException() {
+    void GIVEN_null_URI_WHEN_get_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.get(null));
     }
@@ -95,14 +95,14 @@ class TestArrangeImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_String_url_WHEN_delete_THEN_throwException() {
+    void GIVEN_null_String_url_WHEN_delete_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.delete(null, PATH_VARIABLE_USER_ID));
     }
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_URI_WHEN_delete_THEN_throwException() {
+    void GIVEN_null_URI_WHEN_delete_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.delete(null));
     }
@@ -133,14 +133,14 @@ class TestArrangeImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_String_url_WHEN_options_THEN_throwException() {
+    void GIVEN_null_String_url_WHEN_options_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.options(null, PATH_VARIABLE_USER_ID));
     }
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_URI_WHEN_options_THEN_throwException() {
+    void GIVEN_null_URI_WHEN_options_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.options(null));
     }
@@ -171,14 +171,14 @@ class TestArrangeImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_String_url_WHEN_head_THEN_throwException() {
+    void GIVEN_null_String_url_WHEN_head_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.head(null, PATH_VARIABLE_USER_ID));
     }
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_URI_WHEN_head_THEN_throwException() {
+    void GIVEN_null_URI_WHEN_head_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.head(null));
     }
@@ -209,14 +209,14 @@ class TestArrangeImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_String_url_WHEN_post_THEN_throwException() {
+    void GIVEN_null_String_url_WHEN_post_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.post(null, PATH_VARIABLE_USER_ID));
     }
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_URI_WHEN_post_THEN_throwException() {
+    void GIVEN_null_URI_WHEN_post_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.post(null));
     }
@@ -247,14 +247,14 @@ class TestArrangeImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_String_url_WHEN_put_THEN_throwException() {
+    void GIVEN_null_String_url_WHEN_put_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.put(null, PATH_VARIABLE_USER_ID));
     }
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_URI_WHEN_put_THEN_throwException() {
+    void GIVEN_null_URI_WHEN_put_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.put(null));
     }
@@ -285,14 +285,14 @@ class TestArrangeImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_String_url_WHEN_patch_THEN_throwException() {
+    void GIVEN_null_String_url_WHEN_patch_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.patch(null, PATH_VARIABLE_USER_ID));
     }
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_URI_WHEN_patch_THEN_throwException() {
+    void GIVEN_null_URI_WHEN_patch_THEN_throw_Exception() {
       // Act && Assert
       assertThrows(NullPointerException.class, () -> impl.patch(null));
     }

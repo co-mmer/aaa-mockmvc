@@ -1,6 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test;
 
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_URI;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
@@ -49,12 +51,14 @@ class AAAMockMvcTestSupportTest extends AAAMockMvcTestSupport {
   @Test
   void WHEN_step_THEN_delegates_to_aaaMockMvc_step() {
     // Arrange
-    Runnable runnable = () -> arrange().get(BASE_URI);
+
+    Runnable runnable = this::arrange;
 
     // Act
-    step("test", runnable);
+    var s = step("test", runnable);
 
     // Assert
     verify(this.aaaMockMvc).step("test", runnable);
+    assertThat(s, is(nullValue()));
   }
 }

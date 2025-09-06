@@ -56,7 +56,7 @@ class TestArrangeResBodyImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throwException() {
+    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> new TestArrangeResBodyImpl(null));
     }
   }
@@ -67,7 +67,7 @@ class TestArrangeResBodyImplTest {
     @ParameterizedTest()
     @MethodSource("provideNullParametersRaw")
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_arrangeContent_THEN_throwException(String raw, MediaType type) {
+    void GIVEN_null_WHEN_arrangeContent_THEN_throw_Exception(String raw, MediaType type) {
       assertThrows(NullPointerException.class, () -> impl.raw(raw, type));
     }
 
@@ -94,7 +94,7 @@ class TestArrangeResBodyImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_json_THEN_throwException() {
+    void GIVEN_null_WHEN_json_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> impl.json(null));
     }
 
@@ -110,12 +110,12 @@ class TestArrangeResBodyImplTest {
 
     @Test()
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_as_T_WHEN_json_THEN_throwException() {
+    void GIVEN_null_as_T_WHEN_json_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> impl.json((Object) null));
     }
 
     @Test()
-    void GIVEN_T_exception_WHEN_json_THEN_throwException() {
+    void GIVEN_T_exception_WHEN_json_THEN_throw_Exception() {
       // Arrange
       var mockTestGenericMapper = mockStatic(TestGenericMapper.class);
       mockTestGenericMapper
@@ -143,7 +143,7 @@ class TestArrangeResBodyImplTest {
 
     @Test()
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_file_THEN_throwException() {
+    void GIVEN_null_WHEN_file_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> impl.file(null));
     }
 
@@ -163,7 +163,7 @@ class TestArrangeResBodyImplTest {
 
     @Test()
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_files_THEN_throwException() {
+    void GIVEN_null_WHEN_files_THEN_throw_Exception() {
       assertThrows(NullPointerException.class, () -> impl.files(null));
     }
 

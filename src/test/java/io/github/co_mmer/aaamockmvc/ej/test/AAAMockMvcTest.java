@@ -234,7 +234,7 @@ class AAAMockMvcTest {
   class InternalStepPreconditionsSuccess {
 
     @Test
-    void WHEN_arrange_THEN_not_throwException() {
+    void WHEN_arrange_THEN_not_throw_Exception() {
       // Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
 
@@ -243,7 +243,7 @@ class AAAMockMvcTest {
     }
 
     @Test
-    void WHEN_arrange_act_THEN_not_throwException() {
+    void WHEN_arrange_act_THEN_not_throw_Exception() {
       // Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
 
@@ -256,7 +256,7 @@ class AAAMockMvcTest {
     }
 
     @Test
-    void WHEN_arrange_act_perform_asserts_THEN_not_throwException() {
+    void WHEN_arrange_act_perform_asserts_THEN_not_throw_Exception() {
       // Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
       var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
@@ -273,7 +273,7 @@ class AAAMockMvcTest {
     }
 
     @Test
-    void WHEN_arrange_act_perform_asserts_answer_THEN_not_throwException() {
+    void WHEN_arrange_act_perform_asserts_answer_THEN_not_throw_Exception() {
       // Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
       var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
@@ -291,7 +291,7 @@ class AAAMockMvcTest {
     }
 
     @Test
-    void WHEN_arrange_act_perform_answer_THEN_not_throwException() {
+    void WHEN_arrange_act_perform_answer_THEN_not_throw_Exception() {
       // Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
       var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
@@ -444,7 +444,7 @@ class AAAMockMvcTest {
       "true,  true,  false", // GIVEN_arrangeUrl_act_assert
       "true,  false, true" // GIVEN_arrangeUrl_act_answer
     })
-    void GIVEN_arrangeUrl_variants_WHEN_step_THEN_not_throwException(
+    void GIVEN_arrangeUrl_variants_WHEN_step_THEN_not_throw_Exception(
         boolean act, boolean assertStep, boolean answer) {
 
       // Arrange
@@ -457,7 +457,7 @@ class AAAMockMvcTest {
     }
 
     @Test
-    void GIVEN_arrange_act_WHEN_step_THEN_not_throwException() {
+    void GIVEN_arrange_act_WHEN_step_THEN_not_throw_Exception() {
       //  Arrange
       var aaa = new AAAMockMvc(MOCK_MVC);
       var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();

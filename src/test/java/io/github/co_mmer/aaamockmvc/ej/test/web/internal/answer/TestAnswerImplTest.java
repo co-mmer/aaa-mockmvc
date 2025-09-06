@@ -91,6 +91,13 @@ class TestAnswerImplTest extends TestAssertBase {
   class asObject {
 
     @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_null_WHEN_asObject_THEN_throw_NullPointerException() {
+      // Act & Arrange
+      assertThrows(NullPointerException.class, () -> testAnswer.asObject(null));
+    }
+
+    @Test
     void GIVEN_A1_WHEN_asObject_THEN_return_A1() {
       // Arrange
       useActResult(TEST_A1_JSON);
@@ -129,6 +136,13 @@ class TestAnswerImplTest extends TestAssertBase {
 
   @Nested
   class asList {
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_null_WHEN_asList_THEN_throw_NullPointerException() {
+      // Act & Arrange
+      assertThrows(NullPointerException.class, () -> testAnswer.asList(null));
+    }
 
     @Test
     void GIVEN_A1_A2_WHEN_asList_THEN_return_A1_A2() {
@@ -170,6 +184,13 @@ class TestAnswerImplTest extends TestAssertBase {
   class asSet {
 
     @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_null_WHEN_asSet_THEN_throw_NullPointerException() {
+      // Act & Arrange
+      assertThrows(NullPointerException.class, () -> testAnswer.asSet(null));
+    }
+
+    @Test
     void GIVEN_A1_A2_WHEN_asSet_THEN_return_A1_A2() {
       // Arrange
       useActResult(TEST_SET_A1_A2_JSON);
@@ -209,8 +230,15 @@ class TestAnswerImplTest extends TestAssertBase {
   class asMap {
 
     @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_null_WHEN_asMap_THEN_throw_NullPointerException() {
+      // Act & Arrange
+      assertThrows(NullPointerException.class, () -> testAnswer.asMap(null, null));
+    }
+
+    @Test
     @SneakyThrows
-    void GIVEN_A1_A2_JSON_WHEN_asSet_THEN_return_A1_A2() {
+    void GIVEN_A1_A2_JSON_WHEN_asMap_THEN_return_A1_A2() {
       // Arrange
       useActResult(TEST_MAP_A1_A2_JSON);
 
@@ -223,7 +251,7 @@ class TestAnswerImplTest extends TestAssertBase {
 
     @Test
     @SneakyThrows
-    void GIVEN_null_WHEN_asSet_THEN_return_null() {
+    void GIVEN_null_WHEN_asMap_THEN_return_null() {
       // Arrange
       useActResult(StringUtils.EMPTY);
 
