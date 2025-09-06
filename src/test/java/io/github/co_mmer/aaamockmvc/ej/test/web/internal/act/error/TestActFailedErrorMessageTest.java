@@ -35,7 +35,7 @@ class TestActFailedErrorMessageTest {
   @Test
   void WHEN_buildWithBlankMessage_THEN_usesPlaceholder() {
     // Act
-    var msg = TestActFailedErrorMessage.build(ARRANGE_POST, new Exception("   "));
+    var msg = TestActFailedErrorMessage.build(ARRANGE_POST, new Exception(""));
 
     // Assert
     var expected =

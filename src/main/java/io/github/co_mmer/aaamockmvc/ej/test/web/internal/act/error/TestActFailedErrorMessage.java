@@ -2,6 +2,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.error;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -21,11 +22,11 @@ public final class TestActFailedErrorMessage {
         + "Cause: "
         + cause.getClass().getSimpleName()
         + ": "
-        + safeMsg(cause);
+        + getMessage(cause);
   }
 
-  private static String safeMsg(Throwable throwable) {
-    var m = (throwable != null ? throwable.getMessage() : null);
-    return (m == null || m.isBlank()) ? "<no message>" : m.trim();
+  private static String getMessage(Throwable throwable) {
+    var message = throwable.getMessage();
+    return StringUtils.isBlank(message) ? "<no message>" : message;
   }
 }
