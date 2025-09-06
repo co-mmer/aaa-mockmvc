@@ -46,6 +46,15 @@ public final class TestObject {
   public static final String TEST_SET_A1_A2_JSON = mapToString(TEST_SET_A1_A2);
   public static final String TEST_MAP_A1_A2_JSON = mapToString(TEST_MAP_A1_A2);
 
+  public static final String TEST_INTEGER_JSON = mapToString(1);
+  public static final Integer TEST_INTEGER = 1;
+  public static final String TEST_FLOAT_JSON = mapToString(1F);
+  public static final Float TEST_FLOAT = 1F;
+  public static final String TEST_DOUBLE_JSON = mapToString(1D);
+  public static final Double TEST_DOUBLE = 1D;
+  public static final String TEST_BOOLEAN_JSON = mapToString(Boolean.TRUE);
+  public static final Boolean TEST_BOOLEAN = Boolean.TRUE;
+
   @SneakyThrows
   private static String mapToString(Object value) {
     return new ObjectMapper().writeValueAsString(value);

@@ -23,6 +23,26 @@ public final class TestAnswerImpl implements TestAnswer {
   }
 
   @Override
+  public Integer asInteger() {
+    return asObject(Integer.class);
+  }
+
+  @Override
+  public Float asFloat() {
+    return asObject(Float.class);
+  }
+
+  @Override
+  public Double asDouble() {
+    return asObject(Double.class);
+  }
+
+  @Override
+  public Boolean asBoolean() {
+    return asObject(Boolean.class);
+  }
+
+  @Override
   public String asString() {
     var content = this.context.getActResult().contentAsString();
     this.context.setAnswerResult(new TestAnswerResult<>(content));
@@ -87,3 +107,4 @@ public final class TestAnswerImpl implements TestAnswer {
     }
   }
 }
+
