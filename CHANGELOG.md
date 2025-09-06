@@ -2,20 +2,70 @@
 
 # Changelog
 
+----
+
 ## [2.0.0]
+
+### 🌿 Highlights
+
+- **A gentler AAA flow** — Build once in Arrange, run once in Act, and read with confidence in
+  Assert/Answer. Tests tell a clearer story and stay focused on intent.
+- **Short, memorable method names** — Simplified, consistent naming (e.g., isOk,
+  isCreated, asList, containsEntryExactly) for faster typing and scanning.
+- **Step runner, made for real-world flows** — Name your steps, group multiple AAA blocks in one
+  test,
+  and (optionally) return the last captured answer from a step. Readability first.
+- **Crisp snapshot semantics** — `act().perform()` executes exactly once; every assertion and answer
+  reads
+  from the same cached response. No surprises, no hidden I/O.
+- **Failure messages that help, not hinder** — Human-friendly errors with concrete next actions,
+  optionally annotated with the step name to pinpoint issues fast.
+- **Seamless Spring/JUnit fit** — A lightweight JUnit 5 extension that auto-cleans state
+  before/after
+  tests, so suites stay tidy by default.
+- **Polished docs & JavaDoc**  — Practical examples and precise contracts that make the framework
+  feel familiar from the first read.
+
+### ✨ New Features
+
+- **Step runner (step(...))**
+    - Group multiple AAA blocks in one test with named steps. Each step
+      runs in an isolated context and can (optionally) return the value from the last answer() call
+      inside the block.
+  ```java
+    step("Add Napoleon", () -> {
+        arrange().post(BASE + CREATE_USER).body().json(new User("Napoleon"));
+        act().perform();
+        asserts().status().isCreated();
+    });
+
+- **Scalar answer**
+    - Read primitive-like values directly from the response
+    - answer().asInteger() / answer().asFloat() / answer().asDouble() / answer().asBoolean()
+
+- **Boolean assertion**
+    - Assert boolean payloads fluently after mapping via content().asBoolean().
 
 ### 🧹 Improvements
 
-- Removed all `actPerform()` calls to simplify the test "Act" step.
-- Introduced new unified `assert` method names (`assertContent...`) for improved readability and
-  consistency.
-- Old method names have been marked as deprecated and will be removed in **2.0.0**.
-- See [Deprecations in 1.6.0](docs/deprecations/deprecations-1.6.0.md) for the full list of renamed
-  methods.
+- **Sharper snapshot semantics** — `act().perform()` executes exactly **once**; `asserts()`
+  and `answer()` never trigger extra I/O.
+
+- **Exception model:**
+    - Act failures → `TestActFailedError` (wraps infrastructure/runtime problems, not HTTP status
+      codes)
+    - Assert failures → `TestAssertFailedError`
+    - Answer mapping failures → `TestAnswerRuntimeException`
+
+- **Error hygiene:**
+    - Precondition validators with precise guidance (e.g., “Call `arrange().get|post|…`
+      then `act().perform()` before `asserts()`/`answer()`”).
 
 ### 📦 Dependency Upgrades
 
-- spring-boot 3.5.0 → 3.5.4
+- spring-boot 3.5.0 → 3.5.5
+- spring-boot 1.18.38 → 1.18.40
+- maven-javadoc-plugin 3.10.1 → 3.11.3
 
 ---
 
