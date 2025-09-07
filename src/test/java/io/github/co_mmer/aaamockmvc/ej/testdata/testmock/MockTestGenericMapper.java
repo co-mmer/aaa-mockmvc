@@ -28,6 +28,18 @@ public class MockTestGenericMapper {
     return mockTestGenericMapper;
   }
 
+  public static MockedStatic<TestGenericMapper> mockParseCollectionWithClass() {
+    var mockTestGenericMapper = mockStatic(TestGenericMapper.class);
+    mockTestGenericMapper
+        .when(
+            () ->
+                TestGenericMapper.parseCollection(
+                    Mockito.any(ObjectMapper.class), Mockito.anyString(), Mockito.<Class<?>>any()))
+        .thenThrow(ERROR);
+
+    return mockTestGenericMapper;
+  }
+
   public static MockedStatic<TestGenericMapper> mockParseListWithClass() {
     var mockTestGenericMapper = mockStatic(TestGenericMapper.class);
     mockTestGenericMapper

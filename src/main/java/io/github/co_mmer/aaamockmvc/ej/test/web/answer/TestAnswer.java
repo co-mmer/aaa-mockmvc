@@ -1,6 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.answer;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerRuntimeException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -102,23 +103,35 @@ public interface TestAnswer {
   <T> T asObject(@NonNull Class<T> resultType) throws TestAnswerRuntimeException;
 
   /**
+   * Deserializes the response body into a {@code Collection<T>} using the configured mapper.
+   *
+   * @param elementType the element type; must not be {@code null}
+   * @param <E> element type
+   * @return the deserialized collection
+   * @throws TestAnswerRuntimeException if deserialization fails or the body is not a JSON array
+   *     compatible with {@code Collection<T>}
+   * @since 2.0.0
+   */
+  <E> Collection<E> asCollection(@NonNull Class<E> elementType);
+
+  /**
    * Deserializes the response body into a {@code List<T>} using the configured mapper.
    *
    * @param elementType the element type; must not be {@code null}
-   * @param <T> element type
-   * @return the deserialized list (never {@code null})
+   * @param <E> element type
+   * @return the deserialized list
    * @throws TestAnswerRuntimeException if deserialization fails or the body is not a JSON array
    *     compatible with {@code List<T>}
    * @since 2.0.0
    */
-  <T> List<T> asList(@NonNull Class<T> elementType) throws TestAnswerRuntimeException;
+  <E> List<E> asList(@NonNull Class<E> elementType) throws TestAnswerRuntimeException;
 
   /**
    * Deserializes the response body into a {@code Set<T>} using the configured mapper.
    *
    * @param elementType the element type; must not be {@code null}
    * @param <T> element type
-   * @return the deserialized set (never {@code null})
+   * @return the deserialized set
    * @throws TestAnswerRuntimeException if deserialization fails or the body is not a JSON array
    *     compatible with {@code Set<T>}
    * @since 2.0.0
@@ -132,7 +145,7 @@ public interface TestAnswer {
    * @param valueType the value type; must not be {@code null}
    * @param <K> key type
    * @param <V> value type
-   * @return the deserialized map (never {@code null})
+   * @return the deserialized map
    * @throws TestAnswerRuntimeException if deserialization fails or the body is not a JSON object
    *     compatible with {@code Map<K,V>}
    * @since 2.0.0

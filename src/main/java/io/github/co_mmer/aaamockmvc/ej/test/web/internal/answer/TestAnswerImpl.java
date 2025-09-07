@@ -7,6 +7,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMappe
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAnswerResult;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -65,6 +66,18 @@ public final class TestAnswerImpl implements TestAnswer {
 
       this.context.setAnswerResult(new TestAnswerResult<>(parse));
       return parse;
+    } catch (TestGenericMapperException e) {
+      throw new TestAnswerRuntimeException(e);
+    }
+  }
+
+  @Override
+  public <E> Collection<E> asCollection(@NonNull Class<E> elementClass) {
+    try {
+      return TestGenericMapper.parseCollection(
+          this.context.getEnvironment().objectMapper(),
+          this.context.getActResult().contentAsString(),
+          elementClass);
     } catch (TestGenericMapperException e) {
       throw new TestAnswerRuntimeException(e);
     }

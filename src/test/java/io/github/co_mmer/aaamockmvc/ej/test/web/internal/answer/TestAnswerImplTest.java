@@ -1,6 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper.mockParseCollectionWithClass;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper.mockParseListWithClass;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper.mockParseMapWithClass;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper.mockParseSetWithClass;
@@ -293,6 +294,52 @@ class TestAnswerImplTest extends TestAssertBase {
       // Act && Assert
       assertThrows(
           TestAnswerRuntimeException.class, () -> testAnswer.asObject(TestObjectSimple.class));
+      mockTestGenericMapper.close();
+    }
+  }
+
+  @Nested
+  class asCollection {
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_null_WHEN_asCollection_THEN_throw_NullPointerException() {
+      // Act & Arrange
+      assertThrows(NullPointerException.class, () -> testAnswer.asCollection(null));
+    }
+
+    @Test
+    void GIVEN_A1_A2_WHEN_asCollection_THEN_return_A1_A2() {
+      // Arrange
+      useActResult(TEST_LIST_A1_A2_JSON);
+
+      // Act
+      var result = testAnswer.asCollection(TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, is(TEST_LIST_A1_A2));
+    }
+
+    @Test
+    void GIVEN_null_WHEN_asCollection_THEN_return_null() {
+      // Arrange
+      useActResult(EMPTY);
+
+      // Act
+      var result = testAnswer.asCollection(TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, is(nullValue()));
+    }
+
+    @Test
+    void GIVEN_throws_WHEN_asCollection_THEN_throwTestAnswerRuntimeException() {
+      // Arrange
+      var mockTestGenericMapper = mockParseCollectionWithClass();
+
+      // Act && Assert
+      assertThrows(
+          TestAnswerRuntimeException.class, () -> testAnswer.asCollection(TestObjectSimple.class));
       mockTestGenericMapper.close();
     }
   }

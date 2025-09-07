@@ -3,14 +3,23 @@ package io.github.co_mmer.aaamockmvc.ej.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(classes = WebApplicationContext.class)
 class AAAMockMvcTestSupportTest extends AAAMockMvcTestSupport {
+
+  @BeforeEach
+  void setUp() {
+    var mock = mock(AAAMockMvc.class);
+    ReflectionTestUtils.setField(this, "aaaMockMvc", mock);
+  }
 
   @Test
   void WHEN_arrange_THEN_delegates_to_aaaMockMvc_arrange() {
@@ -51,7 +60,6 @@ class AAAMockMvcTestSupportTest extends AAAMockMvcTestSupport {
   @Test
   void WHEN_step_THEN_delegates_to_aaaMockMvc_step() {
     // Arrange
-
     Runnable runnable = this::arrange;
 
     // Act

@@ -6,8 +6,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.TestArrange;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssert;
 import lombok.NonNull;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * Test support for AAA-style MockMvc tests (Arrange–Act–Assert–Answer).
@@ -52,7 +52,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 @ExtendWith(AAAMockMvcExtension.class)
 public abstract class AAAMockMvcTestSupport {
 
-  @MockitoBean protected AAAMockMvc aaaMockMvc;
+  @Autowired protected AAAMockMvc aaaMockMvc;
 
   /**
    * Starts the <b>arrange</b> phase to build the HTTP request (method, URL, headers, body).
