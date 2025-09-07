@@ -52,20 +52,22 @@ public final class TestAnswerImpl implements TestAnswer {
 
   @Override
   public byte[] asByte() {
-    return this.context.getActResult().contentAsBytes();
+    var content = this.context.getActResult().contentAsBytes();
+    this.context.setAnswerResult(new TestAnswerResult<>(content));
+    return content;
   }
 
   @Override
   public <T> T asObject(@NonNull Class<T> resultType) {
     try {
-      T parse =
+      var content =
           TestGenericMapper.parse(
               this.context.getEnvironment().objectMapper(),
               this.context.getActResult().contentAsString(),
               resultType);
 
-      this.context.setAnswerResult(new TestAnswerResult<>(parse));
-      return parse;
+      this.context.setAnswerResult(new TestAnswerResult<>(content));
+      return content;
     } catch (TestGenericMapperException e) {
       throw new TestAnswerRuntimeException(e);
     }
@@ -74,10 +76,14 @@ public final class TestAnswerImpl implements TestAnswer {
   @Override
   public <E> Collection<E> asCollection(@NonNull Class<E> elementClass) {
     try {
-      return TestGenericMapper.parseCollection(
-          this.context.getEnvironment().objectMapper(),
-          this.context.getActResult().contentAsString(),
-          elementClass);
+      var content =
+          TestGenericMapper.parseCollection(
+              this.context.getEnvironment().objectMapper(),
+              this.context.getActResult().contentAsString(),
+              elementClass);
+
+      this.context.setAnswerResult(new TestAnswerResult<>(content));
+      return content;
     } catch (TestGenericMapperException e) {
       throw new TestAnswerRuntimeException(e);
     }
@@ -86,10 +92,14 @@ public final class TestAnswerImpl implements TestAnswer {
   @Override
   public <E> List<E> asList(@NonNull Class<E> elementClass) {
     try {
-      return TestGenericMapper.parseList(
-          this.context.getEnvironment().objectMapper(),
-          this.context.getActResult().contentAsString(),
-          elementClass);
+      var content =
+          TestGenericMapper.parseList(
+              this.context.getEnvironment().objectMapper(),
+              this.context.getActResult().contentAsString(),
+              elementClass);
+
+      this.context.setAnswerResult(new TestAnswerResult<>(content));
+      return content;
     } catch (TestGenericMapperException e) {
       throw new TestAnswerRuntimeException(e);
     }
@@ -98,10 +108,14 @@ public final class TestAnswerImpl implements TestAnswer {
   @Override
   public <E> Set<E> asSet(@NonNull Class<E> elementClass) {
     try {
-      return TestGenericMapper.parseSet(
-          this.context.getEnvironment().objectMapper(),
-          this.context.getActResult().contentAsString(),
-          elementClass);
+      var content =
+          TestGenericMapper.parseSet(
+              this.context.getEnvironment().objectMapper(),
+              this.context.getActResult().contentAsString(),
+              elementClass);
+
+      this.context.setAnswerResult(new TestAnswerResult<>(content));
+      return content;
     } catch (TestGenericMapperException e) {
       throw new TestAnswerRuntimeException(e);
     }
@@ -110,11 +124,15 @@ public final class TestAnswerImpl implements TestAnswer {
   @Override
   public <K, V> Map<K, V> asMap(@NonNull Class<K> keyClass, @NonNull Class<V> valueClass) {
     try {
-      return TestGenericMapper.parseMap(
-          this.context.getEnvironment().objectMapper(),
-          this.context.getActResult().contentAsString(),
-          keyClass,
-          valueClass);
+      var content =
+          TestGenericMapper.parseMap(
+              this.context.getEnvironment().objectMapper(),
+              this.context.getActResult().contentAsString(),
+              keyClass,
+              valueClass);
+
+      this.context.setAnswerResult(new TestAnswerResult<>(content));
+      return content;
     } catch (TestGenericMapperException e) {
       throw new TestAnswerRuntimeException(e);
     }

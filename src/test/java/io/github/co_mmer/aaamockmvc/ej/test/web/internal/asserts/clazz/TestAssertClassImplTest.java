@@ -205,15 +205,15 @@ class TestAssertClassImplTest extends TestAssertBase {
       impl.matchAll(PREDICATE_A);
 
       // Assert
-      var p1 = new Predicate[]{PREDICATE_A};
+      var p1 = new Predicate[] {PREDICATE_A};
       verify(match).matchAll(p1);
 
       impl.matchAll(PREDICATE_A, PREDICATE_A);
-      var p2 = new Predicate[]{PREDICATE_A, PREDICATE_A};
+      var p2 = new Predicate[] {PREDICATE_A, PREDICATE_A};
       verify(match).matchAll(p2);
 
       impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A);
-      var p3 = new Predicate[]{PREDICATE_A, PREDICATE_A, PREDICATE_A};
+      var p3 = new Predicate[] {PREDICATE_A, PREDICATE_A, PREDICATE_A};
       verify(match).matchAll(p3);
 
       mocked.close();
@@ -286,15 +286,15 @@ class TestAssertClassImplTest extends TestAssertBase {
       impl.matchAny(PREDICATE_A);
 
       // Assert
-      var p1 = new Predicate[]{PREDICATE_A};
+      var p1 = new Predicate[] {PREDICATE_A};
       verify(match).matchAny(p1);
 
       impl.matchAny(PREDICATE_A, PREDICATE_A);
-      var p2 = new Predicate[]{PREDICATE_A, PREDICATE_A};
+      var p2 = new Predicate[] {PREDICATE_A, PREDICATE_A};
       verify(match).matchAny(p2);
 
       impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A);
-      var p3 = new Predicate[]{PREDICATE_A, PREDICATE_A, PREDICATE_A};
+      var p3 = new Predicate[] {PREDICATE_A, PREDICATE_A, PREDICATE_A};
       verify(match).matchAny(p3);
 
       mocked.close();
@@ -378,15 +378,15 @@ class TestAssertClassImplTest extends TestAssertBase {
       impl.matchNone(PREDICATE_A);
 
       // Assert
-      var p1 = new Predicate[]{PREDICATE_A};
+      var p1 = new Predicate[] {PREDICATE_A};
       verify(match).matchNone(p1);
 
       impl.matchNone(PREDICATE_A, PREDICATE_A);
-      var p2 = new Predicate[]{PREDICATE_A, PREDICATE_A};
+      var p2 = new Predicate[] {PREDICATE_A, PREDICATE_A};
       verify(match).matchNone(p2);
 
       impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A);
-      var p3 = new Predicate[]{PREDICATE_A, PREDICATE_A, PREDICATE_A};
+      var p3 = new Predicate[] {PREDICATE_A, PREDICATE_A, PREDICATE_A};
       verify(match).matchNone(p3);
 
       mocked.close();

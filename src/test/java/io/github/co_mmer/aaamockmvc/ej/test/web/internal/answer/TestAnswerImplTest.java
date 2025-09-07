@@ -30,22 +30,23 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerRuntimeException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.TestAssertBase;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import lombok.SneakyThrows;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class TestAnswerImplTest extends TestAssertBase {
 
+  private TestAAAContext context;
   private TestAnswer testAnswer;
 
   @BeforeEach
   @SneakyThrows
   void setUp() {
-    var context = TestContext.mockContext();
+    this.context = TestContext.mockContext();
     this.useContext(context);
     this.testAnswer = new TestAnswerImpl(context);
   }
@@ -63,6 +64,7 @@ class TestAnswerImplTest extends TestAssertBase {
 
       // Assert
       assertThat(result, is(TEST_INTEGER));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_INTEGER));
     }
 
     @Test
@@ -102,6 +104,7 @@ class TestAnswerImplTest extends TestAssertBase {
 
       // Assert
       assertThat(result, is(TEST_FLOAT));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_FLOAT));
     }
 
     @Test
@@ -141,6 +144,7 @@ class TestAnswerImplTest extends TestAssertBase {
 
       // Assert
       assertThat(result, is(TEST_DOUBLE));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_DOUBLE));
     }
 
     @Test
@@ -180,6 +184,7 @@ class TestAnswerImplTest extends TestAssertBase {
 
       // Assert
       assertThat(result, is(TEST_BOOLEAN));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_BOOLEAN));
     }
 
     @Test
@@ -219,6 +224,7 @@ class TestAnswerImplTest extends TestAssertBase {
 
       // Assert
       assertThat(result, is(TEST_A1_JSON));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_A1_JSON));
     }
 
     @Test
@@ -247,7 +253,8 @@ class TestAnswerImplTest extends TestAssertBase {
       var result = testAnswer.asByte();
 
       // Assert
-      MatcherAssert.assertThat(result, is(TEST_A1_JSON.getBytes()));
+      assertThat(result, is(TEST_A1_JSON.getBytes()));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_A1_JSON.getBytes()));
     }
   }
 
@@ -318,6 +325,7 @@ class TestAnswerImplTest extends TestAssertBase {
 
       // Assert
       assertThat(result, is(TEST_LIST_A1_A2));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_LIST_A1_A2));
     }
 
     @Test
@@ -364,6 +372,7 @@ class TestAnswerImplTest extends TestAssertBase {
 
       // Assert
       assertThat(result, is(TEST_LIST_A1_A2));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_LIST_A1_A2));
     }
 
     @Test
@@ -410,6 +419,7 @@ class TestAnswerImplTest extends TestAssertBase {
 
       // Assert
       assertThat(result, is(TEST_SET_A1_A2));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_SET_A1_A2));
     }
 
     @Test
@@ -457,6 +467,7 @@ class TestAnswerImplTest extends TestAssertBase {
 
       // Assert
       assertThat(result, is(TEST_MAP_A1_A2));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_MAP_A1_A2));
     }
 
     @Test
