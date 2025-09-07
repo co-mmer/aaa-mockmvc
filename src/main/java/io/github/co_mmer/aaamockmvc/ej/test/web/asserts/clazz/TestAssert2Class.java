@@ -60,6 +60,34 @@ public interface TestAssert2Class<T> {
   TestAssert3Class<T> matchAll(@NonNull Predicate<T> condition);
 
   /**
+   * Asserts that the provided predicate returns {@code true} for the deserialized value.
+   *
+   * @param condition1 the predicate to evaluate; must not be {@code null}
+   * @param condition2 the predicate to evaluate; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the predicate evaluates to {@code false}
+   * @since 2.0.0
+   */
+  TestAssert3Class<T> matchAll(@NonNull Predicate<T> condition1, @NonNull Predicate<T> condition2);
+
+  /**
+   * Asserts that the provided predicate returns {@code true} for the deserialized value.
+   *
+   * @param condition1 the predicate to evaluate; must not be {@code null}
+   * @param condition2 the predicate to evaluate; must not be {@code null}
+   * @param condition3 the predicate to evaluate; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the predicate evaluates to {@code false}
+   * @since 2.0.0
+   */
+  TestAssert3Class<T> matchAll(
+      @NonNull Predicate<T> condition1,
+      @NonNull Predicate<T> condition2,
+      @NonNull Predicate<T> condition3);
+
+  /**
    * Asserts that all provided predicates return {@code true} for the deserialized value.
    *
    * @param conditions predicates to evaluate; must not be {@code null} or empty
@@ -82,6 +110,36 @@ public interface TestAssert2Class<T> {
    * @since 2.0.0
    */
   TestAssert4Class<T> matchAny(@NonNull Predicate<T> condition);
+
+  /**
+   * Asserts that the provided predicate returns {@code true} for the deserialized value, or that at
+   * least one predicate matches when used with {@code matchAny(p1, p2, ...)}.
+   *
+   * @param condition1 the predicate to evaluate; must not be {@code null}
+   * @param condition2 the predicate to evaluate; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the predicate evaluates to {@code false}
+   * @since 2.0.0
+   */
+  TestAssert4Class<T> matchAny(@NonNull Predicate<T> condition1, @NonNull Predicate<T> condition2);
+
+  /**
+   * Asserts that the provided predicate returns {@code true} for the deserialized value, or that at
+   * least one predicate matches when used with {@code matchAny(p1, p2, ...)}.
+   *
+   * @param condition1 the predicate to evaluate; must not be {@code null}
+   * @param condition2 the predicate to evaluate; must not be {@code null}
+   * @param condition3 the predicate to evaluate; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the predicate evaluates to {@code false}
+   * @since 2.0.0
+   */
+  TestAssert4Class<T> matchAny(
+      @NonNull Predicate<T> condition1,
+      @NonNull Predicate<T> condition2,
+      @NonNull Predicate<T> condition3);
 
   /**
    * Asserts that at least one of the provided predicates returns {@code true} for the deserialized
@@ -107,6 +165,36 @@ public interface TestAssert2Class<T> {
    * @since 2.0.0
    */
   TestAssertLClass matchNone(@NonNull Predicate<T> condition);
+
+  /**
+   * Asserts that the provided predicate returns {@code false} for the deserialized value, or that
+   * no predicate matches when used with {@code matchNone(p1, p2, ...)}.
+   *
+   * @param condition1 the predicate to evaluate; must not be {@code null}
+   * @param condition2 the predicate to evaluate; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the predicate evaluates to {@code true}
+   * @since 2.0.0
+   */
+  TestAssertLClass matchNone(@NonNull Predicate<T> condition1, @NonNull Predicate<T> condition2);
+
+  /**
+   * Asserts that the provided predicate returns {@code false} for the deserialized value, or that
+   * no predicate matches when used with {@code matchNone(p1, p2, ...)}.
+   *
+   * @param condition1 the predicate to evaluate; must not be {@code null}
+   * @param condition2 the predicate to evaluate; must not be {@code null}
+   * @param condition3 the predicate to evaluate; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the predicate evaluates to {@code true}
+   * @since 2.0.0
+   */
+  TestAssertLClass matchNone(
+      @NonNull Predicate<T> condition1,
+      @NonNull Predicate<T> condition2,
+      @NonNull Predicate<T> condition3);
 
   /**
    * Asserts that none of the provided predicates returns {@code true} for the deserialized value.

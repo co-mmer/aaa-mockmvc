@@ -139,7 +139,7 @@ class TestGenericMapperTest {
           () -> TestGenericMapper.parse(om, mockMvcResult, TestObjectSimple.class));
     }
   }
-  
+
   @Nested
   class parseListWithString {
 

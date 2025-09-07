@@ -58,9 +58,26 @@ public final class TestAssertClassImpl<T>
   @Override
   public TestAssert3Class<T> matchAll(@NonNull Predicate<T> condition) {
     @SuppressWarnings("unchecked")
-    T actual = (T) this.context.getAssertResult().actualContent();
-    TestAssertMatch.assertThat(actual).matchAll(condition);
-    return this;
+    Predicate<T>[] predicates = new Predicate[] {condition};
+    return this.matchAll(predicates);
+  }
+
+  @Override
+  public TestAssert3Class<T> matchAll(
+      @NonNull Predicate<T> condition1, @NonNull Predicate<T> condition2) {
+    @SuppressWarnings("unchecked")
+    Predicate<T>[] predicates = new Predicate[] {condition1, condition2};
+    return this.matchAll(predicates);
+  }
+
+  @Override
+  public TestAssert3Class<T> matchAll(
+      @NonNull Predicate<T> condition1,
+      @NonNull Predicate<T> condition2,
+      @NonNull Predicate<T> condition3) {
+    @SuppressWarnings("unchecked")
+    Predicate<T>[] predicates = new Predicate[] {condition1, condition2, condition3};
+    return this.matchAll(predicates);
   }
 
   @SafeVarargs
@@ -75,9 +92,26 @@ public final class TestAssertClassImpl<T>
   @Override
   public TestAssert4Class<T> matchAny(@NonNull Predicate<T> condition) {
     @SuppressWarnings("unchecked")
-    T actual = (T) this.context.getAssertResult().actualContent();
-    TestAssertMatch.assertThat(actual).matchAny(condition);
-    return this;
+    Predicate<T>[] predicates = new Predicate[] {condition};
+    return this.matchAny(predicates);
+  }
+
+  @Override
+  public TestAssert4Class<T> matchAny(
+      @NonNull Predicate<T> condition1, @NonNull Predicate<T> condition2) {
+    @SuppressWarnings("unchecked")
+    Predicate<T>[] predicates = new Predicate[] {condition1, condition2};
+    return this.matchAny(predicates);
+  }
+
+  @Override
+  public TestAssert4Class<T> matchAny(
+      @NonNull Predicate<T> condition1,
+      @NonNull Predicate<T> condition2,
+      @NonNull Predicate<T> condition3) {
+    @SuppressWarnings("unchecked")
+    Predicate<T>[] predicates = new Predicate[] {condition1, condition2, condition3};
+    return this.matchAny(predicates);
   }
 
   @SafeVarargs
@@ -92,9 +126,26 @@ public final class TestAssertClassImpl<T>
   @Override
   public TestAssertLClass matchNone(@NonNull Predicate<T> condition) {
     @SuppressWarnings("unchecked")
-    T actual = (T) this.context.getAssertResult().actualContent();
-    TestAssertMatch.assertThat(actual).matchNone(condition);
-    return this;
+    Predicate<T>[] predicates = new Predicate[] {condition};
+    return this.matchNone(predicates);
+  }
+
+  @Override
+  public TestAssertLClass matchNone(
+      @NonNull Predicate<T> condition1, @NonNull Predicate<T> condition2) {
+    @SuppressWarnings("unchecked")
+    Predicate<T>[] predicates = new Predicate[] {condition1, condition2};
+    return this.matchNone(predicates);
+  }
+
+  @Override
+  public TestAssertLClass matchNone(
+      @NonNull Predicate<T> condition1,
+      @NonNull Predicate<T> condition2,
+      @NonNull Predicate<T> condition3) {
+    @SuppressWarnings("unchecked")
+    Predicate<T>[] predicates = new Predicate[] {condition1, condition2, condition3};
+    return this.matchNone(predicates);
   }
 
   @SafeVarargs

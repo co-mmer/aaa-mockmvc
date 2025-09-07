@@ -11,11 +11,14 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertMatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
@@ -27,8 +30,10 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("java:S2699")
 class TestAssertClassImplTest extends TestAssertBase {
 
-  public static final Predicate<TestObjectSimple> PREDICATE_NULL = null;
-  public static final Predicate<TestObjectSimple>[] PREDICATES_NULL = null;
+  private static final Predicate<TestObjectSimple> PREDICATE_A =
+      element -> element.name().equals(A);
+  private static final Predicate<TestObjectSimple> PREDICATE_NULL = null;
+  private static final Predicate<TestObjectSimple>[] PREDICATES_NULL = null;
   private static final Predicate<TestObjectSimple> PREDICATE_NAME_EQUALS_A =
       element -> element.name().equals(A);
   private static final Predicate<TestObjectSimple> PREDICATE_ID_EQUALS_2 =
@@ -36,13 +41,13 @@ class TestAssertClassImplTest extends TestAssertBase {
   private static final Predicate<TestObjectSimple> PREDICATE_ID_EQUALS_1 =
       element -> element.id() == 1;
 
-  private TestAssertClassImpl<TestObjectSimple> testAssertClass;
+  private TestAssertClassImpl<TestObjectSimple> impl;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext();
     this.useContext(context);
-    this.testAssertClass = new TestAssertClassImpl<>(context);
+    this.impl = new TestAssertClassImpl<>(context);
   }
 
   @Nested
@@ -64,7 +69,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      testAssertClass.isNotNull();
+      impl.isNotNull();
     }
 
     @Test
@@ -73,7 +78,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(null);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertClass::isNotNull);
+      assertThrows(AssertionError.class, impl::isNotNull);
     }
   }
 
@@ -86,7 +91,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(null);
 
       // Act & Assert
-      testAssertClass.isNull();
+      impl.isNull();
     }
 
     @Test
@@ -95,7 +100,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertClass::isNull);
+      assertThrows(AssertionError.class, impl::isNull);
     }
   }
 
@@ -108,7 +113,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      testAssertClass.isEqualTo(A1);
+      impl.isEqualTo(A1);
     }
 
     @Test
@@ -117,13 +122,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssertClass.isEqualTo(A2));
+      assertThrows(AssertionError.class, () -> impl.isEqualTo(A2));
     }
 
     @Test
     @SuppressWarnings("all")
     void WHEN_isEqualTo_Null_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> testAssertClass.isEqualTo(null));
+      assertThrows(NullPointerException.class, () -> impl.isEqualTo(null));
     }
 
     @Test
@@ -133,7 +138,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act
-      testAssertClass.isEqualTo(A1);
+      impl.isEqualTo(A1);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
@@ -147,7 +152,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchAll_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> testAssertClass.matchAll(PREDICATE_NULL));
+      assertThrows(NullPointerException.class, () -> impl.matchAll(PREDICATE_NULL));
     }
 
     @Test
@@ -156,7 +161,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      testAssertClass.matchAll(PREDICATE_NAME_EQUALS_A);
+      impl.matchAll(PREDICATE_NAME_EQUALS_A);
     }
 
     @Test
@@ -165,7 +170,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      testAssertClass.matchAll(PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1);
+      impl.matchAll(PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1);
     }
 
     @Test
@@ -177,14 +182,41 @@ class TestAssertClassImplTest extends TestAssertBase {
       var exception =
           assertThrows(
               AssertionError.class,
-              () -> testAssertClass.matchAll(PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_2));
+              () -> impl.matchAll(PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_2));
       assertThat(exception.getMessage(), not(EMPTY));
     }
 
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchAll_vararg_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> testAssertClass.matchAll(PREDICATES_NULL));
+      assertThrows(NullPointerException.class, () -> impl.matchAll(PREDICATES_NULL));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void GIVEN_A1_WHEN_matchAll_N_Predicate_THEN_success() {
+      // Arrange
+      var mocked = mockStatic(TestAssertMatch.class);
+      var match = mock(TestAssertMatch.class);
+      mocked.when(() -> TestAssertMatch.assertThat(A1)).thenReturn(match);
+      useAssertResult(A1);
+
+      // Act
+      impl.matchAll(PREDICATE_A);
+
+      // Assert
+      var p1 = new Predicate[]{PREDICATE_A};
+      verify(match).matchAll(p1);
+
+      impl.matchAll(PREDICATE_A, PREDICATE_A);
+      var p2 = new Predicate[]{PREDICATE_A, PREDICATE_A};
+      verify(match).matchAll(p2);
+
+      impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A);
+      var p3 = new Predicate[]{PREDICATE_A, PREDICATE_A, PREDICATE_A};
+      verify(match).matchAll(p3);
+
+      mocked.close();
     }
   }
 
@@ -194,7 +226,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchAny_THEN_throw_NullPointerException() {
-      assertThrows(NullPointerException.class, () -> testAssertClass.matchAny(PREDICATE_NULL));
+      assertThrows(NullPointerException.class, () -> impl.matchAny(PREDICATE_NULL));
     }
 
     @Test
@@ -203,7 +235,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      testAssertClass.matchAny(PREDICATE_ID_EQUALS_1);
+      impl.matchAny(PREDICATE_ID_EQUALS_1);
     }
 
     @Test
@@ -212,9 +244,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class,
-          () -> testAssertClass.matchAny(element -> element.name().equals(B)));
+      assertThrows(AssertionError.class, () -> impl.matchAny(element -> element.name().equals(B)));
     }
 
     @Test
@@ -223,13 +253,13 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      testAssertClass.matchAny(element -> element.name().equals(B), PREDICATE_ID_EQUALS_1);
+      impl.matchAny(element -> element.name().equals(B), PREDICATE_ID_EQUALS_1);
     }
 
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchAny_vararg_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> testAssertClass.matchAny(PREDICATES_NULL));
+      assertThrows(NullPointerException.class, () -> impl.matchAny(PREDICATES_NULL));
     }
 
     @Test
@@ -240,9 +270,34 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () ->
-              testAssertClass.matchAny(
-                  element -> element.name().equals(B), element -> element.id() == 3));
+          () -> impl.matchAny(element -> element.name().equals(B), element -> element.id() == 3));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void GIVEN_A1_WHEN_matchAll_N_Predicate_THEN_success() {
+      // Arrange
+      var mocked = mockStatic(TestAssertMatch.class);
+      var match = mock(TestAssertMatch.class);
+      mocked.when(() -> TestAssertMatch.assertThat(A1)).thenReturn(match);
+      useAssertResult(A1);
+
+      // Act
+      impl.matchAny(PREDICATE_A);
+
+      // Assert
+      var p1 = new Predicate[]{PREDICATE_A};
+      verify(match).matchAny(p1);
+
+      impl.matchAny(PREDICATE_A, PREDICATE_A);
+      var p2 = new Predicate[]{PREDICATE_A, PREDICATE_A};
+      verify(match).matchAny(p2);
+
+      impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A);
+      var p3 = new Predicate[]{PREDICATE_A, PREDICATE_A, PREDICATE_A};
+      verify(match).matchAny(p3);
+
+      mocked.close();
     }
   }
 
@@ -252,7 +307,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchNone_THEN_throw_NullPointerException() {
-      assertThrows(NullPointerException.class, () -> testAssertClass.matchNone(PREDICATE_NULL));
+      assertThrows(NullPointerException.class, () -> impl.matchNone(PREDICATE_NULL));
     }
 
     @Test
@@ -261,7 +316,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      testAssertClass.matchNone(PREDICATE_ID_EQUALS_2);
+      impl.matchNone(PREDICATE_ID_EQUALS_2);
     }
 
     @Test
@@ -270,7 +325,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssertClass.matchNone(PREDICATE_NAME_EQUALS_A));
+      assertThrows(AssertionError.class, () -> impl.matchNone(PREDICATE_NAME_EQUALS_A));
     }
 
     @Test
@@ -279,7 +334,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      testAssertClass.matchNone(element -> element.name().equals(B), PREDICATE_ID_EQUALS_2);
+      impl.matchNone(element -> element.name().equals(B), PREDICATE_ID_EQUALS_2);
     }
 
     @Test
@@ -290,7 +345,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertClass.matchNone(PREDICATE_NAME_EQUALS_A, element -> element.id() == 3));
+          () -> impl.matchNone(PREDICATE_NAME_EQUALS_A, element -> element.id() == 3));
     }
 
     @Test
@@ -301,13 +356,40 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Act & Assert
       assertThrows(
           AssertionError.class,
-          () -> testAssertClass.matchNone(PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1));
+          () -> impl.matchNone(PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1));
     }
 
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchNone_vararg_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> testAssertClass.matchNone(PREDICATES_NULL));
+      assertThrows(NullPointerException.class, () -> impl.matchNone(PREDICATES_NULL));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void GIVEN_A1_WHEN_matchAll_N_Predicate_THEN_success() {
+      // Arrange
+      var mocked = mockStatic(TestAssertMatch.class);
+      var match = mock(TestAssertMatch.class);
+      mocked.when(() -> TestAssertMatch.assertThat(A1)).thenReturn(match);
+      useAssertResult(A1);
+
+      // Act
+      impl.matchNone(PREDICATE_A);
+
+      // Assert
+      var p1 = new Predicate[]{PREDICATE_A};
+      verify(match).matchNone(p1);
+
+      impl.matchNone(PREDICATE_A, PREDICATE_A);
+      var p2 = new Predicate[]{PREDICATE_A, PREDICATE_A};
+      verify(match).matchNone(p2);
+
+      impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A);
+      var p3 = new Predicate[]{PREDICATE_A, PREDICATE_A, PREDICATE_A};
+      verify(match).matchNone(p3);
+
+      mocked.close();
     }
   }
 
@@ -317,7 +399,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @Test
     void WHEN_headers_THEN_return_expected_class() {
       // Act
-      var headers = testAssertClass.headers();
+      var headers = impl.headers();
 
       // Assert
       assertThat(headers, instanceOf(TestAssertHeadImpl.class));
