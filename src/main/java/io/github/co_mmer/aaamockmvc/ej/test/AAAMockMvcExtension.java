@@ -12,8 +12,6 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  * prevent context leakage between tests or steps. This improves test isolation and robustness, even
  * when a previous test failed midway.
  *
- * <p>
- *
  * <p><b>Typical usage (explicit):</b>
  *
  * <pre>{@code

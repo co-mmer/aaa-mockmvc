@@ -52,7 +52,7 @@ import org.springframework.context.annotation.Import;
 @ExtendWith(AAAMockMvcExtension.class)
 public abstract class AAAMockMvcTestSupport {
 
-  @Autowired protected AAAMockMvc aaaMockMvc;
+  @Autowired AAAMockMvc aaaMockMvc;
 
   /**
    * Starts the <b>arrange</b> phase to build the HTTP request (method, URL, headers, body).

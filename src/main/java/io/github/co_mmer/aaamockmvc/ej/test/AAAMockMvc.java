@@ -53,7 +53,7 @@ import org.springframework.web.context.WebApplicationContext;
  *
  * }</pre>
  *
- * <p><strong>Lifecycle & pitfalls</strong>
+ * <p><strong>Lifecycle and pitfalls</strong>
  *
  * <ul>
  *   <li>Start each step with {@link #arrange()} (creates a fresh thread-local arrange).
