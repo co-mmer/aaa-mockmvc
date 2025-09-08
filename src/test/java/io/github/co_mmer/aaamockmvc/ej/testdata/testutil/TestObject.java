@@ -55,6 +55,14 @@ public final class TestObject {
   public static final String TEST_BOOLEAN_JSON = mapToString(Boolean.TRUE);
   public static final Boolean TEST_BOOLEAN = Boolean.TRUE;
 
+  public static final Integer TEST_INTEGER_ZERO = 0;
+  public static final Integer TEST_INTEGER_ONE = 1;
+  public static final Integer TEST_INTEGER_TWO = 2;
+  public static final Integer TEST_INTEGER_POSITIVE = 1;
+  public static final Integer TEST_INTEGER_NEGATIVE = -1;
+  public static final Integer TEST_INTEGER_EVEN = 2;
+  public static final Integer TEST_INTEGER_ODD = 3;
+
   @SneakyThrows
   private static String mapToString(Object value) {
     return new ObjectMapper().writeValueAsString(value);
