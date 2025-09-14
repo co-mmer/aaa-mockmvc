@@ -26,13 +26,16 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_A1_A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_A1_A2_JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
-import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerRuntimeException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.TestAssertBase;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
@@ -84,12 +87,17 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asNumber_THEN_throw_TestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asNumber_THEN_throw_TestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
-      // Act && Assert
-      assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asNumber());
+      // Act
+      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asNumber());
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asNumber"));
+      assertThat(ex.getMessage(), containsString("Number"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }
@@ -124,12 +132,17 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asBigDecimal_THEN_throw_TestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asBigDecimal_THEN_throw_TestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
-      // Act && Assert
-      assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asBigDecimal());
+      // Act
+      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asBigDecimal());
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asBigDecimal"));
+      assertThat(ex.getMessage(), containsString("BigDecimal"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }
@@ -164,12 +177,17 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asInteger_THEN_throw_TestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asInteger_THEN_throw_TestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
-      // Act && Assert
-      assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asInteger());
+      // Act
+      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asInteger());
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asInteger"));
+      assertThat(ex.getMessage(), containsString("Integer"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }
@@ -204,12 +222,17 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asLong_THEN_throw_TestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asLong_THEN_throw_TestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
-      // Act && Assert
-      assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asLong());
+      // Act
+      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asLong());
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asLong"));
+      assertThat(ex.getMessage(), containsString("Long"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }
@@ -244,12 +267,17 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asBigInteger_THEN_throw_TestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asBigInteger_THEN_throw_TestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
-      // Act && Assert
-      assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asBigInteger());
+      // Act
+      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asBigInteger());
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asBigInteger"));
+      assertThat(ex.getMessage(), containsString("BigInteger"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }
@@ -284,12 +312,17 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asFloat_THEN_throw_TestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asFloat_THEN_throw_TestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
-      // Act && Assert
-      assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asFloat());
+      // Act
+      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asFloat());
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asFloat"));
+      assertThat(ex.getMessage(), containsString("Float"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }
@@ -324,12 +357,17 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asDouble_THEN_throw_TestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asDouble_THEN_throw_TestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
-      // Act && Assert
-      assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asDouble());
+      // Act
+      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asDouble());
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asDouble"));
+      assertThat(ex.getMessage(), containsString("Double"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }
@@ -364,12 +402,17 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asBoolean_THEN_throw_TestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asBoolean_THEN_throw_TestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
-      // Act && Assert
-      assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asBoolean());
+      // Act
+      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asBoolean());
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asBoolean"));
+      assertThat(ex.getMessage(), containsString("Boolean"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }
@@ -457,13 +500,19 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asObject_THEN_throw_TestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asObject_THEN_throw_TestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
-      // Act && Assert
-      assertThrows(
-          TestAnswerRuntimeException.class, () -> testAnswer.asObject(TestObjectSimple.class));
+      // Act
+      var ex =
+          assertThrows(
+              TestAnswerException.class, () -> testAnswer.asObject(TestObjectSimple.class));
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asObject"));
+      assertThat(ex.getMessage(), containsString("TestObjectSimple"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }
@@ -504,13 +553,19 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asCollection_THEN_throwTestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asCollection_THEN_throwTestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseCollectionWithClass();
 
-      // Act && Assert
-      assertThrows(
-          TestAnswerRuntimeException.class, () -> testAnswer.asCollection(TestObjectSimple.class));
+      // Act
+      var ex =
+          assertThrows(
+              TestAnswerException.class, () -> testAnswer.asCollection(TestObjectSimple.class));
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asCollection"));
+      assertThat(ex.getMessage(), containsString("TestObjectSimple"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }
@@ -551,13 +606,18 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asList_THEN_throwTestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asList_THEN_throwTestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseListWithClass();
 
-      // Act && Assert
-      assertThrows(
-          TestAnswerRuntimeException.class, () -> testAnswer.asList(TestObjectSimple.class));
+      // Act
+      var ex =
+          assertThrows(TestAnswerException.class, () -> testAnswer.asList(TestObjectSimple.class));
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asList"));
+      assertThat(ex.getMessage(), containsString("TestObjectSimple"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }
@@ -598,13 +658,18 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asSet_THEN_throwTestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asSet_THEN_throwTestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseSetWithClass();
 
-      // Act && Assert
-      assertThrows(
-          TestAnswerRuntimeException.class, () -> testAnswer.asSet(TestObjectSimple.class));
+      // Act
+      var ex =
+          assertThrows(TestAnswerException.class, () -> testAnswer.asSet(TestObjectSimple.class));
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asSet"));
+      assertThat(ex.getMessage(), containsString("TestObjectSimple"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }
@@ -646,14 +711,21 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asMap_THEN_throwTestAnswerRuntimeException() {
+    void GIVEN_throws_WHEN_asMap_THEN_throw_TestAnswerException() {
       // Arrange
       var mockTestGenericMapper = mockParseMapWithClass();
 
-      // Act && Assert
-      assertThrows(
-          TestAnswerRuntimeException.class,
-          () -> testAnswer.asMap(Integer.class, TestObjectSimple.class));
+      // Act
+      var ex =
+          assertThrows(
+              TestAnswerException.class,
+              () -> testAnswer.asMap(Integer.class, TestObjectSimple.class));
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("asMap"));
+      assertThat(ex.getMessage(), containsString("TestObjectSimple"));
+      assertThat(ex.getMessage(), containsString("Integer"));
+      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
       mockTestGenericMapper.close();
     }
   }

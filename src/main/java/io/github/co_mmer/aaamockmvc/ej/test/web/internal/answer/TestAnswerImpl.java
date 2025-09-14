@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
-import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerRuntimeException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
@@ -21,48 +21,48 @@ public final class TestAnswerImpl implements TestAnswer {
   private final TestAAAContext context;
 
   @Since("2.0.0")
-  public TestAnswerImpl(TestAAAContext context) {
+  public TestAnswerImpl(@NonNull TestAAAContext context) {
     this.context = context;
   }
 
   @Override
   public Number asNumber() {
-    return asObject(Number.class);
+    return parse("asNumber", Number.class);
   }
 
   @Override
   public BigDecimal asBigDecimal() {
-    return asObject(BigDecimal.class);
+    return parse("asBigDecimal", BigDecimal.class);
   }
 
   @Override
   public BigInteger asBigInteger() {
-    return asObject(BigInteger.class);
+    return parse("asBigInteger", BigInteger.class);
   }
 
   @Override
   public Integer asInteger() {
-    return asObject(Integer.class);
+    return parse("asInteger", Integer.class);
   }
 
   @Override
   public Long asLong() {
-    return asObject(Long.class);
+    return parse("asLong", Long.class);
   }
 
   @Override
   public Float asFloat() {
-    return asObject(Float.class);
+    return parse("asFloat", Float.class);
   }
 
   @Override
   public Double asDouble() {
-    return asObject(Double.class);
+    return parse("asDouble", Double.class);
   }
 
   @Override
   public Boolean asBoolean() {
-    return asObject(Boolean.class);
+    return parse("asBoolean", Boolean.class);
   }
 
   @Override
@@ -81,82 +81,76 @@ public final class TestAnswerImpl implements TestAnswer {
 
   @Override
   public <T> T asObject(@NonNull Class<T> resultType) {
-    try {
-      var content =
-          TestGenericMapper.parse(
-              this.context.getEnvironment().objectMapper(),
-              this.context.getActResult().contentAsString(),
-              resultType);
+    return parse("asObject", resultType);
+  }
 
-      this.context.setAnswerResult(new TestAnswerResult<>(content));
-      return content;
+  private <T> T parse(String stepName, Class<T> resultType) {
+    var content = this.context.getActResult().contentAsString();
+    var mapper = this.context.getEnvironment().objectMapper();
+
+    try {
+      var actual = TestGenericMapper.parse(mapper, content, resultType);
+      this.context.setAnswerResult(new TestAnswerResult<>(actual));
+      return actual;
     } catch (TestGenericMapperException e) {
-      throw new TestAnswerRuntimeException(e);
+      throw new TestAnswerException(stepName, content, resultType.getSimpleName(), e);
     }
   }
 
   @Override
   public <E> Collection<E> asCollection(@NonNull Class<E> elementClass) {
-    try {
-      var content =
-          TestGenericMapper.parseCollection(
-              this.context.getEnvironment().objectMapper(),
-              this.context.getActResult().contentAsString(),
-              elementClass);
+    var content = this.context.getActResult().contentAsString();
+    var mapper = this.context.getEnvironment().objectMapper();
 
-      this.context.setAnswerResult(new TestAnswerResult<>(content));
-      return content;
+    try {
+      var actual = TestGenericMapper.parseCollection(mapper, content, elementClass);
+      this.context.setAnswerResult(new TestAnswerResult<>(actual));
+      return actual;
     } catch (TestGenericMapperException e) {
-      throw new TestAnswerRuntimeException(e);
+      throw new TestAnswerException("asCollection", content, elementClass.getSimpleName(), e);
     }
   }
 
   @Override
   public <E> List<E> asList(@NonNull Class<E> elementClass) {
-    try {
-      var content =
-          TestGenericMapper.parseList(
-              this.context.getEnvironment().objectMapper(),
-              this.context.getActResult().contentAsString(),
-              elementClass);
+    var content = this.context.getActResult().contentAsString();
+    var mapper = this.context.getEnvironment().objectMapper();
 
-      this.context.setAnswerResult(new TestAnswerResult<>(content));
-      return content;
+    try {
+      var actual = TestGenericMapper.parseList(mapper, content, elementClass);
+      this.context.setAnswerResult(new TestAnswerResult<>(actual));
+      return actual;
     } catch (TestGenericMapperException e) {
-      throw new TestAnswerRuntimeException(e);
+      throw new TestAnswerException("asList", content, elementClass.getSimpleName(), e);
     }
   }
 
   @Override
   public <E> Set<E> asSet(@NonNull Class<E> elementClass) {
-    try {
-      var content =
-          TestGenericMapper.parseSet(
-              this.context.getEnvironment().objectMapper(),
-              this.context.getActResult().contentAsString(),
-              elementClass);
+    var content = this.context.getActResult().contentAsString();
+    var mapper = this.context.getEnvironment().objectMapper();
 
-      this.context.setAnswerResult(new TestAnswerResult<>(content));
-      return content;
+    try {
+      var actual = TestGenericMapper.parseSet(mapper, content, elementClass);
+      this.context.setAnswerResult(new TestAnswerResult<>(actual));
+      return actual;
     } catch (TestGenericMapperException e) {
-      throw new TestAnswerRuntimeException(e);
+      throw new TestAnswerException("asSet", content, elementClass.getSimpleName(), e);
     }
   }
 
   @Override
   public <K, V> Map<K, V> asMap(@NonNull Class<K> keyClass, @NonNull Class<V> valueClass) {
-    try {
-      var content =
-          TestGenericMapper.parseMap(
-              this.context.getEnvironment().objectMapper(),
-              this.context.getActResult().contentAsString(),
-              keyClass,
-              valueClass);
+    var content = this.context.getActResult().contentAsString();
+    var mapper = this.context.getEnvironment().objectMapper();
 
-      this.context.setAnswerResult(new TestAnswerResult<>(content));
-      return content;
+    try {
+      var actual = TestGenericMapper.parseMap(mapper, content, keyClass, valueClass);
+      this.context.setAnswerResult(new TestAnswerResult<>(actual));
+      return actual;
     } catch (TestGenericMapperException e) {
-      throw new TestAnswerRuntimeException(e);
+      throw new TestAnswerException(
+          "asMap", content, keyClass.getSimpleName(), valueClass.getSimpleName(), e);
     }
   }
 }
