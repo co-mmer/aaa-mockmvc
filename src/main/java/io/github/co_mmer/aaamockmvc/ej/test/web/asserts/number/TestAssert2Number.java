@@ -67,7 +67,7 @@ public interface TestAssert2Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert5Number isNegative();
+  TestAssert3Number isNegative();
 
   /**
    * Asserts that the number is greater than or equal to zero ({@code >= 0}).
@@ -77,7 +77,7 @@ public interface TestAssert2Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert6Number isNoNegative();
+  TestAssert5Number isNoNegative();
 
   /**
    * Asserts that the number is numerically zero.
@@ -87,7 +87,7 @@ public interface TestAssert2Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert7Number isZero();
+  TestAssertLNumber isZero();
 
   /**
    * Asserts that the actual number is <em>not</em> numerically equal to {@code expected}.
@@ -98,7 +98,7 @@ public interface TestAssert2Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert8Number isNotEqualTo(@NonNull Number expected);
+  TestAssertLNumber isNotEqualTo(@NonNull Number expected);
 
   /**
    * Asserts that the actual number is numerically equal to {@code expected}.
@@ -109,7 +109,7 @@ public interface TestAssert2Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert8Number isEqualTo(@NonNull Number expected);
+  TestAssertLNumber isEqualTo(@NonNull Number expected);
 
   /**
    * Asserts that the actual number is <em>even</em>.
@@ -120,7 +120,7 @@ public interface TestAssert2Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert9Number isEven();
+  TestAssert7Number isEven();
 
   /**
    * Asserts that the actual number is <em>odd</em>.
@@ -131,7 +131,7 @@ public interface TestAssert2Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert10Number isOdd();
+  TestAssert7Number isOdd();
 
   /**
    * Switches to HTTP header assertions for the same response snapshot.

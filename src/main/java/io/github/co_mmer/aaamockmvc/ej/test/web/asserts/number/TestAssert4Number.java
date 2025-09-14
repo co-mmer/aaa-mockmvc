@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import lombok.NonNull;
 
 /**
@@ -45,17 +46,7 @@ public interface TestAssert4Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert5Number isNegative();
-
-  /**
-   * Asserts that the number is numerically zero.
-   *
-   * <p>Both {@code +0.0} and {@code -0.0} are considered zero.
-   *
-   * @return the next step in the fluent assertion chain
-   * @since 2.0.0
-   */
-  TestAssert7Number isZero();
+  TestAssert3Number isNegative();
 
   /**
    * Asserts that the actual number is <em>not</em> numerically equal to {@code expected}.
@@ -66,7 +57,7 @@ public interface TestAssert4Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert8Number isNotEqualTo(@NonNull Number expected);
+  TestAssertLNumber isNotEqualTo(@NonNull Number expected);
 
   /**
    * Asserts that the actual number is numerically equal to {@code expected}.
@@ -77,7 +68,7 @@ public interface TestAssert4Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert8Number isEqualTo(@NonNull Number expected);
+  TestAssertLNumber isEqualTo(@NonNull Number expected);
 
   /**
    * Asserts that the actual number is <em>even</em>.
@@ -88,7 +79,7 @@ public interface TestAssert4Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert9Number isEven();
+  TestAssert7Number isEven();
 
   /**
    * Asserts that the actual number is <em>odd</em>.
@@ -99,5 +90,18 @@ public interface TestAssert4Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert10Number isOdd();
+  TestAssert7Number isOdd();
+
+  /**
+   * Switches to HTTP header assertions for the same response snapshot.
+   *
+   * <p>Use this to continue the assertion chain on headers (e.g. {@code containsKey}, {@code
+   * containsEntry}). No additional I/O is performed; the headers captured during {@code
+   * actPerform().perform()} are reused.
+   *
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @since 2.0.0
+   */
+  TestAssertHead headers();
 }

@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number;
 
-import lombok.NonNull;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 
 /**
  * Entry point for numeric content assertions.
@@ -49,6 +49,36 @@ public interface TestAssert6Number {
   TestAssert3Number isPositive();
 
   /**
+   * Asserts that the number is less than or equal to zero ({@code <= 0}).
+   *
+   * <p>Zero (including {@code +0.0} and {@code -0.0}) and negatives pass; positives fail.
+   *
+   * @return the next step in the fluent assertion chain
+   * @since 2.0.0
+   */
+  TestAssert4Number isNonPositive();
+
+  /**
+   * Asserts that the number is strictly less than zero ({@code < 0}).
+   *
+   * <p>Note: {@code -0.0} is treated as zero and does <em>not</em> count as negative.
+   *
+   * @return the next step in the fluent assertion chain
+   * @since 2.0.0
+   */
+  TestAssert3Number isNegative();
+
+  /**
+   * Asserts that the number is greater than or equal to zero ({@code >= 0}).
+   *
+   * <p>Zero (including {@code +0.0} and {@code -0.0}) and positives pass; negatives fail.
+   *
+   * @return the next step in the fluent assertion chain
+   * @since 2.0.0
+   */
+  TestAssert5Number isNoNegative();
+
+  /**
    * Asserts that the number is numerically zero.
    *
    * <p>Both {@code +0.0} and {@code -0.0} are considered zero.
@@ -56,29 +86,7 @@ public interface TestAssert6Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert7Number isZero();
-
-  /**
-   * Asserts that the actual number is <em>not</em> numerically equal to {@code expected}.
-   *
-   * <p>Comparison is value-based (e.g., {@code 1} equals {@code 1.0}).
-   *
-   * @param expected the value it must not equal; must not be {@code null}
-   * @return the next step in the fluent assertion chain
-   * @since 2.0.0
-   */
-  TestAssert8Number isNotEqualTo(@NonNull Number expected);
-
-  /**
-   * Asserts that the actual number is numerically equal to {@code expected}.
-   *
-   * <p>Comparison is value-based (e.g., {@code 1} equals {@code 1.0}).
-   *
-   * @param expected the expected value; must not be {@code null}
-   * @return the next step in the fluent assertion chain
-   * @since 2.0.0
-   */
-  TestAssert8Number isEqualTo(@NonNull Number expected);
+  TestAssertLNumber isZero();
 
   /**
    * Asserts that the actual number is <em>even</em>.
@@ -89,7 +97,7 @@ public interface TestAssert6Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert9Number isEven();
+  TestAssert7Number isEven();
 
   /**
    * Asserts that the actual number is <em>odd</em>.
@@ -100,5 +108,18 @@ public interface TestAssert6Number {
    * @return the next step in the fluent assertion chain
    * @since 2.0.0
    */
-  TestAssert10Number isOdd();
+  TestAssert7Number isOdd();
+
+  /**
+   * Switches to HTTP header assertions for the same response snapshot.
+   *
+   * <p>Use this to continue the assertion chain on headers (e.g. {@code containsKey}, {@code
+   * containsEntry}). No additional I/O is performed; the headers captured during {@code
+   * actPerform().perform()} are reused.
+   *
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @since 2.0.0
+   */
+  TestAssertHead headers();
 }

@@ -14,7 +14,6 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.number.T
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.number.TestNumberAssertions.requireNumber;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert10Number;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert1Number;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert2Number;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert3Number;
@@ -22,8 +21,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert4Number
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert5Number;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert6Number;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert7Number;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert8Number;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert9Number;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssertLNumber;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.head.TestAssertHeadImpl;
@@ -39,9 +36,6 @@ public final class TestAssertNumberImpl
         TestAssert5Number,
         TestAssert6Number,
         TestAssert7Number,
-        TestAssert8Number,
-        TestAssert9Number,
-        TestAssert10Number,
         TestAssertLNumber {
 
   private final TestAAAContext context;
@@ -80,43 +74,43 @@ public final class TestAssertNumberImpl
   }
 
   @Override
-  public TestAssert5Number isNegative() {
+  public TestAssert3Number isNegative() {
     assertNegative(requireNumber(actual(), "isNegative()"));
     return this;
   }
 
   @Override
-  public TestAssert6Number isNoNegative() {
+  public TestAssert5Number isNoNegative() {
     assertNonNegative(requireNumber(actual(), "isNoNegative()"));
     return this;
   }
 
   @Override
-  public TestAssert7Number isZero() {
+  public TestAssertLNumber isZero() {
     assertZero(requireNumber(actual(), "isZero()"));
     return this;
   }
 
   @Override
-  public TestAssert8Number isNotEqualTo(@NonNull Number expected) {
+  public TestAssertLNumber isNotEqualTo(@NonNull Number expected) {
     assertNotEqual(requireNumber(actual(), "isNotEqualTo()"), expected);
     return this;
   }
 
   @Override
-  public TestAssert8Number isEqualTo(@NonNull Number expected) {
+  public TestAssertLNumber isEqualTo(@NonNull Number expected) {
     assertEqual(requireNumber(actual(), "isEqualTo()"), expected);
     return this;
   }
 
   @Override
-  public TestAssert9Number isEven() {
+  public TestAssert7Number isEven() {
     assertEven(requireNumber(actual(), "isEven()"), "isEven()");
     return this;
   }
 
   @Override
-  public TestAssert10Number isOdd() {
+  public TestAssert7Number isOdd() {
     assertOdd(requireNumber(actual(), "isOdd()"), "isOdd()");
     return this;
   }

@@ -24,6 +24,13 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert2Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert3Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertLMap;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert1Number;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert2Number;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert3Number;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert4Number;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert5Number;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssert7Number;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number.TestAssertLNumber;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert2String;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssertLString;
@@ -31,6 +38,77 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentAssert;
 import org.junit.jupiter.api.Test;
 
 class FluentEdgesTest {
+
+  @Test
+  void single_transitions_number() {
+    FluentAssert.assertThat(
+        transition(TestAssert1Number.class, "isNull", TestAssertLNumber.class),
+        allowsExactly("headers"));
+
+    FluentAssert.assertThat(
+        transition(TestAssert1Number.class, "isNotNull", TestAssert2Number.class),
+        allowsExactly(
+            "isPositive",
+            "isNonPositive",
+            "isNegative",
+            "isNoNegative",
+            "isZero",
+            "isNotEqualTo",
+            "isEqualTo",
+            "isEven",
+            "isOdd",
+            "headers"));
+
+    FluentAssert.assertThat(
+        transition(TestAssert1Number.class, "isPositive", TestAssert3Number.class),
+        allowsExactly("isNotEqualTo", "isEqualTo", "isEven", "isOdd", "headers"));
+
+    FluentAssert.assertThat(
+        transition(TestAssert1Number.class, "isNonPositive", TestAssert4Number.class),
+        allowsExactly("isNegative", "isNotEqualTo", "isEqualTo", "isEven", "isOdd", "headers"));
+
+    FluentAssert.assertThat(
+        transition(TestAssert1Number.class, "isNegative", TestAssert3Number.class),
+        allowsExactly("isNotEqualTo", "isEqualTo", "isEven", "isOdd", "headers"));
+
+    FluentAssert.assertThat(
+        transition(TestAssert1Number.class, "isNoNegative", TestAssert5Number.class),
+        allowsExactly("isPositive", "isNotEqualTo", "isEqualTo", "isEven", "isOdd", "headers"));
+
+    FluentAssert.assertThat(
+        transition(TestAssert1Number.class, "isZero", TestAssertLNumber.class),
+        allowsExactly("headers"));
+
+    FluentAssert.assertThat(
+        transition(TestAssert1Number.class, "isNotEqualTo", TestAssertLNumber.class),
+        allowsExactly("headers"));
+
+    FluentAssert.assertThat(
+        transition(TestAssert1Number.class, "isEqualTo", TestAssertLNumber.class),
+        allowsExactly("headers"));
+
+    FluentAssert.assertThat(
+        transition(TestAssert1Number.class, "isEven", TestAssert7Number.class),
+        allowsExactly(
+            "isPositive",
+            "isNonPositive",
+            "isNegative",
+            "isNoNegative",
+            "isNotEqualTo",
+            "isEqualTo",
+            "headers"));
+
+    FluentAssert.assertThat(
+        transition(TestAssert1Number.class, "isOdd", TestAssert7Number.class),
+        allowsExactly(
+            "isPositive",
+            "isNonPositive",
+            "isNegative",
+            "isNoNegative",
+            "isNotEqualTo",
+            "isEqualTo",
+            "headers"));
+  }
 
   @Test
   void single_transitions_boolean() {
