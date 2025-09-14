@@ -46,13 +46,14 @@ import org.junit.jupiter.api.Test;
 
 class TestAnswerImplTest extends TestAssertBase {
 
+  private static final String TESTING = "Testing";
   private TestAAAContext context;
   private TestAnswer testAnswer;
 
   @BeforeEach
   @SneakyThrows
   void setUp() {
-    this.context = TestContext.mockContext();
+    this.context = TestContext.mockContext(TESTING);
     this.useContext(context);
     this.testAnswer = new TestAnswerImpl(context);
   }
@@ -95,6 +96,7 @@ class TestAnswerImplTest extends TestAssertBase {
       var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asNumber());
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asNumber"));
       assertThat(ex.getMessage(), containsString("Number"));
       assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
@@ -140,6 +142,7 @@ class TestAnswerImplTest extends TestAssertBase {
       var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asBigDecimal());
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asBigDecimal"));
       assertThat(ex.getMessage(), containsString("BigDecimal"));
       assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
@@ -185,6 +188,7 @@ class TestAnswerImplTest extends TestAssertBase {
       var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asInteger());
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asInteger"));
       assertThat(ex.getMessage(), containsString("Integer"));
       assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
@@ -230,6 +234,7 @@ class TestAnswerImplTest extends TestAssertBase {
       var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asLong());
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asLong"));
       assertThat(ex.getMessage(), containsString("Long"));
       assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
@@ -275,6 +280,7 @@ class TestAnswerImplTest extends TestAssertBase {
       var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asBigInteger());
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asBigInteger"));
       assertThat(ex.getMessage(), containsString("BigInteger"));
       assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
@@ -320,6 +326,7 @@ class TestAnswerImplTest extends TestAssertBase {
       var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asFloat());
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asFloat"));
       assertThat(ex.getMessage(), containsString("Float"));
       assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
@@ -365,6 +372,7 @@ class TestAnswerImplTest extends TestAssertBase {
       var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asDouble());
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asDouble"));
       assertThat(ex.getMessage(), containsString("Double"));
       assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
@@ -410,6 +418,7 @@ class TestAnswerImplTest extends TestAssertBase {
       var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asBoolean());
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asBoolean"));
       assertThat(ex.getMessage(), containsString("Boolean"));
       assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
@@ -510,6 +519,7 @@ class TestAnswerImplTest extends TestAssertBase {
               TestAnswerException.class, () -> testAnswer.asObject(TestObjectSimple.class));
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asObject"));
       assertThat(ex.getMessage(), containsString("TestObjectSimple"));
       assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
@@ -563,6 +573,7 @@ class TestAnswerImplTest extends TestAssertBase {
               TestAnswerException.class, () -> testAnswer.asCollection(TestObjectSimple.class));
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asCollection"));
       assertThat(ex.getMessage(), containsString("TestObjectSimple"));
       assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
@@ -615,6 +626,7 @@ class TestAnswerImplTest extends TestAssertBase {
           assertThrows(TestAnswerException.class, () -> testAnswer.asList(TestObjectSimple.class));
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asList"));
       assertThat(ex.getMessage(), containsString("TestObjectSimple"));
       assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
@@ -667,6 +679,7 @@ class TestAnswerImplTest extends TestAssertBase {
           assertThrows(TestAnswerException.class, () -> testAnswer.asSet(TestObjectSimple.class));
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asSet"));
       assertThat(ex.getMessage(), containsString("TestObjectSimple"));
       assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
@@ -722,6 +735,7 @@ class TestAnswerImplTest extends TestAssertBase {
               () -> testAnswer.asMap(Integer.class, TestObjectSimple.class));
 
       // Assert
+      assertThat(ex.getMessage(), containsString(TESTING));
       assertThat(ex.getMessage(), containsString("asMap"));
       assertThat(ex.getMessage(), containsString("TestObjectSimple"));
       assertThat(ex.getMessage(), containsString("Integer"));

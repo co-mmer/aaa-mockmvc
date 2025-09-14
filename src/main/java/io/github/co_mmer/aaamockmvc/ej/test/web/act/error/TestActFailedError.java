@@ -38,7 +38,7 @@ public final class TestActFailedError extends AssertionFailedError {
    * <p>The framework composes the message via an internal builder based on the current request
    * snapshot and passes it here; external callers should not compose this message themselves.
    *
-   * @param message human-readable failure message with request arrange; must not be {@code null}
+   * @param message human-readable failure message with request arrange
    * @param cause the underlying failure; must not be {@code null}
    * @since 2.0.0
    */

@@ -2,7 +2,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.act;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.error.TestActFailedError;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.error.TestActFailedErrorMessage;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.error.TestActFailedErrorFormatter;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.mapper.TestActResultMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.strategy.TestRequestStrategyFactory;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.validator.TestActPreconditionsValidator;
@@ -39,7 +39,7 @@ public final class TestActImpl implements TestAct {
     try {
       return this.context.getEnvironment().mvc().perform(requestBuilder);
     } catch (Exception e) {
-      var message = TestActFailedErrorMessage.build(result, e);
+      var message = TestActFailedErrorFormatter.createMessage(this.context.getStep(), result, e);
       throw new TestActFailedError(message, e);
     }
   }

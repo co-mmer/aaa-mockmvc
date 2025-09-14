@@ -31,8 +31,12 @@ public final class TestContext {
   }
 
   public static TestAAAContext mockContext() {
+    return mockContext(null);
+  }
+
+  public static TestAAAContext mockContext(String stepName) {
     var context = new TestAAAContext(createTestEnvironment());
-    context.setStep(new TestStepMetadata(null));
+    context.setStep(new TestStepMetadata(stepName));
     context.setArrangeResult(createTestArrangeResult());
 
     var actResult = mock(TestActResult.class);

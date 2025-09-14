@@ -28,14 +28,14 @@ class TestActPreconditionsValidatorTest {
     when(this.mockAAAContext.getStep()).thenReturn(null);
 
     // Act
-    var exception =
-        assertThrows(IllegalStateException.class, () -> verifyPerform(this.mockAAAContext));
+    var ex = assertThrows(IllegalStateException.class, () -> verifyPerform(this.mockAAAContext));
 
     // Assert
-    assertThat(
-        exception.getMessage(),
-        is(
-            "Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'"));
+    var expected =
+        """
+            Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'
+            """;
+    assertThat(ex.getMessage(), is(expected));
   }
 
   @Test
@@ -46,13 +46,14 @@ class TestActPreconditionsValidatorTest {
     when(this.mockAAAContext.getStep()).thenReturn(currentStep);
 
     // Act
-    var exception =
-        assertThrows(IllegalStateException.class, () -> verifyPerform(this.mockAAAContext));
+    var ex = assertThrows(IllegalStateException.class, () -> verifyPerform(this.mockAAAContext));
 
     // Assert
-    assertThat(
-        exception.getMessage(),
-        is(
-            "Step 'MyStep' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'"));
+    var expected =
+        """
+            Step 'MyStep'
+            Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'
+            """;
+    assertThat(ex.getMessage(), is(expected));
   }
 }

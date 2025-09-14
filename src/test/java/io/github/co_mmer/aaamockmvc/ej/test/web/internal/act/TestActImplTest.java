@@ -8,7 +8,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.error.TestActFailedError;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.error.TestActFailedErrorMessage;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.mapper.TestActResultMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.strategy.TestRequestBaseStrategy;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.strategy.TestRequestStrategyFactory;
@@ -56,24 +55,29 @@ class TestActImplTest {
 
   @Test
   @SneakyThrows
-  void GIVEN_throwOnMvcPerform_WHEN_perform_THEN_throwError() {
+  void GIVEN_noStepMetadata_throwOnMvcPerform_WHEN_perform_THEN_throw_Error() {
     // Arrange
-
     var requestBuilder = mockRequestBuilder();
     var baseStrategy = mockBaseStrategyReturning(requestBuilder);
 
     var strategyFactory = mockStrategyFactoryReturning(baseStrategy);
     mvcWillThrow(requestBuilder);
-    var failedMsg = mockFailedErrorMessageReturning();
 
     // Act
-    var exception = assertThrows(TestActFailedError.class, () -> this.testAct.perform());
+    var ex = assertThrows(TestActFailedError.class, () -> this.testAct.perform());
 
     // Assert
-    assertThat(exception.getMessage(), is("mockMessage"));
-
+    var expected =
+        """
+            Step '<unnamed step>'
+            ACT failed: GET null
+            Request: GET <no uri>
+            Headers: accepts=<none> | content-type=<none> | key-value={}
+            Body: 0 bytes | content-type=<none>
+            Cause: Exception: test
+            """;
+    assertThat(ex.getMessage(), is(expected));
     strategyFactory.close();
-    failedMsg.close();
   }
 
   @Test
@@ -87,19 +91,18 @@ class TestActImplTest {
 
     var strategyFactory = mockStrategyFactoryReturning(baseStrategy);
     mvcWillThrow(requestBuilder);
-    var failedMsg = mockFailedErrorMessageReturning();
 
     // Act
-    var exception = assertThrows(IllegalStateException.class, () -> this.testAct.perform());
+    var ex = assertThrows(IllegalStateException.class, () -> this.testAct.perform());
 
     // Assert
-    assertThat(
-        exception.getMessage(),
-        is(
-            "Step '<unnamed step>' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'"));
-
+    var expected =
+        """
+            Step '<unnamed step>'
+            Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'
+            """;
+    assertThat(ex.getMessage(), is(expected));
     strategyFactory.close();
-    failedMsg.close();
   }
 
   private MockHttpServletRequestBuilder mockRequestBuilder() {
@@ -122,12 +125,6 @@ class TestActImplTest {
   private MockedStatic<TestActResultMapper> mockResultMapperReturning(TestActResult result) {
     var mocked = Mockito.mockStatic(TestActResultMapper.class);
     mocked.when(() -> TestActResultMapper.mapTo(any())).thenReturn(result);
-    return mocked;
-  }
-
-  private MockedStatic<TestActFailedErrorMessage> mockFailedErrorMessageReturning() {
-    var mocked = Mockito.mockStatic(TestActFailedErrorMessage.class);
-    mocked.when(() -> TestActFailedErrorMessage.build(any(), any())).thenReturn("mockMessage");
     return mocked;
   }
 

@@ -18,14 +18,18 @@ public final class TestActPreconditionsValidator {
   @Since("2.0.0")
   public static void verifyPerform(TestAAAContext context) {
     if (context.getArrangeResult() == null) {
-      var stepPrefix = createStepPrefix(context);
-      throw new IllegalStateException(stepPrefix + MISSING_ARRANGE_BEFORE_ACT_PERFORM);
+      var message =
+          """
+              %s%s
+              """
+              .formatted(createStepPrefix(context), MISSING_ARRANGE_BEFORE_ACT_PERFORM);
+      throw new IllegalStateException(message);
     }
   }
 
   private static String createStepPrefix(TestAAAContext context) {
     return context.getStep() == null
         ? StringUtils.EMPTY
-        : "Step '%s' · ".formatted(context.getStep().name());
+        : "Step '%s'%n".formatted(context.getStep().name());
   }
 }

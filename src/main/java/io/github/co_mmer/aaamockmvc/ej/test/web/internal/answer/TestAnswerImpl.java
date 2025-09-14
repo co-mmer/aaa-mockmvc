@@ -1,5 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer.TestAnswerExceptionFormatter.createMessage;
+
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
@@ -93,7 +95,9 @@ public final class TestAnswerImpl implements TestAnswer {
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
-      throw new TestAnswerException(stepName, content, resultType.getSimpleName(), e);
+      var message =
+          createMessage(this.context.getStep(), stepName, content, resultType.getSimpleName());
+      throw new TestAnswerException(message, e);
     }
   }
 
@@ -107,7 +111,10 @@ public final class TestAnswerImpl implements TestAnswer {
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
-      throw new TestAnswerException("asCollection", content, elementClass.getSimpleName(), e);
+      var message =
+          createMessage(
+              this.context.getStep(), "asCollection", content, elementClass.getSimpleName());
+      throw new TestAnswerException(message, e);
     }
   }
 
@@ -121,7 +128,9 @@ public final class TestAnswerImpl implements TestAnswer {
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
-      throw new TestAnswerException("asList", content, elementClass.getSimpleName(), e);
+      var message =
+          createMessage(this.context.getStep(), "asList", content, elementClass.getSimpleName());
+      throw new TestAnswerException(message, e);
     }
   }
 
@@ -135,7 +144,9 @@ public final class TestAnswerImpl implements TestAnswer {
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
-      throw new TestAnswerException("asSet", content, elementClass.getSimpleName(), e);
+      var message =
+          createMessage(this.context.getStep(), "asSet", content, elementClass.getSimpleName());
+      throw new TestAnswerException(message, e);
     }
   }
 
@@ -149,8 +160,14 @@ public final class TestAnswerImpl implements TestAnswer {
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
-      throw new TestAnswerException(
-          "asMap", content, keyClass.getSimpleName(), valueClass.getSimpleName(), e);
+      var message =
+          createMessage(
+              this.context.getStep(),
+              "asMap",
+              content,
+              keyClass.getSimpleName(),
+              valueClass.getSimpleName());
+      throw new TestAnswerException(message, e);
     }
   }
 }

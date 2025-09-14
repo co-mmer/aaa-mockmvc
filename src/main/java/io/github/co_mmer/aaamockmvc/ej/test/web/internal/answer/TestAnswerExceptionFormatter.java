@@ -1,0 +1,40 @@
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer;
+
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepMetadata;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
+@Since("2.0.0")
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+public final class TestAnswerExceptionFormatter {
+
+  @Since("2.0.0")
+  public static String createMessage(
+      TestStepMetadata step, String stepName, String content, String simpleName) {
+    return """
+        %sAnswer step: %s(%s)
+        Failure: unable to map response body to '%s'.
+        """
+        .formatted(createStepPrefix(step), stepName, content, simpleName);
+  }
+
+  @Since("2.0.0")
+  public static String createMessage(
+      TestStepMetadata step,
+      String stepName,
+      String content,
+      String keySimpleName,
+      String valueSimpleName) {
+    return """
+        %sAnswer step: %s(%s)
+        Failure: unable to map response body to 'Map<%s, %s>'.
+        """
+        .formatted(createStepPrefix(step), stepName, content, keySimpleName, valueSimpleName);
+  }
+
+  private static String createStepPrefix(TestStepMetadata stepMetadata) {
+    return stepMetadata == null ? StringUtils.EMPTY : "Step '%s'%n".formatted(stepMetadata.name());
+  }
+}
