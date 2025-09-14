@@ -8,6 +8,8 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericM
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockTestGenericMapper.mockParseWithClass;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_BIGDECIMAL;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_BIGINTEGER;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_BOOLEAN;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_BOOLEAN_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_DOUBLE;
@@ -18,6 +20,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_INTEGER_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LONG;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_A1_A2;
@@ -49,6 +52,86 @@ class TestAnswerImplTest extends TestAssertBase {
     this.context = TestContext.mockContext();
     this.useContext(context);
     this.testAnswer = new TestAnswerImpl(context);
+  }
+
+  @Nested
+  class asNumber {
+
+    @Test
+    void GIVEN_1_JSON_WHEN_asNumber_THEN_return_1() {
+      // Arrange
+      useActResult(TEST_INTEGER_JSON);
+
+      // Act
+      var result = testAnswer.asNumber();
+
+      // Assert
+      assertThat(result, is(TEST_INTEGER));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_INTEGER));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_empty_WHEN_asNumber_THEN_return_null() {
+      // Arrange
+      useActResult(EMPTY);
+
+      // Act
+      var result = testAnswer.asNumber();
+
+      // Assert
+      assertThat(result, is(nullValue()));
+    }
+
+    @Test
+    void GIVEN_throws_WHEN_asNumber_THEN_throw_TestAnswerRuntimeException() {
+      // Arrange
+      var mockTestGenericMapper = mockParseWithClass();
+
+      // Act && Assert
+      assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asNumber());
+      mockTestGenericMapper.close();
+    }
+  }
+
+  @Nested
+  class asBigDecimal {
+
+    @Test
+    void GIVEN_1_JSON_WHEN_asBigDecimal_THEN_return_1() {
+      // Arrange
+      useActResult(TEST_INTEGER_JSON);
+
+      // Act
+      var result = testAnswer.asBigDecimal();
+
+      // Assert
+      assertThat(result, is(TEST_BIGDECIMAL));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_BIGDECIMAL));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_empty_WHEN_asBigDecimal_THEN_return_null() {
+      // Arrange
+      useActResult(EMPTY);
+
+      // Act
+      var result = testAnswer.asBigDecimal();
+
+      // Assert
+      assertThat(result, is(nullValue()));
+    }
+
+    @Test
+    void GIVEN_throws_WHEN_asBigDecimal_THEN_throw_TestAnswerRuntimeException() {
+      // Arrange
+      var mockTestGenericMapper = mockParseWithClass();
+
+      // Act && Assert
+      assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asBigDecimal());
+      mockTestGenericMapper.close();
+    }
   }
 
   @Nested
@@ -87,6 +170,86 @@ class TestAnswerImplTest extends TestAssertBase {
 
       // Act && Assert
       assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asInteger());
+      mockTestGenericMapper.close();
+    }
+  }
+
+  @Nested
+  class asLong {
+
+    @Test
+    void GIVEN_1_JSON_WHEN_asLong_THEN_return_1() {
+      // Arrange
+      useActResult(TEST_INTEGER_JSON);
+
+      // Act
+      var result = testAnswer.asLong();
+
+      // Assert
+      assertThat(result, is(TEST_LONG));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_LONG));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_empty_WHEN_asLong_THEN_return_null() {
+      // Arrange
+      useActResult(EMPTY);
+
+      // Act
+      var result = testAnswer.asLong();
+
+      // Assert
+      assertThat(result, is(nullValue()));
+    }
+
+    @Test
+    void GIVEN_throws_WHEN_asLong_THEN_throw_TestAnswerRuntimeException() {
+      // Arrange
+      var mockTestGenericMapper = mockParseWithClass();
+
+      // Act && Assert
+      assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asLong());
+      mockTestGenericMapper.close();
+    }
+  }
+
+  @Nested
+  class asBigInteger {
+
+    @Test
+    void GIVEN_1_JSON_WHEN_asBigInteger_THEN_return_1() {
+      // Arrange
+      useActResult(TEST_INTEGER_JSON);
+
+      // Act
+      var result = testAnswer.asBigInteger();
+
+      // Assert
+      assertThat(result, is(TEST_BIGINTEGER));
+      assertThat(context.getAnswerResult().actualContent(), is(TEST_BIGINTEGER));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_empty_WHEN_asBigInteger_THEN_return_null() {
+      // Arrange
+      useActResult(EMPTY);
+
+      // Act
+      var result = testAnswer.asBigInteger();
+
+      // Assert
+      assertThat(result, is(nullValue()));
+    }
+
+    @Test
+    void GIVEN_throws_WHEN_asBigInteger_THEN_throw_TestAnswerRuntimeException() {
+      // Arrange
+      var mockTestGenericMapper = mockParseWithClass();
+
+      // Act && Assert
+      assertThrows(TestAnswerRuntimeException.class, () -> testAnswer.asBigInteger());
       mockTestGenericMapper.close();
     }
   }

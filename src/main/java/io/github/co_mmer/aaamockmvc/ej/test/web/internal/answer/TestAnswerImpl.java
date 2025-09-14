@@ -7,6 +7,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMappe
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAnswerResult;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +26,28 @@ public final class TestAnswerImpl implements TestAnswer {
   }
 
   @Override
+  public Number asNumber() {
+    return asObject(Number.class);
+  }
+
+  @Override
+  public BigDecimal asBigDecimal() {
+    return asObject(BigDecimal.class);
+  }
+
+  @Override
+  public BigInteger asBigInteger() {
+    return asObject(BigInteger.class);
+  }
+
+  @Override
   public Integer asInteger() {
     return asObject(Integer.class);
+  }
+
+  @Override
+  public Long asLong() {
+    return asObject(Long.class);
   }
 
   @Override

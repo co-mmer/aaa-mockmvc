@@ -1,6 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.testdata.testutil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,8 +48,13 @@ public final class TestObject {
   public static final String TEST_SET_A1_A2_JSON = mapToString(TEST_SET_A1_A2);
   public static final String TEST_MAP_A1_A2_JSON = mapToString(TEST_MAP_A1_A2);
 
-  public static final String TEST_INTEGER_JSON = mapToString(1);
+  public static final String TEST_INTEGER_JSON = mapToString((Number) 1);
   public static final Integer TEST_INTEGER = 1;
+  public static final Long TEST_LONG = 1L;
+
+  public static final BigDecimal TEST_BIGDECIMAL = BigDecimal.valueOf(1);
+  public static final BigInteger TEST_BIGINTEGER = BigInteger.valueOf(1);
+
   public static final String TEST_FLOAT_JSON = mapToString(1F);
   public static final Float TEST_FLOAT = 1F;
   public static final String TEST_DOUBLE_JSON = mapToString(1D);
