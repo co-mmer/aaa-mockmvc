@@ -27,45 +27,27 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool;
  *
  * @since 2.0.0
  */
-public interface TestAssert1Boolean {
+public interface TestAssert1Boolean extends OperationTrue, OperationFalse {
 
   /**
    * Asserts that the actual value is {@code null}.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   *     based on the current state
+   * based on the current state
    * @throws AssertionError if the value is not {@code null}
    * @since 2.0.0
    */
-  TestAssert4Boolean isNull();
+  TestAssert3Boolean isNull();
 
   /**
    * Asserts that the actual value is not {@code null}.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   *     based on the current state
+   * based on the current state
    * @throws AssertionError if the value is {@code null}
    * @since 2.0.0
    */
-  TestAssert3Boolean isNotNull();
+  TestAssert2Boolean isNotNull();
 
-  /**
-   * Asserts that the actual value is {@code Boolean.TRUE}.
-   *
-   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   *     based on the current state
-   * @throws AssertionError if the value is not {@code true}
-   * @since 2.0.0
-   */
-  TestAssert4Boolean isTrue();
 
-  /**
-   * Asserts that the actual value is {@code Boolean.FALSE}.
-   *
-   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   *     based on the current state
-   * @throws AssertionError if the value is not {@code false}
-   * @since 2.0.0
-   */
-  TestAssert4Boolean isFalse();
 }

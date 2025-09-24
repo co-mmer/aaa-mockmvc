@@ -4,8 +4,8 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMat
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMatchers.transition;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert1Boolean;
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert2Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert3Boolean;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert4Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssert1Byte;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssert2Byte;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssertLByte;
@@ -113,19 +113,19 @@ class FluentEdgesTest {
   @Test
   void single_transitions_boolean() {
     FluentAssert.assertThat(
-        transition(TestAssert1Boolean.class, "isNull", TestAssert4Boolean.class),
+        transition(TestAssert1Boolean.class, "isNull", TestAssert3Boolean.class),
         allowsExactly("headers"));
 
     FluentAssert.assertThat(
-        transition(TestAssert1Boolean.class, "isNotNull", TestAssert3Boolean.class),
+        transition(TestAssert1Boolean.class, "isNotNull", TestAssert2Boolean.class),
         allowsExactly("isTrue", "isFalse", "headers"));
 
     FluentAssert.assertThat(
-        transition(TestAssert1Boolean.class, "isTrue", TestAssert4Boolean.class),
+        transition(TestAssert1Boolean.class, "isTrue", TestAssert3Boolean.class),
         allowsExactly("headers"));
 
     FluentAssert.assertThat(
-        transition(TestAssert1Boolean.class, "isFalse", TestAssert4Boolean.class),
+        transition(TestAssert1Boolean.class, "isFalse", TestAssert3Boolean.class),
         allowsExactly("headers"));
   }
 

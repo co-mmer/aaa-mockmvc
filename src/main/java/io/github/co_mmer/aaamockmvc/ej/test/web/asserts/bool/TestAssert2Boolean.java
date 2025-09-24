@@ -3,27 +3,26 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool;
 /**
  * Entry point for raw <b>Boolean</b> content assertions.
  *
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * arrange()
+ *   .get("/api/feature/enabled");
+ *
+ * act()
+ *   .perform();
+ *
+ * asserts()
+ *   .content()
+ *   .asBoolean()
+ *   .isTrue();
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> {@code act().perform()} has been executed; assertions operate on the
+ * stored snapshot.
+ *
  * @since 2.0.0
  */
-public interface TestAssert2Boolean {
+public interface TestAssert2Boolean extends OperationTrue, OperationFalse, OperationHeader {
 
-  /**
-   * Asserts that the actual value is {@code Boolean.TRUE}.
-   *
-   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   *     based on the current state
-   * @throws AssertionError if the value is not {@code true}
-   * @since 2.0.0
-   */
-  TestAssert4Boolean isTrue();
-
-  /**
-   * Asserts that the actual value is {@code Boolean.FALSE}.
-   *
-   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   *     based on the current state
-   * @throws AssertionError if the value is not {@code false}
-   * @since 2.0.0
-   */
-  TestAssert4Boolean isFalse();
 }
