@@ -1,8 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
 
-import java.util.Map;
-import lombok.NonNull;
-
 /**
  * Assertions for a deserialized {@link java.util.Map} with keys {@code K} and values {@code V}.
  *
@@ -30,15 +27,17 @@ import lombok.NonNull;
  * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed and {@code
  * content().asMap(K,V)} successfully deserialized a JSON object into a Java map.
  *
+ * @param <K> the key type of the asserted map
+ * @param <V> the value type of the asserted map
  * @since 1.4.0
  */
-public interface TestAssert1Map<K, V> {
+public interface TestAssert1Map<K, V> extends OperationEquals<K, V> {
 
   /**
    * Asserts that the map is not empty.
    *
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
+   * based on the current state.
    * @throws AssertionError if the map is empty
    * @since 2.0.0
    */
@@ -48,7 +47,7 @@ public interface TestAssert1Map<K, V> {
    * Asserts that the map is empty.
    *
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
+   * based on the current state.
    * @throws AssertionError if the map is not empty
    * @since 2.0.0
    */
@@ -59,20 +58,10 @@ public interface TestAssert1Map<K, V> {
    *
    * @param size the expected number of entries
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
+   * based on the current state.
    * @throws AssertionError if the size differs from {@code size}
    * @since 2.0.0
    */
   TestAssert3Map<K, V> hasSize(int size);
 
-  /**
-   * Asserts that the map is equal to the given map (same keys and values).
-   *
-   * @param expectedMap the expected map; must not be {@code null}
-   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
-   * @throws AssertionError if the maps are not equal
-   * @since 2.0.0
-   */
-  TestAssertLMap isEqualTo(@NonNull Map<K, V> expectedMap);
 }

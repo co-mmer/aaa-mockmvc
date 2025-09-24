@@ -1,9 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-import java.util.Map;
-import lombok.NonNull;
-
 /**
  * Assertions for a deserialized {@link java.util.Map} with keys {@code K} and values {@code V}.
  *
@@ -31,31 +27,10 @@ import lombok.NonNull;
  * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed and {@code
  * content().asMap(K,V)} successfully deserialized a JSON object into a Java map.
  *
+ * @param <K> the key type of the asserted map
+ * @param <V> the value type of the asserted map
  * @since 1.4.0
  */
-public interface TestAssert3Map<K, V> {
+public interface TestAssert3Map<K, V> extends OperationEquals<K, V>, OperationHeader {
 
-  /**
-   * Asserts that the map is equal to the given map (same keys and values).
-   *
-   * @param expectedMap the expected map; must not be {@code null}
-   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
-   * @throws AssertionError if the maps are not equal
-   * @since 2.0.0
-   */
-  TestAssertLMap isEqualTo(@NonNull Map<K, V> expectedMap);
-
-  /**
-   * Switches to HTTP header assertions for the same response snapshot.
-   *
-   * <p>Use this to continue the assertion chain on headers (e.g. {@code containsKey}, {@code
-   * containsEntry}). No additional I/O is performed; the headers captured during {@code
-   * actPerform().perform()} are reused.
-   *
-   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
-   * @since 2.0.0
-   */
-  TestAssertHead headers();
 }
