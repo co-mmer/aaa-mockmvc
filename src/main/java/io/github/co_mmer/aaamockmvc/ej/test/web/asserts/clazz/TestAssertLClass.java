@@ -30,6 +30,4 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz;
  *
  * @since 1.0.0
  */
-public interface TestAssertLClass extends OperationHeader {
-
-}
+public interface TestAssertLClass extends OperationHeader {}

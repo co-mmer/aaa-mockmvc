@@ -12,7 +12,7 @@ interface OperationEquals {
    *
    * @param expectedString the expected string; must not be {@code null}
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @throws AssertionError if the strings are not equal
    * @since 2.0.0
    */

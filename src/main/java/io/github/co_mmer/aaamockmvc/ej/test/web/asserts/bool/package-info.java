@@ -9,8 +9,8 @@
  *
  * <ul>
  *   <li>All assertions throw {@link java.lang.AssertionError} on failure.
- *   <li>Unless explicitly documented otherwise, no implicit conversions are performed
- *       (e.g., strings like {@code "true"} are not accepted).
+ *   <li>Unless explicitly documented otherwise, no implicit conversions are performed (e.g.,
+ *       strings like {@code "true"} are not accepted).
  *   <li>Null arguments are not permitted; passing {@code null} will result in {@link
  *       java.lang.NullPointerException}.
  * </ul>

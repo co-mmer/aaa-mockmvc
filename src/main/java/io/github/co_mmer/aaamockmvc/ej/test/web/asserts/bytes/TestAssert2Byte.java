@@ -30,6 +30,4 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
  *
  * @since 1.4.0
  */
-public interface TestAssert2Byte extends OperationEquals, OperationHeader {
-  
-}
+public interface TestAssert2Byte extends OperationEquals, OperationHeader {}

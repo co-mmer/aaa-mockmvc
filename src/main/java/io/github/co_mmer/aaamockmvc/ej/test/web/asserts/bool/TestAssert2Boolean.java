@@ -23,6 +23,4 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool;
  *
  * @since 2.0.0
  */
-public interface TestAssert2Boolean extends OperationTrue, OperationFalse, OperationHeader {
-
-}
+public interface TestAssert2Boolean extends OperationTrue, OperationFalse, OperationHeader {}

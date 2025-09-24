@@ -37,7 +37,7 @@ public interface TestAssert1Map<K, V> extends OperationEquals<K, V> {
    * Asserts that the map is not empty.
    *
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @throws AssertionError if the map is empty
    * @since 2.0.0
    */
@@ -47,7 +47,7 @@ public interface TestAssert1Map<K, V> extends OperationEquals<K, V> {
    * Asserts that the map is empty.
    *
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @throws AssertionError if the map is not empty
    * @since 2.0.0
    */
@@ -58,10 +58,9 @@ public interface TestAssert1Map<K, V> extends OperationEquals<K, V> {
    *
    * @param size the expected number of entries
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @throws AssertionError if the size differs from {@code size}
    * @since 2.0.0
    */
   TestAssert3Map<K, V> hasSize(int size);
-
 }

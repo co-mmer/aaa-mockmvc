@@ -7,7 +7,7 @@ interface OperationEquals {
    *
    * @param expectedByte the expected payload; must not be {@code null}
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @throws AssertionError if the actual bytes differ from {@code expectedByte}
    * @since 2.0.0
    */

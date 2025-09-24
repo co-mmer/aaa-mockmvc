@@ -13,8 +13,8 @@
  *       returned from the HTTP response without transformation.
  *   <li>Empty payloads are defined as either zero-length byte arrays or trimmed textual bodies
  *       equal to {@code "[]"} or {@code "{}"}.
- *   <li>Null arguments are not permitted; passing {@code null} will result in
- *       {@link java.lang.NullPointerException}.
+ *   <li>Null arguments are not permitted; passing {@code null} will result in {@link
+ *       java.lang.NullPointerException}.
  * </ul>
  *
  * <p><b>Entry point:</b> The public API surface is {@link

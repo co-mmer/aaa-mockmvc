@@ -29,7 +29,9 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz;
  * @param <T> the type of the asserted content object
  * @since 1.0.0
  */
-public interface TestAssert2Class<T> extends OperationEquals<T>, OperationMatchAll<T>,
-    OperationMatchAny<T>, OperationMatchNone<T>, OperationHeader {
-
-}
+public interface TestAssert2Class<T>
+    extends OperationEquals<T>,
+        OperationMatchAll<T>,
+        OperationMatchAny<T>,
+        OperationMatchNone<T>,
+        OperationHeader {}

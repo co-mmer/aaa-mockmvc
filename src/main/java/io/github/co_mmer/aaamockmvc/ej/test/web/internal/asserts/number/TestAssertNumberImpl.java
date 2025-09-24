@@ -80,8 +80,8 @@ public final class TestAssertNumberImpl
   }
 
   @Override
-  public TestAssert5Number isNoNegative() {
-    assertNonNegative(requireNumber(actual(), "isNoNegative()"));
+  public TestAssert5Number isNonNegative() {
+    assertNonNegative(requireNumber(actual(), "isNonNegative()"));
     return this;
   }
 

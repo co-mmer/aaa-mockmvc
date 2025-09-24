@@ -31,6 +31,4 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
  *
  * @since 1.4.0
  */
-public interface TestAssertLMap extends OperationHeader {
-
-}
+public interface TestAssertLMap extends OperationHeader {}

@@ -178,33 +178,33 @@ class TestAssertNumberImplTestTest extends TestAssertBase {
   }
 
   @Nested
-  class isNoNegative {
+  class isNonNegative {
 
     @Test
-    void GIVEN_positive_WHEN_isNoNegative_THEN_success() {
+    void GIVEN_positive_WHEN_isNonNegative_THEN_success() {
       // Arrange
       useAssertResult(TEST_INTEGER_POSITIVE);
 
       // Act & Assert
-      impl.isNoNegative();
+      impl.isNonNegative();
     }
 
     @Test
-    void GIVEN_negative_WHEN_isNoNegative_THEN_failed() {
+    void GIVEN_negative_WHEN_isNonNegative_THEN_failed() {
       // Arrange
       useAssertResult(TEST_INTEGER_NEGATIVE);
 
       // Act & Assert
-      assertThrows(AssertionError.class, impl::isNoNegative);
+      assertThrows(AssertionError.class, impl::isNonNegative);
     }
 
     @Test
-    void GIVEN_null_WHEN_isNoNegative_THEN_failed() {
+    void GIVEN_null_WHEN_isNonNegative_THEN_failed() {
       // Arrange
       useAssertResult(null);
 
       // Act & Assert
-      assertThrows(AssertionError.class, impl::isNoNegative);
+      assertThrows(AssertionError.class, impl::isNonNegative);
     }
   }
 

@@ -1,7 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-
 /**
  * Entry point for numeric content assertions.
  *
@@ -35,91 +33,9 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
  *
  * @since 2.0.0
  */
-public interface TestAssert6Number {
-
-  /**
-   * Asserts that the number is strictly greater than zero ({@code > 0}).
-   *
-   * <p>Examples: {@code 1}, {@code 1.0} pass; {@code 0}, {@code 0.0}, {@code -0.0}, {@code -1}
-   * fail.
-   *
-   * @return the next step in the fluent assertion chain
-   * @since 2.0.0
-   */
-  TestAssert3Number isPositive();
-
-  /**
-   * Asserts that the number is less than or equal to zero ({@code <= 0}).
-   *
-   * <p>Zero (including {@code +0.0} and {@code -0.0}) and negatives pass; positives fail.
-   *
-   * @return the next step in the fluent assertion chain
-   * @since 2.0.0
-   */
-  TestAssert4Number isNonPositive();
-
-  /**
-   * Asserts that the number is strictly less than zero ({@code < 0}).
-   *
-   * <p>Note: {@code -0.0} is treated as zero and does <em>not</em> count as negative.
-   *
-   * @return the next step in the fluent assertion chain
-   * @since 2.0.0
-   */
-  TestAssert3Number isNegative();
-
-  /**
-   * Asserts that the number is greater than or equal to zero ({@code >= 0}).
-   *
-   * <p>Zero (including {@code +0.0} and {@code -0.0}) and positives pass; negatives fail.
-   *
-   * @return the next step in the fluent assertion chain
-   * @since 2.0.0
-   */
-  TestAssert5Number isNoNegative();
-
-  /**
-   * Asserts that the number is numerically zero.
-   *
-   * <p>Both {@code +0.0} and {@code -0.0} are considered zero.
-   *
-   * @return the next step in the fluent assertion chain
-   * @since 2.0.0
-   */
-  TestAssertLNumber isZero();
-
-  /**
-   * Asserts that the actual number is <em>even</em>.
-   *
-   * <p>Requires an integer value (no fractional part). Non-integer values cause the assertion to
-   * fail. Examples: {@code 2}, {@code 2.0} pass; {@code 3}, {@code 2.5} fail.
-   *
-   * @return the next step in the fluent assertion chain
-   * @since 2.0.0
-   */
-  TestAssert7Number isEven();
-
-  /**
-   * Asserts that the actual number is <em>odd</em>.
-   *
-   * <p>Requires an integer value (no fractional part). Non-integer values cause the assertion to
-   * fail. Examples: {@code 3} passes; {@code 2}, {@code 3.1} fail.
-   *
-   * @return the next step in the fluent assertion chain
-   * @since 2.0.0
-   */
-  TestAssert7Number isOdd();
-
-  /**
-   * Switches to HTTP header assertions for the same response snapshot.
-   *
-   * <p>Use this to continue the assertion chain on headers (e.g. {@code containsKey}, {@code
-   * containsEntry}). No additional I/O is performed; the headers captured during {@code
-   * actPerform().perform()} are reused.
-   *
-   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
-   * @since 2.0.0
-   */
-  TestAssertHead headers();
-}
+public interface TestAssert6Number
+    extends OperationNonNegative,
+        OperationNegative,
+        OperationParity,
+        OperationZero,
+        OperationHeader {}

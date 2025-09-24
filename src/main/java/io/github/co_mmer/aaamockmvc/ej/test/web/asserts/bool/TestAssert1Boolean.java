@@ -33,7 +33,7 @@ public interface TestAssert1Boolean extends OperationTrue, OperationFalse {
    * Asserts that the actual value is {@code null}.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state
+   *     based on the current state
    * @throws AssertionError if the value is not {@code null}
    * @since 2.0.0
    */
@@ -43,11 +43,9 @@ public interface TestAssert1Boolean extends OperationTrue, OperationFalse {
    * Asserts that the actual value is not {@code null}.
    *
    * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
-   * based on the current state
+   *     based on the current state
    * @throws AssertionError if the value is {@code null}
    * @since 2.0.0
    */
   TestAssert2Boolean isNotNull();
-
-
 }

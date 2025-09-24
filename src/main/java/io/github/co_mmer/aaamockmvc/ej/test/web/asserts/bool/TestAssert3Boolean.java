@@ -25,6 +25,4 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool;
  *
  * @since 2.0.0
  */
-public interface TestAssert3Boolean extends OperationHeader {
-
-}
+public interface TestAssert3Boolean extends OperationHeader {}

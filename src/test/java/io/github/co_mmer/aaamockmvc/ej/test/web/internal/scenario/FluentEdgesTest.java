@@ -51,7 +51,7 @@ class FluentEdgesTest {
             "isPositive",
             "isNonPositive",
             "isNegative",
-            "isNoNegative",
+            "isNonNegative",
             "isZero",
             "isNotEqualTo",
             "isEqualTo",
@@ -72,7 +72,7 @@ class FluentEdgesTest {
         allowsExactly("isNotEqualTo", "isEqualTo", "isEven", "isOdd", "headers"));
 
     FluentAssert.assertThat(
-        transition(TestAssert1Number.class, "isNoNegative", TestAssert5Number.class),
+        transition(TestAssert1Number.class, "isNonNegative", TestAssert5Number.class),
         allowsExactly("isPositive", "isNotEqualTo", "isEqualTo", "isEven", "isOdd", "headers"));
 
     FluentAssert.assertThat(
@@ -93,7 +93,7 @@ class FluentEdgesTest {
             "isPositive",
             "isNonPositive",
             "isNegative",
-            "isNoNegative",
+            "isNonNegative",
             "isNotEqualTo",
             "isEqualTo",
             "headers"));
@@ -104,7 +104,7 @@ class FluentEdgesTest {
             "isPositive",
             "isNonPositive",
             "isNegative",
-            "isNoNegative",
+            "isNonNegative",
             "isNotEqualTo",
             "isEqualTo",
             "headers"));

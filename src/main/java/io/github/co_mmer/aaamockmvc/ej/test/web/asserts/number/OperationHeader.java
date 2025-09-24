@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
+package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.number;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 

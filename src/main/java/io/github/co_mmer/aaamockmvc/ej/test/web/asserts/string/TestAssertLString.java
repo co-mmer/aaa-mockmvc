@@ -24,11 +24,9 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string;
  *  ...
  * }</pre>
  *
- * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed. If no body is
- * present, the cached string representation is empty ({@code ""}).
+ * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed. If no body is present,
+ * the cached string representation is empty ({@code ""}).
  *
  * @since 1.0.0
  */
-public interface TestAssertLString extends OperationHeader {
-
-}
+public interface TestAssertLString extends OperationHeader {}

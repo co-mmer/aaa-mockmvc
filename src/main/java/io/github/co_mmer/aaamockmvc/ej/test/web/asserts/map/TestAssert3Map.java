@@ -31,6 +31,4 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
  * @param <V> the value type of the asserted map
  * @since 1.4.0
  */
-public interface TestAssert3Map<K, V> extends OperationEquals<K, V>, OperationHeader {
-
-}
+public interface TestAssert3Map<K, V> extends OperationEquals<K, V>, OperationHeader {}

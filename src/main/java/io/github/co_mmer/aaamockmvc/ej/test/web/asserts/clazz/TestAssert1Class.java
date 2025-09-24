@@ -29,14 +29,14 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz;
  * @param <T> the type of the asserted content object
  * @since 1.0.0
  */
-public interface TestAssert1Class<T> extends OperationEquals<T>, OperationMatchAll<T>,
-    OperationMatchAny<T>, OperationMatchNone<T> {
+public interface TestAssert1Class<T>
+    extends OperationEquals<T>, OperationMatchAll<T>, OperationMatchAny<T>, OperationMatchNone<T> {
 
   /**
    * Asserts that the deserialized value is not {@code null}.
    *
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @throws AssertionError if the value is {@code null}
    * @since 2.0.0
    */
@@ -46,10 +46,9 @@ public interface TestAssert1Class<T> extends OperationEquals<T>, OperationMatchA
    * Asserts that the deserialized value is {@code null}.
    *
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   * based on the current state.
+   *     based on the current state.
    * @throws AssertionError if the value is not {@code null}
    * @since 2.0.0
    */
   TestAssertLClass isNull();
-
 }

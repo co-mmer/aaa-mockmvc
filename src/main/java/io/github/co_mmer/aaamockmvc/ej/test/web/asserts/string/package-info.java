@@ -10,8 +10,8 @@
  * <ul>
  *   <li>All assertions throw {@link java.lang.AssertionError} on failure.
  *   <li>String comparisons are normalized using Unicode Normalization Form C (NFC).
- *   <li>Null arguments are not permitted; passing {@code null} will result in
- *       {@link java.lang.NullPointerException}.
+ *   <li>Null arguments are not permitted; passing {@code null} will result in {@link
+ *       java.lang.NullPointerException}.
  * </ul>
  *
  * <p><b>Entry point:</b> The public API surface is {@link
