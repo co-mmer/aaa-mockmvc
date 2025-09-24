@@ -35,21 +35,20 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
  *
  * @since 1.4.0
  */
-public interface TestAssert1Byte {
+public interface TestAssert1Byte extends OperationEquals {
 
   /**
    * Asserts that the raw body is not empty (i.e., byte length {@code > 0}).
    *
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
+   * based on the current state.
    * @throws AssertionError if the body is empty
    * @since 2.0.0
    */
   TestAssert2Byte isNotEmpty();
 
   /**
-   * Asserts that the body is empty. <br>
-   * In this arrange, “empty” means either:
+   * Asserts that the body is empty. <br> In this arrange, “empty” means either:
    *
    * <ul>
    *   <li>no bytes at all (length {@code 0}), or
@@ -57,7 +56,7 @@ public interface TestAssert1Byte {
    * </ul>
    *
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
+   * based on the current state.
    * @throws AssertionError if the body is not considered empty
    * @since 2.0.0
    */
@@ -68,20 +67,9 @@ public interface TestAssert1Byte {
    *
    * @param expectedLength the expected number of bytes
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
+   * based on the current state.
    * @throws AssertionError if the actual byte length differs from {@code expectedLength}
    * @since 2.0.0
    */
   TestAssert2Byte hasLength(int expectedLength);
-
-  /**
-   * Asserts that the raw body is exactly equal to the given byte array (byte-for-byte).
-   *
-   * @param expectedByte the expected payload; must not be {@code null}
-   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
-   * @throws AssertionError if the actual bytes differ from {@code expectedByte}
-   * @since 2.0.0
-   */
-  TestAssertLByte isEqualTo(byte[] expectedByte);
 }

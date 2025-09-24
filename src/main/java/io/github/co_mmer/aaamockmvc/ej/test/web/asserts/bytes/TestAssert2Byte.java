@@ -1,7 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-
 /**
  * Entry point for raw <b>byte[]</b> content assertions.
  *
@@ -32,29 +30,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
  *
  * @since 1.4.0
  */
-public interface TestAssert2Byte {
-
-  /**
-   * Asserts that the raw body is exactly equal to the given byte array (byte-for-byte).
-   *
-   * @param expectedByte the expected payload; must not be {@code null}
-   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
-   * @throws AssertionError if the actual bytes differ from {@code expectedByte}
-   * @since 2.0.0
-   */
-  TestAssertLByte isEqualTo(byte[] expectedByte);
-
-  /**
-   * Switches to HTTP header assertions for the same response snapshot.
-   *
-   * <p>Use this to continue the assertion chain on headers (e.g. {@code containsKey}, {@code
-   * containsEntry}). No additional I/O is performed; the headers captured during {@code
-   * actPerform().perform()} are reused.
-   *
-   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
-   *     based on the current state.
-   * @since 2.0.0
-   */
-  TestAssertHead headers();
+public interface TestAssert2Byte extends OperationEquals, OperationHeader {
+  
 }
