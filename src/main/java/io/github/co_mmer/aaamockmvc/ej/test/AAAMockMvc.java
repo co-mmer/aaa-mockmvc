@@ -181,8 +181,8 @@ public final class AAAMockMvc {
    */
   public TestAssert asserts() {
     TestStepPreconditionsValidator.asserts(CURRENT.get());
-    var section = CURRENT.get();
-    return section.asserts();
+    var step = CURRENT.get();
+    return step.asserts();
   }
 
   /**
@@ -195,8 +195,8 @@ public final class AAAMockMvc {
    */
   public TestAnswer answer() {
     TestStepPreconditionsValidator.answer(CURRENT.get());
-    var section = CURRENT.get();
-    return section.answer();
+    var step = CURRENT.get();
+    return step.answer();
   }
 
   /**

@@ -180,7 +180,7 @@ public abstract class AAAMockMvcTestSupport {
    * @throws ClassCastException if the captured answer cannot be cast to {@code R}
    * @since 2.0.0
    */
-  public final <R> R step(String stepName, @NonNull Runnable block) {
+  public final <R> R step(@NonNull String stepName, @NonNull Runnable block) {
     return aaaMockMvc.step(stepName, block);
   }
 }
