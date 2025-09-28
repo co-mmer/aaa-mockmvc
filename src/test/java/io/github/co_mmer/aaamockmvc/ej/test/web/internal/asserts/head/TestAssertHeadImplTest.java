@@ -4,6 +4,9 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_CONTENT_TYPE;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_TOKEN;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
@@ -20,7 +23,7 @@ class TestAssertHeadImplTest extends TestAssertBase {
 
   @BeforeEach
   void setUp() {
-    var context = TestContext.createContext();
+    var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
     this.testAssert = new TestAssertHeadImpl(context);
   }
@@ -59,7 +62,9 @@ class TestAssertHeadImplTest extends TestAssertBase {
       useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert.containsKey(HEADER_KEY_CONTENT_TYPE));
+      var ex =
+          assertThrows(AssertionError.class, () -> testAssert.containsKey(HEADER_KEY_CONTENT_TYPE));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -87,7 +92,9 @@ class TestAssertHeadImplTest extends TestAssertBase {
       useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert.doesNotContainKey(HEADER_KEY_AUTH));
+      var ex =
+          assertThrows(AssertionError.class, () -> testAssert.doesNotContainKey(HEADER_KEY_AUTH));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -109,8 +116,11 @@ class TestAssertHeadImplTest extends TestAssertBase {
       useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class, () -> testAssert.containsEntry(HEADER_KEY_AUTH, HEADER_VALUE_JSON));
+      var ex =
+          assertThrows(
+              AssertionError.class,
+              () -> testAssert.containsEntry(HEADER_KEY_AUTH, HEADER_VALUE_JSON));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -119,9 +129,11 @@ class TestAssertHeadImplTest extends TestAssertBase {
       useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class,
-          () -> testAssert.containsEntry(HEADER_KEY_CONTENT_TYPE, HEADER_VALUE_TOKEN));
+      var ex =
+          assertThrows(
+              AssertionError.class,
+              () -> testAssert.containsEntry(HEADER_KEY_CONTENT_TYPE, HEADER_VALUE_TOKEN));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -152,9 +164,11 @@ class TestAssertHeadImplTest extends TestAssertBase {
       useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class,
-          () -> testAssert.containsEntryExactly(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN));
+      var ex =
+          assertThrows(
+              AssertionError.class,
+              () -> testAssert.containsEntryExactly(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -163,11 +177,13 @@ class TestAssertHeadImplTest extends TestAssertBase {
       useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class,
-          () ->
-              testAssert.containsEntryExactly(
-                  HEADER_KEY_CONTENT_TYPE, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON));
+      var ex =
+          assertThrows(
+              AssertionError.class,
+              () ->
+                  testAssert.containsEntryExactly(
+                      HEADER_KEY_CONTENT_TYPE, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -176,7 +192,10 @@ class TestAssertHeadImplTest extends TestAssertBase {
       useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert.containsEntryExactly(HEADER_KEY_AUTH));
+      var ex =
+          assertThrows(
+              AssertionError.class, () -> testAssert.containsEntryExactly(HEADER_KEY_AUTH));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 }

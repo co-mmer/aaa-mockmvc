@@ -89,7 +89,7 @@ public final class TestAssertClassImpl<T>
   public final TestAssert3Class<T> matchAll(@NonNull Predicate<T>... conditions) {
     @SuppressWarnings("unchecked")
     T actual = (T) this.context.getAssertResult().actualContent();
-    TestAssertMatch.assertThat(actual).matchAll(conditions);
+    TestAssertMatch.assertThat(this.context.getStep(), actual).matchAll(conditions);
     return this;
   }
 
@@ -123,7 +123,7 @@ public final class TestAssertClassImpl<T>
   public final TestAssert4Class<T> matchAny(@NonNull Predicate<T>... conditions) {
     @SuppressWarnings("unchecked")
     T actual = (T) this.context.getAssertResult().actualContent();
-    TestAssertMatch.assertThat(actual).matchAny(conditions);
+    TestAssertMatch.assertThat(this.context.getStep(), actual).matchAny(conditions);
     return this;
   }
 
@@ -157,7 +157,7 @@ public final class TestAssertClassImpl<T>
   public final TestAssertLClass matchNone(@NonNull Predicate<T>... conditions) {
     @SuppressWarnings("unchecked")
     T actual = (T) this.context.getAssertResult().actualContent();
-    TestAssertMatch.assertThat(actual).matchNone(conditions);
+    TestAssertMatch.assertThat(this.context.getStep(), actual).matchNone(conditions);
     return this;
   }
 

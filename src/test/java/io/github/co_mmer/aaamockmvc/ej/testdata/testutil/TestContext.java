@@ -24,6 +24,13 @@ public final class TestContext {
     return context;
   }
 
+  public static TestAAAContext createContext(String stepName) {
+    var context = new TestAAAContext(createTestEnvironment());
+    context.setStep(new TestStepDto(stepName));
+    context.setArrangeResult(createTestArrangeResult());
+    return context;
+  }
+
   private static TestEnvironment createTestEnvironment() {
     var mvc = mock(MockMvc.class);
     var objectMapper = new ObjectMapper();

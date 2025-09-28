@@ -14,7 +14,10 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A3_A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A3_A4;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_B1NEW_B2NEW;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -47,7 +50,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
   @BeforeEach
   void setUp() {
-    var context = TestContext.createContext();
+    var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
     this.impl = new TestAssertCollectionImpl<>(context);
     this.implObjectMatch = new TestAssertCollectionImpl<>(context);
@@ -82,7 +85,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useActResult(value.getBytes());
 
       // Act & Assert
-      assertThrows(AssertionError.class, impl::isNotEmpty);
+      var ex = assertThrows(AssertionError.class, impl::isNotEmpty);
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -105,7 +109,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useActResult(TEST_LIST_A1_A2_JSON.getBytes());
 
       // Act & Assert
-      assertThrows(AssertionError.class, impl::isEmpty);
+      var ex = assertThrows(AssertionError.class, impl::isEmpty);
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -127,7 +132,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.hasSize(1));
+      var ex = assertThrows(AssertionError.class, () -> impl.hasSize(1));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -149,7 +155,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.isEqualTo(TEST_LIST_A1_A3));
+      var ex = assertThrows(AssertionError.class, () -> impl.isEqualTo(TEST_LIST_A1_A3));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -171,7 +178,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.containsAnyOrder(TEST_LIST_A1_A3));
+      var ex = assertThrows(AssertionError.class, () -> impl.containsAnyOrder(TEST_LIST_A1_A3));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -202,7 +210,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.contains(TEST_LIST_A1_A3));
+      var ex = assertThrows(AssertionError.class, () -> impl.contains(TEST_LIST_A1_A3));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -211,7 +220,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.contains(A3));
+      var ex = assertThrows(AssertionError.class, () -> impl.contains(A3));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -242,7 +252,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.notContains(A1));
+      var ex = assertThrows(AssertionError.class, () -> impl.notContains(A1));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -251,7 +262,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.notContains(TEST_LIST_A1_A2));
+      var ex = assertThrows(AssertionError.class, () -> impl.notContains(TEST_LIST_A1_A2));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -273,7 +285,10 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.matchAll(element -> element.name().equals(B)));
+      var ex =
+          assertThrows(
+              AssertionError.class, () -> impl.matchAll(element -> element.name().equals(B)));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -292,11 +307,14 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_B1NEW_B2NEW);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class,
-          () ->
-              implObjectMatch.matchAll(
-                  element -> element.name().equals(A), element -> element.status().equals(NEW)));
+      var ex =
+          assertThrows(
+              AssertionError.class,
+              () ->
+                  implObjectMatch.matchAll(
+                      element -> element.name().equals(A),
+                      element -> element.status().equals(NEW)));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -317,7 +335,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Arrange
       var mocked = mockStatic(TestAssertMatch.class);
       var match = mock(TestAssertMatch.class);
-      mocked.when(() -> TestAssertMatch.assertThat(TEST_LIST_A1_A2)).thenReturn(match);
+      mocked.when(() -> TestAssertMatch.assertThat(STEP, TEST_LIST_A1_A2)).thenReturn(match);
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act
@@ -357,7 +375,10 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.matchAny(element -> element.name().equals(B)));
+      var ex =
+          assertThrows(
+              AssertionError.class, () -> impl.matchAny(element -> element.name().equals(B)));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -386,11 +407,14 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_B1NEW_B2NEW);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class,
-          () ->
-              implObjectMatch.matchAny(
-                  element -> element.name().equals(A), element -> element.status().equals(CLOSE)));
+      var ex =
+          assertThrows(
+              AssertionError.class,
+              () ->
+                  implObjectMatch.matchAny(
+                      element -> element.name().equals(A),
+                      element -> element.status().equals(CLOSE)));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -398,7 +422,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Arrange
       var mocked = mockStatic(TestAssertMatch.class);
       var match = mock(TestAssertMatch.class);
-      mocked.when(() -> TestAssertMatch.assertThat(TEST_LIST_A1_A2)).thenReturn(match);
+      mocked.when(() -> TestAssertMatch.assertThat(STEP, TEST_LIST_A1_A2)).thenReturn(match);
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act
@@ -438,7 +462,8 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.matchNone(PREDICATE_A));
+      var ex = assertThrows(AssertionError.class, () -> impl.matchNone(PREDICATE_A));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -447,11 +472,14 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_B1NEW_B2NEW);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class,
-          () ->
-              implObjectMatch.matchNone(
-                  element -> element.name().equals(B), element -> element.status().equals(NEW)));
+      var ex =
+          assertThrows(
+              AssertionError.class,
+              () ->
+                  implObjectMatch.matchNone(
+                      element -> element.name().equals(B),
+                      element -> element.status().equals(NEW)));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -460,11 +488,14 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       useAssertResult(TEST_LIST_B1NEW_B2NEW);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class,
-          () ->
-              implObjectMatch.matchNone(
-                  element -> element.name().equals(B), element -> element.status().equals(CLOSE)));
+      var ex =
+          assertThrows(
+              AssertionError.class,
+              () ->
+                  implObjectMatch.matchNone(
+                      element -> element.name().equals(B),
+                      element -> element.status().equals(CLOSE)));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -482,7 +513,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Arrange
       var mocked = mockStatic(TestAssertMatch.class);
       var match = mock(TestAssertMatch.class);
-      mocked.when(() -> TestAssertMatch.assertThat(TEST_LIST_A1_A2)).thenReturn(match);
+      mocked.when(() -> TestAssertMatch.assertThat(STEP, TEST_LIST_A1_A2)).thenReturn(match);
       useAssertResult(TEST_LIST_A1_A2);
 
       // Act

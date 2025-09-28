@@ -1,6 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.bool;
 
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -18,7 +20,7 @@ class TestAssertBooleanImplTest extends TestAssertBase {
 
   @BeforeEach
   void setUp() {
-    var context = TestContext.createContext();
+    var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
     this.testAssert = new TestAssertBooleanImpl(context);
   }
@@ -51,7 +53,8 @@ class TestAssertBooleanImplTest extends TestAssertBase {
       useAssertResult(null);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::isNotNull);
+      var ex = assertThrows(AssertionError.class, testAssert::isNotNull);
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -73,7 +76,8 @@ class TestAssertBooleanImplTest extends TestAssertBase {
       useAssertResult(Boolean.TRUE);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::isNull);
+      var ex = assertThrows(AssertionError.class, testAssert::isNull);
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -95,7 +99,8 @@ class TestAssertBooleanImplTest extends TestAssertBase {
       useAssertResult(Boolean.FALSE);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::isTrue);
+      var ex = assertThrows(AssertionError.class, testAssert::isTrue);
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -117,7 +122,8 @@ class TestAssertBooleanImplTest extends TestAssertBase {
       useAssertResult(Boolean.TRUE);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::isFalse);
+      var ex = assertThrows(AssertionError.class, testAssert::isFalse);
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 

@@ -4,6 +4,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.B;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
@@ -38,7 +39,7 @@ public class TestAssertMatchTest {
           List<String> actual, Predicate<String>[] conditions) {
         assertThrows(
             NullPointerException.class,
-            () -> TestAssertMatch.assertThat(actual).matchAll(conditions));
+            () -> TestAssertMatch.assertThat(STEP, actual).matchAll(conditions));
       }
 
       private static Stream<Arguments> provideNullParameters() {
@@ -55,7 +56,7 @@ public class TestAssertMatchTest {
 
       @Test
       void GIVEN_A1_A2_match_A_WHEN_assertMatch_THEN_return_true() {
-        TestAssertMatch.assertThat(LIST_A1_A2).matchAll(EQUALS_A);
+        TestAssertMatch.assertThat(STEP, LIST_A1_A2).matchAll(EQUALS_A);
       }
 
       @Test
@@ -63,7 +64,7 @@ public class TestAssertMatchTest {
       void GIVEN_A1_A2_match_A2_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
             AssertionError.class,
-            () -> TestAssertMatch.assertThat(LIST_A1_A2).matchAll(EQUALS_A, EQUALS_2));
+            () -> TestAssertMatch.assertThat(STEP, LIST_A1_A2).matchAll(EQUALS_A, EQUALS_2));
       }
     }
 
@@ -72,19 +73,20 @@ public class TestAssertMatchTest {
 
       @Test
       void GIVEN_A1_A2_match_1_WHEN_assertMatch_THEN_return_true() {
-        TestAssertMatch.assertThat(LIST_A1_A2).matchAny(EQUALS_1);
+        TestAssertMatch.assertThat(STEP, LIST_A1_A2).matchAny(EQUALS_1);
       }
 
       @Test
       void GIVEN_A1_A2_match_A_WHEN_assertMatch_THEN_return_true() {
-        TestAssertMatch.assertThat(LIST_A1_A2).matchAny(EQUALS_A);
+        TestAssertMatch.assertThat(STEP, LIST_A1_A2).matchAny(EQUALS_A);
       }
 
       @Test
       @SuppressWarnings("java:S5778")
       void GIVEN_A1_A2_match_B_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
-            AssertionError.class, () -> TestAssertMatch.assertThat(LIST_A1_A2).matchAny(EQUALS_B));
+            AssertionError.class,
+            () -> TestAssertMatch.assertThat(STEP, LIST_A1_A2).matchAny(EQUALS_B));
       }
     }
 
@@ -93,21 +95,23 @@ public class TestAssertMatchTest {
 
       @Test
       void GIVEN_A1_A2_match_B_WHEN_assertMatch_THEN_return_true() {
-        TestAssertMatch.assertThat(LIST_A1_A2).matchNone(EQUALS_B);
+        TestAssertMatch.assertThat(STEP, LIST_A1_A2).matchNone(EQUALS_B);
       }
 
       @Test
       @SuppressWarnings("java:S5778")
       void GIVEN_A1_A2_match_A_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
-            AssertionError.class, () -> TestAssertMatch.assertThat(LIST_A1_A2).matchNone(EQUALS_A));
+            AssertionError.class,
+            () -> TestAssertMatch.assertThat(STEP, LIST_A1_A2).matchNone(EQUALS_A));
       }
 
       @Test
       @SuppressWarnings("java:S5778")
       void GIVEN_A1_A2_match_1_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
-            AssertionError.class, () -> TestAssertMatch.assertThat(LIST_A1_A2).matchNone(EQUALS_1));
+            AssertionError.class,
+            () -> TestAssertMatch.assertThat(STEP, LIST_A1_A2).matchNone(EQUALS_1));
       }
 
       @Test
@@ -115,7 +119,7 @@ public class TestAssertMatchTest {
       void GIVEN_A1_A2_match_A2_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
             AssertionError.class,
-            () -> TestAssertMatch.assertThat(LIST_A1_A2).matchNone(EQUALS_A, EQUALS_2));
+            () -> TestAssertMatch.assertThat(STEP, LIST_A1_A2).matchNone(EQUALS_A, EQUALS_2));
       }
     }
   }
@@ -133,7 +137,7 @@ public class TestAssertMatchTest {
           String actual, Predicate<String>[] conditions) {
         assertThrows(
             NullPointerException.class,
-            () -> TestAssertMatch.assertThat(actual).matchAll(conditions));
+            () -> TestAssertMatch.assertThat(STEP, actual).matchAll(conditions));
       }
 
       private static Stream<Arguments> provideNullParameters() {
@@ -150,7 +154,7 @@ public class TestAssertMatchTest {
 
       @Test
       void GIVEN_A1_match_A_WHEN_assertMatch_THEN_return_true() {
-        TestAssertMatch.assertThat(A1).matchAll(EQUALS_A);
+        TestAssertMatch.assertThat(STEP, A1).matchAll(EQUALS_A);
       }
 
       @Test
@@ -158,7 +162,7 @@ public class TestAssertMatchTest {
       void GIVEN_A1_match_A2_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
             AssertionError.class,
-            () -> TestAssertMatch.assertThat(A1).matchAll(EQUALS_A, EQUALS_2));
+            () -> TestAssertMatch.assertThat(STEP, A1).matchAll(EQUALS_A, EQUALS_2));
       }
     }
 
@@ -167,18 +171,19 @@ public class TestAssertMatchTest {
 
       @Test
       void GIVEN_A1_match_1_WHEN_assertMatch_THEN_return_true() {
-        TestAssertMatch.assertThat(A1).matchAny(EQUALS_1);
+        TestAssertMatch.assertThat(STEP, A1).matchAny(EQUALS_1);
       }
 
       @Test
       void GIVEN_A1_match_A_WHEN_assertMatch_THEN_return_true() {
-        TestAssertMatch.assertThat(A1).matchAny(EQUALS_A);
+        TestAssertMatch.assertThat(STEP, A1).matchAny(EQUALS_A);
       }
 
       @Test
       @SuppressWarnings("java:S5778")
       void GIVEN_A1_match_B_WHEN_assertMatch_THEN_throw_AssertionError() {
-        assertThrows(AssertionError.class, () -> TestAssertMatch.assertThat(A1).matchAny(EQUALS_B));
+        assertThrows(
+            AssertionError.class, () -> TestAssertMatch.assertThat(STEP, A1).matchAny(EQUALS_B));
       }
     }
 
@@ -188,26 +193,26 @@ public class TestAssertMatchTest {
 
       @Test
       void GIVEN_A1_match_B_WHEN_assertMatch_THEN_return_true() {
-        TestAssertMatch.assertThat(A1).matchNone(EQUALS_B);
+        TestAssertMatch.assertThat(STEP, A1).matchNone(EQUALS_B);
       }
 
       @Test
       void GIVEN_A1_match_A_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
-            AssertionError.class, () -> TestAssertMatch.assertThat(A1).matchNone(EQUALS_A));
+            AssertionError.class, () -> TestAssertMatch.assertThat(STEP, A1).matchNone(EQUALS_A));
       }
 
       @Test
       void GIVEN_A1_match_1_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
-            AssertionError.class, () -> TestAssertMatch.assertThat(A1).matchNone(EQUALS_1));
+            AssertionError.class, () -> TestAssertMatch.assertThat(STEP, A1).matchNone(EQUALS_1));
       }
 
       @Test
       void GIVEN_A1_match_A2_WHEN_assertMatch_THEN_throw_AssertionError() {
         assertThrows(
             AssertionError.class,
-            () -> TestAssertMatch.assertThat(A1).matchNone(EQUALS_A, EQUALS_2));
+            () -> TestAssertMatch.assertThat(STEP, A1).matchNone(EQUALS_A, EQUALS_2));
       }
     }
   }

@@ -6,7 +6,9 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtil
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A2_A3;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -31,7 +33,7 @@ class TestAssertMapImplTest extends TestAssertBase {
 
   @BeforeEach
   void setUp() {
-    var context = TestContext.createContext();
+    var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
     this.testAssert = new TestAssertMapImpl<>(context);
   }
@@ -65,7 +67,8 @@ class TestAssertMapImplTest extends TestAssertBase {
       useActResult(value);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::isNotEmpty);
+      var ex = assertThrows(AssertionError.class, testAssert::isNotEmpty);
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -88,7 +91,8 @@ class TestAssertMapImplTest extends TestAssertBase {
       useActResult(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssert::isEmpty);
+      var ex = assertThrows(AssertionError.class, testAssert::isEmpty);
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -110,7 +114,8 @@ class TestAssertMapImplTest extends TestAssertBase {
       useAssertResult(TEST_MAP_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert.isEqualTo(TEST_MAP_A2_A3));
+      var ex = assertThrows(AssertionError.class, () -> testAssert.isEqualTo(TEST_MAP_A2_A3));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -153,7 +158,8 @@ class TestAssertMapImplTest extends TestAssertBase {
       useAssertResult(TEST_MAP_A1_A2);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert.hasSize(1));
+      var ex = assertThrows(AssertionError.class, () -> testAssert.hasSize(1));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 

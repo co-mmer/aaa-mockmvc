@@ -146,7 +146,7 @@ public final class TestAssertCollectionImpl<E>
   public final TestAssert4Collection<E> matchAll(@NonNull Predicate<E>... conditions) {
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    TestAssertMatch.assertThat(actual).matchAll(conditions);
+    TestAssertMatch.assertThat(this.context.getStep(), actual).matchAll(conditions);
     return this;
   }
 
@@ -180,7 +180,7 @@ public final class TestAssertCollectionImpl<E>
   public final TestAssert5Collection<E> matchAny(@NonNull Predicate<E>... conditions) {
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    TestAssertMatch.assertThat(actual).matchAny(conditions);
+    TestAssertMatch.assertThat(this.context.getStep(), actual).matchAny(conditions);
     return this;
   }
 
@@ -214,7 +214,7 @@ public final class TestAssertCollectionImpl<E>
   public final TestAssertLCollection matchNone(@NonNull Predicate<E>... conditions) {
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    TestAssertMatch.assertThat(actual).matchNone(conditions);
+    TestAssertMatch.assertThat(this.context.getStep(), actual).matchNone(conditions);
     return this;
   }
 

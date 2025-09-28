@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("java:S2699")
-class TestAssertNumberImplTestTest extends TestAssertBase {
+class TestAssertNumberImplTest extends TestAssertBase {
 
   private TestAssertNumberImpl impl;
 

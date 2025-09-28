@@ -1,6 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.status;
 
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.http.HttpStatus.ACCEPTED;
@@ -35,7 +37,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
 
   @BeforeEach
   void setUp() {
-    var context = TestContext.createContext();
+    var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
     this.testAssert1 = new TestAssertStatusImpl(context);
     this.testAssert2 = new TestAssertStatusImpl(context);
@@ -75,7 +77,8 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(NO_CONTENT);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert1.is(OK));
+      var ex = assertThrows(AssertionError.class, () -> testAssert1.is(OK));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -93,7 +96,8 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(NO_CONTENT);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert1.is(200));
+      var ex = assertThrows(AssertionError.class, () -> testAssert1.is(200));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -139,32 +143,34 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(1);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class,
-          () -> {
-            switch (status) {
-              case OK:
-                testAssert1.isOk();
-                break;
-              case CREATED:
-                testAssert1.isCreated();
-                break;
-              case ACCEPTED:
-                testAssert1.isAccepted();
-                break;
-              case NOT_FOUND:
-                testAssert1.isNotFound();
-                break;
-              case FORBIDDEN:
-                testAssert1.isForbidden();
-                break;
-              case UNAUTHORIZED:
-                testAssert1.isUnauthorized();
-                break;
-              default:
-                Assertions.fail();
-            }
-          });
+      var ex =
+          assertThrows(
+              AssertionError.class,
+              () -> {
+                switch (status) {
+                  case OK:
+                    testAssert1.isOk();
+                    break;
+                  case CREATED:
+                    testAssert1.isCreated();
+                    break;
+                  case ACCEPTED:
+                    testAssert1.isAccepted();
+                    break;
+                  case NOT_FOUND:
+                    testAssert1.isNotFound();
+                    break;
+                  case FORBIDDEN:
+                    testAssert1.isForbidden();
+                    break;
+                  case UNAUTHORIZED:
+                    testAssert1.isUnauthorized();
+                    break;
+                  default:
+                    Assertions.fail();
+                }
+              });
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     private static Stream<HttpStatus> useCaseHttpStatus() {
@@ -193,7 +199,8 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(unexpectedStatusCodes);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert1.is2xxSuccessful());
+      var ex = assertThrows(AssertionError.class, () -> testAssert1.is2xxSuccessful());
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -218,7 +225,8 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(unexpectedStatusCodes);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert1.is3xxRedirect());
+      var ex = assertThrows(AssertionError.class, () -> testAssert1.is3xxRedirect());
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -243,7 +251,8 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(unexpectedStatusCodes);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert1.is4xxClientError());
+      var ex = assertThrows(AssertionError.class, () -> testAssert1.is4xxClientError());
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -268,7 +277,8 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(unexpectedStatusCodes);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert1.is5xxServerError());
+      var ex = assertThrows(AssertionError.class, () -> testAssert1.is5xxServerError());
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -293,7 +303,8 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(unexpectedStatusCodes);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssert1.isInRange(100, 200));
+      var ex = assertThrows(AssertionError.class, () -> testAssert1.isInRange(100, 200));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 

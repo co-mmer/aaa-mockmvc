@@ -6,7 +6,10 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.B;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -45,7 +48,7 @@ class TestAssertClassImplTest extends TestAssertBase {
 
   @BeforeEach
   void setUp() {
-    var context = TestContext.createContext();
+    var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
     this.impl = new TestAssertClassImpl<>(context);
   }
@@ -78,7 +81,8 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(null);
 
       // Act & Assert
-      assertThrows(AssertionError.class, impl::isNotNull);
+      var ex = assertThrows(AssertionError.class, impl::isNotNull);
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -100,7 +104,8 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      assertThrows(AssertionError.class, impl::isNull);
+      var ex = assertThrows(AssertionError.class, impl::isNull);
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -122,7 +127,8 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.isEqualTo(A2));
+      var ex = assertThrows(AssertionError.class, () -> impl.isEqualTo(A2));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -179,11 +185,12 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      var exception =
+      var ex =
           assertThrows(
               AssertionError.class,
               () -> impl.matchAll(PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_2));
-      assertThat(exception.getMessage(), not(EMPTY));
+      assertThat(ex.getMessage(), not(EMPTY));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -198,7 +205,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Arrange
       var mocked = mockStatic(TestAssertMatch.class);
       var match = mock(TestAssertMatch.class);
-      mocked.when(() -> TestAssertMatch.assertThat(A1)).thenReturn(match);
+      mocked.when(() -> TestAssertMatch.assertThat(STEP, A1)).thenReturn(match);
       useAssertResult(A1);
 
       // Act
@@ -244,7 +251,10 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.matchAny(element -> element.name().equals(B)));
+      var ex =
+          assertThrows(
+              AssertionError.class, () -> impl.matchAny(element -> element.name().equals(B)));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -268,9 +278,12 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class,
-          () -> impl.matchAny(element -> element.name().equals(B), element -> element.id() == 3));
+      var ex =
+          assertThrows(
+              AssertionError.class,
+              () ->
+                  impl.matchAny(element -> element.name().equals(B), element -> element.id() == 3));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -279,7 +292,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Arrange
       var mocked = mockStatic(TestAssertMatch.class);
       var match = mock(TestAssertMatch.class);
-      mocked.when(() -> TestAssertMatch.assertThat(A1)).thenReturn(match);
+      mocked.when(() -> TestAssertMatch.assertThat(STEP, A1)).thenReturn(match);
       useAssertResult(A1);
 
       // Act
@@ -325,7 +338,8 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> impl.matchNone(PREDICATE_NAME_EQUALS_A));
+      var ex = assertThrows(AssertionError.class, () -> impl.matchNone(PREDICATE_NAME_EQUALS_A));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -343,9 +357,11 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class,
-          () -> impl.matchNone(PREDICATE_NAME_EQUALS_A, element -> element.id() == 3));
+      var ex =
+          assertThrows(
+              AssertionError.class,
+              () -> impl.matchNone(PREDICATE_NAME_EQUALS_A, element -> element.id() == 3));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -354,9 +370,11 @@ class TestAssertClassImplTest extends TestAssertBase {
       useAssertResult(A1);
 
       // Act & Assert
-      assertThrows(
-          AssertionError.class,
-          () -> impl.matchNone(PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1));
+      var ex =
+          assertThrows(
+              AssertionError.class,
+              () -> impl.matchNone(PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -371,7 +389,7 @@ class TestAssertClassImplTest extends TestAssertBase {
       // Arrange
       var mocked = mockStatic(TestAssertMatch.class);
       var match = mock(TestAssertMatch.class);
-      mocked.when(() -> TestAssertMatch.assertThat(A1)).thenReturn(match);
+      mocked.when(() -> TestAssertMatch.assertThat(STEP, A1)).thenReturn(match);
       useAssertResult(A1);
 
       // Act

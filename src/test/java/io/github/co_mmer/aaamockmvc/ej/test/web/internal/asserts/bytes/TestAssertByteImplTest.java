@@ -5,7 +5,9 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtil
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_OBJECT;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A2_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,7 +28,7 @@ class TestAssertByteImplTest extends TestAssertBase {
 
   @BeforeEach
   void setUp() {
-    var context = TestContext.createContext();
+    var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
     this.testAssert = new TestAssertByteImpl(context);
   }
@@ -60,8 +62,9 @@ class TestAssertByteImplTest extends TestAssertBase {
       useActResult(content.getBytes());
 
       // Act & Assert
-      var exception = assertThrows(AssertionError.class, testAssert::isNotEmpty);
-      assertThat(exception.getMessage(), not(EMPTY));
+      var ex = assertThrows(AssertionError.class, testAssert::isNotEmpty);
+      assertThat(ex.getMessage(), not(EMPTY));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -84,8 +87,9 @@ class TestAssertByteImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON.getBytes());
 
       // Act & Assert
-      var exception = assertThrows(AssertionError.class, testAssert::isEmpty);
-      assertThat(exception.getMessage(), not(EMPTY));
+      var ex = assertThrows(AssertionError.class, testAssert::isEmpty);
+      assertThat(ex.getMessage(), not(EMPTY));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -107,8 +111,9 @@ class TestAssertByteImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON.getBytes());
 
       // Act & Assert
-      var exception = assertThrows(AssertionError.class, () -> testAssert.hasLength(8));
-      assertThat(exception.getMessage(), not(EMPTY));
+      var ex = assertThrows(AssertionError.class, () -> testAssert.hasLength(8));
+      assertThat(ex.getMessage(), not(EMPTY));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -131,9 +136,10 @@ class TestAssertByteImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON.getBytes());
 
       // Act & Assert
-      var exception =
+      var ex =
           assertThrows(AssertionError.class, () -> testAssert.isEqualTo(TEST_A2_JSON.getBytes()));
-      assertThat(exception.getMessage(), not(EMPTY));
+      assertThat(ex.getMessage(), not(EMPTY));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 

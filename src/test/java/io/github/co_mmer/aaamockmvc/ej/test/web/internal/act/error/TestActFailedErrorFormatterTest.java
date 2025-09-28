@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class TestActFailedErrorFormatterTest {
 
   private static final TestStepDto STEP_WITH_NAME = new TestStepDto("MyStep");
-  public static final String EXPECTED =
+  private static final String EXPECTED =
       """
           Step 'MyStep'
           ACT failed: POST /test

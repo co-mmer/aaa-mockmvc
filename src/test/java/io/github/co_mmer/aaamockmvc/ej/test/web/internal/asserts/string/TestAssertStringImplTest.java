@@ -4,7 +4,9 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.T
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A2_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,13 +23,13 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("java:S2699")
 class TestAssertStringImplTest extends TestAssertBase {
 
-  private TestAssertStringImpl testAssertString;
+  private TestAssertStringImpl testAssert;
 
   @BeforeEach
   void setUp() {
-    var context = TestContext.createContext();
+    var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
-    this.testAssertString = new TestAssertStringImpl(context);
+    this.testAssert = new TestAssertStringImpl(context);
   }
 
   @Nested
@@ -49,7 +51,7 @@ class TestAssertStringImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertString.isNotEmpty();
+      testAssert.isNotEmpty();
     }
 
     @Test
@@ -58,7 +60,8 @@ class TestAssertStringImplTest extends TestAssertBase {
       useActResult(EMPTY);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertString::isNotEmpty);
+      var ex = assertThrows(AssertionError.class, testAssert::isNotEmpty);
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -71,7 +74,7 @@ class TestAssertStringImplTest extends TestAssertBase {
       useActResult(EMPTY);
 
       // Act & Assert
-      testAssertString.isEmpty();
+      testAssert.isEmpty();
     }
 
     @Test
@@ -80,7 +83,8 @@ class TestAssertStringImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, testAssertString::isEmpty);
+      var ex = assertThrows(AssertionError.class, testAssert::isEmpty);
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -93,7 +97,7 @@ class TestAssertStringImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertString.isEqualTo(TEST_A1_JSON);
+      testAssert.isEqualTo(TEST_A1_JSON);
     }
 
     @Test
@@ -102,7 +106,8 @@ class TestAssertStringImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssertString.isEqualTo(TEST_A2_JSON));
+      var ex = assertThrows(AssertionError.class, () -> testAssert.isEqualTo(TEST_A2_JSON));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
     @Test
@@ -112,7 +117,7 @@ class TestAssertStringImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON);
 
       // Act
-      testAssertString.isEqualTo(TEST_A1_JSON);
+      testAssert.isEqualTo(TEST_A1_JSON);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
@@ -122,7 +127,7 @@ class TestAssertStringImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_isEqualTo_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> testAssertString.isEqualTo(null));
+      assertThrows(NullPointerException.class, () -> testAssert.isEqualTo(null));
     }
   }
 
@@ -135,7 +140,7 @@ class TestAssertStringImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON);
 
       // Act & Assert
-      testAssertString.hasLength(TEST_A1_JSON.length());
+      testAssert.hasLength(TEST_A1_JSON.length());
     }
 
     @Test
@@ -144,7 +149,8 @@ class TestAssertStringImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON);
 
       // Act & Assert
-      assertThrows(AssertionError.class, () -> testAssertString.hasLength(10));
+      var ex = assertThrows(AssertionError.class, () -> testAssert.hasLength(10));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
 
@@ -154,7 +160,7 @@ class TestAssertStringImplTest extends TestAssertBase {
     @Test
     void WHEN_headers_THEN_return_expected_class() {
       // Act
-      var headers = testAssertString.headers();
+      var headers = testAssert.headers();
 
       // Assert
       assertThat(headers, instanceOf(TestAssertHeadImpl.class));

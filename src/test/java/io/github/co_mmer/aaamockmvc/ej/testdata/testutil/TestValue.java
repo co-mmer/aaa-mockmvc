@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.testdata.testutil;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -95,6 +96,8 @@ public final class TestValue {
   public static final String HEADER_VALUE_TOKEN = "value1";
   public static final String HEADER_VALUE_JSON = "value2";
   public static final String HEADER_VALUE_XML = "value3";
+  public static final String STEP_NAME = "Create User";
+  public static final TestStepDto STEP = new TestStepDto(STEP_NAME);
 
   @SneakyThrows
   private static URI createUri() {
