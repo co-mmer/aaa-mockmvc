@@ -1,5 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason.reasonOf;
+
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils;
@@ -35,6 +37,6 @@ public final class TestAnswerExceptionFormatter {
   }
 
   private static String createStepPrefix(TestStepDto step) {
-    return step == null ? StringUtils.EMPTY : "Step '%s'%n".formatted(step.name());
+    return step == null ? StringUtils.EMPTY : reasonOf(step) + "\n";
   }
 }

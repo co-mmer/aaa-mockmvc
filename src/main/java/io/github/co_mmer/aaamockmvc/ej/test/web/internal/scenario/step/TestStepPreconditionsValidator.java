@@ -1,8 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason.reasonOf;
+
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -39,9 +39,12 @@ public class TestStepPreconditionsValidator {
 
   private static void verifyActStepCustom(TestStepImpl step) {
     if (step.getContext().getArrangeResult() == null) {
-      var stepPrefix = createStepPrefix(step.getContext());
-      throw new IllegalStateException(stepPrefix + MISSING_ARRANGE_BEFORE_ACT);
+      throwIllegalStateException(step, MISSING_ARRANGE_BEFORE_ACT);
     }
+  }
+
+  private static void throwIllegalStateException(TestStepImpl step, String message) {
+    throw new IllegalStateException(reasonOf(step.getContext().getStep(), message));
   }
 
   @Since("2.0.0")
@@ -58,8 +61,7 @@ public class TestStepPreconditionsValidator {
 
   private static void verifyAssertsStepCustom(TestStepImpl step) {
     if (isActResultNull(step)) {
-      var stepPrefix = createStepPrefix(step.getContext());
-      throw new IllegalStateException(stepPrefix + MISSING_ASSERTS_BEFORE_ACT);
+      throwIllegalStateException(step, MISSING_ASSERTS_BEFORE_ACT);
     }
   }
 
@@ -77,18 +79,11 @@ public class TestStepPreconditionsValidator {
 
   private static void verifyAnswerStepCustom(TestStepImpl step) {
     if (isActResultNull(step)) {
-      var stepPrefix = createStepPrefix(step.getContext());
-      throw new IllegalStateException(stepPrefix + MISSING_ACT_BEFORE_ANSWER);
+      throwIllegalStateException(step, MISSING_ACT_BEFORE_ANSWER);
     }
   }
 
   private static boolean isActResultNull(TestStepImpl step) {
     return step.getContext().getActResult() == null;
-  }
-
-  private static String createStepPrefix(TestAAAContext context) {
-    return context.getStep() == null
-        ? StringUtils.EMPTY
-        : "Step '%s' · ".formatted(context.getStep().name());
   }
 }

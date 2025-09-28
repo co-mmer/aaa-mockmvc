@@ -1,5 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.error;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason.reasonOf;
+
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
@@ -32,7 +34,7 @@ public final class TestActFailedErrorFormatter {
     return StringUtils.isBlank(message) ? "<no message>" : message;
   }
 
-  private static String createStepPrefix(TestStepDto stepMetadata) {
-    return stepMetadata == null ? StringUtils.EMPTY : "Step '%s'%n".formatted(stepMetadata.name());
+  private static String createStepPrefix(TestStepDto step) {
+    return step == null ? StringUtils.EMPTY : reasonOf(step) + "\n";
   }
 }

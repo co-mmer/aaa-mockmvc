@@ -53,15 +53,15 @@ class TestStepPreconditionsValidatorTest {
     when(this.mockAAAContext.getStep()).thenReturn(currentStep);
 
     // Act
-    var exception =
+    var ex =
         assertThrows(
             IllegalStateException.class, () -> TestStepPreconditionsValidator.act(mockStepImpl));
 
     // Assert
     assertThat(
-        exception.getMessage(),
+        ex.getMessage(),
         is(
-            "Step 'MyStep' · Act error: No 'arrange()' step configured. "
+            "Step 'MyStep' ⇒ Act error: No 'arrange()' step configured. "
                 + "Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
   }
 }

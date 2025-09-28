@@ -1,5 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason.reasonOf;
+
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
 import lombok.AccessLevel;
@@ -20,15 +22,5 @@ public class TestAssert {
   public static <T> void assertThat(
       TestStepDto step, String what, T actual, Matcher<? super T> matcher) {
     MatcherAssert.assertThat(reasonOf(step, what), actual, matcher);
-  }
-
-  @Since("2.0.0")
-  private static String reasonOf(TestStepDto step) {
-    return step != null ? String.format("Step '%s'", step.name()) : "";
-  }
-
-  @Since("2.0.0")
-  private static String reasonOf(TestStepDto step, String what) {
-    return reasonOf(step) + " ⇒ " + what;
   }
 }

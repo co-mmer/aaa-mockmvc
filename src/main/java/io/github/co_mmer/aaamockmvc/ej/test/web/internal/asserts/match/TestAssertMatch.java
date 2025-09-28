@@ -1,5 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason.reasonOf;
+
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
 import java.util.Arrays;
@@ -33,12 +35,15 @@ public class TestAssertMatch<T> {
   @SafeVarargs
   public final void matchAll(Predicate<T>... conditions) {
     var matches =
-        actual.stream()
+        this.actual.stream()
             .allMatch(item -> Arrays.stream(conditions).allMatch(cond -> cond.test(item)));
     if (!matches) {
       throw new AssertionError(
           reasonOf(
-              "Expected all conditions to match for <" + actual + ">, but at least one did not."));
+              this.step,
+              "Expected all conditions to match for <"
+                  + this.actual
+                  + ">, but at least one did not."));
     }
   }
 
@@ -46,11 +51,13 @@ public class TestAssertMatch<T> {
   @SafeVarargs
   public final void matchAny(Predicate<T>... conditions) {
     var matches =
-        actual.stream()
+        this.actual.stream()
             .anyMatch(item -> Arrays.stream(conditions).anyMatch(cond -> cond.test(item)));
     if (!matches) {
       throw new AssertionError(
-          reasonOf("Expected any condition to match for <" + actual + ">, but none did."));
+          reasonOf(
+              this.step,
+              "Expected any condition to match for <" + this.actual + ">, but none did."));
     }
   }
 
@@ -58,24 +65,15 @@ public class TestAssertMatch<T> {
   @SafeVarargs
   public final void matchNone(Predicate<T>... conditions) {
     var matches =
-        actual.stream()
+        this.actual.stream()
             .noneMatch(item -> Arrays.stream(conditions).anyMatch(cond -> cond.test(item)));
     if (!matches) {
       throw new AssertionError(
           reasonOf(
+              this.step,
               "Expected none of the conditions to match for <"
-                  + actual
+                  + this.actual
                   + ">, but at least one did."));
     }
-  }
-
-  @Since("2.0.0")
-  private String reasonOf() {
-    return this.step != null ? String.format("Step '%s'", step.name()) : "";
-  }
-
-  @Since("2.0.0")
-  private String reasonOf(String what) {
-    return reasonOf() + " ⇒ " + what;
   }
 }

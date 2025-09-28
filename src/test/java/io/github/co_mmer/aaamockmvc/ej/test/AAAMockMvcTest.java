@@ -453,7 +453,7 @@ class AAAMockMvcTest {
       assertThat(
           exception.getMessage(),
           is(
-              "Step 'StepTest' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+              "Step 'StepTest' ⇒ Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
       mockTestActResultMapper.close();
     }
 
@@ -472,7 +472,7 @@ class AAAMockMvcTest {
       assertThat(
           exception.getMessage(),
           is(
-              "Step 'StepTest' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+              "Step 'StepTest' ⇒ Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
       mockTestActResultMapper.close();
     }
 
@@ -490,7 +490,7 @@ class AAAMockMvcTest {
       assertThat(
           exception.getMessage(),
           is(
-              "Step 'StepTest' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+              "Step 'StepTest' ⇒ Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
       mockTestActResultMapper.close();
     }
 
@@ -508,7 +508,7 @@ class AAAMockMvcTest {
       assertThat(
           exception.getMessage(),
           is(
-              "Step 'StepTest' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
+              "Step 'StepTest' ⇒ Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
       mockTestActResultMapper.close();
     }
 
@@ -527,7 +527,7 @@ class AAAMockMvcTest {
       assertThat(
           exception.getMessage(),
           is(
-              "Step 'StepTest' · Assert error: No 'act()' step configured. Call 'act().perform()' before 'asserts()'"));
+              "Step 'StepTest' ⇒ Assert error: No 'act()' step configured. Call 'act().perform()' before 'asserts()'"));
       mockTestActResultMapper.close();
     }
 
@@ -545,7 +545,7 @@ class AAAMockMvcTest {
       assertThat(
           exception.getMessage(),
           is(
-              "Step 'StepTest' · Assert error: No 'act()' step configured. Call 'act().perform()' before 'asserts()'"));
+              "Step 'StepTest' ⇒ Assert error: No 'act()' step configured. Call 'act().perform()' before 'asserts()'"));
       mockTestActResultMapper.close();
     }
 
@@ -564,7 +564,7 @@ class AAAMockMvcTest {
       assertThat(
           exception.getMessage(),
           is(
-              "Step 'StepTest' · Answer error: No 'act()' step configured. Call 'act().perform()' before 'answer()'"));
+              "Step 'StepTest' ⇒ Answer error: No 'act()' step configured. Call 'act().perform()' before 'answer()'"));
       mockTestActResultMapper.close();
     }
 
@@ -582,7 +582,7 @@ class AAAMockMvcTest {
       assertThat(
           exception.getMessage(),
           is(
-              "Step 'StepTest' · Answer error: No 'act()' step configured. Call 'act().perform()' before 'answer()'"));
+              "Step 'StepTest' ⇒ Answer error: No 'act()' step configured. Call 'act().perform()' before 'answer()'"));
       mockTestActResultMapper.close();
     }
 

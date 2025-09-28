@@ -1,6 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer.exception;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer.TestAnswerExceptionFormatter.createMessage;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -15,7 +16,6 @@ class TestAnswerExceptionFormatterTest {
   private static final String CONTENT = "{\"id\":1}";
   private static final String CONTENT_MAP = "{\"id\":1,\"name\":\"A\"}";
   private static final String ANSWER_STEP_NAME = "asExample";
-  private static final TestStepDto STEP_WITH_NAME = new TestStepDto("MyStep");
 
   @ParameterizedTest
   @MethodSource("messageCases")
@@ -32,10 +32,10 @@ class TestAnswerExceptionFormatterTest {
   private static Stream<Arguments> messageCases() {
     return Stream.of(
         Arguments.of(
-            STEP_WITH_NAME,
+            STEP,
             CONTENT,
             """
-                Step 'MyStep'
+                Step 'Create User'
                 Answer step: asExample({"id":1})
                 Failure: unable to map response body to 'Number'.
                 """),
@@ -63,10 +63,10 @@ class TestAnswerExceptionFormatterTest {
   private static Stream<Arguments> messageCasesMap() {
     return Stream.of(
         Arguments.of(
-            STEP_WITH_NAME,
+            STEP,
             CONTENT_MAP,
             """
-                Step 'MyStep'
+                Step 'Create User'
                 Answer step: asExample({"id":1,"name":"A"})
                 Failure: unable to map response body to 'Map<String, User>'.
                 """),

@@ -21,4 +21,7 @@ public final class StringUtils {
 
   @Since("1.4.1")
   public static final String EMPTY_OBJECT = "{}";
+
+  @Since("1.4.1")
+  public static final String UNSET = "<unset>";
 }
