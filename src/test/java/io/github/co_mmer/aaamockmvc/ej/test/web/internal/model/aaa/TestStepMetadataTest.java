@@ -4,30 +4,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-public class TestStepMetadataTest {
+class TestStepMetadataTest {
 
-  public static final String UPDATE_USER = "update user";
-
-  @ParameterizedTest
-  @NullAndEmptySource
-  void GIVEN_blank_WHEN_name_THEN_return_default_name(String name) {
-    // Arrange
-    var metadata = new TestStepMetadata(name);
-
-    // Act
-    var stepName = metadata.name();
-
-    // Assert
-    assertThat(stepName, is("<unnamed step>"));
-  }
+  private static final String UPDATE_USER = "update user";
 
   @Test
   void GIVEN_name_WHEN_name_THEN_return_name() {
     // Arrange
-    var metadata = new TestStepMetadata(UPDATE_USER);
+    var metadata = new TestStepDto(UPDATE_USER);
 
     // Act
     var stepName = metadata.name();

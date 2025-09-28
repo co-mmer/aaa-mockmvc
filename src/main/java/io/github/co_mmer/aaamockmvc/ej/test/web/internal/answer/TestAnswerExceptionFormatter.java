@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepMetadata;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ public final class TestAnswerExceptionFormatter {
 
   @Since("2.0.0")
   public static String createMessage(
-      TestStepMetadata step, String stepName, String content, String simpleName) {
+      TestStepDto step, String stepName, String content, String simpleName) {
     return """
         %sAnswer step: %s(%s)
         Failure: unable to map response body to '%s'.
@@ -22,7 +22,7 @@ public final class TestAnswerExceptionFormatter {
 
   @Since("2.0.0")
   public static String createMessage(
-      TestStepMetadata step,
+      TestStepDto step,
       String stepName,
       String content,
       String keySimpleName,
@@ -34,7 +34,7 @@ public final class TestAnswerExceptionFormatter {
         .formatted(createStepPrefix(step), stepName, content, keySimpleName, valueSimpleName);
   }
 
-  private static String createStepPrefix(TestStepMetadata stepMetadata) {
-    return stepMetadata == null ? StringUtils.EMPTY : "Step '%s'%n".formatted(stepMetadata.name());
+  private static String createStepPrefix(TestStepDto step) {
+    return step == null ? StringUtils.EMPTY : "Step '%s'%n".formatted(step.name());
   }
 }

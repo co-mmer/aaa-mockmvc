@@ -1,9 +1,9 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.bytes;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssert.assertThat;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_ARRAY;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_OBJECT;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -29,29 +29,33 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
 
   @Override
   public TestAssert2Byte isNotEmpty() {
-    var actual = this.context.getActResult().contentAsString();
-    assertThat(actual, not(anyOf(is(EMPTY), is(EMPTY_ARRAY), is(EMPTY_OBJECT))));
+    assertThat(
+        this.context.getStep(),
+        this.context.getActResult().contentAsString(),
+        not(anyOf(is(EMPTY), is(EMPTY_ARRAY), is(EMPTY_OBJECT))));
     return this;
   }
 
   @Override
   public TestAssertLByte isEmpty() {
-    var actual = this.context.getActResult().contentAsString();
-    assertThat(actual, anyOf(is(EMPTY), is(EMPTY_ARRAY), is(EMPTY_OBJECT)));
+    assertThat(
+        this.context.getStep(),
+        this.context.getActResult().contentAsString(),
+        anyOf(is(EMPTY), is(EMPTY_ARRAY), is(EMPTY_OBJECT)));
     return this;
   }
 
   @Override
   public TestAssert2Byte hasLength(int expectedLength) {
     var actResult = this.context.getActResult();
-    assertThat(actResult.contentAsBytes().length, is(expectedLength));
+    assertThat(this.context.getStep(), actResult.contentAsBytes().length, is(expectedLength));
     return this;
   }
 
   @Override
   public TestAssertLByte isEqualTo(byte[] expectedByte) {
     var actResult = this.context.getActResult();
-    assertThat(actResult.contentAsBytes(), is(expectedByte));
+    assertThat(this.context.getStep(), actResult.contentAsBytes(), is(expectedByte));
     return this;
   }
 

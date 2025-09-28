@@ -9,7 +9,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContex
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestEnvironment;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepMetadata;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpMethod;
@@ -31,12 +31,18 @@ public final class TestContext {
   }
 
   public static TestAAAContext mockContext() {
-    return mockContext(null);
+    var context = new TestAAAContext(createTestEnvironment());
+    context.setArrangeResult(createTestArrangeResult());
+
+    var actResult = mock(TestActResult.class);
+    when(actResult.contentAsString()).thenReturn(TEST_A1_JSON);
+    context.setActResult(actResult);
+    return context;
   }
 
   public static TestAAAContext mockContext(String stepName) {
     var context = new TestAAAContext(createTestEnvironment());
-    context.setStep(new TestStepMetadata(stepName));
+    context.setStep(new TestStepDto(stepName));
     context.setArrangeResult(createTestArrangeResult());
 
     var actResult = mock(TestActResult.class);

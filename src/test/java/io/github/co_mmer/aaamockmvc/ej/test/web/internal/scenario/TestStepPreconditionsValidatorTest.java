@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepMetadata;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepPreconditionsValidator;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +48,7 @@ class TestStepPreconditionsValidatorTest {
   @Test
   void WHEN_act_with_context_with_current_step_THEN_message_is_prefixed_with_step_name() {
     // Arrange
-    var currentStep = mock(TestStepMetadata.class);
+    var currentStep = mock(TestStepDto.class);
     when(currentStep.name()).thenReturn("MyStep");
     when(this.mockAAAContext.getStep()).thenReturn(currentStep);
 

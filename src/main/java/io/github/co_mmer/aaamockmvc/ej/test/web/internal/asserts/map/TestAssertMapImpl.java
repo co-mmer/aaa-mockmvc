@@ -1,9 +1,9 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.map;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssert.assertThat;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.TestArrangeNormalizer.normalizeMap;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_OBJECT;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -33,21 +33,21 @@ public final class TestAssertMapImpl<K, V>
   @Override
   public TestAssert2Map<K, V> isNotEmpty() {
     var actual = this.context.getActResult().contentAsString();
-    assertThat(actual, not(anyOf(is(EMPTY), is(EMPTY_OBJECT))));
+    assertThat(this.context.getStep(), actual, not(anyOf(is(EMPTY), is(EMPTY_OBJECT))));
     return this;
   }
 
   @Override
   public TestAssertLMap isEmpty() {
     var actual = this.context.getActResult().contentAsString();
-    assertThat(actual, anyOf(is(EMPTY), is(EMPTY_OBJECT)));
+    assertThat(this.context.getStep(), actual, anyOf(is(EMPTY), is(EMPTY_OBJECT)));
     return this;
   }
 
   @Override
   public TestAssert3Map<K, V> hasSize(int expectedSize) {
     var actual = (Map<?, ?>) this.context.getAssertResult().actualContent();
-    assertThat(actual.size(), is(expectedSize));
+    assertThat(this.context.getStep(), actual.size(), is(expectedSize));
     return this;
   }
 
@@ -55,7 +55,7 @@ public final class TestAssertMapImpl<K, V>
   public TestAssertLMap isEqualTo(@NonNull Map<K, V> expectedMap) {
     @SuppressWarnings("unchecked")
     var actual = (Map<K, V>) this.context.getAssertResult().actualContent();
-    assertThat(normalizeMap(actual), is(normalizeMap(expectedMap)));
+    assertThat(this.context.getStep(), normalizeMap(actual), is(normalizeMap(expectedMap)));
     return this;
   }
 

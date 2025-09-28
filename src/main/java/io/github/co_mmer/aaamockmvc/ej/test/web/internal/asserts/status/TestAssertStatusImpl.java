@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.status;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
@@ -34,13 +34,14 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
 
   @Override
   public TestAssert2Status is(@NonNull HttpStatus status) {
-    assertThat(this.context.getActResult().status(), Matchers.is(status.value()));
+    assertThat(
+        this.context.getStep(), this.context.getActResult().status(), Matchers.is(status.value()));
     return this;
   }
 
   @Override
   public TestAssert2Status is(int status) {
-    assertThat(this.context.getActResult().status(), Matchers.is(status));
+    assertThat(this.context.getStep(), this.context.getActResult().status(), Matchers.is(status));
     return this;
   }
 
@@ -97,8 +98,8 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   @Override
   public TestAssert2Status isInRange(int minStatusCode, int maxStatusCode) {
     var status = this.context.getActResult().status();
-    assertThat(status, Matchers.is(greaterThanOrEqualTo(minStatusCode)));
-    assertThat(status, Matchers.is(lessThanOrEqualTo(maxStatusCode)));
+    assertThat(this.context.getStep(), status, Matchers.is(greaterThanOrEqualTo(minStatusCode)));
+    assertThat(this.context.getStep(), status, Matchers.is(lessThanOrEqualTo(maxStatusCode)));
     return this;
   }
 

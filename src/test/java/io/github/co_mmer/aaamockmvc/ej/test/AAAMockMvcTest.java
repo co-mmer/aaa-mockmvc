@@ -420,23 +420,6 @@ class AAAMockMvcTest {
   @Nested
   class Step {
 
-    @Test
-    void GIVEN_emptyStepName_WHEN_step_THEN_message_used_unnamed_step() {
-      //  Arrange
-      var aaa = new AAAMockMvc(MOCK_MVC);
-      var mockTestActResultMapper = MockTestActResultMapper.mockWithResult();
-
-      // Act
-      var exception = assertThrows(IllegalStateException.class, () -> aaa.step("", aaa::act));
-
-      // Assert
-      assertThat(
-          exception.getMessage(),
-          is(
-              "Step '<unnamed step>' · Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act()'"));
-      mockTestActResultMapper.close();
-    }
-
     @ParameterizedTest(name = "arrangeUrl=true, arrange=false, act={0}, assert={1}, answer={2}")
     @CsvSource({
       "false, false, false", // GIVEN_arrangeUrl

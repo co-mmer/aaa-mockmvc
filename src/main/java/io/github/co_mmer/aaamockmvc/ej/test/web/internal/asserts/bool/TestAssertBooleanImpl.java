@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.bool;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
@@ -26,27 +26,29 @@ public class TestAssertBooleanImpl
 
   @Override
   public TestAssert3Boolean isNull() {
-    assertThat(this.context.getAssertResult().actualContent(), is(nullValue()));
+    assertThat(
+        this.context.getStep(), this.context.getAssertResult().actualContent(), is(nullValue()));
     return this;
   }
 
   @Override
   public TestAssert2Boolean isNotNull() {
-    assertThat(this.context.getAssertResult().actualContent(), is(notNullValue()));
+    assertThat(
+        this.context.getStep(), this.context.getAssertResult().actualContent(), is(notNullValue()));
     return this;
   }
 
   @Override
   public TestAssert3Boolean isTrue() {
-    Boolean actual = (Boolean) this.context.getAssertResult().actualContent();
-    assertThat(actual, is(Boolean.TRUE));
+    var actual = (Boolean) this.context.getAssertResult().actualContent();
+    assertThat(this.context.getStep(), actual, is(Boolean.TRUE));
     return this;
   }
 
   @Override
   public TestAssert3Boolean isFalse() {
-    Boolean actual = (Boolean) this.context.getAssertResult().actualContent();
-    assertThat(actual, is(Boolean.FALSE));
+    var actual = (Boolean) this.context.getAssertResult().actualContent();
+    assertThat(this.context.getStep(), actual, is(Boolean.FALSE));
     return this;
   }
 

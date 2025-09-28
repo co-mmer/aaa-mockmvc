@@ -4,7 +4,7 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer.TestAnswe
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepMetadata;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,13 +15,12 @@ class TestAnswerExceptionFormatterTest {
   private static final String CONTENT = "{\"id\":1}";
   private static final String CONTENT_MAP = "{\"id\":1,\"name\":\"A\"}";
   private static final String ANSWER_STEP_NAME = "asExample";
-  private static final TestStepMetadata STEP_WITH_NAME = new TestStepMetadata("MyStep");
-  private static final TestStepMetadata STEP_BLANK_NAME = new TestStepMetadata("");
+  private static final TestStepDto STEP_WITH_NAME = new TestStepDto("MyStep");
 
   @ParameterizedTest
   @MethodSource("messageCases")
   void GIVEN_variousSteps_WHEN_buildMessage_THEN_expectedMessage(
-      TestStepMetadata step, String content, String expected) {
+      TestStepDto step, String content, String expected) {
 
     // Act
     var msg = createMessage(step, ANSWER_STEP_NAME, content, "Number");
@@ -41,14 +40,6 @@ class TestAnswerExceptionFormatterTest {
                 Failure: unable to map response body to 'Number'.
                 """),
         Arguments.of(
-            STEP_BLANK_NAME,
-            "{}",
-            """
-                Step '<unnamed step>'
-                Answer step: asExample({})
-                Failure: unable to map response body to 'Number'.
-                """),
-        Arguments.of(
             null,
             CONTENT,
             """
@@ -60,7 +51,7 @@ class TestAnswerExceptionFormatterTest {
   @ParameterizedTest
   @MethodSource("messageCasesMap")
   void GIVEN_variousSteps_WHEN_buildMapMessage_THEN_expectedMessage(
-      TestStepMetadata step, String content, String expected) {
+      TestStepDto step, String content, String expected) {
 
     // Act
     var msg = createMessage(step, ANSWER_STEP_NAME, content, "String", "User");
@@ -77,14 +68,6 @@ class TestAnswerExceptionFormatterTest {
             """
                 Step 'MyStep'
                 Answer step: asExample({"id":1,"name":"A"})
-                Failure: unable to map response body to 'Map<String, User>'.
-                """),
-        Arguments.of(
-            STEP_BLANK_NAME,
-            "{}",
-            """
-                Step '<unnamed step>'
-                Answer step: asExample({})
                 Failure: unable to map response body to 'Map<String, User>'.
                 """),
         Arguments.of(

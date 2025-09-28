@@ -7,7 +7,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.TestArrange;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestEnvironment;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepMetadata;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepPreconditionsValidator;
 import lombok.NonNull;
@@ -257,7 +257,7 @@ public final class AAAMockMvc {
    * }</pre>
    *
    * <p><b>Tip:</b> If your codebase prefers stricter type safety, provide an overload like {@code
-   * step(String, Class<R>, Consumer<TestStep>)} that validates the captured answer type against
+   * step(String, Class<R>, Consumer<TestStepDto>)} that validates the captured answer type against
    * {@code R} and fails with a clear message instead of a {@code ClassCastException}.
    *
    * @param stepName human-readable step name used in logs and error messages (must not be {@code
@@ -278,9 +278,9 @@ public final class AAAMockMvc {
    * @throws ClassCastException if the captured answer cannot be cast to {@code R}
    * @since 2.0.0
    */
-  public <R> R step(String stepName, @NonNull Runnable block) {
+  public <R> R step(@NonNull String stepName, @NonNull Runnable block) {
     var context = new TestAAAContext(this.environment);
-    context.setStep(new TestStepMetadata(stepName));
+    context.setStep(new TestStepDto(stepName));
     var step = new TestStepImpl(context);
 
     var prev = CURRENT.get();

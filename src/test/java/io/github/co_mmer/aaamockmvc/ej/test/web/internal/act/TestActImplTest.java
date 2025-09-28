@@ -55,7 +55,7 @@ class TestActImplTest {
 
   @Test
   @SneakyThrows
-  void GIVEN_noStepMetadata_throwOnMvcPerform_WHEN_perform_THEN_throw_Error() {
+  void GIVEN_noStep_throwOnMvcPerform_WHEN_perform_THEN_throw_Error() {
     // Arrange
     var requestBuilder = mockRequestBuilder();
     var baseStrategy = mockBaseStrategyReturning(requestBuilder);
@@ -69,7 +69,6 @@ class TestActImplTest {
     // Assert
     var expected =
         """
-            Step '<unnamed step>'
             ACT failed: GET null
             Request: GET <no uri>
             Headers: accepts=<none> | content-type=<none> | key-value={}
@@ -98,7 +97,6 @@ class TestActImplTest {
     // Assert
     var expected =
         """
-            Step '<unnamed step>'
             Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'
             """;
     assertThat(ex.getMessage(), is(expected));

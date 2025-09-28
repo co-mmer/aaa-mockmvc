@@ -1,7 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.clazz;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.TestArrangeNormalizer.normalizeObject;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
@@ -14,6 +13,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssertLClass;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertMatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import java.util.function.Predicate;
@@ -36,13 +36,15 @@ public final class TestAssertClassImpl<T>
 
   @Override
   public TestAssert2Class<T> isNotNull() {
-    assertThat(this.context.getAssertResult().actualContent(), is(notNullValue()));
+    TestAssert.assertThat(
+        this.context.getStep(), this.context.getAssertResult().actualContent(), is(notNullValue()));
     return this;
   }
 
   @Override
   public TestAssertLClass isNull() {
-    assertThat(this.context.getAssertResult().actualContent(), is(nullValue()));
+    TestAssert.assertThat(
+        this.context.getStep(), this.context.getAssertResult().actualContent(), is(nullValue()));
     return this;
   }
 
@@ -50,8 +52,10 @@ public final class TestAssertClassImpl<T>
   public TestAssertLClass isEqualTo(@NonNull T expectedResponse) {
     @SuppressWarnings("unchecked")
     T actual = (T) this.context.getAssertResult().actualContent();
-    assertThat(actual.getClass(), is(expectedResponse.getClass()));
-    assertThat(normalizeObject(actual), is(normalizeObject(expectedResponse)));
+    TestAssert.assertThat(
+        this.context.getStep(), actual.getClass(), is(expectedResponse.getClass()));
+    TestAssert.assertThat(
+        this.context.getStep(), normalizeObject(actual), is(normalizeObject(expectedResponse)));
     return this;
   }
 

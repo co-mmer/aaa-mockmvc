@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.head;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.hasItem;
@@ -25,32 +25,36 @@ public final class TestAssertHeadImpl implements TestAssertHead {
   @Override
   public TestAssertHead containsKey(String expectedKey) {
     var headers = this.context.getActResult().headers();
-    assertThat(headers, Matchers.hasKey(expectedKey));
+    assertThat(this.context.getStep(), headers, Matchers.hasKey(expectedKey));
     return this;
   }
 
   @Override
   public TestAssertHead doesNotContainKey(String notExpectedKey) {
     var headers = this.context.getActResult().headers();
-    assertThat(headers, not(Matchers.hasKey(notExpectedKey)));
+    assertThat(this.context.getStep(), headers, not(Matchers.hasKey(notExpectedKey)));
     return this;
   }
 
   @Override
   public TestAssertHead containsEntry(String expectedKey, String expectedValue) {
     var headers = this.context.getActResult().headers();
-    assertThat(expectedKey, headers, Matchers.hasKey(expectedKey));
-    assertThat(headers.get(expectedKey), hasItem(expectedValue));
+    assertThat(this.context.getStep(), expectedKey, headers, Matchers.hasKey(expectedKey));
+    assertThat(this.context.getStep(), headers.get(expectedKey), hasItem(expectedValue));
     return this;
   }
 
   @Override
   public TestAssertHead containsEntryExactly(String expectedKey, String... expectedValue) {
-    assertThat("at least one expected value required", expectedValue, not(emptyArray()));
+    assertThat(
+        this.context.getStep(),
+        "at least one expected value required",
+        expectedValue,
+        not(emptyArray()));
 
     var headers = this.context.getActResult().headers();
-    assertThat(expectedKey, headers, Matchers.hasKey(expectedKey));
-    assertThat(headers.get(expectedKey), containsInAnyOrder(expectedValue));
+    assertThat(this.context.getStep(), expectedKey, headers, Matchers.hasKey(expectedKey));
+    assertThat(this.context.getStep(), headers.get(expectedKey), containsInAnyOrder(expectedValue));
     return this;
   }
 }

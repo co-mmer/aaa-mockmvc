@@ -12,7 +12,7 @@ import lombok.Setter;
 public final class TestAAAContext {
 
   private final TestEnvironment environment;
-  private TestStepMetadata step;
+  private TestStepDto step;
   private TestArrangeResult arrangeResult;
   private TestActResult actResult;
   private TestAssertResult<?> assertResult;

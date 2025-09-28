@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssert.assertThat;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.TestArrangeNormalizer.normalizeObject;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
@@ -26,26 +26,32 @@ public final class TestAssertStringImpl
 
   @Override
   public TestAssert2String isNotEmpty() {
-    assertThat(this.context.getActResult().contentAsString().isEmpty(), is(false));
+    var content = this.context.getActResult().contentAsString();
+    assertThat(this.context.getStep(), content.isEmpty(), is(false));
     return this;
   }
 
   @Override
   public TestAssertLString isEmpty() {
-    assertThat(this.context.getActResult().contentAsString().isEmpty(), is(true));
+    var content = this.context.getActResult().contentAsString();
+    assertThat(this.context.getStep(), content.isEmpty(), is(true));
     return this;
   }
 
   @Override
   public TestAssert2String hasLength(int expectedLength) {
-    assertThat(this.context.getActResult().contentAsString().length(), is(expectedLength));
+    assertThat(
+        this.context.getStep(),
+        this.context.getActResult().contentAsString().length(),
+        is(expectedLength));
     return this;
   }
 
   @Override
   public TestAssertLString isEqualTo(@NonNull String expectedString) {
     var content = this.context.getActResult().contentAsString();
-    assertThat(normalizeObject(content), is(normalizeObject(expectedString)));
+    assertThat(
+        this.context.getStep(), normalizeObject(content), is(normalizeObject(expectedString)));
     return this;
   }
 
