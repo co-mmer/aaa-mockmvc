@@ -39,12 +39,9 @@
         asserts().status().isCreated();
     });
 
-- **Scalar answer**
-    - Read primitive-like values directly from the response
-    - answer().asInteger() / answer().asFloat() / answer().asDouble() / answer().asBoolean()
-
-- **Boolean assertion**
-    - Assert boolean payloads fluently after mapping via content().asBoolean().
+- **Support Boolean**
+    - Assert boolean payloads fluently after mapping via `content().asBoolean()`.
+    - Read boolean values directly with `answer().asBoolean()`.
 
 ### 🧹 Improvements
 
@@ -55,7 +52,7 @@
     - Act failures → `TestActFailedError` (wraps infrastructure/runtime problems, not HTTP status
       codes)
     - Assert failures → `TestAssertFailedError`
-    - Answer mapping failures → `TestAnswerRuntimeException`
+    - Answer mapping failures → `TestAnswerException`
 
 - **Error hygiene:**
     - Precondition validators with precise guidance (e.g., “Call `arrange().get|post|…`
