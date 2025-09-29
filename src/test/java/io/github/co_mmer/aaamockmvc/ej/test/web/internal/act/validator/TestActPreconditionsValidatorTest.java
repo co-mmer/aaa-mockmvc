@@ -31,11 +31,10 @@ class TestActPreconditionsValidatorTest {
     var ex = assertThrows(IllegalStateException.class, () -> verifyPerform(this.mockAAAContext));
 
     // Assert
-    var expected =
-        """
-            Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'
-            """;
-    assertThat(ex.getMessage(), is(expected));
+    assertThat(
+        ex.getMessage(),
+        is(
+            "Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'"));
   }
 
   @Test
@@ -49,11 +48,9 @@ class TestActPreconditionsValidatorTest {
     var ex = assertThrows(IllegalStateException.class, () -> verifyPerform(this.mockAAAContext));
 
     // Assert
-    var expected =
-        """
-            Step 'MyStep'
-            Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'
-            """;
-    assertThat(ex.getMessage(), is(expected));
+    assertThat(
+        ex.getMessage(),
+        is(
+            "Step 'MyStep' ⇒ Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'"));
   }
 }

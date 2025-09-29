@@ -95,11 +95,10 @@ class TestActImplTest {
     var ex = assertThrows(IllegalStateException.class, () -> this.testAct.perform());
 
     // Assert
-    var expected =
-        """
-            Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'
-            """;
-    assertThat(ex.getMessage(), is(expected));
+    assertThat(
+        ex.getMessage(),
+        is(
+            "Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'"));
     strategyFactory.close();
   }
 
