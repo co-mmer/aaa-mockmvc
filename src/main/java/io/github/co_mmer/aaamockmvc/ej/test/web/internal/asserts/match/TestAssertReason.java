@@ -56,10 +56,7 @@ public class TestAssertReason {
 
   private static void addWhat(String what, StringBuilder sb) {
     if (StringUtils.isNotBlank(what)) {
-      if (!sb.isEmpty() && sb.charAt(sb.length() - 1) != ' ') {
-        sb.append(' ');
-      }
-      sb.append(what);
+      sb.append(" ").append(what);
     }
   }
 }
