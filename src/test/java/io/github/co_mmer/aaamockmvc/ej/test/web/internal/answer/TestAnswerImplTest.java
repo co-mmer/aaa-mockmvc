@@ -27,15 +27,13 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_A1_A2_JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
-import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerFailed;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.TestAssertBase;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
@@ -88,18 +86,18 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asNumber_THEN_throw_TestAnswerException() {
+    void GIVEN_throws_WHEN_asNumber_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
       // Act
-      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asNumber());
+      var ex = assertThrows(TestAnswerFailed.class, () -> testAnswer.asNumber());
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asNumber"));
-      assertThat(ex.getMessage(), containsString("Number"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "Step 'Testing' ⇒ 'answer().asNumber()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Number"));
       mockTestGenericMapper.close();
     }
   }
@@ -134,18 +132,18 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asBigDecimal_THEN_throw_TestAnswerException() {
+    void GIVEN_throws_WHEN_asBigDecimal_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
       // Act
-      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asBigDecimal());
+      var ex = assertThrows(TestAnswerFailed.class, () -> testAnswer.asBigDecimal());
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asBigDecimal"));
-      assertThat(ex.getMessage(), containsString("BigDecimal"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "Step 'Testing' ⇒ 'answer().asBigDecimal()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to BigDecimal"));
       mockTestGenericMapper.close();
     }
   }
@@ -180,18 +178,18 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asInteger_THEN_throw_TestAnswerException() {
+    void GIVEN_throws_WHEN_asInteger_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
       // Act
-      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asInteger());
+      var ex = assertThrows(TestAnswerFailed.class, () -> testAnswer.asInteger());
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asInteger"));
-      assertThat(ex.getMessage(), containsString("Integer"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "Step 'Testing' ⇒ 'answer().asInteger()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Integer"));
       mockTestGenericMapper.close();
     }
   }
@@ -226,18 +224,18 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asLong_THEN_throw_TestAnswerException() {
+    void GIVEN_throws_WHEN_asLong_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
       // Act
-      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asLong());
+      var ex = assertThrows(TestAnswerFailed.class, () -> testAnswer.asLong());
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asLong"));
-      assertThat(ex.getMessage(), containsString("Long"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "Step 'Testing' ⇒ 'answer().asLong()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Long"));
       mockTestGenericMapper.close();
     }
   }
@@ -272,18 +270,18 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asBigInteger_THEN_throw_TestAnswerException() {
+    void GIVEN_throws_WHEN_asBigInteger_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
       // Act
-      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asBigInteger());
+      var ex = assertThrows(TestAnswerFailed.class, () -> testAnswer.asBigInteger());
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asBigInteger"));
-      assertThat(ex.getMessage(), containsString("BigInteger"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "Step 'Testing' ⇒ 'answer().asBigInteger()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to BigInteger"));
       mockTestGenericMapper.close();
     }
   }
@@ -318,18 +316,18 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asFloat_THEN_throw_TestAnswerException() {
+    void GIVEN_throws_WHEN_asFloat_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
       // Act
-      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asFloat());
+      var ex = assertThrows(TestAnswerFailed.class, () -> testAnswer.asFloat());
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asFloat"));
-      assertThat(ex.getMessage(), containsString("Float"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "Step 'Testing' ⇒ 'answer().asFloat()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Float"));
       mockTestGenericMapper.close();
     }
   }
@@ -364,18 +362,18 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asDouble_THEN_throw_TestAnswerException() {
+    void GIVEN_throws_WHEN_asDouble_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
       // Act
-      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asDouble());
+      var ex = assertThrows(TestAnswerFailed.class, () -> testAnswer.asDouble());
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asDouble"));
-      assertThat(ex.getMessage(), containsString("Double"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "Step 'Testing' ⇒ 'answer().asDouble()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Double"));
       mockTestGenericMapper.close();
     }
   }
@@ -410,18 +408,18 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asBoolean_THEN_throw_TestAnswerException() {
+    void GIVEN_throws_WHEN_asBoolean_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
       // Act
-      var ex = assertThrows(TestAnswerException.class, () -> testAnswer.asBoolean());
+      var ex = assertThrows(TestAnswerFailed.class, () -> testAnswer.asBoolean());
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asBoolean"));
-      assertThat(ex.getMessage(), containsString("Boolean"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "Step 'Testing' ⇒ 'answer().asBoolean()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Boolean"));
       mockTestGenericMapper.close();
     }
   }
@@ -497,7 +495,7 @@ class TestAnswerImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("all")
-    void GIVEN_emptyl_WHEN_asObject_THEN_return_null() {
+    void GIVEN_empty_WHEN_asObject_THEN_return_null() {
       // Arrange
       useActResult(EMPTY);
 
@@ -509,20 +507,19 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asObject_THEN_throw_TestAnswerException() {
+    void GIVEN_throws_WHEN_asObject_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseWithClass();
 
       // Act
       var ex =
-          assertThrows(
-              TestAnswerException.class, () -> testAnswer.asObject(TestObjectSimple.class));
+          assertThrows(TestAnswerFailed.class, () -> testAnswer.asObject(TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asObject"));
-      assertThat(ex.getMessage(), containsString("TestObjectSimple"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "Step 'Testing' ⇒ 'answer().asObject()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to TestObjectSimple"));
       mockTestGenericMapper.close();
     }
   }
@@ -563,20 +560,20 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asCollection_THEN_throwTestAnswerException() {
+    void GIVEN_throws_WHEN_asCollection_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseCollectionWithClass();
 
       // Act
       var ex =
           assertThrows(
-              TestAnswerException.class, () -> testAnswer.asCollection(TestObjectSimple.class));
+              TestAnswerFailed.class, () -> testAnswer.asCollection(TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asCollection"));
-      assertThat(ex.getMessage(), containsString("TestObjectSimple"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "Step 'Testing' ⇒ 'answer().asCollection()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to TestObjectSimple"));
       mockTestGenericMapper.close();
     }
   }
@@ -617,19 +614,19 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asList_THEN_throwTestAnswerException() {
+    void GIVEN_throws_WHEN_asList_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseListWithClass();
 
       // Act
       var ex =
-          assertThrows(TestAnswerException.class, () -> testAnswer.asList(TestObjectSimple.class));
+          assertThrows(TestAnswerFailed.class, () -> testAnswer.asList(TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asList"));
-      assertThat(ex.getMessage(), containsString("TestObjectSimple"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "Step 'Testing' ⇒ 'answer().asList()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to TestObjectSimple"));
       mockTestGenericMapper.close();
     }
   }
@@ -670,19 +667,18 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asSet_THEN_throwTestAnswerException() {
+    void GIVEN_throws_WHEN_asSet_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseSetWithClass();
 
       // Act
-      var ex =
-          assertThrows(TestAnswerException.class, () -> testAnswer.asSet(TestObjectSimple.class));
+      var ex = assertThrows(TestAnswerFailed.class, () -> testAnswer.asSet(TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asSet"));
-      assertThat(ex.getMessage(), containsString("TestObjectSimple"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          containsString(
+              "Step 'Testing' ⇒ 'answer().asSet()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to TestObjectSimple"));
       mockTestGenericMapper.close();
     }
   }
@@ -724,22 +720,22 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_throws_WHEN_asMap_THEN_throw_TestAnswerException() {
+    void GIVEN_throws_WHEN_asMap_THEN_throw_TestAnswerFailed() {
       // Arrange
       var mockTestGenericMapper = mockParseMapWithClass();
 
       // Act
       var ex =
           assertThrows(
-              TestAnswerException.class,
+              TestAnswerFailed.class,
               () -> testAnswer.asMap(Integer.class, TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString(TESTING));
-      assertThat(ex.getMessage(), containsString("asMap"));
-      assertThat(ex.getMessage(), containsString("TestObjectSimple"));
-      assertThat(ex.getMessage(), containsString("Integer"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          containsString("Step 'Testing' ⇒ 'answer().asMap()' — Reason: Response body "));
+      assertThat(
+          ex.getMessage(), containsString("cannot be mapped to Map<Integer, TestObjectSimple>"));
       mockTestGenericMapper.close();
     }
   }

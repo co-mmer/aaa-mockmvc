@@ -17,7 +17,7 @@ public final class StringUtils {
   public static boolean isNotBlank(String string) {
     return !isBlank(string);
   }
-  
+
   @Since("1.4.1")
   public static final String EMPTY = "";
 
@@ -29,5 +29,4 @@ public final class StringUtils {
 
   @Since("1.4.1")
   public static final String UNSET = "<unset>";
-
 }

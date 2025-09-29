@@ -41,7 +41,7 @@ public class TestAssertReason {
 
   private static void addWho(String who, StringBuilder sb) {
     if (StringUtils.isNotBlank(who)) {
-      sb.append("assertion '").append(who).append("' failed");
+      sb.append("'").append(who).append("' — Reason");
     }
   }
 

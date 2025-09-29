@@ -85,7 +85,7 @@ class TestAssertContentImplTest {
       assertThat(
           ex.getMessage(),
           is(
-              "assertion 'content().asBoolean()' failed: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Boolean"));
+              "'content().asBoolean()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Boolean"));
       assertThat(context.getAssertResult(), nullValue());
     }
   }
@@ -216,7 +216,7 @@ class TestAssertContentImplTest {
       assertThat(
           ex.getMessage(),
           is(
-              "assertion 'content().asClass()' failed: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to String"));
+              "'content().asClass()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to String"));
       assertThat(context.getAssertResult(), nullValue());
     }
   }
@@ -266,7 +266,7 @@ class TestAssertContentImplTest {
       assertThat(
           ex.getMessage(),
           is(
-              "assertion 'content().asCollection()' failed: Response body '[{\"id\":1,\"name\":\"A\"},{\"id\":2,\"name\":\"A\"}]' cannot be mapped to String"));
+              "'content().asCollection()' — Reason: Response body '[{\"id\":1,\"name\":\"A\"},{\"id\":2,\"name\":\"A\"}]' cannot be mapped to String"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
@@ -283,7 +283,7 @@ class TestAssertContentImplTest {
       assertThat(
           ex.getMessage(),
           is(
-              "assertion 'content().asCollection()' failed: Response body '{not-valid-json' cannot be mapped to TestObjectSimple"));
+              "'content().asCollection()' — Reason: Response body '{not-valid-json' cannot be mapped to TestObjectSimple"));
       assertThat(context.getAssertResult(), nullValue());
     }
   }
@@ -333,7 +333,7 @@ class TestAssertContentImplTest {
       assertThat(
           ex.getMessage(),
           is(
-              "assertion 'content().asList()' failed: Response body '[{\"id\":1,\"name\":\"A\"},{\"id\":2,\"name\":\"A\"}]' cannot be mapped to String"));
+              "'content().asList()' — Reason: Response body '[{\"id\":1,\"name\":\"A\"},{\"id\":2,\"name\":\"A\"}]' cannot be mapped to String"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
@@ -349,7 +349,7 @@ class TestAssertContentImplTest {
       assertThat(
           ex.getMessage(),
           is(
-              "assertion 'content().asList()' failed: Response body '{not-valid-json' cannot be mapped to TestObjectSimple"));
+              "'content().asList()' — Reason: Response body '{not-valid-json' cannot be mapped to TestObjectSimple"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
@@ -365,7 +365,7 @@ class TestAssertContentImplTest {
       assertThat(
           ex.getMessage(),
           is(
-              "assertion 'content().asList()' failed: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to TestObjectSimple"));
+              "'content().asList()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to TestObjectSimple"));
       assertThat(context.getAssertResult(), nullValue());
     }
   }
@@ -412,8 +412,7 @@ class TestAssertContentImplTest {
       var ex = assertThrows(AssertionFailedError.class, () -> impl.asSet(String.class));
 
       // Assert
-      assertThat(
-          ex.getMessage(), containsString("assertion 'content().asSet()' failed: Response body "));
+      assertThat(ex.getMessage(), containsString("'content().asSet()' — Reason: Response body "));
       assertThat(ex.getMessage(), containsString("cannot be mapped to String"));
       assertThat(context.getAssertResult(), nullValue());
     }
@@ -430,7 +429,7 @@ class TestAssertContentImplTest {
       assertThat(
           ex.getMessage(),
           is(
-              "assertion 'content().asSet()' failed: Response body '{not-valid-json' cannot be mapped to TestObjectSimple"));
+              "'content().asSet()' — Reason: Response body '{not-valid-json' cannot be mapped to TestObjectSimple"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
@@ -443,8 +442,7 @@ class TestAssertContentImplTest {
       var ex = assertThrows(AssertionFailedError.class, () -> impl.asSet(TestObjectSimple.class));
 
       // Assert
-      assertThat(
-          ex.getMessage(), containsString("assertion 'content().asSet()' failed: Response body "));
+      assertThat(ex.getMessage(), containsString("'content().asSet()' — Reason: Response body "));
       assertThat(ex.getMessage(), containsString("cannot be mapped to TestObjectSimple"));
       assertThat(context.getAssertResult(), nullValue());
     }
@@ -494,8 +492,7 @@ class TestAssertContentImplTest {
               AssertionFailedError.class, () -> impl.asMap(Boolean.class, TestObjectSimple.class));
 
       // Assert
-      assertThat(
-          ex.getMessage(), containsString("assertion 'content().asMap()' failed: Response body "));
+      assertThat(ex.getMessage(), containsString("'content().asMap()' — Reason: Response body "));
       assertThat(
           ex.getMessage(), containsString("cannot be mapped to Map<Boolean, TestObjectSimple>"));
       assertThat(context.getAssertResult(), nullValue());
@@ -511,8 +508,7 @@ class TestAssertContentImplTest {
           assertThrows(AssertionFailedError.class, () -> impl.asMap(Integer.class, String.class));
 
       // Assert
-      assertThat(
-          ex.getMessage(), containsString("assertion 'content().asMap()' failed: Response body "));
+      assertThat(ex.getMessage(), containsString("'content().asMap()' — Reason: Response body "));
       assertThat(ex.getMessage(), containsString("cannot be mapped to Map<Integer, String>"));
       assertThat(context.getAssertResult(), nullValue());
     }
@@ -527,8 +523,7 @@ class TestAssertContentImplTest {
           assertThrows(AssertionFailedError.class, () -> impl.asMap(String.class, String.class));
 
       // Assert
-      assertThat(
-          ex.getMessage(), containsString("assertion 'content().asMap()' failed: Response body "));
+      assertThat(ex.getMessage(), containsString("'content().asMap()' — Reason: Response body "));
       assertThat(ex.getMessage(), containsString("cannot be mapped to Map<String, String>"));
       assertThat(context.getAssertResult(), nullValue());
     }
@@ -544,8 +539,7 @@ class TestAssertContentImplTest {
               AssertionFailedError.class, () -> impl.asMap(Integer.class, TestObjectSimple.class));
 
       // Assert
-      assertThat(
-          ex.getMessage(), containsString("assertion 'content().asMap()' failed: Response body "));
+      assertThat(ex.getMessage(), containsString("'content().asMap()' — Reason: Response body "));
       assertThat(
           ex.getMessage(), containsString("cannot be mapped to Map<Integer, TestObjectSimple>"));
       assertThat(context.getAssertResult(), nullValue());
@@ -562,8 +556,7 @@ class TestAssertContentImplTest {
               AssertionFailedError.class, () -> impl.asMap(Integer.class, TestObjectSimple.class));
 
       // Assert
-      assertThat(
-          ex.getMessage(), containsString("assertion 'content().asMap()' failed: Response body "));
+      assertThat(ex.getMessage(), containsString("'content().asMap()' — Reason: Response body "));
       assertThat(
           ex.getMessage(), containsString("cannot be mapped to Map<Integer, TestObjectSimple>"));
       assertThat(context.getAssertResult(), nullValue());

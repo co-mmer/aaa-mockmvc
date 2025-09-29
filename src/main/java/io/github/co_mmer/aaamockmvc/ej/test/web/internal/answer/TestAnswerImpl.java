@@ -1,9 +1,9 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer.TestAnswerExceptionFormatter.createMessage;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason.reasonContentOf;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
-import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerFailed;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
@@ -20,6 +20,8 @@ import lombok.NonNull;
 @Since("1.2.0")
 public final class TestAnswerImpl implements TestAnswer {
 
+  private static final String WHAT = "cannot be mapped to ";
+
   private final TestAAAContext context;
 
   @Since("2.0.0")
@@ -29,42 +31,42 @@ public final class TestAnswerImpl implements TestAnswer {
 
   @Override
   public Number asNumber() {
-    return parse("asNumber", Number.class);
+    return parse("asNumber()", Number.class);
   }
 
   @Override
   public BigDecimal asBigDecimal() {
-    return parse("asBigDecimal", BigDecimal.class);
+    return parse("asBigDecimal()", BigDecimal.class);
   }
 
   @Override
   public BigInteger asBigInteger() {
-    return parse("asBigInteger", BigInteger.class);
+    return parse("asBigInteger()", BigInteger.class);
   }
 
   @Override
   public Integer asInteger() {
-    return parse("asInteger", Integer.class);
+    return parse("asInteger()", Integer.class);
   }
 
   @Override
   public Long asLong() {
-    return parse("asLong", Long.class);
+    return parse("asLong()", Long.class);
   }
 
   @Override
   public Float asFloat() {
-    return parse("asFloat", Float.class);
+    return parse("asFloat()", Float.class);
   }
 
   @Override
   public Double asDouble() {
-    return parse("asDouble", Double.class);
+    return parse("asDouble()", Double.class);
   }
 
   @Override
   public Boolean asBoolean() {
-    return parse("asBoolean", Boolean.class);
+    return parse("asBoolean()", Boolean.class);
   }
 
   @Override
@@ -83,7 +85,7 @@ public final class TestAnswerImpl implements TestAnswer {
 
   @Override
   public <T> T asObject(@NonNull Class<T> resultType) {
-    return parse("asObject", resultType);
+    return parse("asObject()", resultType);
   }
 
   private <T> T parse(String stepName, Class<T> resultType) {
@@ -95,9 +97,13 @@ public final class TestAnswerImpl implements TestAnswer {
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
-      var message =
-          createMessage(this.context.getStep(), stepName, content, resultType.getSimpleName());
-      throw new TestAnswerException(message, e);
+      var reason =
+          reasonContentOf(
+              this.context.getStep(),
+              "answer()." + stepName,
+              content,
+              WHAT + resultType.getSimpleName());
+      throw new TestAnswerFailed(reason);
     }
   }
 
@@ -111,10 +117,13 @@ public final class TestAnswerImpl implements TestAnswer {
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
-      var message =
-          createMessage(
-              this.context.getStep(), "asCollection", content, elementClass.getSimpleName());
-      throw new TestAnswerException(message, e);
+      var reason =
+          reasonContentOf(
+              this.context.getStep(),
+              "answer().asCollection()",
+              content,
+              WHAT + elementClass.getSimpleName());
+      throw new TestAnswerFailed(reason);
     }
   }
 
@@ -128,9 +137,13 @@ public final class TestAnswerImpl implements TestAnswer {
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
-      var message =
-          createMessage(this.context.getStep(), "asList", content, elementClass.getSimpleName());
-      throw new TestAnswerException(message, e);
+      var reason =
+          reasonContentOf(
+              this.context.getStep(),
+              "answer().asList()",
+              content,
+              WHAT + elementClass.getSimpleName());
+      throw new TestAnswerFailed(reason);
     }
   }
 
@@ -144,9 +157,13 @@ public final class TestAnswerImpl implements TestAnswer {
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
-      var message =
-          createMessage(this.context.getStep(), "asSet", content, elementClass.getSimpleName());
-      throw new TestAnswerException(message, e);
+      var reason =
+          reasonContentOf(
+              this.context.getStep(),
+              "answer().asSet()",
+              content,
+              WHAT + elementClass.getSimpleName());
+      throw new TestAnswerFailed(reason);
     }
   }
 
@@ -160,14 +177,10 @@ public final class TestAnswerImpl implements TestAnswer {
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
-      var message =
-          createMessage(
-              this.context.getStep(),
-              "asMap",
-              content,
-              keyClass.getSimpleName(),
-              valueClass.getSimpleName());
-      throw new TestAnswerException(message, e);
+      var target = "Map<%s, %s>".formatted(keyClass.getSimpleName(), valueClass.getSimpleName());
+      var reason =
+          reasonContentOf(this.context.getStep(), "answer().asMap()", content, WHAT + target);
+      throw new TestAnswerFailed(reason);
     }
   }
 }

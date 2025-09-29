@@ -7,10 +7,10 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception;
  *
  * @since 2.0.0
  */
-public final class TestAnswerException extends RuntimeException {
+public final class TestAnswerFailed extends RuntimeException {
 
   /**
-   * Constructs a new {@code TestAnswerException} with the specified cause.
+   * Constructs a new {@code TestAnswerFailed} with the specified cause.
    *
    * <p>The framework composes the message via an internal builder based on the current request
    * snapshot and passes it here; external callers should not compose this message themselves.
@@ -19,7 +19,11 @@ public final class TestAnswerException extends RuntimeException {
    * @param cause the underlying mapping/parse exception
    * @since 2.0.0
    */
-  public TestAnswerException(String message, Throwable cause) {
+  public TestAnswerFailed(String message, Throwable cause) {
     super(message, cause);
+  }
+
+  public TestAnswerFailed(String message) {
+    super(message);
   }
 }

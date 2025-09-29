@@ -61,7 +61,7 @@ class TestAssertReasonTest {
             "content().asBoolean()",
             "{\"id\":1,\"name\":\"A\"}",
             "cannot be mapped to Boolean",
-            "Step 'Create User' ⇒ assertion 'content().asBoolean()' failed: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Boolean"),
+            "Step 'Create User' ⇒ 'content().asBoolean()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Boolean"),
         Arguments.of(
             STEP,
             null,
@@ -73,12 +73,12 @@ class TestAssertReasonTest {
             "content().asBoolean()",
             null,
             "cannot be mapped to Boolean",
-            "Step 'Create User' ⇒ assertion 'content().asBoolean()' failed cannot be mapped to Boolean"),
+            "Step 'Create User' ⇒ 'content().asBoolean()' — Reason cannot be mapped to Boolean"),
         Arguments.of(
             null,
             "content().asBoolean()",
             "raw",
             "is invalid",
-            "assertion 'content().asBoolean()' failed: Response body 'raw' is invalid"));
+            "'content().asBoolean()' — Reason: Response body 'raw' is invalid"));
   }
 }

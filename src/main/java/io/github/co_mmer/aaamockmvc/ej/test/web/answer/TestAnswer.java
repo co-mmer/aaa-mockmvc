@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.answer;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerFailed;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
@@ -36,7 +36,7 @@ public interface TestAnswer {
    * numeric payloads (e.g., {@code 42}).
    *
    * @return the parsed Number value
-   * @throws TestAnswerException if deserialization fails or the body is not a numeric scalar
+   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
    *     compatible with {@code Number}
    * @since 2.0.0
    */
@@ -47,7 +47,7 @@ public interface TestAnswer {
    * scalar numeric payloads (e.g., {@code 42}).
    *
    * @return the parsed BigDecimal value
-   * @throws TestAnswerException if deserialization fails or the body is not a numeric scalar
+   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
    *     compatible with {@code BigDecimal}
    * @since 2.0.0
    */
@@ -58,7 +58,7 @@ public interface TestAnswer {
    * scalar numeric payloads (e.g., {@code 42}).
    *
    * @return the parsed BigInteger value
-   * @throws TestAnswerException if deserialization fails or the body is not a numeric scalar
+   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
    *     compatible with {@code BigInteger}
    * @since 2.0.0
    */
@@ -69,7 +69,7 @@ public interface TestAnswer {
    * numeric payloads (e.g., {@code 42}).
    *
    * @return the parsed integer value
-   * @throws TestAnswerException if deserialization fails or the body is not a numeric scalar
+   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
    *     compatible with {@code Integer}
    * @since 2.0.0
    */
@@ -80,7 +80,7 @@ public interface TestAnswer {
    * numeric payloads (e.g., {@code 42}).
    *
    * @return the parsed long value
-   * @throws TestAnswerException if deserialization fails or the body is not a numeric scalar
+   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
    *     compatible with {@code Long}
    * @since 2.0.0
    */
@@ -91,7 +91,7 @@ public interface TestAnswer {
    * numeric payloads (e.g., {@code 12.34}).
    *
    * @return the parsed float value
-   * @throws TestAnswerException if deserialization fails or the body is not a numeric scalar
+   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
    *     compatible with {@code Float}
    * @since 2.0.0
    */
@@ -102,7 +102,7 @@ public interface TestAnswer {
    * numeric payloads (e.g., {@code 12.34}).
    *
    * @return the parsed double value
-   * @throws TestAnswerException if deserialization fails or the body is not a numeric scalar
+   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
    *     compatible with {@code Double}
    * @since 2.0.0
    */
@@ -113,7 +113,7 @@ public interface TestAnswer {
    * literals (e.g., {@code true} / {@code false}).
    *
    * @return the parsed boolean value
-   * @throws TestAnswerException if deserialization fails or the body is not compatible with {@code
+   * @throws TestAnswerFailed if deserialization fails or the body is not compatible with {@code
    *     Boolean}
    * @since 2.0.0
    */
@@ -142,11 +142,11 @@ public interface TestAnswer {
    * @param resultType the target type to deserialize to; must not be {@code null}
    * @param <T> target type
    * @return the deserialized object
-   * @throws TestAnswerException if deserialization fails or the body is not compatible with {@code
+   * @throws TestAnswerFailed if deserialization fails or the body is not compatible with {@code
    *     resultType}
    * @since 2.0.0
    */
-  <T> T asObject(@NonNull Class<T> resultType) throws TestAnswerException;
+  <T> T asObject(@NonNull Class<T> resultType) throws TestAnswerFailed;
 
   /**
    * Deserializes the response body into a {@code Collection<T>} using the configured mapper.
@@ -154,7 +154,7 @@ public interface TestAnswer {
    * @param elementType the element type; must not be {@code null}
    * @param <E> element type
    * @return the deserialized collection
-   * @throws TestAnswerException if deserialization fails or the body is not a JSON array compatible
+   * @throws TestAnswerFailed if deserialization fails or the body is not a JSON array compatible
    *     with {@code Collection<T>}
    * @since 2.0.0
    */
@@ -166,11 +166,11 @@ public interface TestAnswer {
    * @param elementType the element type; must not be {@code null}
    * @param <E> element type
    * @return the deserialized list
-   * @throws TestAnswerException if deserialization fails or the body is not a JSON array compatible
+   * @throws TestAnswerFailed if deserialization fails or the body is not a JSON array compatible
    *     with {@code List<T>}
    * @since 2.0.0
    */
-  <E> List<E> asList(@NonNull Class<E> elementType) throws TestAnswerException;
+  <E> List<E> asList(@NonNull Class<E> elementType) throws TestAnswerFailed;
 
   /**
    * Deserializes the response body into a {@code Set<T>} using the configured mapper.
@@ -178,11 +178,11 @@ public interface TestAnswer {
    * @param elementType the element type; must not be {@code null}
    * @param <T> element type
    * @return the deserialized set
-   * @throws TestAnswerException if deserialization fails or the body is not a JSON array compatible
+   * @throws TestAnswerFailed if deserialization fails or the body is not a JSON array compatible
    *     with {@code Set<T>}
    * @since 2.0.0
    */
-  <T> Set<T> asSet(@NonNull Class<T> elementType) throws TestAnswerException;
+  <T> Set<T> asSet(@NonNull Class<T> elementType) throws TestAnswerFailed;
 
   /**
    * Deserializes the response body into a {@code Map<K,V>} using the configured mapper.
@@ -192,10 +192,10 @@ public interface TestAnswer {
    * @param <K> key type
    * @param <V> value type
    * @return the deserialized map
-   * @throws TestAnswerException if deserialization fails or the body is not a JSON object
-   *     compatible with {@code Map<K,V>}
+   * @throws TestAnswerFailed if deserialization fails or the body is not a JSON object compatible
+   *     with {@code Map<K,V>}
    * @since 2.0.0
    */
   <K, V> Map<K, V> asMap(@NonNull Class<K> keyType, @NonNull Class<V> valueType)
-      throws TestAnswerException;
+      throws TestAnswerFailed;
 }
