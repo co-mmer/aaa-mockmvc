@@ -15,9 +15,12 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert3Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertLMap;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.TestArrangeNormalizerException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import java.util.Map;
 import lombok.NonNull;
+import org.opentest4j.AssertionFailedError;
 
 @Since("1.4.0")
 public final class TestAssertMapImpl<K, V>
@@ -55,7 +58,13 @@ public final class TestAssertMapImpl<K, V>
   public TestAssertLMap isEqualTo(@NonNull Map<K, V> expectedMap) {
     @SuppressWarnings("unchecked")
     var actual = (Map<K, V>) this.context.getAssertResult().actualContent();
-    assertThat(this.context.getStep(), normalizeMap(actual), is(normalizeMap(expectedMap)));
+
+    try {
+      assertThat(this.context.getStep(), normalizeMap(actual), is(normalizeMap(expectedMap)));
+    } catch (TestArrangeNormalizerException e) {
+      var reason = TestAssertReason.reasonOf(this.context.getStep(), e.getMessage());
+      throw new AssertionFailedError(reason);
+    }
     return this;
   }
 

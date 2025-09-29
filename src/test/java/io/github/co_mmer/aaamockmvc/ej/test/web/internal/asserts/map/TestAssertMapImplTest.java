@@ -3,6 +3,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.map;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.TestArrangeNormalizer.normalizeMap;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_OBJECT;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.MAP_WITH_NORMALIZED_KEY_COLLISION;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A2_A3;
@@ -25,17 +26,20 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.opentest4j.AssertionFailedError;
 
 @SuppressWarnings("java:S2699")
 class TestAssertMapImplTest extends TestAssertBase {
 
   private TestAssertMapImpl<Integer, TestObjectSimple> testAssert;
+  private TestAssertMapImpl<String, String> testAssertString;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
     this.testAssert = new TestAssertMapImpl<>(context);
+    this.testAssertString = new TestAssertMapImpl<>(context);
   }
 
   @Nested
@@ -137,6 +141,24 @@ class TestAssertMapImplTest extends TestAssertBase {
     void GIVEN_null_WHEN_isEqualTo_THEN_throw_Exception() {
       // Act & Assert
       assertThrows(NullPointerException.class, () -> testAssert.isEqualTo(null));
+    }
+
+    @Test
+    void GIVEN_collidingKeys_WHEN_isEqualTo_THEN_throw_Exception() {
+      // Assert
+      useAssertResult(MAP_WITH_NORMALIZED_KEY_COLLISION);
+
+      // Act
+      var ex =
+          assertThrows(
+              AssertionFailedError.class,
+              () -> testAssertString.isEqualTo(MAP_WITH_NORMALIZED_KEY_COLLISION));
+
+      // Assert
+      assertThat(ex.getMessage(), containsString("Key collision after normalization: originals"));
+      assertThat(ex.getMessage(), containsString("\"Café\" [U+0043 U+0061 U+0066 U+00E9]"));
+      assertThat(ex.getMessage(), containsString("vs"));
+      assertThat(ex.getMessage(), containsString("\"Café\" [U+0043 U+0061 U+0066 U+0065 U+0301]"));
     }
   }
 

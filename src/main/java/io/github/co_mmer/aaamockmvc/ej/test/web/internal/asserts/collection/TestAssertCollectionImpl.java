@@ -1,7 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.collection;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssert.assertThat;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.TestArrangeNormalizer.normalizeAsObjects;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.TestArrangeNormalizer.normalizeCollection;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_ARRAY;
@@ -77,9 +76,9 @@ public final class TestAssertCollectionImpl<E>
   public TestAssert3Collection<E> contains(@NonNull Collection<E> expectedElements) {
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    var normalizeExpected = normalizeAsObjects(expectedElements);
-    var normalizeActual = normalizeAsObjects(actual);
-    assertThat(this.context.getStep(), normalizeActual, hasItems(normalizeExpected.toArray()));
+    var normalizeExpected = normalizeCollection(expectedElements).toArray(String[]::new);
+    var normalizeActual = normalizeCollection(actual);
+    assertThat(this.context.getStep(), normalizeActual, hasItems(normalizeExpected));
     return this;
   }
 
@@ -91,8 +90,8 @@ public final class TestAssertCollectionImpl<E>
   public TestAssert3Collection<E> containsAnyOrder(@NonNull Collection<E> expectedCollection) {
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    var normalizeExpected = normalizeAsObjects(expectedCollection);
-    var normalizeActual = normalizeAsObjects(actual);
+    var normalizeExpected = normalizeCollection(expectedCollection);
+    var normalizeActual = normalizeCollection(actual);
     assertThat(
         this.context.getStep(), normalizeActual, containsInAnyOrder(normalizeExpected.toArray()));
     return this;
@@ -101,9 +100,9 @@ public final class TestAssertCollectionImpl<E>
   public TestAssert3Collection<E> notContains(@NonNull Collection<E> unexpectedElements) {
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    var normalizeExpected = normalizeAsObjects(unexpectedElements);
-    var normalizeActual = normalizeAsObjects(actual);
-    assertThat(this.context.getStep(), normalizeActual, not(hasItems(normalizeExpected.toArray())));
+    var normalizeExpected = normalizeCollection(unexpectedElements).toArray(String[]::new);
+    var normalizeActual = normalizeCollection(actual);
+    assertThat(this.context.getStep(), normalizeActual, not(hasItems(normalizeExpected)));
     return this;
   }
 

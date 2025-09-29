@@ -11,15 +11,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TestNormalizer {
 
-  public static final String WORD_OBJECT = "Café";
-  public static final String WORD_OBJECT_NORMALIZED = Normalizer.normalize(WORD_OBJECT, Form.NFC);
-  public static final List<String> WORD_LIST = List.of("Café", "Naïve", "Résumé");
-  public static final List<String> WORD_LIST_NORMALIZED =
-      WORD_LIST.stream().map(element -> Normalizer.normalize(element, Form.NFC)).toList();
+  public static final String NOT_NORMALIZED_CAFE = "Café";
+  public static final String NORMALIZED_CAFE = Normalizer.normalize(NOT_NORMALIZED_CAFE, Form.NFC);
+  public static final List<String> NOT_NORMALIZED_LIST = List.of("Café", "Naïve", "Résumé");
+  public static final List<String> NORMALIZED_CAFE_LIST =
+      NOT_NORMALIZED_LIST.stream().map(element -> Normalizer.normalize(element, Form.NFC)).toList();
 
-  public static final Map<String, String> WORD_MAP = Map.of("Key1", "Café", "Key2", "Résumé");
-  public static final Map<String, String> WORD_MAP_NORMALIZED =
-      WORD_MAP.entrySet().stream()
+  public static final Map<String, String> NOT_NORMALIZED_CAFE_MAP =
+      Map.of("Key1", "Café", "Key2", "Résumé");
+  public static final Map<String, String> NORMALIZED_CAFE_MAP =
+      NOT_NORMALIZED_CAFE_MAP.entrySet().stream()
           .collect(
               Collectors.toMap(
                   entry -> Normalizer.normalize(entry.getKey(), Form.NFC),

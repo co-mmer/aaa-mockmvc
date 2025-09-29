@@ -38,6 +38,8 @@ public final class TestObject {
   public static final List<TestObjectSimple> TEST_LIST_A1_A3 = List.of(A1, A3);
   public static final List<TestObjectSimple> TEST_LIST_A3_A1 = List.of(A3, A1);
   public static final Set<TestObjectSimple> TEST_SET_A1_A2 = Set.of(A1, A2);
+  public static final Map<String, String> MAP_WITH_NORMALIZED_KEY_COLLISION =
+      Map.of("Cafe\u0301", "value1", "Caf\u00E9", "value2");
 
   public static final Map<Integer, TestObjectSimple> TEST_MAP_A1_A2 = Map.of(ID1, A1, ID2, A2);
   public static final Map<Integer, TestObjectSimple> TEST_MAP_A2_A3 = Map.of(ID2, A2, ID3, A3);
