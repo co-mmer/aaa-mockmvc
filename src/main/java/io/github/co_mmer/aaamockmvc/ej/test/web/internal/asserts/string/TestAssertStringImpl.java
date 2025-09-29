@@ -26,15 +26,17 @@ public final class TestAssertStringImpl
 
   @Override
   public TestAssert2String isNotEmpty() {
-    var content = this.context.getActResult().contentAsString();
-    assertThat(this.context.getStep(), content.isEmpty(), is(false));
+    assertThat(this.context.getStep(), getContent().isEmpty(), is(false));
     return this;
+  }
+
+  private String getContent() {
+    return this.context.getActResult().contentAsString();
   }
 
   @Override
   public TestAssertLString isEmpty() {
-    var content = this.context.getActResult().contentAsString();
-    assertThat(this.context.getStep(), content.isEmpty(), is(true));
+    assertThat(this.context.getStep(), getContent().isEmpty(), is(true));
     return this;
   }
 
@@ -49,9 +51,8 @@ public final class TestAssertStringImpl
 
   @Override
   public TestAssertLString isEqualTo(@NonNull String expectedString) {
-    var content = this.context.getActResult().contentAsString();
     assertThat(
-        this.context.getStep(), normalizeObject(content), is(normalizeObject(expectedString)));
+        this.context.getStep(), normalizeObject(getContent()), is(normalizeObject(expectedString)));
     return this;
   }
 

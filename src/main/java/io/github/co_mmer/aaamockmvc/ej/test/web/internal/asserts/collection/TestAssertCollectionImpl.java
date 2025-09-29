@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.collection;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssert.assertThat;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.TestArrangeNormalizer.normalizeAsObjects;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.TestArrangeNormalizer.normalizeCollection;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
@@ -19,7 +20,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertLCo
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertMatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import java.util.Collection;
@@ -46,28 +46,28 @@ public final class TestAssertCollectionImpl<E>
   @Override
   public TestAssert2Collection<E> isNotEmpty() {
     var actual = this.context.getActResult().contentAsString();
-    TestAssert.assertThat(this.context.getStep(), actual, not(anyOf(is(EMPTY), is(EMPTY_ARRAY))));
+    assertThat(this.context.getStep(), actual, not(anyOf(is(EMPTY), is(EMPTY_ARRAY))));
     return this;
   }
 
   @Override
   public TestAssertLCollection isEmpty() {
     var actual = this.context.getActResult().contentAsString();
-    TestAssert.assertThat(this.context.getStep(), actual, anyOf(is(EMPTY), is(EMPTY_ARRAY)));
+    assertThat(this.context.getStep(), actual, anyOf(is(EMPTY), is(EMPTY_ARRAY)));
     return this;
   }
 
   @Override
   public TestAssert2Collection<E> hasSize(int expectedSize) {
     var actual = (Collection<?>) this.context.getAssertResult().actualContent();
-    TestAssert.assertThat(this.context.getStep(), actual.size(), is(expectedSize));
+    assertThat(this.context.getStep(), actual.size(), is(expectedSize));
     return this;
   }
 
   public TestAssertLCollection isEqualTo(@NonNull Collection<E> expectedCollection) {
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    TestAssert.assertThat(
+    assertThat(
         this.context.getStep(),
         normalizeCollection(actual),
         is(normalizeCollection(expectedCollection)));
@@ -79,8 +79,7 @@ public final class TestAssertCollectionImpl<E>
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
     var normalizeExpected = normalizeAsObjects(expectedElements);
     var normalizeActual = normalizeAsObjects(actual);
-    TestAssert.assertThat(
-        this.context.getStep(), normalizeActual, hasItems(normalizeExpected.toArray()));
+    assertThat(this.context.getStep(), normalizeActual, hasItems(normalizeExpected.toArray()));
     return this;
   }
 
@@ -94,7 +93,7 @@ public final class TestAssertCollectionImpl<E>
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
     var normalizeExpected = normalizeAsObjects(expectedCollection);
     var normalizeActual = normalizeAsObjects(actual);
-    TestAssert.assertThat(
+    assertThat(
         this.context.getStep(), normalizeActual, containsInAnyOrder(normalizeExpected.toArray()));
     return this;
   }
@@ -104,8 +103,7 @@ public final class TestAssertCollectionImpl<E>
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
     var normalizeExpected = normalizeAsObjects(unexpectedElements);
     var normalizeActual = normalizeAsObjects(actual);
-    TestAssert.assertThat(
-        this.context.getStep(), normalizeActual, not(hasItems(normalizeExpected.toArray())));
+    assertThat(this.context.getStep(), normalizeActual, not(hasItems(normalizeExpected.toArray())));
     return this;
   }
 

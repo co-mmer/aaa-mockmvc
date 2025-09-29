@@ -13,6 +13,11 @@ public final class StringUtils {
     return string == null || string.trim().isEmpty();
   }
 
+  @Since("2.0.0")
+  public static boolean isNotBlank(String string) {
+    return !isBlank(string);
+  }
+  
   @Since("1.4.1")
   public static final String EMPTY = "";
 
@@ -25,7 +30,4 @@ public final class StringUtils {
   @Since("1.4.1")
   public static final String UNSET = "<unset>";
 
-  public static boolean isNotBlank(String string) {
-    return !isBlank(string);
-  }
 }

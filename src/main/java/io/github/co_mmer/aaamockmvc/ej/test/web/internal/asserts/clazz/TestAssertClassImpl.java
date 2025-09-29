@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.clazz;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssert.assertThat;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.string.TestArrangeNormalizer.normalizeObject;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -13,7 +14,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssertLClass;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertMatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import java.util.function.Predicate;
@@ -36,25 +36,26 @@ public final class TestAssertClassImpl<T>
 
   @Override
   public TestAssert2Class<T> isNotNull() {
-    TestAssert.assertThat(
-        this.context.getStep(), this.context.getAssertResult().actualContent(), is(notNullValue()));
+    assertThat(this.context.getStep(), getActual(), is(notNullValue()));
     return this;
+  }
+
+  private Object getActual() {
+    return this.context.getAssertResult().actualContent();
   }
 
   @Override
   public TestAssertLClass isNull() {
-    TestAssert.assertThat(
-        this.context.getStep(), this.context.getAssertResult().actualContent(), is(nullValue()));
+    assertThat(this.context.getStep(), getActual(), is(nullValue()));
     return this;
   }
 
   @Override
   public TestAssertLClass isEqualTo(@NonNull T expectedResponse) {
     @SuppressWarnings("unchecked")
-    T actual = (T) this.context.getAssertResult().actualContent();
-    TestAssert.assertThat(
-        this.context.getStep(), actual.getClass(), is(expectedResponse.getClass()));
-    TestAssert.assertThat(
+    T actual = (T) getActual();
+    assertThat(this.context.getStep(), actual.getClass(), is(expectedResponse.getClass()));
+    assertThat(
         this.context.getStep(), normalizeObject(actual), is(normalizeObject(expectedResponse)));
     return this;
   }
@@ -88,7 +89,7 @@ public final class TestAssertClassImpl<T>
   @Override
   public final TestAssert3Class<T> matchAll(@NonNull Predicate<T>... conditions) {
     @SuppressWarnings("unchecked")
-    T actual = (T) this.context.getAssertResult().actualContent();
+    T actual = (T) getActual();
     TestAssertMatch.assertThat(this.context.getStep(), actual).matchAll(conditions);
     return this;
   }
@@ -122,7 +123,7 @@ public final class TestAssertClassImpl<T>
   @Override
   public final TestAssert4Class<T> matchAny(@NonNull Predicate<T>... conditions) {
     @SuppressWarnings("unchecked")
-    T actual = (T) this.context.getAssertResult().actualContent();
+    T actual = (T) getActual();
     TestAssertMatch.assertThat(this.context.getStep(), actual).matchAny(conditions);
     return this;
   }
@@ -156,7 +157,7 @@ public final class TestAssertClassImpl<T>
   @Override
   public final TestAssertLClass matchNone(@NonNull Predicate<T>... conditions) {
     @SuppressWarnings("unchecked")
-    T actual = (T) this.context.getAssertResult().actualContent();
+    T actual = (T) getActual();
     TestAssertMatch.assertThat(this.context.getStep(), actual).matchNone(conditions);
     return this;
   }

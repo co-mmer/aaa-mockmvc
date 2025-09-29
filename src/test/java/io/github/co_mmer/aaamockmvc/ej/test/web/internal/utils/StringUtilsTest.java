@@ -18,6 +18,11 @@ class StringUtilsTest {
     assertTrue(StringUtils.isBlank(input));
   }
 
+  @Test
+  void GIVEN_string_WHEN_isNotBlank_THEN_return_true() {
+    assertTrue(StringUtils.isNotBlank("test"));
+  }
+
   @ParameterizedTest
   @ValueSource(strings = {"test", " a ", "0", "false"})
   void GIVEN_value_WHEN_isBlank_THEN_return_false(String input) {

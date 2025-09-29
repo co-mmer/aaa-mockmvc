@@ -9,6 +9,8 @@ import static org.hamcrest.Matchers.not;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import java.util.List;
+import java.util.Map;
 import lombok.NonNull;
 import org.hamcrest.Matchers;
 
@@ -24,21 +26,23 @@ public final class TestAssertHeadImpl implements TestAssertHead {
 
   @Override
   public TestAssertHead containsKey(String expectedKey) {
-    var headers = this.context.getActResult().headers();
-    assertThat(this.context.getStep(), headers, Matchers.hasKey(expectedKey));
+    assertThat(this.context.getStep(), getHeaders(), Matchers.hasKey(expectedKey));
     return this;
+  }
+
+  private Map<String, List<String>> getHeaders() {
+    return this.context.getActResult().headers();
   }
 
   @Override
   public TestAssertHead doesNotContainKey(String notExpectedKey) {
-    var headers = this.context.getActResult().headers();
-    assertThat(this.context.getStep(), headers, not(Matchers.hasKey(notExpectedKey)));
+    assertThat(this.context.getStep(), getHeaders(), not(Matchers.hasKey(notExpectedKey)));
     return this;
   }
 
   @Override
   public TestAssertHead containsEntry(String expectedKey, String expectedValue) {
-    var headers = this.context.getActResult().headers();
+    var headers = getHeaders();
     assertThat(this.context.getStep(), expectedKey, headers, Matchers.hasKey(expectedKey));
     assertThat(this.context.getStep(), headers.get(expectedKey), hasItem(expectedValue));
     return this;
@@ -52,7 +56,7 @@ public final class TestAssertHeadImpl implements TestAssertHead {
         expectedValue,
         not(emptyArray()));
 
-    var headers = this.context.getActResult().headers();
+    var headers = getHeaders();
     assertThat(this.context.getStep(), expectedKey, headers, Matchers.hasKey(expectedKey));
     assertThat(this.context.getStep(), headers.get(expectedKey), containsInAnyOrder(expectedValue));
     return this;
