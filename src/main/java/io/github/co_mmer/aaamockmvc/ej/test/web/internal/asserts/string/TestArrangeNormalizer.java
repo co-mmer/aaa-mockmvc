@@ -23,7 +23,7 @@ public final class TestArrangeNormalizer {
 
   @Since("1.4.0")
   public static <T> List<String> normalizeCollection(@NonNull Collection<T> actual) {
-    return actual.stream().map(element -> normalizeObject(element.toString())).toList();
+    return actual.stream().map(TestArrangeNormalizer::normalizeObject).toList();
   }
 
   @Since("1.4.0")

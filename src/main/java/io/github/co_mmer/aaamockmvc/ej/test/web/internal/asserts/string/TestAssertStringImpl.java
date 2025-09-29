@@ -42,10 +42,7 @@ public final class TestAssertStringImpl
 
   @Override
   public TestAssert2String hasLength(int expectedLength) {
-    assertThat(
-        this.context.getStep(),
-        this.context.getActResult().contentAsString().length(),
-        is(expectedLength));
+    assertThat(this.context.getStep(), getContent().length(), is(expectedLength));
     return this;
   }
 
