@@ -9,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 public final class StringUtils {
 
   @Since("1.4.1")
-  public static boolean isBlank(String str) {
-    return str == null || str.trim().isEmpty();
+  public static boolean isBlank(String string) {
+    return string == null || string.trim().isEmpty();
   }
 
   @Since("1.4.1")
@@ -24,4 +24,8 @@ public final class StringUtils {
 
   @Since("1.4.1")
   public static final String UNSET = "<unset>";
+
+  public static boolean isNotBlank(String string) {
+    return !isBlank(string);
+  }
 }

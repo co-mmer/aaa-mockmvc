@@ -25,4 +25,41 @@ public class TestAssertReason {
     var reason = reasonOf(step);
     return StringUtils.isBlank(reason) ? what : reason + " ⇒ " + what;
   }
+
+  @Since("2.0.0")
+  public static String reasonContentOf(TestStepDto step, String who, String with, String what) {
+    var base = reasonOf(step);
+
+    var detailsBuilder = new StringBuilder();
+    addWho(who, detailsBuilder);
+    addWith(with, detailsBuilder);
+    addWhat(what, detailsBuilder);
+
+    var detail = detailsBuilder.toString();
+    return StringUtils.isBlank(base) ? detail : base + " ⇒ " + detail;
+  }
+
+  private static void addWho(String who, StringBuilder sb) {
+    if (StringUtils.isNotBlank(who)) {
+      sb.append("assertion '").append(who).append("' failed");
+    }
+  }
+
+  private static void addWith(String with, StringBuilder sb) {
+    if (StringUtils.isNotBlank(with)) {
+      if (!sb.isEmpty()) {
+        sb.append(": ");
+      }
+      sb.append("Response body ").append("'").append(with).append("'");
+    }
+  }
+
+  private static void addWhat(String what, StringBuilder sb) {
+    if (StringUtils.isNotBlank(what)) {
+      if (!sb.isEmpty() && sb.charAt(sb.length() - 1) != ' ') {
+        sb.append(' ');
+      }
+      sb.append(what);
+    }
+  }
 }

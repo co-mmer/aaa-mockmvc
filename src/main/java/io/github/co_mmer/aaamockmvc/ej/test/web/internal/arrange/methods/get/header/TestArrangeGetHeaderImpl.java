@@ -17,11 +17,11 @@ import org.springframework.http.MediaType;
 @Since("1.0.0")
 public final class TestArrangeGetHeaderImpl extends TestArrangeHeader
     implements TestArrange1GetHeader,
-    TestArrange2GetHeader,
-    TestArrange3GetHeader,
-    TestArrange4GetHeader,
-    TestArrange5GetHeader,
-    TestArrange6GetHeader {
+        TestArrange2GetHeader,
+        TestArrange3GetHeader,
+        TestArrange4GetHeader,
+        TestArrange5GetHeader,
+        TestArrange6GetHeader {
 
   @Since("2.0.0")
   public TestArrangeGetHeaderImpl(@NonNull TestAAAContext context) {

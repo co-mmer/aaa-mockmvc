@@ -51,7 +51,7 @@
 - **Exception model:**
     - Act failures → `TestActFailedError` (wraps infrastructure/runtime problems, not HTTP status
       codes)
-    - Assert failures → `TestAssertFailedError`
+    - Assert failures → `AssertionsFailedError`
     - Answer mapping failures → `TestAnswerException`
 
 - **Error hygiene:**

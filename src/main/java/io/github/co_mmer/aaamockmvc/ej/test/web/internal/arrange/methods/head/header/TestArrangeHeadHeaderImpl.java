@@ -16,11 +16,11 @@ import lombok.NonNull;
 @Since("1.0.0")
 public final class TestArrangeHeadHeaderImpl extends TestArrangeHeader
     implements TestArrange1HeadHeader,
-    TestArrange2HeadHeader,
-    TestArrange3HeadHeader,
-    TestArrange4HeadHeader,
-    TestArrange5HeadHeader,
-    TestArrange6HeadHeader {
+        TestArrange2HeadHeader,
+        TestArrange3HeadHeader,
+        TestArrange4HeadHeader,
+        TestArrange5HeadHeader,
+        TestArrange6HeadHeader {
 
   @Since("2.0.0")
   public TestArrangeHeadHeaderImpl(@NonNull TestAAAContext context) {

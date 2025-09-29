@@ -7,6 +7,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Co
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
 import lombok.NonNull;
+import org.opentest4j.AssertionFailedError;
 
 /**
  * Entry point for content assertions.
@@ -76,10 +77,10 @@ public interface TestAssertContent {
    * @param <C> target type
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
    *     based on the current state.
-   * @throws TestAssertFailedError if the body cannot be deserialized to {@code expectedClass}
+   * @throws AssertionFailedError if the body cannot be deserialized to {@code expectedClass}
    * @since 2.0.0
    */
-  <C> TestAssert1Class<C> asClass(@NonNull Class<C> expectedClass) throws TestAssertFailedError;
+  <C> TestAssert1Class<C> asClass(@NonNull Class<C> expectedClass) throws AssertionFailedError;
 
   /**
    * Deserializes the response body into a {@code Collection<E>} using the configured mapper and
@@ -89,11 +90,11 @@ public interface TestAssertContent {
    * @param <E> element type
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
    *     based on the current state.
-   * @throws TestAssertFailedError if the body cannot be deserialized to {@code Collection<E>}
+   * @throws AssertionFailedError if the body cannot be deserialized to {@code Collection<E>}
    * @since 2.0.0
    */
   <E> TestAssert1Collection<E> asCollection(@NonNull Class<E> elementClass)
-      throws TestAssertFailedError;
+      throws AssertionFailedError;
 
   /**
    * Deserializes the response body into a {@code List<E>} using the configured mapper and exposes
@@ -103,10 +104,10 @@ public interface TestAssertContent {
    * @param <E> element type
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
    *     based on the current state.
-   * @throws TestAssertFailedError if the body cannot be deserialized to {@code List<E>}
+   * @throws AssertionFailedError if the body cannot be deserialized to {@code List<E>}
    * @since 2.0.0
    */
-  <E> TestAssert1Collection<E> asList(@NonNull Class<E> elementClass) throws TestAssertFailedError;
+  <E> TestAssert1Collection<E> asList(@NonNull Class<E> elementClass) throws AssertionFailedError;
 
   /**
    * Deserializes the response body into a {@code Set<E>} using the configured mapper and exposes
@@ -116,10 +117,10 @@ public interface TestAssertContent {
    * @param <E> element type
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
    *     based on the current state.
-   * @throws TestAssertFailedError if the body cannot be deserialized to {@code Set<E>}
+   * @throws AssertionFailedError if the body cannot be deserialized to {@code Set<E>}
    * @since 2.0.0
    */
-  <E> TestAssert1Collection<E> asSet(@NonNull Class<E> elementClass) throws TestAssertFailedError;
+  <E> TestAssert1Collection<E> asSet(@NonNull Class<E> elementClass) throws AssertionFailedError;
 
   /**
    * Deserializes the response body into a {@code Map<K,V>} using the configured mapper and exposes
@@ -131,9 +132,9 @@ public interface TestAssertContent {
    * @param <V> value type
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
    *     based on the current state.
-   * @throws TestAssertFailedError if the body cannot be deserialized to {@code Map<K,V>}
+   * @throws AssertionFailedError if the body cannot be deserialized to {@code Map<K,V>}
    * @since 2.0.0
    */
   <K, V> TestAssert1Map<K, V> asMap(@NonNull Class<K> keyClass, @NonNull Class<V> valueClass)
-      throws TestAssertFailedError;
+      throws AssertionFailedError;
 }

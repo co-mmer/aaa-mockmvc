@@ -12,15 +12,12 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_SET_A1_A2_JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertFailedError;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
@@ -31,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.opentest4j.AssertionFailedError;
 
 class TestAssertContentImplTest {
 
@@ -77,17 +75,17 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    void
-        GIVEN_invalid_mapping_WHEN_asBoolean_THEN_throw_TestAssertFailedError_wrapping_TestGenericMapperException() {
+    void GIVEN_invalid_mapping_WHEN_asBoolean_THEN_throw_AssertionFailedError() {
       when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
 
       // Act
-      var ex = assertThrows(TestAssertFailedError.class, () -> impl.asBoolean());
+      var ex = assertThrows(AssertionFailedError.class, () -> impl.asBoolean());
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asBoolean"));
-      assertThat(ex.getMessage(), containsString("Boolean"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "assertion 'content().asBoolean()' failed: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Boolean"));
       assertThat(context.getAssertResult(), nullValue());
     }
   }
@@ -208,17 +206,17 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    void
-        GIVEN_invalid_mapping_WHEN_asClass_THEN_throw_TestAssertFailedError_wrapping_TestGenericMapperException() {
+    void GIVEN_invalid_mapping_WHEN_asClass_THEN_throw_AssertionFailedError() {
       when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
 
       // Act
-      var ex = assertThrows(TestAssertFailedError.class, () -> impl.asClass(String.class));
+      var ex = assertThrows(AssertionFailedError.class, () -> impl.asClass(String.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asClass"));
-      assertThat(ex.getMessage(), containsString("String"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "assertion 'content().asClass()' failed: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to String"));
       assertThat(context.getAssertResult(), nullValue());
     }
   }
@@ -257,35 +255,35 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    void
-        GIVEN_invalid_mapping_WHEN_asCollection_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
+    void GIVEN_invalid_mapping_WHEN_asCollection_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
 
       // Act
-      var ex = assertThrows(TestAssertFailedError.class, () -> impl.asCollection(String.class));
+      var ex = assertThrows(AssertionFailedError.class, () -> impl.asCollection(String.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asCollection"));
-      assertThat(ex.getMessage(), containsString("String"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "assertion 'content().asCollection()' failed: Response body '[{\"id\":1,\"name\":\"A\"},{\"id\":2,\"name\":\"A\"}]' cannot be mapped to String"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
     @Test
-    void
-        GIVEN_invalid_json_WHEN_asCollection_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
+    void GIVEN_invalid_json_WHEN_asCollection_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn("{not-valid-json");
 
       // Act
       var ex =
-          assertThrows(
-              TestAssertFailedError.class, () -> impl.asCollection(TestObjectSimple.class));
+          assertThrows(AssertionFailedError.class, () -> impl.asCollection(TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asCollection"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "assertion 'content().asCollection()' failed: Response body '{not-valid-json' cannot be mapped to TestObjectSimple"));
       assertThat(context.getAssertResult(), nullValue());
     }
   }
@@ -324,47 +322,50 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    void
-        GIVEN_invalid_elementClass_WHEN_asList_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
+    void GIVEN_invalid_elementClass_WHEN_asList_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
 
       // Act
-      var ex = assertThrows(TestAssertFailedError.class, () -> impl.asList(String.class));
+      var ex = assertThrows(AssertionFailedError.class, () -> impl.asList(String.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asList"));
-      assertThat(ex.getMessage(), containsString("String"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "assertion 'content().asList()' failed: Response body '[{\"id\":1,\"name\":\"A\"},{\"id\":2,\"name\":\"A\"}]' cannot be mapped to String"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
     @Test
-    void
-        GIVEN_invalid_json_WHEN_asList_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
+    void GIVEN_invalid_json_WHEN_asList_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn("{not-valid-json");
 
       // Act
-      var ex = assertThrows(TestAssertFailedError.class, () -> impl.asList(TestObjectSimple.class));
+      var ex = assertThrows(AssertionFailedError.class, () -> impl.asList(TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asList"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "assertion 'content().asList()' failed: Response body '{not-valid-json' cannot be mapped to TestObjectSimple"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
     @Test
-    void GIVEN_object_json_instead_of_array_WHEN_asList_THEN_throwTestAssertFailedError() {
+    void GIVEN_object_json_instead_of_array_WHEN_asList_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
 
       // Act
-      var ex = assertThrows(TestAssertFailedError.class, () -> impl.asList(TestObjectSimple.class));
+      var ex = assertThrows(AssertionFailedError.class, () -> impl.asList(TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asList"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "assertion 'content().asList()' failed: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to TestObjectSimple"));
       assertThat(context.getAssertResult(), nullValue());
     }
   }
@@ -403,47 +404,48 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    void
-        GIVEN_invalid_elementClass_WHEN_asSet_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
+    void GIVEN_invalid_elementClass_WHEN_asSet_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_SET_A1_A2_JSON);
 
       // Act
-      var ex = assertThrows(TestAssertFailedError.class, () -> impl.asSet(String.class));
+      var ex = assertThrows(AssertionFailedError.class, () -> impl.asSet(String.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asSet"));
-      assertThat(ex.getMessage(), containsString("String"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(), containsString("assertion 'content().asSet()' failed: Response body "));
+      assertThat(ex.getMessage(), containsString("cannot be mapped to String"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
     @Test
-    void
-        GIVEN_invalid_json_WHEN_asSet_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
+    void GIVEN_invalid_json_WHEN_asSet_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn("{not-valid-json");
 
       // Act
-      var ex = assertThrows(TestAssertFailedError.class, () -> impl.asSet(TestObjectSimple.class));
+      var ex = assertThrows(AssertionFailedError.class, () -> impl.asSet(TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asSet"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(),
+          is(
+              "assertion 'content().asSet()' failed: Response body '{not-valid-json' cannot be mapped to TestObjectSimple"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
     @Test
-    void GIVEN_object_json_instead_of_array_WHEN_asSet_THEN_throwTestAssertFailedError() {
+    void GIVEN_object_json_instead_of_array_WHEN_asSet_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
 
       // Act
-      var ex = assertThrows(TestAssertFailedError.class, () -> impl.asSet(TestObjectSimple.class));
+      var ex = assertThrows(AssertionFailedError.class, () -> impl.asSet(TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asSet"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(), containsString("assertion 'content().asSet()' failed: Response body "));
+      assertThat(ex.getMessage(), containsString("cannot be mapped to TestObjectSimple"));
       assertThat(context.getAssertResult(), nullValue());
     }
   }
@@ -482,86 +484,88 @@ class TestAssertContentImplTest {
     }
 
     @Test
-    void
-        GIVEN_wrong_keyClass_WHEN_asMap_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
+    void GIVEN_wrong_keyClass_WHEN_asMap_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_MAP_A1_A2_JSON);
 
       // Act
       var ex =
           assertThrows(
-              TestAssertFailedError.class, () -> impl.asMap(Boolean.class, TestObjectSimple.class));
+              AssertionFailedError.class, () -> impl.asMap(Boolean.class, TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asMap"));
-      assertThat(ex.getMessage(), containsString("Boolean"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(), containsString("assertion 'content().asMap()' failed: Response body "));
+      assertThat(
+          ex.getMessage(), containsString("cannot be mapped to Map<Boolean, TestObjectSimple>"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
     @Test
-    void
-        GIVEN_wrong_valueClass_WHEN_asMap_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
+    void GIVEN_wrong_valueClass_WHEN_asMap_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_MAP_A1_A2_JSON);
 
       // Act
       var ex =
-          assertThrows(TestAssertFailedError.class, () -> impl.asMap(Integer.class, String.class));
+          assertThrows(AssertionFailedError.class, () -> impl.asMap(Integer.class, String.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asMap"));
-      assertThat(ex.getMessage(), containsString("String"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(), containsString("assertion 'content().asMap()' failed: Response body "));
+      assertThat(ex.getMessage(), containsString("cannot be mapped to Map<Integer, String>"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
     @Test
-    void
-        GIVEN_wrong_key_and_value_class_WHEN_asMap_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
+    void GIVEN_wrong_key_and_value_class_WHEN_asMap_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_MAP_A1_A2_JSON);
 
       // Act
       var ex =
-          assertThrows(TestAssertFailedError.class, () -> impl.asMap(String.class, String.class));
+          assertThrows(AssertionFailedError.class, () -> impl.asMap(String.class, String.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asMap"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(), containsString("assertion 'content().asMap()' failed: Response body "));
+      assertThat(ex.getMessage(), containsString("cannot be mapped to Map<String, String>"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
     @Test
-    void
-        GIVEN_invalid_json_WHEN_asMap_THEN_throwTestAssertFailedError_wrappingTestGenericMapperException() {
+    void GIVEN_invalid_json_WHEN_asMap_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn("{not-valid-json");
 
       // Act
       var ex =
           assertThrows(
-              TestAssertFailedError.class, () -> impl.asMap(Integer.class, TestObjectSimple.class));
+              AssertionFailedError.class, () -> impl.asMap(Integer.class, TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asMap"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(), containsString("assertion 'content().asMap()' failed: Response body "));
+      assertThat(
+          ex.getMessage(), containsString("cannot be mapped to Map<Integer, TestObjectSimple>"));
       assertThat(context.getAssertResult(), nullValue());
     }
 
     @Test
-    void GIVEN_array_json_instead_of_object_WHEN_asMap_THEN_throwTestAssertFailedError() {
+    void GIVEN_array_json_instead_of_object_WHEN_asMap_THEN_throw_AssertionFailedError() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
 
       // Act
       var ex =
           assertThrows(
-              TestAssertFailedError.class, () -> impl.asMap(Integer.class, TestObjectSimple.class));
+              AssertionFailedError.class, () -> impl.asMap(Integer.class, TestObjectSimple.class));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("asMap"));
-      assertThat(ex.getCause(), instanceOf(TestGenericMapperException.class));
+      assertThat(
+          ex.getMessage(), containsString("assertion 'content().asMap()' failed: Response body "));
+      assertThat(
+          ex.getMessage(), containsString("cannot be mapped to Map<Integer, TestObjectSimple>"));
       assertThat(context.getAssertResult(), nullValue());
     }
   }

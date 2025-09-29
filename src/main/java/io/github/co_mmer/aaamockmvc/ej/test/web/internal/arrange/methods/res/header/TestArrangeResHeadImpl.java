@@ -19,11 +19,11 @@ import org.springframework.http.MediaType;
 @Since("1.0.0")
 public final class TestArrangeResHeadImpl extends TestArrangeHeader
     implements TestArrange1ResHead,
-    TestArrange2ResHead,
-    TestArrange3ResHead,
-    TestArrange4ResHead,
-    TestArrange5ResHead,
-    TestArrange6ResHead {
+        TestArrange2ResHead,
+        TestArrange3ResHead,
+        TestArrange4ResHead,
+        TestArrange5ResHead,
+        TestArrange6ResHead {
 
   @Since("2.0.0")
   public TestArrangeResHeadImpl(@NonNull TestAAAContext context) {

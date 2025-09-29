@@ -17,11 +17,11 @@ import org.springframework.http.MediaType;
 @Since("1.0.0")
 public final class TestArrangeDeleteHeaderImpl extends TestArrangeHeader
     implements TestArrange1DeleteHeader,
-    TestArrange2DeleteHeader,
-    TestArrange3DeleteHeader,
-    TestArrange4DeleteHeader,
-    TestArrange5DeleteHeader,
-    TestArrange6DeleteHeader {
+        TestArrange2DeleteHeader,
+        TestArrange3DeleteHeader,
+        TestArrange4DeleteHeader,
+        TestArrange5DeleteHeader,
+        TestArrange6DeleteHeader {
 
   @Since("2.0.0")
   public TestArrangeDeleteHeaderImpl(@NonNull TestAAAContext context) {

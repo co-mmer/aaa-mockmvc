@@ -26,28 +26,30 @@ public class TestAssertBooleanImpl
 
   @Override
   public TestAssert3Boolean isNull() {
-    assertThat(
-        this.context.getStep(), this.context.getAssertResult().actualContent(), is(nullValue()));
+    assertThat(this.context.getStep(), getActual(), is(nullValue()));
     return this;
+  }
+
+  private Object getActual() {
+    return this.context.getAssertResult().actualContent();
   }
 
   @Override
   public TestAssert2Boolean isNotNull() {
-    assertThat(
-        this.context.getStep(), this.context.getAssertResult().actualContent(), is(notNullValue()));
+    assertThat(this.context.getStep(), getActual(), is(notNullValue()));
     return this;
   }
 
   @Override
   public TestAssert3Boolean isTrue() {
-    var actual = (Boolean) this.context.getAssertResult().actualContent();
+    var actual = (Boolean) getActual();
     assertThat(this.context.getStep(), actual, is(Boolean.TRUE));
     return this;
   }
 
   @Override
   public TestAssert3Boolean isFalse() {
-    var actual = (Boolean) this.context.getAssertResult().actualContent();
+    var actual = (Boolean) getActual();
     assertThat(this.context.getStep(), actual, is(Boolean.FALSE));
     return this;
   }

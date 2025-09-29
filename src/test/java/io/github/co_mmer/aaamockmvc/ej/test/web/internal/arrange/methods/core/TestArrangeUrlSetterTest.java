@@ -67,10 +67,10 @@ class TestArrangeUrlSetterTest {
 
     @Test
     void
-    GIVEN_path_var3_and_vars_only_unsupported_WHEN_setUri_THEN_throw_IllegalArgumentException() {
+        GIVEN_path_var3_and_vars_only_unsupported_WHEN_setUri_THEN_throw_IllegalArgumentException() {
       // Arrange
-      Executable executable = () -> setUri(urlDto, GET, PATH_WITH_USER_ORDER_AND_PRODUCT,
-          List.of(1), Map.of("k", 1));
+      Executable executable =
+          () -> setUri(urlDto, GET, PATH_WITH_USER_ORDER_AND_PRODUCT, List.of(1), Map.of("k", 1));
 
       // Act && Assert
       assertThrows(IllegalArgumentException.class, executable);
@@ -78,7 +78,7 @@ class TestArrangeUrlSetterTest {
 
     @Test
     void
-    GIVEN_path_var2_and_vars_2_unsupported_and_2_supported_WHEN_setUri_THEN_getUri_returned_expected_value() {
+        GIVEN_path_var2_and_vars_2_unsupported_and_2_supported_WHEN_setUri_THEN_getUri_returned_expected_value() {
       // Act
       setUri(
           urlDto,
@@ -153,7 +153,7 @@ class TestArrangeUrlSetterTest {
 
     @Test
     void
-    GIVEN_addQuery_key_0_WHEN_addQuery_with_map_key_1_2_THEN_getQuery_returned_expected_values() {
+        GIVEN_addQuery_key_0_WHEN_addQuery_with_map_key_1_2_THEN_getQuery_returned_expected_values() {
       // Arrange
       addQuery(urlDto, QUERY_KEY_SEARCH, QUERY_VALUE_SEARCH_TERM);
 

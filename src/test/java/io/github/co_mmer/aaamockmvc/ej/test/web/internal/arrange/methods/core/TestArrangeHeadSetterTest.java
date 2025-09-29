@@ -111,7 +111,7 @@ class TestArrangeHeadSetterTest {
 
     @Test
     void
-    GIVEN_addKeyValue_key_0_WHEN_addKeyValue_with_map_key_1_2_THEN_getKeyValue_returned_expected_values() {
+        GIVEN_addKeyValue_key_0_WHEN_addKeyValue_with_map_key_1_2_THEN_getKeyValue_returned_expected_values() {
       // Arrange
       addKeyValue(headDto, HEADER_KEY_0, HEADER_VALUE_0);
 

@@ -16,11 +16,11 @@ import lombok.NonNull;
 @Since("1.0.0")
 public final class TestArrangeOptionsHeaderImpl extends TestArrangeHeader
     implements TestArrange1OptionsHeader,
-    TestArrange2OptionsHeader,
-    TestArrange3OptionsHeader,
-    TestArrange4OptionsHeader,
-    TestArrange5OptionsHeader,
-    TestArrange6OptionsHeader {
+        TestArrange2OptionsHeader,
+        TestArrange3OptionsHeader,
+        TestArrange4OptionsHeader,
+        TestArrange5OptionsHeader,
+        TestArrange6OptionsHeader {
 
   @Since("2.0.0")
   public TestArrangeOptionsHeaderImpl(@NonNull TestAAAContext context) {
