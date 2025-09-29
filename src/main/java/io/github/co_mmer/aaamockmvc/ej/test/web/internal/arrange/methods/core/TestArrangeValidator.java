@@ -18,7 +18,7 @@ public final class TestArrangeValidator {
 
   @SafeVarargs
   private static <T> void nonNull(T... values) {
-    if (values != null && Arrays.stream(values).anyMatch(Objects::isNull)) {
+    if (Arrays.stream(values).anyMatch(Objects::isNull)) {
       throw new IllegalArgumentException("Accepts" + " must not contain null values");
     }
   }

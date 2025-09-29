@@ -16,13 +16,8 @@ public final class TestAnswerFailed extends RuntimeException {
    * snapshot and passes it here; external callers should not compose this message themselves.
    *
    * @param message human-readable failure message with request answer
-   * @param cause the underlying mapping/parse exception
    * @since 2.0.0
    */
-  public TestAnswerFailed(String message, Throwable cause) {
-    super(message, cause);
-  }
-
   public TestAnswerFailed(String message) {
     super(message);
   }
