@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.test.web.servlet.MvcResult;
 
 @Since("2.0.0")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -26,26 +25,11 @@ public final class TestGenericMapper {
     }
   }
 
-  private static String getContent(MvcResult result) throws TestGenericMapperException {
-    try {
-      return result.getResponse().getContentAsString();
-    } catch (Exception e) {
-      throw new TestGenericMapperException(e);
-    }
-  }
-
   @Since("2.0.0")
   public static <T> T parse(ObjectMapper om, String content, Class<T> clazz)
       throws TestGenericMapperException {
     var type = om.getTypeFactory().constructType(clazz);
     return parse(om, content, type);
-  }
-
-  @Since("2.0.0")
-  public static <T> T parse(ObjectMapper om, MvcResult result, Class<T> clazz)
-      throws TestGenericMapperException {
-    var type = om.getTypeFactory().constructType(clazz);
-    return parse(om, getContent(result), type);
   }
 
   @Since("2.0.0")
@@ -63,24 +47,10 @@ public final class TestGenericMapper {
   }
 
   @Since("2.0.0")
-  public static <E> List<E> parseList(ObjectMapper om, MvcResult result, Class<E> elementClass)
-      throws TestGenericMapperException {
-    var type = om.getTypeFactory().constructCollectionType(List.class, elementClass);
-    return parse(om, getContent(result), type);
-  }
-
-  @Since("2.0.0")
   public static <E> Set<E> parseSet(ObjectMapper om, String content, Class<E> elementClass)
       throws TestGenericMapperException {
     var type = om.getTypeFactory().constructCollectionType(Set.class, elementClass);
     return parse(om, content, type);
-  }
-
-  @Since("2.0.0")
-  public static <E> Set<E> parseSet(ObjectMapper om, MvcResult result, Class<E> elementClass)
-      throws TestGenericMapperException {
-    var type = om.getTypeFactory().constructCollectionType(Set.class, elementClass);
-    return parse(om, getContent(result), type);
   }
 
   @Since("2.0.0")
@@ -89,14 +59,6 @@ public final class TestGenericMapper {
       throws TestGenericMapperException {
     var type = om.getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
     return parse(om, content, type);
-  }
-
-  @Since("2.0.0")
-  public static <K, V> Map<K, V> parseMap(
-      ObjectMapper om, MvcResult result, Class<K> keyClass, Class<V> valueClass)
-      throws TestGenericMapperException {
-    var type = om.getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
-    return parse(om, getContent(result), type);
   }
 
   @Since("2.0.0")
