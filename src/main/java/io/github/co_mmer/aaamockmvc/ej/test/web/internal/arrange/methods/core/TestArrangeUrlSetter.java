@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.url;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.TestRequestUrlDto;
@@ -8,27 +8,23 @@ import java.util.List;
 import java.util.Map;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import org.springframework.http.HttpMethod;
 
 @Since("1.0.0")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class TestArrangeUrlUtils {
+public final class TestArrangeUrlSetter {
 
   @Since("1.0.0")
   public static void setUri(
-      @NonNull TestRequestUrlDto destination,
-      @NonNull HttpMethod method,
-      @NonNull String path,
-      @NonNull Object... variable) {
+      TestRequestUrlDto destination, HttpMethod method, String path, Object... variable) {
 
     var checkedVariable = filterSupported(variable);
-    var uri = TestRequestUriMapper.mapTo(path, checkedVariable);
+    var uri = TestArrangeUrlMapper.mapTo(path, checkedVariable);
     setUri(destination, method, uri);
   }
 
   private static List<Object> filterSupported(Object... variable) {
-    return Arrays.stream(variable).filter(TestArrangeUrlUtils::isSupported).toList();
+    return Arrays.stream(variable).filter(TestArrangeUrlSetter::isSupported).toList();
   }
 
   private static boolean isSupported(Object object) {
@@ -41,21 +37,18 @@ public final class TestArrangeUrlUtils {
   }
 
   @Since("1.0.0")
-  public static void setUri(
-      @NonNull TestRequestUrlDto destination, @NonNull HttpMethod method, @NonNull URI uri) {
+  public static void setUri(TestRequestUrlDto destination, HttpMethod method, URI uri) {
     destination.setMethod(method);
     destination.setUri(uri);
   }
 
   @Since("1.0.0")
-  public static void addQuery(@NonNull TestRequestUrlDto destination, String key, String value) {
+  public static void addQuery(TestRequestUrlDto destination, String key, String value) {
     destination.getQuery().put(key, value);
   }
 
   @Since("1.0.0")
-  public static void addQuery(
-      @NonNull TestRequestUrlDto destination, @NonNull Map<String, String> params) {
-
+  public static void addQuery(TestRequestUrlDto destination, Map<String, String> params) {
     destination.getQuery().putAll(params);
   }
 }

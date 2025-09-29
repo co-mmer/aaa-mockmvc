@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.url;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core;
 
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_PATH;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_VARIABLE_USER_ID;
@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class TestRequestUriMapperTest {
+class TestArrangeUrlMapperTest {
 
   @SuppressWarnings("all")
   @Test
@@ -23,7 +23,7 @@ class TestRequestUriMapperTest {
         NullPointerException.class,
 
         // Act
-        () -> TestRequestUriMapper.mapTo(null, null));
+        () -> TestArrangeUrlMapper.mapTo(null, null));
   }
 
   @SuppressWarnings("all")
@@ -34,7 +34,7 @@ class TestRequestUriMapperTest {
         NullPointerException.class,
 
         // Act
-        () -> TestRequestUriMapper.mapTo(null, List.of(PATH_VARIABLE_USER_ID)));
+        () -> TestArrangeUrlMapper.mapTo(null, List.of(PATH_VARIABLE_USER_ID)));
   }
 
   @SuppressWarnings("all")
@@ -48,13 +48,13 @@ class TestRequestUriMapperTest {
         NullPointerException.class,
 
         // Act
-        () -> TestRequestUriMapper.mapTo(BASE_PATH, null));
+        () -> TestArrangeUrlMapper.mapTo(BASE_PATH, null));
   }
 
   @Test
   void GIVEN_path_variables_empty_WHEN_mapTo_THEN_returned_expected_value() {
     // Act
-    var uri = TestRequestUriMapper.mapTo(BASE_PATH, Collections.emptyList());
+    var uri = TestArrangeUrlMapper.mapTo(BASE_PATH, Collections.emptyList());
 
     // Assert
     assertThat(uri.toString(), is(BASE_PATH));
@@ -63,7 +63,7 @@ class TestRequestUriMapperTest {
   @Test
   void GIVEN_path_var1_variable1_WHEN_mapTo_THEN_returned_expected_value() {
     // Act
-    var uri = TestRequestUriMapper.mapTo(PATH_WITH_USER_ID, List.of(PATH_VARIABLE_USER_ID));
+    var uri = TestArrangeUrlMapper.mapTo(PATH_WITH_USER_ID, List.of(PATH_VARIABLE_USER_ID));
 
     // Assert
     assertThat(uri.toString(), is(BASE_PATH + "/" + PATH_VARIABLE_USER_ID));
@@ -72,7 +72,7 @@ class TestRequestUriMapperTest {
   @Test
   void GIVEN_path_variable1_WHEN_mapTo_THEN_returned_expected_value() {
     // Act
-    var uri = TestRequestUriMapper.mapTo(BASE_PATH, List.of(PATH_VARIABLE_USER_ID));
+    var uri = TestArrangeUrlMapper.mapTo(BASE_PATH, List.of(PATH_VARIABLE_USER_ID));
 
     // Assert
     assertThat(uri.toString(), is(BASE_PATH));
@@ -88,7 +88,7 @@ class TestRequestUriMapperTest {
         IllegalArgumentException.class,
 
         // Act
-        () -> TestRequestUriMapper.mapTo(PATH_WITH_USER_ORDER_AND_PRODUCT, vars));
+        () -> TestArrangeUrlMapper.mapTo(PATH_WITH_USER_ORDER_AND_PRODUCT, vars));
   }
 
   @Test
@@ -101,6 +101,6 @@ class TestRequestUriMapperTest {
         IllegalArgumentException.class,
 
         // Act
-        () -> TestRequestUriMapper.mapTo(PATH_WITH_USER_ORDER_AND_PRODUCT, vars));
+        () -> TestArrangeUrlMapper.mapTo(PATH_WITH_USER_ORDER_AND_PRODUCT, vars));
   }
 }

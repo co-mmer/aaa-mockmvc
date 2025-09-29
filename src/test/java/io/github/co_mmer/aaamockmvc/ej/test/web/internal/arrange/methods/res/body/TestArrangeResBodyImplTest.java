@@ -1,8 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.body;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.body.TestArrangeBodyUtils.addFile;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.body.TestArrangeBodyUtils.addFiles;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.body.TestArrangeBodyUtils.setContent;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeBodySetter.addFile;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeBodySetter.addFiles;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeBodySetter.setContent;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestBody.TEST_BODY_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestBody.TEST_BODY_XML;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestFiles.TEST_FILE_1;
@@ -16,7 +16,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.exception.TestArrangeException;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.body.TestArrangeBodyUtils;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeBodySetter;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
@@ -37,12 +37,12 @@ class TestArrangeResBodyImplTest {
 
   private TestAAAContext context;
   private TestArrangeResBodyImpl impl;
-  private MockedStatic<TestArrangeBodyUtils> mockTestArrangeBodyUtils;
+  private MockedStatic<TestArrangeBodySetter> mockTestArrangeBodyUtils;
 
   @BeforeEach
   void setUp() {
     this.context = TestContext.createContext();
-    this.mockTestArrangeBodyUtils = Mockito.mockStatic(TestArrangeBodyUtils.class);
+    this.mockTestArrangeBodyUtils = Mockito.mockStatic(TestArrangeBodySetter.class);
     this.impl = new TestArrangeResBodyImpl(this.context);
   }
 

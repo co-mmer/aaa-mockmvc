@@ -8,7 +8,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestA
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestArrange5ResHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestArrange6ResHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.body.TestArrangeResBodyImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import java.util.List;
@@ -17,13 +17,13 @@ import lombok.NonNull;
 import org.springframework.http.MediaType;
 
 @Since("1.0.0")
-public final class TestArrangeResHeadImpl extends TestArrangeHead
+public final class TestArrangeResHeadImpl extends TestArrangeHeader
     implements TestArrange1ResHead,
-        TestArrange2ResHead,
-        TestArrange3ResHead,
-        TestArrange4ResHead,
-        TestArrange5ResHead,
-        TestArrange6ResHead {
+    TestArrange2ResHead,
+    TestArrange3ResHead,
+    TestArrange4ResHead,
+    TestArrange5ResHead,
+    TestArrange6ResHead {
 
   @Since("2.0.0")
   public TestArrangeResHeadImpl(@NonNull TestAAAContext context) {
@@ -44,7 +44,7 @@ public final class TestArrangeResHeadImpl extends TestArrangeHead
 
   @Override
   public TestArrange4ResHead contentType(@NonNull MediaType mediaType) {
-    setContentTypes(mediaType);
+    setContentType(mediaType);
     return this;
   }
 

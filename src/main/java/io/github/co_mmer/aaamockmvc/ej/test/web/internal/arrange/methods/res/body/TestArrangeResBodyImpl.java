@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.body;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.body.TestArrangeBodyUtils.setContent;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeBodySetter.setContent;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.exception.TestArrangeException;
@@ -9,7 +9,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArr
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArrange3ResBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.TestArrangeBaseAbstract;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.body.TestArrangeBodyUtils;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeBodySetter;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import java.util.List;
@@ -28,12 +28,12 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
 
   @Override
   public void raw(@NonNull String raw, @NonNull MediaType type) {
-    TestArrangeBodyUtils.setContent(super.getBody(), raw, type);
+    TestArrangeBodySetter.setContent(super.getBody(), raw, type);
   }
 
   @Override
   public void json(@NonNull String json) {
-    TestArrangeBodyUtils.setContent(super.getBody(), json, APPLICATION_JSON);
+    TestArrangeBodySetter.setContent(super.getBody(), json, APPLICATION_JSON);
   }
 
   @Override
@@ -48,13 +48,13 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
 
   @Override
   public TestArrange2ResBody file(@NonNull MockMultipartFile file) {
-    TestArrangeBodyUtils.addFile(super.getBody(), file);
+    TestArrangeBodySetter.addFile(super.getBody(), file);
     return this;
   }
 
   @Override
   public TestArrange3ResBody files(@NonNull List<MockMultipartFile> files) {
-    TestArrangeBodyUtils.addFiles(super.getBody(), files);
+    TestArrangeBodySetter.addFiles(super.getBody(), files);
     return this;
   }
 }

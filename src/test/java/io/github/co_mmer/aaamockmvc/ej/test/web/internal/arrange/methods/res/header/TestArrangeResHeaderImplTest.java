@@ -1,8 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.header;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils.addKeyValue;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils.setAccepts;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils.setContentTypes;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeaderSetter.addKeyValue;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeaderSetter.setAccepts;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeaderSetter.setContentType;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_MAP_1_2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_1;
@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_PDF;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.validation.TestArrangeValidator;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeaderSetter;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeValidator;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.body.TestArrangeResBodyImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
@@ -31,12 +31,12 @@ class TestArrangeResHeaderImplTest {
 
   private TestAAAContext context;
   private TestArrangeResHeadImpl impl;
-  private MockedStatic<TestArrangeHeadUtils> mockTestArrangeHeadUtils;
+  private MockedStatic<TestArrangeHeaderSetter> mockTestArrangeHeadUtils;
 
   @BeforeEach
   void setUp() {
     this.context = TestContext.createContext();
-    this.mockTestArrangeHeadUtils = Mockito.mockStatic(TestArrangeHeadUtils.class);
+    this.mockTestArrangeHeadUtils = Mockito.mockStatic(TestArrangeHeaderSetter.class);
     this.impl = new TestArrangeResHeadImpl(context);
   }
 
@@ -123,7 +123,7 @@ class TestArrangeResHeaderImplTest {
 
       // Assert
       mockTestArrangeHeadUtils.verify(
-          () -> setContentTypes(context.getArrangeResult().getHead(), APPLICATION_PDF));
+          () -> setContentType(context.getArrangeResult().getHead(), APPLICATION_PDF));
     }
   }
 

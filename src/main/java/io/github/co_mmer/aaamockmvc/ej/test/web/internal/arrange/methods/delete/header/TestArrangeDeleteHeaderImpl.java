@@ -7,7 +7,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.header.Te
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.header.TestArrange5DeleteHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.header.TestArrange6DeleteHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import java.util.List;
 import java.util.Map;
@@ -15,13 +15,13 @@ import lombok.NonNull;
 import org.springframework.http.MediaType;
 
 @Since("1.0.0")
-public final class TestArrangeDeleteHeaderImpl extends TestArrangeHead
+public final class TestArrangeDeleteHeaderImpl extends TestArrangeHeader
     implements TestArrange1DeleteHeader,
-        TestArrange2DeleteHeader,
-        TestArrange3DeleteHeader,
-        TestArrange4DeleteHeader,
-        TestArrange5DeleteHeader,
-        TestArrange6DeleteHeader {
+    TestArrange2DeleteHeader,
+    TestArrange3DeleteHeader,
+    TestArrange4DeleteHeader,
+    TestArrange5DeleteHeader,
+    TestArrange6DeleteHeader {
 
   @Since("2.0.0")
   public TestArrangeDeleteHeaderImpl(@NonNull TestAAAContext context) {

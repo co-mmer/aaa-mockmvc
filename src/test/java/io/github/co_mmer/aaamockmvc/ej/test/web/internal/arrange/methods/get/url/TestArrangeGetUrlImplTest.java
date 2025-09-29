@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.get.url;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.url.TestArrangeUrlUtils.addQuery;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.url.TestArrangeUrlUtils.setUri;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeUrlSetter.addQuery;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeUrlSetter.setUri;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_URI;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_URL;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_VARIABLE_USER_ID;
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.springframework.http.HttpMethod.GET;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.url.TestArrangeUrlUtils;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeUrlSetter;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.get.header.TestArrangeGetHeaderImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
@@ -35,12 +35,12 @@ class TestArrangeGetUrlImplTest {
 
   private TestAAAContext context;
   private TestArrangeGetUrlImpl impl;
-  private MockedStatic<TestArrangeUrlUtils> mockTestArrangeUrlUtils;
+  private MockedStatic<TestArrangeUrlSetter> mockTestArrangeUrlUtils;
 
   @BeforeEach
   void setUp() {
     this.context = TestContext.createContext();
-    this.mockTestArrangeUrlUtils = Mockito.mockStatic(TestArrangeUrlUtils.class);
+    this.mockTestArrangeUrlUtils = Mockito.mockStatic(TestArrangeUrlSetter.class);
     this.impl = new TestArrangeGetUrlImpl(this.context, BASE_URL);
   }
 

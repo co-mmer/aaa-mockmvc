@@ -7,20 +7,20 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.header.T
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.header.TestArrange5OptionsHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.header.TestArrange6OptionsHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import java.util.List;
 import java.util.Map;
 import lombok.NonNull;
 
 @Since("1.0.0")
-public final class TestArrangeOptionsHeaderImpl extends TestArrangeHead
+public final class TestArrangeOptionsHeaderImpl extends TestArrangeHeader
     implements TestArrange1OptionsHeader,
-        TestArrange2OptionsHeader,
-        TestArrange3OptionsHeader,
-        TestArrange4OptionsHeader,
-        TestArrange5OptionsHeader,
-        TestArrange6OptionsHeader {
+    TestArrange2OptionsHeader,
+    TestArrange3OptionsHeader,
+    TestArrange4OptionsHeader,
+    TestArrange5OptionsHeader,
+    TestArrange6OptionsHeader {
 
   @Since("2.0.0")
   public TestArrangeOptionsHeaderImpl(@NonNull TestAAAContext context) {

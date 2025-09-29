@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.head.header;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils.addKeyValue;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeaderSetter.addKeyValue;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_MAP_1_2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_1;
@@ -8,7 +8,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_A
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.TEST_AUTH_VALUE;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeaderSetter;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import org.junit.jupiter.api.AfterEach;
@@ -22,12 +22,12 @@ class TestArrangeHeadHeaderImplTest {
 
   private TestAAAContext context;
   private TestArrangeHeadHeaderImpl impl;
-  private MockedStatic<TestArrangeHeadUtils> mockTestArrangeHeadUtils;
+  private MockedStatic<TestArrangeHeaderSetter> mockTestArrangeHeadUtils;
 
   @BeforeEach
   void setUp() {
     this.context = TestContext.createContext();
-    this.mockTestArrangeHeadUtils = Mockito.mockStatic(TestArrangeHeadUtils.class);
+    this.mockTestArrangeHeadUtils = Mockito.mockStatic(TestArrangeHeaderSetter.class);
     this.impl = new TestArrangeHeadHeaderImpl(context);
   }
 

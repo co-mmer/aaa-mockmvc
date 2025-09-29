@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.delete.header;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils.addKeyValue;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils.setAccepts;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeaderSetter.addKeyValue;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeaderSetter.setAccepts;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_KEY_1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_MAP_1_2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_1;
@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_PDF;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.validation.TestArrangeValidator;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeadUtils;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeaderSetter;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeValidator;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import org.junit.jupiter.api.AfterEach;
@@ -26,12 +26,12 @@ class TestArrangeDeleteHeaderImplTest {
 
   private TestAAAContext context;
   private TestArrangeDeleteHeaderImpl impl;
-  private MockedStatic<TestArrangeHeadUtils> mockTestArrangeHeadUtils;
+  private MockedStatic<TestArrangeHeaderSetter> mockTestArrangeHeadUtils;
 
   @BeforeEach
   void setUp() {
     this.context = TestContext.createContext();
-    this.mockTestArrangeHeadUtils = Mockito.mockStatic(TestArrangeHeadUtils.class);
+    this.mockTestArrangeHeadUtils = Mockito.mockStatic(TestArrangeHeaderSetter.class);
     this.impl = new TestArrangeDeleteHeaderImpl(context);
   }
 

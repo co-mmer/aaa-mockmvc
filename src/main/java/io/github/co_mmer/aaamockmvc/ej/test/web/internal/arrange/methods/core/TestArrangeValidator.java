@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.validation;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import java.util.Arrays;
@@ -12,20 +12,14 @@ public final class TestArrangeValidator {
 
   @Since("1.3.0")
   @SafeVarargs
-  public static <T> void nonNullContentTypes(T... values) {
-    nonNull("ContentTypes", values);
-  }
-
-  @Since("1.3.0")
-  @SafeVarargs
   public static <T> void nonNullAccepts(T... values) {
-    nonNull("Accepts", values);
+    nonNull(values);
   }
 
   @SafeVarargs
-  private static <T> void nonNull(String argumentName, T... values) {
+  private static <T> void nonNull(T... values) {
     if (values != null && Arrays.stream(values).anyMatch(Objects::isNull)) {
-      throw new IllegalArgumentException(argumentName + " must not contain null values");
+      throw new IllegalArgumentException("Accepts" + " must not contain null values");
     }
   }
 }

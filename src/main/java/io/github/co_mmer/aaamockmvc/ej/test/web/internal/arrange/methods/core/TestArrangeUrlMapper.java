@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.url;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import java.net.URI;
@@ -10,7 +10,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Since("1.0.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class TestRequestUriMapper {
+public final class TestArrangeUrlMapper {
 
   @Since("1.0.0")
   public static URI mapTo(@NonNull String url, @NonNull List<Object> variables) {

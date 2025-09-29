@@ -7,7 +7,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.get.header.TestA
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.get.header.TestArrange5GetHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.get.header.TestArrange6GetHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import java.util.List;
 import java.util.Map;
@@ -15,13 +15,13 @@ import lombok.NonNull;
 import org.springframework.http.MediaType;
 
 @Since("1.0.0")
-public final class TestArrangeGetHeaderImpl extends TestArrangeHead
+public final class TestArrangeGetHeaderImpl extends TestArrangeHeader
     implements TestArrange1GetHeader,
-        TestArrange2GetHeader,
-        TestArrange3GetHeader,
-        TestArrange4GetHeader,
-        TestArrange5GetHeader,
-        TestArrange6GetHeader {
+    TestArrange2GetHeader,
+    TestArrange3GetHeader,
+    TestArrange4GetHeader,
+    TestArrange5GetHeader,
+    TestArrange6GetHeader {
 
   @Since("2.0.0")
   public TestArrangeGetHeaderImpl(@NonNull TestAAAContext context) {

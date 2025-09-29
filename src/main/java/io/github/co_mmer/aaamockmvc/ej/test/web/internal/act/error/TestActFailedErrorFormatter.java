@@ -1,11 +1,12 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.error;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason.reasonOf;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.isBlank;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +22,7 @@ public final class TestActFailedErrorFormatter {
         Cause: %s: %s
         """
         .formatted(
-            createStepPrefix(step),
+            step == null ? EMPTY : reasonOf(step) + "\n",
             arrange.getUrl().getMethod(),
             arrange.getUrl().getUri(),
             arrange.asMessage(),
@@ -31,10 +32,6 @@ public final class TestActFailedErrorFormatter {
 
   private static String getMessage(Throwable throwable) {
     var message = throwable.getMessage();
-    return StringUtils.isBlank(message) ? "<no message>" : message;
-  }
-
-  private static String createStepPrefix(TestStepDto step) {
-    return step == null ? StringUtils.EMPTY : reasonOf(step) + "\n";
+    return isBlank(message) ? "<no message>" : message;
   }
 }
