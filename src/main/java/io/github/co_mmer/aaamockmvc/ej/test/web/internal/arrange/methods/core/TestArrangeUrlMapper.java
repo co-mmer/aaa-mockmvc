@@ -13,7 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public final class TestArrangeUrlMapper {
 
   @Since("1.0.0")
-  public static URI mapTo(@NonNull String url, @NonNull List<Object> variables) {
+  public static URI mapTo(String url, @NonNull List<Object> variables) {
     return UriComponentsBuilder.fromUriString(url)
         .buildAndExpand(variables.toArray())
         .encode()

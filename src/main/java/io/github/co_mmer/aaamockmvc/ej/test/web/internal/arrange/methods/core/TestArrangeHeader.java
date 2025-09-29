@@ -5,7 +5,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.TestArrang
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import java.util.List;
 import java.util.Map;
-import lombok.NonNull;
 import org.springframework.http.MediaType;
 
 @Since("1.0.0")
@@ -14,12 +13,12 @@ public abstract class TestArrangeHeader extends TestArrangeBaseAbstract {
   private static final String AUTHORIZATION = "Authorization";
 
   @Since("2.0.0")
-  protected TestArrangeHeader(@NonNull TestAAAContext context) {
+  protected TestArrangeHeader(TestAAAContext context) {
     super(context);
   }
 
   @Since("1.0.0")
-  protected void setAccepts(@NonNull MediaType... types) {
+  protected void setAccepts(MediaType... types) {
     TestArrangeValidator.nonNullAccepts(types);
     TestArrangeHeaderSetter.setAccepts(getHead(), types);
   }
@@ -30,7 +29,7 @@ public abstract class TestArrangeHeader extends TestArrangeBaseAbstract {
   }
 
   @Since("1.0.0")
-  protected void setContentType(@NonNull MediaType type) {
+  protected void setContentType(MediaType type) {
     TestArrangeHeaderSetter.setContentType(getHead(), type);
   }
 
@@ -40,7 +39,7 @@ public abstract class TestArrangeHeader extends TestArrangeBaseAbstract {
   }
 
   @Since("1.0.0")
-  protected void putAll(@NonNull Map<String, List<Object>> keyValue) {
+  protected void putAll(Map<String, List<Object>> keyValue) {
     TestArrangeHeaderSetter.addKeyValue(getHead(), keyValue);
   }
 }

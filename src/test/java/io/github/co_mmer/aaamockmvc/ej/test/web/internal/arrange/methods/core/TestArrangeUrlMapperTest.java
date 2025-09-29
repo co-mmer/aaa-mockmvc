@@ -17,28 +17,6 @@ class TestArrangeUrlMapperTest {
 
   @SuppressWarnings("all")
   @Test
-  void GIVEN_null_null_WHEN_mapTo_THEN_throw_NullPointerException() {
-    //  Assert
-    assertThrows(
-        NullPointerException.class,
-
-        // Act
-        () -> TestArrangeUrlMapper.mapTo(null, null));
-  }
-
-  @SuppressWarnings("all")
-  @Test
-  void GIVEN_url_null_WHEN_mapTo_THEN_throw_NullPointerException() {
-    //  Assert
-    assertThrows(
-        NullPointerException.class,
-
-        // Act
-        () -> TestArrangeUrlMapper.mapTo(null, List.of(PATH_VARIABLE_USER_ID)));
-  }
-
-  @SuppressWarnings("all")
-  @Test
   void GIVEN_path_variables_null_WHEN_mapTo_THEN_throw_NullPointerException() {
     // Arrange
     var testRequestBodyDto = new TestRequestBodyDto();
