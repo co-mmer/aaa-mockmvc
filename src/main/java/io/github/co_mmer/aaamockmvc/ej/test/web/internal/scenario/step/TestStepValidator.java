@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Since("2.0.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class TestStepPreconditionsValidator {
+public class TestStepValidator {
 
   private static final String MISSING_ARRANGE_BEFORE_ACT =
       "Act error: No 'arrange()' step configured. "
@@ -26,7 +26,7 @@ public class TestStepPreconditionsValidator {
       "Answer error: No 'act()' step configured. Call 'act().perform()' before 'answer()'";
 
   @Since("2.0.0")
-  public static void act(TestStepImpl step) {
+  public static void preconditionsOfAct(TestStepImpl step) {
     verifyActStepInternal(step);
     verifyActStepCustom(step);
   }
@@ -48,7 +48,7 @@ public class TestStepPreconditionsValidator {
   }
 
   @Since("2.0.0")
-  public static void asserts(TestStepImpl step) {
+  public static void preconditionsOfAsserts(TestStepImpl step) {
     verifyAssertsStepInternal(step);
     verifyAssertsStepCustom(step);
   }
@@ -66,7 +66,7 @@ public class TestStepPreconditionsValidator {
   }
 
   @Since("2.0.0")
-  public static void answer(TestStepImpl step) {
+  public static void preconditionsOfAnswer(TestStepImpl step) {
     verifyAnswerStepInternal(step);
     verifyAnswerStepCustom(step);
   }
