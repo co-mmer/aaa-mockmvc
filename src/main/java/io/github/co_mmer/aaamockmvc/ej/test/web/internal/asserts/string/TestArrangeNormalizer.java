@@ -23,7 +23,7 @@ public final class TestArrangeNormalizer {
 
   @Since("1.4.0")
   public static String normalizeObject(Object actual, Form form) {
-    final String s = (actual instanceof CharSequence cs) ? cs.toString() : actual.toString();
+    var s = (actual instanceof CharSequence cs) ? handlingCharSequence(cs) : actual.toString();
     return Normalizer.normalize(s, form);
   }
 
@@ -74,8 +74,16 @@ public final class TestArrangeNormalizer {
   }
 
   private static String describeOriginal(Object o) {
-    var s = (o instanceof CharSequence cs) ? cs.toString() : String.valueOf(o);
+    var s = (o instanceof CharSequence cs) ? handlingCharSequence(cs) : handleOtherObject(o);
     return "\"" + s + "\" [" + codePointsOf(s) + "]";
+  }
+
+  private static String handlingCharSequence(CharSequence cs) {
+    return cs.toString();
+  }
+
+  private static String handleOtherObject(Object o) {
+    return String.valueOf(o);
   }
 
   private static String codePointsOf(String s) {

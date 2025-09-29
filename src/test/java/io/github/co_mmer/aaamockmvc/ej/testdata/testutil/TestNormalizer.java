@@ -2,6 +2,7 @@ package io.github.co_mmer.aaamockmvc.ej.testdata.testutil;
 
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,4 +26,34 @@ public final class TestNormalizer {
               Collectors.toMap(
                   entry -> Normalizer.normalize(entry.getKey(), Form.NFC),
                   entry -> Normalizer.normalize(entry.getValue(), Form.NFC)));
+
+  public static final Map<Object, Object> COLLISION_CHARSEQ_FIRST_NONCHARSEQ_SECOND;
+  public static final Map<Object, Object> COLLISION_NONCHARSEQ_FIRST_CHARSEQ_SECOND;
+
+  static {
+    var map1 = new LinkedHashMap<>();
+    map1.put("Cafe\u0301", "v1");
+    map1.put(
+        new Object() {
+          @Override
+          public String toString() {
+            return "Caf\u00E9";
+          }
+        },
+        "v2");
+
+    COLLISION_CHARSEQ_FIRST_NONCHARSEQ_SECOND = Map.copyOf(map1);
+
+    var map2 = new LinkedHashMap<>();
+    map2.put(
+        new Object() {
+          @Override
+          public String toString() {
+            return "Cafe\u0301";
+          } // e + combining accent
+        },
+        "v1");
+    map2.put("Caf\u00E9", "v2");
+    COLLISION_NONCHARSEQ_FIRST_CHARSEQ_SECOND = Map.copyOf(map2);
+  }
 }
