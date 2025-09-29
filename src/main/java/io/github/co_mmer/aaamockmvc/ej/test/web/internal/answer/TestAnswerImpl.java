@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.answer;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason.reasonContentOf;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason.reasonContentMapOf;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerFailed;
@@ -19,8 +19,6 @@ import lombok.NonNull;
 
 @Since("1.2.0")
 public final class TestAnswerImpl implements TestAnswer {
-
-  private static final String WHAT = "cannot be mapped to ";
 
   private final TestAAAContext context;
 
@@ -98,11 +96,8 @@ public final class TestAnswerImpl implements TestAnswer {
       return actual;
     } catch (TestGenericMapperException e) {
       var reason =
-          reasonContentOf(
-              this.context.getStep(),
-              "answer()." + stepName,
-              content,
-              WHAT + resultType.getSimpleName());
+          reasonContentMapOf(
+              this.context.getStep(), "answer()." + stepName, content, resultType.getSimpleName());
       throw new TestAnswerFailed(reason);
     }
   }
@@ -118,11 +113,11 @@ public final class TestAnswerImpl implements TestAnswer {
       return actual;
     } catch (TestGenericMapperException e) {
       var reason =
-          reasonContentOf(
+          reasonContentMapOf(
               this.context.getStep(),
               "answer().asCollection()",
               content,
-              WHAT + elementClass.getSimpleName());
+              elementClass.getSimpleName());
       throw new TestAnswerFailed(reason);
     }
   }
@@ -138,11 +133,8 @@ public final class TestAnswerImpl implements TestAnswer {
       return actual;
     } catch (TestGenericMapperException e) {
       var reason =
-          reasonContentOf(
-              this.context.getStep(),
-              "answer().asList()",
-              content,
-              WHAT + elementClass.getSimpleName());
+          reasonContentMapOf(
+              this.context.getStep(), "answer().asList()", content, elementClass.getSimpleName());
       throw new TestAnswerFailed(reason);
     }
   }
@@ -158,11 +150,8 @@ public final class TestAnswerImpl implements TestAnswer {
       return actual;
     } catch (TestGenericMapperException e) {
       var reason =
-          reasonContentOf(
-              this.context.getStep(),
-              "answer().asSet()",
-              content,
-              WHAT + elementClass.getSimpleName());
+          reasonContentMapOf(
+              this.context.getStep(), "answer().asSet()", content, elementClass.getSimpleName());
       throw new TestAnswerFailed(reason);
     }
   }
@@ -178,8 +167,7 @@ public final class TestAnswerImpl implements TestAnswer {
       return actual;
     } catch (TestGenericMapperException e) {
       var target = "Map<%s, %s>".formatted(keyClass.getSimpleName(), valueClass.getSimpleName());
-      var reason =
-          reasonContentOf(this.context.getStep(), "answer().asMap()", content, WHAT + target);
+      var reason = reasonContentMapOf(this.context.getStep(), "answer().asMap()", content, target);
       throw new TestAnswerFailed(reason);
     }
   }

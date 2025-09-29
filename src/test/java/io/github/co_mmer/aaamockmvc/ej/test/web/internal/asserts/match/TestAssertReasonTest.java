@@ -48,7 +48,7 @@ class TestAssertReasonTest {
       TestStepDto step, String who, String with, String what, String expected) {
 
     // Act
-    var reason = TestAssertReason.reasonContentOf(step, who, with, what);
+    var reason = TestAssertReason.reasonContentMapOf(step, who, with, what);
 
     // Assert
     assertThat(reason, is(expected));
@@ -60,25 +60,25 @@ class TestAssertReasonTest {
             STEP,
             "content().asBoolean()",
             "{\"id\":1,\"name\":\"A\"}",
-            "cannot be mapped to Boolean",
+            "Boolean",
             "Step 'Create User' ⇒ 'content().asBoolean()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Boolean"),
         Arguments.of(
             STEP,
             null,
             "{\"id\":1}",
-            "cannot be mapped to Boolean",
+            "Boolean",
             "Step 'Create User' ⇒ Response body '{\"id\":1}' cannot be mapped to Boolean"),
         Arguments.of(
             STEP,
             "content().asBoolean()",
             null,
-            "cannot be mapped to Boolean",
+            "Boolean",
             "Step 'Create User' ⇒ 'content().asBoolean()' — Reason cannot be mapped to Boolean"),
         Arguments.of(
             null,
             "content().asBoolean()",
             "raw",
-            "is invalid",
-            "'content().asBoolean()' — Reason: Response body 'raw' is invalid"));
+            "Boolean",
+            "'content().asBoolean()' — Reason: Response body 'raw' cannot be mapped to Boolean"));
   }
 }

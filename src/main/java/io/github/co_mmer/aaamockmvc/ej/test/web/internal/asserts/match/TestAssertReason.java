@@ -27,7 +27,7 @@ public class TestAssertReason {
   }
 
   @Since("2.0.0")
-  public static String reasonContentOf(TestStepDto step, String who, String with, String what) {
+  public static String reasonContentMapOf(TestStepDto step, String who, String with, String what) {
     var base = reasonOf(step);
 
     var detailsBuilder = new StringBuilder();
@@ -56,7 +56,7 @@ public class TestAssertReason {
 
   private static void addWhat(String what, StringBuilder sb) {
     if (StringUtils.isNotBlank(what)) {
-      sb.append(" ").append(what);
+      sb.append(" cannot be mapped to ").append(what);
     }
   }
 }

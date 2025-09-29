@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.content;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason.reasonContentOf;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason.reasonContentMapOf;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert1Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssert1Byte;
@@ -28,7 +28,6 @@ import org.opentest4j.AssertionFailedError;
 @RequiredArgsConstructor
 public class TestAssertContentImpl implements TestAssertContent {
 
-  private static final String WHAT = "cannot be mapped to ";
   private final TestAAAContext context;
 
   @Override
@@ -42,8 +41,7 @@ public class TestAssertContentImpl implements TestAssertContent {
       return new TestAssertBooleanImpl(this.context);
     } catch (TestGenericMapperException e) {
       var reason =
-          reasonContentOf(
-              this.context.getStep(), "content().asBoolean()", content, WHAT + "Boolean");
+          reasonContentMapOf(this.context.getStep(), "content().asBoolean()", content, "Boolean");
       throw new AssertionFailedError(reason);
     }
   }
@@ -74,11 +72,11 @@ public class TestAssertContentImpl implements TestAssertContent {
       this.context.setAssertResult(new TestAssertResult<>(actual));
     } catch (TestGenericMapperException e) {
       var reason =
-          reasonContentOf(
+          reasonContentMapOf(
               this.context.getStep(),
               "content().asClass()",
               content,
-              WHAT + expectedClass.getSimpleName());
+              expectedClass.getSimpleName());
       throw new AssertionFailedError(reason);
     }
     return new TestAssertClassImpl<>(this.context);
@@ -94,11 +92,11 @@ public class TestAssertContentImpl implements TestAssertContent {
       this.context.setAssertResult(new TestAssertResult<>(actual));
     } catch (TestGenericMapperException e) {
       var reason =
-          reasonContentOf(
+          reasonContentMapOf(
               this.context.getStep(),
               "content().asCollection()",
               content,
-              WHAT + elementClass.getSimpleName());
+              elementClass.getSimpleName());
       throw new AssertionFailedError(reason);
     }
     return new TestAssertCollectionImpl<>(this.context);
@@ -114,11 +112,8 @@ public class TestAssertContentImpl implements TestAssertContent {
       this.context.setAssertResult(new TestAssertResult<>(actual));
     } catch (TestGenericMapperException e) {
       var reason =
-          reasonContentOf(
-              this.context.getStep(),
-              "content().asList()",
-              content,
-              WHAT + elementClass.getSimpleName());
+          reasonContentMapOf(
+              this.context.getStep(), "content().asList()", content, elementClass.getSimpleName());
       throw new AssertionFailedError(reason);
     }
     return new TestAssertCollectionImpl<>(this.context);
@@ -134,11 +129,8 @@ public class TestAssertContentImpl implements TestAssertContent {
       this.context.setAssertResult(new TestAssertResult<>(actual));
     } catch (TestGenericMapperException e) {
       var reason =
-          reasonContentOf(
-              this.context.getStep(),
-              "content().asSet()",
-              content,
-              WHAT + elementClass.getSimpleName());
+          reasonContentMapOf(
+              this.context.getStep(), "content().asSet()", content, elementClass.getSimpleName());
       throw new AssertionFailedError(reason);
     }
     return new TestAssertCollectionImpl<>(this.context);
@@ -156,8 +148,7 @@ public class TestAssertContentImpl implements TestAssertContent {
       return new TestAssertMapImpl<>(this.context);
     } catch (TestGenericMapperException e) {
       var target = "Map<%s, %s>".formatted(keyClass.getSimpleName(), valueClass.getSimpleName());
-      var reason =
-          reasonContentOf(this.context.getStep(), "content().asMap()", content, WHAT + target);
+      var reason = reasonContentMapOf(this.context.getStep(), "content().asMap()", content, target);
       throw new AssertionFailedError(reason);
     }
   }
