@@ -69,6 +69,13 @@ class AAAMockMvcTestSupportTest extends AAAMockMvcTestSupport {
   }
 
   @Test
+  @SuppressWarnings("ConstantConditions")
+  void GIVEN_null_in_block_WHEN_step_THEN_throw_NullPointerException() {
+    // Act & Assert
+    assertThrows(NullPointerException.class, () -> step("null", null));
+  }
+
+  @Test
   void WHEN_step_THEN_delegates_to_aaaMockMvc_step() {
     // Arrange
     Runnable runnable = this::arrange;
