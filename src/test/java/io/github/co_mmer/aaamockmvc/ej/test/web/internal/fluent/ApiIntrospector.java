@@ -1,6 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,15 +22,30 @@ public final class ApiIntrospector {
     return names;
   }
 
-  public static Method findPublicMethodByName(Class<?> type, String name) {
-    for (Method m : type.getMethods()) {
-      if (m.getDeclaringClass() == Object.class || m.isSynthetic()) {
+  // ApiIntrospector.java
+  public static Method findPublicMethodByNameAndReturn(
+      Class<?> type, String methodName, Class<?> expectedReturn) {
+
+    Method[] methods = type.getMethods(); // nur public
+    Method candidate = null;
+
+    for (Method m : methods) {
+      if (!m.getName().equals(methodName)) {
         continue;
       }
-      if (m.getName().equals(name)) {
+      if (!Modifier.isPublic(m.getModifiers())) {
+        continue;
+      }
+
+      if (m.getReturnType().equals(expectedReturn)) {
+        // perfekte Übereinstimmung
         return m;
+      } else if (candidate == null) {
+        // merke irgendeinen Overload für bessere Fehlermeldungen
+        candidate = m;
       }
     }
+    // nichts mit passendem Return gefunden
     return null;
   }
 

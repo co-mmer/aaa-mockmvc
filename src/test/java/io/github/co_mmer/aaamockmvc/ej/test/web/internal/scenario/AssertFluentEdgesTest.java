@@ -37,7 +37,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssertLString
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentAssert;
 import org.junit.jupiter.api.Test;
 
-class FluentEdgesTest {
+class AssertFluentEdgesTest {
 
   @Test
   void single_transitions_number() {

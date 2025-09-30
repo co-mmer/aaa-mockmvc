@@ -15,4 +15,9 @@ public final class FluentMatchers {
   public static AllowsExactly allowsExactly(String first, String... more) {
     return AllowsExactly.of(first, more);
   }
+
+  /** Matcher: es gibt keine erlaubten Methoden. */
+  public static AllowsNone allowsNone() {
+    return AllowsNone.instance();
+  }
 }

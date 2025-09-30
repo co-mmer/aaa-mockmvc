@@ -7,24 +7,18 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.ApiIntros
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentAssert.Matcher;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public final class AllowsExactly implements Matcher<FluentTransition> {
+/** Matcher: es gibt KEINE erlaubten Methoden. */
+public final class AllowsNone implements Matcher<FluentTransition> {
 
-  private final Set<String> expected;
+  private static final AllowsNone INSTANCE = new AllowsNone();
 
-  private AllowsExactly(Set<String> expected) {
-    this.expected = expected;
-  }
+  private AllowsNone() {}
 
-  public static AllowsExactly of(String first, String... more) {
-    Set<String> exp = new LinkedHashSet<>();
-    exp.add(first);
-    exp.addAll(Arrays.asList(more));
-    return new AllowsExactly(exp);
+  public static AllowsNone instance() {
+    return INSTANCE;
   }
 
   @Override
@@ -34,6 +28,7 @@ public final class AllowsExactly implements Matcher<FluentTransition> {
       return Optional.of(
           header(t.fromClass(), t.startMethod(), t.toClass()) + " -> startMethod nicht gefunden");
     }
+
     Class<?> actualTo = start.getReturnType();
     if (!actualTo.equals(t.toClass())) {
       return Optional.of(
@@ -45,11 +40,10 @@ public final class AllowsExactly implements Matcher<FluentTransition> {
     }
 
     Set<String> actual = publicApiMethodNames(t.toClass());
-    if (!expected.equals(actual)) {
+    if (!actual.isEmpty()) {
       return Optional.of(
           header(t.fromClass(), t.startMethod(), t.toClass())
-              + "\n   erwartete Allowed : "
-              + join(expected)
+              + "\n   erwartete Allowed : — keine —"
               + "\n   tatsächliche      : "
               + join(actual));
     }
