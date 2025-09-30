@@ -60,9 +60,15 @@
 
 ### 📦 Dependency Upgrades
 
-- spring-boot 3.5.0 → 3.5.5
-- spring-boot 1.18.38 → 1.18.40
+- spring-boot 3.5.0 → 3.5.6
+- lombok 1.18.40 → 1.18.42
 - maven-javadoc-plugin 3.10.1 → 3.11.3
+- central-publishing-maven-plugin 0.6.0 → 0.9.0
+- maven-gpg-plugin 3.2.7 → 3.2.8
+- maven-surefire-plugin 3.2.5 → 3.5.4
+- jacoco-maven-plugin 0.8.12 → 0.8.13
+- spotless-maven-plugin 2.43.0 → 3.0.0
+- maven-compiler-plugin 3.13.0 → 3.14.1
 
 ---
 
