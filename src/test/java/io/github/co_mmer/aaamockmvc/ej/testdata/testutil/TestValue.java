@@ -53,7 +53,7 @@ public final class TestValue {
   public static final boolean SAMPLE_BOOLEAN_TRUE = true;
 
   public static final String PATH_WITH_USER_ID = "/test/{" + PATH_VARIABLE_USER_ID + "}";
-  public static final URI URI_WITH_USER_ID = createUriQuery("/test/var1");
+  public static final URI URI_WITH_USER_ID = createUriQuery();
 
   public static final String PATH_WITH_USER_AND_ORDER =
       "/test/{" + PATH_VARIABLE_USER_ID + "}/{" + PATH_VARIABLE_ORDER_ID + "}";
@@ -105,7 +105,7 @@ public final class TestValue {
   }
 
   @SneakyThrows
-  private static URI createUriQuery(String uri) {
-    return new URI(uri);
+  private static URI createUriQuery() {
+    return new URI("/test/var1");
   }
 }
