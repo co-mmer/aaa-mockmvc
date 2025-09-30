@@ -56,8 +56,6 @@ class AAAMockMvcTest {
     @Test
     @SuppressWarnings("ConstantConditions")
     void WHEN_constructor_with_null_MockMvc_THEN_throws_NullPointerException() {
-      // Arrange
-
       // Act & Assert
       assertThrows(NullPointerException.class, () -> new AAAMockMvc((MockMvc) null));
     }
