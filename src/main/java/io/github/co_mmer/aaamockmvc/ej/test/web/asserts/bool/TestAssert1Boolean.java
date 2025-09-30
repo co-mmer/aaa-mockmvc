@@ -1,5 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool;
 
+import lombok.NonNull;
+
 /**
  * Entry point for raw <b>Boolean</b> content assertions.
  *
@@ -48,4 +50,15 @@ public interface TestAssert1Boolean extends OperationTrue, OperationFalse {
    * @since 2.0.0
    */
   TestAssert2Boolean isNotNull();
+
+  /**
+   * Asserts that the actual value is equal to the given {@code expectedBoolean}.
+   *
+   * @param expectedBoolean the expected boolean value to compare against (must not be {@code null})
+   * @return the next step in the fluent assertion chain, exposing only context-appropriate methods
+   *     based on the current state
+   * @throws AssertionError if the actual value does not equal {@code expectedBoolean}
+   * @since 2.0.0
+   */
+  TestAssert3Boolean isEqualTo(@NonNull Boolean expectedBoolean);
 }

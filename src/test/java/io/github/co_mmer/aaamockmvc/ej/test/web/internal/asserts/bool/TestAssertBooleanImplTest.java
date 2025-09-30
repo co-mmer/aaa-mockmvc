@@ -128,6 +128,36 @@ class TestAssertBooleanImplTest extends TestAssertBase {
   }
 
   @Nested
+  class isEqualTo {
+
+    @Test
+    void GIVEN_False_WHEN_isEqualTo_THEN_assert_true() {
+      // Arrange
+      useAssertResult(Boolean.FALSE);
+
+      // Act & Assert
+      testAssert.isEqualTo(Boolean.FALSE);
+    }
+
+    @Test
+    void GIVEN_True_WHEN_isEqualTo_THEN_return_assert_false() {
+      // Arrange
+      useAssertResult(Boolean.TRUE);
+
+      // Act & Assert
+      var ex = assertThrows(AssertionError.class, () -> testAssert.isEqualTo(Boolean.FALSE));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
+    }
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_null_WHEN_isEqualTo_THEN_throw_NullPointerException() {
+      // Act & Assert
+      assertThrows(NullPointerException.class, () -> testAssert.isEqualTo(null));
+    }
+  }
+
+  @Nested
   class nextStep {
 
     @Test

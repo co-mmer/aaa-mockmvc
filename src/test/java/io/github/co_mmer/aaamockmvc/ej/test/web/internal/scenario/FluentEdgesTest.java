@@ -127,6 +127,10 @@ class FluentEdgesTest {
     FluentAssert.assertThat(
         transition(TestAssert1Boolean.class, "isFalse", TestAssert3Boolean.class),
         allowsExactly("headers"));
+
+    FluentAssert.assertThat(
+        transition(TestAssert1Boolean.class, "isEqualTo", TestAssert3Boolean.class),
+        allowsExactly("headers"));
   }
 
   @Test

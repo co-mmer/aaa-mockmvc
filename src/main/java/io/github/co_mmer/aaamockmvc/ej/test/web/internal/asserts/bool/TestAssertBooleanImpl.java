@@ -41,6 +41,13 @@ public class TestAssertBooleanImpl
   }
 
   @Override
+  public TestAssert3Boolean isEqualTo(@NonNull Boolean expectedBoolean) {
+    var actual = (Boolean) getActual();
+    assertThat(this.context.getStep(), actual, is(expectedBoolean));
+    return this;
+  }
+
+  @Override
   public TestAssert3Boolean isTrue() {
     var actual = (Boolean) getActual();
     assertThat(this.context.getStep(), actual, is(Boolean.TRUE));
