@@ -1,7 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.url;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.header.TestArrange1DeleteHeader;
-
 /**
  * DELETE arrange step for defining the request URL and query parameters.
  *
@@ -24,27 +22,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.header.Te
  *
  * @since 1.0.0
  */
-public interface TestArrange2DeleteUrl {
+public interface TestArrange2DeleteUrl extends TestOperationQuery1, TestOperationHeader {
 
-  /**
-   * Adds a single query parameter to the request URL. Calling this method multiple times appends
-   * additional parameters; if the same key is provided again, the last value wins (replaces the
-   * previous one).
-   *
-   * @param key the query parameter name; must not be {@code null}
-   * @param value the query parameter value; must not be {@code null}
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange2DeleteUrl query(String key, String value);
-
-  /**
-   * Switches to the headers arrange step for the same request specification.
-   *
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange1DeleteHeader headers();
 }
