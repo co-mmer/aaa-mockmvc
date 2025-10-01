@@ -1,9 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.head.url;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.head.header.TestArrange1HeadHeader;
-import java.util.Map;
-import lombok.NonNull;
-
 /**
  * HEAD arrange step for defining the request URL and query parameters.
  *
@@ -26,38 +22,5 @@ import lombok.NonNull;
  *
  * @since 1.0.0
  */
-public interface TestArrange1HeadUrl {
-
-  /**
-   * Adds a single query parameter to the request URL. Calling this method multiple times appends
-   * additional parameters; if the same key is provided again, the last value wins (replaces the
-   * previous one).
-   *
-   * @param key the query parameter name; must not be {@code null}
-   * @param value the query parameter value; must not be {@code null}
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange2HeadUrl query(String key, String value);
-
-  /**
-   * Adds all given query parameters to the request URL in one call. If a key already exists, the
-   * provided value replaces the previous one.
-   *
-   * @param keyValue map of query parameters to add; must not be {@code null}
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange3HeadUrl query(@NonNull Map<String, String> keyValue);
-
-  /**
-   * Switches to the headers arrange step for the same request specification.
-   *
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange1HeadHeader headers();
-}
+public interface TestArrange1HeadUrl
+    extends TestOperationQuery1, TestOperationQuery2, TestOperationHeader {}
