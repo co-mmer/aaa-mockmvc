@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.header;
+package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header;
 
 interface TestOperationAuth {
 
@@ -10,5 +10,5 @@ interface TestOperationAuth {
    *     the current state.
    * @since 2.0.0
    */
-  TestArrange3OptionsHeader auth(String token);
+  TestArrange3ResHead auth(String token);
 }

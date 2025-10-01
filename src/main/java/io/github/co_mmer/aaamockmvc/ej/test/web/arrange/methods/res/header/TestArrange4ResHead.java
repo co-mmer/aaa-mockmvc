@@ -1,10 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArrange1ResBody;
-import java.util.List;
-import java.util.Map;
-import lombok.NonNull;
-
 /**
  * POST/PUT/PATCH arrange step for defining HTTP headers.
  *
@@ -29,38 +24,5 @@ import lombok.NonNull;
  *
  * @since 1.0.0
  */
-public interface TestArrange4ResHead {
-
-  /**
-   * Adds a header value. If the header already exists, the value is <em>appended</em> (multi-value
-   * header); it does not replace existing values.
-   *
-   * @param key the header name; must not be {@code null}
-   * @param value the header value (converted via {@code String.valueOf(value)}); must not be {@code
-   *     null}
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange5ResHead add(String key, Object value);
-
-  /**
-   * Replaces the current header map with the given one (full replace). Keys are treated
-   * case-insensitively; value lists are preserved as given (order kept).
-   *
-   * @param keyValue the complete header map to set; must not be {@code null}
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange6ResHead set(@NonNull Map<String, List<Object>> keyValue);
-
-  /**
-   * Switches to the body arrange step for the same request specification.
-   *
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange1ResBody body();
-}
+public interface TestArrange4ResHead
+    extends TestOperationAdd, TestOperationSet, TestOperationBody {}

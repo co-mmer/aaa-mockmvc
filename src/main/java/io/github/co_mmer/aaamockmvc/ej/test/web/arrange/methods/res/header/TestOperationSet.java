@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.head.header;
+package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header;
 
 import java.util.List;
 import java.util.Map;
@@ -15,5 +15,5 @@ interface TestOperationSet {
    *     the current state.
    * @since 2.0.0
    */
-  TestArrange6HeadHeader set(@NonNull Map<String, List<Object>> keyValue);
+  TestArrange6ResHead set(@NonNull Map<String, List<Object>> keyValue);
 }

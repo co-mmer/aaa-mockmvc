@@ -12,7 +12,7 @@ interface TestOperationSet {
    *
    * @param keyValue the complete header map to set; must not be {@code null}
    * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   * the current state.
+   *     the current state.
    * @since 2.0.0
    */
   TestArrange6OptionsHeader set(@NonNull Map<String, List<Object>> keyValue);

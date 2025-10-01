@@ -1,7 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArrange1ResBody;
-
 /**
  * POST/PUT/PATCH arrange step for defining HTTP headers.
  *
@@ -26,27 +24,4 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArr
  *
  * @since 1.0.0
  */
-public interface TestArrange5ResHead {
-
-  /**
-   * Adds a header value. If the header already exists, the value is <em>appended</em> (multi-value
-   * header); it does not replace existing values.
-   *
-   * @param key the header name; must not be {@code null}
-   * @param value the header value (converted via {@code String.valueOf(value)}); must not be {@code
-   *     null}
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange5ResHead add(String key, Object value);
-
-  /**
-   * Switches to the body arrange step for the same request specification.
-   *
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange1ResBody body();
-}
+public interface TestArrange5ResHead extends TestOperationAdd, TestOperationBody {}

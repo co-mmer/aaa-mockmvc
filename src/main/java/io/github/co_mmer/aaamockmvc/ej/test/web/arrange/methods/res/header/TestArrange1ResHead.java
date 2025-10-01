@@ -1,10 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header;
 
-import java.util.List;
-import java.util.Map;
-import lombok.NonNull;
-import org.springframework.http.MediaType;
-
 /**
  * POST/PUT/PATCH arrange step for defining HTTP headers.
  *
@@ -29,62 +24,9 @@ import org.springframework.http.MediaType;
  *
  * @since 1.0.0
  */
-public interface TestArrange1ResHead {
-
-  /**
-   * Sets the {@code Accept} header to the given media types (comma-separated).
-   *
-   * @param mediaTypes one or more media types; must not be {@code null} or empty
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange2ResHead accept(@NonNull MediaType... mediaTypes);
-
-  /**
-   * Sets the {@code Authorization} header.
-   *
-   * @param token the bearer token; must not be {@code null} or blank
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange3ResHead auth(String token);
-
-  /**
-   * Sets the {@code Content-Type} header for the request body.
-   *
-   * <p>If the media type specifies a charset, it will be used to encode any string payloads
-   * provided in the body step; otherwise UTF-8 is used by default.
-   *
-   * @param mediaType the content type to set; must not be {@code null}
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange4ResHead contentType(@NonNull MediaType mediaType);
-
-  /**
-   * Adds a header value. If the header already exists, the value is <em>appended</em> (multi-value
-   * header); it does not replace existing values.
-   *
-   * @param key the header name; must not be {@code null}
-   * @param value the header value (converted via {@code String.valueOf(value)}); must not be {@code
-   *     null}
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange5ResHead add(String key, Object value);
-
-  /**
-   * Replaces the current header map with the given one (full replace). Keys are treated
-   * case-insensitively; value lists are preserved as given (order kept).
-   *
-   * @param keyValue the complete header map to set; must not be {@code null}
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange6ResHead set(@NonNull Map<String, List<Object>> keyValue);
-}
+public interface TestArrange1ResHead
+    extends TestOperationAccept,
+        TestOperationAuth,
+        TestOperationAdd,
+        TestOperationContentType,
+        TestOperationSet {}

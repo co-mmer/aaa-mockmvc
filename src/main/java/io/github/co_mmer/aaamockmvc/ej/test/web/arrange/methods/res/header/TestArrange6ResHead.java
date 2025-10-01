@@ -1,7 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArrange1ResBody;
-
 /**
  * POST/PUT/PATCH arrange step for defining HTTP headers.
  *
@@ -26,14 +24,4 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArr
  *
  * @since 1.0.0
  */
-public interface TestArrange6ResHead {
-
-  /**
-   * Switches to the body arrange step for the same request specification.
-   *
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange1ResBody body();
-}
+public interface TestArrange6ResHead extends TestOperationBody {}

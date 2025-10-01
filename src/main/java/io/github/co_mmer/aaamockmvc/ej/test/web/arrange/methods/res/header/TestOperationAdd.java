@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.header;
+package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header;
 
 interface TestOperationAdd {
 
@@ -13,5 +13,5 @@ interface TestOperationAdd {
    *     the current state.
    * @since 2.0.0
    */
-  TestArrange5OptionsHeader add(String key, Object value);
+  TestArrange5ResHead add(String key, Object value);
 }

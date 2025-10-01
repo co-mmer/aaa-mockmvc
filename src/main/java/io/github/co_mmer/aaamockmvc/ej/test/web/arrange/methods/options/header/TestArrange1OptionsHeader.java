@@ -23,7 +23,5 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.header;
  *
  * @since 1.0.0
  */
-public interface TestArrange1OptionsHeader extends TestOperationAuth, TestOperationAdd,
-    TestOperationSet {
-
-}
+public interface TestArrange1OptionsHeader
+    extends TestOperationAuth, TestOperationAdd, TestOperationSet {}
