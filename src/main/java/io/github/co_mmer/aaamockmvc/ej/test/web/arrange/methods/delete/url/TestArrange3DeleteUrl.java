@@ -22,6 +22,4 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.url;
  *
  * @since 1.0.0
  */
-public interface TestArrange3DeleteUrl extends TestOperationHeader {
-
-}
+public interface TestArrange3DeleteUrl extends TestOperationHeader {}

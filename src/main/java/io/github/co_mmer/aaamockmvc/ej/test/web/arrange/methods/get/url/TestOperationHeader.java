@@ -1,6 +1,6 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.url;
+package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.get.url;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.header.TestArrange1DeleteHeader;
+import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.get.header.TestArrange1GetHeader;
 
 interface TestOperationHeader {
 
@@ -11,5 +11,5 @@ interface TestOperationHeader {
    *     the current state.
    * @since 2.0.0
    */
-  TestArrange1DeleteHeader headers();
+  TestArrange1GetHeader headers();
 }

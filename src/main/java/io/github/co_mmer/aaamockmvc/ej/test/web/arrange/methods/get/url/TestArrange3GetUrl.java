@@ -1,7 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.get.url;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.get.header.TestArrange1GetHeader;
-
 /**
  * GET arrange step for defining the request URL and query parameters.
  *
@@ -26,14 +24,4 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.get.header.TestA
  *
  * @since 1.0.0
  */
-public interface TestArrange3GetUrl {
-
-  /**
-   * Switches to the headers arrange step for the same request specification.
-   *
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange1GetHeader headers();
-}
+public interface TestArrange3GetUrl extends TestOperationHeader {}

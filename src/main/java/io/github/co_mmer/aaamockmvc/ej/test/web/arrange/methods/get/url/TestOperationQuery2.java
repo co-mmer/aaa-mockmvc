@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.url;
+package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.get.url;
 
 import java.util.Map;
 import lombok.NonNull;
@@ -14,5 +14,5 @@ interface TestOperationQuery2 {
    *     the current state.
    * @since 2.0.0
    */
-  TestArrange3DeleteUrl query(@NonNull Map<String, String> keyValue);
+  TestArrange3GetUrl query(@NonNull Map<String, String> keyValue);
 }

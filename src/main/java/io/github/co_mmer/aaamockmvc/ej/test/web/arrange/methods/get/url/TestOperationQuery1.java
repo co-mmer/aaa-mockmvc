@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.url;
+package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.get.url;
 
 interface TestOperationQuery1 {
 
@@ -13,5 +13,5 @@ interface TestOperationQuery1 {
    *     the current state.
    * @since 2.0.0
    */
-  TestArrange2DeleteUrl query(String key, String value);
+  TestArrange2GetUrl query(String key, String value);
 }
