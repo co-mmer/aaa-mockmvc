@@ -23,18 +23,4 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.header;
  *
  * @since 1.0.0
  */
-public interface TestArrange5DeleteHeader {
-
-  /**
-   * Adds a header value. If the header already exists, the value is <em>appended</em> (multi-value
-   * header); it does not replace existing values.
-   *
-   * @param key the header name; must not be {@code null}
-   * @param value the header value (converted via {@code String.valueOf(value)}); must not be {@code
-   *     null}
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange5DeleteHeader add(String key, Object value);
-}
+public interface TestArrange5DeleteHeader extends TestOperationAdd {}
