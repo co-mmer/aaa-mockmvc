@@ -10,8 +10,8 @@
  * <p><b>General rules (apply to all methods in this package):</b>
  *
  * <ul>
- *   <li>All methods return the next step in the arrange chain, exposing only
- *       arrange-appropriate operations for the current state.
+ *   <li>All methods return the next step in the arrange chain, exposing only arrange-appropriate
+ *       operations for the current state.
  *   <li>All validations throw {@link java.lang.NullPointerException} for {@code null} arguments.
  *   <li>For duplicate query keys, the most recently provided value replaces the previous one.
  * </ul>
@@ -26,8 +26,8 @@
  *   .auth("token-123");
  * }</pre>
  *
- * <p><b>Entry point:</b> The public API surface is
- * {@link io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.url.TestArrange1OptionsUrl}.
+ * <p><b>Entry point:</b> The public API surface is {@link
+ * io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.url.TestArrange1OptionsUrl}.
  *
  * @since 1.0.0
  */

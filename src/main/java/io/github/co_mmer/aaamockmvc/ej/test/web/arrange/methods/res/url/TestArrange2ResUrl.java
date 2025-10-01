@@ -1,8 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.url;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArrange1ResBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestArrange1ResHead;
-
 /**
  * POST/PUT/PATCH arrange step for defining the request URL and query parameters.
  *
@@ -25,36 +22,5 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestA
  *
  * @since 1.0.0
  */
-public interface TestArrange2ResUrl {
-
-  /**
-   * Adds a single query parameter to the request URL. Calling this method multiple times appends
-   * additional parameters; if the same key is provided again, the last value wins (replaces the
-   * previous one).
-   *
-   * @param key the query parameter name; must not be {@code null}
-   * @param value the query parameter value; must not be {@code null}
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange2ResUrl query(String key, String value);
-
-  /**
-   * Switches to the headers arrange step for the same request specification.
-   *
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange1ResHead headers();
-
-  /**
-   * Switches to the body arrange step for the same request specification.
-   *
-   * @return the next step in the arrange chain, exposing only arrange-appropriate methods based on
-   *     the current state.
-   * @since 2.0.0
-   */
-  TestArrange1ResBody body();
-}
+public interface TestArrange2ResUrl
+    extends TestOperationQuery1, TestOperationHeader, TestOperationBody {}
