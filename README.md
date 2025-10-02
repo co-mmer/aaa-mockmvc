@@ -79,14 +79,9 @@ class UserIT extends AAAMockMvcTestSupport {
 
 ---
 
-<div style="border:2px solid orange; padding:10px; border-radius:6px; ">
-
-#### You are reading the documentation for **AAA-MockMvc 2.0.0-RC1** (currently Release Candidate)
-
-#### For the stable 1.x series, see [README-1.x.md](./README-1.x.md)
-
-</div>
-
+> [!Note] You are reading the documentation for AAA-MockMvc 2.0.0-RC1 (currently Release
+> Candidate).  
+> For the stable 1.x series, see [README-1.x.md](./README-1.x.md).
 
 ---
 
