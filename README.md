@@ -77,6 +77,15 @@ class UserIT extends AAAMockMvcTestSupport {
 
 </details>
 
+---
+
+<div style="border:2px solid orange; padding:10px; border-radius:6px; ">
+
+#### You are reading the documentation for **AAA-MockMvc 2.0.0-RC1** (currently Release Candidate)
+
+#### For the stable 1.x series, see [README-1.x.md](./README-1.x.md)
+
+</div>
 
 
 ---
@@ -92,7 +101,7 @@ class UserIT extends AAAMockMvcTestSupport {
 
 ## News
 
-### 🌿 Release v2.0.0
+### 🌿 Release v2.0.0-RC1
 
 This is a quality-of-life release poured with a lot of care tests read cleaner and fail clearer.
 
@@ -139,7 +148,7 @@ The sources can also be downloaded directly to access the documentation of the c
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.0-RC1</version>
   <scope>test</scope>
 </dependency>
 

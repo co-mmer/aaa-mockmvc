@@ -72,6 +72,19 @@
 
 ---
 
+## [2.0.0-RC1]
+
+### 🔭 Overview
+
+- **Release Candidate for 2.0.0** — API considered stable; only bug fixes and documentation
+  polish planned until GA.
+- **A refined AAA flow** — Arrange, Act, Assert/Answer now tell a clearer story with a consistent,
+  one-time execution model.
+- **Concise, memorable method names** — faster to type, easier to scan.
+- **Step runner** — structure complex test flows with named steps.
+
+---
+
 ## [1.5.0]
 
 ### ✨ New Features
