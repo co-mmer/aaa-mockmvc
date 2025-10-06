@@ -1,9 +1,8 @@
-<table>
-  <tr>
-    <td><img src="./images/aaa-mockmvc-icon.png" alt="aaa-mockmvc-icon" style="vertical-align: middle;"/></td>
-    <td><h1>AAA-MockMvc</h1></td>
-  </tr>
-</table>
+<div style="display: flex; align-items: center;">
+  <img src="./images/aaa-mockmvc-icon1.png" alt="aaa-mockmvc-icon" />
+  <span style="margin-left: 8px; font-size: 60px;">AAA-MockMvc</span>
+</div>
+
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=coverage)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
@@ -16,7 +15,8 @@
 
 ## Overview
 
-A fluent testing framework for Spring's MockMvc that enforces the Arrange-Act-Assert (AAA)
+**AAA-MockMvc** is a fluent testing framework for Spring's MockMvc that enforces the
+Arrange-Act-Assert (AAA)
 pattern and reduces boilerplate in controller tests.
 The library guides developers through each testing phase with a strongly-typed,
 step-by-step API, ensuring a consistent and intuitive test structure. Common tasks such as
@@ -79,8 +79,7 @@ class UserIT extends AAAMockMvcTestSupport {
 
 ---
 
-> [!Note] You are reading the documentation for AAA-MockMvc 2.0.0-RC1 (currently Release
-> Candidate).  
+> ⚠️ You are reading the documentation for AAA-MockMvc 2.0.0-RC1 (currently Release Candidate).  
 > For the stable 1.x series, see [README-1.x.md](./README-1.x.md).
 
 ---
