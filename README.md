@@ -1,5 +1,5 @@
 <p>
-  <img src="./images/aaa-mockmvc-icon1.png" alt="aaa-mockmvc-icon" style="max-width:100%; height:auto;" />
+  <img src="./images/aaa-mockmvc-icon1.png" alt="aaa-mockmvc-icon" style="max-width:50%; height:auto;" />
 </p>
 
 
