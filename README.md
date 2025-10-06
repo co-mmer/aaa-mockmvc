@@ -1,6 +1,4 @@
-<p>
-  <img src="./images/aaa-mockmvc-icon1.png" alt="aaa-mockmvc-icon" style="max-width:50%; height:auto;" />
-</p>
+<img src="./images/aaa-mockmvc-icon1.png" alt="aaa-mockmvc-icon" style="width:100%; max-width:40%; height:auto; vertical-align:middle;" />
 
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
