@@ -1,6 +1,7 @@
-<div style="display: flex; align-items: center;">
-  <img src="./images/aaa-mockmvc-icon1.png" alt="aaa-mockmvc-icon" style="max-width: 100%; height: auto;" />
-</div>
+<p>
+  <img src="./images/aaa-mockmvc-icon1.png" alt="aaa-mockmvc-icon" style="max-width:100%; height:auto;" />
+</p>
+
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=coverage)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
