@@ -13,13 +13,27 @@
 
 ## Overview
 
-**AAA-MockMvc** is a fluent testing framework for Spring's MockMvc that enforces the
-Arrange-Act-Assert (AAA)
-pattern and reduces boilerplate in controller tests.
-The library guides developers through each testing phase with a strongly-typed,
-step-by-step API, ensuring a consistent and intuitive test structure. Common tasks such as
-request setup, ObjectMapper-based serialization, and response assertions are fully abstracted,
-allowing developers to focus on the test logic itself rather than technical overhead.
+**AAA-MockMvc** is a **Spring Boot testing framework** that provides a **fluent API** for creating
+clean,
+maintainable, and strongly-typed **MockMvc integration tests**.  
+It follows the classic **Arrange–Act–Assert (AAA)** pattern, helping developers write expressive and
+consistent tests for their REST controllers and services.
+
+Instead of manually wiring `MockMvc` and handling JSON serialization, **AAA-MockMvc** guides you
+through
+each testing phase — **Arrange**, **Act**, and **Assert** — using a step-by-step, type-safe DSL.  
+This approach improves **readability**, **reusability**, and **test reliability** for
+**Spring Boot applications** written in **Java 17+**.
+
+Key benefits:
+
+- Simplifies **MockMvc integration testing** with a fluent, intuitive DSL.
+- Enforces a clear **Arrange-Act-Assert** structure for every test case.
+- Minimizes boilerplate setup for `ObjectMapper`, headers, and request/response handling.
+- Integrates seamlessly with existing **Spring Boot** test configurations and beans.
+
+Whether you’re building REST APIs, testing controllers, or ensuring contract consistency,
+**AAA-MockMvc** makes your **Spring Boot integration tests** both **cleaner and faster**.
 
 ### Example
 
@@ -87,7 +101,7 @@ class UserIT extends AAAMockMvcTestSupport {
 - [Overview](#overview)
 - [News](#news)
 - [User Guide](#user-guide)
-- [License](#License)
+- [License](#license)
 
 ---
 
@@ -111,7 +125,7 @@ This is a quality-of-life release poured with a lot of care tests read cleaner a
 ## User Guide
 
 - [1. Installation](#1-installation)
-- [2. Getting Starting](#2-getting-started)
+- [2. Getting Started](#2-getting-started)
 - [3. Creating a Test](#3-creating-a-test)
     - [3.1. Phase Arrange](#31-phase-arrange)
     - [3.2. Phase Act](#32-phase-act)
@@ -121,12 +135,12 @@ This is a quality-of-life release poured with a lot of care tests read cleaner a
     - [4.1. Using steps](#41-using-step)
     - [4.2. Using steps with return-object](#42-using-step-with-answer)
 - [5. Using Custom Bean ](#5-using-custom-beans)
-    - [ObjectMapper](#51-objectmapper)
-    - [MockMvc](#52-mockmvc)
+    - [5.1. ObjectMapper](#51-objectmapper)
+    - [5.2. MockMvc](#52-mockmvc)
 - [6. Manuel Setup](#6-manuel-setup)
-    - [Getting Starting](#61-getting-starting)
-    - [Creating a Test](#62-creating-a-test)
-    - [Working with Steps](#63-using-steps)
+    - [6.1. Getting Started](#61-getting-started)
+    - [6.2. Creating a Test](#62-creating-a-test)
+    - [6.3. Working with Steps](#63-using-steps)
 
 ---
 
@@ -272,7 +286,7 @@ class MyTest extends AAAMockMvcTestSupport {
         .auth("token-123");
 
     act()
-        .perfrom();
+        .perform();
 
     asserts()
         .status()
@@ -315,7 +329,7 @@ class MyTest extends AAAMockMvcTestSupport {
         .auth("token-123");
 
     act()
-        .perfrom();
+        .perform();
 
     asserts()
         .status()
@@ -547,7 +561,7 @@ tests
 lean), you can also use the framework without extending it.
 Simply import the Spring configuration and inject `AAAMockMvc` yourself.
 
-### 6.1 Getting Starting
+### 6.1 Getting Started
 
 To use AAA-MockMvc without `AAAMockMvcTestSupport`, add `@ExtendWith(AAAMockMvcExtension.class)`
 and `@Import(AAAMockMvcConfig.class)` to your test and autowire an `AAAMockMvc` field.
