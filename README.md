@@ -1,9 +1,6 @@
 <div align="center">
-  <img src="./images/aaa-mockmvc-icon5.png" alt="aaa-mockmvc-icon" />
+  <img src="./images/aaa-mockmvc-icon6.png" alt="aaa-mockmvc-icon" />
 </div>
-
-<h1 align="center">AAA-MockMvc</h1>
-
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=coverage)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
