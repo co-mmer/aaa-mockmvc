@@ -16,14 +16,9 @@ public class TestStepValidator {
 
   private static final String MISSING_ARRANGE_ACT_BEFORE_ASSERTS =
       "Assert error: No 'arrange()' / 'act()' steps configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' followed by 'act().perform()' before 'asserts()'";
-  private static final String MISSING_ASSERTS_BEFORE_ACT =
-      "Assert error: No 'act()' step configured. Call 'act().perform()' before 'asserts()'";
 
   private static final String MISSING_ARRANGE_ACT_BEFORE_ANSWER =
       "Answer error: No 'arrange()' / 'act()' steps configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' followed by 'act().perform()' before 'answer()'";
-
-  private static final String MISSING_ACT_BEFORE_ANSWER =
-      "Answer error: No 'act()' step configured. Call 'act().perform()' before 'answer()'";
 
   @Since("2.0.0")
   public static void preconditionsOfAct(TestStepImpl step) {
@@ -61,7 +56,7 @@ public class TestStepValidator {
 
   private static void verifyAssertsStepCustom(TestStepImpl step) {
     if (isActResultNull(step)) {
-      throwIllegalStateException(step, MISSING_ASSERTS_BEFORE_ACT);
+      throwIllegalStateException(step, MISSING_ARRANGE_ACT_BEFORE_ASSERTS);
     }
   }
 
@@ -79,7 +74,7 @@ public class TestStepValidator {
 
   private static void verifyAnswerStepCustom(TestStepImpl step) {
     if (isActResultNull(step)) {
-      throwIllegalStateException(step, MISSING_ACT_BEFORE_ANSWER);
+      throwIllegalStateException(step, MISSING_ARRANGE_ACT_BEFORE_ANSWER);
     }
   }
 

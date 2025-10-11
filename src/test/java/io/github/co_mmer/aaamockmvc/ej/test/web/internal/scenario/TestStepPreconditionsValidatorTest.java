@@ -31,14 +31,8 @@ class TestStepValidatorTest {
   private static final String MSG_ASSERTS_NO_ARRANGE_ACT =
       "Assert error: No 'arrange()' / 'act()' steps configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' followed by 'act().perform()' before 'asserts()'";
 
-  private static final String MSG_ASSERTS_NO_ACT =
-      "Assert error: No 'act()' step configured. Call 'act().perform()' before 'asserts()'";
-
   private static final String MSG_ANSWER_NO_ARRANGE_ACT =
       "Answer error: No 'arrange()' / 'act()' steps configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' followed by 'act().perform()' before 'answer()'";
-
-  private static final String MSG_ANSWER_NO_ACT =
-      "Answer error: No 'act()' step configured. Call 'act().perform()' before 'answer()'";
 
   private TestStepImpl mockStep(String stepName, TestArrangeResult arrange, TestActResult act) {
     var step = mock(TestStepImpl.class);
@@ -132,7 +126,7 @@ class TestStepValidatorTest {
               IllegalStateException.class, () -> TestStepValidator.preconditionsOfAsserts(step));
 
       // Assert
-      assertThat(ex.getMessage(), is(prefixed(stepName, MSG_ASSERTS_NO_ACT)));
+      assertThat(ex.getMessage(), is(prefixed(stepName, MSG_ASSERTS_NO_ARRANGE_ACT)));
     }
 
     @Test
@@ -176,7 +170,7 @@ class TestStepValidatorTest {
               IllegalStateException.class, () -> TestStepValidator.preconditionsOfAnswer(step));
 
       // Assert
-      assertThat(ex.getMessage(), is(prefixed(stepName, MSG_ANSWER_NO_ACT)));
+      assertThat(ex.getMessage(), is(prefixed(stepName, MSG_ANSWER_NO_ARRANGE_ACT)));
     }
 
     @Test

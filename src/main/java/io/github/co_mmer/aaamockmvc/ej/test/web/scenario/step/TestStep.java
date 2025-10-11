@@ -6,15 +6,14 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.TestArrange;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.TestAssert;
 
 /**
- * Represents a single AAA step and exposes the phase entry points: {@link #arrange()},
- * {@link #act()}, {@link #asserts()}, and {@link #answer()}.
+ * Represents a single AAA step and exposes the phase entry points: {@link #arrange()}, {@link
+ * #act()}, {@link #asserts()}, and {@link #answer()}.
  *
- * <p><b>What it does:</b> Holds the state for one HTTP test interaction. You declare the request
- * in
+ * <p><b>What it does:</b> Holds the state for one HTTP test interaction. You declare the request in
  * the <i>Arrange</i> phase, execute it once in the <i>Act</i> phase ({@code perform()}), and then
  * verify or read the captured <i>snapshot</i> in the <i>Assert</i>/<i>Answer</i> phases. Assertions
- * and answer access operate on the cached snapshot—no additional network I/O occurs after
- * {@code perform()}.
+ * and answer access operate on the cached snapshot—no additional network I/O occurs after {@code
+ * perform()}.
  *
  * <p><b>Typical usage (AAA):</b>
  *
