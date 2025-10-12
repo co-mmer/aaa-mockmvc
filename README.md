@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./images/aaa-mockmvc-icon7.png" alt="aaa-mockmvc-icon" />
+  <img src="images/aaa-mockmvc-icon.png" alt="aaa-mockmvc-icon" />
   <h1>AAA-MockMvc</h1>
 </div>
 
@@ -39,7 +39,7 @@ Whether you’re building REST APIs, testing controllers, or ensuring contract c
 
 ### Example
 
-<img src="images/aaa-mockmvc-example4.png" alt="AAA-MockMvc example test using Arrange Act Assert pattern in Spring Boot"/>
+<img src="images/aaa-mockmvc-example.png" alt="AAA-MockMvc example test using Arrange Act Assert pattern in Spring Boot"/>
 <details>
 <summary>Code</summary>
 

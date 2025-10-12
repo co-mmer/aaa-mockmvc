@@ -23,7 +23,7 @@ step-by-step API, ensuring a consistent and intuitive test structure. Common tas
 request setup, ObjectMapper-based serialization, and response assertions are fully abstracted,
 allowing developers to focus on the test logic itself rather than technical overhead.
 
-<img src="images/aaa-mockmvc-example1.png" alt="aaa-mockmvc-example"/>
+<img src="images/aaa-mockmvc-example.png" alt="aaa-mockmvc-example"/>
 
 ___
 
