@@ -1,5 +1,7 @@
 # <img src="./images/aaa-mockmvc-changelog.png" align="left"/> Changelog
 
+----
+
 ## [2.0.0]
 
 ### 🌿 Highlights
