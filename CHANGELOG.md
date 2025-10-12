@@ -1,4 +1,4 @@
-# <img src="./images/changelog.png" align="left"/> Changelog
+# <img src="./images/aaa-mockmvc-changelog.png" align="left"/> Changelog
 
 ----
 
