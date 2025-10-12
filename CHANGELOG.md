@@ -1,4 +1,4 @@
-# <img src="./images/24px.png" align="left"/> Changelog
+# <img src="./images/27px.png" align="left"/> Changelog
 
 ----
 
