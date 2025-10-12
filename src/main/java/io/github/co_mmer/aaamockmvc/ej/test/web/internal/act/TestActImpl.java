@@ -39,7 +39,7 @@ public final class TestActImpl implements TestAct {
     try {
       return this.context.getEnvironment().mvc().perform(requestBuilder);
     } catch (Exception e) {
-      throw new TestActFailedError(createMessage(this.context.getStep(), result, e), e);
+      throw new TestActFailedError(createMessage(this.context.getStep(), result, e));
     }
   }
 }

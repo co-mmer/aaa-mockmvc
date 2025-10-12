@@ -1,6 +1,7 @@
 <div align="center">
-  <img src="./images/aaa-mockmvc-icon6.png" alt="aaa-mockmvc-icon" />
+  <img src="./images/aaa-mockmvc-icon7.png" alt="aaa-mockmvc-icon" />
 </div>
+
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=coverage)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
@@ -37,7 +38,7 @@ Whether you’re building REST APIs, testing controllers, or ensuring contract c
 
 ### Example
 
-<img src="images/aaa-mockmvc-example4.png" alt="aaa-mockmvc-example"/>
+<img src="images/aaa-mockmvc-example4.png" alt="AAA-MockMvc example test using Arrange Act Assert pattern in Spring Boot"/>
 <details>
 <summary>Code</summary>
 

@@ -39,10 +39,9 @@ public final class TestActFailedError extends AssertionFailedError {
    * snapshot and passes it here; external callers should not compose this message themselves.
    *
    * @param message human-readable failure message with request arrange
-   * @param cause the underlying failure; must not be {@code null}
    * @since 2.0.0
    */
-  public TestActFailedError(String message, Throwable cause) {
-    super(message, cause);
+  public TestActFailedError(String message) {
+    super(message);
   }
 }
