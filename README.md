@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="images/aaa-mockmvc-icon.png" alt="aaa-mockmvc-icon" />
+  <img src="images/aaa-mockmvc-icon.png" alt="aaa-mockmvc-icon" style="width: 300px;" />
   <h1>AAA-MockMvc</h1>
 </div>
 
