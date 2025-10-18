@@ -4,35 +4,74 @@
 
 ## [2.0.0]
 
-Version 2.0.0 represents a major evolution of the AAA-MockMvc framework.  
-It refines the core testing flow (Arrange → Act → Assert/Answer), improves error clarity, and
-introduces a new step runner for building real-world test scenarios more intuitively.  
-This release focuses on expressiveness, predictability, and a smoother developer experience.
+Version **2.0.0** marks a major step forward for the AAA-MockMvc framework.  
+The testing experience has been reimagined — more fluent, predictable, and closer to real-world
+developer workflows.  
+This release refines the **Arrange → Act → Assert/Answer** flow into a more natural rhythm, with
+clear semantics, stronger assertions, and a new **step runner** for structured scenarios.
 
 ### 🌿 Highlights
 
-- **A gentler AAA flow** — Build once in Arrange, run once in Act, and read with confidence in
-  Assert/Answer. Tests tell a clearer story and stay focused on intent.
-- **Short, memorable method names** — Simplified, consistent naming (e.g., isOk,
-  isCreated, asList, containsEntryExactly) for faster typing and scanning.
-- **Step runner, made for real-world flows** — Name your steps, group multiple AAA blocks in one
-  test,
-  and (optionally) return the last captured answer from a step. Readability first.
+- **A gentler AAA flow** — Build once in Arrange, execute once in Act, and verify confidently in
+  Assert/Answer.  
+  Tests are now more declarative, stable, and easy to reason about.
+
+    ```java
+    
+    @SpringBootTest
+    class MyTest extends AAAMockMvcTestSupport {
+    
+      @Test
+      void GIVEN_newUser_WHEN_createUser_THEN_userStatusIsPending() {
+    
+        arrange()
+            .post("/users")
+            .body()
+            .json(new User("Napoleon"));
+    
+        act()
+            .perform();
+    
+        asserts()
+            .status()
+            .isCreated()
+            .content().asClass(UserResponse.class)
+            .isNotNull()
+            .matchAll(r -> r.status().equals("pending"));
+      }
+    }
+    
+    ```
+
+
+- **Step Runner** — Compose multiple AAA blocks into named steps within a single test.  
+  Keeps tests organized while reflecting real-world test flows.
+
+    ```java
+    
+    @SpringBootTest
+    class MyTest extends AAAMockMvcTestSupport {
+    
+      @Test
+      void GIVEN_newUser_WHEN_receiveNewUser_THEN_returnStatusOk() {
+    
+        step("Create user", () -> {
+            arrange().post("/users").body().json(new User("Napoleon"));
+            act().perform();
+            asserts().status().isCreated();
+        });
+            
+        step("Retrieve user", () -> {
+            arrange().get("/users/Napoleon");
+            act().perform();
+            asserts().status().isOk();
+        });
+      }
+    }
+    
+    ```
 
 ### ✨ New Features
-
-- **Step runner (step(...))**
-    - Group multiple AAA blocks into named steps within a single test.
-    - Each step runs in isolation and can return the last captured answer from its block.
-    - Greatly improves readability and organization of complex test flows.
-    - Example:
-
-  ```java
-    step("Add Napoleon", () -> {
-        arrange().post(BASE + CREATE_USER).body().json(new User("Napoleon"));
-        act().perform();
-        asserts().status().isCreated();
-    });
 
 - **Support Boolean**
     - Added fluent assertion support for boolean payloads via `content().asBoolean()`.
@@ -40,22 +79,16 @@ This release focuses on expressiveness, predictability, and a smoother developer
 
 ### 🧹 Improvements
 
-- **Sharper Snapshot Semantics**
-    - `act().perform()` executes exactly once; subsequent assertions read from the same cached
-      response.  
-      No hidden re-execution or I/O.
-
-- **Error Hygiene**
-    - Added clearer precondition validation with actionable messages, e.g.:
-      > “Call `arrange().get|post|…` then `act().perform()` before using `asserts()` or `answer()`.”
-
-- **Spring/JUnit Integration**
-    - Lightweight JUnit 5 extension that auto-cleans state before and after tests.
-    - Ensures clean test suites without manual resets.
-
-
-- **Documentation**
-    - Refined docs and JavaDoc with practical examples for faster onboarding.
+- **Short, memorable method names** — Consistent naming like `isOk`, `isCreated`, `asList`,
+  and `containsEntryExactly` improves discoverability and reduces noise.
+- **Sharper snapshot semantics** — `act().perform()` now executes only once; assertions and answers
+  reuse the same cached response.
+- **Better error experience** — Human-readable failure messages with contextual guidance and
+  annotated step names.
+- **Seamless Spring/JUnit integration** — Lightweight extension automatically resets state between
+  tests.
+- **Refined documentation and JavaDoc** — Practical examples and precise contracts make onboarding
+  faster.
 
 ---
 
