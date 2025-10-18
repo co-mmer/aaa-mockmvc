@@ -112,8 +112,8 @@ integration tests.
 
 ### 🧹 Improvements
 
-- Updated and clarified documentation for the Arrange section,  
-  offering better guidance on test setup patterns.
+- Updated and clarified documentation for the Arrange section, offering better guidance on test
+  setup patterns.
 
 ---
 
@@ -121,8 +121,8 @@ integration tests.
 
 ### 🧹 Improvements
 
-This release updates core dependencies to maintain framework compatibility and stability.  
-No code or behavior changes were made.
+* This release updates core dependencies to maintain framework compatibility and stability.
+* No code or behavior changes were made.
 
 ---
 
@@ -133,7 +133,7 @@ handling for null responses.
 
 ### 🧹 Improvements
 
-- Reduced the number of transitive dependencies, resulting in a lighter and faster test runtime.
+* This release updates core dependencies to maintain framework compatibility and stability.
 
 ### ☂️ Fixes
 
