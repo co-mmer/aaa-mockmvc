@@ -1,8 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.answer;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerFailed;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -30,83 +28,6 @@ import lombok.NonNull;
  * @since 1.2.0
  */
 public interface TestAnswer {
-
-  /**
-   * Parses the response body as an {@link Number} using the configured mapper. Intended for scalar
-   * numeric payloads (e.g., {@code 42}).
-   *
-   * @return the parsed Number value
-   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
-   *     compatible with {@code Number}
-   * @since 2.0.0
-   */
-  Number asNumber();
-
-  /**
-   * Parses the response body as an {@link BigDecimal} using the configured mapper. Intended for
-   * scalar numeric payloads (e.g., {@code 42}).
-   *
-   * @return the parsed BigDecimal value
-   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
-   *     compatible with {@code BigDecimal}
-   * @since 2.0.0
-   */
-  BigDecimal asBigDecimal();
-
-  /**
-   * Parses the response body as an {@link BigInteger} using the configured mapper. Intended for
-   * scalar numeric payloads (e.g., {@code 42}).
-   *
-   * @return the parsed BigInteger value
-   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
-   *     compatible with {@code BigInteger}
-   * @since 2.0.0
-   */
-  BigInteger asBigInteger();
-
-  /**
-   * Parses the response body as an {@link Integer} using the configured mapper. Intended for scalar
-   * numeric payloads (e.g., {@code 42}).
-   *
-   * @return the parsed integer value
-   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
-   *     compatible with {@code Integer}
-   * @since 2.0.0
-   */
-  Integer asInteger();
-
-  /**
-   * Parses the response body as an {@link Long} using the configured mapper. Intended for scalar
-   * numeric payloads (e.g., {@code 42}).
-   *
-   * @return the parsed long value
-   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
-   *     compatible with {@code Long}
-   * @since 2.0.0
-   */
-  Long asLong();
-
-  /**
-   * Parses the response body as a {@link Float} using the configured mapper. Intended for scalar
-   * numeric payloads (e.g., {@code 12.34}).
-   *
-   * @return the parsed float value
-   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
-   *     compatible with {@code Float}
-   * @since 2.0.0
-   */
-  Float asFloat();
-
-  /**
-   * Parses the response body as a {@link Double} using the configured mapper. Intended for scalar
-   * numeric payloads (e.g., {@code 12.34}).
-   *
-   * @return the parsed double value
-   * @throws TestAnswerFailed if deserialization fails or the body is not a numeric scalar
-   *     compatible with {@code Double}
-   * @since 2.0.0
-   */
-  Double asDouble();
 
   /**
    * Parses the response body as a {@link Boolean} using the configured mapper. Intended for boolean

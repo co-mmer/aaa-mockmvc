@@ -9,8 +9,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMappe
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAnswerResult;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -25,41 +23,6 @@ public final class TestAnswerImpl implements TestAnswer {
   @Since("2.0.0")
   public TestAnswerImpl(@NonNull TestAAAContext context) {
     this.context = context;
-  }
-
-  @Override
-  public Number asNumber() {
-    return parse("asNumber()", Number.class);
-  }
-
-  @Override
-  public BigDecimal asBigDecimal() {
-    return parse("asBigDecimal()", BigDecimal.class);
-  }
-
-  @Override
-  public BigInteger asBigInteger() {
-    return parse("asBigInteger()", BigInteger.class);
-  }
-
-  @Override
-  public Integer asInteger() {
-    return parse("asInteger()", Integer.class);
-  }
-
-  @Override
-  public Long asLong() {
-    return parse("asLong()", Long.class);
-  }
-
-  @Override
-  public Float asFloat() {
-    return parse("asFloat()", Float.class);
-  }
-
-  @Override
-  public Double asDouble() {
-    return parse("asDouble()", Double.class);
   }
 
   @Override

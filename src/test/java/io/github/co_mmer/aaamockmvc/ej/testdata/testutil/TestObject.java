@@ -1,8 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.testdata.testutil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,27 +48,8 @@ public final class TestObject {
   public static final String TEST_SET_A1_A2_JSON = mapToString(TEST_SET_A1_A2);
   public static final String TEST_MAP_A1_A2_JSON = mapToString(TEST_MAP_A1_A2);
 
-  public static final String TEST_INTEGER_JSON = mapToString((Number) 1);
-  public static final Integer TEST_INTEGER = 1;
-  public static final Long TEST_LONG = 1L;
-
-  public static final BigDecimal TEST_BIGDECIMAL = BigDecimal.valueOf(1);
-  public static final BigInteger TEST_BIGINTEGER = BigInteger.valueOf(1);
-
-  public static final String TEST_FLOAT_JSON = mapToString(1F);
-  public static final Float TEST_FLOAT = 1F;
-  public static final String TEST_DOUBLE_JSON = mapToString(1D);
-  public static final Double TEST_DOUBLE = 1D;
   public static final String TEST_BOOLEAN_JSON = mapToString(Boolean.TRUE);
   public static final Boolean TEST_BOOLEAN = Boolean.TRUE;
-
-  public static final Integer TEST_INTEGER_ZERO = 0;
-  public static final Integer TEST_INTEGER_ONE = 1;
-  public static final Integer TEST_INTEGER_TWO = 2;
-  public static final Integer TEST_INTEGER_POSITIVE = 1;
-  public static final Integer TEST_INTEGER_NEGATIVE = -1;
-  public static final Integer TEST_INTEGER_EVEN = 2;
-  public static final Integer TEST_INTEGER_ODD = 3;
 
   @SneakyThrows
   private static String mapToString(Object value) {
