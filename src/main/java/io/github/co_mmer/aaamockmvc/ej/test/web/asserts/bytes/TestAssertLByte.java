@@ -1,27 +1,33 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-
 /**
- * Provides methods for asserting HTTP response byte content in tests.
+ * Entry point for raw <b>byte[]</b> content assertions.
  *
- * <ul>
- *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
- * </ul>
+ * <p><b>What it does:</b> Exposes assertions for the HTTP response body at the byte level
+ * (emptiness, length, exact equality). Use this when you want to verify the raw payload rather than
+ * a deserialized representation.
+ *
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * arrange()
+ *  .get("/api/binary");
+ *
+ * actPerform()
+ *  .perform();
+ *
+ * asserts()
+ *  .content()
+ *  .asBytes()
+ *  .isNotEmpty()
+ *  .hasLength(128);
+ *
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed. Content assertions
+ * apply only if the response contains a body. If no body is present, the cached string
+ * representation is empty ({@code ""}) and the byte representation has length {@code 0}.
  *
  * @since 1.4.0
  */
-public interface TestAssertLByte {
-
-  /**
-   * Asserts that the HTTP response is valid for a HEAD request.
-   *
-   * <p>This method returns an instance of {@code TestAssertHead} for asserting the headers of the
-   * HTTP response. It allows various validations of response headers, such as checking for the
-   * presence or absence of specific headers and comparing header values.
-   *
-   * @return an instance of {@code TestAssertHead} for further assertions on headers
-   * @since 1.4.0
-   */
-  TestAssertHead assertHead();
-}
+public interface TestAssertLByte extends OperationHeader {}

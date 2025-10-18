@@ -1,101 +1,33 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-import java.util.function.Predicate;
-import lombok.NonNull;
-
 /**
- * Provides assertion methods for validating classes in the HTTP response.
+ * Assertions for a deserialized content object of type {@code T}.
  *
- * <ul>
- *   <li>{@link #assertClassMatchAny(Class, Predicate)}: Asserts that the class matches at least one
- *       of the specified conditions.
- *   <li>{@link #assertClassMatchAny(Class, Predicate...)}: Asserts that the class matches at least
- *       one of the specified conditions.
- *   <li>{@link #assertClassMatchNone(Class, Predicate)}: Asserts that the class matches none of the
- *       specified conditions.
- *   <li>{@link #assertClassMatchNone(Class, Predicate...)}: Asserts that the class matches none of
- *       the specified conditions.
- *   <li>{@link #assertHead()}: Asserts properties of response headers for HTTP HEAD requests.
- * </ul>
+ * <p><b>What it does:</b> Provides type-safe checks on the already mapped response body (e.g.,
+ * nullability, equality, predicate-based matching). The body was deserialized once in the preceding
+ * {@code content().asClass(T)} step and is cached for all subsequent assertions.
  *
- * @since 1.4.0
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * arrange()
+ *  .get("/api/user/42");
+ *
+ * actPerform()
+ *  .perform();
+ *
+ * asserts()
+ *  .content()
+ *  .asClass(User.class)
+ *  .isNotNull()
+ *  .matchAny(user -> user.id() == 42, user -> user.status() == ACTIVE);
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed and {@code
+ * content().asClass(T)} successfully deserialized the response body.
+ *
+ * @param <T> the type of the asserted content object
+ * @since 1.0.0
  */
-public interface TestAssert3Class {
-
-  /**
-   * Asserts that the class matches at least one of the specified conditions.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @param <T> the type of the expected response object
-   * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param condition a predicate that the class may match (must not be {@code null})
-   * @return the current instance of {@code TestAssertLClass} for method chaining
-   * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
-   */
-  <T> TestAssert4Class assertClassMatchAny(
-      @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition);
-
-  /**
-   * Asserts that the class matches at least one of the specified conditions.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @param <T> the type of the expected response object
-   * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param conditions a varargs array of predicates that the class may match (must not be {@code
-   *     null})
-   * @return the current instance of {@code TestAssertLClass} for method chaining
-   * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
-   */
-  @SuppressWarnings("unchecked")
-  <T> TestAssert4Class assertClassMatchAny(
-      @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions);
-
-  /**
-   * Asserts that the class matches none of the specified conditions.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @param <T> the type of the expected response object
-   * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param condition a predicate that the class must not match (must not be {@code null})
-   * @return the current instance of {@code TestAssertLClass} for method chaining
-   * @throws NullPointerException if {@code expectedClass} or {@code condition} is {@code null}
-   */
-  <T> TestAssertLClass assertClassMatchNone(
-      @NonNull Class<T> expectedClass, @NonNull Predicate<T> condition);
-
-  /**
-   * Asserts that the class matches none of the specified conditions.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @param <T> the type of the expected response object
-   * @param expectedClass the class of the expected response object (must not be {@code null})
-   * @param conditions a varargs array of predicates that the class must not match (must not be
-   *     {@code null})
-   * @return the current instance of {@code TestAssertLClass} for method chaining
-   * @throws NullPointerException if {@code expectedClass} or {@code conditions} is {@code null}
-   */
-  @SuppressWarnings("unchecked")
-  <T> TestAssertLClass assertClassMatchNone(
-      @NonNull Class<T> expectedClass, @NonNull Predicate<T>... conditions);
-
-  /**
-   * Asserts that the HTTP response is valid for a HEAD request.
-   *
-   * <p>This method returns an instance of {@code TestAssertHead} for asserting the headers of the
-   * HTTP response. It allows various validations of response headers, such as checking for the
-   * presence or absence of specific headers and comparing header values.
-   *
-   * @return an instance of {@code TestAssertHead} for further assertions on headers
-   * @since 1.4.0
-   */
-  TestAssertHead assertHead();
-}
+public interface TestAssert3Class<T>
+    extends OperationMatchAny<T>, OperationMatchNone<T>, OperationHeader {}

@@ -1,9 +1,8 @@
-<table>
-  <tr>
-    <td><img src="./images/aaa-mockmvc-icon.png" alt="aaa-mockmvc-icon" style="vertical-align: middle;"/></td>
-    <td><h1>AAA-MockMvc</h1></td>
-  </tr>
-</table>
+<div align="center">
+  <img src="images/aaa-mockmvc-icon.png" alt="aaa-mockmvc-icon" style="width: 300px;" />
+  <h1>AAA-MockMvc</h1>
+</div>
+
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=co-mmer_aaa-mockmvc&metric=coverage)](https://sonarcloud.io/summary/new_code?id=co-mmer_aaa-mockmvc)
@@ -16,39 +15,93 @@
 
 ## Overview
 
-A fluent testing framework for Spring's MockMvc that enforces the Arrange-Act-Assert (AAA)
-pattern and reduces boilerplate in controller tests.
-The library guides developers through each testing phase with a strongly-typed,
-step-by-step API, ensuring a consistent and intuitive test structure. Common tasks such as
-request setup, ObjectMapper-based serialization, and response assertions are fully abstracted,
-allowing developers to focus on the test logic itself rather than technical overhead.
+**AAA-MockMvc** is a **Spring Boot testing framework** that provides a **fluent API** for creating
+clean,
+maintainable, and strongly-typed **MockMvc integration tests**.  
+It follows the classic **Arrange–Act–Assert (AAA)** pattern, helping developers write expressive and
+consistent tests for their REST controllers and services.
 
-<img src="images/aaa-mockmvc-example1.png" alt="aaa-mockmvc-example"/>
+Instead of manually wiring `MockMvc` and handling JSON serialization, **AAA-MockMvc** guides you
+through
+each testing phase — **Arrange**, **Act**, and **Assert** — using a step-by-step, type-safe DSL.  
+This approach improves **readability**, **reusability**, and **test reliability** for
+**Spring Boot applications** written in **Java 17+**.
 
-___
+Key benefits:
 
-## Table of Contents
+- Simplifies **MockMvc integration testing** with a fluent, intuitive DSL.
+- Enforces a clear **Arrange-Act-Assert** structure for every test case.
+- Minimizes boilerplate setup for `ObjectMapper`, headers, and request/response handling.
+- Integrates seamlessly with existing **Spring Boot** test configurations and beans.
 
-- [Installation](#Installation)
-- [Starting](#starting)
-- [Writing Tests](#writing-tests)
-- [Example](#example)
-- [License](#License)
+Whether you’re building REST APIs, testing controllers, or ensuring contract consistency,
+**AAA-MockMvc** makes your **Spring Boot integration tests** both **cleaner and faster**.
+
+### Example
+
+<img src="images/aaa-mockmvc-example.png" alt="AAA-MockMvc example test using Arrange Act Assert pattern in Spring Boot"/>
 
 ---
 
-## Installation
+## Table of Contents
 
-To include AAAMockMvc in the project, add the following dependency to the `pom.xml`.
-The sources can also be downloaded directly within the IDE (e.g. IntelliJ IDEA) to access the
-documentation of the classes.
+- [Overview](#overview)
+- [News](#news)
+- [User Guide](#user-guide)
+- [License](#license)
+
+---
+
+## News
+
+### 🌿 Release v2.0.0
+
+This is a quality-of-life release poured with a lot of care tests read cleaner and fail clearer.
+
+#### What’s new
+
+- AAA blocks are now much simpler — shorter and easier to follow.
+- The phases are clearly separated, making each test easier to scan.
+- New steps let you group multiple AAA blocks in one test and put a clear name on error messages.
+- Sharper snapshot behavior: act().perform() runs once; assertions and answers stay pure (no extra
+  I/O).
+- See full details in the [Release Note](./RELEASE.md#200)
+
+---
+
+## User Guide
+
+- [1. Installation](#1-installation)
+- [2. Getting Started](#2-getting-started)
+- [3. Creating a Test](#3-creating-a-test)
+    - [3.1. Phase Arrange](#31-phase-arrange)
+    - [3.2. Phase Act](#32-phase-act)
+    - [3.3. Phase Assert](#33-phase-assert)
+    - [3.4. Phase Answer](#34-phase-answer)
+- [4. Working with Steps ](#4-working-with-steps)
+    - [4.1. Using steps](#41-using-step)
+    - [4.2. Using steps with return-object](#42-using-step-with-answer)
+- [5. Using Custom Bean ](#5-using-custom-beans)
+    - [5.1. ObjectMapper](#51-objectmapper)
+    - [5.2. MockMvc](#52-mockmvc)
+- [6. Manuel Setup](#6-manuel-setup)
+    - [6.1. Getting Started](#61-getting-started)
+    - [6.2. Creating a Test](#62-creating-a-test)
+    - [6.3. Working with Steps](#63-using-steps)
+
+---
+
+## 1. Installation
+
+To include AAA-MockMvc in the project, add the following dependency to the `pom.xml`.
+The sources can also be downloaded directly to access the documentation of the classes.
 
 ```xml
 
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>1.5.0</version>
+  <version>2.0.0</version>
   <scope>test</scope>
 </dependency>
 
@@ -56,70 +109,320 @@ documentation of the classes.
 
 ---
 
-## Starting
+## 2. Getting Started
 
-### AAAMockMvcAbstract
+AAA-MockMvc uses a **typed fluent API** that guides you through the classic AAA flow:
 
-The base class `AAAMockMvcAbstract` is the preferred entry point for using the AAAMockMvc framework.
+- **Arrange** – build the request (method, URL/URI, query, headers, body).
+- **Act** – execute the request **once** and capture a **snapshot** (status, headers, body).
+- **Assert** – verify the snapshot; no additional I/O is performed.
+- **Answer** (optional) – read the same snapshot as data (string/bytes/object/list/set/map).
 
-- It provides direct access to all supported HTTP methods via convenient test request objects (
-  e.g., `get()`, `post()`, `put()`, etc.)
-- It automatically configures and injects an internal `AAAMockMvc` instance via Spring's dependency
-  injection mechanism
-- It performs `automatic configuration` by detecting and reusing existing beans (e.g., custom
-  MockMvc
-  or ObjectMapper) from the Spring context
+The Framework exposes only **context-appropriate methods**. For example, `GET/DELETE/HEAD/OPTIONS`
+do **not** offer a request body, while `POST/PUT/PATCH` do.
 
-### Example
+> For more details and edge cases (e.g., headers, content negotiation, error messages),
+> see the JavaDoc of the arrange/act/assert/answer APIs.
+
+---
+
+## 3. Creating a Test
+
+To use AAA-MockMvc, the test class must first inherit from '**AAAMockMvcTestSupport**'
+
+`AAAMockMvcTestSupport` exposes the AAA entry
+points (`arrange()`, `act()`, `asserts()`, `answer()` , `step()`)
+
+``` java
+
+@SpringBootTest
+class MyTest extends AAAMockMvcTestSupport {
+
+}
+```
+
+### 3.1 Phase arrange
+
+Build the request: choose the HTTP method and URL/URI, then (optionally) add path variables,
+query parameters, headers, and a body. **No network I/O happens in this phase**—execution occurs
+later in `act().perform()`.
+
+> For details and edge cases, see the JavaDoc of the arrange APIs.
+
+**Examples**
 
 ```java
 
 @SpringBootTest
-class ExampleIT extends AAAMockMvcAbstract {
+class MyTest extends AAAMockMvcTestSupport {
 
   @Test
-  @SneakyThrows
-  void GIVEN_defaultObjectMapper_THEN_countryCodeIsInLowercase() {
-    get()
-        .arrange()
-        .arrangeUrl(GET_EXAMPLE)
-        .act()
-        .actPerform()
-        .asserts()
-        .assertContentAsClass()
-        .assertClassMatchAll(SimpleObject.class, obj -> obj.countryCode().equals("de"));
+  void GIVEN_newUser_WHEN_createUser_THEN_pendingUserIsCreated() {
+
+    arrange()
+        .post(BASE + CREATE_USER)
+        .query("lang", "de")
+        .body()
+        .json(new User("Napoleon"))
+        .headers()
+        .auth("token-123");
   }
 }
 ```
 
-```java
+### 3.2 Phase act
 
-@RestController
-@RequestMapping(BASE)
-public class SimpleController {
+Execute the arranged request **once** and capture a **response snapshot** (status, headers, body).
+No assertions are performed here; verification happens in the next phase.
 
-  @GetMapping(EXAMPLE)
-  public ResponseEntity<SimpleObject> getSimpleObject() {
-    var simpleObject = new SimpleObject("de");
-    return new ResponseEntity<>(simpleObject, HttpStatus.OK);
+> For details and edge cases, see the JavaDoc of the act APIs.
+
+**Examples**
+
+``` java
+@SpringBootTest
+class MyTest extends AAAMockMvcTestSupport {
+
+  @Test
+  void GIVEN_newUser_WHEN_createUser_THEN_pendingUserIsCreated() {
+    
+    arrange()
+        .post(BASE + CREATE_USER)
+        .query("lang", "de")
+        .body()
+        .json(new User("Napoleon"))
+        .headers()
+        .auth("token-123");
+    
+    act()
+      .perform();
+    
   }
 }
 ```
 
-### Using Custom ObjectMapper or MockMvc Beans
+### 3.3 Phase assert
 
-If the project already defines a custom ObjectMapper or MockMvc bean (e.g. for custom
-serialization), these will automatically be detected and used by AAAMockMvcAbstract.
-This is made possible by the Spring ObjectProvider mechanism used in AAAMockMvcConfig. No additional
-configuration is necessary — the framework automatically picks up the existing beans and integrates
-them internally.
+Verify the response **snapshot** captured in `act().perform()`. No additional I/O happens here.
 
-### Example
+**What you can assert**
+
+- **Status**: exact codes or ranges.
+- **Headers**: key presence , key–value pairs and exact multi-value matches.
+- **Content** as **string / bytes / object / collection / map**   *(object/collection/map use the
+  configured ObjectMapper)*
+
+> For details and edge cases, see the JavaDoc of the asserts APIs.
+
+**Examples**
 
 ```java
 
 @SpringBootTest
-class ExampleIT extends AAAMockMvcAbstract {
+class MyTest extends AAAMockMvcTestSupport {
+
+  @Test
+  void GIVEN_newUser_WHEN_createUser_THEN_pendingUserIsCreated() {
+
+    arrange()
+        .post(BASE + CREATE_USER)
+        .query("lang", "de")
+        .body()
+        .json(new User("Napoleon"))
+        .headers()
+        .auth("token-123");
+
+    act()
+        .perform();
+
+    asserts()
+        .status()
+        .isCreated()
+        .content()
+        .asClass(UserResponse.class)
+        .isNotNull()
+        .matchAll(userResponse -> userResponse.status().equals("pending"));
+  }
+}
+
+```
+
+### 3.4 Phase answer
+
+Read data from the **same snapshot** captured in `act().perform()`—**no additional I/O** is
+performed. Use this to drive follow-up steps (e.g., IDs, payloads, or full objects).
+
+- Return as **string** / **bytes**
+- Deserialize as **object**, **list**, **set**, or **map** (uses the configured ObjectMapper)
+
+> For details and edge cases, see the JavaDoc of the answer APIs.
+
+**Examples**
+
+```java
+
+@SpringBootTest
+class MyTest extends AAAMockMvcTestSupport {
+
+  @Test
+  void GIVEN_newUser_WHEN_createUser_THEN_pendingUserIsCreated() {
+
+    arrange()
+        .post(BASE + CREATE_USER)
+        .query("lang", "de")
+        .body()
+        .json(new User("Napoleon"))
+        .headers()
+        .auth("token-123");
+
+    act()
+        .perform();
+
+    asserts()
+        .status()
+        .isCreated()
+        .content()
+        .asClass(UserResponse.class)
+        .isNotNull()
+        .matchAll(userResponse -> userResponse.status().equals("pending"));
+
+    var userResponse = answer().asObject(UserResponse.class);
+  }
+}
+
+```
+
+---
+
+## 4. Working with Steps
+
+Use **steps** to group multiple AAA blocks within a single test. A step gives your flow a **name**,
+isolates **state**, and makes **failure messages** easier to read (“Step 'Create user' …”).
+
+**When to use**
+
+- You call **multiple endpoints** in one test (e.g., create → update → verify).
+- You need to **pass data** from one response to the next request.
+
+### 4.1 Using Step
+
+Wrap a named, isolated AAA block in a **step** to improve readability and error messages.
+This example shows multiple steps **without** using `answer()`.
+
+**Examples**
+
+```java
+
+@SpringBootTest
+class UserIT extends AAAMockMvcTestSupport {
+
+  @Test
+  void GIVEN_addTwiceUser_WHEN_loadUsers_THEN_containExpectedUsers() {
+
+    step(
+        "Add Napoleon", () -> {
+          arrange()
+              .post(BASE + CREATE_USER)
+              .body().json(new User("Napoleon"));
+          act().perform();
+          asserts().status().isCreated();
+        });
+
+    step(
+        "Add Gandolf", () -> {
+          arrange()
+              .post(BASE + CREATE_USER)
+              .body().json(new User("Gandolf"));
+          act().perform();
+          asserts().status().isCreated();
+        });
+
+    step(
+        "Napoleon and Gandolf are saved", () -> {
+          arrange().get(BASE + USERS);
+          act().perform();
+          asserts()
+              .content().asList(User.class)
+              .hasSize(2)
+              .matchAny(
+                  user -> user.name().equals("Napoleon"),
+                  user -> user.name().equals("Gandolf")
+              );
+        });
+  }
+}
+
+```
+
+### 4.2 Using Step with Answer
+
+A step can return a value. Inside the step, the value comes from the last call to answer()
+.as…(...). If you don’t call answer() at all, the step returns null.
+The result type is simply inferred from where you assign it.
+
+**Examples**
+
+```java
+
+@SpringBootTest
+class UserIT extends AAAMockMvcTestSupport {
+
+  @Test
+  void GIVEN_two_users_WHEN_list_THEN_contains_both() {
+    step(
+        "Add Napoleon", () -> {
+          arrange()
+              .post(BASE + CREATE_USER)
+              .body().json(new User("Napoleon"));
+          act().perform();
+          asserts().status().isCreated();
+        });
+
+    step(
+        "Add Gandolf", () -> {
+          arrange()
+              .post(BASE + CREATE_USER)
+              .body().json(new User("Gandolf"));
+          act().perform();
+          asserts().status().isCreated();
+        });
+
+    List<User> users = step(
+        "Napoleon and Gandolf are saved", () -> {
+          arrange().get(BASE + USERS);
+          act().perform();
+          asserts()
+              .content().asList(User.class)
+              .hasSize(2)
+              .matchAny(
+                  user -> user.name().equals("Napoleon"),
+                  user -> user.name().equals("Gandolf"));
+          answer().asList(User.class);
+        });
+  }
+}
+
+```
+
+---
+
+## 5. Using Custom Beans
+
+AAA-MockMvc automatically **discovers and uses** your existing Spring beans.
+
+**Discovery order**
+
+1. If a **MockMvc** bean exists, it is used as-is; otherwise a default instance is built.
+2. If an **ObjectMapper** bean exists, it is used; otherwise a default mapper is created.
+
+### 5.1 ObjectMapper
+
+Provide a Spring bean and AAA-MockMvc will use it automatically.
+
+```java
+
+@SpringBootTest
+class BeanObjectMapperCustomIT extends AAAMockMvcTestSupport {
 
   @TestConfiguration
   static class ObjectMapperConfig {
@@ -135,273 +438,172 @@ class ExampleIT extends AAAMockMvcAbstract {
   }
 
   @Test
-  @SneakyThrows
-  void GIVEN_customObjectMapper_THEN_countryCodeIsInUpperCase() {
-    get()
-        .arrange()
-        .arrangeUrl(GET_EXAMPLE)
-        .act()
-        .actPerform()
-        .asserts()
-        .assertContentAsClass()
-        .assertClassMatchAll(SimpleObject.class, obj -> obj.countryCode().equals("DE"));
+  void GIVEN_customObjectMapper_THEN_Uppercase() {
+    arrange()
+        .get(BASE + GET_USER);
+
+    act()
+        .perform();
+
+    asserts()
+        .content()
+        .asClass(UserResponse.class)
+        .matchAll(userResponse -> userResponse.status().equals("PENDING"));
   }
 }
 ```
 
-___
+### 5.2 MockMvc
 
-## Writing Tests
+Expose a preconfigured MockMvc bean — filters, interceptors, and default actions are respected.
 
-In the provided library, every test follows the AAA structure using the following three phases:
+```java
 
-1. **Arrange**: Set up the necessary conditions for the test (e.g., define URL, parameters,
-   headers).
-2. **Act**: Perform the operation (e.g., make the API request).
-3. **Assert**: Validate the result (e.g., check HTTP status, response content).
-4. **Answer**: Optionally, the result of the request can be accessed using the `answer()` method,
-   allowing for further examination and validation of the response. Additionally, the returned
-   object can be passed back as the body of a subsequent request using `arrangeJson(T content)`.
-   This enables used to set up the next, creating a seamless flow in
-   testing. [For more details, see the example below.](#example)
+@SpringBootTest
+class BeanMockMvcCustomIT extends AAAMockMvcTestSupport {
 
-### Arrange
+  @TestConfiguration
+  static class MockMvcConfig {
 
-- [Arrange Url](docs/arrange/ArrangeUrl.md)
-- [Arrange Head](docs/arrange/ArrangeHead.md)
-- [Arrange Body Raw](docs/arrange/ArrangeBodyRaw.md)
-- [Arrange Body Binary](docs/arrange/ArrangeBodyBinray.md)
+    @Bean
+    public MockMvc mockMvc(WebApplicationContext wac) {
+      var filter = new OncePerRequestFilter() {
+        @Override
+        @SneakyThrows
+        protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
+            FilterChain chain) {
+          res.addHeader("X-Custom-MockMvc", "active");
+          chain.doFilter(req, res);
+        }
+      };
 
-### Assert
+      return MockMvcBuilders.webAppContextSetup(wac)
+          .addFilters(filter)
+          .alwaysDo(print())
+          .build();
+    }
+  }
 
-- [Assert Status](docs/assert/AssertStatus.md)
-- [Assert ContentAsString](docs/assert/AssertString.md)
-- [Assert ContentAsClass 🔸 (New)](docs/assert/AssertClass.md)
-- [Assert ContentAsByte](docs/assert/AssertByte.md)
-- [Assert ContentAsCollection 🔸 (New)](docs/assert/AssertCollection.md)
-- [Assert ContentAsMap 🔸 (New)](docs/assert/AssertMap.md)
-- [Assert Head](docs/assert/AssertHead.md)
-- [Assert Custom](docs/assert/AssertCustom.md)
+  @Test
+  void GIVEN_customMockMvc_THEN_customHeader() {
+    arrange()
+        .get(BASE + GET_USER);
 
-### Answer
+    act()
+        .perform();
 
-- [Answer](docs/answer/Answer.md)
+    asserts()
+        .headers()
+        .containsEntry("X-Custom-MockMvc", "active");
+  }
+}
+```
 
 ---
 
-## Example
+## 6. Manuel Setup
 
-This example demonstrates a registration process, where the user's email address must first
-be verified by sending a code. After the email verification, the user can proceed with the
-registration, including providing the verification code. The process is split into two main steps:
+While the recommended entry point is `AAAMockMvcTestSupport` (it auto-wires everything and keeps
+tests
+lean), you can also use the framework without extending it.
+Simply import the Spring configuration and inject `AAAMockMvc` yourself.
 
-1. **Email Verification**: A verification code is sent to the provided email address.
-2. **Registration**: After receiving the verification code, the user sends it back to the backend
-   for validation, allowing them to complete their registration.
+### 6.1 Getting Started
 
-### Main Code
+To use AAA-MockMvc without `AAAMockMvcTestSupport`, add `@ExtendWith(AAAMockMvcExtension.class)`
+and `@Import(AAAMockMvcConfig.class)` to your test and autowire an `AAAMockMvc` field.
 
-<details>
-<summary>Implementation of Registration Scenario</summary>
+``` java
 
-### 1. Verification Response Model
+@ExtendWith(AAAMockMvcExtension.class)
+@Import(AAAMockMvcConfig.class)
+@SpringBootTest
+class MyTest {
 
-The `VerificationResponse` class represents the response that contains the verification code, UUID,
-and email after the verification process:
+  @Autowired
+  private AAAMockMvc aaa;
 
-```java
-public class VerificationResponse {
-
-  private String code;
-  private String uuid;
-  private String mail;
 }
 ```
 
-### 2. Verification Controller
+### 6.2 Creating a Test
 
-The `VerificationController` is responsible for handling the verification request. It receives a
-request with the user's email and generates a verification response containing a unique UUID and a
-dummy verification code sent to the provided email.
+For a deeper dive into AAA, see Chapter 3 – [Creating a Test](#3-creating-a-test)
 
-```java
+``` java
 
-@RestController
-@RequestMapping(Api.BASE)
-public class VerificationController {
+@ExtendWith(AAAMockMvcExtension.class)
+@Import({AAAMockMvcConfig.class})
+@SpringBootTest
+class UserIT {
 
-  @PostMapping(Api.CREATE_VERIFICATION)
-  public ResponseEntity<VerificationResponse> createVerification(
-      @RequestBody VerificationRequest verification) {
+  @Autowired
+  private AAAMockMvc aaa;
 
-    var response = VerificationResponse
-        .builder()
-        .mail(verification.getMail())
-        .uuid(UUID.randomUUID().toString())
-        .build();
+  @Test
+  void GIVEN_user_WHEN_create_THEN_status_is_created() {
+    aaa.arrange()
+        .post(BASE + CREATE_USER)
+        .body()
+        .json(new User("Napoleon"));
 
-    // Simulate sending a verification code to the user's email
-    return new ResponseEntity<>(response, HttpStatus.OK);
+    aaa.act()
+        .perform();
+
+    aaa.asserts()
+        .status()
+        .isCreated();
   }
 }
 
 ```
 
-### 3. Registration Models
+### 6.3 Using steps
 
-The `RegistrationAddress` class holds the user's address details, while the `RegistrationRequest`
-contains both the address and the verification response (which includes the verification code, UUID,
-and email):
+For a deeper dive into steps, see Chapter 4 – [Working with Steps](#4-working-with-steps)
 
-```java
-public class RegistrationAddress {
+``` java
 
-  private String street;
-  private String houseNumber;
-  private String zip;
-  private String city;
-  private String country;
-}
+@ExtendWith(AAAMockMvcExtension.class)
+@Import({AAAMockMvcConfig.class})
+@SpringBootTest
+class UserIT {
 
-public class VerificationResponse {
+  @Autowired
+  private AAAMockMvc aaa;
 
-  private String code;
-  private String uuid;
-  private String mail;
-}
+  @Test
+  void GIVEN_two_users_WHEN_list_THEN_contains_both() {
+    aaa.step("Add Napoleon", () -> {
+      aaa.arrange()
+          .post(BASE + CREATE_USER)
+          .body().json(new User("Napoleon"));
+      aaa.act().perform();
+      aaa.asserts().status().isCreated();
+    });
 
-public class RegistrationRequest {
+    aaa.step("Add Gandalf", () -> {
+      aaa.arrange()
+          .post(BASE + CREATE_USER)
+          .body().json(new User("Gandalf"));
+      aaa.act().perform();
+      aaa.asserts().status().isCreated();
+    });
 
-  private RegistrationAddress address;
-  private VerificationResponse verification;
-}
-```
-
-### 4. Registration Controller
-
-The `RegistrationController` handles the registration process. Once the user sends the verification
-code, the backend will validate it and, if valid, complete the registration process.
-
-```java
-
-@RestController
-@RequestMapping(Api.BASE)
-public class RegistrationController {
-
-  @PostMapping(Api.CREATE_REGISTRATION)
-  public ResponseEntity<Void> createRegistration(@RequestBody RegistrationRequest registration) {
-    // Simulate the process of verifying the code entered by the user
-    return new ResponseEntity<>(HttpStatus.CREATED);
+    List<User> users = aaa.step("Napoleon and Gandolf are saved", () -> {
+      aaa.arrange().get(BASE + USERS);
+      aaa.act().perform();
+      aaa.asserts()
+          .content().asList(User.class)
+          .hasSize(2)
+          .matchAny(
+              u -> u.name().equals("Napoleon"),
+              u -> u.name().equals("Gandalf"));
+      aaa.answer().asList(User.class); 
+    });
   }
 }
 
-```
-
-</details>
-
-### Test Code
-
-The following examples demonstrate the same test scenario written in two different ways. First, the
-test is implemented using MockMvc, the traditional approach for performing HTTP tests in Spring.
-This is followed by the same test written with AAAMockMvc.
-
-To keep the tests straightforward and focused on the core testing logic, the use of private helper
-methods has been intentionally avoided. This ensures clarity and helps highlight the differences
-between the two testing approaches.
-
-### Test with MockMvc
-
-```java
-
-@Autowired
-private MockMvc mockMvc;
-
-@Autowired
-private ObjectMapper objectMapper;
-
-@Test
-@SneakyThrows
-void GIVEN_valid_code_WHEN_registration_THEN_status_201() {
-
-  var verificationRequest = VerificationRequest.builder()
-      .firstname(FIRSTNAME)
-      .lastname(LASTNAME)
-      .mail(EMAIL)
-      .build();
-
-  var content = MockMvcRequestBuilders.post(SEND_MAIL_VERIFICATION)
-      .contentType(MediaType.APPLICATION_JSON)
-      .content(objectMapper.writeValueAsString(verificationRequest));
-
-  var verificationResponseJson = mockMvc.perform(content)
-      .andReturn()
-      .getResponse()
-      .getContentAsString();
-
-  var verificationResponse = objectMapper.readValue(
-      verificationResponseJson, VerificationResponse.class);
-
-  var registrationRequest = RegistrationRequest.builder()
-      .verification(VerificationResponse.builder()
-          .code(VALID_CODE)
-          .mail(verificationResponse.getMail())
-          .uuid(verificationResponse.getUuid())
-          .build())
-      .build();
-
-  content = MockMvcRequestBuilders.post(POST_CREATE_REGISTRATION)
-      .contentType(MediaType.APPLICATION_JSON)
-      .content(objectMapper.writeValueAsString(registrationRequest));
-
-  mockMvc.perform(content).andExpect(status().isCreated());
-}
-
-```
-
-### Test with AAAMockMvc
-
-```java
-
-@Test
-@SneakyThrows
-void GIVEN_valid_code_WHEN_registration_THEN_status_201() {
-
-  var verificationRequest = VerificationRequest.builder()
-      .firstname(FIRSTNAME)
-      .lastname(LASTNAME)
-      .mail(EMAIL)
-      .build();
-
-  var verificationResponse = post()
-      .arrange()
-      .arrangeUrl(SEND_VERIFICATION)
-      .arrangeBody()
-      .arrangeJson(verificationRequest)
-      .act()
-      .actPerform()
-      .answer()
-      .answerAsObject(VerificationResponse.class);
-
-  var registrationRequest = RegistrationRequest
-      .builder()
-      .verification(VerificationResponse.builder()
-          .code(VALID_CODE)
-          .mail(verificationResponse.getMail())
-          .uuid(verificationResponse.getUuid())
-          .build())
-      .build();
-
-  post()
-      .arrange()
-      .arrangeUrl(CREATE_REGISTRATION)
-      .arrangeBody()
-      .arrangeJson(registrationRequest)
-      .act()
-      .actPerform()
-      .asserts()
-      .assertStatus()
-      .assertStatusIsCreated();
-}
 
 ```
 

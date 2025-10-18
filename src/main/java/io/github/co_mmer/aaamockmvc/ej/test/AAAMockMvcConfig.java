@@ -1,6 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.AAAMockMvcBuilder;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -9,14 +10,22 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
- * Configuration class that conditionally provides a {@link AAAMockMvc} bean if none is already
- * defined.
+ * Spring configuration that provides an {@link AAAMockMvc} bean for AAA-style tests.
  *
- * <p>This configuration is useful in integration or test scenarios where either a {@link MockMvc}
- * or a {@link WebApplicationContext} is available in the Spring context. It constructs an {@code
- * AAAMockMvc} instance using the best available combination of dependencies.
+ * <p><b>What it does:</b> Registers a single {@code AAAMockMvc} instance when none is already
+ * present in the arrange (see {@link ConditionalOnMissingBean}). It wires the current {@link
+ * WebApplicationContext} and, if available via {@link ObjectProvider}, an existing {@link MockMvc}
+ * and {@link ObjectMapper}. Missing optional dependencies are handled by the builder.
  *
- * <p>The bean will only be created if no other {@code AAAMockMvc} bean is present in the context.
+ * <p><b>Typical usage:</b>
+ *
+ * <pre>{@code
+ * @SpringBootTest
+ * @Import(AAAMockMvcConfig.class) // or extend AAAMockMvcTestSupport which already imports it
+ * class UserApiTest { ... }
+ * }</pre>
+ *
+ * <p><b>Customization:</b> Define your own {@code @Bean AAAMockMvc} to override this configuration.
  *
  * @since 1.5.0
  */
@@ -25,27 +34,22 @@ import org.springframework.web.context.WebApplicationContext;
 public class AAAMockMvcConfig {
 
   /**
-   * Creates an {@link AAAMockMvc} bean using available Spring test infrastructure components.
+   * Builds the {@link AAAMockMvc} DSL entry point backed by the given Spring test infrastructure.
    *
-   * <p>The method constructs an {@code AAAMockMvc} instance based on available dependencies in the
-   * following priority:
+   * <p>The builder is supplied with:
    *
-   * <ol>
-   *   <li>If both {@link MockMvc} and {@link ObjectMapper} are available, use them.
-   *   <li>If only {@link MockMvc} is available, use it.
-   *   <li>If {@link WebApplicationContext} is available, optionally with {@link ObjectMapper}, use
-   *       it to internally build {@code MockMvc}.
-   * </ol>
+   * <ul>
+   *   <li>the active {@link WebApplicationContext} (required),
+   *   <li>an optional {@link MockMvc} (taken from the arrange if available),
+   *   <li>an optional {@link ObjectMapper} (taken from the arrange if available).
+   * </ul>
    *
-   * <p>If neither {@code MockMvc} nor {@code WebApplicationContext} is available, an {@link
-   * IllegalStateException} is thrown to indicate misconfiguration or an unsupported test context.
+   * <p>If optional components are absent, the builder applies sensible defaults.
    *
-   * @param webApplicationContext a {@link WebApplicationContext}; must not be {@code null}
-   * @param mockMvcProvider a provider for {@link MockMvc}; may be absent
-   * @param objectMapperProvider a provider for {@link ObjectMapper}; optional
-   * @return a fully configured {@code AAAMockMvc} instance
-   * @throws IllegalStateException if neither {@code MockMvc} nor {@code WebApplicationContext} is
-   *     available
+   * @param webApplicationContext the current web application arrange (required)
+   * @param mockMvcProvider provider for an existing {@link MockMvc} (optional)
+   * @param objectMapperProvider provider for an existing {@link ObjectMapper} (optional)
+   * @return a configured {@link AAAMockMvc} bean ready for Arrange–Act–Assert tests
    * @since 1.5.0
    */
   @Bean

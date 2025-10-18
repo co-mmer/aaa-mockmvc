@@ -4,134 +4,165 @@ import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 
 /**
- * Provides methods for asserting HTTP response statuses in tests.
+ * Assertions for the HTTP response status code.
  *
- * <ul>
- *   <li>{@link #assertStatus(HttpStatus)}: Asserts that the status of the HTTP response matches the
- *       given {@code HttpStatus}.
- *   <li>{@link #assertStatus(int)}: Asserts that the status of the HTTP response matches the given
- *       status code.
- *   <li>{@link #assertStatusIsOk()}: Asserts that the HTTP response status is 200 OK.
- *   <li>{@link #assertStatusIsCreated()}: Asserts that the HTTP response status is 201 Created.
- *   <li>{@link #assertStatusIsAccepted()}: Asserts that the HTTP response status is 202 Accepted.
- *   <li>{@link #assertStatusIsNotFound()}: Asserts that the HTTP response status is 404 Not Found.
- *   <li>{@link #assertStatusIsClientError()}: Asserts that the HTTP response status indicates a
- *       client error (4xx).
- *   <li>{@link #assertStatusIsServerError()}: Asserts that the HTTP response status indicates a
- *       server error (5xx).
- *   <li>{@link #assertStatusIsRedirect()}: Asserts that the HTTP response status indicates a
- *       redirection (3xx).
- *   <li>{@link #assertStatusIsAccessForbidden()}: Asserts that the HTTP response status is 403
- *       Forbidden.
- *   <li>{@link #assertStatusIsAccessUnauthorized()}: Asserts that the HTTP response status is 401
- *       Unauthorized.
- *   <li>{@link #assertStatusInRange(int, int)}: Asserts that the HTTP response status code is
- *       within a specified range.
- * </ul>
+ * <p><b>What it does:</b> Provides exact and range-based checks for the status captured during
+ * {@code actPerform().perform()}. Use this to verify success, redirects, client/server errors, or
+ * specific codes like 200/201/404.
+ *
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * arrange()
+ *  .get("/api/users/42");
+ *
+ * actPerform()
+ *  .perform();
+ *
+ * asserts()
+ *  .status()
+ *  .isOk();
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed; assertions operate on
+ * the stored snapshot.
  *
  * @since 1.1.0
  */
 public interface TestAssert1Status {
 
   /**
-   * Asserts that the HTTP response status matches the given {@code HttpStatus}.
+   * Asserts that the status equals the given {@link org.springframework.http.HttpStatus}.
    *
-   * @param status the expected {@code HttpStatus} of the response (must not be {@code null})
-   * @return the current instance of {@code TestAssert2Status} for further assertions
-   * @since 1.1.0
+   * @param status the expected status; must not be {@code null}
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the actual status differs from {@code status}
+   * @since 2.0.0
    */
-  TestAssert2Status assertStatus(@NonNull HttpStatus status);
+  TestAssert2Status is(@NonNull HttpStatus status);
 
   /**
-   * Asserts that the HTTP response status matches the given status code.
+   * Asserts that the status equals the given numeric code.
    *
-   * @param status the expected status code of the response
-   * @return the current instance of {@code TestAssert2Status} for further assertions
-   * @since 1.1.0
+   * @param status the expected HTTP status code (e.g., 200, 404)
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the actual status differs from {@code status}
+   * @since 2.0.0
    */
-  TestAssert2Status assertStatus(int status);
+  TestAssert2Status is(int status);
 
   /**
-   * Asserts that the HTTP response status is 200 OK.
+   * Asserts that the status is 200 OK.
    *
-   * @return the current instance of {@code TestAssert2Status} for further assertions
-   * @since 1.1.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the status is not 200
+   * @since 2.0.0
    */
-  TestAssert2Status assertStatusIsOk();
+  TestAssert2Status isOk();
 
   /**
-   * Asserts that the HTTP response status is 201 Created.
+   * Asserts that the status is 201 Created.
    *
-   * @return the current instance of {@code TestAssert2Status} for further assertions
-   * @since 1.1.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the status is not 201
+   * @since 2.0.0
    */
-  TestAssert2Status assertStatusIsCreated();
+  TestAssert2Status isCreated();
 
   /**
-   * Asserts that the HTTP response status is 202 Accepted.
+   * Asserts that the status is 202 Accepted.
    *
-   * @return the current instance of {@code TestAssert2Status} for further assertions
-   * @since 1.1.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the status is not 202
+   * @since 2.0.0
    */
-  TestAssert2Status assertStatusIsAccepted();
+  TestAssert2Status isAccepted();
 
   /**
-   * Asserts that the HTTP response status is 404 Not Found.
+   * Asserts that the status is 404 Not Found.
    *
-   * @return the current instance of {@code TestAssert2Status} for further assertions
-   * @since 1.1.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the status is not 404
+   * @since 2.0.0
    */
-  TestAssert2Status assertStatusIsNotFound();
+  TestAssert2Status isNotFound();
 
   /**
-   * Asserts that the HTTP response status indicates a client error (4xx).
+   * Asserts that the status is in the 2xx Successful range.
    *
-   * @return the current instance of {@code TestAssert2Status} for further assertions
-   * @since 1.1.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the status is not 2xx
+   * @since 2.0.0
    */
-  TestAssert2Status assertStatusIsClientError();
+  TestAssert2Status is2xxSuccessful();
 
   /**
-   * Asserts that the HTTP response status indicates a server error (5xx).
+   * Asserts that the status is in the 3xx Redirection range.
    *
-   * @return the current instance of {@code TestAssert2Status} for further assertions
-   * @since 1.1.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the status is not 3xx
+   * @since 2.0.0
    */
-  TestAssert2Status assertStatusIsServerError();
+  TestAssert2Status is3xxRedirect();
 
   /**
-   * Asserts that the HTTP response status indicates a redirection (3xx).
+   * Asserts that the status is in the 4xx Client Error range.
    *
-   * @return the current instance of {@code TestAssert2Status} for further assertions
-   * @since 1.1.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the status is not 4xx
+   * @since 2.0.0
    */
-  TestAssert2Status assertStatusIsRedirect();
+  TestAssert2Status is4xxClientError();
 
   /**
-   * Asserts that the HTTP response status is 403 Forbidden.
+   * Asserts that the status is in the 5xx Server Error range.
    *
-   * @return the current instance of {@code TestAssert2Status} for further assertions
-   * @since 1.1.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the status is not 5xx
+   * @since 2.0.0
    */
-  TestAssert2Status assertStatusIsAccessForbidden();
+  TestAssert2Status is5xxServerError();
 
   /**
-   * Asserts that the HTTP response status is 401 Unauthorized.
+   * Asserts that the status is 403 Forbidden.
    *
-   * @return the current instance of {@code TestAssert2Status} for further assertions
-   * @since 1.1.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the status is not 403
+   * @since 2.0.0
    */
-  TestAssert2Status assertStatusIsAccessUnauthorized();
+  TestAssert2Status isForbidden();
 
   /**
-   * Asserts that the HTTP response status code is within a specified range.
+   * Asserts that the status is 401 Unauthorized.
    *
-   * @param minStatusCode the minimum expected status code (must be less than or equal to
-   *     maxStatusCode)
-   * @param maxStatusCode the maximum expected status code (must be greater than or equal to
-   *     minStatusCode)
-   * @return the current instance of {@code TestAssert2Status} for further assertions
-   * @since 1.1.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the status is not 401
+   * @since 2.0.0
    */
-  TestAssert2Status assertStatusInRange(int minStatusCode, int maxStatusCode);
+  TestAssert2Status isUnauthorized();
+
+  /**
+   * Asserts that the status code is within the given inclusive range.
+   *
+   * @param minStatusCode the lower bound (inclusive), e.g., 200
+   * @param maxStatusCode the upper bound (inclusive), e.g., 299
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws IllegalArgumentException if {@code minStatusCode > maxStatusCode}
+   * @throws AssertionError if the status is outside {@code [minStatusCode, maxStatusCode]}
+   * @since 2.0.0
+   */
+  TestAssert2Status isInRange(int minStatusCode, int maxStatusCode);
 }

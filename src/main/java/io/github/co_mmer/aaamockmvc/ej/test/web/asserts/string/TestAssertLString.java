@@ -1,27 +1,32 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-
 /**
- * Provides methods for asserting HTTP response content in tests.
+ * Assertions for the response body as a {@link String}.
  *
- * <ul>
- *   <li>{@link #assertHead()}: Provides assertion methods for validating the HTTP response headers.
- * </ul>
+ * <p><b>What it does:</b> Provides string-specific checks such as emptiness, length, and equality
+ * on the cached response body produced by {@code actPerform().perform()}.
+ *
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * arrange()
+ *  .get("/api/text");
+ *
+ * actPerform()
+ *  .perform();
+ *
+ * asserts()
+ *  .content()
+ *  .asString()
+ *  .isNotEmpty()
+ *  .isEqualTo("aaa")
+ *  .headers()
+ *  ...
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed. If no body is present,
+ * the cached string representation is empty ({@code ""}).
  *
  * @since 1.0.0
  */
-public interface TestAssertLString {
-
-  /**
-   * Provides assertion methods for validating the HTTP response headers.
-   *
-   * <p>This method returns an instance of {@code TestAssertHead}, which provides assertion methods
-   * for validating the headers of the HTTP response, such as checking for the presence or absence
-   * of specific headers and comparing header values.
-   *
-   * @return an instance of {@code TestAssertHead} for asserting the response headers
-   * @since 1.0.0
-   */
-  TestAssertHead assertHead();
-}
+public interface TestAssertLString extends OperationHeader {}

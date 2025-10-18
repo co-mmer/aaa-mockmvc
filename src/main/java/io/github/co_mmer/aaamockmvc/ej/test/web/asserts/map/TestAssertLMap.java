@@ -1,27 +1,34 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-
 /**
- * Provides assertion methods for validating HTTP response collections.
+ * Assertions for a deserialized {@link java.util.Map} with keys {@code K} and values {@code V}.
  *
- * <ul>
- *   <li>{@link #assertHead()}: Asserting properties of response headers for HTTP HEAD requests.
- * </ul>
+ * <p><b>What it does:</b> Provides (non-)emptiness, size, and equality checks on the map produced
+ * by a prior {@code content().asMap(K,V)} step. The response body has already been deserialized
+ * once using the configured mapper and is cached for all subsequent assertions.
+ *
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * arrange()
+ *  .get("/api/stats");
+ *
+ * actPerform()
+ *  .perform();
+ *
+ * asserts()
+ *  .content()
+ *  .asMap(String.class, Integer.class)
+ *  .isNotEmpty()
+ *  .hasSize(3)
+ *  .isEqualTo(Map.of("count", 5, "errors", 0, "warnings", 1))
+ *  .headers()
+ *  ...
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed and {@code
+ * content().asMap(K,V)} successfully deserialized a JSON object into a Java map.
  *
  * @since 1.4.0
  */
-public interface TestAssertLMap {
-
-  /**
-   * Asserts that the HTTP response is valid for a HEAD request.
-   *
-   * <p>This method returns an instance of {@code TestAssertHead} for asserting the headers of the
-   * HTTP response. It allows various validations of response headers, such as checking for the
-   * presence or absence of specific headers and comparing header values.
-   *
-   * @return an instance of {@code TestAssertHead} for further assertions on headers
-   * @since 1.4.0
-   */
-  TestAssertHead assertHead();
-}
+public interface TestAssertLMap extends OperationHeader {}

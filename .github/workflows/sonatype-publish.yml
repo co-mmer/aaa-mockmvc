@@ -21,16 +21,20 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_CENTRAL_TOKEN
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-      - name: Prepare Maven environnement with Java 17 for deployment to Sonatype
-        run: export MAVEN_OPTS="--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
+      - name: Set MAVEN_OPTS for Java 17 reflective access
+        run: |
+          echo 'MAVEN_OPTS=--add-opens=java.base/java.util=ALL-UNNAMED \
+          --add-opens=java.base/java.lang.reflect=ALL-UNNAMED \
+          --add-opens=java.base/java.text=ALL-UNNAMED \
+          --add-opens=java.desktop/java.awt.font=ALL-UNNAMED' >> $GITHUB_ENV
 
       - name: Publish to Apache Maven Central
-        run: mvn deploy -PsonatypeDeploy
+        run: mvn -B clean deploy -PsonatypeDeploy
         env:
           MAVEN_USERNAME: ${{ secrets.NEXUS_USERNAME }}
           MAVEN_CENTRAL_TOKEN: ${{ secrets.NEXUS_PASSWORD }}

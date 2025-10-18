@@ -1,78 +1,66 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
 
-import java.util.Map;
-import lombok.NonNull;
-
 /**
- * Provides assertion methods for validating HTTP response maps.
+ * Assertions for a deserialized {@link java.util.Map} with keys {@code K} and values {@code V}.
  *
- * <ul>
- *   <li>{@link #assertMapNotEmpty()}: Asserts that the map in the HTTP response is not empty.
- *   <li>{@link #assertMapEmpty()}: Asserts that the map in the HTTP response is empty.
- *   <li>{@link #assertMapSize(int)}: Asserts that the size of the map in the HTTP response matches
- *       the given size.
- *   <li>{@link #assertMapEquals(Class, Class, Map)}: Asserts that the map in the HTTP response
- *       matches the expected map of key-value pairs.
- * </ul>
+ * <p><b>What it does:</b> Provides (non-)emptiness, size, and equality checks on the map produced
+ * by a prior {@code content().asMap(K,V)} step. The response body has already been deserialized
+ * once using the configured mapper and is cached for all subsequent assertions.
  *
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * arrange()
+ *  .get("/api/stats");
+ *
+ * actPerform()
+ *  .perform();
+ *
+ * asserts()
+ *  .content()
+ *  .asMap(String.class, Integer.class)
+ *  .isNotEmpty()
+ *  .hasSize(3)
+ *  .isEqualTo(Map.of("count", 5, "errors", 0, "warnings", 1));
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> {@code actPerform().perform()} has been executed and {@code
+ * content().asMap(K,V)} successfully deserialized a JSON object into a Java map.
+ *
+ * @param <K> the key type of the asserted map
+ * @param <V> the value type of the asserted map
  * @since 1.4.0
  */
-public interface TestAssert1Map {
+public interface TestAssert1Map<K, V> extends OperationEquals<K, V> {
 
   /**
-   * Asserts that the map in the HTTP response is not empty.
+   * Asserts that the map is not empty.
    *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @return the current instance of {@code TestAssert2Map} for further assertions
-   * @throws AssertionError if the response collection is empty or invalid
-   * @since 1.4.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the map is empty
+   * @since 2.0.0
    */
-  TestAssert2Map assertMapNotEmpty();
+  TestAssert2Map<K, V> isNotEmpty();
 
   /**
-   * Asserts that the map in the HTTP response is empty.
+   * Asserts that the map is empty.
    *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @return the current instance of {@code TestAssertLMap} for further assertions
-   * @throws AssertionError if the response collection is not empty
-   * @since 1.4.0
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the map is not empty
+   * @since 2.0.0
    */
-  TestAssertLMap assertMapEmpty();
+  TestAssertLMap isEmpty();
 
   /**
-   * Asserts that the size of the map in the HTTP response matches the given size.
+   * Asserts that the map has the given size.
    *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @param size the expected size of the collection
-   * @return the current instance of {@code TestAssert3Map} for further assertions
-   * @throws AssertionError if the collection size does not match the expected size
-   * @since 1.4.0
+   * @param size the expected number of entries
+   * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
+   *     based on the current state.
+   * @throws AssertionError if the size differs from {@code size}
+   * @since 2.0.0
    */
-  TestAssert3Map assertMapSize(int size);
-
-  /**
-   * Asserts that the map in the HTTP response matches the expected map of key-value pairs.
-   *
-   * <p>Both maps are normalized before comparison to ensure consistent results.
-   *
-   * <p>If an error occurs, execution is terminated with a call to {@code Assertions.fail}, passing
-   * the corresponding exception.
-   *
-   * @param keyClass the class of the keys in the map (must not be {@code null})
-   * @param valueClass the class of the values in the map (must not be {@code null})
-   * @param expectedMap the expected map of key-value pairs (must not be {@code null})
-   * @param <K> the type of the keys in the map
-   * @param <V> the type of the values in the map
-   * @return the current instance of {@code TestAssertLMap} for further assertions
-   * @throws AssertionError if the maps do not match
-   * @since 1.4.0
-   */
-  <K, V> TestAssertLMap assertMapEquals(
-      @NonNull Class<K> keyClass, @NonNull Class<V> valueClass, @NonNull Map<K, V> expectedMap);
+  TestAssert3Map<K, V> hasSize(int size);
 }

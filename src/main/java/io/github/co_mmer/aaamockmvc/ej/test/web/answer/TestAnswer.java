@@ -1,125 +1,122 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.answer;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerFailed;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import lombok.NonNull;
-import org.springframework.lang.Nullable;
-import org.springframework.test.web.servlet.ResultActions;
 
 /**
- * This interface defines methods for handling responses from HTTP requests in a testing context. It
- * provides various ways to retrieve the results of executed HTTP requests, including response
- * content as strings, byte arrays, and headers.
+ * Read access (“answer” phase) to the captured HTTP response payload.
+ *
+ * <p><b>What it does:</b> Returns the response body either as a cached string/byte array or
+ * deserialized into objects/collections/maps using the configured mapper. No additional I/O is
+ * performed; values are derived from the immutable snapshot produced by {@code act().perform()}.
+ *
+ * <p><b>Typical usage (AAA):</b>
+ *
+ * <pre>{@code
+ * arrange().get("/api/users");
+ * act().perform();
+ * List<User> users = answer().asList(User.class);
+ * }</pre>
+ *
+ * <p><b>Preconditions:</b> {@code act().perform()} has been executed. If no body is present, {@link
+ * #asString()} returns {@code ""} and {@link #asByte()} returns an empty array.
  *
  * @since 1.2.0
  */
 public interface TestAnswer {
 
   /**
-   * Retrieves the {@link ResultActions} from the executed HTTP request.
+   * Parses the response body as a {@link Boolean} using the configured mapper. Intended for boolean
+   * literals (e.g., {@code true} / {@code false}).
    *
-   * @return the result actions of the request
-   * @throws TestAnswerException if an error occurs while retrieving the result actions
-   * @since 1.2.0
+   * @return the parsed boolean value
+   * @throws TestAnswerFailed if deserialization fails or the body is not compatible with {@code
+   *     Boolean}
+   * @since 2.0.0
    */
-  ResultActions answerAsResultActions() throws TestAnswerException;
+  Boolean asBoolean();
 
   /**
-   * Retrieves the response content as a string from the executed HTTP request.
+   * Returns the response body as a {@link String} (using the response charset or UTF-8).
    *
-   * @return the response content as a string
-   * @throws TestAnswerException if an error occurs while retrieving the response content
-   * @since 1.2.0
+   * @return the cached string representation of the response body; {@code ""} if no body is present
+   * @since 2.0.0
    */
-  String answerAsString() throws TestAnswerException;
+  String asString();
 
   /**
-   * Retrieves the response content as a byte array from the executed HTTP request.
+   * Returns the raw response body as {@code byte[]}.
    *
-   * @return the response content as a byte array
-   * @throws TestAnswerException if an error occurs while retrieving the response content
-   * @since 1.2.0
+   * @return the cached byte representation of the response body; an empty array if no body is
+   *     present
+   * @since 2.0.0
    */
-  byte[] answerAsByte() throws TestAnswerException;
+  byte[] asByte();
 
   /**
-   * Retrieves the response as an instance of the specified class type.
+   * Deserializes the response body into the given target class using the configured mapper.
    *
-   * @param resultType the target class to map the response content to (must not be {@code null})
-   * @param <T> the type of the object to be returned
-   * @return an instance of the specified type populated with the response data
-   * @throws NullPointerException if the {@code resultType} is {@code null}
-   * @throws TestAnswerException if an error occurs during the mapping process
-   * @since 1.3.0
+   * @param resultType the target type to deserialize to; must not be {@code null}
+   * @param <T> target type
+   * @return the deserialized object
+   * @throws TestAnswerFailed if deserialization fails or the body is not compatible with {@code
+   *     resultType}
+   * @since 2.0.0
    */
-  <T> T answerAsObject(@NonNull Class<T> resultType) throws TestAnswerException;
+  <T> T asObject(@NonNull Class<T> resultType) throws TestAnswerFailed;
 
   /**
-   * Retrieves the response as a {@link List} of the specified class type.
+   * Deserializes the response body into a {@code Collection<T>} using the configured mapper.
    *
-   * @param elementType the target class type for each element in the list (must not be {@code
-   *     null})
-   * @param <T> the type of each element in the list
-   * @return a {@link List} populated with elements of the specified type
-   * @throws NullPointerException if the {@code targetClass} is {@code null}
-   * @throws TestAnswerException if an error occurs during the mapping process
-   * @since 1.3.0
+   * @param elementType the element type; must not be {@code null}
+   * @param <E> element type
+   * @return the deserialized collection
+   * @throws TestAnswerFailed if deserialization fails or the body is not a JSON array compatible
+   *     with {@code Collection<T>}
+   * @since 2.0.0
    */
-  <T> List<T> answerAsList(@NonNull Class<T> elementType) throws TestAnswerException;
+  <E> Collection<E> asCollection(@NonNull Class<E> elementType);
 
   /**
-   * Retrieves the HTTP response content as a {@code Set} of elements of type {@code T}.
+   * Deserializes the response body into a {@code List<T>} using the configured mapper.
    *
-   * <p>This method maps the response content to a {@code Set} using the provided element type. It
-   * utilizes an {@code ObjectMapper} to deserialize the content into a set of the specified type.
-   *
-   * @param elementType the expected class of the elements in the set (must not be {@code null})
-   * @param <T> the type of the elements in the set
-   * @return a {@code Set} containing the deserialized elements
-   * @throws NullPointerException if {@code elementType} is {@code null}
-   * @throws TestAnswerException if an error occurs during the response mapping process
-   * @since 1.3.0
+   * @param elementType the element type; must not be {@code null}
+   * @param <E> element type
+   * @return the deserialized list
+   * @throws TestAnswerFailed if deserialization fails or the body is not a JSON array compatible
+   *     with {@code List<T>}
+   * @since 2.0.0
    */
-  <T> Set<T> answerAsSet(@NonNull Class<T> elementType) throws TestAnswerException;
+  <E> List<E> asList(@NonNull Class<E> elementType) throws TestAnswerFailed;
 
   /**
-   * Retrieves the HTTP response content as a {@code Map} of key-value pairs of types {@code K} and
-   * {@code V}.
+   * Deserializes the response body into a {@code Set<T>} using the configured mapper.
    *
-   * <p>This method maps the response content to a {@code Map} using the provided key and value
-   * types. It utilizes an {@code ObjectMapper} to deserialize the content into a map with the
-   * specified key and value types.
-   *
-   * @param keyType the expected class of the map keys (must not be {@code null})
-   * @param valueType the expected class of the map values (must not be {@code null})
-   * @param <K> the type of the keys in the map
-   * @param <V> the type of the values in the map
-   * @return a {@code Map} containing the deserialized key-value pairs
-   * @throws NullPointerException if {@code keyType} or {@code valueType} are {@code null}
-   * @throws TestAnswerException if an error occurs during the response mapping process
-   * @since 1.3.0
+   * @param elementType the element type; must not be {@code null}
+   * @param <T> element type
+   * @return the deserialized set
+   * @throws TestAnswerFailed if deserialization fails or the body is not a JSON array compatible
+   *     with {@code Set<T>}
+   * @since 2.0.0
    */
-  <K, V> Map<K, V> answerAsMap(@NonNull Class<K> keyType, @NonNull Class<V> valueType)
-      throws TestAnswerException;
+  <T> Set<T> asSet(@NonNull Class<T> elementType) throws TestAnswerFailed;
 
   /**
-   * Retrieves the value of a specified response header from the executed HTTP request.
+   * Deserializes the response body into a {@code Map<K,V>} using the configured mapper.
    *
-   * @param key the name of the response header to retrieve
-   * @return the value of the response header, or {@code null} if the header is not present
-   * @throws TestAnswerException if an error occurs while retrieving the header value
-   * @since 1.2.0
+   * @param keyType the key type; must not be {@code null}
+   * @param valueType the value type; must not be {@code null}
+   * @param <K> key type
+   * @param <V> value type
+   * @return the deserialized map
+   * @throws TestAnswerFailed if deserialization fails or the body is not a JSON object compatible
+   *     with {@code Map<K,V>}
+   * @since 2.0.0
    */
-  @Nullable
-  String answerHeader(String key) throws TestAnswerException;
-
-  /**
-   * Executes the HTTP request without returning any content.
-   *
-   * @throws TestAnswerException if an error occurs during the execution
-   * @since 1.2.0
-   */
-  void answerVoid() throws TestAnswerException;
+  <K, V> Map<K, V> asMap(@NonNull Class<K> keyType, @NonNull Class<V> valueType)
+      throws TestAnswerFailed;
 }

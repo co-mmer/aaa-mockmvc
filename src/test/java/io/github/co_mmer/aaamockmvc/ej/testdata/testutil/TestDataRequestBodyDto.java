@@ -5,7 +5,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestFiles.TEST_F
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestFiles.TEST_FILE_2;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.request.model.TestRequestBodyDto;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.TestRequestBodyDto;
 import java.util.Collections;
 import java.util.List;
 import lombok.AccessLevel;
