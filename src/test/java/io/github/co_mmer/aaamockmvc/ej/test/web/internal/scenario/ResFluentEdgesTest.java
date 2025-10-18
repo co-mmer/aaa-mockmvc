@@ -9,6 +9,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArr
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArrange3ResBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestArrange1ResHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestArrange2ResHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestArrange3ResHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestArrange4ResHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestArrange5ResHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestArrange6ResHead;
@@ -45,9 +46,9 @@ class ResFluentEdgesTest {
         transition(TestArrange1ResHead.class, "accept", TestArrange2ResHead.class),
         allowsExactly("accept", "auth", "contentType", "add", "set", "body"));
 
-    /*FluentAssert.assertThat(
-    transition(TestArrange1ResHead.class, "auth", TestArrange3ResHead.class),
-    allowsExactly("add", "contentType", "add", "set", "body"));*/
+    FluentAssert.assertThat(
+        transition(TestArrange1ResHead.class, "auth", TestArrange3ResHead.class),
+        allowsExactly("add", "contentType", "set", "body"));
 
     FluentAssert.assertThat(
         transition(TestArrange1ResHead.class, "contentType", TestArrange4ResHead.class),

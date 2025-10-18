@@ -25,8 +25,4 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header;
  * @since 1.0.0
  */
 public interface TestArrange3ResHead
-    extends TestOperationAuth,
-        TestOperationAdd,
-        TestOperationContentType,
-        TestOperationSet,
-        TestOperationBody {}
+    extends TestOperationAdd, TestOperationContentType, TestOperationSet, TestOperationBody {}
