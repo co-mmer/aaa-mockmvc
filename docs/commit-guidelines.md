@@ -1,4 +1,8 @@
-# 📜 Release Commit Message Cheatsheet
+# 📜 Commit Message Guidelines
+
+This cheatsheet defines the commit messages used for tagging and tracking releases.  
+It follows the [Conventional Commits](https://www.conventionalcommits.org/) specification and
+Semantic Versioning (SemVer).
 
 | Release Type                                 | Version Example | Commit Message (short)                                                                                                                                                 |
 |----------------------------------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

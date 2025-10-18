@@ -40,61 +40,6 @@ Whether you’re building REST APIs, testing controllers, or ensuring contract c
 ### Example
 
 <img src="images/aaa-mockmvc-example.png" alt="AAA-MockMvc example test using Arrange Act Assert pattern in Spring Boot"/>
-<details>
-<summary>Code</summary>
-
-```java
-public record User(String name) {
-
-}
-
-public record UserResponse(String status) {
-
-}
-
-@RestController
-@RequestMapping(BASE)
-public class UserController {
-
-  @PostMapping(CREATE_USER)
-  public ResponseEntity<UserResponse> createUser(@RequestBody User user) {
-    var response = new UserResponse("pending");
-    return new ResponseEntity<>(response, HttpStatus.CREATED);
-  }
-}
-
-@SpringBootTest
-class UserIT extends AAAMockMvcTestSupport {
-
-  @Test
-  void GIVEN_newUser_WHEN_createUser_THEN_pendingUserIsCreated() {
-    arrange()
-        .post(BASE + CREATE_USER)
-        .body()
-        .json(new User("Napoleon"));
-
-    act()
-        .perform();
-
-    asserts()
-        .status()
-        .isCreated()
-        .content()
-        .asClass(UserResponse.class)
-        .isNotNull()
-        .matchAll(userResponse -> userResponse.status().equals("pending"));
-  }
-
-}
-
-```
-
-</details>
-
----
-
-> ⚠️ You are reading the documentation for AAA-MockMvc 2.0.0-RC1 (currently Release Candidate).  
-> For the stable 1.x series, see [README-1.x.md](./README-1.x.md).
 
 ---
 
@@ -109,7 +54,7 @@ class UserIT extends AAAMockMvcTestSupport {
 
 ## News
 
-### 🌿 Release v2.0.0-RC1
+### 🌿 Release v2.0.0
 
 This is a quality-of-life release poured with a lot of care tests read cleaner and fail clearer.
 
@@ -120,7 +65,7 @@ This is a quality-of-life release poured with a lot of care tests read cleaner a
 - New steps let you group multiple AAA blocks in one test and put a clear name on error messages.
 - Sharper snapshot behavior: act().perform() runs once; assertions and answers stay pure (no extra
   I/O).
-- See full details in the [Changelog](./CHANGELOG.md#200)
+- See full details in the [Release Note](./RELEASE.md#200)
 
 ---
 
@@ -156,7 +101,7 @@ The sources can also be downloaded directly to access the documentation of the c
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>2.0.0-RC1</version>
+  <version>2.0.0</version>
   <scope>test</scope>
 </dependency>
 
