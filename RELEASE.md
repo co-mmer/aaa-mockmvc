@@ -2,6 +2,15 @@
 
 ----
 
+## [2.0.1]
+
+### 🧹 Improvements
+
+* This release updates core dependencies to maintain framework compatibility and stability.
+* No code or behavior changes were made.
+
+----
+
 ## [2.0.0]
 
 Version **2.0.0** marks a major step forward for the AAA-MockMvc framework.  
