@@ -1,5 +1,16 @@
 # <img src="./images/aaa-mockmvc-icon-27.png" align="left"/> Changelog
 
+## [2.0.1]
+
+### 🧹 Improvements
+
+- Clean up dependencies
+
+### 📦 Dependency Upgrades
+
+- spring-boot 3.5.6 → 3.5.16
+- lombok 1.18.42 → 1.18.46
+
 ----
 
 ## [2.0.0]
