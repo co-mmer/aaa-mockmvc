@@ -2,16 +2,17 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model;
 
 import java.net.URI;
 import java.util.Objects;
+import org.springframework.web.util.UriComponentsBuilder;
 
 public class RequestPath {
 
-  private final URI value;
+  private URI value;
 
-  public RequestPath(String value) {
-    this(toUri(value));
+  public void setValue(String value) {
+    this.value = toUri(value);
   }
 
-  public RequestPath(URI value) {
+  public void setValue(URI value) {
     this.value = validate(value);
   }
 
@@ -37,5 +38,16 @@ public class RequestPath {
     }
 
     return value;
+  }
+
+  public void setValue(String path, Object... variables) {
+    Objects.requireNonNull(path, "path must not be null");
+
+    if (path.isBlank()) {
+      throw new IllegalArgumentException("path must not be blank");
+    }
+
+    this.value =
+        UriComponentsBuilder.fromUriString(path).buildAndExpand(variables).encode().toUri();
   }
 }

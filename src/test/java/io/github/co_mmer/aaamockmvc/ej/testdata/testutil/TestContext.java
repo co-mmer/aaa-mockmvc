@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.RequestBuilder;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeResult;
@@ -21,6 +22,7 @@ public final class TestContext {
   public static TestAAAContext createContext() {
     var context = new TestAAAContext(createTestEnvironment());
     context.setArrangeResult(createTestArrangeResult());
+    context.setRequestBuilder(createRequestBuilder());
     return context;
   }
 
@@ -28,6 +30,7 @@ public final class TestContext {
     var context = new TestAAAContext(createTestEnvironment());
     context.setStep(new TestStepDto(stepName));
     context.setArrangeResult(createTestArrangeResult());
+    context.setRequestBuilder(createRequestBuilder());
     return context;
   }
 
@@ -62,5 +65,12 @@ public final class TestContext {
     var arrange = new TestArrangeResult();
     arrange.getUrl().setMethod(HttpMethod.GET);
     return arrange;
+  }
+
+  private static RequestBuilder createRequestBuilder() {
+    var requestBuilder = new RequestBuilder();
+    requestBuilder.method(
+        io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.GET);
+    return requestBuilder;
   }
 }

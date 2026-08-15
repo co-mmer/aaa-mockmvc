@@ -8,7 +8,10 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.mapper.TestActResul
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.strategy.TestRequestStrategyFactory;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.validator.TestActPreconditionsValidator;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutionResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutor;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult2;
 import org.springframework.test.web.servlet.ResultActions;
 
 @Since("1.0.0")
@@ -26,6 +29,13 @@ public final class TestActImpl implements TestAct {
     var resultActions = performRequest();
     var actResult = TestActResultMapper.mapTo(resultActions);
     this.context.setActResult(actResult);
+
+    var result = performRequest2();
+    var resultAct =
+        new TestActResult2(
+            result.status(), result.headers(), result.contentAsBytes(), result.contentAsString());
+    this.context.setActResult2(resultAct);
+
     return this;
   }
 
@@ -40,6 +50,15 @@ public final class TestActImpl implements TestAct {
       return this.context.getEnvironment().mvc().perform(requestBuilder);
     } catch (Exception e) {
       throw new TestActFailedError(createMessage(this.context.getStep(), result, e));
+    }
+  }
+
+  private MockMvcExecutionResult performRequest2() {
+    try {
+      var executor = new MockMvcExecutor(this.context.getEnvironment().mvc());
+      return executor.execute(this.context.getRequestBuilder().build());
+    } catch (Exception e) {
+      throw new TestActFailedError("testing"); // todo
     }
   }
 }

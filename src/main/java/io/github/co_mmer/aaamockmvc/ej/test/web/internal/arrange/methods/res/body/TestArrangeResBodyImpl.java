@@ -11,7 +11,10 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.TestArrangeBaseAbstract;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeBodySetter;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.MultipartBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.TextBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import java.io.IOException;
 import java.util.List;
 import lombok.NonNull;
 import org.springframework.http.MediaType;
@@ -34,6 +37,9 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
   @Override
   public void json(@NonNull String json) {
     TestArrangeBodySetter.setContent(super.getBody(), json, APPLICATION_JSON);
+
+    context.getRequestBuilder().body(new TextBody(json));
+    context.getRequestBuilder().headers().contentType(APPLICATION_JSON);
   }
 
   @Override
@@ -41,6 +47,10 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
     try {
       var json = TestGenericMapper.toJson(super.getEnvironment().objectMapper(), content);
       setContent(getBody(), json, APPLICATION_JSON);
+
+      context.getRequestBuilder().body(new TextBody(json));
+      context.getRequestBuilder().headers().contentType(APPLICATION_JSON);
+
     } catch (Exception e) {
       throw new TestArrangeException(e);
     }
@@ -49,12 +59,32 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
   @Override
   public TestArrange2ResBody file(@NonNull MockMultipartFile file) {
     TestArrangeBodySetter.addFile(super.getBody(), file);
-    return this;
+
+    try {
+      var body = new MultipartBody();
+      body.add(file.getName(), file.getOriginalFilename(), file.getContentType(), file.getBytes());
+      context.getRequestBuilder().body(body);
+
+      return this;
+    } catch (IOException e) {
+      throw new TestArrangeException(e);
+    }
   }
 
   @Override
   public TestArrange3ResBody files(@NonNull List<MockMultipartFile> files) {
     TestArrangeBodySetter.addFiles(super.getBody(), files);
-    return this;
+
+    try {
+      var body = new MultipartBody();
+      for (var file : files) {
+        body.add(
+            file.getName(), file.getOriginalFilename(), file.getContentType(), file.getBytes());
+      }
+      context.getRequestBuilder().body(body);
+      return this;
+    } catch (IOException e) {
+      throw new TestArrangeException(e);
+    }
   }
 }

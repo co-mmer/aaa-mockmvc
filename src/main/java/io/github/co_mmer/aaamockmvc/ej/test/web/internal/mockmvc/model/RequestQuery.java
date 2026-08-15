@@ -7,43 +7,45 @@ import java.util.Objects;
 
 public final class RequestQuery {
 
-  private final Map<String, List<String>> values;
+  private final Map<String, List<String>> values = new LinkedHashMap<>();
 
-  public RequestQuery(Map<String, List<String>> values) {
+  public void add(String name, String value) {
+    validateName(name);
+    Objects.requireNonNull(value, "value must not be null");
+
+    values.computeIfAbsent(name, ignored -> new java.util.ArrayList<>()).add(value);
+  }
+
+  public void addAllValues(Map<String, List<String>> values) {
     Objects.requireNonNull(values, "values must not be null");
 
-    Map<String, List<String>> copy = new LinkedHashMap<>();
-
     values.forEach(
-        (name, parameterValues) -> {
+        (name, queryValues) -> {
           validateName(name);
-          validateValues(name, parameterValues);
 
-          copy.put(name, List.copyOf(parameterValues));
+          Objects.requireNonNull(queryValues, "values for '%s' must not be null".formatted(name));
+
+          queryValues.forEach(value -> add(name, value));
         });
+  }
 
-    this.values = copy;
+  public void addAll(Map<String, String> query) {
+    Objects.requireNonNull(query, "query must not be null");
+
+    query.forEach(this::add);
   }
 
   public Map<String, List<String>> values() {
-    return Map.copyOf(values);
+    Map<String, List<String>> copy = new LinkedHashMap<>();
+
+    values.forEach((name, queryValues) -> copy.put(name, List.copyOf(queryValues)));
+
+    return Map.copyOf(copy);
   }
 
   private static void validateName(String name) {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Query parameter name must not be null or blank");
-    }
-  }
-
-  private static void validateValues(String name, List<String> values) {
-    if (values == null || values.isEmpty()) {
-      throw new IllegalArgumentException(
-          "Query parameter '%s' must contain at least one value".formatted(name));
-    }
-
-    if (values.stream().anyMatch(Objects::isNull)) {
-      throw new IllegalArgumentException(
-          "Query parameter '%s' must not contain null values".formatted(name));
     }
   }
 }

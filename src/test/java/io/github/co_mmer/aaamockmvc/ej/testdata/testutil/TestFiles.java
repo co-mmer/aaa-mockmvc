@@ -29,6 +29,6 @@ public final class TestFiles {
   public static final List<MockMultipartFile> TEST_FILE_3_4 = List.of(TEST_FILE_3, TEST_FILE_4);
 
   private static MockMultipartFile createFile(String name) {
-    return new MockMultipartFile(name, new byte[0]);
+    return new MockMultipartFile(name, name, "text/plain", "".getBytes());
   }
 }

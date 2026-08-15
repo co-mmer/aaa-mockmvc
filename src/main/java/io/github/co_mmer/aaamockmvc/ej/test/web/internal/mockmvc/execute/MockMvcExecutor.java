@@ -6,11 +6,11 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.result.MockMvcR
 import java.util.Objects;
 import org.springframework.test.web.servlet.MockMvc;
 
-final class MockMvcExecutor {
+public final class MockMvcExecutor {
 
   private final MockMvc mockMvc;
 
-  MockMvcExecutor(MockMvc mockMvc) {
+  public MockMvcExecutor(MockMvc mockMvc) {
     this.mockMvc = Objects.requireNonNull(mockMvc, "mockMvc must not be null");
   }
 

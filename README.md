@@ -101,7 +101,7 @@ The sources can also be downloaded directly to access the documentation of the c
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>2.0.1</version>
+  <version>2.0.2</version>
   <scope>test</scope>
 </dependency>
 

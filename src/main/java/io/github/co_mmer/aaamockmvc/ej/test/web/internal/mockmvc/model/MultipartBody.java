@@ -1,17 +1,47 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import lombok.NonNull;
 
-public record MultipartBody(List<MultipartPart> parts) implements RequestBody {
+public final class MultipartBody implements RequestBody {
 
-  public MultipartBody {
-    Objects.requireNonNull(parts, "parts must not be null");
+  private final List<MultipartPart> parts = new ArrayList<>();
 
-    if (parts.stream().anyMatch(Objects::isNull)) {
-      throw new IllegalArgumentException("parts must not contain null values");
+  public void add(@NonNull MultipartPart part) {
+    parts.add(part);
+  }
+
+  public void add(
+      @NonNull String name, String filename, String contentType, @NonNull byte[] content) {
+    validateName(name);
+    validateFilename(filename);
+    validateContentType(contentType);
+
+    parts.add(
+        new MultipartPart(name, filename, contentType, Arrays.copyOf(content, content.length)));
+  }
+
+  public List<MultipartPart> parts() {
+    return List.copyOf(parts);
+  }
+
+  private static void validateName(String name) {
+    if (name.isBlank()) {
+      throw new IllegalArgumentException("Multipart part name must not be blank");
     }
+  }
 
-    parts = List.copyOf(parts);
+  private static void validateFilename(String filename) {
+    if (filename != null && filename.isBlank()) {
+      throw new IllegalArgumentException("Multipart filename must not be blank");
+    }
+  }
+
+  private static void validateContentType(String contentType) {
+    if (contentType != null && contentType.isBlank()) {
+      throw new IllegalArgumentException("Multipart content type must not be blank");
+    }
   }
 }
