@@ -32,14 +32,14 @@ public final class TestAnswerImpl implements TestAnswer {
 
   @Override
   public String asString() {
-    var content = this.context.getActResult().contentAsString();
+    var content = this.context.getActResult2().contentAsString();
     this.context.setAnswerResult(new TestAnswerResult<>(content));
     return content;
   }
 
   @Override
   public byte[] asByte() {
-    var content = this.context.getActResult().contentAsBytes();
+    var content = this.context.getActResult2().contentAsBytes();
     this.context.setAnswerResult(new TestAnswerResult<>(content));
     return content;
   }
@@ -50,7 +50,7 @@ public final class TestAnswerImpl implements TestAnswer {
   }
 
   private <T> T parse(String stepName, Class<T> resultType) {
-    var content = this.context.getActResult().contentAsString();
+    var content = this.context.getActResult2().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
@@ -67,7 +67,7 @@ public final class TestAnswerImpl implements TestAnswer {
 
   @Override
   public <E> Collection<E> asCollection(@NonNull Class<E> elementClass) {
-    var content = this.context.getActResult().contentAsString();
+    var content = this.context.getActResult2().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
@@ -87,7 +87,7 @@ public final class TestAnswerImpl implements TestAnswer {
 
   @Override
   public <E> List<E> asList(@NonNull Class<E> elementClass) {
-    var content = this.context.getActResult().contentAsString();
+    var content = this.context.getActResult2().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
@@ -104,7 +104,7 @@ public final class TestAnswerImpl implements TestAnswer {
 
   @Override
   public <E> Set<E> asSet(@NonNull Class<E> elementClass) {
-    var content = this.context.getActResult().contentAsString();
+    var content = this.context.getActResult2().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
@@ -121,7 +121,7 @@ public final class TestAnswerImpl implements TestAnswer {
 
   @Override
   public <K, V> Map<K, V> asMap(@NonNull Class<K> keyClass, @NonNull Class<V> valueClass) {
-    var content = this.context.getActResult().contentAsString();
+    var content = this.context.getActResult2().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {

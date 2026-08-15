@@ -31,7 +31,7 @@ public final class TestAssertHeadImpl implements TestAssertHead {
   }
 
   private Map<String, List<String>> getHeaders() {
-    return this.context.getActResult().headers();
+    return this.context.getActResult2().headers();
   }
 
   @Override

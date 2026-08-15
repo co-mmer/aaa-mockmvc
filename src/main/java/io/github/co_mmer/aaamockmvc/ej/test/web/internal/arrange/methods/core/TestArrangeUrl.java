@@ -2,10 +2,10 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.TestArrangeBaseAbstract;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import java.net.URI;
 import java.util.Map;
-import org.springframework.http.HttpMethod;
 
 @Since("2.0.0")
 public abstract class TestArrangeUrl extends TestArrangeBaseAbstract {
@@ -17,21 +17,17 @@ public abstract class TestArrangeUrl extends TestArrangeBaseAbstract {
 
   @Since("2.0.0")
   protected void setUri(HttpMethod method, String url, Object... variable) {
-    TestArrangeUrlSetter.setUri(super.getUrl(), method, url, variable);
+    // TestArrangeUrlSetter.setUri(super.getUrl(), method, url, variable);
 
-    context
-        .getRequestBuilder()
-        .method(io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.GET);
+    context.getRequestBuilder().method(method);
     context.getRequestBuilder().path().setValue(url, variable);
   }
 
   @Since("2.0.0")
   protected void setUri(HttpMethod method, URI uri) {
-    TestArrangeUrlSetter.setUri(super.getUrl(), method, uri);
+    // TestArrangeUrlSetter.setUri(super.getUrl(), method, uri);
 
-    context
-        .getRequestBuilder()
-        .method(io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.GET);
+    context.getRequestBuilder().method(method);
     context.getRequestBuilder().path().setValue(uri);
   }
 

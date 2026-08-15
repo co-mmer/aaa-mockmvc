@@ -47,6 +47,10 @@ public final class RequestBuilder {
     return this.body;
   }
 
+  public RequestBody body() {
+    return this.body;
+  }
+
   public Request build() {
     return new Request(
         method,

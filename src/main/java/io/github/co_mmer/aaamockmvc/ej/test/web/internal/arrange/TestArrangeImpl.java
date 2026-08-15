@@ -12,13 +12,13 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.get.url
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.head.url.TestArrangeHeadUrlImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.options.url.TestArrangeOptionsUrlImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.url.TestArrangeResUrlImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.RequestBuilder;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeResult;
 import java.net.URI;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpMethod;
 
 @Since("2.0.0")
 @RequiredArgsConstructor

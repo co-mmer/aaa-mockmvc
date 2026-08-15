@@ -31,7 +31,7 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
   public TestAssert2Byte isNotEmpty() {
     assertThat(
         this.context.getStep(),
-        this.context.getActResult().contentAsString(),
+        this.context.getActResult2().contentAsString(),
         not(anyOf(is(EMPTY), is(EMPTY_ARRAY), is(EMPTY_OBJECT))));
     return this;
   }
@@ -40,21 +40,21 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
   public TestAssertLByte isEmpty() {
     assertThat(
         this.context.getStep(),
-        this.context.getActResult().contentAsString(),
+        this.context.getActResult2().contentAsString(),
         anyOf(is(EMPTY), is(EMPTY_ARRAY), is(EMPTY_OBJECT)));
     return this;
   }
 
   @Override
   public TestAssert2Byte hasLength(int expectedLength) {
-    var actResult = this.context.getActResult();
+    var actResult = this.context.getActResult2();
     assertThat(this.context.getStep(), actResult.contentAsBytes().length, is(expectedLength));
     return this;
   }
 
   @Override
   public TestAssertLByte isEqualTo(byte[] expectedByte) {
-    var actResult = this.context.getActResult();
+    var actResult = this.context.getActResult2();
     assertThat(this.context.getStep(), actResult.contentAsBytes(), is(expectedByte));
     return this;
   }

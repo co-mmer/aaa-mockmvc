@@ -20,7 +20,7 @@ public final class MockMvcExecutor {
       var mvcResult = mockMvc.perform(requestBuilder).andReturn();
       return MockMvcResultMapper.map(mvcResult);
     } catch (Exception e) {
-      throw new MockMvcExecutionException("Could not execute MockMvc request", e);
+      throw new MockMvcExecutionException(e.getMessage());
     }
   }
 }

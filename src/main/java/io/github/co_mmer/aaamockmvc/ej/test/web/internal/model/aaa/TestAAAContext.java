@@ -15,8 +15,7 @@ public final class TestAAAContext {
   private final TestEnvironment environment;
   private TestStepDto step;
   private TestArrangeResult arrangeResult;
-  @Deprecated
-  private TestActResult actResult;
+  @Deprecated private TestActResult actResult;
   private TestActResult2 actResult2;
   private TestAssertResult<?> assertResult;
   private TestAnswerResult<?> answerResult;

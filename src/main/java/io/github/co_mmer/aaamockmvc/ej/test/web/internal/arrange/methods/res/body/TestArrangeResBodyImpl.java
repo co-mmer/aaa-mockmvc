@@ -11,6 +11,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.TestArrangeBaseAbstract;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeBodySetter;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.EmptyBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.MultipartBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.TextBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
@@ -32,6 +33,9 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
   @Override
   public void raw(@NonNull String raw, @NonNull MediaType type) {
     TestArrangeBodySetter.setContent(super.getBody(), raw, type);
+
+    context.getRequestBuilder().body(new TextBody(raw));
+    context.getRequestBuilder().headers().contentType(type);
   }
 
   @Override
@@ -61,7 +65,7 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
     TestArrangeBodySetter.addFile(super.getBody(), file);
 
     try {
-      var body = new MultipartBody();
+      var body = multipartBody();
       body.add(file.getName(), file.getOriginalFilename(), file.getContentType(), file.getBytes());
       context.getRequestBuilder().body(body);
 
@@ -76,7 +80,7 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
     TestArrangeBodySetter.addFiles(super.getBody(), files);
 
     try {
-      var body = new MultipartBody();
+      var body = multipartBody();
       for (var file : files) {
         body.add(
             file.getName(), file.getOriginalFilename(), file.getContentType(), file.getBytes());
@@ -86,5 +90,21 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
     } catch (IOException e) {
       throw new TestArrangeException(e);
     }
+  }
+
+  private MultipartBody multipartBody() {
+    var currentBody = context.getRequestBuilder().body();
+
+    if (currentBody instanceof EmptyBody) {
+      var body = new MultipartBody();
+      context.getRequestBuilder().body(body);
+      return body;
+    }
+
+    if (currentBody instanceof MultipartBody) {
+      return (MultipartBody) currentBody;
+    }
+
+    throw new IllegalStateException("Request body is already set and is not a MultipartBody");
   }
 }

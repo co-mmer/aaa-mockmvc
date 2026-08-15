@@ -35,13 +35,13 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   @Override
   public TestAssert2Status is(@NonNull HttpStatus status) {
     assertThat(
-        this.context.getStep(), this.context.getActResult().status(), Matchers.is(status.value()));
+        this.context.getStep(), this.context.getActResult2().status(), Matchers.is(status.value()));
     return this;
   }
 
   @Override
   public TestAssert2Status is(int status) {
-    assertThat(this.context.getStep(), this.context.getActResult().status(), Matchers.is(status));
+    assertThat(this.context.getStep(), this.context.getActResult2().status(), Matchers.is(status));
     return this;
   }
 
@@ -97,7 +97,7 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
 
   @Override
   public TestAssert2Status isInRange(int minStatusCode, int maxStatusCode) {
-    var status = this.context.getActResult().status();
+    var status = this.context.getActResult2().status();
     assertThat(this.context.getStep(), status, Matchers.is(greaterThanOrEqualTo(minStatusCode)));
     assertThat(this.context.getStep(), status, Matchers.is(lessThanOrEqualTo(maxStatusCode)));
     return this;

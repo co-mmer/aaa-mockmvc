@@ -90,13 +90,11 @@ public final class RequestHeaders {
 
   public RequestHeaders accept(@NonNull MediaType... mediaTypes) {
     values.put("Accept", Arrays.stream(mediaTypes).map(MediaType::toString).toList());
-
     return this;
   }
 
   public RequestHeaders contentType(@NonNull MediaType mediaType) {
     values.put("Content-Type", List.of(mediaType.toString()));
-
     return this;
   }
 

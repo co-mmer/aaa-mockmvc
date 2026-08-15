@@ -27,7 +27,7 @@ public final class MockMvcResultMapper {
     try {
       return response.getContentAsString();
     } catch (UnsupportedEncodingException e) {
-      throw new MockMvcExecutionException("Could not read response content as String", e);
+      throw new MockMvcExecutionException("Could not read response content as String");
     }
   }
 

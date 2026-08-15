@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public final class RequestQuery {
 
     values.forEach((name, queryValues) -> copy.put(name, List.copyOf(queryValues)));
 
-    return Map.copyOf(copy);
+    return Collections.unmodifiableMap(copy);
   }
 
   private static void validateName(String name) {

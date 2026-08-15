@@ -35,14 +35,14 @@ public final class TestAssertMapImpl<K, V>
 
   @Override
   public TestAssert2Map<K, V> isNotEmpty() {
-    var actual = this.context.getActResult().contentAsString();
+    var actual = this.context.getActResult2().contentAsString();
     assertThat(this.context.getStep(), actual, not(anyOf(is(EMPTY), is(EMPTY_OBJECT))));
     return this;
   }
 
   @Override
   public TestAssertLMap isEmpty() {
-    var actual = this.context.getActResult().contentAsString();
+    var actual = this.context.getActResult2().contentAsString();
     assertThat(this.context.getStep(), actual, anyOf(is(EMPTY), is(EMPTY_OBJECT)));
     return this;
   }

@@ -79,6 +79,6 @@ public class TestStepValidator {
   }
 
   private static boolean isActResultNull(TestStepImpl step) {
-    return step.getContext().getActResult() == null;
+    return step.getContext().getActResult2() == null;
   }
 }

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TestActFailedErrorFormatter {
 
+  @Deprecated
   @Since("2.0.0")
   public static String createMessage(TestStepDto step, TestArrangeResult arrange, Throwable cause) {
     return """
@@ -28,6 +29,15 @@ public final class TestActFailedErrorFormatter {
             arrange.asMessage(),
             cause.getClass().getSimpleName(),
             getMessage(cause));
+  }
+
+  @Since("2.0.2")
+  public static String createMessage(TestStepDto step, String d, Throwable cause) {
+    return """
+        %sACT failed: %s
+        Cause: %s
+        """
+        .formatted(step == null ? EMPTY : reasonOf(step) + "\n", d, getMessage(cause));
   }
 
   private static String getMessage(Throwable throwable) {

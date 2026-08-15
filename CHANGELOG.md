@@ -1,5 +1,16 @@
 # <img src="./images/aaa-mockmvc-icon-27.png" align="left"/> Changelog
 
+## [2.0.2]
+
+### ☂️ Fixed
+
+- Corrected `Accept` header handling for multiple media types. Accept values are now represented
+  consistently as multiple HTTP header values. This may change the raw header representation from
+  `application/json, application/pdf` to `application/json,application/pdf` while preserving the
+  same HTTP semantics.
+
+----
+
 ## [2.0.1]
 
 ### 🧹 Improvements
