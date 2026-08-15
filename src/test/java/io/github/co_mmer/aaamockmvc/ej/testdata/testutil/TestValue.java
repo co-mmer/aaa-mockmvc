@@ -20,6 +20,13 @@ public final class TestValue {
 
   public static final Map<String, String> QUERY_MAP_SEARCH_PAGE =
       Map.of(QUERY_KEY_SEARCH, QUERY_VALUE_SEARCH_TERM, QUERY_KEY_PAGE, QUERY_VALUE_PAGE_NUMBER);
+
+  public static final Map<String, List<String>> QUERY_MAP_LIST_SEARCH_PAGE =
+      Map.of(
+          QUERY_KEY_SEARCH,
+          List.of(QUERY_VALUE_SEARCH_TERM),
+          QUERY_KEY_PAGE,
+          List.of(QUERY_VALUE_PAGE_NUMBER));
   public static final Map<String, String> QUERY_MAP_1_2 =
       Map.of(QUERY_KEY_2, QUERY_VALUE_2, QUERY_KEY_PAGE, QUERY_VALUE_PAGE_NUMBER);
 

@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
 
+@Deprecated
 @Since("1.0.0")
 @Setter
 @Getter

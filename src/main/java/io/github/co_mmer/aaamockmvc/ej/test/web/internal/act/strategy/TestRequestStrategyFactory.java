@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.http.HttpMethod;
 
+@Deprecated
 @Since("1.0.0")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TestRequestStrategyFactory {

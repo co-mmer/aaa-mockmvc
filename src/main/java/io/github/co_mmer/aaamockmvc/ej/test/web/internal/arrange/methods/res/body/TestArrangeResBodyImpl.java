@@ -9,7 +9,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArr
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArrange3ResBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.TestArrangeBaseAbstract;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeBodySetter;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.EmptyBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.MultipartBody;
@@ -32,16 +31,12 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
 
   @Override
   public void raw(@NonNull String raw, @NonNull MediaType type) {
-    TestArrangeBodySetter.setContent(super.getBody(), raw, type);
-
     context.getRequestBuilder().body(new TextBody(raw));
     context.getRequestBuilder().headers().contentType(type);
   }
 
   @Override
   public void json(@NonNull String json) {
-    TestArrangeBodySetter.setContent(super.getBody(), json, APPLICATION_JSON);
-
     context.getRequestBuilder().body(new TextBody(json));
     context.getRequestBuilder().headers().contentType(APPLICATION_JSON);
   }
@@ -62,8 +57,6 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
 
   @Override
   public TestArrange2ResBody file(@NonNull MockMultipartFile file) {
-    TestArrangeBodySetter.addFile(super.getBody(), file);
-
     try {
       var body = multipartBody();
       body.add(file.getName(), file.getOriginalFilename(), file.getContentType(), file.getBytes());
@@ -77,8 +70,6 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
 
   @Override
   public TestArrange3ResBody files(@NonNull List<MockMultipartFile> files) {
-    TestArrangeBodySetter.addFiles(super.getBody(), files);
-
     try {
       var body = multipartBody();
       for (var file : files) {

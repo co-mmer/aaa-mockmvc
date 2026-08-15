@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.util.CollectionUtils;
 
+@Deprecated
 @Since("1.0.0")
 @Getter
 @Setter

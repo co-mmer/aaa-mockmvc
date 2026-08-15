@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
+@Deprecated
 @Since("1.0.0")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TestArrangeBodySetter {

@@ -10,8 +10,6 @@ import org.springframework.http.MediaType;
 @Since("1.0.0")
 public abstract class TestArrangeHeader extends TestArrangeBaseAbstract {
 
-  private static final String AUTHORIZATION = "Authorization";
-
   @Since("2.0.0")
   protected TestArrangeHeader(TestAAAContext context) {
     super(context);
@@ -19,32 +17,26 @@ public abstract class TestArrangeHeader extends TestArrangeBaseAbstract {
 
   @Since("1.0.0")
   protected void setAccepts(MediaType... types) {
-    TestArrangeValidator.nonNullAccepts(types);
-    TestArrangeHeaderSetter.setAccepts(getHead(), types);
     this.context.getRequestBuilder().headers().accept(types);
   }
 
   @Since("1.0.0")
   protected void setAuth(String token) {
-    TestArrangeHeaderSetter.addKeyValue(getHead(), AUTHORIZATION, token);
     this.context.getRequestBuilder().headers().auth(token);
   }
 
   @Since("1.0.0")
   protected void setContentType(MediaType type) {
-    TestArrangeHeaderSetter.setContentType(getHead(), type);
     this.context.getRequestBuilder().headers().contentType(type);
   }
 
   @Since("1.0.0")
   protected void put(String key, Object value) {
-    TestArrangeHeaderSetter.addKeyValue(getHead(), key, value);
     this.context.getRequestBuilder().headers().add(key, String.valueOf(value));
   }
 
   @Since("1.0.0")
   protected void putAll(Map<String, List<Object>> keyValue) {
-    TestArrangeHeaderSetter.addKeyValue(getHead(), keyValue);
     this.context.getRequestBuilder().headers().set(keyValue);
   }
 }

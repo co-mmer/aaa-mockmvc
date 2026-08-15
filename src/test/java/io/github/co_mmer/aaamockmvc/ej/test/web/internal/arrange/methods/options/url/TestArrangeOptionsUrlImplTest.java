@@ -1,52 +1,53 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.options.url;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeUrlSetter.addQuery;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeUrlSetter.setUri;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_PATH;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_URI;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_URL;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_VARIABLE_USER_ID;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_WITH_USER_ID;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_KEY_SEARCH;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_MAP_LIST_SEARCH_PAGE;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_MAP_SEARCH_PAGE;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.QUERY_VALUE_SEARCH_TERM;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
-import static org.springframework.http.HttpMethod.OPTIONS;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeUrlSetter;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.delete.url.TestArrangeDeleteUrlImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.options.header.TestArrangeOptionsHeaderImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.RequestPath;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.RequestQuery;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import java.net.URI;
+import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.AfterEach;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
 class TestArrangeOptionsUrlImplTest {
 
   private TestAAAContext context;
   private TestArrangeOptionsUrlImpl impl;
-  private MockedStatic<TestArrangeUrlSetter> mockTestArrangeUrlUtils;
 
   @BeforeEach
   void setUp() {
     this.context = TestContext.createContext();
-    this.mockTestArrangeUrlUtils = Mockito.mockStatic(TestArrangeUrlSetter.class);
     this.impl = new TestArrangeOptionsUrlImpl(this.context, BASE_URL);
   }
 
-  @AfterEach
-  void clean() {
-    this.mockTestArrangeUrlUtils.close();
+  private RequestPath getPath() {
+    return context.getRequestBuilder().path();
+  }
+
+  private RequestQuery getQuery() {
+    return context.getRequestBuilder().query();
   }
 
   @Nested
@@ -58,7 +59,7 @@ class TestArrangeOptionsUrlImplTest {
     void GIVEN_provideNullOnContextUrl_WHEN_call_constructor_THEN_throw_Exception(
         TestAAAContext context, String url) {
 
-      assertThrows(NullPointerException.class, () -> new TestArrangeOptionsUrlImpl(context, url));
+      assertThrows(NullPointerException.class, () -> new TestArrangeDeleteUrlImpl(context, url));
     }
 
     private static Stream<Arguments> provideNullOnContextUrl() {
@@ -69,25 +70,13 @@ class TestArrangeOptionsUrlImplTest {
     }
 
     @Test
-    void GIVEN_url_WHEN_arrangeUrl_THEN_setUriIsCalled() {
-      // Assert
-      mockTestArrangeUrlUtils.verify(
-          () -> setUri(context.getArrangeResult().getUrl(), OPTIONS, BASE_URL));
-    }
-
-    @Test
-    void GIVEN_pathWithVariable_WHEN_call_constructor_THEN_setUriIsCalled() {
+    @SneakyThrows
+    void GIVEN_pathWithVariable_WHEN_call_constructor_THEN_return_expected_path() {
       // Act
-      new TestArrangeOptionsUrlImpl(context, PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
+      new TestArrangeDeleteUrlImpl(context, PATH_WITH_USER_ID, 1);
 
       // Assert
-      mockTestArrangeUrlUtils.verify(
-          () ->
-              setUri(
-                  context.getArrangeResult().getUrl(),
-                  OPTIONS,
-                  PATH_WITH_USER_ID,
-                  PATH_VARIABLE_USER_ID));
+      assertThat(getPath().value(), is(new URI(BASE_URI + "/" + 1)));
     }
 
     @ParameterizedTest()
@@ -96,7 +85,7 @@ class TestArrangeOptionsUrlImplTest {
     void GIVEN_provideNullOnContextUri_WHEN_call_constructor_THEN_throw_Exception(
         TestAAAContext context, URI uri) {
 
-      assertThrows(NullPointerException.class, () -> new TestArrangeOptionsUrlImpl(context, uri));
+      assertThrows(NullPointerException.class, () -> new TestArrangeDeleteUrlImpl(context, uri));
     }
 
     private static Stream<Arguments> provideNullOnContextUri() {
@@ -107,13 +96,21 @@ class TestArrangeOptionsUrlImplTest {
     }
 
     @Test
-    void GIVEN_uri_WHEN_call_constructor_THEN_setUriIsCalled() {
+    @SneakyThrows
+    void GIVEN_uri_WHEN_call_constructor_THEN_return_expected_path() {
       // Act
-      new TestArrangeOptionsUrlImpl(context, BASE_URI);
+      new TestArrangeDeleteUrlImpl(context, BASE_URI);
 
       // Assert
-      mockTestArrangeUrlUtils.verify(
-          () -> setUri(context.getArrangeResult().getUrl(), OPTIONS, BASE_URI));
+      assertThat(getPath().value(), is(BASE_URI));
+    }
+
+    @Test
+    void GIVEN_url_WHEN_call_constructor_THEN_return_expected_path() {
+      new TestArrangeDeleteUrlImpl(context, BASE_PATH);
+
+      // Assert
+      assertThat(getPath().value(), is(BASE_URI));
     }
   }
 
@@ -128,15 +125,12 @@ class TestArrangeOptionsUrlImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_keyValue_WHEN_query_THEN_addQueryIsCalled() {
+    void GIVEN_keyValue_WHEN_query_THEN_return_expected_query() {
       // Act
       impl.query(QUERY_KEY_SEARCH, QUERY_VALUE_SEARCH_TERM);
 
       // Assert
-      mockTestArrangeUrlUtils.verify(
-          () ->
-              addQuery(
-                  context.getArrangeResult().getUrl(), QUERY_KEY_SEARCH, QUERY_VALUE_SEARCH_TERM));
+      assertThat(getQuery().values(), hasEntry(QUERY_KEY_SEARCH, List.of(QUERY_VALUE_SEARCH_TERM)));
     }
 
     @Test
@@ -146,13 +140,12 @@ class TestArrangeOptionsUrlImplTest {
     }
 
     @Test
-    void GIVEN_map_WHEN_query_THEN_addQueryIsCalled() {
+    void GIVEN_map_WHEN_query_THEN_return_expected_query() {
       // Act
       impl.query(QUERY_MAP_SEARCH_PAGE);
 
       // Assert
-      mockTestArrangeUrlUtils.verify(
-          () -> addQuery(context.getArrangeResult().getUrl(), QUERY_MAP_SEARCH_PAGE));
+      assertThat(getQuery().values(), is(QUERY_MAP_LIST_SEARCH_PAGE));
     }
   }
 

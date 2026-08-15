@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.ResultActions;
 
+@Deprecated
 @Since("2.0.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestActResultMapper {

@@ -8,6 +8,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@Deprecated
 @Since("1.0.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TestArrangeUrlMapper {

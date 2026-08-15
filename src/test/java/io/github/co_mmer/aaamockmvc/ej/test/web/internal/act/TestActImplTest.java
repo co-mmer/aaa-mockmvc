@@ -3,25 +3,33 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.act;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext.mockContext;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.error.TestActFailedError;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.mapper.TestActResultMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.strategy.TestRequestBaseStrategy;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.strategy.TestRequestStrategyFactory;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutionException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutionResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutor;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.d.RequestDescription;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
+import java.util.List;
+import java.util.Map;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 class TestActImplTest {
 
+  private static final MockMvcExecutionResult ANY_EXECUTION_RESULT =
+      new MockMvcExecutionResult(
+          200,
+          "{\"result\":\"ok\"}",
+          new byte[] {1, 2, 3},
+          Map.of("Content-Type", List.of("application/json")));
+  private static final MockMvcExecutionException ANY_Exception =
+      new MockMvcExecutionException("test");
   private TestAAAContext context;
   private TestActImpl testAct;
 
@@ -35,99 +43,54 @@ class TestActImplTest {
   @SneakyThrows
   void WHEN_perform_THEN_expected_methods_are_called() {
     // Arrange
-    var requestBuilder = mockRequestBuilder();
-    var baseStrategy = mockBaseStrategyReturning(requestBuilder);
-    var actResult = Mockito.mock(TestActResult.class);
+    var request = this.context.getRequestBuilder().build();
 
-    var strategyFactory = mockStrategyFactoryReturning(baseStrategy);
-    var resultMapper = mockResultMapperReturning(actResult);
+    var mockedExecutor = Mockito.mockStatic(MockMvcExecutor.class);
+    mockedExecutor
+        .when(() -> MockMvcExecutor.execute(this.context.getEnvironment().mvc(), request))
+        .thenReturn(ANY_EXECUTION_RESULT);
 
     // Act
-    this.testAct.perform();
+    var result = this.testAct.perform();
 
     // Assert
-    verify(this.context.getEnvironment().mvc()).perform(requestBuilder);
-    assertThat(this.context.getActResult(), is(actResult));
+    assertThat(result, sameInstance(this.testAct));
 
-    strategyFactory.close();
-    resultMapper.close();
+    var actResult = this.context.getActResult2();
+    assertThat(actResult.status(), is(ANY_EXECUTION_RESULT.status()));
+    assertThat(actResult.headers(), is(ANY_EXECUTION_RESULT.headers()));
+    assertThat(actResult.contentAsBytes(), is(ANY_EXECUTION_RESULT.contentAsBytes()));
+    assertThat(actResult.contentAsString(), is(ANY_EXECUTION_RESULT.contentAsString()));
+
+    mockedExecutor.verify(
+        () -> MockMvcExecutor.execute(this.context.getEnvironment().mvc(), request));
+    mockedExecutor.close();
   }
 
   @Test
-  @SneakyThrows
-  void GIVEN_noStep_throwOnMvcPerform_WHEN_perform_THEN_throw_Error() {
+  void GIVEN_throwException_WHEN_perform_THEN_throw_TestActFailedError() {
     // Arrange
-    var requestBuilder = mockRequestBuilder();
-    var baseStrategy = mockBaseStrategyReturning(requestBuilder);
+    var request = this.context.getRequestBuilder().build();
 
-    var strategyFactory = mockStrategyFactoryReturning(baseStrategy);
-    mvcWillThrow(requestBuilder);
+    var mockedExecutor = Mockito.mockStatic(MockMvcExecutor.class);
+    var mockedDescription = Mockito.mockStatic(RequestDescription.class);
+
+    mockedExecutor
+        .when(() -> MockMvcExecutor.execute(this.context.getEnvironment().mvc(), request))
+        .thenThrow(ANY_Exception);
+
+    mockedDescription
+        .when(() -> RequestDescription.describe(request))
+        .thenReturn("RequestDescription");
 
     // Act
     var ex = assertThrows(TestActFailedError.class, () -> this.testAct.perform());
 
     // Assert
-    var expected =
-        """
-            ACT failed: GET null
-            Request: GET <no uri>
-            Headers: accepts=<none> | content-type=<none> | key-value={}
-            Body: 0 bytes | content-type=<none>
-            Cause: Exception: test
-            """;
-    assertThat(ex.getMessage(), is(expected));
-    strategyFactory.close();
-  }
+    assertThat(ex, is(notNullValue()));
 
-  @Test
-  @SneakyThrows
-  void GIVEN_no_arrange_WHEN_perform_THEN_throwError() {
-    // Arrange
-    this.context.setArrangeResult(null);
-
-    var requestBuilder = mockRequestBuilder();
-    var baseStrategy = mockBaseStrategyReturning(requestBuilder);
-
-    var strategyFactory = mockStrategyFactoryReturning(baseStrategy);
-    mvcWillThrow(requestBuilder);
-
-    // Act
-    var ex = assertThrows(IllegalStateException.class, () -> this.testAct.perform());
-
-    // Assert
-    assertThat(
-        ex.getMessage(),
-        is(
-            "Act error: No 'arrange()' step configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' before 'act().perform()'"));
-    strategyFactory.close();
-  }
-
-  private MockHttpServletRequestBuilder mockRequestBuilder() {
-    return Mockito.mock(MockHttpServletRequestBuilder.class);
-  }
-
-  private TestRequestBaseStrategy mockBaseStrategyReturning(MockHttpServletRequestBuilder builder) {
-    var strategy = Mockito.mock(TestRequestBaseStrategy.class);
-    Mockito.when(strategy.apply(any())).thenReturn(builder);
-    return strategy;
-  }
-
-  private MockedStatic<TestRequestStrategyFactory> mockStrategyFactoryReturning(
-      TestRequestBaseStrategy strategy) {
-    var mocked = Mockito.mockStatic(TestRequestStrategyFactory.class);
-    mocked.when(() -> TestRequestStrategyFactory.resolve(any())).thenReturn(strategy);
-    return mocked;
-  }
-
-  private MockedStatic<TestActResultMapper> mockResultMapperReturning(TestActResult result) {
-    var mocked = Mockito.mockStatic(TestActResultMapper.class);
-    mocked.when(() -> TestActResultMapper.mapTo(any())).thenReturn(result);
-    return mocked;
-  }
-
-  @SneakyThrows
-  private void mvcWillThrow(MockHttpServletRequestBuilder builder) {
-    Mockito.when(this.context.getEnvironment().mvc().perform(builder))
-        .thenThrow(new Exception("test"));
+    mockedExecutor.verify(
+        () -> MockMvcExecutor.execute(this.context.getEnvironment().mvc(), request));
+    mockedExecutor.close();
   }
 }

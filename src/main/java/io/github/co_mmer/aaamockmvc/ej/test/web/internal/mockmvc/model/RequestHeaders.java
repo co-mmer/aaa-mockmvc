@@ -8,9 +8,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.springframework.http.MediaType;
 
+@EqualsAndHashCode
 public final class RequestHeaders {
 
   private Map<String, List<String>> values;
@@ -89,6 +91,9 @@ public final class RequestHeaders {
   }
 
   public RequestHeaders accept(@NonNull MediaType... mediaTypes) {
+    if (Arrays.stream(mediaTypes).anyMatch(Objects::isNull)) {
+      throw new IllegalArgumentException("mediaTypes must not contain null values");
+    }
     values.put("Accept", Arrays.stream(mediaTypes).map(MediaType::toString).toList());
     return this;
   }

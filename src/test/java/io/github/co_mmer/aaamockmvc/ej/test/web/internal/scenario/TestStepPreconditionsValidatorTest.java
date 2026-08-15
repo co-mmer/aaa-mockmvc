@@ -8,7 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult2;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepImpl;
@@ -34,7 +34,7 @@ class TestStepValidatorTest {
   private static final String MSG_ANSWER_NO_ARRANGE_ACT =
       "Answer error: No 'arrange()' / 'act()' steps configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' followed by 'act().perform()' before 'answer()'";
 
-  private TestStepImpl mockStep(String stepName, TestArrangeResult arrange, TestActResult act) {
+  private TestStepImpl mockStep(String stepName, TestArrangeResult arrange, TestActResult2 act) {
     var step = mock(TestStepImpl.class);
     var context = mock(TestAAAContext.class);
 
@@ -49,7 +49,7 @@ class TestStepValidatorTest {
     }
 
     when(context.getArrangeResult()).thenReturn(arrange);
-    when(context.getActResult()).thenReturn(act);
+    when(context.getActResult2()).thenReturn(act);
     return step;
   }
 
@@ -132,9 +132,7 @@ class TestStepValidatorTest {
     @Test
     void WHEN_act_present_THEN_no_exception() {
       // Act
-      var act =
-          new TestActResult(
-              200, Map.of(), "ok".getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+      var act = new TestActResult2(200, Map.of(), "ok".getBytes(StandardCharsets.UTF_8), "ok");
       var step = mockStep("Any", new TestArrangeResult(), act);
 
       // Assert
@@ -177,8 +175,8 @@ class TestStepValidatorTest {
     void WHEN_act_present_THEN_no_exception() {
       // Arrange
       var act =
-          new TestActResult(
-              204, Map.of("X-Test", List.of("1")), new byte[0], StandardCharsets.UTF_8);
+          new TestActResult2(
+              204, Map.of("X-Test", List.of("1")), new byte[0], new String(new byte[0]));
       var step = mockStep(null, new TestArrangeResult(), act);
 
       // Act & Assert

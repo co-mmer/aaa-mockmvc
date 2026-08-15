@@ -6,6 +6,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.TestReque
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.TestRequestUrlDto;
 import lombok.Getter;
 
+@Deprecated
 @Since("2.0.0")
 @Getter
 public class TestArrangeResult {

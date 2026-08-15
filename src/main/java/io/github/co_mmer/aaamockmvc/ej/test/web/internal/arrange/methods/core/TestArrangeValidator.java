@@ -6,6 +6,7 @@ import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
+@Deprecated
 @Since("1.3.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TestArrangeValidator {

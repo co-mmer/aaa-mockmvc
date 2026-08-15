@@ -17,29 +17,23 @@ public abstract class TestArrangeUrl extends TestArrangeBaseAbstract {
 
   @Since("2.0.0")
   protected void setUri(HttpMethod method, String url, Object... variable) {
-    // TestArrangeUrlSetter.setUri(super.getUrl(), method, url, variable);
-
     context.getRequestBuilder().method(method);
     context.getRequestBuilder().path().setValue(url, variable);
   }
 
   @Since("2.0.0")
   protected void setUri(HttpMethod method, URI uri) {
-    // TestArrangeUrlSetter.setUri(super.getUrl(), method, uri);
-
     context.getRequestBuilder().method(method);
     context.getRequestBuilder().path().setValue(uri);
   }
 
   @Since("2.0.0")
   protected void setQuery(String key, String value) {
-    TestArrangeUrlSetter.addQuery(super.getUrl(), key, value);
     this.context.getRequestBuilder().query().add(key, value);
   }
 
   @Since("2.0.0")
   protected void setQuery(Map<String, String> keyValue) {
-    TestArrangeUrlSetter.addQuery(super.getUrl(), keyValue);
     this.context.getRequestBuilder().query().addAll(keyValue);
   }
 }

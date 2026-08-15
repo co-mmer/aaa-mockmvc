@@ -1,18 +1,18 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.DELETE;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.GET;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.HEAD;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.OPTIONS;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.PATCH;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.POST;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.PUT;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_VARIABLE_USER_ID;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_WITH_USER_ID;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.URI_WITH_USER_ID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.springframework.http.HttpMethod.DELETE;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.HEAD;
-import static org.springframework.http.HttpMethod.OPTIONS;
-import static org.springframework.http.HttpMethod.PATCH;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.TestArrange;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
@@ -41,8 +41,8 @@ class TestArrangeImplTest {
       impl.get(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(GET));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(GET));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -51,8 +51,8 @@ class TestArrangeImplTest {
       impl.get(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(GET));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(GET));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -79,8 +79,8 @@ class TestArrangeImplTest {
       impl.delete(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(DELETE));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(DELETE));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -89,8 +89,8 @@ class TestArrangeImplTest {
       impl.delete(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(DELETE));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(DELETE));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -117,8 +117,8 @@ class TestArrangeImplTest {
       impl.options(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(OPTIONS));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(OPTIONS));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -127,8 +127,8 @@ class TestArrangeImplTest {
       impl.options(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(OPTIONS));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(OPTIONS));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -155,8 +155,8 @@ class TestArrangeImplTest {
       impl.head(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(HEAD));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(HEAD));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -165,8 +165,8 @@ class TestArrangeImplTest {
       impl.head(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(HEAD));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(HEAD));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -193,8 +193,8 @@ class TestArrangeImplTest {
       impl.post(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(POST));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(POST));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -203,8 +203,8 @@ class TestArrangeImplTest {
       impl.post(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(POST));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(POST));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -231,8 +231,8 @@ class TestArrangeImplTest {
       impl.put(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(PUT));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(PUT));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -241,8 +241,8 @@ class TestArrangeImplTest {
       impl.put(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(PUT));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(PUT));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -269,8 +269,8 @@ class TestArrangeImplTest {
       impl.patch(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(PATCH));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(PATCH));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -279,8 +279,8 @@ class TestArrangeImplTest {
       impl.patch(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getArrangeResult().getUrl().getMethod(), is(PATCH));
-      assertThat(context.getArrangeResult().getUrl().getUri(), is(URI_WITH_USER_ID));
+      assertThat(context.getRequestBuilder().build().method(), is(PATCH));
+      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test

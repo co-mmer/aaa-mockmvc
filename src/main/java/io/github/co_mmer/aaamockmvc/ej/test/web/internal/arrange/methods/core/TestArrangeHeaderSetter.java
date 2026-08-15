@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.http.MediaType;
 
+@Deprecated
 @Since("1.0.0")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TestArrangeHeaderSetter {
