@@ -1,16 +1,23 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.description;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestPath;
-import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
+@Since("2.0.2")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RequestPathDescription {
 
-  public static String describe(RequestPath path) {
-    Objects.requireNonNull(path, "path must not be null");
+  private static final String PATH_PREFIX = "Path: ";
+  private static final String MISSING_PATH_MESSAGE = "Request path must be set";
 
-    return "Path: " + path.value();
+  @Since("2.0.2")
+  public static String describe(RequestPath path) {
+    if (path == null || path.value() == null) {
+      throw new IllegalArgumentException(MISSING_PATH_MESSAGE);
+    }
+
+    return PATH_PREFIX + path.value();
   }
 }

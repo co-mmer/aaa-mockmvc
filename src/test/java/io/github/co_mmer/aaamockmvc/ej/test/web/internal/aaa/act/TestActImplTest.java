@@ -92,5 +92,6 @@ class TestActImplTest {
     mockedExecutor.verify(
         () -> MockMvcExecutor.execute(this.context.getEnvironment().mvc(), request));
     mockedExecutor.close();
+    mockedDescription.close();
   }
 }

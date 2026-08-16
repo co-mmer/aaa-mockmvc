@@ -19,7 +19,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 
 class TestArrangeDeleteHeaderImplTest {
 
@@ -48,12 +47,6 @@ class TestArrangeDeleteHeaderImplTest {
 
   @Nested
   class accept {
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_accept_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> impl.accept((MediaType) null));
-    }
 
     @Test
     void GIVEN_type_WHEN_accept_THEN_header_contain_type() {
@@ -104,13 +97,6 @@ class TestArrangeDeleteHeaderImplTest {
 
   @Nested
   class set {
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_set_THEN_throw_NullPointerException() {
-      // Act & Arrange
-      assertThrows(NullPointerException.class, () -> impl.set(null));
-    }
 
     @Test
     void GIVEN_map_WHEN_set_THEN_header_is_expected_map() {

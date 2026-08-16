@@ -1,16 +1,30 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.request;
 
-import java.math.BigInteger;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @EqualsAndHashCode
 public class RequestPath {
+
+  private static final String NULL_PATH_MESSAGE = "Request path must not be null";
+
+  private static final String BLANK_PATH_MESSAGE = "Request path must not be blank";
+
+  private static final String INVALID_PATH_MESSAGE = "Request path '%s' is not a valid URI";
+
+  private static final String NULL_PATH_VARIABLES_MESSAGE = "Path variables must not be null";
+
+  private static final String NULL_PATH_VARIABLE_MESSAGE =
+      "Path variable at position %d must not be null";
+
+  private static final String UNSUPPORTED_PATH_VARIABLE_MESSAGE =
+      "Path variable at position %d has unsupported type '%s'";
+
+  private static final String UNRESOLVABLE_PATH_TEMPLATE_MESSAGE =
+      "Request path template '%s' could not be expanded with the provided variables";
 
   private URI value;
 
@@ -22,74 +36,86 @@ public class RequestPath {
     this.value = validate(value);
   }
 
+  public void setValue(String path, Object... variables) {
+    var checkedPath = validate(path);
+    var checkedVariables = validateVariables(variables);
+
+    try {
+      this.value =
+          UriComponentsBuilder.fromUriString(checkedPath)
+              .buildAndExpand(checkedVariables.toArray())
+              .encode()
+              .toUri();
+    } catch (IllegalArgumentException exception) {
+      throw new IllegalArgumentException(
+          UNRESOLVABLE_PATH_TEMPLATE_MESSAGE.formatted(path), exception);
+    }
+  }
+
   public URI value() {
     return value;
   }
 
   private static URI toUri(String value) {
-    Objects.requireNonNull(value, "value must not be null");
+    var checkedValue = validate(value);
 
-    if (value.isBlank()) {
-      throw new IllegalArgumentException("Request path must not be blank");
+    try {
+      return URI.create(checkedValue);
+    } catch (IllegalArgumentException exception) {
+      throw new IllegalArgumentException(INVALID_PATH_MESSAGE.formatted(value), exception);
     }
-
-    return URI.create(value);
   }
 
-  private static URI validate(URI value) {
-    Objects.requireNonNull(value, "value must not be null");
+  private static String validate(String value) {
+    if (value == null) {
+      throw new IllegalArgumentException(NULL_PATH_MESSAGE);
+    }
 
-    if (value.toString().isBlank()) {
-      throw new IllegalArgumentException("Request path must not be blank");
+    if (value.isBlank()) {
+      throw new IllegalArgumentException(BLANK_PATH_MESSAGE);
     }
 
     return value;
   }
 
-  public void setValue(String path, Object... variables) {
-    if (path.isBlank()) {
-      throw new IllegalArgumentException("path must not be blank");
+  private static URI validate(URI value) {
+    if (value == null) {
+      throw new IllegalArgumentException(NULL_PATH_MESSAGE);
     }
 
-    var checkedVariables = validateSupported(variables);
+    if (value.toString().isBlank()) {
+      throw new IllegalArgumentException(BLANK_PATH_MESSAGE);
+    }
 
-    this.value =
-        UriComponentsBuilder.fromUriString(path)
-            .buildAndExpand(checkedVariables.toArray())
-            .encode()
-            .toUri();
+    return value;
   }
 
-  private static List<Object> validateSupported(Object... variables) {
-    var unsupported =
-        Arrays.stream(variables)
-            .filter(Objects::nonNull)
-            .filter(value -> !isSupported(value))
-            .toList();
-
-    if (!unsupported.isEmpty()) {
-      throw new IllegalArgumentException(
-          "Unsupported path variable types: "
-              + unsupported.stream().map(value -> value.getClass().getName()).distinct().toList());
+  private static List<Object> validateVariables(Object... variables) {
+    if (variables == null) {
+      throw new IllegalArgumentException(NULL_PATH_VARIABLES_MESSAGE);
     }
 
-    if (Arrays.stream(variables).anyMatch(Objects::isNull)) {
-      throw new IllegalArgumentException("Path variables must not contain null values");
+    for (var index = 0; index < variables.length; index++) {
+      var variable = variables[index];
+      var position = index + 1;
+
+      if (variable == null) {
+        throw new IllegalArgumentException(NULL_PATH_VARIABLE_MESSAGE.formatted(position));
+      }
+
+      if (!isSupported(variable)) {
+        throw new IllegalArgumentException(
+            UNSUPPORTED_PATH_VARIABLE_MESSAGE.formatted(position, variable.getClass().getName()));
+      }
     }
 
-    return Arrays.asList(variables);
+    return List.of(variables);
   }
 
   private static boolean isSupported(Object value) {
     return value instanceof String
         || value instanceof Character
-        || value instanceof Byte
-        || value instanceof Short
-        || value instanceof Integer
-        || value instanceof Long
-        || value instanceof Float
-        || value instanceof Double
-        || value instanceof BigInteger
+        || value instanceof Number
         || value instanceof Boolean
         || value instanceof UUID
         || value instanceof Enum<?>;

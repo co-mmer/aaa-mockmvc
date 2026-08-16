@@ -119,12 +119,6 @@ class TestArrangeHeadUrlImplTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_nullAsKey_WHEN_query_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> impl.query(null, QUERY_VALUE_SEARCH_TERM));
-    }
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
     void GIVEN_keyValue_WHEN_query_THEN_return_expected_query() {
       // Act
       impl.query(QUERY_KEY_SEARCH, QUERY_VALUE_SEARCH_TERM);

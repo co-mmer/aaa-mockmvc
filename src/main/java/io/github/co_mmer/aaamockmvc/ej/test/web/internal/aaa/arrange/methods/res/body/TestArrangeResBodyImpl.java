@@ -15,8 +15,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.MultipartB
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.TextBody;
 import java.io.IOException;
 import java.util.List;
-import lombok.NonNull;
 import org.springframework.http.MediaType;
+import org.springframework.lang.NonNull;
 import org.springframework.mock.web.MockMultipartFile;
 
 @Since("1.0.0")

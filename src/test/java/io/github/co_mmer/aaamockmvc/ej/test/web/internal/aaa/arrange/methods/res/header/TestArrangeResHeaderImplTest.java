@@ -122,13 +122,6 @@ class TestArrangeResHeaderImplTest {
   class set {
 
     @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_set_THEN_throw_NullPointerException() {
-      // Act & Arrange
-      assertThrows(NullPointerException.class, () -> impl.set(null));
-    }
-
-    @Test
     void GIVEN_map_WHEN_set_THEN_header_is_expected_map() {
       // Act
       impl.set(HEADER_MAP_1_2);

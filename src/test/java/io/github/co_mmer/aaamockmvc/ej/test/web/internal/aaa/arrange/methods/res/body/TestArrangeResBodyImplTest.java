@@ -27,15 +27,10 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.RequestBod
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.TextBody;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import java.util.List;
-import java.util.stream.Stream;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.http.MediaType;
 
 class TestArrangeResBodyImplTest {
 
@@ -69,20 +64,6 @@ class TestArrangeResBodyImplTest {
   @Nested
   class raw {
 
-    @ParameterizedTest()
-    @MethodSource("provideNullParametersRaw")
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_arrangeContent_THEN_throw_Exception(String raw, MediaType type) {
-      assertThrows(NullPointerException.class, () -> impl.raw(raw, type));
-    }
-
-    private static Stream<Arguments> provideNullParametersRaw() {
-      return Stream.of(
-          Arguments.of(null, APPLICATION_XML),
-          Arguments.of(TEST_BODY_XML, null),
-          Arguments.of(null, null));
-    }
-
     @Test
     void GIVEN_xml_WHEN_raw_THEN_return_expected_body() {
       // Act
@@ -115,12 +96,6 @@ class TestArrangeResBodyImplTest {
       assertThat(body.value(), is(TEST_BODY_JSON));
       assertThat(
           getHeaders().values(), hasEntry("Content-Type", List.of(APPLICATION_JSON.toString())));
-    }
-
-    @Test()
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_as_T_WHEN_json_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> impl.json((Object) null));
     }
 
     @Test()

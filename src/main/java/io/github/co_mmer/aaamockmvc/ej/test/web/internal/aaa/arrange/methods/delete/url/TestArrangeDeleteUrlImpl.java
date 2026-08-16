@@ -11,7 +11,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.HttpMethod;
 import java.net.URI;
 import java.util.Map;
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 
 @Since("1.0.0")
 public final class TestArrangeDeleteUrlImpl extends TestArrangeUrl

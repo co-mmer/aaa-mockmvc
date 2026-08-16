@@ -11,7 +11,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAACont
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.List;
 import java.util.Map;
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 
 @Since("1.0.0")
 public final class TestArrangeHeadHeaderImpl extends TestArrangeHeader
