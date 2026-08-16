@@ -1,6 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.body;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeBodySetter.setContent;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.exception.TestArrangeException;
@@ -45,8 +44,6 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
   public <T> void json(@NonNull T content) {
     try {
       var json = TestGenericMapper.toJson(super.getEnvironment().objectMapper(), content);
-      setContent(getBody(), json, APPLICATION_JSON);
-
       context.getRequestBuilder().body(new TextBody(json));
       context.getRequestBuilder().headers().contentType(APPLICATION_JSON);
 

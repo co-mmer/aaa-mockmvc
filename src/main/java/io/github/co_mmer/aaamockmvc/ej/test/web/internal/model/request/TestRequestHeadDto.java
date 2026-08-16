@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.MediaType;
@@ -40,21 +39,5 @@ public final class TestRequestHeadDto {
   @Since("2.0.0")
   public boolean isNotEmptyKeyValue() {
     return !CollectionUtils.isEmpty(this.getKeyValue());
-  }
-
-  @Since("2.0.0")
-  public String asMessage() {
-    var acceptsStr =
-        isNotEmptyAccepts()
-            ? accepts.stream().map(MediaType::toString).collect(Collectors.joining(", "))
-            : "<none>";
-
-    var ctStr = isNotNullContentType() ? contentType.toString() : "<none>";
-    return "Headers: accepts="
-        + acceptsStr
-        + " | content-type="
-        + ctStr
-        + " | key-value="
-        + this.keyValue;
   }
 }
