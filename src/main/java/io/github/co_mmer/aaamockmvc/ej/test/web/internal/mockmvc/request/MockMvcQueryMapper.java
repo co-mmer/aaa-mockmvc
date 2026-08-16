@@ -10,20 +10,21 @@ import org.springframework.util.CollectionUtils;
 
 @Since("2.0.2")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class MockMvcHeaderMapper {
+public final class MockMvcQueryMapper {
 
   @Since("2.0.2")
   public static void apply(
-      MockHttpServletRequestBuilder builder, Map<String, List<String>> headers) {
+      MockHttpServletRequestBuilder builder, Map<String, List<String>> queryParameters) {
 
-    if (!CollectionUtils.isEmpty(headers)) {
-      headers.forEach(
+    if (!CollectionUtils.isEmpty(queryParameters)) {
+      queryParameters.forEach(
           (name, values) -> {
             if (values == null || values.isEmpty()) {
+              builder.queryParam(name);
               return; // todo kann das wirklich auftreten, sollte RequestHeaders verhindert werden
             }
 
-            values.forEach(value -> builder.header(name, value));
+            builder.queryParam(name, values.toArray(new String[0]));
           });
     }
   }

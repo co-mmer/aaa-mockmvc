@@ -3,6 +3,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.request;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.HttpMethod;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.Request;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.BinaryBody;
@@ -16,12 +17,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+@Since("2.0.2")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockMvcRequestMapper {
 
+  @Since("2.0.2")
   public static RequestBuilder map(Request source) {
-    return source.body() instanceof MultipartBody
-        ? mapMultipart(source, (MultipartBody) source.body())
+    return (source.body() instanceof MultipartBody multipartBody)
+        ? mapMultipart(source, multipartBody)
         : mapRegular(source);
   }
 
@@ -37,18 +40,18 @@ public final class MockMvcRequestMapper {
       return;
     }
 
-    if (body instanceof TextBody) {
-      MockMvcBodyMapper.applyText(builder, (TextBody) body);
+    if (body instanceof TextBody textBody) {
+      MockMvcBodyMapper.applyText(builder, textBody);
       return;
     }
 
-    if (body instanceof BinaryBody) {
-      MockMvcBodyMapper.applyBinary(builder, (BinaryBody) body);
+    if (body instanceof BinaryBody binaryBody) {
+      MockMvcBodyMapper.applyBinary(builder, binaryBody);
       return;
     }
 
-    if (body instanceof FormBody) {
-      MockMvcBodyMapper.applyForm(builder, (FormBody) body);
+    if (body instanceof FormBody formBody) {
+      MockMvcBodyMapper.applyForm(builder, formBody);
     }
   }
 
@@ -60,9 +63,8 @@ public final class MockMvcRequestMapper {
   }
 
   private static void applyCommon(MockHttpServletRequestBuilder builder, Request source) {
-    MockMvcQueryParameterMapper.apply(builder, source.query().values());
+    MockMvcQueryMapper.apply(builder, source.query().values());
     MockMvcHeaderMapper.apply(builder, source.headers().values());
-    MockMvcCookieMapper.apply(builder, source.cookies());
   }
 
   private static org.springframework.http.HttpMethod mapHttpMethod(HttpMethod method) {

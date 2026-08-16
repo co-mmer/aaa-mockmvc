@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.io.UnsupportedEncodingException;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -9,9 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 
+@Since("2.0.2")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockMvcExecutionResultMapper {
 
+  @Since("2.0.2")
   public static MockMvcExecutionResult map(MvcResult source) {
     var response = source.getResponse();
     return new MockMvcExecutionResult(
