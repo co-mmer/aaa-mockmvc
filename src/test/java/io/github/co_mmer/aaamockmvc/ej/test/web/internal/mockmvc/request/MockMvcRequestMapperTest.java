@@ -33,10 +33,9 @@ class MockMvcRequestMapperTest {
   private static final URI ANY_PATH = URI.create("/test");
 
   private static final TextBody ANY_TEXT_BODY = new TextBody("test body");
-  private static final BinaryBody ANY_BINARY_BODY = new BinaryBody(new byte[]{1, 2, 3});
+  private static final BinaryBody ANY_BINARY_BODY = new BinaryBody(new byte[] {1, 2, 3});
 
-  private static final FormBody ANY_FORM_BODY =
-      new FormBody(Map.of("parameter", List.of("value")));
+  private static final FormBody ANY_FORM_BODY = new FormBody(Map.of("parameter", List.of("value")));
 
   private static final MultipartBody ANY_MULTIPART_BODY = new MultipartBody();
 
@@ -77,8 +76,7 @@ class MockMvcRequestMapperTest {
     requestBuilders.verify(
         () ->
             MockMvcRequestBuilders.request(
-                org.springframework.http.HttpMethod.POST,
-                source.path().value()));
+                org.springframework.http.HttpMethod.POST, source.path().value()));
 
     assertThatCommonMappersWereCalledWith(builder, source);
     assertThat(result, is(builder));
@@ -165,12 +163,10 @@ class MockMvcRequestMapperTest {
     requestBuilders.verify(
         () ->
             MockMvcRequestBuilders.multipart(
-                org.springframework.http.HttpMethod.POST,
-                source.path().value()));
+                org.springframework.http.HttpMethod.POST, source.path().value()));
 
     assertThatCommonMappersWereCalledWith(builder, source);
-    bodyMapper.verify(
-        () -> MockMvcBodyMapper.applyMultipart(builder, ANY_MULTIPART_BODY));
+    bodyMapper.verify(() -> MockMvcBodyMapper.applyMultipart(builder, ANY_MULTIPART_BODY));
 
     assertThat(result, is(builder));
   }
@@ -182,8 +178,7 @@ class MockMvcRequestMapperTest {
         .when(
             () ->
                 MockMvcRequestBuilders.request(
-                    org.springframework.http.HttpMethod.POST,
-                    source.path().value()))
+                    org.springframework.http.HttpMethod.POST, source.path().value()))
         .thenReturn(builder);
 
     return builder;
@@ -196,8 +191,7 @@ class MockMvcRequestMapperTest {
         .when(
             () ->
                 MockMvcRequestBuilders.multipart(
-                    org.springframework.http.HttpMethod.POST,
-                    source.path().value()))
+                    org.springframework.http.HttpMethod.POST, source.path().value()))
         .thenReturn(builder);
 
     return builder;
@@ -205,11 +199,9 @@ class MockMvcRequestMapperTest {
 
   private void assertThatCommonMappersWereCalledWith(
       MockHttpServletRequestBuilder builder, Request source) {
-    queryParameterMapper.verify(
-        () -> MockMvcQueryMapper.apply(builder, source.query().values()));
+    queryParameterMapper.verify(() -> MockMvcQueryMapper.apply(builder, source.query().values()));
 
-    headerMapper.verify(
-        () -> MockMvcHeaderMapper.apply(builder, source.headers().values()));
+    headerMapper.verify(() -> MockMvcHeaderMapper.apply(builder, source.headers().values()));
   }
 
   private static Request requestWith(RequestBody body) {
@@ -222,12 +214,6 @@ class MockMvcRequestMapperTest {
     var headers = new RequestHeaders();
     headers.add("X-Test", "value");
 
-    return new Request(
-        HttpMethod.POST,
-        path,
-        query,
-        headers,
-        ANY_COOKIES,
-        body);
+    return new Request(HttpMethod.POST, path, query, headers, ANY_COOKIES, body);
   }
 }

@@ -19,7 +19,7 @@ class MockMvcExecutionResultMapperTest {
 
   private static final int ANY_STATUS = 201;
   private static final String ANY_CONTENT_AS_STRING = "response content";
-  private static final byte[] ANY_CONTENT_AS_BYTES = new byte[]{1, 2, 3};
+  private static final byte[] ANY_CONTENT_AS_BYTES = new byte[] {1, 2, 3};
 
   private static final Map<String, List<String>> ANY_HEADERS =
       Map.of(
@@ -61,13 +61,10 @@ class MockMvcExecutionResultMapperTest {
     // Act
     var exception =
         assertThrows(
-            MockMvcExecutionException.class,
-            () -> MockMvcExecutionResultMapper.map(this.source));
+            MockMvcExecutionException.class, () -> MockMvcExecutionResultMapper.map(this.source));
 
     // Assert
-    assertThat(
-        exception.getMessage(),
-        is("Could not read response content as String"));
+    assertThat(exception.getMessage(), is("Could not read response content as String"));
   }
 
   @SneakyThrows
@@ -77,13 +74,11 @@ class MockMvcExecutionResultMapperTest {
     when(this.response.getContentAsByteArray()).thenReturn(ANY_CONTENT_AS_BYTES);
     when(this.response.getHeaderNames()).thenReturn(ANY_HEADERS.keySet());
 
-    ANY_HEADERS.forEach(
-        (name, values) -> when(this.response.getHeaders(name)).thenReturn(values));
+    ANY_HEADERS.forEach((name, values) -> when(this.response.getHeaders(name)).thenReturn(values));
   }
 
   @SneakyThrows
   private void givenUnreadableResponseContent() {
-    when(this.response.getContentAsString())
-        .thenThrow(new UnsupportedEncodingException());
+    when(this.response.getContentAsString()).thenThrow(new UnsupportedEncodingException());
   }
 }

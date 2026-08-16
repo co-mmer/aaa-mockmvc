@@ -105,7 +105,6 @@ class MockMvcExecutorTest {
         .when(() -> MockMvcRequestMapper.map(this.request))
         .thenReturn(this.requestBuilder);
 
-    when(this.mockMvc.perform(this.requestBuilder))
-        .thenThrow(new Exception(message));
+    when(this.mockMvc.perform(this.requestBuilder)).thenThrow(new Exception(message));
   }
 }

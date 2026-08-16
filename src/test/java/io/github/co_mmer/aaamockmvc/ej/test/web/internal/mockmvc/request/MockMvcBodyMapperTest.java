@@ -22,13 +22,13 @@ import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequ
 class MockMvcBodyMapperTest {
 
   private static final TextBody ANY_TEXT_BODY = new TextBody("test body");
-  private static final BinaryBody ANY_BINARY_BODY = new BinaryBody(new byte[]{1, 2, 3});
+  private static final BinaryBody ANY_BINARY_BODY = new BinaryBody(new byte[] {1, 2, 3});
 
   private static final FormBody ANY_FORM_BODY =
       new FormBody(Map.of("parameter", List.of("first value", "second value")));
 
   private static final MultipartPart ANY_MULTIPART_PART =
-      new MultipartPart("file", "test.txt", "text/plain", new byte[]{1, 2, 3});
+      new MultipartPart("file", "test.txt", "text/plain", new byte[] {1, 2, 3});
 
   @Test
   void GIVEN_text_body_WHEN_applyText_THEN_call_content_with_body_value() {
