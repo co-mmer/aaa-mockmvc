@@ -21,20 +21,6 @@ public final class RequestHeaders {
     this.values = new LinkedHashMap<>();
   }
 
-  /*  public void set(@NonNull Map<String, List<String>> values) {
-    var copy = new LinkedHashMap<String, List<String>>();
-
-    values.forEach(
-        (name, headerValues) -> {
-          validateName(name);
-          validateValues(name, headerValues);
-
-          copy.put(name, List.copyOf(headerValues));
-        });
-
-    this.values = Map.copyOf(copy);
-  }*/
-
   public void set(@NonNull Map<String, List<Object>> values) {
     var copy = new LinkedHashMap<String, List<String>>();
 
@@ -65,18 +51,6 @@ public final class RequestHeaders {
   private static void validateName(String name) {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Header name must not be null or blank");
-    }
-  }
-
-  private static void validateValues(String name, List<String> values) {
-    if (values == null || values.isEmpty()) {
-      throw new IllegalArgumentException(
-          "Header '%s' must contain at least one value".formatted(name));
-    }
-
-    if (values.stream().anyMatch(Objects::isNull)) {
-      throw new IllegalArgumentException(
-          "Header '%s' must not contain null values".formatted(name));
     }
   }
 

@@ -15,10 +15,10 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert2Status;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.status.TestAssertStatusImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;

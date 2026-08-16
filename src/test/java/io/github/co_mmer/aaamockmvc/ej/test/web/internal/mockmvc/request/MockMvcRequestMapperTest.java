@@ -7,7 +7,6 @@ import static org.mockito.Mockito.mockStatic;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.HttpMethod;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.Request;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestCookie;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestHeaders;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestPath;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestQuery;
@@ -38,9 +37,6 @@ class MockMvcRequestMapperTest {
   private static final FormBody ANY_FORM_BODY = new FormBody(Map.of("parameter", List.of("value")));
 
   private static final MultipartBody ANY_MULTIPART_BODY = new MultipartBody();
-
-  private static final List<RequestCookie> ANY_COOKIES =
-      List.of(new RequestCookie("cookie", "value"));
 
   private MockedStatic<MockMvcRequestBuilders> requestBuilders;
   private MockedStatic<MockMvcBodyMapper> bodyMapper;
@@ -214,6 +210,6 @@ class MockMvcRequestMapperTest {
     var headers = new RequestHeaders();
     headers.add("X-Test", "value");
 
-    return new Request(HttpMethod.POST, path, query, headers, ANY_COOKIES, body);
+    return new Request(HttpMethod.POST, path, query, headers, body);
   }
 }

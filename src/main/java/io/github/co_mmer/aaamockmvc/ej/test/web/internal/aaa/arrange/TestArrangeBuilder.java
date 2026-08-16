@@ -2,14 +2,11 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.HttpMethod;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.Request;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestCookie;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestHeaders;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestPath;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestQuery;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.EmptyBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.RequestBody;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public final class TestArrangeBuilder {
@@ -18,7 +15,6 @@ public final class TestArrangeBuilder {
   private RequestPath path;
   private RequestQuery query;
   private RequestHeaders headers;
-  private final List<RequestCookie> cookies = new ArrayList<>();
   private RequestBody body = new EmptyBody();
 
   public TestArrangeBuilder method(HttpMethod method) {
@@ -60,7 +56,6 @@ public final class TestArrangeBuilder {
   }
 
   public Request build() {
-    return new Request(
-        this.method, this.path, this.query, this.headers, List.copyOf(this.cookies), this.body);
+    return new Request(this.method, this.path, this.query, this.headers, this.body);
   }
 }
