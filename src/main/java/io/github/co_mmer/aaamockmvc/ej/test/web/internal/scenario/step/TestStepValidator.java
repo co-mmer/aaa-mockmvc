@@ -33,7 +33,7 @@ public class TestStepValidator {
   }
 
   private static void verifyActStepCustom(TestStepImpl step) {
-    if (step.getContext().getArrangeResult() == null) {
+    if (step.getContext().getRequestBuilder() == null) {
       throwIllegalStateException(step, MISSING_ARRANGE_BEFORE_ACT);
     }
   }
