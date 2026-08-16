@@ -1,12 +1,12 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.DELETE;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.GET;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.HEAD;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.OPTIONS;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.PATCH;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.POST;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.PUT;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod.DELETE;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod.GET;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod.HEAD;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod.OPTIONS;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod.PATCH;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod.POST;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod.PUT;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_VARIABLE_USER_ID;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.PATH_WITH_USER_ID;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.URI_WITH_USER_ID;

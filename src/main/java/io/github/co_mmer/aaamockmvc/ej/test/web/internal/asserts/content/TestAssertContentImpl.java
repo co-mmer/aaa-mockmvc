@@ -32,7 +32,7 @@ public class TestAssertContentImpl implements TestAssertContent {
 
   @Override
   public TestAssert1Boolean asBoolean() {
-    var content = this.context.getActResult2().contentAsString();
+    var content = this.context.getActResult().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
@@ -48,14 +48,14 @@ public class TestAssertContentImpl implements TestAssertContent {
 
   @Override
   public TestAssert1String asString() {
-    var assertResult = new TestAssertResult<>(this.context.getActResult2().contentAsString());
+    var assertResult = new TestAssertResult<>(this.context.getActResult().contentAsString());
     this.context.setAssertResult(assertResult);
     return new TestAssertStringImpl(this.context);
   }
 
   @Override
   public TestAssert1Byte asBytes() {
-    var assertResult = new TestAssertResult<>(this.context.getActResult2().contentAsBytes());
+    var assertResult = new TestAssertResult<>(this.context.getActResult().contentAsBytes());
     this.context.setAssertResult(assertResult);
     return new TestAssertByteImpl(this.context);
   }
@@ -64,7 +64,7 @@ public class TestAssertContentImpl implements TestAssertContent {
   public <C> TestAssert1Class<C> asClass(@NonNull Class<C> expectedClass)
       throws AssertionFailedError {
 
-    var content = this.context.getActResult2().contentAsString();
+    var content = this.context.getActResult().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
@@ -84,7 +84,7 @@ public class TestAssertContentImpl implements TestAssertContent {
 
   @Override
   public <E> TestAssert1Collection<E> asCollection(@NonNull Class<E> elementClass) {
-    var content = this.context.getActResult2().contentAsString();
+    var content = this.context.getActResult().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
@@ -104,7 +104,7 @@ public class TestAssertContentImpl implements TestAssertContent {
 
   @Override
   public <E> TestAssert1Collection<E> asList(@NonNull Class<E> elementClass) {
-    var content = this.context.getActResult2().contentAsString();
+    var content = this.context.getActResult().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
@@ -121,7 +121,7 @@ public class TestAssertContentImpl implements TestAssertContent {
 
   @Override
   public <E> TestAssert1Collection<E> asSet(@NonNull Class<E> elementClass) {
-    var content = this.context.getActResult2().contentAsString();
+    var content = this.context.getActResult().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
@@ -140,7 +140,7 @@ public class TestAssertContentImpl implements TestAssertContent {
   public <K, V> TestAssert1Map<K, V> asMap(
       @NonNull Class<K> keyClass, @NonNull Class<V> valueClass) {
 
-    var content = this.context.getActResult2().contentAsString();
+    var content = this.context.getActResult().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
     try {
       var actual = TestGenericMapper.parseMap(mapper, content, keyClass, valueClass);

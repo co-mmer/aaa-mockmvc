@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutionResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutor;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.Request;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.Request;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mockito.MockedStatic;

@@ -47,7 +47,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_valid_json_AND_expectedClass_WHEN_asBoolean_THEN_store_assertResult() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_BOOLEAN_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_BOOLEAN_JSON);
 
       // Act
       impl.asBoolean();
@@ -63,7 +63,7 @@ class TestAssertContentImplTest {
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     void GIVEN_blank_body_WHEN_asBoolean_THEN_store_null_in_assertResult(String body) {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(body);
+      when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
       impl.asBoolean();
@@ -76,7 +76,7 @@ class TestAssertContentImplTest {
 
     @Test
     void GIVEN_invalid_mapping_WHEN_asBoolean_THEN_throw_AssertionFailedError() {
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_A1_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
 
       // Act
       var ex = assertThrows(AssertionFailedError.class, () -> impl.asBoolean());
@@ -96,7 +96,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_valid_string_WHEN_asString_THEN_store_assertResult() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_A1_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
 
       // Act
       impl.asString();
@@ -112,7 +112,7 @@ class TestAssertContentImplTest {
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     void GIVEN_blank_body_WHEN_asString_THEN_store_blank_in_assertResult(String body) {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(body);
+      when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
       impl.asString();
@@ -131,7 +131,7 @@ class TestAssertContentImplTest {
     void GIVEN_valid_bytes_WHEN_asBytes_THEN_store_assertResult() {
       // Arrange
       var bytes = TEST_A1_JSON.getBytes(StandardCharsets.UTF_8);
-      when(context.getActResult2().contentAsBytes()).thenReturn(bytes);
+      when(context.getActResult().contentAsBytes()).thenReturn(bytes);
 
       // Act
       impl.asBytes();
@@ -146,7 +146,7 @@ class TestAssertContentImplTest {
     void GIVEN_empty_bytes_WHEN_asBytes_THEN_store_empty_array() {
       // Arrange
       var bytes = new byte[0];
-      when(context.getActResult2().contentAsBytes()).thenReturn(bytes);
+      when(context.getActResult().contentAsBytes()).thenReturn(bytes);
 
       // Act
       impl.asBytes();
@@ -160,7 +160,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_null_bytes_WHEN_asBytes_THEN_store_null() {
       // Arrange
-      when(context.getActResult2().contentAsBytes()).thenReturn(null);
+      when(context.getActResult().contentAsBytes()).thenReturn(null);
 
       // Act
       impl.asBytes();
@@ -178,7 +178,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_valid_json_AND_expectedClass_WHEN_asClass_THEN_store_assertResult() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_A1_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
 
       // Act
       impl.asClass(TestObjectSimple.class);
@@ -194,7 +194,7 @@ class TestAssertContentImplTest {
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     void GIVEN_blank_body_WHEN_asClass_THEN_store_null_in_assertResult(String body) {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(body);
+      when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
       impl.asClass(TestObjectSimple.class);
@@ -207,7 +207,7 @@ class TestAssertContentImplTest {
 
     @Test
     void GIVEN_invalid_mapping_WHEN_asClass_THEN_throw_AssertionFailedError() {
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_A1_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
 
       // Act
       var ex = assertThrows(AssertionFailedError.class, () -> impl.asClass(String.class));
@@ -227,7 +227,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_list_json_AND_elementClass_WHEN_asCollection_THEN_store_assertResult() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
 
       // Act
       impl.asCollection(TestObjectSimple.class);
@@ -243,7 +243,7 @@ class TestAssertContentImplTest {
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     void GIVEN_blank_body_WHEN_asCollection_THEN_store_null_in_assertResult(String body) {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(body);
+      when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
       impl.asCollection(TestObjectSimple.class);
@@ -257,7 +257,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_invalid_mapping_WHEN_asCollection_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
 
       // Act
       var ex = assertThrows(AssertionFailedError.class, () -> impl.asCollection(String.class));
@@ -273,7 +273,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_invalid_json_WHEN_asCollection_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn("{not-valid-json");
+      when(context.getActResult().contentAsString()).thenReturn("{not-valid-json");
 
       // Act
       var ex =
@@ -294,7 +294,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_list_json_AND_elementClass_WHEN_asList_THEN_store_assertResult() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
 
       // Act
       impl.asList(TestObjectSimple.class);
@@ -310,7 +310,7 @@ class TestAssertContentImplTest {
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     void GIVEN_blank_body_WHEN_asList_THEN_store_null_in_assertResult(String body) {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(body);
+      when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
       impl.asList(TestObjectSimple.class);
@@ -324,7 +324,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_invalid_elementClass_WHEN_asList_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
 
       // Act
       var ex = assertThrows(AssertionFailedError.class, () -> impl.asList(String.class));
@@ -340,7 +340,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_invalid_json_WHEN_asList_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn("{not-valid-json");
+      when(context.getActResult().contentAsString()).thenReturn("{not-valid-json");
 
       // Act
       var ex = assertThrows(AssertionFailedError.class, () -> impl.asList(TestObjectSimple.class));
@@ -356,7 +356,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_object_json_instead_of_array_WHEN_asList_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_A1_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
 
       // Act
       var ex = assertThrows(AssertionFailedError.class, () -> impl.asList(TestObjectSimple.class));
@@ -376,7 +376,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_set_json_AND_elementClass_WHEN_asSet_THEN_store_assertResult() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_SET_A1_A2_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_SET_A1_A2_JSON);
 
       // Act
       impl.asSet(TestObjectSimple.class);
@@ -392,7 +392,7 @@ class TestAssertContentImplTest {
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     void GIVEN_blank_body_WHEN_asSet_THEN_store_null_in_assertResult(String body) {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(body);
+      when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
       impl.asSet(TestObjectSimple.class);
@@ -406,7 +406,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_invalid_elementClass_WHEN_asSet_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_SET_A1_A2_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_SET_A1_A2_JSON);
 
       // Act
       var ex = assertThrows(AssertionFailedError.class, () -> impl.asSet(String.class));
@@ -420,7 +420,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_invalid_json_WHEN_asSet_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn("{not-valid-json");
+      when(context.getActResult().contentAsString()).thenReturn("{not-valid-json");
 
       // Act
       var ex = assertThrows(AssertionFailedError.class, () -> impl.asSet(TestObjectSimple.class));
@@ -436,7 +436,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_object_json_instead_of_array_WHEN_asSet_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_A1_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
 
       // Act
       var ex = assertThrows(AssertionFailedError.class, () -> impl.asSet(TestObjectSimple.class));
@@ -454,7 +454,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_map_json_AND_keyClass_valueClass_WHEN_asMap_THEN_store_assertResult() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_MAP_A1_A2_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_MAP_A1_A2_JSON);
 
       // Act
       impl.asMap(Integer.class, TestObjectSimple.class);
@@ -470,7 +470,7 @@ class TestAssertContentImplTest {
     @ValueSource(strings = {" ", "\t", "\n", "   "})
     void GIVEN_blank_body_WHEN_asMap_THEN_store_null_in_assertResult(String body) {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(body);
+      when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
       impl.asMap(Integer.class, TestObjectSimple.class);
@@ -484,7 +484,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_wrong_keyClass_WHEN_asMap_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_MAP_A1_A2_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_MAP_A1_A2_JSON);
 
       // Act
       var ex =
@@ -501,7 +501,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_wrong_valueClass_WHEN_asMap_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_MAP_A1_A2_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_MAP_A1_A2_JSON);
 
       // Act
       var ex =
@@ -516,7 +516,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_wrong_key_and_value_class_WHEN_asMap_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_MAP_A1_A2_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_MAP_A1_A2_JSON);
 
       // Act
       var ex =
@@ -531,7 +531,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_invalid_json_WHEN_asMap_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn("{not-valid-json");
+      when(context.getActResult().contentAsString()).thenReturn("{not-valid-json");
 
       // Act
       var ex =
@@ -548,7 +548,7 @@ class TestAssertContentImplTest {
     @Test
     void GIVEN_array_json_instead_of_object_WHEN_asMap_THEN_throw_AssertionFailedError() {
       // Arrange
-      when(context.getActResult2().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
+      when(context.getActResult().contentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
 
       // Act
       var ex =

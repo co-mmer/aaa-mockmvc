@@ -44,14 +44,14 @@ public final class TestAssertCollectionImpl<E>
 
   @Override
   public TestAssert2Collection<E> isNotEmpty() {
-    var actual = this.context.getActResult2().contentAsString();
+    var actual = this.context.getActResult().contentAsString();
     assertThat(this.context.getStep(), actual, not(anyOf(is(EMPTY), is(EMPTY_ARRAY))));
     return this;
   }
 
   @Override
   public TestAssertLCollection isEmpty() {
-    var actual = this.context.getActResult2().contentAsString();
+    var actual = this.context.getActResult().contentAsString();
     assertThat(this.context.getStep(), actual, anyOf(is(EMPTY), is(EMPTY_ARRAY)));
     return this;
   }

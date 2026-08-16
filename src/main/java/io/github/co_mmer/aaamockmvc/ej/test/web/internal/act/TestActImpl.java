@@ -9,7 +9,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvc
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutor;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.d.RequestDescription;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult2;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
 
 @Since("1.0.0")
 public final class TestActImpl implements TestAct {
@@ -25,9 +25,9 @@ public final class TestActImpl implements TestAct {
   public TestAct perform() {
     var result = performRequest();
     var resultAct =
-        new TestActResult2(
+        new TestActResult(
             result.status(), result.headers(), result.contentAsBytes(), result.contentAsString());
-    this.context.setActResult2(resultAct);
+    this.context.setActResult(resultAct);
 
     return this;
   }

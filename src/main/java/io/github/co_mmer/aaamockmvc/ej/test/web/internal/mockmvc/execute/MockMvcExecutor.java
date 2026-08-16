@@ -1,8 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.Request;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.request.MockMvcRequestMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.result.MockMvcResultMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.Request;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.test.web.servlet.MockMvc;

@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,27 +19,27 @@ public final class RequestBuilder {
   }
 
   public RequestPath path() {
-    if (path == null) {
-      path = new RequestPath();
+    if (this.path == null) {
+      this.path = new RequestPath();
     }
 
-    return path;
+    return this.path;
   }
 
   public RequestQuery query() {
-    if (query == null) {
-      query = new RequestQuery();
+    if (this.query == null) {
+      this.query = new RequestQuery();
     }
 
-    return query;
+    return this.query;
   }
 
   public RequestHeaders headers() {
-    if (headers == null) {
-      headers = new RequestHeaders();
+    if (this.headers == null) {
+      this.headers = new RequestHeaders();
     }
 
-    return headers;
+    return this.headers;
   }
 
   public RequestBody body(RequestBody body) {
@@ -53,11 +53,6 @@ public final class RequestBuilder {
 
   public Request build() {
     return new Request(
-        method,
-        path,
-        query != null ? query : new RequestQuery(),
-        headers != null ? headers : new RequestHeaders(),
-        List.copyOf(cookies),
-        body);
+        this.method, this.path, this.query, this.headers, List.copyOf(this.cookies), this.body);
   }
 }

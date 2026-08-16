@@ -14,8 +14,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_PDF;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.body.TestArrangeResBodyImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.RequestHeaders;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestHeaders;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

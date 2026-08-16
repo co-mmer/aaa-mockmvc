@@ -7,8 +7,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.head.url.TestArr
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.TestArrangeUrl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.head.header.TestArrangeHeadHeaderImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod;
 import java.net.URI;
 import java.util.Map;
 import lombok.NonNull;

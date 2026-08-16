@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 

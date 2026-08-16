@@ -9,10 +9,10 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArr
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base.TestArrangeBaseAbstract;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.EmptyBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.MultipartBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.TextBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.EmptyBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.MultipartBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.TextBody;
 import java.io.IOException;
 import java.util.List;
 import lombok.NonNull;

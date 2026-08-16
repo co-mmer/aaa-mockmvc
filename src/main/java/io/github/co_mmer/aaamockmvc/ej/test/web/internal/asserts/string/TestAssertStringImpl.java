@@ -31,7 +31,7 @@ public final class TestAssertStringImpl
   }
 
   private String getContent() {
-    return this.context.getActResult2().contentAsString();
+    return this.context.getActResult().contentAsString();
   }
 
   @Override

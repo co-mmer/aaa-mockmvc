@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.request;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.RequestCookie;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestCookie;
 import jakarta.servlet.http.Cookie;
 import java.util.List;
 import java.util.Objects;

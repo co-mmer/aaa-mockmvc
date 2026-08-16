@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.url;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.POST;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod.POST;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_PATH;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_URI;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.BASE_URL;
@@ -18,9 +18,9 @@ import static org.mockito.Mockito.mock;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.delete.url.TestArrangeDeleteUrlImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.body.TestArrangeResBodyImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.header.TestArrangeResHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.RequestPath;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.RequestQuery;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestPath;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestQuery;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import java.net.URI;
 import java.util.List;

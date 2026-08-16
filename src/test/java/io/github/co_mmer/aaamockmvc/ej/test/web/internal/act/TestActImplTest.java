@@ -56,7 +56,7 @@ class TestActImplTest {
     // Assert
     assertThat(result, sameInstance(this.testAct));
 
-    var actResult = this.context.getActResult2();
+    var actResult = this.context.getActResult();
     assertThat(actResult.status(), is(ANY_EXECUTION_RESULT.status()));
     assertThat(actResult.headers(), is(ANY_EXECUTION_RESULT.headers()));
     assertThat(actResult.contentAsBytes(), is(ANY_EXECUTION_RESULT.contentAsBytes()));

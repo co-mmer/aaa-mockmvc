@@ -5,11 +5,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.RequestBuilder;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult2;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestEnvironment;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestBuilder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.test.web.servlet.MockMvc;
@@ -40,8 +41,8 @@ public final class TestContext {
     var context = new TestAAAContext(createTestEnvironment());
     context.setRequestBuilder(createRequestBuilder());
 
-    var actResult = mock(TestActResult2.class);
-    context.setActResult2(actResult);
+    var actResult = mock(TestActResult.class);
+    context.setActResult(actResult);
     return context;
   }
 
@@ -49,16 +50,15 @@ public final class TestContext {
     var context = new TestAAAContext(createTestEnvironment());
     context.setStep(new TestStepDto(stepName));
 
-    var actResult = mock(TestActResult2.class);
+    var actResult = mock(TestActResult.class);
     when(actResult.contentAsString()).thenReturn(TEST_A1_JSON);
-    context.setActResult2(actResult);
+    context.setActResult(actResult);
     return context;
   }
 
   private static RequestBuilder createRequestBuilder() {
     var requestBuilder = new RequestBuilder();
-    requestBuilder.method(
-        io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.HttpMethod.GET);
+    requestBuilder.method(HttpMethod.GET);
     return requestBuilder;
   }
 }

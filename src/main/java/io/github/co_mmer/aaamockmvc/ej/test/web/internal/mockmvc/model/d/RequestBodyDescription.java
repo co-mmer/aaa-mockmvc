@@ -1,11 +1,11 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.d;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.BinaryBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.EmptyBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.FormBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.MultipartBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.RequestBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.TextBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.BinaryBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.EmptyBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.FormBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.MultipartBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.TextBody;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
