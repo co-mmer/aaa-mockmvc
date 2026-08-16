@@ -19,7 +19,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.del
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.res.body.TestArrangeResBodyImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.res.header.TestArrangeResHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.res.url.TestArrangeResUrlImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestPath;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestQuery;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;

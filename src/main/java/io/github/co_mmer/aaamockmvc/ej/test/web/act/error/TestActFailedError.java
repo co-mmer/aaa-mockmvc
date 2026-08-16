@@ -22,10 +22,10 @@ import org.opentest4j.AssertionFailedError;
  *
  * <pre>{@code
  * ACT failed: POST http://localhost/api/items?verbose=true
- * TestArrangeResult: POST http://localhost/api/items?verbose=true | query: verbose=true
+ * Request: POST http://localhost/api/items?verbose=true | query: verbose=true
  * Headers: accepts=application/json | content-type=application/json;charset=UTF-8 | key-value={Authorization=[Bearer token-123], X-Trace-Id=[1234]}
  * Body: 67 bytes | content-type=application/json;charset=UTF-8 | preview: {"name":"A","price":12.34,"tags":["new","sale"]}
- * Cause: NestedServletException: TestArrangeResult processing failed: java.lang.NullPointerException
+ * Cause: NestedServletException: Request processing failed: java.lang.NullPointerException
  * }</pre>
  *
  * @since 2.0.0

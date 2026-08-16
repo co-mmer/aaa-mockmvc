@@ -1,14 +1,14 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.description;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.Request;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RequestDescription {
 
-  public static String describe(TestArrangeResult request) {
-    return "TestArrangeResult: "
+  public static String describe(Request request) {
+    return "Request: "
         + request.method()
         + System.lineSeparator()
         + RequestPathDescription.describe(request.path())

@@ -4,11 +4,10 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.matc
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.exception.TestAnswerFailed;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAnswerResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapperException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

@@ -7,9 +7,9 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArr
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArrange2ResBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArrange3ResBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.base.TestArrangeBaseAbstract;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.EmptyBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.MultipartBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.TextBody;
@@ -91,7 +91,6 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
       return (MultipartBody) currentBody;
     }
 
-    throw new IllegalStateException(
-        "TestArrangeResult body is already set and is not a MultipartBody");
+    throw new IllegalStateException("Request body is already set and is not a MultipartBody");
   }
 }

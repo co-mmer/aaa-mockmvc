@@ -1,8 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAssertResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.model.TestActResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;

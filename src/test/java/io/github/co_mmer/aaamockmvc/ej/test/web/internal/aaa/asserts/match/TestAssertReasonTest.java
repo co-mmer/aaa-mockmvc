@@ -4,7 +4,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

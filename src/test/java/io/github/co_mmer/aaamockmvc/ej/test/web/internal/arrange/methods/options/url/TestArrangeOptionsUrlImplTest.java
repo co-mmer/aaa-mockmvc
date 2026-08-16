@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.delete.url.TestArrangeDeleteUrlImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.options.header.TestArrangeOptionsHeaderImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.options.url.TestArrangeOptionsUrlImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestPath;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestQuery;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;

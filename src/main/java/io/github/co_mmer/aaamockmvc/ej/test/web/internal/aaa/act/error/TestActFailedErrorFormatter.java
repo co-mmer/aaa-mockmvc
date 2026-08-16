@@ -4,8 +4,8 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.matc
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.isBlank;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 

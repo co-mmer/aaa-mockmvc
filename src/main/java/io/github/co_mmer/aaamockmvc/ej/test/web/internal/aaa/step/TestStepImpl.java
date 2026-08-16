@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
@@ -8,8 +8,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.TestActImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.answer.TestAnswerImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.TestArrangeImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.scenario.step.TestStep;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

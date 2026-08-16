@@ -1,6 +1,7 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.HttpMethod;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.Request;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestCookie;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestHeaders;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestPath;
@@ -58,8 +59,8 @@ public final class TestArrangeBuilder {
     return this.body;
   }
 
-  public TestArrangeResult build() {
-    return new TestArrangeResult(
+  public Request build() {
+    return new Request(
         this.method, this.path, this.query, this.headers, List.copyOf(this.cookies), this.body);
   }
 }

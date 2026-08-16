@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.testdata.testutil;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;

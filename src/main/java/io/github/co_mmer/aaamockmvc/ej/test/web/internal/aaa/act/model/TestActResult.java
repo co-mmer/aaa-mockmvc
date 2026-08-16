@@ -1,6 +1,6 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.model;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.List;
 import java.util.Map;
 

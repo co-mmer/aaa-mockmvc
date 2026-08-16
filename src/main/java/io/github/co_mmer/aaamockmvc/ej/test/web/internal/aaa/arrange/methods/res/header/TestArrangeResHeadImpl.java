@@ -9,8 +9,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestA
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestArrange6ResHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.core.TestArrangeHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.res.body.TestArrangeResBodyImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.List;
 import java.util.Map;
 import lombok.NonNull;

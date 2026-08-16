@@ -10,8 +10,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert2Status;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import lombok.NonNull;
 import org.hamcrest.Matchers;
 import org.springframework.http.HttpStatus;

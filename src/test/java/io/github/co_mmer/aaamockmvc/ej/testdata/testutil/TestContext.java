@@ -5,11 +5,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeBuilder;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestEnvironment;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.model.TestActResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.TestArrangeBuilder;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestEnvironment;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.HttpMethod;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

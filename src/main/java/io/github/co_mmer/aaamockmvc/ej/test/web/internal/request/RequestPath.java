@@ -30,7 +30,7 @@ public class RequestPath {
     Objects.requireNonNull(value, "value must not be null");
 
     if (value.isBlank()) {
-      throw new IllegalArgumentException("TestArrangeResult path must not be blank");
+      throw new IllegalArgumentException("Request path must not be blank");
     }
 
     return URI.create(value);
@@ -40,7 +40,7 @@ public class RequestPath {
     Objects.requireNonNull(value, "value must not be null");
 
     if (value.toString().isBlank()) {
-      throw new IllegalArgumentException("TestArrangeResult path must not be blank");
+      throw new IllegalArgumentException("Request path must not be blank");
     }
 
     return value;

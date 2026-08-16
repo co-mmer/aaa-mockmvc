@@ -6,8 +6,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.url.Test
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.url.TestArrange3OptionsUrl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.core.TestArrangeUrl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.options.header.TestArrangeOptionsHeaderImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.HttpMethod;
 import java.net.URI;
 import java.util.Map;

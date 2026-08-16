@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutionResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutor;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.Request;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mockito.MockedStatic;
@@ -21,7 +21,7 @@ public final class MockMockMvcExecutor {
 
     var executor = Mockito.mockStatic(MockMvcExecutor.class);
     executor
-        .when(() -> MockMvcExecutor.execute(any(MockMvc.class), any(TestArrangeResult.class)))
+        .when(() -> MockMvcExecutor.execute(any(MockMvc.class), any(Request.class)))
         .thenReturn(mockResult);
 
     return executor;

@@ -1,6 +1,6 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 
 @Since("1.0.0")
 public final class TestGenericMapperException extends Exception {

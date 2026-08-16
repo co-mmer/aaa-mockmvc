@@ -4,7 +4,7 @@ import static org.mockito.Mockito.mockStatic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapperException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mockito.MockedStatic;

@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeBuilder;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepValidator;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.model.TestActResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.TestArrangeBuilder;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepValidator;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;

@@ -8,8 +8,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.url.TestArra
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.core.TestArrangeUrl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.res.body.TestArrangeResBodyImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.res.header.TestArrangeResHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.HttpMethod;
 import java.net.URI;
 import java.util.Map;

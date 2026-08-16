@@ -7,8 +7,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.TestActImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.answer.TestAnswerImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.TestArrangeImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

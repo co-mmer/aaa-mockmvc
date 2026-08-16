@@ -3,6 +3,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;
 import org.junit.jupiter.api.Test;
 
 class TestStepMetadataTest {
