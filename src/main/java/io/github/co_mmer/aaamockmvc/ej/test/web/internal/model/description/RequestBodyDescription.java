@@ -1,11 +1,11 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.d;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.description;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.BinaryBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.EmptyBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.FormBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.MultipartBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.TextBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.BinaryBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.EmptyBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.FormBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.MultipartBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.TextBody;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.d;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.description;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestHeaders;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestHeaders;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 

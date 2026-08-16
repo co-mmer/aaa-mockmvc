@@ -14,7 +14,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.options
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.url.TestArrangeResUrlImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeBuilder;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.HttpMethod;
 import java.net.URI;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

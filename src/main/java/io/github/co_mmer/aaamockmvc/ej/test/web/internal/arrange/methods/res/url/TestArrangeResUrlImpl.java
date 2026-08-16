@@ -10,7 +10,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.core.Te
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.body.TestArrangeResBodyImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.res.header.TestArrangeResHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.HttpMethod;
 import java.net.URI;
 import java.util.Map;
 import lombok.NonNull;

@@ -1,12 +1,12 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.EmptyBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestCookie;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestHeaders;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestPath;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestQuery;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.EmptyBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.HttpMethod;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestCookie;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestHeaders;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestPath;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestQuery;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

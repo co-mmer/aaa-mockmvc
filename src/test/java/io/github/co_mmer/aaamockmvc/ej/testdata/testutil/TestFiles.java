@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.testdata.testutil;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.MultipartBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.MultipartPart;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.MultipartBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.MultipartPart;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;

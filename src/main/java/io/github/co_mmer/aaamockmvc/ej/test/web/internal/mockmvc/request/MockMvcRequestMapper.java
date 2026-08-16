@@ -4,13 +4,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeResult;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.BinaryBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.EmptyBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.FormBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.MultipartBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.TextBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.BinaryBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.EmptyBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.FormBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.HttpMethod;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.MultipartBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.TextBody;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.test.web.servlet.RequestBuilder;

@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

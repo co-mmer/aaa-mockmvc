@@ -7,7 +7,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.act.error.TestActFailedError;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutionResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutor;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.d.RequestDescription;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.description.RequestDescription;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
 

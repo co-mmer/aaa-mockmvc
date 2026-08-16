@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.model.d;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.description;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeResult;
 import lombok.AccessLevel;

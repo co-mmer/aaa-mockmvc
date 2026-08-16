@@ -3,10 +3,10 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.base;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestEnvironment;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestHeaders;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestPath;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestQuery;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestHeaders;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestPath;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestQuery;
 import lombok.NonNull;
 
 @Since("1.0.0")
