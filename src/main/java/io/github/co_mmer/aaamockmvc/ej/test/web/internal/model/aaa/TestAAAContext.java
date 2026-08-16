@@ -1,7 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestBuilder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -15,10 +14,8 @@ public final class TestAAAContext {
   private final TestEnvironment environment;
   private TestStepDto step;
 
-  private RequestBuilder requestBuilder;
-
+  private TestArrangeBuilder arrangeBuilder;
   private TestActResult actResult;
-
   private TestAssertResult<?> assertResult;
   private TestAnswerResult<?> answerResult;
 }

@@ -18,7 +18,7 @@ public final class TestActPreconditionsValidator {
 
   @Since("2.0.0")
   public static void verifyPerform(TestAAAContext context) {
-    if (context.getRequestBuilder() == null) {
+    if (context.getArrangeBuilder() == null) {
       var reason = reasonOf(context.getStep(), MISSING_ARRANGE_BEFORE_ACT_PERFORM);
       throw new IllegalStateException(reason);
     }

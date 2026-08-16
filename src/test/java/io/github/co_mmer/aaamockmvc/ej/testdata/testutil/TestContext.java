@@ -7,10 +7,10 @@ import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeBuilder;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestEnvironment;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestBuilder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,14 +20,14 @@ public final class TestContext {
 
   public static TestAAAContext createContext() {
     var context = new TestAAAContext(createTestEnvironment());
-    context.setRequestBuilder(createRequestBuilder());
+    context.setArrangeBuilder(createRequestBuilder());
     return context;
   }
 
   public static TestAAAContext createContext(String stepName) {
     var context = new TestAAAContext(createTestEnvironment());
     context.setStep(new TestStepDto(stepName));
-    context.setRequestBuilder(createRequestBuilder());
+    context.setArrangeBuilder(createRequestBuilder());
     return context;
   }
 
@@ -39,7 +39,7 @@ public final class TestContext {
 
   public static TestAAAContext mockContext() {
     var context = new TestAAAContext(createTestEnvironment());
-    context.setRequestBuilder(createRequestBuilder());
+    context.setArrangeBuilder(createRequestBuilder());
 
     var actResult = mock(TestActResult.class);
     context.setActResult(actResult);
@@ -56,8 +56,8 @@ public final class TestContext {
     return context;
   }
 
-  private static RequestBuilder createRequestBuilder() {
-    var requestBuilder = new RequestBuilder();
+  private static TestArrangeBuilder createRequestBuilder() {
+    var requestBuilder = new TestArrangeBuilder();
     requestBuilder.method(HttpMethod.GET);
     return requestBuilder;
   }

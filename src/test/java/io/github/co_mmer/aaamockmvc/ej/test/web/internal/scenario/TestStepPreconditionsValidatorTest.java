@@ -9,8 +9,8 @@ import static org.mockito.Mockito.when;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeBuilder;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestBuilder;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step.TestStepValidator;
 import java.nio.charset.StandardCharsets;
@@ -34,7 +34,7 @@ class TestStepValidatorTest {
   private static final String MSG_ANSWER_NO_ARRANGE_ACT =
       "Answer error: No 'arrange()' / 'act()' steps configured. Call 'arrange().get|post|put|patch|delete|head|options(...)' followed by 'act().perform()' before 'answer()'";
 
-  private TestStepImpl mockStep(String stepName, RequestBuilder arrange, TestActResult act) {
+  private TestStepImpl mockStep(String stepName, TestArrangeBuilder arrange, TestActResult act) {
     var step = mock(TestStepImpl.class);
     var context = mock(TestAAAContext.class);
 
@@ -48,7 +48,7 @@ class TestStepValidatorTest {
       when(context.getStep()).thenReturn(dto);
     }
 
-    when(context.getRequestBuilder()).thenReturn(arrange);
+    when(context.getArrangeBuilder()).thenReturn(arrange);
     when(context.getActResult()).thenReturn(act);
     return step;
   }
@@ -90,7 +90,7 @@ class TestStepValidatorTest {
     @Test
     void WHEN_arrange_present_THEN_no_exception() {
       // Arrange
-      var arrange = new RequestBuilder();
+      var arrange = new TestArrangeBuilder();
       var step = mockStep("Any", arrange, null);
 
       // Act & Assert
@@ -117,7 +117,7 @@ class TestStepValidatorTest {
     @ValueSource(strings = {"MyAssertsStep"})
     void WHEN_act_missing_THEN_custom_message_with_optional_prefix(String stepName) {
       // Arrange
-      var arrange = new RequestBuilder();
+      var arrange = new TestArrangeBuilder();
       var step = mockStep(stepName, arrange, null);
 
       // Act
@@ -133,7 +133,7 @@ class TestStepValidatorTest {
     void WHEN_act_present_THEN_no_exception() {
       // Act
       var act = new TestActResult(200, Map.of(), "ok".getBytes(StandardCharsets.UTF_8), "ok");
-      var step = mockStep("Any", new RequestBuilder(), act);
+      var step = mockStep("Any", new TestArrangeBuilder(), act);
 
       // Assert
       assertDoesNotThrow(() -> TestStepValidator.preconditionsOfAsserts(step));
@@ -159,7 +159,7 @@ class TestStepValidatorTest {
     @ValueSource(strings = {"MyAnswerStep"})
     void WHEN_act_missing_THEN_custom_message_with_optional_prefix(String stepName) {
       // Arrange
-      var arrange = new RequestBuilder();
+      var arrange = new TestArrangeBuilder();
       var step = mockStep(stepName, arrange, null);
 
       // Act
@@ -177,7 +177,7 @@ class TestStepValidatorTest {
       var act =
           new TestActResult(
               204, Map.of("X-Test", List.of("1")), new byte[0], new String(new byte[0]));
-      var step = mockStep(null, new RequestBuilder(), act);
+      var step = mockStep(null, new TestArrangeBuilder(), act);
 
       // Act & Assert
       assertDoesNotThrow(() -> TestStepValidator.preconditionsOfAnswer(step));

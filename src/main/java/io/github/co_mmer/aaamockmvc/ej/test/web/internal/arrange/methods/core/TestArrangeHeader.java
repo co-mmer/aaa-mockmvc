@@ -17,26 +17,26 @@ public abstract class TestArrangeHeader extends TestArrangeBaseAbstract {
 
   @Since("1.0.0")
   protected void setAccepts(MediaType... types) {
-    this.context.getRequestBuilder().headers().accept(types);
+    getRequestHeaders().accept(types);
   }
 
   @Since("1.0.0")
   protected void setAuth(String token) {
-    this.context.getRequestBuilder().headers().auth(token);
+    getRequestHeaders().auth(token);
   }
 
   @Since("1.0.0")
   protected void setContentType(MediaType type) {
-    this.context.getRequestBuilder().headers().contentType(type);
+    getRequestHeaders().contentType(type);
   }
 
   @Since("1.0.0")
   protected void put(String key, Object value) {
-    this.context.getRequestBuilder().headers().add(key, String.valueOf(value));
+    getRequestHeaders().add(key, String.valueOf(value));
   }
 
   @Since("1.0.0")
   protected void putAll(Map<String, List<Object>> keyValue) {
-    this.context.getRequestBuilder().headers().set(keyValue);
+    getRequestHeaders().set(keyValue);
   }
 }

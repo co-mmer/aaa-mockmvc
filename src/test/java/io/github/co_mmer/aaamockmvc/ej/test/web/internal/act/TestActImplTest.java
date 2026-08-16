@@ -43,7 +43,7 @@ class TestActImplTest {
   @SneakyThrows
   void WHEN_perform_THEN_expected_methods_are_called() {
     // Arrange
-    var request = this.context.getRequestBuilder().build();
+    var request = this.context.getArrangeBuilder().build();
 
     var mockedExecutor = Mockito.mockStatic(MockMvcExecutor.class);
     mockedExecutor
@@ -70,7 +70,7 @@ class TestActImplTest {
   @Test
   void GIVEN_throwException_WHEN_perform_THEN_throw_TestActFailedError() {
     // Arrange
-    var request = this.context.getRequestBuilder().build();
+    var request = this.context.getArrangeBuilder().build();
 
     var mockedExecutor = Mockito.mockStatic(MockMvcExecutor.class);
     var mockedDescription = Mockito.mockStatic(RequestDescription.class);

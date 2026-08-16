@@ -34,10 +34,10 @@ public final class TestActImpl implements TestAct {
 
   private MockMvcExecutionResult performRequest() {
     try {
-      var request = this.context.getRequestBuilder().build();
+      var request = this.context.getArrangeBuilder().build();
       return MockMvcExecutor.execute(this.context.getEnvironment().mvc(), request);
     } catch (Exception e) {
-      var request = this.context.getRequestBuilder().build();
+      var request = this.context.getArrangeBuilder().build();
       var description = RequestDescription.describe(request);
       throw new TestActFailedError(createMessage(this.context.getStep(), description, e)); // todo
     }

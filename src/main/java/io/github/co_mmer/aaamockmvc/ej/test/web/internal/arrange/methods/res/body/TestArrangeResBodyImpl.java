@@ -30,23 +30,22 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
 
   @Override
   public void raw(@NonNull String raw, @NonNull MediaType type) {
-    context.getRequestBuilder().body(new TextBody(raw));
-    context.getRequestBuilder().headers().contentType(type);
+    this.context.getArrangeBuilder().body(new TextBody(raw));
+    getRequestHeaders().contentType(type);
   }
 
   @Override
   public void json(@NonNull String json) {
-    context.getRequestBuilder().body(new TextBody(json));
-    context.getRequestBuilder().headers().contentType(APPLICATION_JSON);
+    this.context.getArrangeBuilder().body(new TextBody(json));
+    getRequestHeaders().contentType(APPLICATION_JSON);
   }
 
   @Override
   public <T> void json(@NonNull T content) {
     try {
-      var json = TestGenericMapper.toJson(super.getEnvironment().objectMapper(), content);
-      context.getRequestBuilder().body(new TextBody(json));
-      context.getRequestBuilder().headers().contentType(APPLICATION_JSON);
-
+      var json = TestGenericMapper.toJson(getEnvironment().objectMapper(), content);
+      this.context.getArrangeBuilder().body(new TextBody(json));
+      getRequestHeaders().contentType(APPLICATION_JSON);
     } catch (Exception e) {
       throw new TestArrangeException(e);
     }
@@ -57,8 +56,7 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
     try {
       var body = multipartBody();
       body.add(file.getName(), file.getOriginalFilename(), file.getContentType(), file.getBytes());
-      context.getRequestBuilder().body(body);
-
+      this.context.getArrangeBuilder().body(body);
       return this;
     } catch (IOException e) {
       throw new TestArrangeException(e);
@@ -73,7 +71,7 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
         body.add(
             file.getName(), file.getOriginalFilename(), file.getContentType(), file.getBytes());
       }
-      context.getRequestBuilder().body(body);
+      this.context.getArrangeBuilder().body(body);
       return this;
     } catch (IOException e) {
       throw new TestArrangeException(e);
@@ -81,11 +79,11 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
   }
 
   private MultipartBody multipartBody() {
-    var currentBody = context.getRequestBuilder().body();
+    var currentBody = getRequestBody();
 
     if (currentBody instanceof EmptyBody) {
       var body = new MultipartBody();
-      context.getRequestBuilder().body(body);
+      this.context.getArrangeBuilder().body(body);
       return body;
     }
 
@@ -93,6 +91,7 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
       return (MultipartBody) currentBody;
     }
 
-    throw new IllegalStateException("Request body is already set and is not a MultipartBody");
+    throw new IllegalStateException(
+        "TestArrangeResult body is already set and is not a MultipartBody");
   }
 }

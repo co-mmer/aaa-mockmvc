@@ -41,8 +41,8 @@ class TestArrangeImplTest {
       impl.get(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(GET));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(GET));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -51,8 +51,8 @@ class TestArrangeImplTest {
       impl.get(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(GET));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(GET));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -79,8 +79,8 @@ class TestArrangeImplTest {
       impl.delete(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(DELETE));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(DELETE));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -89,8 +89,8 @@ class TestArrangeImplTest {
       impl.delete(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(DELETE));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(DELETE));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -117,8 +117,8 @@ class TestArrangeImplTest {
       impl.options(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(OPTIONS));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(OPTIONS));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -127,8 +127,8 @@ class TestArrangeImplTest {
       impl.options(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(OPTIONS));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(OPTIONS));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -155,8 +155,8 @@ class TestArrangeImplTest {
       impl.head(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(HEAD));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(HEAD));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -165,8 +165,8 @@ class TestArrangeImplTest {
       impl.head(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(HEAD));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(HEAD));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -193,8 +193,8 @@ class TestArrangeImplTest {
       impl.post(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(POST));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(POST));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -203,8 +203,8 @@ class TestArrangeImplTest {
       impl.post(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(POST));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(POST));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -231,8 +231,8 @@ class TestArrangeImplTest {
       impl.put(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(PUT));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(PUT));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -241,8 +241,8 @@ class TestArrangeImplTest {
       impl.put(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(PUT));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(PUT));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -269,8 +269,8 @@ class TestArrangeImplTest {
       impl.patch(PATH_WITH_USER_ID, PATH_VARIABLE_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(PATCH));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(PATCH));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test
@@ -279,8 +279,8 @@ class TestArrangeImplTest {
       impl.patch(URI_WITH_USER_ID);
 
       // Assert
-      assertThat(context.getRequestBuilder().build().method(), is(PATCH));
-      assertThat(context.getRequestBuilder().build().path().value(), is(URI_WITH_USER_ID));
+      assertThat(context.getArrangeBuilder().build().method(), is(PATCH));
+      assertThat(context.getArrangeBuilder().build().path().value(), is(URI_WITH_USER_ID));
     }
 
     @Test

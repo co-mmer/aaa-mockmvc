@@ -19,7 +19,7 @@ class TestActPreconditionsValidatorTest {
   @BeforeEach
   void setUp() {
     this.mockAAAContext = mock(TestAAAContext.class);
-    when(this.mockAAAContext.getRequestBuilder()).thenReturn(null);
+    when(this.mockAAAContext.getArrangeBuilder()).thenReturn(null);
   }
 
   @Test

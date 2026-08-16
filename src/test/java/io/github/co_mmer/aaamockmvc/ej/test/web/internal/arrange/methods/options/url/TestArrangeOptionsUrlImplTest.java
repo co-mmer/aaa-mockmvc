@@ -43,11 +43,11 @@ class TestArrangeOptionsUrlImplTest {
   }
 
   private RequestPath getPath() {
-    return context.getRequestBuilder().path();
+    return context.getArrangeBuilder().path();
   }
 
   private RequestQuery getQuery() {
-    return context.getRequestBuilder().query();
+    return context.getArrangeBuilder().query();
   }
 
   @Nested

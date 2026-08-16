@@ -3,12 +3,12 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.request;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.BinaryBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.EmptyBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.FormBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.MultipartBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.Request;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.TextBody;
 import lombok.AccessLevel;
@@ -19,13 +19,13 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockMvcRequestMapper {
 
-  public static RequestBuilder map(Request source) {
+  public static RequestBuilder map(TestArrangeResult source) {
     return source.body() instanceof MultipartBody
         ? mapMultipart(source, (MultipartBody) source.body())
         : mapRegular(source);
   }
 
-  private static RequestBuilder mapRegular(Request source) {
+  private static RequestBuilder mapRegular(TestArrangeResult source) {
     var builder = request(mapHttpMethod(source.method()), source.path().value());
     applyCommon(builder, source);
     applyBody(builder, source.body());
@@ -52,14 +52,14 @@ public final class MockMvcRequestMapper {
     }
   }
 
-  private static RequestBuilder mapMultipart(Request source, MultipartBody body) {
+  private static RequestBuilder mapMultipart(TestArrangeResult source, MultipartBody body) {
     var builder = multipart(mapHttpMethod(source.method()), source.path().value());
     applyCommon(builder, source);
     MockMvcBodyMapper.applyMultipart(builder, body);
     return builder;
   }
 
-  private static void applyCommon(MockHttpServletRequestBuilder builder, Request source) {
+  private static void applyCommon(MockHttpServletRequestBuilder builder, TestArrangeResult source) {
     MockMvcQueryParameterMapper.apply(builder, source.query().values());
     MockMvcHeaderMapper.apply(builder, source.headers().values());
     MockMvcCookieMapper.apply(builder, source.cookies());

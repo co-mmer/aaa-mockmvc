@@ -35,7 +35,7 @@ class TestArrangeResHeaderImplTest {
   }
 
   private RequestHeaders getHeaders() {
-    return context.getRequestBuilder().headers();
+    return context.getArrangeBuilder().headers();
   }
 
   @Nested

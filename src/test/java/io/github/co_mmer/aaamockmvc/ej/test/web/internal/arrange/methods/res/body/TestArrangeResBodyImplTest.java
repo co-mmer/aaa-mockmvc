@@ -49,11 +49,11 @@ class TestArrangeResBodyImplTest {
   }
 
   private RequestHeaders getHeaders() {
-    return context.getRequestBuilder().headers();
+    return context.getArrangeBuilder().headers();
   }
 
   private RequestBody getBody() {
-    return context.getRequestBuilder().body();
+    return context.getArrangeBuilder().body();
   }
 
   @Nested

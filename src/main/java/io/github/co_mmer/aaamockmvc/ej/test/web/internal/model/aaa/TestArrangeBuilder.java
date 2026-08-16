@@ -1,10 +1,17 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.EmptyBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.HttpMethod;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestCookie;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestHeaders;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestPath;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.request.RequestQuery;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class RequestBuilder {
+public final class TestArrangeBuilder {
 
   private HttpMethod method;
   private RequestPath path;
@@ -13,7 +20,7 @@ public final class RequestBuilder {
   private final List<RequestCookie> cookies = new ArrayList<>();
   private RequestBody body = new EmptyBody();
 
-  public RequestBuilder method(HttpMethod method) {
+  public TestArrangeBuilder method(HttpMethod method) {
     this.method = Objects.requireNonNull(method, "method must not be null");
     return this;
   }
@@ -51,8 +58,8 @@ public final class RequestBuilder {
     return this.body;
   }
 
-  public Request build() {
-    return new Request(
+  public TestArrangeResult build() {
+    return new TestArrangeResult(
         this.method, this.path, this.query, this.headers, List.copyOf(this.cookies), this.body);
   }
 }
