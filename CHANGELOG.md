@@ -2,6 +2,10 @@
 
 ## [2.0.2]
 
+### 🧹 Improvements
+
+- Refactored and reorganized internal architecture for clearer separation of responsibilities
+
 ### ☂️ Fixed
 
 - Corrected `Accept` header handling for multiple media types. Accept values are now represented
