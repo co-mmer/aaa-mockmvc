@@ -63,6 +63,7 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
     }
   }
 
+  // todo testinf
   @Override
   public TestArrange3ResBody files(@NonNull List<MockMultipartFile> files) {
     try {
@@ -78,6 +79,7 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
     }
   }
 
+  // todo testinf
   private MultipartBody multipartBody() {
     var currentBody = getRequestBody();
 
@@ -87,8 +89,8 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
       return body;
     }
 
-    if (currentBody instanceof MultipartBody) {
-      return (MultipartBody) currentBody;
+    if (currentBody instanceof MultipartBody multipartBody) {
+      return multipartBody;
     }
 
     throw new IllegalStateException("Request body is already set and is not a MultipartBody");
