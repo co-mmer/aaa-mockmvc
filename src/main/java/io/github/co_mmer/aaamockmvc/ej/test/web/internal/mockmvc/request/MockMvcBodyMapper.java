@@ -1,9 +1,9 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.request;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.BinaryBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.FormBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.MultipartBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.TextBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.BinaryBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.FormBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.MultipartBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.TextBody;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mock.web.MockMultipartFile;

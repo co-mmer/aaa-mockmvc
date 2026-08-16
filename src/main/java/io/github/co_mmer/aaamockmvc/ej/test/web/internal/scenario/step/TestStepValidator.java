@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.step;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.asserts.match.TestAssertReason.reasonOf;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertReason.reasonOf;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.annotation.Since;
 import lombok.AccessLevel;

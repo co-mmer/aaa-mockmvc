@@ -18,13 +18,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_XML;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.exception.TestArrangeException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.res.body.TestArrangeResBodyImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.MultipartBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestHeaders;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.TextBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestHeaders;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.MultipartBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.RequestBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.TextBody;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import java.util.List;
 import java.util.stream.Stream;

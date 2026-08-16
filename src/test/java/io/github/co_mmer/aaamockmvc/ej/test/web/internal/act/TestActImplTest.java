@@ -8,11 +8,12 @@ import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.error.TestActFailedError;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.TestActImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutionException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutionResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutor;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.description.RequestDescription;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.description.RequestDescription;
 import java.util.List;
 import java.util.Map;
 import lombok.SneakyThrows;
@@ -26,7 +27,7 @@ class TestActImplTest {
       new MockMvcExecutionResult(
           200,
           "{\"result\":\"ok\"}",
-          new byte[]{1, 2, 3},
+          new byte[] {1, 2, 3},
           Map.of("Content-Type", List.of("application/json")));
   private static final MockMvcExecutionException ANY_Exception =
       new MockMvcExecutionException("test");

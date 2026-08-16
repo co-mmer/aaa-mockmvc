@@ -14,10 +14,11 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.arrange.methods.delete.header.TestArrangeDeleteHeaderImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.delete.header.TestArrangeDeleteHeaderImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.delete.url.TestArrangeDeleteUrlImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestPath;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.RequestQuery;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestPath;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestQuery;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import java.net.URI;
 import java.util.List;

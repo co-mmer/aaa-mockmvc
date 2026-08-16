@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.validator;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.act.validator.TestActPreconditionsValidator.verifyPerform;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.validator.TestActPreconditionsValidator.verifyPerform;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;

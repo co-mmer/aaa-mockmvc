@@ -10,7 +10,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestActResult
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestArrangeBuilder;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestEnvironment;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.aaa.TestStepDto;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.model.request.HttpMethod;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.HttpMethod;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.test.web.servlet.MockMvc;
