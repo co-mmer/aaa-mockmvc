@@ -1,8 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMatchers.allowsExactly;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMatchers.allowsNone;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMatchers.transition;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentMatchers.allowsExactly;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentMatchers.allowsNone;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentMatchers.transition;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.header.TestArrange1DeleteHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.header.TestArrange2DeleteHeader;
@@ -12,7 +12,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.header.Te
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.url.TestArrange1DeleteUrl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.url.TestArrange2DeleteUrl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.url.TestArrange3DeleteUrl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentAssert;
 import org.junit.jupiter.api.Test;
 
 class DeleteFluentEdgesTest {

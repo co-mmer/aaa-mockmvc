@@ -5,9 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.Request;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.BinaryBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.EmptyBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.FormBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.MultipartBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.RequestBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.TextBody;
@@ -41,16 +39,6 @@ public final class MockMvcRequestMapper {
 
     if (body instanceof TextBody textBody) {
       MockMvcBodyMapper.applyText(builder, textBody);
-      return;
-    }
-
-    if (body instanceof BinaryBody binaryBody) {
-      MockMvcBodyMapper.applyBinary(builder, binaryBody);
-      return;
-    }
-
-    if (body instanceof FormBody formBody) {
-      MockMvcBodyMapper.applyForm(builder, formBody);
     }
   }
 

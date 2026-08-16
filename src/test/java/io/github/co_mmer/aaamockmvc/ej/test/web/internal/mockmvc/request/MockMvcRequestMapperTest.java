@@ -10,15 +10,11 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.Request;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestHeaders;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestPath;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestQuery;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.BinaryBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.EmptyBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.FormBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.MultipartBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.RequestBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.TextBody;
 import java.net.URI;
-import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,9 +28,6 @@ class MockMvcRequestMapperTest {
   private static final URI ANY_PATH = URI.create("/test");
 
   private static final TextBody ANY_TEXT_BODY = new TextBody("test body");
-  private static final BinaryBody ANY_BINARY_BODY = new BinaryBody(new byte[] {1, 2, 3});
-
-  private static final FormBody ANY_FORM_BODY = new FormBody(Map.of("parameter", List.of("value")));
 
   private static final MultipartBody ANY_MULTIPART_BODY = new MultipartBody();
 
@@ -89,34 +82,6 @@ class MockMvcRequestMapperTest {
 
     // Assert
     bodyMapper.verify(() -> MockMvcBodyMapper.applyText(builder, ANY_TEXT_BODY));
-    bodyMapper.verifyNoMoreInteractions();
-  }
-
-  @Test
-  void GIVEN_binary_body_WHEN_map_THEN_call_binary_body_mapper() {
-    // Arrange
-    var source = requestWith(ANY_BINARY_BODY);
-    var builder = givenRegularBuilderFor(source);
-
-    // Act
-    MockMvcRequestMapper.map(source);
-
-    // Assert
-    bodyMapper.verify(() -> MockMvcBodyMapper.applyBinary(builder, ANY_BINARY_BODY));
-    bodyMapper.verifyNoMoreInteractions();
-  }
-
-  @Test
-  void GIVEN_form_body_WHEN_map_THEN_call_form_body_mapper() {
-    // Arrange
-    var source = requestWith(ANY_FORM_BODY);
-    var builder = givenRegularBuilderFor(source);
-
-    // Act
-    MockMvcRequestMapper.map(source);
-
-    // Assert
-    bodyMapper.verify(() -> MockMvcBodyMapper.applyForm(builder, ANY_FORM_BODY));
     bodyMapper.verifyNoMoreInteractions();
   }
 

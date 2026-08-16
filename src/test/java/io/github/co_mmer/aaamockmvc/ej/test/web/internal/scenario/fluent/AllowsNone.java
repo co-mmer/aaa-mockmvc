@@ -1,11 +1,11 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.ApiIntrospector.findPublicMethodByNameAndReturn;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.ApiIntrospector.header;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.ApiIntrospector.join;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.ApiIntrospector.publicApiMethodNames;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.ApiIntrospector.findPublicMethodByNameAndReturn;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.ApiIntrospector.header;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.ApiIntrospector.join;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.ApiIntrospector.publicApiMethodNames;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentAssert.Matcher;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentAssert.Matcher;
 import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.Set;

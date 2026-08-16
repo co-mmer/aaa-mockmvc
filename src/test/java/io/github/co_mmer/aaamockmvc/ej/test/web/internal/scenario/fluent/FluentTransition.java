@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent;
 
 public record FluentTransition(Class<?> fromClass, String startMethod, Class<?> toClass) {
 
