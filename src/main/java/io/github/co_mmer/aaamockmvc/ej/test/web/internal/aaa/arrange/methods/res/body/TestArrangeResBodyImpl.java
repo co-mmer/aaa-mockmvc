@@ -10,8 +10,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.base.TestAr
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.EmptyBody;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.MultipartBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.TextBody;
 import java.io.IOException;
 import java.util.List;
@@ -54,7 +52,7 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
   @Override
   public TestArrange2ResBody file(@NonNull MockMultipartFile file) {
     try {
-      var body = multipartBody();
+      var body = getMultipartBody();
       body.add(file.getName(), file.getOriginalFilename(), file.getContentType(), file.getBytes());
       this.context.getArrangeBuilder().body(body);
       return this;
@@ -63,11 +61,10 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
     }
   }
 
-  // todo testinf
   @Override
   public TestArrange3ResBody files(@NonNull List<MockMultipartFile> files) {
     try {
-      var body = multipartBody();
+      var body = getMultipartBody();
       for (var file : files) {
         body.add(
             file.getName(), file.getOriginalFilename(), file.getContentType(), file.getBytes());
@@ -77,22 +74,5 @@ public final class TestArrangeResBodyImpl extends TestArrangeBaseAbstract
     } catch (IOException e) {
       throw new TestArrangeException(e);
     }
-  }
-
-  // todo testinf
-  private MultipartBody multipartBody() {
-    var currentBody = getRequestBody();
-
-    if (currentBody instanceof EmptyBody) {
-      var body = new MultipartBody();
-      this.context.getArrangeBuilder().body(body);
-      return body;
-    }
-
-    if (currentBody instanceof MultipartBody multipartBody) {
-      return multipartBody;
-    }
-
-    throw new IllegalStateException("Request body is already set and is not a MultipartBody");
   }
 }

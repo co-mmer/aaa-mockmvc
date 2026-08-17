@@ -7,6 +7,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestHeaders;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestPath;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestQuery;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.EmptyBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.MultipartBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.RequestBody;
 import java.util.Objects;
 
@@ -49,6 +50,17 @@ public final class TestArrangeBuilder {
   @Since("2.0.2")
   public RequestBody body() {
     return this.body;
+  }
+
+  @Since("2.0.2")
+  public MultipartBody multipartBody() {
+    if (this.body instanceof EmptyBody) {
+      this.body = new MultipartBody();
+    }
+    if (this.body instanceof MultipartBody multipartBody) {
+      return multipartBody;
+    }
+    throw new IllegalStateException("Request body is already set and is not a MultipartBody");
   }
 
   @Since("2.0.2")

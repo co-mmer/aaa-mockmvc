@@ -6,7 +6,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestHeaders;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestPath;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestQuery;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.RequestBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.MultipartBody;
 import lombok.NonNull;
 
 @Since("1.0.0")
@@ -34,8 +34,8 @@ public abstract class TestArrangeBaseAbstract {
   }
 
   @Since("2.0.2")
-  protected RequestBody getRequestBody() {
-    return this.context.getArrangeBuilder().body();
+  protected MultipartBody getMultipartBody() {
+    return this.context.getArrangeBuilder().multipartBody();
   }
 
   @Since("1.0.0")
