@@ -3,6 +3,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.request;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonEmpty;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonNull;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 
+@Since("2.0.2")
 @EqualsAndHashCode
 public final class RequestQuery {
 
@@ -25,17 +27,20 @@ public final class RequestQuery {
 
   private final Map<String, List<String>> values = new LinkedHashMap<>();
 
+  @Since("2.0.2")
   public void add(String name, String value) {
     validateParameter(name, value);
     addValidated(name, value);
   }
 
+  @Since("2.0.2")
   public void addAll(Map<String, String> parameters) {
     requireNonNull(parameters, NULL_PARAMETERS_MESSAGE);
     parameters.forEach(RequestQuery::validateParameter);
     parameters.forEach(this::addValidated);
   }
 
+  @Since("2.0.2")
   public Map<String, List<String>> values() {
     var copy = new LinkedHashMap<String, List<String>>();
     this.values.forEach((n, v) -> copy.put(n, List.copyOf(v)));

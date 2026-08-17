@@ -3,12 +3,14 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.request;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonEmpty;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonNull;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@Since("2.0.2")
 @EqualsAndHashCode
 public class RequestPath {
 
@@ -31,14 +33,17 @@ public class RequestPath {
 
   private URI value;
 
+  @Since("2.0.2")
   public void setValue(String value) {
     this.value = toUri(value);
   }
 
+  @Since("2.0.2")
   public void setValue(URI value) {
     this.value = validate(value);
   }
 
+  @Since("2.0.2")
   public void setValue(String path, Object... variables) {
     var checkedPath = validate(path);
     var checkedVariables = validateVariables(variables);
@@ -55,6 +60,7 @@ public class RequestPath {
     }
   }
 
+  @Since("2.0.2")
   public URI value() {
     return value;
   }
