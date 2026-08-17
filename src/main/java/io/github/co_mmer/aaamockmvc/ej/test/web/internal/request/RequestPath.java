@@ -1,5 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.request;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonEmpty;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonNull;
+
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
@@ -67,41 +70,25 @@ public class RequestPath {
   }
 
   private static String validate(String value) {
-    if (value == null) {
-      throw new IllegalArgumentException(NULL_PATH_MESSAGE);
-    }
-
-    if (value.isBlank()) {
-      throw new IllegalArgumentException(BLANK_PATH_MESSAGE);
-    }
-
+    requireNonNull(value, NULL_PATH_MESSAGE);
+    requireNonEmpty(value, BLANK_PATH_MESSAGE);
     return value;
   }
 
   private static URI validate(URI value) {
-    if (value == null) {
-      throw new IllegalArgumentException(NULL_PATH_MESSAGE);
-    }
-
-    if (value.toString().isBlank()) {
-      throw new IllegalArgumentException(BLANK_PATH_MESSAGE);
-    }
-
+    requireNonNull(value, NULL_PATH_MESSAGE);
+    requireNonEmpty(value.toString(), BLANK_PATH_MESSAGE);
     return value;
   }
 
   private static List<Object> validateVariables(Object... variables) {
-    if (variables == null) {
-      throw new IllegalArgumentException(NULL_PATH_VARIABLES_MESSAGE);
-    }
+    requireNonNull(variables, NULL_PATH_VARIABLES_MESSAGE);
 
     for (var index = 0; index < variables.length; index++) {
       var variable = variables[index];
       var position = index + 1;
 
-      if (variable == null) {
-        throw new IllegalArgumentException(NULL_PATH_VARIABLE_MESSAGE.formatted(position));
-      }
+      requireNonNull(variable, NULL_PATH_VARIABLE_MESSAGE.formatted(position));
 
       if (!isSupported(variable)) {
         throw new IllegalArgumentException(

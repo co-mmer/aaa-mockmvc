@@ -128,12 +128,6 @@ class TestArrangeGetUrlImplTest {
     }
 
     @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_nullAsMap_WHEN_query_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> impl.query(null));
-    }
-
-    @Test
     void GIVEN_map_WHEN_query_THEN_return_expected_query() {
       // Act
       impl.query(QUERY_MAP_SEARCH_PAGE);

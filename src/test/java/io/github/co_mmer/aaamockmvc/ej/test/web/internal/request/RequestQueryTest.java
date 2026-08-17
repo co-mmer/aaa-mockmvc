@@ -85,7 +85,8 @@ class RequestQueryTest {
     @Test
     void GIVEN_null_parameter_value_WHEN_add_THEN_return_meaningful_message() {
       // Act
-      var ex = assertThrows(NullPointerException.class, () -> query.add(ANY_PARAMETER_NAME, null));
+      var ex =
+          assertThrows(IllegalArgumentException.class, () -> query.add(ANY_PARAMETER_NAME, null));
 
       // Assert
       assertThat(
@@ -133,7 +134,7 @@ class RequestQueryTest {
     @Test
     void GIVEN_null_parameters_WHEN_addAll_THEN_return_meaningful_message() {
       // Act
-      var ex = assertThrows(NullPointerException.class, () -> query.addAll(null));
+      var ex = assertThrows(IllegalArgumentException.class, () -> query.addAll(null));
 
       // Assert
       assertThat(ex.getMessage(), is("Query parameters must not be null"));

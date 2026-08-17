@@ -1,11 +1,13 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.request;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonEmpty;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode
@@ -29,8 +31,7 @@ public final class RequestQuery {
   }
 
   public void addAll(Map<String, String> parameters) {
-    Objects.requireNonNull(parameters, NULL_PARAMETERS_MESSAGE);
-
+    requireNonNull(parameters, NULL_PARAMETERS_MESSAGE);
     parameters.forEach(RequestQuery::validateParameter);
     parameters.forEach(this::addValidated);
   }
@@ -42,19 +43,9 @@ public final class RequestQuery {
   }
 
   private static void validateParameter(String name, String value) {
-    validateName(name);
-
-    Objects.requireNonNull(value, NULL_PARAMETER_VALUE_MESSAGE.formatted(name));
-  }
-
-  private static void validateName(String name) {
-    if (name == null) {
-      throw new IllegalArgumentException(NULL_PARAMETER_NAME_MESSAGE);
-    }
-
-    if (name.isBlank()) {
-      throw new IllegalArgumentException(BLANK_PARAMETER_NAME_MESSAGE);
-    }
+    requireNonNull(name, NULL_PARAMETER_NAME_MESSAGE);
+    requireNonEmpty(name, BLANK_PARAMETER_NAME_MESSAGE);
+    requireNonNull(value, NULL_PARAMETER_VALUE_MESSAGE.formatted(name));
   }
 
   private void addValidated(String name, String value) {

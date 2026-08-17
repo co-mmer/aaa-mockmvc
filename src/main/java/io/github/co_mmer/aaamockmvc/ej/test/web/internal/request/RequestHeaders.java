@@ -1,5 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.request;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonBlank;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonEmpty;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonNull;
 import static org.springframework.http.HttpHeaders.ACCEPT;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
@@ -52,10 +55,7 @@ public final class RequestHeaders {
   private Map<String, List<String>> values = new LinkedCaseInsensitiveMap<>();
 
   public void set(Map<String, ? extends List<?>> headers) {
-    if (headers == null) {
-      throw new IllegalArgumentException(NULL_HEADERS_MESSAGE);
-    }
-
+    requireNonNull(headers, NULL_HEADERS_MESSAGE);
     var checkedHeaders = new LinkedCaseInsensitiveMap<List<String>>();
 
     headers.forEach(
@@ -79,55 +79,35 @@ public final class RequestHeaders {
   }
 
   public RequestHeaders auth(String token) {
-    if (token == null) {
-      throw new IllegalArgumentException(NULL_AUTHORIZATION_TOKEN_MESSAGE);
-    }
-
-    if (token.isBlank()) {
-      throw new IllegalArgumentException(BLANK_AUTHORIZATION_TOKEN_MESSAGE);
-    }
+    requireNonNull(token, NULL_AUTHORIZATION_TOKEN_MESSAGE);
+    requireNonEmpty(token, BLANK_AUTHORIZATION_TOKEN_MESSAGE);
 
     validateValue(AUTHORIZATION, token);
     replace(AUTHORIZATION, List.of(token));
     return this;
   }
 
-  public RequestHeaders accept(MediaType... mediaTypes) {
-    if (mediaTypes == null) {
-      throw new IllegalArgumentException(NULL_ACCEPTED_MEDIA_TYPES_MESSAGE);
+  public RequestHeaders accept(MediaType... types) {
+    requireNonNull(types, NULL_ACCEPTED_MEDIA_TYPES_MESSAGE);
+    requireNonEmpty(EMPTY_ACCEPTED_MEDIA_TYPES_MESSAGE, types);
+
+    for (var i = 0; i < types.length; i++) {
+      requireNonNull(types[i], NULL_ACCEPTED_MEDIA_TYPE_MESSAGE.formatted(i + 1));
     }
 
-    if (mediaTypes.length == 0) {
-      throw new IllegalArgumentException(EMPTY_ACCEPTED_MEDIA_TYPES_MESSAGE);
-    }
-
-    for (var index = 0; index < mediaTypes.length; index++) {
-      if (mediaTypes[index] == null) {
-        throw new IllegalArgumentException(NULL_ACCEPTED_MEDIA_TYPE_MESSAGE.formatted(index + 1));
-      }
-    }
-
-    replace(ACCEPT, Arrays.stream(mediaTypes).map(MediaType::toString).toList());
+    replace(ACCEPT, Arrays.stream(types).map(MediaType::toString).toList());
     return this;
   }
 
   public RequestHeaders contentType(MediaType mediaType) {
-    if (mediaType == null) {
-      throw new IllegalArgumentException(NULL_CONTENT_TYPE_MESSAGE);
-    }
-
+    requireNonNull(mediaType, NULL_CONTENT_TYPE_MESSAGE);
     replace(CONTENT_TYPE, List.of(mediaType.toString()));
     return this;
   }
 
   public RequestHeaders contentType(String mediaType) {
-    if (mediaType == null) {
-      throw new IllegalArgumentException(NULL_CONTENT_TYPE_MESSAGE);
-    }
-
-    if (mediaType.isBlank()) {
-      throw new IllegalArgumentException(BLANK_CONTENT_TYPE_MESSAGE);
-    }
+    requireNonNull(mediaType, NULL_CONTENT_TYPE_MESSAGE);
+    requireNonEmpty(mediaType, BLANK_CONTENT_TYPE_MESSAGE);
 
     try {
       var checkedMediaType = MediaType.parseMediaType(mediaType);
@@ -146,20 +126,13 @@ public final class RequestHeaders {
 
   private static List<String> validateValues(String name, List<?> headerValues) {
     validateName(name);
-
-    if (headerValues == null || headerValues.isEmpty()) {
-      throw new IllegalArgumentException(EMPTY_HEADER_VALUES_MESSAGE.formatted(name));
-    }
+    requireNonBlank(headerValues, EMPTY_HEADER_VALUES_MESSAGE.formatted(name));
 
     var checkedValues = new ArrayList<String>();
 
     for (var index = 0; index < headerValues.size(); index++) {
       var value = headerValues.get(index);
-
-      if (value == null) {
-        throw new IllegalArgumentException(
-            NULL_HEADER_VALUE_AT_POSITION_MESSAGE.formatted(name, index + 1));
-      }
+      requireNonNull(value, NULL_HEADER_VALUE_AT_POSITION_MESSAGE.formatted(name, index + 1));
 
       var checkedValue = String.valueOf(value);
       validateValue(name, checkedValue);
@@ -170,13 +143,8 @@ public final class RequestHeaders {
   }
 
   private static void validateName(String name) {
-    if (name == null) {
-      throw new IllegalArgumentException(NULL_HEADER_NAME_MESSAGE);
-    }
-
-    if (name.isBlank()) {
-      throw new IllegalArgumentException(BLANK_HEADER_NAME_MESSAGE);
-    }
+    requireNonNull(name, NULL_HEADER_NAME_MESSAGE);
+    requireNonEmpty(name, BLANK_HEADER_NAME_MESSAGE);
 
     if (!VALID_HEADER_NAME.matcher(name).matches()) {
       throw new IllegalArgumentException(INVALID_HEADER_NAME_MESSAGE.formatted(name));
@@ -184,9 +152,7 @@ public final class RequestHeaders {
   }
 
   private static void validateValue(String name, String value) {
-    if (value == null) {
-      throw new IllegalArgumentException(NULL_HEADER_VALUE_MESSAGE.formatted(name));
-    }
+    requireNonNull(value, NULL_HEADER_VALUE_MESSAGE.formatted(name));
 
     if (value.indexOf('\r') >= 0 || value.indexOf('\n') >= 0) {
       throw new IllegalArgumentException(INVALID_HEADER_VALUE_MESSAGE.formatted(name));
