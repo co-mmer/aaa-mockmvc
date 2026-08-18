@@ -17,7 +17,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert4Co
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert5Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertLCollection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertMatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
@@ -65,7 +65,7 @@ public final class TestAssertCollectionImpl<E>
   }
 
   public TestAssertLCollection isEqualTo(@NonNull Collection<E> expectedCollection) {
-    var target = TestAssert.expectedCollection(expectedCollection).value();
+    var target = TestAssertType.expectedCollection(expectedCollection).value();
 
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
@@ -75,7 +75,7 @@ public final class TestAssertCollectionImpl<E>
   }
 
   public TestAssert3Collection<E> contains(@NonNull Collection<E> expectedElements) {
-    var target = TestAssert.expectedCollection(expectedElements).value();
+    var target = TestAssertType.expectedCollection(expectedElements).value();
 
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
@@ -87,12 +87,12 @@ public final class TestAssertCollectionImpl<E>
 
   @SafeVarargs
   public final TestAssert3Collection<E> contains(@NonNull E... expectedElements) {
-    var target = TestAssert.expectedElements(expectedElements).value();
+    var target = TestAssertType.expectedElements(expectedElements).value();
     return contains(List.of(target));
   }
 
   public TestAssert3Collection<E> containsAnyOrder(@NonNull Collection<E> expectedCollection) {
-    var target = TestAssert.expectedCollection(expectedCollection).value();
+    var target = TestAssertType.expectedCollection(expectedCollection).value();
 
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
@@ -104,7 +104,7 @@ public final class TestAssertCollectionImpl<E>
   }
 
   public TestAssert3Collection<E> notContains(@NonNull Collection<E> unexpectedElements) {
-    var target = TestAssert.expectedCollection(unexpectedElements).value();
+    var target = TestAssertType.unexpectedElements(unexpectedElements).value();
 
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
@@ -116,7 +116,7 @@ public final class TestAssertCollectionImpl<E>
 
   @SafeVarargs
   public final TestAssert3Collection<E> notContains(@NonNull E... unexpectedElements) {
-    var target = TestAssert.expectedElements(unexpectedElements).value();
+    var target = TestAssertType.unexpectedElements(unexpectedElements).value();
     return notContains(List.of(target));
   }
 
@@ -150,7 +150,7 @@ public final class TestAssertCollectionImpl<E>
   @SafeVarargs
   @Override
   public final TestAssert4Collection<E> matchAll(@NonNull Predicate<E>... conditions) {
-    var checkedConditions = TestAssert.matchConditions(conditions).value();
+    var checkedConditions = TestAssertType.matchConditions(conditions).value();
 
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
@@ -186,7 +186,7 @@ public final class TestAssertCollectionImpl<E>
   @SafeVarargs
   @Override
   public final TestAssert5Collection<E> matchAny(@NonNull Predicate<E>... conditions) {
-    var checkedConditions = TestAssert.matchConditions(conditions).value();
+    var checkedConditions = TestAssertType.matchConditions(conditions).value();
 
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
@@ -222,7 +222,7 @@ public final class TestAssertCollectionImpl<E>
   @SafeVarargs
   @Override
   public final TestAssertLCollection matchNone(@NonNull Predicate<E>... conditions) {
-    var checkedConditions = TestAssert.matchConditions(conditions).value();
+    var checkedConditions = TestAssertType.matchConditions(conditions).value();
 
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();

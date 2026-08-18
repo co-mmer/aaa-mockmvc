@@ -7,11 +7,13 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.List;
 import java.util.Map;
 import org.hamcrest.Matchers;
+import org.springframework.lang.NonNull;
 
 @Since("1.0.0")
 public final class TestAssertHeadImpl implements TestAssertHead {
@@ -24,8 +26,9 @@ public final class TestAssertHeadImpl implements TestAssertHead {
   }
 
   @Override
-  public TestAssertHead containsKey(String expectedKey) {
-    assertThat(this.context.getStep(), getHeaders(), Matchers.hasKey(expectedKey));
+  public TestAssertHead containsKey(@NonNull String expectedKey) {
+    var key = TestAssertType.expectedHeaderName(expectedKey).value();
+    assertThat(this.context.getStep(), getHeaders(), Matchers.hasKey(key));
     return this;
   }
 
@@ -34,30 +37,35 @@ public final class TestAssertHeadImpl implements TestAssertHead {
   }
 
   @Override
-  public TestAssertHead doesNotContainKey(String notExpectedKey) {
-    assertThat(this.context.getStep(), getHeaders(), not(Matchers.hasKey(notExpectedKey)));
+  public TestAssertHead doesNotContainKey(@NonNull String notExpectedKey) {
+    var key = TestAssertType.unexpectedHeaderName(notExpectedKey).value();
+    assertThat(this.context.getStep(), getHeaders(), not(Matchers.hasKey(key)));
     return this;
   }
 
   @Override
-  public TestAssertHead containsEntry(String expectedKey, String expectedValue) {
+  public TestAssertHead containsEntry(@NonNull String expectedKey, @NonNull String expectedValue) {
+    var key = TestAssertType.expectedHeaderName(expectedKey).value();
+    var value = TestAssertType.expectedHeaderValue(expectedValue).value();
+
     var headers = getHeaders();
-    assertThat(this.context.getStep(), expectedKey, headers, Matchers.hasKey(expectedKey));
-    assertThat(this.context.getStep(), headers.get(expectedKey), hasItem(expectedValue));
+    assertThat(this.context.getStep(), key, headers, Matchers.hasKey(key));
+    assertThat(this.context.getStep(), headers.get(key), hasItem(value));
     return this;
   }
 
   @Override
-  public TestAssertHead containsEntryExactly(String expectedKey, String... expectedValue) {
+  public TestAssertHead containsEntryExactly(
+      @NonNull String expectedKey, @NonNull String... expectedValue) {
+    var key = TestAssertType.expectedHeaderName(expectedKey).value();
+    var values = TestAssertType.expectedHeaderValues(expectedValue).value();
+
     assertThat(
-        this.context.getStep(),
-        "at least one expected value required",
-        expectedValue,
-        not(emptyArray()));
+        this.context.getStep(), "at least one expected value required", values, not(emptyArray()));
 
     var headers = getHeaders();
-    assertThat(this.context.getStep(), expectedKey, headers, Matchers.hasKey(expectedKey));
-    assertThat(this.context.getStep(), headers.get(expectedKey), containsInAnyOrder(expectedValue));
+    assertThat(this.context.getStep(), key, headers, Matchers.hasKey(key));
+    assertThat(this.context.getStep(), headers.get(key), containsInAnyOrder(values));
     return this;
   }
 }

@@ -9,8 +9,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Co
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.bool.TestAssertBooleanImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.bytes.TestAssertByteImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.clazz.TestAssertClassImpl;
@@ -65,7 +65,7 @@ public class TestAssertContentImpl implements TestAssertContent {
   public <C> TestAssert1Class<C> asClass(@NonNull Class<C> expectedClass)
       throws AssertionFailedError {
 
-    var target = TestAssert.expectedClass(expectedClass).value();
+    var target = TestAssertType.expectedClass(expectedClass).value();
     var content = this.context.getActResult().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
@@ -86,7 +86,7 @@ public class TestAssertContentImpl implements TestAssertContent {
 
   @Override
   public <E> TestAssert1Collection<E> asCollection(@NonNull Class<E> elementClass) {
-    var target = TestAssert.collectionElementClass(elementClass).value();
+    var target = TestAssertType.collectionElementClass(elementClass).value();
     var content = this.context.getActResult().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
@@ -104,7 +104,7 @@ public class TestAssertContentImpl implements TestAssertContent {
 
   @Override
   public <E> TestAssert1Collection<E> asList(@NonNull Class<E> elementClass) {
-    var target = TestAssert.listElementClass(elementClass).value();
+    var target = TestAssertType.listElementClass(elementClass).value();
     var content = this.context.getActResult().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
@@ -122,7 +122,7 @@ public class TestAssertContentImpl implements TestAssertContent {
 
   @Override
   public <E> TestAssert1Collection<E> asSet(@NonNull Class<E> elementClass) {
-    var target = TestAssert.setElementClass(elementClass).value();
+    var target = TestAssertType.setElementClass(elementClass).value();
     var content = this.context.getActResult().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();
 
@@ -142,8 +142,8 @@ public class TestAssertContentImpl implements TestAssertContent {
   public <K, V> TestAssert1Map<K, V> asMap(
       @NonNull Class<K> keyClass, @NonNull Class<V> valueClass) {
 
-    var targetKey = TestAssert.mapKeyClass(keyClass).value();
-    var targetValue = TestAssert.mapValueClass(valueClass).value();
+    var targetKey = TestAssertType.mapKeyClass(keyClass).value();
+    var targetValue = TestAssertType.mapValueClass(valueClass).value();
 
     var content = this.context.getActResult().contentAsString();
     var mapper = this.context.getEnvironment().objectMapper();

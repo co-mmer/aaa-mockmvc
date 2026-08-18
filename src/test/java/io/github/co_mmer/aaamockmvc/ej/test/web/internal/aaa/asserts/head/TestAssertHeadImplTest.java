@@ -34,7 +34,7 @@ class TestAssertHeadImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("ConstantConditions")
     void GIVEN_null_WHEN_containsKey_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> testAssert.containsKey(null));
+      assertThrows(IllegalArgumentException.class, () -> testAssert.containsKey(null));
     }
 
     @Test
@@ -64,7 +64,7 @@ class TestAssertHeadImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("ConstantConditions")
     void GIVEN_null_WHEN_doesNotContainKey_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> testAssert.doesNotContainKey(null));
+      assertThrows(IllegalArgumentException.class, () -> testAssert.doesNotContainKey(null));
     }
 
     @Test
@@ -90,6 +90,26 @@ class TestAssertHeadImplTest extends TestAssertBase {
 
   @Nested
   class containsEntry {
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_null_WHEN_containsEntry_THEN_throwException() {
+      assertThrows(IllegalArgumentException.class, () -> testAssert.containsEntry(null, null));
+    }
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_keyIsNull_WHEN_containsEntry_THEN_throwException() {
+      assertThrows(
+          IllegalArgumentException.class, () -> testAssert.containsEntry(null, HEADER_VALUE_TOKEN));
+    }
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_valueIsNull_WHEN_containsEntry_THEN_throwException() {
+      assertThrows(
+          IllegalArgumentException.class, () -> testAssert.containsEntry(HEADER_KEY_AUTH, null));
+    }
 
     @Test
     void GIVEN_key1_value1_WHEN_containsEntry_key1_value1_THEN_success() {
@@ -129,6 +149,29 @@ class TestAssertHeadImplTest extends TestAssertBase {
 
   @Nested
   class containsEntryExactly {
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_null_WHEN_containsEntryExactly_THEN_throwException() {
+      assertThrows(
+          IllegalArgumentException.class, () -> testAssert.containsEntryExactly(null, null));
+    }
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_keyIsNull_WHEN_containsEntryExactly_THEN_throwException() {
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> testAssert.containsEntryExactly(null, HEADER_VALUE_TOKEN));
+    }
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_valueIsNull_WHEN_containsEntryExactly_THEN_throwException() {
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> testAssert.containsEntryExactly(HEADER_KEY_AUTH, null));
+    }
 
     @Test
     void GIVEN_key1_value1_value2_WHEN_containsEntryExactly_key1_value1_value2_THEN_success() {

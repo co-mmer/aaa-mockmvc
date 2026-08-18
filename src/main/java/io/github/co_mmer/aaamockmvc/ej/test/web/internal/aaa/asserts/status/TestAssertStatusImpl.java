@@ -8,7 +8,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertConten
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert2Status;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
@@ -35,7 +35,7 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
 
   @Override
   public TestAssert2Status is(@NonNull HttpStatus status) {
-    var target = TestAssert.expectedStatus(status).value();
+    var target = TestAssertType.expectedStatus(status).value();
 
     assertThat(
         this.context.getStep(), this.context.getActResult().status(), Matchers.is(target.value()));

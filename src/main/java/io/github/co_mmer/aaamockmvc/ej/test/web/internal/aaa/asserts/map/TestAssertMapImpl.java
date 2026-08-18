@@ -13,7 +13,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert2Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert3Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertLMap;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertReason;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizerException;
@@ -57,7 +57,7 @@ public final class TestAssertMapImpl<K, V>
 
   @Override
   public TestAssertLMap isEqualTo(@NonNull Map<K, V> expectedMap) {
-    var target = TestAssert.expectedMap(expectedMap).value();
+    var target = TestAssertType.expectedMap(expectedMap).value();
 
     @SuppressWarnings("unchecked")
     var actual = (Map<K, V>) this.context.getAssertResult().actualContent();

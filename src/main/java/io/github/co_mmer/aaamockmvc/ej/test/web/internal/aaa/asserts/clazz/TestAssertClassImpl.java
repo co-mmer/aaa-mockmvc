@@ -12,7 +12,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert3Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert4Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssertLClass;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertMatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
@@ -53,7 +53,7 @@ public final class TestAssertClassImpl<T>
 
   @Override
   public TestAssertLClass isEqualTo(@NonNull T expectedResponse) {
-    var target = TestAssert.expectedResponse(expectedResponse).value();
+    var target = TestAssertType.expectedResponse(expectedResponse).value();
 
     @SuppressWarnings("unchecked")
     T actual = (T) getActual();
@@ -91,7 +91,7 @@ public final class TestAssertClassImpl<T>
   @SafeVarargs
   @Override
   public final TestAssert3Class<T> matchAll(@NonNull Predicate<T>... conditions) {
-    var checkedConditions = TestAssert.matchConditions(conditions).value();
+    var checkedConditions = TestAssertType.matchConditions(conditions).value();
 
     @SuppressWarnings("unchecked")
     T actual = (T) getActual();
@@ -127,7 +127,7 @@ public final class TestAssertClassImpl<T>
   @SafeVarargs
   @Override
   public final TestAssert4Class<T> matchAny(@NonNull Predicate<T>... conditions) {
-    var checkedConditions = TestAssert.matchConditions(conditions).value();
+    var checkedConditions = TestAssertType.matchConditions(conditions).value();
 
     @SuppressWarnings("unchecked")
     T actual = (T) getActual();
@@ -163,7 +163,7 @@ public final class TestAssertClassImpl<T>
   @SafeVarargs
   @Override
   public final TestAssertLClass matchNone(@NonNull Predicate<T>... conditions) {
-    var checkedConditions = TestAssert.matchConditions(conditions).value();
+    var checkedConditions = TestAssertType.matchConditions(conditions).value();
 
     @SuppressWarnings("unchecked")
     T actual = (T) getActual();

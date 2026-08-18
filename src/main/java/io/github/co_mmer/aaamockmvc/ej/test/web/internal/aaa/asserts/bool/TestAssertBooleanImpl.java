@@ -9,7 +9,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert1Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert2Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert3Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
@@ -43,7 +43,7 @@ public class TestAssertBooleanImpl
 
   @Override
   public TestAssert3Boolean isEqualTo(@NonNull Boolean expectedBoolean) {
-    var target = TestAssert.expectedBoolean(expectedBoolean).value();
+    var target = TestAssertType.expectedBoolean(expectedBoolean).value();
     var actual = (Boolean) getActual();
     assertThat(this.context.getStep(), actual, is(target));
     return this;
