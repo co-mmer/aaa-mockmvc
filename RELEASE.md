@@ -2,45 +2,69 @@
 
 ## [2.1.0]
 
-Version **2.1.0** introduces comprehensive validation for HTTP request configuration in the
-AAA-MockMvc DSL.
+Version **2.1.0** introduces consistent domain validation across the AAA-MockMvc DSL.
 
-Invalid paths, path variables, query parameters, headers, media types, and request bodies are now
-detected close to where the request data is configured. Validation failures provide descriptive
-messages that identify the affected request value, making incorrectly configured tests easier to
-understand and correct.
+Invalid request configuration, response target types, and assertion inputs are now rejected with
+descriptive `IllegalArgumentException` messages. Validation identifies the affected DSL argument
+and includes its position when multiple values or conditions are supplied.
 
 ### 🌿 Highlights
 
-* **Clear request validation** — Invalid request configuration is rejected with precise,
-  domain-specific error messages.
-* **Consistent failure behavior** — Validation failures now use `IllegalArgumentException` instead
-  of Lombok-generated `NullPointerException` for affected null inputs.
-* **Safer request data handling** — Mutable request data is protected through immutable views and
-  defensive copies.
-* **Clearer internal request model** — Dedicated domain objects keep request data, validation, and
-  related behavior together.
+* **Consistent DSL validation** — Invalid arguments are detected close to where they are provided.
+* **Clear failure messages** — Errors identify the affected request value, response target,
+  assertion input, or condition.
+* **Predictable exception behavior** — Affected null arguments now produce
+  `IllegalArgumentException` instead of Lombok-generated `NullPointerException`.
+* **No mapping behavior changes** — Response deserialization and assertion semantics remain
+  unchanged.
 
 ### ✨ New Features
 
-* Added validation for:
+#### Request validation
 
-    * Request paths and URI syntax.
-    * Path variable values and supported types.
-    * Query parameter names and values.
-    * Header names and values, including protection against carriage-return and line-feed
-      characters.
-    * Duplicate header names using different casing.
-    * Accepted media types and content types.
-    * Text and multipart request bodies.
+Added validation for:
+
+* Request paths and URI syntax.
+* Path variable values and supported types.
+* Query parameter names and values.
+* Header names and values, including protection against carriage-return and line-feed characters.
+* Duplicate header names using different casing.
+* Accepted media types and content types.
+* Text and multipart request bodies.
+
+#### Answer validation
+
+Added validation for response target types used by:
+
+* `answer().asObject()`
+* `answer().asCollection()`
+* `answer().asList()`
+* `answer().asSet()`
+* `answer().asMap()`
+
+Missing result, element, map-key, and map-value types now produce precise validation messages.
+
+#### Assertion validation
+
+Added validation for assertion inputs, including:
+
+* Expected boolean, string, byte-array, object, collection, and map values.
+* Expected HTTP statuses.
+* Expected classes and collection element classes.
+* Map key and value classes.
+* Expected and unexpected collection elements.
+* Expected header names and values.
+* Predicate arguments used by `matchAll()`, `matchAny()`, and `matchNone()`.
+
+When one of multiple elements, header values, or match conditions is `null`, the validation message
+includes its one-based position.
 
 ### 🧹 Improvements
 
-* Refactored request handling into dedicated internal domain objects.
-* Improved validation messages by including the affected request element and, where applicable, its
-  position.
-* Added immutable views for request headers, query parameters, and multipart parts.
-* Added defensive copying for multipart binary content.
+* Moved runtime input validation from Lombok annotations into dedicated internal domain objects.
+* Kept validation rules and their error messages close to the values they protect.
+* Improved consistency between the Request, Answer, and Assert areas of the DSL.
+* Added immutable views and defensive copies for internally managed request data.
 
 ### ☂️ Fixes
 
@@ -49,7 +73,7 @@ understand and correct.
   `application/json, application/pdf` to `application/json,application/pdf` while preserving the
   same HTTP semantics.
 
-----
+---
 
 ## [2.0.1]
 

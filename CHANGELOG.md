@@ -4,16 +4,18 @@
 
 ### ✨ New Features
 
-* Added comprehensive validation for DSL request configuration, covering request paths, path
-  variables, query parameters, headers, media types, and request bodies.
-* Invalid request configuration now produces descriptive `IllegalArgumentException` messages.
-  This replaces Lombok-generated `NullPointerException` behavior for affected null inputs.
+* Added comprehensive domain validation across request configuration, answer type selection, and
+  assertion inputs.
+* Invalid DSL arguments now produce descriptive `IllegalArgumentException` messages that identify
+  the affected input and, where applicable, its position.
 
 ### 🧹 Improvements
 
-* Refactored the internal request model into dedicated domain objects, keeping validation and
-  request
-  data handling close together for clearer separation of responsibilities.
+* Replaced Lombok-generated null checks in the public DSL flow with explicit validation owned by
+  internal domain objects.
+* Refactored the internal request model for clearer separation of responsibilities and consistent
+  validation of paths, path variables, query parameters, headers, media types, and request bodies.
+* Added validated target types for Answer operations and validated inputs for assertions.
 * Added immutable views and defensive copies for internally managed request data.
 
 ### ☂️ Fixed
@@ -23,7 +25,7 @@
   `application/json, application/pdf` to `application/json,application/pdf` while preserving the
   same HTTP semantics.
 
-----
+---
 
 ## [2.0.1]
 
