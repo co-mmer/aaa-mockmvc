@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map;
 
 import java.util.Map;
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 
 interface OperationEquals<K, V> {
 

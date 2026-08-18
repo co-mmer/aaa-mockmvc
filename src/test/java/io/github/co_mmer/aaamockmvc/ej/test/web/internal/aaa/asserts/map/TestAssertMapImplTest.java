@@ -31,25 +31,15 @@ import org.opentest4j.AssertionFailedError;
 @SuppressWarnings("java:S2699")
 class TestAssertMapImplTest extends TestAssertBase {
 
-  private TestAssertMapImpl<Integer, TestObjectSimple> testAssert;
+  private TestAssertMapImpl<Integer, TestObjectSimple> impl;
   private TestAssertMapImpl<String, String> testAssertString;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
-    this.testAssert = new TestAssertMapImpl<>(context);
+    this.impl = new TestAssertMapImpl<>(context);
     this.testAssertString = new TestAssertMapImpl<>(context);
-  }
-
-  @Nested
-  class callConstructor {
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> new TestAssertMapImpl<>(null));
-    }
   }
 
   @Nested
@@ -61,7 +51,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useActResult(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      testAssert.isNotEmpty();
+      impl.isNotEmpty();
     }
 
     @ParameterizedTest
@@ -71,7 +61,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useActResult(value);
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, testAssert::isNotEmpty);
+      var ex = assertThrows(AssertionError.class, impl::isNotEmpty);
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
@@ -86,7 +76,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useActResult(value);
 
       // Act & Assert
-      testAssert.isEmpty();
+      impl.isEmpty();
     }
 
     @Test
@@ -95,7 +85,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useActResult(TEST_MAP_A1_A2_JSON);
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, testAssert::isEmpty);
+      var ex = assertThrows(AssertionError.class, impl::isEmpty);
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
@@ -104,12 +94,18 @@ class TestAssertMapImplTest extends TestAssertBase {
   class isEqualTo {
 
     @Test
+    @SuppressWarnings("all")
+    void WHEN_isEqualTo_Null_THEN_throw_Exception() {
+      assertThrows(IllegalArgumentException.class, () -> impl.isEqualTo(null));
+    }
+
+    @Test
     void GIVEN_A1_A2_WHEN_isEqualTo_THEN_success() {
       // Arrange
       useAssertResult(TEST_MAP_A1_A2);
 
       // Act & Assert
-      testAssert.isEqualTo(TEST_MAP_A1_A2);
+      impl.isEqualTo(TEST_MAP_A1_A2);
     }
 
     @Test
@@ -118,7 +114,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useAssertResult(TEST_MAP_A1_A2);
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert.isEqualTo(TEST_MAP_A2_A3));
+      var ex = assertThrows(AssertionError.class, () -> impl.isEqualTo(TEST_MAP_A2_A3));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
@@ -129,7 +125,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useAssertResult(TEST_MAP_A1_A2);
 
       // Act
-      testAssert.isEqualTo(TEST_MAP_A1_A2);
+      impl.isEqualTo(TEST_MAP_A1_A2);
 
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeMap(any()), times(2));
@@ -140,7 +136,7 @@ class TestAssertMapImplTest extends TestAssertBase {
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_isEqualTo_THEN_throw_Exception() {
       // Act & Assert
-      assertThrows(NullPointerException.class, () -> testAssert.isEqualTo(null));
+      assertThrows(IllegalArgumentException.class, () -> impl.isEqualTo(null));
     }
 
     @Test
@@ -171,7 +167,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useAssertResult(TEST_MAP_A1_A2);
 
       // Act & Assert
-      testAssert.hasSize(2);
+      impl.hasSize(2);
     }
 
     @Test
@@ -180,7 +176,7 @@ class TestAssertMapImplTest extends TestAssertBase {
       useAssertResult(TEST_MAP_A1_A2);
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert.hasSize(1));
+      var ex = assertThrows(AssertionError.class, () -> impl.hasSize(1));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
@@ -191,7 +187,7 @@ class TestAssertMapImplTest extends TestAssertBase {
     @Test
     void WHEN_headers_THEN_return_expected_class() {
       // Act
-      var headers = testAssert.headers();
+      var headers = impl.headers();
 
       // Assert
       assertThat(headers, instanceOf(TestAssertHeadImpl.class));

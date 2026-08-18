@@ -15,7 +15,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
-import lombok.NonNull;
 
 @Since("1.4.0")
 public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byte, TestAssertLByte {
@@ -23,7 +22,7 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
   private final TestAAAContext context;
 
   @Since("2.0.0")
-  public TestAssertByteImpl(@NonNull TestAAAContext context) {
+  public TestAssertByteImpl(TestAAAContext context) {
     this.context = context;
   }
 

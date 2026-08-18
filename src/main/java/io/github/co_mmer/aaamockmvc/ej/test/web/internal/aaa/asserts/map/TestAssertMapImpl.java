@@ -13,14 +13,15 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert2Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert3Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertLMap;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertReason;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizerException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.Map;
-import lombok.NonNull;
 import org.opentest4j.AssertionFailedError;
+import org.springframework.lang.NonNull;
 
 @Since("1.4.0")
 public final class TestAssertMapImpl<K, V>
@@ -29,7 +30,7 @@ public final class TestAssertMapImpl<K, V>
   private final TestAAAContext context;
 
   @Since("2.0.0")
-  public TestAssertMapImpl(@NonNull TestAAAContext context) {
+  public TestAssertMapImpl(TestAAAContext context) {
     this.context = context;
   }
 
@@ -56,11 +57,13 @@ public final class TestAssertMapImpl<K, V>
 
   @Override
   public TestAssertLMap isEqualTo(@NonNull Map<K, V> expectedMap) {
+    var target = TestAssert.expectedMap(expectedMap).value();
+
     @SuppressWarnings("unchecked")
     var actual = (Map<K, V>) this.context.getAssertResult().actualContent();
 
     try {
-      assertThat(this.context.getStep(), normalizeMap(actual), is(normalizeMap(expectedMap)));
+      assertThat(this.context.getStep(), normalizeMap(actual), is(normalizeMap(target)));
     } catch (TestArrangeNormalizerException e) {
       var reason = TestAssertReason.reasonOf(this.context.getStep(), e.getMessage());
       throw new AssertionFailedError(reason);

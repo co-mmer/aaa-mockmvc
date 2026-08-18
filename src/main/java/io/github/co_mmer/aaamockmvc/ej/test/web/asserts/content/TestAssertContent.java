@@ -6,8 +6,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert1Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
-import lombok.NonNull;
 import org.opentest4j.AssertionFailedError;
+import org.springframework.lang.NonNull;
 
 /**
  * Entry point for content assertions.

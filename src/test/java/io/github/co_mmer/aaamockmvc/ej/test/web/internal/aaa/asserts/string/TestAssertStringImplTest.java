@@ -33,16 +33,6 @@ class TestAssertStringImplTest extends TestAssertBase {
   }
 
   @Nested
-  class constructor {
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> new TestAssertStringImpl(null));
-    }
-  }
-
-  @Nested
   class isNotEmpty {
 
     @Test
@@ -127,7 +117,7 @@ class TestAssertStringImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_isEqualTo_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> testAssert.isEqualTo(null));
+      assertThrows(IllegalArgumentException.class, () -> testAssert.isEqualTo(null));
     }
   }
 

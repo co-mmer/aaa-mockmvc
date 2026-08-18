@@ -176,6 +176,12 @@ class TestAssertContentImplTest {
   class asClass {
 
     @Test
+    @SuppressWarnings("all")
+    void WHEN_null_THEN_throwException() {
+      assertThrows(IllegalArgumentException.class, () -> impl.asClass(null));
+    }
+
+    @Test
     void GIVEN_valid_json_AND_expectedClass_WHEN_asClass_THEN_store_assertResult() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_A1_JSON);
@@ -223,6 +229,12 @@ class TestAssertContentImplTest {
 
   @Nested
   class asCollection {
+
+    @Test
+    @SuppressWarnings("all")
+    void WHEN_null_THEN_throwException() {
+      assertThrows(IllegalArgumentException.class, () -> impl.asCollection(null));
+    }
 
     @Test
     void GIVEN_list_json_AND_elementClass_WHEN_asCollection_THEN_store_assertResult() {
@@ -290,6 +302,12 @@ class TestAssertContentImplTest {
 
   @Nested
   class asList {
+
+    @Test
+    @SuppressWarnings("all")
+    void WHEN_null_THEN_throwException() {
+      assertThrows(IllegalArgumentException.class, () -> impl.asList(null));
+    }
 
     @Test
     void GIVEN_list_json_AND_elementClass_WHEN_asList_THEN_store_assertResult() {
@@ -374,6 +392,12 @@ class TestAssertContentImplTest {
   class asSet {
 
     @Test
+    @SuppressWarnings("all")
+    void WHEN_null_THEN_throwException() {
+      assertThrows(IllegalArgumentException.class, () -> impl.asSet(null));
+    }
+
+    @Test
     void GIVEN_set_json_AND_elementClass_WHEN_asSet_THEN_store_assertResult() {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(TEST_SET_A1_A2_JSON);
@@ -450,6 +474,24 @@ class TestAssertContentImplTest {
 
   @Nested
   class asMap {
+
+    @Test
+    @SuppressWarnings("all")
+    void WHEN_keyIsNull_and_valueIsNull_THEN_throwException() {
+      assertThrows(IllegalArgumentException.class, () -> impl.asMap(null, null));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void WHEN_keyIsNull_THEN_throwException() {
+      assertThrows(IllegalArgumentException.class, () -> impl.asMap(null, TestObjectSimple.class));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void WHEN_valueIsNull_THEN_throwException() {
+      assertThrows(IllegalArgumentException.class, () -> impl.asMap(Integer.class, null));
+    }
 
     @Test
     void GIVEN_map_json_AND_keyClass_valueClass_WHEN_asMap_THEN_store_assertResult() {

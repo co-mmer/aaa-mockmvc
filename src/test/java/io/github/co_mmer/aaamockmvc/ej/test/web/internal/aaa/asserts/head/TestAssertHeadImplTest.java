@@ -29,16 +29,6 @@ class TestAssertHeadImplTest extends TestAssertBase {
   }
 
   @Nested
-  class constructor {
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> new TestAssertHeadImpl(null));
-    }
-  }
-
-  @Nested
   class containsKey {
 
     @Test

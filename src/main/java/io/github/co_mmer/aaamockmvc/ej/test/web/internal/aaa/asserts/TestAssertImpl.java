@@ -9,7 +9,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAs
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.status.TestAssertStatusImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
-import lombok.NonNull;
 
 @Since("1.0.0")
 public final class TestAssertImpl implements TestAssert {
@@ -17,7 +16,7 @@ public final class TestAssertImpl implements TestAssert {
   private final TestAAAContext context;
 
   @Since("2.0.0")
-  public TestAssertImpl(@NonNull TestAAAContext context) {
+  public TestAssertImpl(TestAAAContext context) {
     this.context = context;
   }
 

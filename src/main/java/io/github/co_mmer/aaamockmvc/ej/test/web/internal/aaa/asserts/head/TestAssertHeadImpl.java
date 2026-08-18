@@ -11,7 +11,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAACont
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.List;
 import java.util.Map;
-import lombok.NonNull;
 import org.hamcrest.Matchers;
 
 @Since("1.0.0")
@@ -20,7 +19,7 @@ public final class TestAssertHeadImpl implements TestAssertHead {
   private final TestAAAContext context;
 
   @Since("2.0.0")
-  public TestAssertHeadImpl(@NonNull TestAAAContext context) {
+  public TestAssertHeadImpl(TestAAAContext context) {
     this.context = context;
   }
 

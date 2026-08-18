@@ -54,16 +54,6 @@ class TestAssertClassImplTest extends TestAssertBase {
   }
 
   @Nested
-  class constructor {
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> new TestAssertClassImpl<>(null));
-    }
-  }
-
-  @Nested
   class isNotNull {
 
     @Test
@@ -134,7 +124,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("all")
     void WHEN_isEqualTo_Null_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> impl.isEqualTo(null));
+      assertThrows(IllegalArgumentException.class, () -> impl.isEqualTo(null));
     }
 
     @Test
@@ -158,7 +148,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchAll_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> impl.matchAll(PREDICATE_NULL));
+      assertThrows(IllegalArgumentException.class, () -> impl.matchAll(PREDICATE_NULL));
     }
 
     @Test
@@ -196,7 +186,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchAll_vararg_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> impl.matchAll(PREDICATES_NULL));
+      assertThrows(IllegalArgumentException.class, () -> impl.matchAll(PREDICATES_NULL));
     }
 
     @Test
@@ -232,8 +222,8 @@ class TestAssertClassImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("all")
-    void GIVEN_null_WHEN_matchAny_THEN_throw_NullPointerException() {
-      assertThrows(NullPointerException.class, () -> impl.matchAny(PREDICATE_NULL));
+    void GIVEN_null_WHEN_matchAny_THEN_throw_Exception() {
+      assertThrows(IllegalArgumentException.class, () -> impl.matchAny(PREDICATE_NULL));
     }
 
     @Test
@@ -269,7 +259,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchAny_vararg_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> impl.matchAny(PREDICATES_NULL));
+      assertThrows(IllegalArgumentException.class, () -> impl.matchAny(PREDICATES_NULL));
     }
 
     @Test

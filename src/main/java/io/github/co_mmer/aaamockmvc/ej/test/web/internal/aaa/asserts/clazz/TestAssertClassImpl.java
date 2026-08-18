@@ -12,12 +12,13 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert3Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert4Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssertLClass;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertMatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.function.Predicate;
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 
 @Since("1.0.0")
 public final class TestAssertClassImpl<T>
@@ -52,16 +53,18 @@ public final class TestAssertClassImpl<T>
 
   @Override
   public TestAssertLClass isEqualTo(@NonNull T expectedResponse) {
+    var target = TestAssert.expectedResponse(expectedResponse).value();
+
     @SuppressWarnings("unchecked")
     T actual = (T) getActual();
-    assertThat(this.context.getStep(), actual.getClass(), is(expectedResponse.getClass()));
-    assertThat(
-        this.context.getStep(), normalizeObject(actual), is(normalizeObject(expectedResponse)));
+    assertThat(this.context.getStep(), actual.getClass(), is(target.getClass()));
+    assertThat(this.context.getStep(), normalizeObject(actual), is(normalizeObject(target)));
     return this;
   }
 
   @Override
   public TestAssert3Class<T> matchAll(@NonNull Predicate<T> condition) {
+
     @SuppressWarnings("unchecked")
     Predicate<T>[] predicates = new Predicate[] {condition};
     return this.matchAll(predicates);
@@ -88,9 +91,11 @@ public final class TestAssertClassImpl<T>
   @SafeVarargs
   @Override
   public final TestAssert3Class<T> matchAll(@NonNull Predicate<T>... conditions) {
+    var checkedConditions = TestAssert.matchConditions(conditions).value();
+
     @SuppressWarnings("unchecked")
     T actual = (T) getActual();
-    TestAssertMatch.assertThat(this.context.getStep(), actual).matchAll(conditions);
+    TestAssertMatch.assertThat(this.context.getStep(), actual).matchAll(checkedConditions);
     return this;
   }
 
@@ -122,9 +127,11 @@ public final class TestAssertClassImpl<T>
   @SafeVarargs
   @Override
   public final TestAssert4Class<T> matchAny(@NonNull Predicate<T>... conditions) {
+    var checkedConditions = TestAssert.matchConditions(conditions).value();
+
     @SuppressWarnings("unchecked")
     T actual = (T) getActual();
-    TestAssertMatch.assertThat(this.context.getStep(), actual).matchAny(conditions);
+    TestAssertMatch.assertThat(this.context.getStep(), actual).matchAny(checkedConditions);
     return this;
   }
 

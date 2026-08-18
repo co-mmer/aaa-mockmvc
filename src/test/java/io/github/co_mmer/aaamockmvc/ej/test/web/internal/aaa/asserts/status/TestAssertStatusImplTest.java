@@ -32,25 +32,15 @@ import org.springframework.http.HttpStatus;
 @SuppressWarnings("java:S2699")
 class TestAssertStatusImplTest extends TestAssertBase {
 
-  private TestAssert1Status testAssert1;
+  private TestAssert1Status impl;
   private TestAssert2Status testAssert2;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
-    this.testAssert1 = new TestAssertStatusImpl(context);
+    this.impl = new TestAssertStatusImpl(context);
     this.testAssert2 = new TestAssertStatusImpl(context);
-  }
-
-  @Nested
-  class constructor {
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> new TestAssertStatusImpl(null));
-    }
   }
 
   @Nested
@@ -59,7 +49,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("ConstantConditions")
     void GIVEN_null_WHEN_is_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> testAssert1.is(null));
+      assertThrows(IllegalArgumentException.class, () -> impl.is(null));
     }
 
     @Test
@@ -68,7 +58,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(OK);
 
       // Act & Assert
-      testAssert1.is(OK);
+      impl.is(OK);
     }
 
     @Test
@@ -77,7 +67,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(NO_CONTENT);
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert1.is(OK));
+      var ex = assertThrows(AssertionError.class, () -> impl.is(OK));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
 
@@ -87,7 +77,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(OK);
 
       // Act & Assert
-      testAssert1.is(200);
+      impl.is(200);
     }
 
     @Test
@@ -96,7 +86,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(NO_CONTENT);
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert1.is(200));
+      var ex = assertThrows(AssertionError.class, () -> impl.is(200));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
@@ -113,22 +103,22 @@ class TestAssertStatusImplTest extends TestAssertBase {
       // Act & Assert
       switch (status) {
         case OK:
-          testAssert1.isOk();
+          impl.isOk();
           break;
         case CREATED:
-          testAssert1.isCreated();
+          impl.isCreated();
           break;
         case ACCEPTED:
-          testAssert1.isAccepted();
+          impl.isAccepted();
           break;
         case NOT_FOUND:
-          testAssert1.isNotFound();
+          impl.isNotFound();
           break;
         case FORBIDDEN:
-          testAssert1.isForbidden();
+          impl.isForbidden();
           break;
         case UNAUTHORIZED:
-          testAssert1.isUnauthorized();
+          impl.isUnauthorized();
           break;
         default:
           Assertions.fail();
@@ -149,22 +139,22 @@ class TestAssertStatusImplTest extends TestAssertBase {
               () -> {
                 switch (status) {
                   case OK:
-                    testAssert1.isOk();
+                    impl.isOk();
                     break;
                   case CREATED:
-                    testAssert1.isCreated();
+                    impl.isCreated();
                     break;
                   case ACCEPTED:
-                    testAssert1.isAccepted();
+                    impl.isAccepted();
                     break;
                   case NOT_FOUND:
-                    testAssert1.isNotFound();
+                    impl.isNotFound();
                     break;
                   case FORBIDDEN:
-                    testAssert1.isForbidden();
+                    impl.isForbidden();
                     break;
                   case UNAUTHORIZED:
-                    testAssert1.isUnauthorized();
+                    impl.isUnauthorized();
                     break;
                   default:
                     Assertions.fail();
@@ -188,7 +178,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
         useActResult(statusCode);
 
         // Act & Assert
-        testAssert1.is2xxSuccessful();
+        impl.is2xxSuccessful();
       }
     }
 
@@ -199,7 +189,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(unexpectedStatusCodes);
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert1.is2xxSuccessful());
+      var ex = assertThrows(AssertionError.class, () -> impl.is2xxSuccessful());
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
@@ -214,7 +204,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
         useActResult(statusCode);
 
         // Act & Assert
-        testAssert1.is3xxRedirect();
+        impl.is3xxRedirect();
       }
     }
 
@@ -225,7 +215,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(unexpectedStatusCodes);
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert1.is3xxRedirect());
+      var ex = assertThrows(AssertionError.class, () -> impl.is3xxRedirect());
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
@@ -240,7 +230,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
         useActResult(statusCode);
 
         // Act & Assert
-        testAssert1.is4xxClientError();
+        impl.is4xxClientError();
       }
     }
 
@@ -251,7 +241,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(unexpectedStatusCodes);
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert1.is4xxClientError());
+      var ex = assertThrows(AssertionError.class, () -> impl.is4xxClientError());
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
@@ -266,7 +256,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
         useActResult(statusCode);
 
         // Act & Assert
-        testAssert1.is5xxServerError();
+        impl.is5xxServerError();
       }
     }
 
@@ -277,7 +267,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(unexpectedStatusCodes);
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert1.is5xxServerError());
+      var ex = assertThrows(AssertionError.class, () -> impl.is5xxServerError());
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
@@ -292,7 +282,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
         useActResult(statusCode);
 
         // Act & Assert
-        testAssert1.isInRange(100, 200);
+        impl.isInRange(100, 200);
       }
     }
 
@@ -303,7 +293,7 @@ class TestAssertStatusImplTest extends TestAssertBase {
       useActResult(unexpectedStatusCodes);
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert1.isInRange(100, 200));
+      var ex = assertThrows(AssertionError.class, () -> impl.isInRange(100, 200));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }

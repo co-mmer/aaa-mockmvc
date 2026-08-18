@@ -34,16 +34,6 @@ class TestAssertByteImplTest extends TestAssertBase {
   }
 
   @Nested
-  class constructor {
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> new TestAssertByteImpl(null));
-    }
-  }
-
-  @Nested
   class isNotEmpty {
 
     @Test

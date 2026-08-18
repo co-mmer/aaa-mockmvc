@@ -26,16 +26,6 @@ class TestAssertBooleanImplTest extends TestAssertBase {
   }
 
   @Nested
-  class constructor {
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_call_constructor_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> new TestAssertBooleanImpl(null));
-    }
-  }
-
-  @Nested
   class isNotNull {
 
     @Test
@@ -153,7 +143,7 @@ class TestAssertBooleanImplTest extends TestAssertBase {
     @SuppressWarnings("ConstantConditions")
     void GIVEN_null_WHEN_isEqualTo_THEN_throw_NullPointerException() {
       // Act & Assert
-      assertThrows(NullPointerException.class, () -> testAssert.isEqualTo(null));
+      assertThrows(IllegalArgumentException.class, () -> testAssert.isEqualTo(null));
     }
   }
 
