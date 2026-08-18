@@ -310,7 +310,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchNone_THEN_throw_NullPointerException() {
-      assertThrows(NullPointerException.class, () -> impl.matchNone(PREDICATE_NULL));
+      assertThrows(IllegalArgumentException.class, () -> impl.matchNone(PREDICATE_NULL));
     }
 
     @Test
@@ -370,7 +370,7 @@ class TestAssertClassImplTest extends TestAssertBase {
     @Test
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchNone_vararg_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> impl.matchNone(PREDICATES_NULL));
+      assertThrows(IllegalArgumentException.class, () -> impl.matchNone(PREDICATES_NULL));
     }
 
     @Test

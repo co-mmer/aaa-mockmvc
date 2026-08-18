@@ -163,9 +163,11 @@ public final class TestAssertClassImpl<T>
   @SafeVarargs
   @Override
   public final TestAssertLClass matchNone(@NonNull Predicate<T>... conditions) {
+    var checkedConditions = TestAssert.matchConditions(conditions).value();
+
     @SuppressWarnings("unchecked")
     T actual = (T) getActual();
-    TestAssertMatch.assertThat(this.context.getStep(), actual).matchNone(conditions);
+    TestAssertMatch.assertThat(this.context.getStep(), actual).matchNone(checkedConditions);
     return this;
   }
 

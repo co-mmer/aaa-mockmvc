@@ -87,7 +87,8 @@ public final class TestAssertCollectionImpl<E>
 
   @SafeVarargs
   public final TestAssert3Collection<E> contains(@NonNull E... expectedElements) {
-    return contains(List.of(expectedElements));
+    var target = TestAssert.expectedElements(expectedElements).value();
+    return contains(List.of(target));
   }
 
   public TestAssert3Collection<E> containsAnyOrder(@NonNull Collection<E> expectedCollection) {
@@ -115,7 +116,8 @@ public final class TestAssertCollectionImpl<E>
 
   @SafeVarargs
   public final TestAssert3Collection<E> notContains(@NonNull E... unexpectedElements) {
-    return notContains(List.of(unexpectedElements));
+    var target = TestAssert.expectedElements(unexpectedElements).value();
+    return notContains(List.of(target));
   }
 
   @Override
