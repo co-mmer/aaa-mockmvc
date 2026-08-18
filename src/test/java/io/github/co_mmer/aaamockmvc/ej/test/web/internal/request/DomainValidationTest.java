@@ -103,6 +103,7 @@ class DomainValidationTest {
     }
 
     @Test
+    @SuppressWarnings("all")
     void GIVEN_single_value_WHEN_requireNonEmpty_THEN_do_not_throw() {
       assertDoesNotThrow(() -> DomainValidation.requireNonEmpty(ANY_MESSAGE, 1));
     }
