@@ -1,15 +1,13 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.error.TestActFailedErrorFormatter.createMessage;
-
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.TestAct;
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.error.TestActFailedError;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.error.TestActFailureDescription;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.model.TestActResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutionResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mockmvc.execute.MockMvcExecutor;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.description.RequestDescription;
 
 @Since("1.0.0")
 public final class TestActImpl implements TestAct {
@@ -33,13 +31,13 @@ public final class TestActImpl implements TestAct {
   }
 
   private MockMvcExecutionResult performRequest() {
+    var request = this.context.getArrangeBuilder().build();
+
     try {
-      var request = this.context.getArrangeBuilder().build();
       return MockMvcExecutor.execute(this.context.getEnvironment().mvc(), request);
-    } catch (Exception e) {
-      var request = this.context.getArrangeBuilder().build();
-      var description = RequestDescription.describe(request);
-      throw new TestActFailedError(createMessage(this.context.getStep(), description, e)); // todo
+    } catch (Exception cause) {
+      var message = TestActFailureDescription.describe(this.context.getStep(), request, cause);
+      throw new TestActFailedError(message);
     }
   }
 }
