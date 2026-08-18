@@ -5,7 +5,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -43,39 +42,12 @@ class MockMvcHeaderMapperTest {
   }
 
   @Test
-  void GIVEN_null_headers_WHEN_apply_THEN_do_not_interact_with_builder() {
-    // Arrange
-    var builder = mock(MockHttpServletRequestBuilder.class);
-
-    // Act
-    MockMvcHeaderMapper.apply(builder, null);
-
-    // Assert
-    verifyNoInteractions(builder);
-  }
-
-  @Test
   void GIVEN_empty_headers_WHEN_apply_THEN_do_not_interact_with_builder() {
     // Arrange
     var builder = mock(MockHttpServletRequestBuilder.class);
 
     // Act
     MockMvcHeaderMapper.apply(builder, Map.of());
-
-    // Assert
-    verifyNoInteractions(builder);
-  }
-
-  @Test
-  void GIVEN_headers_without_values_WHEN_apply_THEN_do_not_interact_with_builder() {
-    // Arrange
-    var builder = mock(MockHttpServletRequestBuilder.class);
-    var headers = new HashMap<String, List<String>>();
-    headers.put("X-Null-Values", null);
-    headers.put("X-Empty-Values", List.of());
-
-    // Act
-    MockMvcHeaderMapper.apply(builder, headers);
 
     // Assert
     verifyNoInteractions(builder);

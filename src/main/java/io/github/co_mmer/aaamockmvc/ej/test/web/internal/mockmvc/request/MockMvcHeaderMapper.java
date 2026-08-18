@@ -6,7 +6,6 @@ import java.util.Map;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.util.CollectionUtils;
 
 @Since("2.0.2")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -16,15 +15,6 @@ public final class MockMvcHeaderMapper {
   public static void apply(
       MockHttpServletRequestBuilder builder, Map<String, List<String>> headers) {
 
-    if (!CollectionUtils.isEmpty(headers)) {
-      headers.forEach(
-          (name, values) -> {
-            if (values == null || values.isEmpty()) {
-              return; // todo kann das wirklich auftreten, sollte RequestHeaders verhindert werden
-            }
-
-            values.forEach(value -> builder.header(name, value));
-          });
-    }
+    headers.forEach((name, values) -> values.forEach(value -> builder.header(name, value)));
   }
 }

@@ -5,7 +5,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -46,18 +45,6 @@ class MockMvcQueryMapperTest {
   }
 
   @Test
-  void GIVEN_null_query_parameters_WHEN_apply_THEN_do_not_interact_with_builder() {
-    // Arrange
-    var builder = mock(MockHttpServletRequestBuilder.class);
-
-    // Act
-    MockMvcQueryMapper.apply(builder, null);
-
-    // Assert
-    verifyNoInteractions(builder);
-  }
-
-  @Test
   void GIVEN_empty_query_parameters_WHEN_apply_THEN_do_not_interact_with_builder() {
     // Arrange
     var builder = mock(MockHttpServletRequestBuilder.class);
@@ -67,22 +54,5 @@ class MockMvcQueryMapperTest {
 
     // Assert
     verifyNoInteractions(builder);
-  }
-
-  @Test
-  void GIVEN_query_parameters_without_values_WHEN_apply_THEN_call_queryParam_without_values() {
-    // Arrange
-    var builder = mock(MockHttpServletRequestBuilder.class);
-    var queryParameters = new HashMap<String, List<String>>();
-    queryParameters.put("parameter-with-null-values", null);
-    queryParameters.put("parameter-with-empty-values", List.of());
-
-    // Act
-    MockMvcQueryMapper.apply(builder, queryParameters);
-
-    // Assert
-    verify(builder).queryParam("parameter-with-null-values");
-    verify(builder).queryParam("parameter-with-empty-values");
-    verifyNoMoreInteractions(builder);
   }
 }

@@ -23,9 +23,7 @@ import org.springframework.http.MediaType;
 class RequestHeadersTest {
 
   private static final String ANY_HEADER_NAME = "X-Test-Header";
-
   private static final String ANOTHER_HEADER_NAME = "X-Another-Header";
-
   private static final String ANY_VALUE = "value";
   private static final String ANOTHER_VALUE = "another value";
   private static final String ANY_TOKEN = "Bearer token";

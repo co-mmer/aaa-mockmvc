@@ -16,12 +16,9 @@ import lombok.EqualsAndHashCode;
 public final class RequestQuery {
 
   private static final String NULL_PARAMETERS_MESSAGE = "Query parameters must not be null";
-
   private static final String NULL_PARAMETER_NAME_MESSAGE = "Query parameter name must not be null";
-
   private static final String BLANK_PARAMETER_NAME_MESSAGE =
       "Query parameter name must not be blank";
-
   private static final String NULL_PARAMETER_VALUE_MESSAGE =
       "Query parameter '%s' must not have a null value";
 
