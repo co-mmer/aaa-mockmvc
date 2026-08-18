@@ -15,8 +15,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAACont
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.HttpMethod;
 import java.net.URI;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
 
 @Since("2.0.0")
 @RequiredArgsConstructor

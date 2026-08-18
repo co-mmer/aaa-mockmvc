@@ -145,9 +145,9 @@ class TestAnswerImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_asObject_THEN_throw_NullPointerException() {
+    void GIVEN_null_WHEN_asObject_THEN_throw_IllegalArgumentException() {
       // Act & Arrange
-      assertThrows(NullPointerException.class, () -> testAnswer.asObject(null));
+      assertThrows(IllegalArgumentException.class, () -> testAnswer.asObject(null));
     }
 
     @Test
@@ -198,9 +198,9 @@ class TestAnswerImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_asCollection_THEN_throw_NullPointerException() {
+    void GIVEN_null_WHEN_asCollection_THEN_throw_IllegalArgumentException() {
       // Act & Arrange
-      assertThrows(NullPointerException.class, () -> testAnswer.asCollection(null));
+      assertThrows(IllegalArgumentException.class, () -> testAnswer.asCollection(null));
     }
 
     @Test
@@ -252,9 +252,9 @@ class TestAnswerImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_asList_THEN_throw_NullPointerException() {
+    void GIVEN_null_WHEN_asList_THEN_throw_IllegalArgumentException() {
       // Act & Arrange
-      assertThrows(NullPointerException.class, () -> testAnswer.asList(null));
+      assertThrows(IllegalArgumentException.class, () -> testAnswer.asList(null));
     }
 
     @Test
@@ -305,9 +305,9 @@ class TestAnswerImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_asSet_THEN_throw_NullPointerException() {
+    void GIVEN_null_WHEN_asSet_THEN_throw_IllegalArgumentException() {
       // Act & Arrange
-      assertThrows(NullPointerException.class, () -> testAnswer.asSet(null));
+      assertThrows(IllegalArgumentException.class, () -> testAnswer.asSet(null));
     }
 
     @Test
@@ -357,9 +357,9 @@ class TestAnswerImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_asMap_THEN_throw_NullPointerException() {
+    void GIVEN_null_WHEN_asMap_THEN_throw_IllegalArgumentException() {
       // Act & Arrange
-      assertThrows(NullPointerException.class, () -> testAnswer.asMap(null, null));
+      assertThrows(IllegalArgumentException.class, () -> testAnswer.asMap(null, null));
     }
 
     @Test
