@@ -5,11 +5,11 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.HttpMethod;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockMvcHttpMapper {
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static org.springframework.http.HttpMethod mapTo(HttpMethod method) {
     return switch (method) {
       case GET -> org.springframework.http.HttpMethod.GET;

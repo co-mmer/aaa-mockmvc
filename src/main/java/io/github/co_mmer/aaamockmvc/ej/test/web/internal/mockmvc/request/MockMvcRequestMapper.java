@@ -14,11 +14,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockMvcRequestMapper {
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static RequestBuilder map(Request source) {
     return (source.body() instanceof MultipartBody multipartBody)
         ? mapMultipart(source, multipartBody)

@@ -12,11 +12,11 @@ import java.util.stream.Stream;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestActFailureDescription {
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static String describe(TestStepDto step, Request request, Throwable cause) {
 
     return Stream.of(

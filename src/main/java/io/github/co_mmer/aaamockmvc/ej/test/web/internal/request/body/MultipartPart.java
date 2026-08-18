@@ -5,7 +5,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.DomainValidatio
 import java.util.Arrays;
 import org.springframework.lang.Nullable;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @SuppressWarnings({"java:S6206", "ClassCanBeRecord"})
 public final class MultipartPart {
 

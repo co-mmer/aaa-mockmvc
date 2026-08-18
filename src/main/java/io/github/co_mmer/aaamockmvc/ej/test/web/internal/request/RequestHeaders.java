@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.http.MediaType;
 import org.springframework.util.LinkedCaseInsensitiveMap;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @EqualsAndHashCode
 public final class RequestHeaders {
 
@@ -56,7 +56,7 @@ public final class RequestHeaders {
 
   private Map<String, List<String>> values = new LinkedCaseInsensitiveMap<>();
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public void set(Map<String, ? extends List<?>> headers) {
     requireNonNull(headers, NULL_HEADERS_MESSAGE);
     var checkedHeaders = new LinkedCaseInsensitiveMap<List<String>>();
@@ -75,14 +75,14 @@ public final class RequestHeaders {
     this.values = checkedHeaders;
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public Map<String, List<String>> values() {
     var copy = new LinkedCaseInsensitiveMap<List<String>>();
     values.forEach((name, headerValues) -> copy.put(name, List.copyOf(headerValues)));
     return Collections.unmodifiableMap(copy);
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public RequestHeaders auth(String token) {
     requireNonNull(token, NULL_AUTHORIZATION_TOKEN_MESSAGE);
     requireNonEmpty(token, BLANK_AUTHORIZATION_TOKEN_MESSAGE);
@@ -92,7 +92,7 @@ public final class RequestHeaders {
     return this;
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public RequestHeaders accept(MediaType... types) {
     requireNonNull(types, NULL_ACCEPTED_MEDIA_TYPES_MESSAGE);
     requireNonEmpty(EMPTY_ACCEPTED_MEDIA_TYPES_MESSAGE, types);
@@ -105,14 +105,14 @@ public final class RequestHeaders {
     return this;
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public RequestHeaders contentType(MediaType mediaType) {
     requireNonNull(mediaType, NULL_CONTENT_TYPE_MESSAGE);
     replace(CONTENT_TYPE, List.of(mediaType.toString()));
     return this;
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public RequestHeaders contentType(String mediaType) {
     requireNonNull(mediaType, NULL_CONTENT_TYPE_MESSAGE);
     requireNonEmpty(mediaType, BLANK_CONTENT_TYPE_MESSAGE);
@@ -126,7 +126,7 @@ public final class RequestHeaders {
     }
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public void add(String name, String value) {
     validateName(name);
     validateValue(name, value);

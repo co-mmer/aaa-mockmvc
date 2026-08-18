@@ -7,11 +7,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockMvcQueryMapper {
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static void apply(
       MockHttpServletRequestBuilder builder, Map<String, List<String>> queryParameters) {
 

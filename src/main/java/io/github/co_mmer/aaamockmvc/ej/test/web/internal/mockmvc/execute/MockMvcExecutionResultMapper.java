@@ -10,11 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockMvcExecutionResultMapper {
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static MockMvcExecutionResult map(MvcResult source) {
     var response = source.getResponse();
     return new MockMvcExecutionResult(

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @EqualsAndHashCode
 public final class RequestQuery {
 
@@ -24,20 +24,20 @@ public final class RequestQuery {
 
   private final Map<String, List<String>> values = new LinkedHashMap<>();
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public void add(String name, String value) {
     validateParameter(name, value);
     addValidated(name, value);
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public void addAll(Map<String, String> parameters) {
     requireNonNull(parameters, NULL_PARAMETERS_MESSAGE);
     parameters.forEach(RequestQuery::validateParameter);
     parameters.forEach(this::addValidated);
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public Map<String, List<String>> values() {
     var copy = new LinkedHashMap<String, List<String>>();
     this.values.forEach((n, v) -> copy.put(n, List.copyOf(v)));

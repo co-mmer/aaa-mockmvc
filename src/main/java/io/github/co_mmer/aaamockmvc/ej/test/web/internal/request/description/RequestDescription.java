@@ -9,13 +9,13 @@ import java.util.stream.Stream;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RequestDescription {
 
   private static final String REQUEST_PREFIX = "Request: ";
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static String describe(Request request) {
     var queryDescription = getQueryDescription(request);
     var headersDescription = getHeadersDescription(request);

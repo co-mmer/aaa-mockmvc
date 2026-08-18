@@ -4,6 +4,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.List;
 import java.util.Map;
 
-@Since("2.0.2")
+@Since("2.1.0")
 public record TestActResult(
     int status, Map<String, List<String>> headers, byte[] contentAsBytes, String contentAsString) {}

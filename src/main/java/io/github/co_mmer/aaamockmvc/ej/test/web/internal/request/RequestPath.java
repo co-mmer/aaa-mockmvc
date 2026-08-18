@@ -10,7 +10,7 @@ import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @EqualsAndHashCode
 public class RequestPath {
 
@@ -33,17 +33,17 @@ public class RequestPath {
 
   private URI value;
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public void setValue(String value) {
     this.value = toUri(value);
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public void setValue(URI value) {
     this.value = validate(value);
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public void setValue(String path, Object... variables) {
     var checkedPath = validate(path);
     var checkedVariables = validateVariables(variables);
@@ -60,7 +60,7 @@ public class RequestPath {
     }
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public URI value() {
     return value;
   }

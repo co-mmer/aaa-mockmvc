@@ -3,7 +3,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.request;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.RequestBody;
 
-@Since("2.0.2")
+@Since("2.1.0")
 public record Request(
     HttpMethod method,
     RequestPath path,

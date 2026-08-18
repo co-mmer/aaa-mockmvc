@@ -7,11 +7,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.CollectionUtils;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RequestHeadersDescription {
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static String describe(RequestHeaders headers) {
     var values = headers.values();
     return CollectionUtils.isEmpty(values) ? StringUtils.EMPTY : "Headers: " + values;

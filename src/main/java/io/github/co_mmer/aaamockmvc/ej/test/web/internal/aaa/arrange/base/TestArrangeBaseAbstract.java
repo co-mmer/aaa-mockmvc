@@ -18,22 +18,22 @@ public abstract class TestArrangeBaseAbstract {
     this.context = context;
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   protected RequestPath getRequestPath() {
     return this.context.getArrangeBuilder().path();
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   protected RequestQuery getRequestQuery() {
     return this.context.getArrangeBuilder().query();
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   protected RequestHeaders getRequestHeaders() {
     return this.context.getArrangeBuilder().headers();
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   protected MultipartBody getMultipartBody() {
     return this.context.getArrangeBuilder().multipartBody();
   }

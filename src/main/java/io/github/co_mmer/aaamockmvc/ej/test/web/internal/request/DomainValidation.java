@@ -6,32 +6,32 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DomainValidation {
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static void requireNonNull(Object value, String message) {
     if (value == null) {
       throw new IllegalArgumentException(message);
     }
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static void requireNonEmpty(String value, String message) {
     if (value.isBlank()) {
       throw new IllegalArgumentException(message);
     }
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static void requireNonBlank(String value, String message) {
     if (StringUtils.isBlank(value)) {
       throw new IllegalArgumentException(message);
     }
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static void requireNonBlank(List<?> values, String message) {
     if (values == null || values.isEmpty()) {
       throw new IllegalArgumentException(message);
@@ -39,7 +39,7 @@ public final class DomainValidation {
   }
 
   @SafeVarargs
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static <T> void requireNonEmpty(String message, T... values) {
     if (values == null || values.length == 0) {
       throw new IllegalArgumentException(message);

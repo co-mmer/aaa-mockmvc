@@ -9,16 +9,16 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 
-@Since("2.0.2")
+@Since("2.1.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MockMvcBodyMapper {
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static void applyText(MockHttpServletRequestBuilder builder, TextBody body) {
     builder.content(body.value());
   }
 
-  @Since("2.0.2")
+  @Since("2.1.0")
   public static void applyMultipart(
       MockMultipartHttpServletRequestBuilder builder, MultipartBody body) {
     for (var part : body.parts()) {
