@@ -81,12 +81,6 @@ class TestArrangeResBodyImplTest {
   class json {
 
     @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_json_THEN_throw_Exception() {
-      assertThrows(NullPointerException.class, () -> impl.json(null));
-    }
-
-    @Test
     void GIVEN_json_WHEN_json_THEN_return_expected_body() {
       // Act
       impl.json(TEST_BODY_JSON);

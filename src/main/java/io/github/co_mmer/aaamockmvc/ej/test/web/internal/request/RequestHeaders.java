@@ -1,8 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.request;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonBlank;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonEmpty;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonNull;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.DomainValidation.requireNonBlank;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.DomainValidation.requireNonEmpty;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.DomainValidation.requireNonNull;
 import static org.springframework.http.HttpHeaders.ACCEPT;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;

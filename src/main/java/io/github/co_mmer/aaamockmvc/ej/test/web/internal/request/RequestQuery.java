@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.request;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonEmpty;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestValidation.requireNonNull;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.DomainValidation.requireNonEmpty;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.DomainValidation.requireNonNull;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.ArrayList;

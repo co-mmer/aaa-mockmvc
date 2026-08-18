@@ -1,13 +1,14 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.request;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @Since("2.0.2")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class RequestValidation {
+public final class DomainValidation {
 
   @Since("2.0.2")
   public static void requireNonNull(Object value, String message) {
@@ -19,6 +20,13 @@ public final class RequestValidation {
   @Since("2.0.2")
   public static void requireNonEmpty(String value, String message) {
     if (value.isBlank()) {
+      throw new IllegalArgumentException(message);
+    }
+  }
+
+  @Since("2.0.2")
+  public static void requireNonBlank(String value, String message) {
+    if (StringUtils.isBlank(value)) {
       throw new IllegalArgumentException(message);
     }
   }
