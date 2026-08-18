@@ -54,7 +54,7 @@ Whether you’re building REST APIs, testing controllers, or ensuring contract c
 
 ## News
 
-### 🌿 Release v2.1.0
+### 🌿 Release 2.1.0
 
 This release makes invalid request configuration easier to detect, understand, and correct.
 
@@ -70,7 +70,7 @@ This release makes invalid request configuration easier to detect, understand, a
 
 --- 
 
-### 🌿 Release v2.0.0
+### 🌿 Release 2.0.0
 
 This is a quality-of-life release poured with a lot of care tests read cleaner and fail clearer.
 
