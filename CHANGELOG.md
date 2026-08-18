@@ -1,14 +1,24 @@
 # <img src="./images/aaa-mockmvc-icon-27.png" align="left"/> Changelog
 
-## [2.0.2]
+## [2.1.0]
+
+### ✨ New Features
+
+* Added comprehensive validation for DSL request configuration, covering request paths, path
+  variables, query parameters, headers, media types, and request bodies.
+* Invalid request configuration now produces descriptive `IllegalArgumentException` messages.
+  This replaces Lombok-generated `NullPointerException` behavior for affected null inputs.
 
 ### 🧹 Improvements
 
-- Refactored and reorganized internal architecture for clearer separation of responsibilities
+* Refactored the internal request model into dedicated domain objects, keeping validation and
+  request
+  data handling close together for clearer separation of responsibilities.
+* Added immutable views and defensive copies for internally managed request data.
 
 ### ☂️ Fixed
 
-- Corrected `Accept` header handling for multiple media types. Accept values are now represented
+* Corrected `Accept` header handling for multiple media types. Accept values are now represented
   consistently as multiple HTTP header values. This may change the raw header representation from
   `application/json, application/pdf` to `application/json,application/pdf` while preserving the
   same HTTP semantics.

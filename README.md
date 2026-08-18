@@ -54,6 +54,22 @@ Whether you’re building REST APIs, testing controllers, or ensuring contract c
 
 ## News
 
+### 🌿 Release v2.1.0
+
+This release makes invalid request configuration easier to detect, understand, and correct.
+
+#### What’s new
+
+* Request paths, path variables, query parameters, headers, media types, and request bodies are now
+  validated consistently.
+* Invalid values produce clear `IllegalArgumentException` messages that identify the affected
+  request element.
+* The internal request model now uses dedicated domain objects for clearer responsibilities and
+  safer data handling.
+* See full details in the [Release Note](./RELEASE.md#210)
+
+--- 
+
 ### 🌿 Release v2.0.0
 
 This is a quality-of-life release poured with a lot of care tests read cleaner and fail clearer.
@@ -101,7 +117,7 @@ The sources can also be downloaded directly to access the documentation of the c
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>2.0.2</version>
+  <version>2.1.0</version>
   <scope>test</scope>
 </dependency>
 

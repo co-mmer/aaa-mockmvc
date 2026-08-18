@@ -1,5 +1,54 @@
 # <img src="./images/aaa-mockmvc-icon-27.png" align="left"/> Release
 
+## [2.1.0]
+
+Version **2.1.0** introduces comprehensive validation for HTTP request configuration in the
+AAA-MockMvc DSL.
+
+Invalid paths, path variables, query parameters, headers, media types, and request bodies are now
+detected close to where the request data is configured. Validation failures provide descriptive
+messages that identify the affected request value, making incorrectly configured tests easier to
+understand and correct.
+
+### 🌿 Highlights
+
+* **Clear request validation** — Invalid request configuration is rejected with precise,
+  domain-specific error messages.
+* **Consistent failure behavior** — Validation failures now use `IllegalArgumentException` instead
+  of Lombok-generated `NullPointerException` for affected null inputs.
+* **Safer request data handling** — Mutable request data is protected through immutable views and
+  defensive copies.
+* **Clearer internal request model** — Dedicated domain objects keep request data, validation, and
+  related behavior together.
+
+### ✨ New Features
+
+* Added validation for:
+
+    * Request paths and URI syntax.
+    * Path variable values and supported types.
+    * Query parameter names and values.
+    * Header names and values, including protection against carriage-return and line-feed
+      characters.
+    * Duplicate header names using different casing.
+    * Accepted media types and content types.
+    * Text and multipart request bodies.
+
+### 🧹 Improvements
+
+* Refactored request handling into dedicated internal domain objects.
+* Improved validation messages by including the affected request element and, where applicable, its
+  position.
+* Added immutable views for request headers, query parameters, and multipart parts.
+* Added defensive copying for multipart binary content.
+
+### ☂️ Fixes
+
+* Corrected `Accept` header handling for multiple media types. Accept values are now represented
+  consistently as multiple HTTP header values. The raw representation may change from
+  `application/json, application/pdf` to `application/json,application/pdf` while preserving the
+  same HTTP semantics.
+
 ----
 
 ## [2.0.1]
