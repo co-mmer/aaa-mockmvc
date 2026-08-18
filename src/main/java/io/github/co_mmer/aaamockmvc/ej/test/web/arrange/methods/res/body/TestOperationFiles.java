@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body;
 
 import java.util.List;
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 import org.springframework.mock.web.MockMultipartFile;
 
 interface TestOperationFiles {
