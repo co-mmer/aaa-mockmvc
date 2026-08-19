@@ -24,13 +24,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 @SuppressWarnings("java:S2699")
 class TestAssertByteImplTest extends TestAssertBase {
 
-  private TestAssertByteImpl testAssert;
+  private TestAssertByteImpl impl;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
-    this.testAssert = new TestAssertByteImpl(context);
+    this.impl = new TestAssertByteImpl(context);
   }
 
   @Nested
@@ -42,7 +42,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON.getBytes());
 
       // Act & Assert
-      testAssert.isNotEmpty();
+      impl.isNotEmpty();
     }
 
     @ParameterizedTest
@@ -52,7 +52,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       useActResult(content.getBytes());
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, testAssert::isNotEmpty);
+      var ex = assertThrows(AssertionError.class, impl::isNotEmpty);
       assertThat(ex.getMessage(), not(EMPTY));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
@@ -68,7 +68,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       useActResult(content.getBytes());
 
       // Act & Assert
-      testAssert.isEmpty();
+      impl.isEmpty();
     }
 
     @Test
@@ -77,7 +77,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON.getBytes());
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, testAssert::isEmpty);
+      var ex = assertThrows(AssertionError.class, impl::isEmpty);
       assertThat(ex.getMessage(), not(EMPTY));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
@@ -92,7 +92,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON.getBytes());
 
       // Act & Assert
-      testAssert.hasLength(TEST_A1_JSON.length());
+      impl.hasLength(TEST_A1_JSON.length());
     }
 
     @Test
@@ -101,7 +101,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON.getBytes());
 
       // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert.hasLength(8));
+      var ex = assertThrows(AssertionError.class, () -> impl.hasLength(8));
       assertThat(ex.getMessage(), not(EMPTY));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
@@ -116,7 +116,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON.getBytes());
 
       // Act & Assert
-      testAssert.isEqualTo(TEST_A1_JSON.getBytes());
+      impl.isEqualTo(TEST_A1_JSON.getBytes());
     }
 
     @Test
@@ -126,8 +126,7 @@ class TestAssertByteImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON.getBytes());
 
       // Act & Assert
-      var ex =
-          assertThrows(AssertionError.class, () -> testAssert.isEqualTo(TEST_A2_JSON.getBytes()));
+      var ex = assertThrows(AssertionError.class, () -> impl.isEqualTo(TEST_A2_JSON.getBytes()));
       assertThat(ex.getMessage(), not(EMPTY));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
@@ -139,7 +138,7 @@ class TestAssertByteImplTest extends TestAssertBase {
     @Test
     void WHEN_headers_THEN_return_expected_class() {
       // Act
-      var headers = testAssert.headers();
+      var headers = impl.headers();
 
       // Assert
       assertThat(headers, instanceOf(TestAssertHeadImpl.class));

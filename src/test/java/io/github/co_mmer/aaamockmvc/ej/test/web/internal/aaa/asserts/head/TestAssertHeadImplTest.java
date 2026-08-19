@@ -148,6 +148,7 @@ class TestAssertHeadImplTest extends TestAssertBase {
   }
 
   @Nested
+  @SuppressWarnings("all")
   class containsEntryExactly {
 
     @Test

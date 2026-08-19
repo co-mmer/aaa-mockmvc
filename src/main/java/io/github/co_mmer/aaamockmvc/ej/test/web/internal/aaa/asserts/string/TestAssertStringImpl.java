@@ -8,22 +8,19 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert2String;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssertLString;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertType;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
+import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 
 @Since("1.0.0")
+@RequiredArgsConstructor
 public final class TestAssertStringImpl
     implements TestAssert1String, TestAssert2String, TestAssertLString {
 
   private final TestAAAContext context;
-
-  @Since("2.0.0")
-  public TestAssertStringImpl(TestAAAContext context) {
-    this.context = context;
-  }
 
   @Override
   public TestAssert2String isNotEmpty() {
@@ -49,9 +46,12 @@ public final class TestAssertStringImpl
 
   @Override
   public TestAssertLString isEqualTo(@NonNull String expectedString) {
-    var target = TestAssertType.expectedString(expectedString).value();
+    var expectedValue = AssertValue.expectedString(expectedString);
 
-    assertThat(this.context.getStep(), normalizeObject(getContent()), is(normalizeObject(target)));
+    assertThat(
+        this.context.getStep(),
+        normalizeObject(getContent()),
+        is(normalizeObject(expectedValue.value())));
     return this;
   }
 

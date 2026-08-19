@@ -2,6 +2,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.AAAType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils;
 import java.util.Collection;
@@ -24,39 +25,39 @@ public final class TestGenericMapper {
     }
   }
 
-  @Since("2.0.0")
-  public static <T> T parse(ObjectMapper om, String content, Class<T> clazz)
+  @Since("2.1.0")
+  public static <T> T parse(ObjectMapper om, String content, AAAType<T> clazz)
       throws TestGenericMapperException {
-    var type = om.getTypeFactory().constructType(clazz);
+    var type = om.getTypeFactory().constructType(clazz.type());
     return parse(om, content, type);
   }
 
-  @Since("2.0.0")
+  @Since("2.1.0")
   public static <E> Collection<E> parseCollection(
-      ObjectMapper om, String content, Class<E> elementClass) throws TestGenericMapperException {
-    var type = om.getTypeFactory().constructCollectionType(Collection.class, elementClass);
+      ObjectMapper om, String content, AAAType<E> elementType) throws TestGenericMapperException {
+    var type = om.getTypeFactory().constructCollectionType(Collection.class, elementType.type());
     return parse(om, content, type);
   }
 
-  @Since("2.0.0")
-  public static <E> List<E> parseList(ObjectMapper om, String content, Class<E> elementClass)
+  @Since("2.1.0")
+  public static <E> List<E> parseList(ObjectMapper om, String content, AAAType<E> elementType)
       throws TestGenericMapperException {
-    var type = om.getTypeFactory().constructCollectionType(List.class, elementClass);
+    var type = om.getTypeFactory().constructCollectionType(List.class, elementType.type());
     return parse(om, content, type);
   }
 
-  @Since("2.0.0")
-  public static <E> Set<E> parseSet(ObjectMapper om, String content, Class<E> elementClass)
+  @Since("2.1.0")
+  public static <E> Set<E> parseSet(ObjectMapper om, String content, AAAType<E> elementType)
       throws TestGenericMapperException {
-    var type = om.getTypeFactory().constructCollectionType(Set.class, elementClass);
+    var type = om.getTypeFactory().constructCollectionType(Set.class, elementType.type());
     return parse(om, content, type);
   }
 
-  @Since("2.0.0")
+  @Since("2.1.0")
   public static <K, V> Map<K, V> parseMap(
-      ObjectMapper om, String content, Class<K> keyClass, Class<V> valueClass)
+      ObjectMapper om, String content, AAAType<K> keyType, AAAType<V> valueType)
       throws TestGenericMapperException {
-    var type = om.getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
+    var type = om.getTypeFactory().constructMapType(Map.class, keyType.type(), valueType.type());
     return parse(om, content, type);
   }
 

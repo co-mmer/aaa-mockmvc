@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class AnswerTargetTest {
+class AnswerTypeTest {
 
   @Nested
   class result {
@@ -19,7 +19,7 @@ class AnswerTargetTest {
       var resultType = String.class;
 
       // Act
-      var target = AnswerTarget.result(resultType);
+      var target = AnswerType.result(resultType);
 
       // Assert
       assertThat(target.type(), is(resultType));
@@ -32,7 +32,7 @@ class AnswerTargetTest {
 
       // Act
       var exception =
-          assertThrows(IllegalArgumentException.class, () -> AnswerTarget.result(resultType));
+          assertThrows(IllegalArgumentException.class, () -> AnswerType.result(resultType));
 
       // Assert
       assertThat(exception.getMessage(), is("Result type must not be null"));
@@ -48,7 +48,7 @@ class AnswerTargetTest {
       var elementType = String.class;
 
       // Act
-      var target = AnswerTarget.collectionElement(elementType);
+      var target = AnswerType.collectionElement(elementType);
 
       // Assert
       assertThat(target.type(), is(elementType));
@@ -62,7 +62,7 @@ class AnswerTargetTest {
       // Act
       var exception =
           assertThrows(
-              IllegalArgumentException.class, () -> AnswerTarget.collectionElement(elementType));
+              IllegalArgumentException.class, () -> AnswerType.collectionElement(elementType));
 
       // Assert
       assertThat(exception.getMessage(), is("Collection element type must not be null"));
@@ -78,7 +78,7 @@ class AnswerTargetTest {
       var elementType = String.class;
 
       // Act
-      var target = AnswerTarget.listElement(elementType);
+      var target = AnswerType.listElement(elementType);
 
       // Assert
       assertThat(target.type(), is(elementType));
@@ -91,7 +91,7 @@ class AnswerTargetTest {
 
       // Act
       var exception =
-          assertThrows(IllegalArgumentException.class, () -> AnswerTarget.listElement(elementType));
+          assertThrows(IllegalArgumentException.class, () -> AnswerType.listElement(elementType));
 
       // Assert
       assertThat(exception.getMessage(), is("List element type must not be null"));
@@ -107,7 +107,7 @@ class AnswerTargetTest {
       var elementType = String.class;
 
       // Act
-      var target = AnswerTarget.setElement(elementType);
+      var target = AnswerType.setElement(elementType);
 
       // Assert
       assertThat(target.type(), is(elementType));
@@ -120,7 +120,7 @@ class AnswerTargetTest {
 
       // Act
       var exception =
-          assertThrows(IllegalArgumentException.class, () -> AnswerTarget.setElement(elementType));
+          assertThrows(IllegalArgumentException.class, () -> AnswerType.setElement(elementType));
 
       // Assert
       assertThat(exception.getMessage(), is("Set element type must not be null"));
@@ -136,7 +136,7 @@ class AnswerTargetTest {
       var keyType = String.class;
 
       // Act
-      var target = AnswerTarget.mapKey(keyType);
+      var target = AnswerType.mapKey(keyType);
 
       // Assert
       assertThat(target.type(), is(keyType));
@@ -149,7 +149,7 @@ class AnswerTargetTest {
 
       // Act
       var exception =
-          assertThrows(IllegalArgumentException.class, () -> AnswerTarget.mapKey(keyType));
+          assertThrows(IllegalArgumentException.class, () -> AnswerType.mapKey(keyType));
 
       // Assert
       assertThat(exception.getMessage(), is("Map key type must not be null"));
@@ -165,7 +165,7 @@ class AnswerTargetTest {
       var valueType = Integer.class;
 
       // Act
-      var target = AnswerTarget.mapValue(valueType);
+      var target = AnswerType.mapValue(valueType);
 
       // Assert
       assertThat(target.type(), is(valueType));
@@ -178,7 +178,7 @@ class AnswerTargetTest {
 
       // Act
       var exception =
-          assertThrows(IllegalArgumentException.class, () -> AnswerTarget.mapValue(valueType));
+          assertThrows(IllegalArgumentException.class, () -> AnswerType.mapValue(valueType));
 
       // Assert
       assertThat(exception.getMessage(), is("Map value type must not be null"));
@@ -191,8 +191,8 @@ class AnswerTargetTest {
     @Test
     void GIVEN_same_type_WHEN_compare_THEN_equal() {
       // Arrange
-      var first = AnswerTarget.result(String.class);
-      var second = AnswerTarget.result(String.class);
+      var first = AnswerType.result(String.class);
+      var second = AnswerType.result(String.class);
 
       // Act
       var equal = first.equals(second);
@@ -206,8 +206,8 @@ class AnswerTargetTest {
     @Test
     void GIVEN_different_type_WHEN_compare_THEN_not_equal() {
       // Arrange
-      var first = AnswerTarget.result(String.class);
-      var second = AnswerTarget.result(Integer.class);
+      var first = AnswerType.result(String.class);
+      var second = AnswerType.result(Integer.class);
 
       // Act
       var equal = first.equals(second);
@@ -220,7 +220,7 @@ class AnswerTargetTest {
     @Test
     void GIVEN_type_WHEN_toString_THEN_return_type_name() {
       // Arrange
-      var target = AnswerTarget.result(String.class);
+      var target = AnswerType.result(String.class);
 
       // Act
       var result = target.toString();

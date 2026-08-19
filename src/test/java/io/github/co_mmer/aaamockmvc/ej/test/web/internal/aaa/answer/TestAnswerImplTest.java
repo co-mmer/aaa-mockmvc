@@ -363,6 +363,21 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_keyIsNull_WHEN_asMap_THEN_throw_IllegalArgumentException() {
+      // Act & Arrange
+      assertThrows(
+          IllegalArgumentException.class, () -> testAnswer.asMap(null, TestObjectSimple.class));
+    }
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_valueIsNull_WHEN_asMap_THEN_throw_IllegalArgumentException() {
+      // Act & Arrange
+      assertThrows(IllegalArgumentException.class, () -> testAnswer.asMap(Integer.class, null));
+    }
+
+    @Test
     @SneakyThrows
     void GIVEN_A1_A2_JSON_WHEN_asMap_THEN_return_A1_A2() {
       // Arrange
@@ -377,7 +392,7 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_null_WHEN_asMap_THEN_return_null() {
+    void GIVEN_empty_WHEN_asMap_THEN_return_null() {
       // Arrange
       useActResult(EMPTY);
 

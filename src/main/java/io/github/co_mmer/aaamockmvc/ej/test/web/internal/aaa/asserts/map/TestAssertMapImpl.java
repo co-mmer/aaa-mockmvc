@@ -13,26 +13,23 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert2Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert3Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertLMap;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertType;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertReason;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizerException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.lang.NonNull;
 
 @Since("1.4.0")
+@RequiredArgsConstructor
 public final class TestAssertMapImpl<K, V>
     implements TestAssert1Map<K, V>, TestAssert2Map<K, V>, TestAssert3Map<K, V>, TestAssertLMap {
 
   private final TestAAAContext context;
-
-  @Since("2.0.0")
-  public TestAssertMapImpl(TestAAAContext context) {
-    this.context = context;
-  }
 
   @Override
   public TestAssert2Map<K, V> isNotEmpty() {
@@ -57,13 +54,14 @@ public final class TestAssertMapImpl<K, V>
 
   @Override
   public TestAssertLMap isEqualTo(@NonNull Map<K, V> expectedMap) {
-    var target = TestAssertType.expectedMap(expectedMap).value();
+    var expectedValue = AssertValue.expectedMap(expectedMap);
 
     @SuppressWarnings("unchecked")
     var actual = (Map<K, V>) this.context.getAssertResult().actualContent();
 
     try {
-      assertThat(this.context.getStep(), normalizeMap(actual), is(normalizeMap(target)));
+      assertThat(
+          this.context.getStep(), normalizeMap(actual), is(normalizeMap(expectedValue.value())));
     } catch (TestArrangeNormalizerException e) {
       var reason = TestAssertReason.reasonOf(this.context.getStep(), e.getMessage());
       throw new AssertionFailedError(reason);

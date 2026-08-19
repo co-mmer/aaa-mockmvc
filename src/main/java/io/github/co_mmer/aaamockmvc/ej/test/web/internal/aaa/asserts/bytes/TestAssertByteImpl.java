@@ -15,16 +15,13 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
+import lombok.RequiredArgsConstructor;
 
 @Since("1.4.0")
+@RequiredArgsConstructor
 public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byte, TestAssertLByte {
 
   private final TestAAAContext context;
-
-  @Since("2.0.0")
-  public TestAssertByteImpl(TestAAAContext context) {
-    this.context = context;
-  }
 
   @Override
   public TestAssert2Byte isNotEmpty() {

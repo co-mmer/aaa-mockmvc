@@ -1,10 +1,11 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.answer;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.AAAType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.DomainValidation;
 
 @Since("2.1.0")
-public final class AnswerTarget<T> {
+public final class AnswerType<T> implements AAAType<T> {
 
   private static final String NULL_RESULT_TYPE_MESSAGE = "Result type must not be null";
 
@@ -21,39 +22,39 @@ public final class AnswerTarget<T> {
 
   private final Class<T> type;
 
-  private AnswerTarget(Class<T> type, String nullMessage) {
+  private AnswerType(Class<T> type, String nullMessage) {
     DomainValidation.requireNonNull(type, nullMessage);
     this.type = type;
   }
 
   @Since("2.1.0")
-  public static <T> AnswerTarget<T> result(Class<T> resultType) {
-    return new AnswerTarget<>(resultType, NULL_RESULT_TYPE_MESSAGE);
+  public static <T> AnswerType<T> result(Class<T> resultType) {
+    return new AnswerType<>(resultType, NULL_RESULT_TYPE_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static <E> AnswerTarget<E> collectionElement(Class<E> elementType) {
-    return new AnswerTarget<>(elementType, NULL_COLLECTION_ELEMENT_TYPE_MESSAGE);
+  public static <E> AnswerType<E> collectionElement(Class<E> elementType) {
+    return new AnswerType<>(elementType, NULL_COLLECTION_ELEMENT_TYPE_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static <E> AnswerTarget<E> listElement(Class<E> elementType) {
-    return new AnswerTarget<>(elementType, NULL_LIST_ELEMENT_TYPE_MESSAGE);
+  public static <E> AnswerType<E> listElement(Class<E> elementType) {
+    return new AnswerType<>(elementType, NULL_LIST_ELEMENT_TYPE_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static <E> AnswerTarget<E> setElement(Class<E> elementType) {
-    return new AnswerTarget<>(elementType, NULL_SET_ELEMENT_TYPE_MESSAGE);
+  public static <E> AnswerType<E> setElement(Class<E> elementType) {
+    return new AnswerType<>(elementType, NULL_SET_ELEMENT_TYPE_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static <K> AnswerTarget<K> mapKey(Class<K> keyType) {
-    return new AnswerTarget<>(keyType, NULL_MAP_KEY_TYPE_MESSAGE);
+  public static <K> AnswerType<K> mapKey(Class<K> keyType) {
+    return new AnswerType<>(keyType, NULL_MAP_KEY_TYPE_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static <V> AnswerTarget<V> mapValue(Class<V> valueType) {
-    return new AnswerTarget<>(valueType, NULL_MAP_VALUE_TYPE_MESSAGE);
+  public static <V> AnswerType<V> mapValue(Class<V> valueType) {
+    return new AnswerType<>(valueType, NULL_MAP_VALUE_TYPE_MESSAGE);
   }
 
   @Since("2.1.0")
@@ -67,7 +68,7 @@ public final class AnswerTarget<T> {
       return true;
     }
 
-    return other instanceof AnswerTarget<?> target && type.equals(target.type);
+    return other instanceof AnswerType<?> target && type.equals(target.type);
   }
 
   @Override

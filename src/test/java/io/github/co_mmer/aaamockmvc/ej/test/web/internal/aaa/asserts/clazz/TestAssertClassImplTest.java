@@ -103,6 +103,13 @@ class TestAssertClassImplTest extends TestAssertBase {
   class isEqualTo {
 
     @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_null_WHEN_isEqualTo_THEN_throw_IllegalArgumentException() {
+      // Act & Arrange
+      assertThrows(IllegalArgumentException.class, () -> impl.isEqualTo(null));
+    }
+
+    @Test
     void GIVEN_A1_WHEN_isEqualTo_A1_THEN_assert_true() {
       // Arrange
       useAssertResult(A1);
@@ -149,6 +156,29 @@ class TestAssertClassImplTest extends TestAssertBase {
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchAll_THEN_throw_Exception() {
       assertThrows(IllegalArgumentException.class, () -> impl.matchAll(PREDICATE_NULL));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_null_null_WHEN_matchAll_THEN_throw_Exception() {
+      assertThrows(
+          IllegalArgumentException.class, () -> impl.matchAll(PREDICATE_NULL, PREDICATE_NULL));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_null_null_null_WHEN_matchAll_THEN_throw_Exception() {
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> impl.matchAll(PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_null_null_null_null_WHEN_matchAll_THEN_throw_Exception() {
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> impl.matchAll(PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL));
     }
 
     @Test
@@ -224,6 +254,29 @@ class TestAssertClassImplTest extends TestAssertBase {
     @SuppressWarnings("all")
     void GIVEN_null_WHEN_matchAny_THEN_throw_Exception() {
       assertThrows(IllegalArgumentException.class, () -> impl.matchAny(PREDICATE_NULL));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_null_null_WHEN_matchAny_THEN_throw_Exception() {
+      assertThrows(
+          IllegalArgumentException.class, () -> impl.matchAny(PREDICATE_NULL, PREDICATE_NULL));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_null_null_null_WHEN_matchAny_THEN_throw_Exception() {
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> impl.matchAny(PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_null_null_null_null_WHEN_matchAny_THEN_throw_Exception() {
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> impl.matchAny(PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL));
     }
 
     @Test
@@ -309,8 +362,31 @@ class TestAssertClassImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("all")
-    void GIVEN_null_WHEN_matchNone_THEN_throw_NullPointerException() {
+    void GIVEN_null_WHEN_matchNone_THEN_throw_Exception() {
       assertThrows(IllegalArgumentException.class, () -> impl.matchNone(PREDICATE_NULL));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_null_null_WHEN_matchNone_THEN_throw_Exception() {
+      assertThrows(
+          IllegalArgumentException.class, () -> impl.matchNone(PREDICATE_NULL, PREDICATE_NULL));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_null_null_null_WHEN_matchNone_THEN_throw_Exception() {
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> impl.matchNone(PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL));
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void GIVEN_null_null_null_null_WHEN_matchNone_THEN_throw_Exception() {
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> impl.matchNone(PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL));
     }
 
     @Test

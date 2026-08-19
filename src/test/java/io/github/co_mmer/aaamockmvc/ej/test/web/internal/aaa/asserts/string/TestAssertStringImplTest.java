@@ -82,6 +82,12 @@ class TestAssertStringImplTest extends TestAssertBase {
   class isEqualTo {
 
     @Test
+    @SuppressWarnings("all")
+    void GIVEN_null_WHEN_isEqualTo_THEN_throw_Exception() {
+      assertThrows(IllegalArgumentException.class, () -> testAssert.isEqualTo(null));
+    }
+
+    @Test
     void GIVEN_A1_WHEN_isEqualTo_A1_THEN_success() {
       // Arrange
       useActResult(TEST_A1_JSON);
@@ -112,12 +118,6 @@ class TestAssertStringImplTest extends TestAssertBase {
       // Assert
       mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
       mockTestArrangeNormalizer.close();
-    }
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_WHEN_isEqualTo_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> testAssert.isEqualTo(null));
     }
   }
 

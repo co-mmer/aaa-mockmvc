@@ -9,21 +9,19 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert1Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert2Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert3Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertType;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
+import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 
+@Since("2.0.0")
+@RequiredArgsConstructor
 public class TestAssertBooleanImpl
     implements TestAssert1Boolean, TestAssert2Boolean, TestAssert3Boolean {
 
   private final TestAAAContext context;
-
-  @Since("2.0.0")
-  public TestAssertBooleanImpl(@NonNull TestAAAContext context) {
-    this.context = context;
-  }
 
   @Override
   public TestAssert3Boolean isNull() {
@@ -43,9 +41,9 @@ public class TestAssertBooleanImpl
 
   @Override
   public TestAssert3Boolean isEqualTo(@NonNull Boolean expectedBoolean) {
-    var target = TestAssertType.expectedBoolean(expectedBoolean).value();
+    var expectedValue = AssertValue.expectedBoolean(expectedBoolean);
     var actual = (Boolean) getActual();
-    assertThat(this.context.getStep(), actual, is(target));
+    assertThat(this.context.getStep(), actual, is(expectedValue.value()));
     return this;
   }
 

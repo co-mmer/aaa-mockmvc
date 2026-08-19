@@ -133,7 +133,7 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
     @Test
     @SuppressWarnings("all")
-    void WHEN_isEqualTo_Null_THEN_throw_Exception() {
+    void GIVEN_null_WHEN_isEqualTo_THEN_throw_Exception() {
       assertThrows(IllegalArgumentException.class, () -> impl.isEqualTo(null));
     }
 
@@ -153,34 +153,6 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
       // Act & Assert
       var ex = assertThrows(AssertionError.class, () -> impl.isEqualTo(TEST_LIST_A1_A3));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-  }
-
-  @Nested
-  class containsAnyOrder {
-
-    @SuppressWarnings("all")
-    void WHEN_contains_null_as_element_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> impl.containsAnyOrder(null));
-    }
-
-    @Test
-    void GIVEN_A1_A3_WHEN_containsAnyOrder_A3_A1_THEN_success() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A3);
-
-      // Act & Assert
-      impl.containsAnyOrder(TEST_LIST_A3_A1);
-    }
-
-    @Test
-    void GIVEN_A1_A2_WHEN_containsAnyOrder_A1_A3_THEN_failed() {
-      // Arrange
-      useAssertResult(TEST_LIST_A1_A2);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> impl.containsAnyOrder(TEST_LIST_A1_A3));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
   }
@@ -240,18 +212,46 @@ class TestAssertCollectionImplTest extends TestAssertBase {
   }
 
   @Nested
+  class containsAnyOrder {
+
+    @SuppressWarnings("all")
+    void WHEN_contains_null_as_element_THEN_throw_Exception() {
+      assertThrows(IllegalArgumentException.class, () -> impl.containsAnyOrder(null));
+    }
+
+    @Test
+    void GIVEN_A1_A3_WHEN_containsAnyOrder_A3_A1_THEN_success() {
+      // Arrange
+      useAssertResult(TEST_LIST_A1_A3);
+
+      // Act & Assert
+      impl.containsAnyOrder(TEST_LIST_A3_A1);
+    }
+
+    @Test
+    void GIVEN_A1_A2_WHEN_containsAnyOrder_A1_A3_THEN_failed() {
+      // Arrange
+      useAssertResult(TEST_LIST_A1_A2);
+
+      // Act & Assert
+      var ex = assertThrows(AssertionError.class, () -> impl.containsAnyOrder(TEST_LIST_A1_A3));
+      assertThat(ex.getMessage(), containsString(STEP_NAME));
+    }
+  }
+
+  @Nested
   class notContains {
 
     @Test
     @SuppressWarnings("all")
-    void WHEN_notContains_null_as_collection_THEN_throw_Exception() {
+    void GIVEN_nullAsCollection_WHEN_notContains_THEN_throw_Exception() {
       assertThrows(
           IllegalArgumentException.class,
           () -> impl.notContains((Collection<TestObjectSimple>) null));
     }
 
     @SuppressWarnings("all")
-    void WHEN_notContains_null_as_element_THEN_throw_Exception() {
+    void GIVEN_nullAsElement_WHEN_notContains_THEN_throw_Exception() {
       assertThrows(IllegalArgumentException.class, () -> impl.notContains((TestObjectSimple) null));
     }
 
@@ -298,25 +298,25 @@ class TestAssertCollectionImplTest extends TestAssertBase {
   class matchAll {
 
     @SuppressWarnings("all")
-    void WHEN_matchAll_null_THEN_throw_Exception() {
+    void GIVEN_null_WHEN_matchAll_THEN_throw_Exception() {
       assertThrows(IllegalArgumentException.class, () -> impl.matchAll((Predicate) null));
     }
 
     @SuppressWarnings("all")
-    void WHEN_matchAll_null_null_THEN_throw_Exception() {
+    void GIVEN_null_null_WHEN_matchAll_THEN_throw_Exception() {
       assertThrows(
           IllegalArgumentException.class, () -> impl.matchAll((Predicate) null, (Predicate) null));
     }
 
     @SuppressWarnings("all")
-    void WHEN_matchAll_null_null_null_THEN_throw_Exception() {
+    void GIVEN_null_null_null_WHEN_matchAll_THEN_throw_Exception() {
       assertThrows(
           IllegalArgumentException.class,
           () -> impl.matchAll((Predicate) null, (Predicate) null, (Predicate) null));
     }
 
     @SuppressWarnings("all")
-    void WHEN_matchAll_null_null_null_null_THEN_throw_Exception() {
+    void GIVEN_null_null_null_null_WHEN_matchAll_THEN_throw_Exception() {
       assertThrows(
           IllegalArgumentException.class,
           () ->
@@ -415,25 +415,25 @@ class TestAssertCollectionImplTest extends TestAssertBase {
   class matchAny {
 
     @SuppressWarnings("all")
-    void WHEN_matchAny_null_THEN_throw_Exception() {
+    void GIVEN_null_WHEN_matchAny_THEN_throw_Exception() {
       assertThrows(IllegalArgumentException.class, () -> impl.matchAny((Predicate) null));
     }
 
     @SuppressWarnings("all")
-    void WHEN_matchAny_null_null_THEN_throw_Exception() {
+    void GIVEN_null_null_WHEN_matchAny_THEN_throw_Exception() {
       assertThrows(
           IllegalArgumentException.class, () -> impl.matchAny((Predicate) null, (Predicate) null));
     }
 
     @SuppressWarnings("all")
-    void WHEN_matchAny_null_null_null_THEN_throw_Exception() {
+    void GIVEN_null_null_null_WHEN_matchAny_THEN_throw_Exception() {
       assertThrows(
           IllegalArgumentException.class,
           () -> impl.matchAny((Predicate) null, (Predicate) null, (Predicate) null));
     }
 
     @SuppressWarnings("all")
-    void WHEN_matchAny_null_null_null_null_THEN_throw_Exception() {
+    void GIVEN_null_null_null_null_WHEN_matchAny_THEN_throw_Exception() {
       assertThrows(
           IllegalArgumentException.class,
           () ->
@@ -529,25 +529,25 @@ class TestAssertCollectionImplTest extends TestAssertBase {
   class matchNone {
 
     @SuppressWarnings("all")
-    void WHEN_matchNone_null_THEN_throw_Exception() {
+    void GIVEN_null_WHEN_matchNone_THEN_throw_Exception() {
       assertThrows(IllegalArgumentException.class, () -> impl.matchNone((Predicate) null));
     }
 
     @SuppressWarnings("all")
-    void WHEN_matchNone_null_null_THEN_throw_Exception() {
+    void GIVEN_null_null_WHEN_matchNone_THEN_throw_Exception() {
       assertThrows(
           IllegalArgumentException.class, () -> impl.matchNone((Predicate) null, (Predicate) null));
     }
 
     @SuppressWarnings("all")
-    void WHEN_matchNone_null_null_null_THEN_throw_Exception() {
+    void GIVEN_null_null_null_WHEN_matchNone_THEN_throw_Exception() {
       assertThrows(
           IllegalArgumentException.class,
           () -> impl.matchNone((Predicate) null, (Predicate) null, (Predicate) null));
     }
 
     @SuppressWarnings("all")
-    void WHEN_matchNone_null_null_null_null_THEN_throw_Exception() {
+    void GIVEN_null_null_null_null_WHEN_matchNone_THEN_throw_Exception() {
       assertThrows(
           IllegalArgumentException.class,
           () ->

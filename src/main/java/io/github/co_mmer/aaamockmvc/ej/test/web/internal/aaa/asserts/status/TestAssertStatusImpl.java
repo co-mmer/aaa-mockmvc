@@ -8,16 +8,18 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertConten
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert2Status;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertType;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
+import lombok.RequiredArgsConstructor;
 import org.hamcrest.Matchers;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 
 @Since("1.1.0")
+@RequiredArgsConstructor
 public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert2Status {
 
   private record Status(int min, int max) {}
@@ -26,19 +28,17 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
   private static final Status REDIRECT = new Status(300, 399);
   private static final Status CLIENT = new Status(400, 499);
   private static final Status SERVER = new Status(500, 599);
-  private final TestAAAContext context;
 
-  @Since("2.0.0")
-  public TestAssertStatusImpl(@NonNull TestAAAContext context) {
-    this.context = context;
-  }
+  private final TestAAAContext context;
 
   @Override
   public TestAssert2Status is(@NonNull HttpStatus status) {
-    var target = TestAssertType.expectedStatus(status).value();
+    var expectedValue = AssertValue.expectedStatus(status);
 
     assertThat(
-        this.context.getStep(), this.context.getActResult().status(), Matchers.is(target.value()));
+        this.context.getStep(),
+        this.context.getActResult().status(),
+        Matchers.is(expectedValue.value().value()));
     return this;
   }
 

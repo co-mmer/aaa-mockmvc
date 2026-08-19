@@ -121,6 +121,13 @@ class TestAssertBooleanImplTest extends TestAssertBase {
   class isEqualTo {
 
     @Test
+    @SuppressWarnings("ConstantConditions")
+    void GIVEN_null_WHEN_isEqualTo_THEN_throw_IllegalArgumentException() {
+      // Act & Assert
+      assertThrows(IllegalArgumentException.class, () -> testAssert.isEqualTo(null));
+    }
+
+    @Test
     void GIVEN_False_WHEN_isEqualTo_THEN_assert_true() {
       // Arrange
       useAssertResult(Boolean.FALSE);
@@ -137,13 +144,6 @@ class TestAssertBooleanImplTest extends TestAssertBase {
       // Act & Assert
       var ex = assertThrows(AssertionError.class, () -> testAssert.isEqualTo(Boolean.FALSE));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_isEqualTo_THEN_throw_NullPointerException() {
-      // Act & Assert
-      assertThrows(IllegalArgumentException.class, () -> testAssert.isEqualTo(null));
     }
   }
 

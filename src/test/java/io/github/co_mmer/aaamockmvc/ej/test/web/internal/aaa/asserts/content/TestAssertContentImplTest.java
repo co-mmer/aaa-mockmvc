@@ -477,19 +477,19 @@ class TestAssertContentImplTest {
 
     @Test
     @SuppressWarnings("all")
-    void WHEN_keyIsNull_and_valueIsNull_THEN_throwException() {
+    void GIVEN_keyIsNull_and_valueIsNull_WHEN_asMap_THEN_throwException() {
       assertThrows(IllegalArgumentException.class, () -> impl.asMap(null, null));
     }
 
     @Test
     @SuppressWarnings("all")
-    void WHEN_keyIsNull_THEN_throwException() {
+    void GIVEN_keyIsNull_WHEN_asMap_THEN_throwException() {
       assertThrows(IllegalArgumentException.class, () -> impl.asMap(null, TestObjectSimple.class));
     }
 
     @Test
     @SuppressWarnings("all")
-    void WHEN_valueIsNull_THEN_throwException() {
+    void GIVEN_valueIsNull_WHEN_asMap_THEN_throwException() {
       assertThrows(IllegalArgumentException.class, () -> impl.asMap(Integer.class, null));
     }
 

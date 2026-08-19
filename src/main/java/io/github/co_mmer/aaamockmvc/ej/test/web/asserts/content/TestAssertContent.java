@@ -77,7 +77,7 @@ public interface TestAssertContent {
    * @param <C> target type
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
    *     based on the current state.
-   * @throws AssertionFailedError if the body cannot be deserialized to {@code expectedClass}
+   * @throws AssertionFailedError if the body cannot be deserialized to {@code resultClass}
    * @since 2.0.0
    */
   <C> TestAssert1Class<C> asClass(@NonNull Class<C> expectedClass) throws AssertionFailedError;
