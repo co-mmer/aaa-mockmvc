@@ -1,6 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.map;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeMap;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_OBJECT;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.MAP_WITH_NORMALIZED_KEY_COLLISION;
@@ -12,13 +11,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,20 +25,19 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.opentest4j.AssertionFailedError;
 
 @SuppressWarnings("java:S2699")
 class TestAssertMapImplTest extends TestAssertBase {
 
   private TestAssertMapImpl<Integer, TestObjectSimple> impl;
-  private TestAssertMapImpl<String, String> testAssertString;
+  private TestAssertMapImpl<String, String> implWithString;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
     this.impl = new TestAssertMapImpl<>(context);
-    this.testAssertString = new TestAssertMapImpl<>(context);
+    this.implWithString = new TestAssertMapImpl<>(context);
   }
 
   @Nested
@@ -142,20 +140,6 @@ class TestAssertMapImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_A1_A2_WHEN_isEqualTo_THEN_normalize_map_is_called() {
-      // Arrange
-      var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
-      useAssertResult(TEST_MAP_A1_A2);
-
-      // Act
-      impl.isEqualTo(TEST_MAP_A1_A2);
-
-      // Assert
-      mockTestArrangeNormalizer.verify(() -> normalizeMap(any()), times(2));
-      mockTestArrangeNormalizer.close();
-    }
-
-    @Test
     void GIVEN_collidingKeys_WHEN_isEqualTo_THEN_throw_Exception() {
       // Assert
       useAssertResult(MAP_WITH_NORMALIZED_KEY_COLLISION);
@@ -163,14 +147,35 @@ class TestAssertMapImplTest extends TestAssertBase {
       // Act
       var ex =
           assertThrows(
-              AssertionFailedError.class,
-              () -> testAssertString.isEqualTo(MAP_WITH_NORMALIZED_KEY_COLLISION));
+              IllegalArgumentException.class,
+              () -> implWithString.isEqualTo(MAP_WITH_NORMALIZED_KEY_COLLISION));
 
       // Assert
-      assertThat(ex.getMessage(), containsString("Key collision after normalization: originals"));
+      assertThat(ex.getMessage(), containsString("Key collision after NFC normalization:"));
       assertThat(ex.getMessage(), containsString("\"Café\" [U+0043 U+0061 U+0066 U+00E9]"));
-      assertThat(ex.getMessage(), containsString("vs"));
+      assertThat(ex.getMessage(), containsString("and"));
       assertThat(ex.getMessage(), containsString("\"Café\" [U+0043 U+0061 U+0066 U+0065 U+0301]"));
+    }
+
+    @Test
+    void WHEN_isEqualTo_THEN_normalizedValue_is_called() {
+      // Arrange
+      var realUnexpectedValue = AssertValue.expectedMap(TEST_MAP_A1_A2);
+      var spyUnexpectedValue = spy(realUnexpectedValue);
+
+      var mockAssertValue = mockStatic(AssertValue.class);
+      mockAssertValue
+          .when(() -> AssertValue.expectedMap(TEST_MAP_A1_A2))
+          .thenReturn(spyUnexpectedValue);
+
+      useAssertResult(TEST_MAP_A1_A2);
+
+      // Act
+      impl.isEqualTo(TEST_MAP_A1_A2);
+
+      // Assert
+      verify(spyUnexpectedValue).normalizedValue();
+      mockAssertValue.close();
     }
   }
 

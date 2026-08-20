@@ -1,14 +1,26 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeCollection;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeMap;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeObject;
+
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.DomainValidation;
+import java.text.Normalizer.Form;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import org.springframework.http.HttpStatus;
 
 @Since("2.1.0")
-public final class AssertValue<T> {
+public final class AssertValue<T, N> {
+
+  private static final Form NORMALIZATION_FORM = Form.NFC;
 
   private static final String NULL_EXPECTED_BOOLEAN_MESSAGE = "Expected boolean must not be null";
 
@@ -55,78 +67,99 @@ public final class AssertValue<T> {
   private static final String NULL_MATCH_CONDITION_AT_POSITION_MESSAGE =
       "Match condition at position %d must not be null";
 
+  private static final String NULL_ACTUAL_VALUE_MESSAGE = "Actual value must not be null";
+
+  private static final String ACTUAL_COLLECTION_TYPE_MESSAGE = "Actual value must be a collection";
+
+  private static final String ACTUAL_ELEMENTS_TYPE_MESSAGE =
+      "Actual value must be a collection or an object array";
+
+  private static final String ACTUAL_MAP_TYPE_MESSAGE = "Actual value must be a map";
+
   private final T value;
 
-  private AssertValue(T value) {
+  private final N normalizedValue;
+
+  private final Function<Object, N> actualNormalizer;
+
+  private AssertValue(T value, N normalizedValue, Function<Object, N> actualNormalizer) {
     this.value = value;
+    this.normalizedValue = normalizedValue;
+    this.actualNormalizer = actualNormalizer;
   }
 
   @Since("2.1.0")
-  public static AssertValue<Boolean> expectedBoolean(Boolean value) {
+  public static AssertValue<Boolean, Boolean> expectedBoolean(Boolean value) {
     return requireNonNull(value, NULL_EXPECTED_BOOLEAN_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static <T> AssertValue<T> expectedResponse(T value) {
-    return requireNonNull(value, NULL_EXPECTED_RESPONSE_MESSAGE);
+  public static <T> AssertValue<T, String> expectedResponse(T value) {
+    return requireNormalizedObject(value, NULL_EXPECTED_RESPONSE_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static AssertValue<String> expectedString(String value) {
-    return requireNonNull(value, NULL_EXPECTED_STRING_MESSAGE);
+  public static AssertValue<String, String> expectedString(String value) {
+    return requireNormalizedObject(value, NULL_EXPECTED_STRING_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static <E> AssertValue<Collection<E>> expectedCollection(Collection<E> value) {
-    return requireNonNull(value, NULL_EXPECTED_COLLECTION_MESSAGE);
-  }
+  public static <E> AssertValue<Collection<E>, List<String>> expectedCollection(
+      Collection<E> value) {
 
-  @SafeVarargs
-  @Since("2.1.0")
-  public static <E> AssertValue<E[]> expectedElements(E... values) {
-    return requireElements(values, NULL_EXPECTED_ELEMENTS_MESSAGE, NULL_EXPECTED_ELEMENT_MESSAGE);
-  }
-
-  @Since("2.1.0")
-  public static <E> AssertValue<Collection<E>> unexpectedElements(Collection<E> values) {
-    return requireNonNull(values, NULL_UNEXPECTED_ELEMENTS_MESSAGE);
+    return requireNormalizedCollection(value, NULL_EXPECTED_COLLECTION_MESSAGE);
   }
 
   @SafeVarargs
   @Since("2.1.0")
-  public static <E> AssertValue<E[]> unexpectedElements(E... values) {
-    return requireElements(
+  public static <E> AssertValue<E[], List<String>> expectedElements(E... values) {
+    return requireNormalizedElements(
+        values, NULL_EXPECTED_ELEMENTS_MESSAGE, NULL_EXPECTED_ELEMENT_MESSAGE);
+  }
+
+  @Since("2.1.0")
+  public static <E> AssertValue<Collection<E>, List<String>> unexpectedElements(
+      Collection<E> values) {
+
+    return requireNormalizedCollection(values, NULL_UNEXPECTED_ELEMENTS_MESSAGE);
+  }
+
+  @SafeVarargs
+  @Since("2.1.0")
+  public static <E> AssertValue<E[], List<String>> unexpectedElements(E... values) {
+    return requireNormalizedElements(
         values, NULL_UNEXPECTED_ELEMENTS_MESSAGE, NULL_UNEXPECTED_ELEMENT_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static <K, V> AssertValue<Map<K, V>> expectedMap(Map<K, V> value) {
-    return requireNonNull(value, NULL_EXPECTED_MAP_MESSAGE);
+  public static <K, V> AssertValue<Map<K, V>, Map<String, String>> expectedMap(Map<K, V> value) {
+    return requireNormalizedMap(value);
   }
 
   @Since("2.1.0")
-  public static AssertValue<HttpStatus> expectedStatus(HttpStatus value) {
+  public static AssertValue<HttpStatus, HttpStatus> expectedStatus(HttpStatus value) {
     return requireNonNull(value, NULL_EXPECTED_STATUS_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static AssertValue<String> expectedHeaderName(String value) {
-    return requireNonNull(value, NULL_EXPECTED_HEADER_NAME_MESSAGE);
+  public static AssertValue<String, String> expectedHeaderName(String value) {
+    return requireNormalizedObject(value, NULL_EXPECTED_HEADER_NAME_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static AssertValue<String> unexpectedHeaderName(String value) {
-    return requireNonNull(value, NULL_UNEXPECTED_HEADER_NAME_MESSAGE);
+  public static AssertValue<String, String> unexpectedHeaderName(String value) {
+    return requireNormalizedObject(value, NULL_UNEXPECTED_HEADER_NAME_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static AssertValue<String> expectedHeaderValue(String value) {
-    return requireNonNull(value, NULL_EXPECTED_HEADER_VALUE_MESSAGE);
+  public static AssertValue<String, String> expectedHeaderValue(String value) {
+    return requireNormalizedObject(value, NULL_EXPECTED_HEADER_VALUE_MESSAGE);
   }
 
   @Since("2.1.0")
-  public static AssertValue<String[]> expectedHeaderValues(String... values) {
-    return requireElements(
+  public static AssertValue<String[], List<String>> expectedHeaderValues(String... values) {
+
+    return requireNormalizedElements(
         values,
         NULL_EXPECTED_HEADER_VALUES_MESSAGE,
         NULL_EXPECTED_HEADER_VALUE_AT_POSITION_MESSAGE);
@@ -134,9 +167,10 @@ public final class AssertValue<T> {
 
   @SafeVarargs
   @Since("2.1.0")
-  public static <T> AssertValue<Predicate<T>[]> matchConditions(Predicate<T>... conditions) {
-    return requireElements(
-        conditions, NULL_MATCH_CONDITIONS_MESSAGE, NULL_MATCH_CONDITION_AT_POSITION_MESSAGE);
+  public static <T> AssertValue<Predicate<T>[], Predicate<T>[]> matchConditions(
+      Predicate<T>... conditions) {
+
+    return requireElements(conditions);
   }
 
   @Since("2.1.0")
@@ -144,21 +178,125 @@ public final class AssertValue<T> {
     return value;
   }
 
-  private static <T> AssertValue<T> requireNonNull(T value, String message) {
-    DomainValidation.requireNonNull(value, message);
-    return new AssertValue<>(value);
+  @Since("2.1.0")
+  public N normalizedValue() {
+    return normalizedValue;
   }
 
-  private static <T> AssertValue<T[]> requireElements(
-      T[] values, String nullValuesMessage, String nullElementMessage) {
+  @Since("2.1.0")
+  public N normalizeActual(Object actual) {
+    DomainValidation.requireNonNull(actual, NULL_ACTUAL_VALUE_MESSAGE);
+    return actualNormalizer.apply(actual);
+  }
+
+  private static <T> AssertValue<T, T> requireNonNull(T value, String message) {
+
+    DomainValidation.requireNonNull(value, message);
+
+    return new AssertValue<>(value, value, AssertValue::cast);
+  }
+
+  private static <T> AssertValue<T, String> requireNormalizedObject(
+      T value, String nullValueMessage) {
+
+    DomainValidation.requireNonNull(value, nullValueMessage);
+
+    return new AssertValue<>(
+        value,
+        normalizeObject(value, NORMALIZATION_FORM),
+        actual -> normalizeObject(actual, NORMALIZATION_FORM));
+  }
+
+  private static <E> AssertValue<Collection<E>, List<String>> requireNormalizedCollection(
+      Collection<E> value, String nullValueMessage) {
+
+    DomainValidation.requireNonNull(value, nullValueMessage);
+
+    return new AssertValue<>(
+        value,
+        normalizeCollection(value, NORMALIZATION_FORM),
+        actual -> normalizeCollection(requireCollection(actual), NORMALIZATION_FORM));
+  }
+
+  private static <E> AssertValue<E[], List<String>> requireNormalizedElements(
+      E[] values, String nullValuesMessage, String nullElementMessage) {
+
+    requireElementsNotNull(values, nullValuesMessage, nullElementMessage);
+
+    return new AssertValue<>(
+        values, normalizeArray(values), AssertValue::normalizeCollectionOrArray);
+  }
+
+  private static <K, V> AssertValue<Map<K, V>, Map<String, String>> requireNormalizedMap(
+      Map<K, V> value) {
+
+    DomainValidation.requireNonNull(value, AssertValue.NULL_EXPECTED_MAP_MESSAGE);
+
+    return new AssertValue<>(
+        value, normalizeMapSnapshot(value), actual -> normalizeMapSnapshot(requireMap(actual)));
+  }
+
+  private static <T> AssertValue<T[], T[]> requireElements(T[] values) {
+
+    requireElementsNotNull(
+        values,
+        AssertValue.NULL_MATCH_CONDITIONS_MESSAGE,
+        AssertValue.NULL_MATCH_CONDITION_AT_POSITION_MESSAGE);
+
+    return new AssertValue<>(values, values, AssertValue::cast);
+  }
+
+  private static void requireElementsNotNull(
+      Object[] values, String nullValuesMessage, String nullElementMessage) {
 
     DomainValidation.requireNonNull(values, nullValuesMessage);
 
     for (var i = 0; i < values.length; i++) {
       DomainValidation.requireNonNull(values[i], nullElementMessage.formatted(i + 1));
     }
+  }
 
-    return new AssertValue<>(values);
+  private static Collection<?> requireCollection(Object actual) {
+    if (actual instanceof Collection<?> collection) {
+      return collection;
+    }
+
+    throw new IllegalArgumentException(ACTUAL_COLLECTION_TYPE_MESSAGE);
+  }
+
+  private static Map<?, ?> requireMap(Object actual) {
+    if (actual instanceof Map<?, ?> map) {
+      return map;
+    }
+
+    throw new IllegalArgumentException(ACTUAL_MAP_TYPE_MESSAGE);
+  }
+
+  private static List<String> normalizeCollectionOrArray(Object actual) {
+    if (actual instanceof Collection<?> collection) {
+      return normalizeCollection(collection, NORMALIZATION_FORM);
+    }
+
+    if (actual instanceof Object[] array) {
+      return normalizeArray(array);
+    }
+
+    throw new IllegalArgumentException(ACTUAL_ELEMENTS_TYPE_MESSAGE);
+  }
+
+  private static List<String> normalizeArray(Object[] values) {
+    return Arrays.stream(values).map(value -> normalizeObject(value, NORMALIZATION_FORM)).toList();
+  }
+
+  private static Map<String, String> normalizeMapSnapshot(Map<?, ?> value) {
+    var normalized = normalizeMap(value, NORMALIZATION_FORM);
+
+    return Collections.unmodifiableMap(new LinkedHashMap<>(normalized));
+  }
+
+  @SuppressWarnings("unchecked")
+  private static <T> T cast(Object value) {
+    return (T) value;
   }
 
   @Override
@@ -167,16 +305,17 @@ public final class AssertValue<T> {
       return true;
     }
 
-    return other instanceof AssertValue<?> target && value.equals(target.value);
+    return other instanceof AssertValue<?, ?> target
+        && normalizedValue.equals(target.normalizedValue);
   }
 
   @Override
   public int hashCode() {
-    return value.hashCode();
+    return normalizedValue.hashCode();
   }
 
   @Override
   public String toString() {
-    return value != null ? value.toString() : "null";
+    return value.toString();
   }
 }

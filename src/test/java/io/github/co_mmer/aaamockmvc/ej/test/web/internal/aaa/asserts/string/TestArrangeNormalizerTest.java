@@ -101,13 +101,13 @@ class TestArrangeNormalizerTest {
     // Act
     var ex =
         assertThrows(
-            TestArrangeNormalizerException.class,
+            IllegalArgumentException.class,
             () -> normalizeMap(COLLISION_CHARSEQ_FIRST_NONCHARSEQ_SECOND, Form.NFC));
 
     // Assert
-    assertThat(ex.getMessage(), containsString("Key collision after normalization: originals"));
+    assertThat(ex.getMessage(), containsString("Key collision after NFC normalization:"));
     assertThat(ex.getMessage(), containsString("\"Café\" [U+0043 U+0061 U+0066 U+00E9]"));
-    assertThat(ex.getMessage(), containsString("vs"));
+    assertThat(ex.getMessage(), containsString("and"));
     assertThat(ex.getMessage(), containsString("\"Café\" [U+0043 U+0061 U+0066 U+0065 U+0301]"));
   }
 
@@ -117,30 +117,30 @@ class TestArrangeNormalizerTest {
     // Act
     var ex =
         assertThrows(
-            TestArrangeNormalizerException.class,
+            IllegalArgumentException.class,
             () -> normalizeMap(COLLISION_NONCHARSEQ_FIRST_CHARSEQ_SECOND, Form.NFC));
 
     // Assert
-    assertThat(ex.getMessage(), containsString("Key collision after normalization: originals"));
+    assertThat(ex.getMessage(), containsString("Key collision after NFC normalization:"));
     assertThat(ex.getMessage(), containsString("\"Café\" [U+0043 U+0061 U+0066 U+00E9]"));
-    assertThat(ex.getMessage(), containsString("vs"));
+    assertThat(ex.getMessage(), containsString("and"));
     assertThat(ex.getMessage(), containsString("\"Café\" [U+0043 U+0061 U+0066 U+0065 U+0301]"));
   }
 
   @Test
   @SuppressWarnings("all")
-  void GIVEN_mapWithCollidingKeys_WHEN_normalizeMap_THEN_throw_TestArrangeNormalizerException() {
+  void GIVEN_mapWithCollidingKeys_WHEN_normalizeMap_THEN_throw_IllegalArgumentException() {
     var input = new HashMap<String, String>();
     input.put("Cafe\u0301", "value1");
     input.put("Caf\u00E9", "value2");
 
     // Act
-    var ex = assertThrows(TestArrangeNormalizerException.class, () -> normalizeMap(input));
+    var ex = assertThrows(IllegalArgumentException.class, () -> normalizeMap(input));
 
     // Assert
-    assertThat(
-        ex.getMessage(),
-        is(
-            "Key collision after normalization: originals \"Café\" [U+0043 U+0061 U+0066 U+0065 U+0301] vs \"Café\" [U+0043 U+0061 U+0066 U+00E9]"));
+    assertThat(ex.getMessage(), containsString("Key collision after NFC normalization:"));
+    assertThat(ex.getMessage(), containsString("\"Café\" [U+0043 U+0061 U+0066 U+00E9]"));
+    assertThat(ex.getMessage(), containsString("and"));
+    assertThat(ex.getMessage(), containsString("\"Café\" [U+0043 U+0061 U+0066 U+0065 U+0301]"));
   }
 }

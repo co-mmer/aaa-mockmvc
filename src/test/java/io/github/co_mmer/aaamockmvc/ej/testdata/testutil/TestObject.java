@@ -28,6 +28,9 @@ public final class TestObject {
   public static final TestObjectMatch B1 = new TestObjectMatch(ID1, B, NEW);
   public static final TestObjectMatch B2 = new TestObjectMatch(ID2, B, NEW);
 
+  @SuppressWarnings("all")
+  public static final TestObjectSimple A1_NFD = new TestObjectSimple(ID1, "Cafe\u0301");
+
   public static final List<TestObjectMatch> TEST_LIST_B1NEW_B2NEW = List.of(B1, B2);
 
   public static final List<TestObjectSimple> TEST_LIST_A1_A2 = List.of(A1, A2);

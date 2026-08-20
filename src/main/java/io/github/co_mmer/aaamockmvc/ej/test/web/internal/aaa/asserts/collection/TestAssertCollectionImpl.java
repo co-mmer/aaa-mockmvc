@@ -67,9 +67,7 @@ public final class TestAssertCollectionImpl<E>
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
     assertThat(
-        this.context.getStep(),
-        normalizeCollection(actual),
-        is(normalizeCollection(expectedValue.value())));
+        this.context.getStep(), normalizeCollection(actual), is(expectedValue.normalizedValue()));
     return this;
   }
 
@@ -78,7 +76,7 @@ public final class TestAssertCollectionImpl<E>
 
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    var normalizeExpected = normalizeCollection(expectedValue.value()).toArray(String[]::new);
+    var normalizeExpected = expectedValue.normalizedValue().toArray(String[]::new);
     var normalizeActual = normalizeCollection(actual);
     assertThat(this.context.getStep(), normalizeActual, hasItems(normalizeExpected));
     return this;
@@ -95,10 +93,9 @@ public final class TestAssertCollectionImpl<E>
 
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    var normalizeExpected = normalizeCollection(expectedValue.value());
+    var normalizeExpected = expectedValue.normalizedValue().toArray();
     var normalizeActual = normalizeCollection(actual);
-    assertThat(
-        this.context.getStep(), normalizeActual, containsInAnyOrder(normalizeExpected.toArray()));
+    assertThat(this.context.getStep(), normalizeActual, containsInAnyOrder(normalizeExpected));
     return this;
   }
 
@@ -107,7 +104,7 @@ public final class TestAssertCollectionImpl<E>
 
     @SuppressWarnings("unchecked")
     var actual = (Collection<E>) this.context.getAssertResult().actualContent();
-    var normalizeExpected = normalizeCollection(unexpectedValue.value()).toArray(String[]::new);
+    var normalizeExpected = unexpectedValue.normalizedValue().toArray(String[]::new);
     var normalizeActual = normalizeCollection(actual);
     assertThat(this.context.getStep(), normalizeActual, not(hasItems(normalizeExpected)));
     return this;

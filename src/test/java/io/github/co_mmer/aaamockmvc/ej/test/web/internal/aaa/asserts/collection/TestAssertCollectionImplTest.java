@@ -20,10 +20,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertMatch;
@@ -155,6 +158,27 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var ex = assertThrows(AssertionError.class, () -> impl.isEqualTo(TEST_LIST_A1_A3));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
+
+    @Test
+    void WHEN_isEqualTo_THEN_normalizedValue_is_called() {
+      // Arrange
+      var realUnexpectedValue = AssertValue.expectedCollection(TEST_LIST_A1_A2);
+      var spyUnexpectedValue = spy(realUnexpectedValue);
+
+      var mockAssertValue = mockStatic(AssertValue.class);
+      mockAssertValue
+          .when(() -> AssertValue.expectedCollection(any(Collection.class)))
+          .thenReturn(spyUnexpectedValue);
+
+      useAssertResult(TEST_LIST_A1_A2);
+
+      // Act
+      impl.isEqualTo(TEST_LIST_A1_A2);
+
+      // Assert
+      verify(spyUnexpectedValue).normalizedValue();
+      mockAssertValue.close();
+    }
   }
 
   @Nested
@@ -209,6 +233,27 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       var ex = assertThrows(AssertionError.class, () -> impl.contains(A3));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
     }
+
+    @Test
+    void WHEN_contains_THEN_normalizedValue_is_called() {
+      // Arrange
+      var realUnexpectedValue = AssertValue.expectedCollection(TEST_LIST_A1_A2);
+      var spyUnexpectedValue = spy(realUnexpectedValue);
+
+      var mockAssertValue = mockStatic(AssertValue.class);
+      mockAssertValue
+          .when(() -> AssertValue.expectedCollection(any(Collection.class)))
+          .thenReturn(spyUnexpectedValue);
+
+      useAssertResult(TEST_LIST_A1_A2);
+
+      // Act
+      impl.contains(TEST_LIST_A1_A2);
+
+      // Assert
+      verify(spyUnexpectedValue).normalizedValue();
+      mockAssertValue.close();
+    }
   }
 
   @Nested
@@ -236,6 +281,27 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       var ex = assertThrows(AssertionError.class, () -> impl.containsAnyOrder(TEST_LIST_A1_A3));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
+    }
+
+    @Test
+    void WHEN_containsAnyOrder_THEN_normalizedValue_is_called() {
+      // Arrange
+      var realUnexpectedValue = AssertValue.expectedCollection(TEST_LIST_A1_A2);
+      var spyUnexpectedValue = spy(realUnexpectedValue);
+
+      var mockAssertValue = mockStatic(AssertValue.class);
+      mockAssertValue
+          .when(() -> AssertValue.expectedCollection(any(Collection.class)))
+          .thenReturn(spyUnexpectedValue);
+
+      useAssertResult(TEST_LIST_A1_A2);
+
+      // Act
+      impl.containsAnyOrder(TEST_LIST_A1_A2);
+
+      // Assert
+      verify(spyUnexpectedValue).normalizedValue();
+      mockAssertValue.close();
     }
   }
 
@@ -291,6 +357,27 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Act & Assert
       var ex = assertThrows(AssertionError.class, () -> impl.notContains(TEST_LIST_A1_A2));
       assertThat(ex.getMessage(), containsString(STEP_NAME));
+    }
+
+    @Test
+    void WHEN_notContains_THEN_normalizedValue_is_called() {
+      // Arrange
+      var realUnexpectedValue = AssertValue.unexpectedElements(TEST_LIST_A3_A4);
+      var spyUnexpectedValue = spy(realUnexpectedValue);
+
+      var mockAssertValue = mockStatic(AssertValue.class);
+      mockAssertValue
+          .when(() -> AssertValue.unexpectedElements(any(Collection.class)))
+          .thenReturn(spyUnexpectedValue);
+
+      useAssertResult(TEST_LIST_A1_A2);
+
+      // Act
+      impl.notContains(TEST_LIST_A3_A4);
+
+      // Assert
+      verify(spyUnexpectedValue).normalizedValue();
+      mockAssertValue.close();
     }
   }
 

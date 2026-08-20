@@ -16,9 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertMatch;
@@ -103,9 +104,8 @@ class TestAssertClassImplTest extends TestAssertBase {
   class isEqualTo {
 
     @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_isEqualTo_THEN_throw_IllegalArgumentException() {
-      // Act & Arrange
+    @SuppressWarnings("all")
+    void WHEN_isEqualTo_Null_THEN_throw_Exception() {
       assertThrows(IllegalArgumentException.class, () -> impl.isEqualTo(null));
     }
 
@@ -129,12 +129,6 @@ class TestAssertClassImplTest extends TestAssertBase {
     }
 
     @Test
-    @SuppressWarnings("all")
-    void WHEN_isEqualTo_Null_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> impl.isEqualTo(null));
-    }
-
-    @Test
     void GIVEN_A1_WHEN_isEqualTo_A1_THEN_normalize_object_is_called() {
       // Arrange
       var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
@@ -144,8 +138,27 @@ class TestAssertClassImplTest extends TestAssertBase {
       impl.isEqualTo(A1);
 
       // Assert
-      mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
+      mockTestArrangeNormalizer.verify(() -> normalizeObject(any()));
       mockTestArrangeNormalizer.close();
+    }
+
+    @Test
+    void WHEN_isEqualTo_THEN_normalizedValue_is_called() {
+      // Arrange
+      var realUnexpectedValue = AssertValue.expectedResponse(A1);
+      var spyUnexpectedValue = spy(realUnexpectedValue);
+
+      var mockAssertValue = mockStatic(AssertValue.class);
+      mockAssertValue.when(() -> AssertValue.expectedResponse(A1)).thenReturn(spyUnexpectedValue);
+
+      useAssertResult(A1);
+
+      // Act
+      impl.isEqualTo(A1);
+
+      // Assert
+      verify(spyUnexpectedValue).normalizedValue();
+      mockAssertValue.close();
     }
   }
 

@@ -56,9 +56,7 @@ public final class TestAssertClassImpl<T>
     T actual = (T) getActual();
     assertThat(this.context.getStep(), actual.getClass(), is(expectedValue.value().getClass()));
     assertThat(
-        this.context.getStep(),
-        normalizeObject(actual),
-        is(normalizeObject(expectedValue.value())));
+        this.context.getStep(), normalizeObject(actual), is(expectedValue.normalizedValue()));
     return this;
   }
 

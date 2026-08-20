@@ -23,8 +23,11 @@ public final class TestArrangeNormalizer {
 
   @Since("1.4.0")
   public static String normalizeObject(Object actual, Form form) {
-    var s = (actual instanceof CharSequence cs) ? handlingCharSequence(cs) : actual.toString();
-    return Normalizer.normalize(s, form);
+    return Normalizer.normalize(actual.toString(), form);
+  }
+
+  private static String handlingCharSequence(CharSequence cs) {
+    return cs.toString();
   }
 
   @Since("1.4.0")
@@ -34,61 +37,57 @@ public final class TestArrangeNormalizer {
 
   @Since("1.4.0")
   public static List<String> normalizeCollection(Collection<?> actual, Form form) {
-    return actual.stream().map(elem -> normalizeObject(elem, form)).toList();
+    return actual.stream().map(element -> normalizeObject(element, form)).toList();
   }
 
   @Since("1.3.0")
-  public static Map<String, String> normalizeMap(Map<?, ?> actual)
-      throws TestArrangeNormalizerException {
+  public static Map<String, String> normalizeMap(Map<?, ?> actual) {
     return normalizeMap(actual, Form.NFC);
   }
 
   @Since("1.3.0")
-  public static Map<String, String> normalizeMap(Map<?, ?> actual, Form form)
-      throws TestArrangeNormalizerException {
+  public static Map<String, String> normalizeMap(Map<?, ?> actual, Form form) {
     var result = new LinkedHashMap<String, String>();
-    var firstOriginalKeyByNormalized = new HashMap<String, Object>();
+    var originalKeys = new HashMap<String, Object>();
 
-    for (var e : actual.entrySet()) {
-      var key = e.getKey();
-      var normalizedKey = getNormalized(form, key);
+    for (var entry : actual.entrySet()) {
+      var originalKey = entry.getKey();
+      var normalizedKey = normalizeNullable(originalKey, form);
 
-      var value = e.getValue();
-      var normalizedValue = getNormalized(form, value);
-
-      var firstOriginal = firstOriginalKeyByNormalized.putIfAbsent(normalizedKey, key);
-      if (firstOriginal != null) {
-        var left = describeOriginal(firstOriginal);
-        var right = describeOriginal(key);
-        throw new TestArrangeNormalizerException(
-            "Key collision after normalization: originals " + left + " vs " + right);
+      if (originalKeys.containsKey(normalizedKey)) {
+        throw keyCollision(form, originalKeys.get(normalizedKey), originalKey, normalizedKey);
       }
 
-      result.put(normalizedKey, normalizedValue);
+      originalKeys.put(normalizedKey, originalKey);
+      result.put(normalizedKey, normalizeNullable(entry.getValue(), form));
     }
+
     return result;
   }
 
-  private static String getNormalized(Form form, Object object) {
-    return (object == null) ? null : normalizeObject(object, form);
+  private static String normalizeNullable(Object value, Form form) {
+    return value == null ? null : normalizeObject(value, form);
   }
 
-  private static String describeOriginal(Object o) {
-    var s = (o instanceof CharSequence cs) ? handlingCharSequence(cs) : handleOtherObject(o);
-    return "\"" + s + "\" [" + codePointsOf(s) + "]";
+  private static IllegalArgumentException keyCollision(
+      Form form, Object firstKey, Object secondKey, String normalizedKey) {
+
+    var message =
+        """
+            Key collision after %s normalization: %s and %s both become %s
+            """
+            .formatted(form, describe(firstKey), describe(secondKey), describe(normalizedKey))
+            .strip();
+
+    return new IllegalArgumentException(message);
   }
 
-  private static String handlingCharSequence(CharSequence cs) {
-    return cs.toString();
+  private static String describe(Object value) {
+    var text = String.valueOf(value);
+    return "\"%s\" [%s]".formatted(text, codePointsOf(text));
   }
 
-  private static String handleOtherObject(Object o) {
-    return String.valueOf(o);
-  }
-
-  private static String codePointsOf(String s) {
-    return s.codePoints()
-        .mapToObj(cp -> String.format("U+%04X", cp))
-        .collect(Collectors.joining(" "));
+  private static String codePointsOf(String value) {
+    return value.codePoints().mapToObj("U+%04X"::formatted).collect(Collectors.joining(" "));
   }
 }
