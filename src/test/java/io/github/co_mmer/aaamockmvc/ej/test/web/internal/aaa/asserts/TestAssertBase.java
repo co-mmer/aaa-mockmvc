@@ -39,6 +39,6 @@ public abstract class TestAssertBase {
   }
 
   protected <T> void useAssertResult(T actual) {
-    this.context.setAssertResult(new TestAssertResult<>(actual));
+    this.context.setAssertOperand(AssertOperand.clazz(actual));
   }
 }

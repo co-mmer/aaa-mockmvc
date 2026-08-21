@@ -30,7 +30,7 @@ public class TestAssertBooleanImpl
   }
 
   private Object getActual() {
-    return this.context.getAssertResult().actualContent();
+    return this.context.getAssertOperand().actual();
   }
 
   @Override

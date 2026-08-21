@@ -53,9 +53,9 @@ class TestAssertContentImplTest {
       impl.asBoolean();
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), is(TEST_BOOLEAN));
+      assertThat(stored.actual(), is(TEST_BOOLEAN));
     }
 
     @ParameterizedTest
@@ -69,9 +69,9 @@ class TestAssertContentImplTest {
       impl.asBoolean();
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), nullValue());
+      assertThat(stored.actual(), nullValue());
     }
 
     @Test
@@ -86,7 +86,7 @@ class TestAssertContentImplTest {
           ex.getMessage(),
           is(
               "'content().asBoolean()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to Boolean"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
   }
 
@@ -102,9 +102,9 @@ class TestAssertContentImplTest {
       impl.asString();
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), is(TEST_A1_JSON));
+      assertThat(stored.actual(), is(TEST_A1_JSON));
     }
 
     @ParameterizedTest
@@ -118,9 +118,9 @@ class TestAssertContentImplTest {
       impl.asString();
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), is(body));
+      assertThat(stored.actual(), is(body));
     }
   }
 
@@ -137,9 +137,9 @@ class TestAssertContentImplTest {
       impl.asBytes();
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), is(bytes));
+      assertThat(stored.actual(), is(bytes));
     }
 
     @Test
@@ -152,9 +152,9 @@ class TestAssertContentImplTest {
       impl.asBytes();
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat((byte[]) stored.actualContent(), is(new byte[0]));
+      assertThat((byte[]) stored.actual(), is(new byte[0]));
     }
 
     @Test
@@ -166,9 +166,9 @@ class TestAssertContentImplTest {
       impl.asBytes();
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), nullValue());
+      assertThat(stored.actual(), nullValue());
     }
   }
 
@@ -190,9 +190,9 @@ class TestAssertContentImplTest {
       impl.asClass(TestObjectSimple.class);
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), is(A1));
+      assertThat(stored.actual(), is(A1));
     }
 
     @ParameterizedTest
@@ -206,9 +206,9 @@ class TestAssertContentImplTest {
       impl.asClass(TestObjectSimple.class);
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), nullValue());
+      assertThat(stored.actual(), nullValue());
     }
 
     @Test
@@ -223,7 +223,7 @@ class TestAssertContentImplTest {
           ex.getMessage(),
           is(
               "'content().asClass()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to String"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
   }
 
@@ -245,9 +245,9 @@ class TestAssertContentImplTest {
       impl.asCollection(TestObjectSimple.class);
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), is(TEST_LIST_A1_A2));
+      assertThat(stored.actual(), is(TEST_LIST_A1_A2));
     }
 
     @ParameterizedTest
@@ -261,9 +261,9 @@ class TestAssertContentImplTest {
       impl.asCollection(TestObjectSimple.class);
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), nullValue());
+      assertThat(stored.actual(), nullValue());
     }
 
     @Test
@@ -279,7 +279,7 @@ class TestAssertContentImplTest {
           ex.getMessage(),
           is(
               "'content().asCollection()' — Reason: Response body '[{\"id\":1,\"name\":\"A\"},{\"id\":2,\"name\":\"A\"}]' cannot be mapped to String"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
 
     @Test
@@ -296,7 +296,7 @@ class TestAssertContentImplTest {
           ex.getMessage(),
           is(
               "'content().asCollection()' — Reason: Response body '{not-valid-json' cannot be mapped to TestObjectSimple"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
   }
 
@@ -318,9 +318,9 @@ class TestAssertContentImplTest {
       impl.asList(TestObjectSimple.class);
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), is(TEST_LIST_A1_A2));
+      assertThat(stored.actual(), is(TEST_LIST_A1_A2));
     }
 
     @ParameterizedTest
@@ -334,9 +334,9 @@ class TestAssertContentImplTest {
       impl.asList(TestObjectSimple.class);
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), nullValue());
+      assertThat(stored.actual(), nullValue());
     }
 
     @Test
@@ -352,7 +352,7 @@ class TestAssertContentImplTest {
           ex.getMessage(),
           is(
               "'content().asList()' — Reason: Response body '[{\"id\":1,\"name\":\"A\"},{\"id\":2,\"name\":\"A\"}]' cannot be mapped to String"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
 
     @Test
@@ -368,7 +368,7 @@ class TestAssertContentImplTest {
           ex.getMessage(),
           is(
               "'content().asList()' — Reason: Response body '{not-valid-json' cannot be mapped to TestObjectSimple"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
 
     @Test
@@ -384,7 +384,7 @@ class TestAssertContentImplTest {
           ex.getMessage(),
           is(
               "'content().asList()' — Reason: Response body '{\"id\":1,\"name\":\"A\"}' cannot be mapped to TestObjectSimple"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
   }
 
@@ -406,9 +406,9 @@ class TestAssertContentImplTest {
       impl.asSet(TestObjectSimple.class);
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), is(TEST_SET_A1_A2));
+      assertThat(stored.actual(), is(TEST_SET_A1_A2));
     }
 
     @ParameterizedTest
@@ -422,9 +422,9 @@ class TestAssertContentImplTest {
       impl.asSet(TestObjectSimple.class);
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), nullValue());
+      assertThat(stored.actual(), nullValue());
     }
 
     @Test
@@ -438,7 +438,7 @@ class TestAssertContentImplTest {
       // Assert
       assertThat(ex.getMessage(), containsString("'content().asSet()' — Reason: Response body "));
       assertThat(ex.getMessage(), containsString("cannot be mapped to String"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
 
     @Test
@@ -454,7 +454,7 @@ class TestAssertContentImplTest {
           ex.getMessage(),
           is(
               "'content().asSet()' — Reason: Response body '{not-valid-json' cannot be mapped to TestObjectSimple"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
 
     @Test
@@ -468,7 +468,7 @@ class TestAssertContentImplTest {
       // Assert
       assertThat(ex.getMessage(), containsString("'content().asSet()' — Reason: Response body "));
       assertThat(ex.getMessage(), containsString("cannot be mapped to TestObjectSimple"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
   }
 
@@ -502,9 +502,9 @@ class TestAssertContentImplTest {
       impl.asMap(Integer.class, TestObjectSimple.class);
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), is(TEST_MAP_A1_A2));
+      assertThat(stored.actual(), is(TEST_MAP_A1_A2));
     }
 
     @ParameterizedTest
@@ -518,9 +518,9 @@ class TestAssertContentImplTest {
       impl.asMap(Integer.class, TestObjectSimple.class);
 
       // Assert
-      var stored = context.getAssertResult();
+      var stored = context.getAssertOperand();
       assertThat(stored, notNullValue());
-      assertThat(stored.actualContent(), nullValue());
+      assertThat(stored.actual(), nullValue());
     }
 
     @Test
@@ -537,7 +537,7 @@ class TestAssertContentImplTest {
       assertThat(ex.getMessage(), containsString("'content().asMap()' — Reason: Response body "));
       assertThat(
           ex.getMessage(), containsString("cannot be mapped to Map<Boolean, TestObjectSimple>"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
 
     @Test
@@ -552,7 +552,7 @@ class TestAssertContentImplTest {
       // Assert
       assertThat(ex.getMessage(), containsString("'content().asMap()' — Reason: Response body "));
       assertThat(ex.getMessage(), containsString("cannot be mapped to Map<Integer, String>"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
 
     @Test
@@ -567,7 +567,7 @@ class TestAssertContentImplTest {
       // Assert
       assertThat(ex.getMessage(), containsString("'content().asMap()' — Reason: Response body "));
       assertThat(ex.getMessage(), containsString("cannot be mapped to Map<String, String>"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
 
     @Test
@@ -584,7 +584,7 @@ class TestAssertContentImplTest {
       assertThat(ex.getMessage(), containsString("'content().asMap()' — Reason: Response body "));
       assertThat(
           ex.getMessage(), containsString("cannot be mapped to Map<Integer, TestObjectSimple>"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
 
     @Test
@@ -601,7 +601,7 @@ class TestAssertContentImplTest {
       assertThat(ex.getMessage(), containsString("'content().asMap()' — Reason: Response body "));
       assertThat(
           ex.getMessage(), containsString("cannot be mapped to Map<Integer, TestObjectSimple>"));
-      assertThat(context.getAssertResult(), nullValue());
+      assertThat(context.getAssertOperand(), nullValue());
     }
   }
 }

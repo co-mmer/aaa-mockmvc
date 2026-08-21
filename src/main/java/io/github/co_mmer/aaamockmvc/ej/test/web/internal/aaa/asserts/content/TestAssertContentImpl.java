@@ -9,8 +9,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Co
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertOperand;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertType;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertResult;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.bool.TestAssertBooleanImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.bytes.TestAssertByteImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.clazz.TestAssertClassImpl;
@@ -39,7 +39,7 @@ public class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var actual = TestGenericMapper.parse(mapper, content, assertType);
-      this.context.setAssertResult(new TestAssertResult<>(actual));
+      this.context.setAssertOperand(AssertOperand.bool(actual));
       return new TestAssertBooleanImpl(this.context);
     } catch (TestGenericMapperException e) {
       var reason =
@@ -50,15 +50,15 @@ public class TestAssertContentImpl implements TestAssertContent {
 
   @Override
   public TestAssert1String asString() {
-    var assertResult = new TestAssertResult<>(this.context.getActResult().contentAsString());
-    this.context.setAssertResult(assertResult);
+    var assertOperand = AssertOperand.string(this.context.getActResult().contentAsString());
+    this.context.setAssertOperand(assertOperand);
     return new TestAssertStringImpl(this.context);
   }
 
   @Override
   public TestAssert1Byte asBytes() {
-    var assertResult = new TestAssertResult<>(this.context.getActResult().contentAsBytes());
-    this.context.setAssertResult(assertResult);
+    var assertOperand = AssertOperand.bytes(this.context.getActResult().contentAsBytes());
+    this.context.setAssertOperand(assertOperand);
     return new TestAssertByteImpl(this.context);
   }
 
@@ -70,7 +70,7 @@ public class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var actual = TestGenericMapper.parse(mapper, content, assertType);
-      this.context.setAssertResult(new TestAssertResult<>(actual));
+      this.context.setAssertOperand(AssertOperand.clazz(actual));
     } catch (TestGenericMapperException e) {
       var reason =
           reasonContentMapOf(
@@ -91,7 +91,7 @@ public class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var actual = TestGenericMapper.parseCollection(mapper, content, assertType);
-      this.context.setAssertResult(new TestAssertResult<>(actual));
+      this.context.setAssertOperand(AssertOperand.collection(actual));
     } catch (TestGenericMapperException e) {
       var reason =
           reasonContentMapOf(
@@ -112,7 +112,7 @@ public class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var actual = TestGenericMapper.parseList(mapper, content, assertType);
-      this.context.setAssertResult(new TestAssertResult<>(actual));
+      this.context.setAssertOperand(AssertOperand.list(actual));
     } catch (TestGenericMapperException e) {
       var reason =
           reasonContentMapOf(
@@ -133,7 +133,7 @@ public class TestAssertContentImpl implements TestAssertContent {
 
     try {
       var actual = TestGenericMapper.parseSet(mapper, content, assertType);
-      this.context.setAssertResult(new TestAssertResult<>(actual));
+      this.context.setAssertOperand(AssertOperand.set(actual));
     } catch (TestGenericMapperException e) {
       var reason =
           reasonContentMapOf(
@@ -157,7 +157,7 @@ public class TestAssertContentImpl implements TestAssertContent {
     var mapper = this.context.getEnvironment().objectMapper();
     try {
       var actual = TestGenericMapper.parseMap(mapper, content, assertKey, assertValue);
-      this.context.setAssertResult(new TestAssertResult<>(actual));
+      this.context.setAssertOperand(AssertOperand.map(actual));
       return new TestAssertMapImpl<>(this.context);
     } catch (TestGenericMapperException e) {
       var target =

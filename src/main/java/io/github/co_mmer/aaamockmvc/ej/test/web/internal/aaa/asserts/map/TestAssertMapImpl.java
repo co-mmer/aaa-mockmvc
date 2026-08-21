@@ -1,7 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.map;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssert.assertThat;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeMap;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_OBJECT;
 import static org.hamcrest.Matchers.anyOf;
@@ -30,7 +29,19 @@ public final class TestAssertMapImpl<K, V>
 
   @Override
   public TestAssert2Map<K, V> isNotEmpty() {
-    var actual = this.context.getActResult().contentAsString();
+    var actual = this.context.getAssertOperand().actual();
+
+    if (actual == null) {
+      throw new AssertionError(
+          System.lineSeparator()
+              + """
+              Expected: not empty
+              Actual:   null
+              Reason:   The response body was absent.
+              """
+                  .strip());
+    }
+
     assertThat(this.context.getStep(), actual, not(anyOf(is(EMPTY), is(EMPTY_OBJECT))));
     return this;
   }
@@ -44,7 +55,20 @@ public final class TestAssertMapImpl<K, V>
 
   @Override
   public TestAssert3Map<K, V> hasSize(int expectedSize) {
-    var actual = (Map<?, ?>) this.context.getAssertResult().actualContent();
+    var actual = (Map<?, ?>) this.context.getAssertOperand().actual();
+
+    if (actual == null) {
+      throw new AssertionError(
+          System.lineSeparator()
+              + """
+              Expected: size %d
+              Actual:   null
+              Reason:   The response body was absent.
+              """
+                  .formatted(expectedSize)
+                  .strip());
+    }
+
     assertThat(this.context.getStep(), actual.size(), is(expectedSize));
     return this;
   }
@@ -54,9 +78,21 @@ public final class TestAssertMapImpl<K, V>
     var expectedValue = AssertValue.expectedMap(expectedMap);
 
     @SuppressWarnings("unchecked")
-    var actual = (Map<K, V>) this.context.getAssertResult().actualContent();
+    var actual = (Map<String, String>) this.context.getAssertOperand().normalizedValue();
 
-    assertThat(this.context.getStep(), normalizeMap(actual), is(expectedValue.normalizedValue()));
+    if (actual == null) {
+      throw new AssertionError(
+          System.lineSeparator()
+              + """
+              Expected: %s
+              Actual:   null
+              Reason:   The response body was absent.
+              """
+                  .formatted(expectedMap)
+                  .strip());
+    }
+
+    assertThat(this.context.getStep(), actual, is(expectedValue.normalizedValue()));
     return this;
   }
 

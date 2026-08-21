@@ -34,12 +34,24 @@ public final class TestAssertClassImpl<T>
 
   @Override
   public TestAssert2Class<T> isNotNull() {
+
+    if (getActual() == null) {
+      throw new AssertionError(
+          System.lineSeparator()
+              + """
+              Expected: not null
+              Actual:   null
+              Reason:   The response body was absent.
+              """
+                  .strip());
+    }
+
     assertThat(this.context.getStep(), getActual(), is(notNullValue()));
     return this;
   }
 
   private Object getActual() {
-    return this.context.getAssertResult().actualContent();
+    return this.context.getAssertOperand().actual();
   }
 
   @Override
@@ -54,6 +66,19 @@ public final class TestAssertClassImpl<T>
 
     @SuppressWarnings("unchecked")
     T actual = (T) getActual();
+
+    if (actual == null) {
+      throw new AssertionError(
+          System.lineSeparator()
+              + """
+              Expected: %s
+              Actual:   null
+              Reason:   The response body was absent.
+              """
+                  .formatted(expectedResponse)
+                  .strip());
+    }
+
     assertThat(this.context.getStep(), actual.getClass(), is(expectedValue.value().getClass()));
     assertThat(
         this.context.getStep(), normalizeObject(actual), is(expectedValue.normalizedValue()));
@@ -93,6 +118,18 @@ public final class TestAssertClassImpl<T>
 
     @SuppressWarnings("unchecked")
     T actual = (T) getActual();
+
+    if (actual == null) {
+      throw new AssertionError(
+          System.lineSeparator()
+              + """
+              Expected: matches all conditions
+              Actual:   null
+              Reason:   The response body was absent.
+              """
+                  .strip());
+    }
+
     TestAssertMatch.assertThat(this.context.getStep(), actual).matchAll(expectedValue.value());
     return this;
   }
@@ -129,6 +166,18 @@ public final class TestAssertClassImpl<T>
 
     @SuppressWarnings("unchecked")
     T actual = (T) getActual();
+
+    if (actual == null) {
+      throw new AssertionError(
+          System.lineSeparator()
+              + """
+              Expected: matches any conditions
+              Actual:   null
+              Reason:   The response body was absent.
+              """
+                  .strip());
+    }
+
     TestAssertMatch.assertThat(this.context.getStep(), actual).matchAny(expectedValue.value());
     return this;
   }
@@ -165,6 +214,18 @@ public final class TestAssertClassImpl<T>
 
     @SuppressWarnings("unchecked")
     T actual = (T) getActual();
+
+    if (actual == null) {
+      throw new AssertionError(
+          System.lineSeparator()
+              + """
+              Expected: matches no conditions
+              Actual:   null
+              Reason:   The response body was absent.
+              """
+                  .strip());
+    }
+
     TestAssertMatch.assertThat(this.context.getStep(), actual).matchNone(expectedValue.value());
     return this;
   }
