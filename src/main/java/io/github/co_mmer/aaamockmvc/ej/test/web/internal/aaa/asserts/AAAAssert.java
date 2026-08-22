@@ -118,7 +118,7 @@ public final class AAAAssert<A, N> {
 
               Reason:
               Checking whether a collection contains an empty collection is always true.
-              This creates a false-positive green test that does not verify production behavior.
+              This creates a false-positive "green test" that does not verify production behavior.
 
               How to fix:
               -> To verify that the collection is empty, use:
@@ -155,7 +155,7 @@ public final class AAAAssert<A, N> {
 
               Reason:
               Checking whether an empty response collection does not contain an element
-              is always true. This creates a false-positive green test that does not verify
+              is always true. This creates a false-positive "green test" that does not verify
               the provided unexpected value.
 
               How to fix:
@@ -209,12 +209,12 @@ public final class AAAAssert<A, N> {
 
               Reason:
               Checking whether all elements of an empty response collection match the conditions
-              is always true. This creates a false-positive green test that does not verify
+              is always true. This creates a false-positive "green test" that does not verify
               the provided conditions.
 
               How to fix:
               -> If the response collection must contain elements, assert this first with:
-                 isNotEmpty()
+                 isNotEmpty().toMatchAll(...);
 
               -> If an empty response collection is expected, use:
                  isEmpty()

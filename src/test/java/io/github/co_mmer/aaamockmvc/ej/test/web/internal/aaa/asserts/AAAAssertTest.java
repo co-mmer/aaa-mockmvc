@@ -890,12 +890,12 @@ final class AAAAssertTest {
 
               Reason:
               Checking whether all elements of an empty response collection match the conditions
-              is always true. This creates a false-positive green test that does not verify
+              is always true. This creates a false-positive "green test" that does not verify
               the provided conditions.
 
               How to fix:
               -> If the response collection must contain elements, assert this first with:
-                 isNotEmpty()
+                 isNotEmpty().toMatchAll(...);
 
               -> If an empty response collection is expected, use:
                  isEmpty()
