@@ -1,17 +1,11 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.map;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssert.assertThat;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_OBJECT;
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert2Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert3Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertLMap;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
@@ -29,70 +23,29 @@ public final class TestAssertMapImpl<K, V>
 
   @Override
   public TestAssert2Map<K, V> isNotEmpty() {
-    var actual = this.context.getAssertOperand().actual();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: not empty
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .strip());
-    }
-
-    assertThat(this.context.getStep(), actual, not(anyOf(is(EMPTY), is(EMPTY_OBJECT))));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).notToBeEmpty();
     return this;
   }
 
   @Override
   public TestAssertLMap isEmpty() {
-    var actual = this.context.getActResult().contentAsString();
-    assertThat(this.context.getStep(), actual, anyOf(is(EMPTY), is(EMPTY_OBJECT)));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).toBeEmpty();
+
     return this;
   }
 
   @Override
   public TestAssert3Map<K, V> hasSize(int expectedSize) {
-    var actual = (Map<?, ?>) this.context.getAssertOperand().actual();
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toHaveSize(expectedSize);
 
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: size %d
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .formatted(expectedSize)
-                  .strip());
-    }
-
-    assertThat(this.context.getStep(), actual.size(), is(expectedSize));
     return this;
   }
 
   @Override
   public TestAssertLMap isEqualTo(@NonNull Map<K, V> expectedMap) {
-    var expectedValue = AssertValue.expectedMap(expectedMap);
-
-    @SuppressWarnings("unchecked")
-    var actual = (Map<String, String>) this.context.getAssertOperand().normalizedValue();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: %s
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .formatted(expectedMap)
-                  .strip());
-    }
-
-    assertThat(this.context.getStep(), actual, is(expectedValue.normalizedValue()));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toEqual(AssertValue.expectedMap(expectedMap));
     return this;
   }
 

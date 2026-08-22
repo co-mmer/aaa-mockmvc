@@ -1,14 +1,10 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.bool;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert1Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert2Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert3Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
@@ -25,39 +21,34 @@ public class TestAssertBooleanImpl
 
   @Override
   public TestAssert3Boolean isNull() {
-    assertThat(this.context.getStep(), getActual(), is(nullValue()));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).toBeAbsent();
     return this;
-  }
-
-  private Object getActual() {
-    return this.context.getAssertOperand().actual();
   }
 
   @Override
   public TestAssert2Boolean isNotNull() {
-    assertThat(this.context.getStep(), getActual(), is(notNullValue()));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).toBePresent();
     return this;
   }
 
   @Override
   public TestAssert3Boolean isEqualTo(@NonNull Boolean expectedBoolean) {
-    var expectedValue = AssertValue.expectedBoolean(expectedBoolean);
-    var actual = (Boolean) getActual();
-    assertThat(this.context.getStep(), actual, is(expectedValue.value()));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toEqual(AssertValue.expectedBoolean(expectedBoolean));
     return this;
   }
 
   @Override
   public TestAssert3Boolean isTrue() {
-    var actual = (Boolean) getActual();
-    assertThat(this.context.getStep(), actual, is(Boolean.TRUE));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toEqual(AssertValue.expectedBoolean(Boolean.TRUE));
     return this;
   }
 
   @Override
   public TestAssert3Boolean isFalse() {
-    var actual = (Boolean) getActual();
-    assertThat(this.context.getStep(), actual, is(Boolean.FALSE));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toEqual(AssertValue.expectedBoolean(Boolean.FALSE));
     return this;
   }
 

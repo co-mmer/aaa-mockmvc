@@ -137,7 +137,14 @@ public final class AssertValue<T, N> {
   }
 
   @Since("2.1.0")
-  public static AssertValue<HttpStatus, HttpStatus> expectedStatus(HttpStatus value) {
+  public static AssertValue<HttpStatus, Integer> expectedStatus(HttpStatus value) {
+    DomainValidation.requireNonNull(value, NULL_EXPECTED_STATUS_MESSAGE);
+
+    return new AssertValue<>(value, value.value(), AssertValue::cast);
+  }
+
+  @Since("2.1.0")
+  public static AssertValue<Integer, Integer> expectedStatus(Integer value) {
     return requireNonNull(value, NULL_EXPECTED_STATUS_MESSAGE);
   }
 

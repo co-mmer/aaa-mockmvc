@@ -72,6 +72,19 @@ public final class AAAAssert<A, N> {
   }
 
   @Since("2.1.0")
+  public void toHaveLength(int length) {
+    var expected = "length " + length;
+    var actual = requireActual(expected);
+    var actualSize = sizeOf(actual);
+
+    verify(
+        actualSize == length,
+        expected,
+        "length " + actualSize,
+        "The response body had a different length.");
+  }
+
+  @Since("2.1.0")
   public void toEqual(AssertValue<?, ?> expectedValue) {
     var actual = requireActual(expectedValue.value());
 
@@ -126,7 +139,7 @@ public final class AAAAssert<A, N> {
               -> To verify the number of elements, use:
                  hasSize(expectedSize)
               """
-              .strip());
+                  .strip());
     }
   }
 
@@ -164,7 +177,7 @@ public final class AAAAssert<A, N> {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-              .strip());
+                  .strip());
     }
   }
 
@@ -218,7 +231,7 @@ public final class AAAAssert<A, N> {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-              .strip());
+                  .strip());
     }
   }
 
@@ -244,6 +257,123 @@ public final class AAAAssert<A, N> {
                 value -> Arrays.stream(conditions.value()).anyMatch(it -> it.test(cast(value))));
 
     verify(matches, expected, actual, "At least one value matched a condition.");
+  }
+
+  @Since("2.1.0")
+  public void toContainKey(AssertValue<?, ?> expectedKey) {
+    var expected = expectedKey.normalizedValue();
+    var actual = normalizedMap("contains key " + expectedKey.value());
+
+    verify(
+        actual.containsKey(expected),
+        expectedKey.value(),
+        actualValue.actual(),
+        "The response headers did not contain the expected key.");
+  }
+
+  @Since("2.1.0")
+  public void notToContainKey(AssertValue<?, ?> unexpectedKey) {
+    var unexpected = unexpectedKey.normalizedValue();
+    var actual = normalizedMap("does not contain key " + unexpectedKey.value());
+
+    verify(
+        !actual.containsKey(unexpected),
+        "does not contain key " + unexpectedKey.value(),
+        actualValue.actual(),
+        "The response headers contained the unexpected key.");
+  }
+
+  @Since("2.1.0")
+  public void toContainEntry(AssertValue<?, ?> expectedKey, AssertValue<?, ?> expectedValue) {
+
+    var key = expectedKey.normalizedValue();
+    var value = expectedValue.normalizedValue();
+    var actual = normalizedMap("contains entry " + expectedKey.value());
+
+    verify(
+        actual.containsKey(key),
+        expectedKey.value(),
+        actualValue.actual(),
+        "The response headers did not contain the expected key.");
+
+    var actualEntryValue = actual.get(key);
+
+    verify(
+        containsValue(actualEntryValue, value),
+        expectedValue.value(),
+        actualEntryValue,
+        "The response header did not contain the expected value.");
+  }
+
+  @Since("2.1.0")
+  public void toContainEntryExactly(
+      AssertValue<?, ?> expectedKey, AssertValue<?, ? extends Collection<?>> expectedValues) {
+
+    var key = expectedKey.normalizedValue();
+    var values = expectedValues.normalizedValue();
+
+    verifyValuesForToContainEntryExactly(values);
+
+    var actual = normalizedMap("contains entry exactly " + expectedKey.value());
+
+    verify(
+        actual.containsKey(key),
+        expectedKey.value(),
+        actualValue.actual(),
+        "The response headers did not contain the expected key.");
+
+    var actualEntryValue = actual.get(key);
+
+    verify(
+        actualEntryValue instanceof Collection<?>
+            && occurrences((Collection<?>) actualEntryValue).equals(occurrences(values)),
+        expectedValues.value(),
+        actualEntryValue,
+        "The response header contained different values.");
+  }
+
+  @Since("2.1.0")
+  public void toHaveStatus(AssertValue<?, ?> expectedStatus) {
+    var actualStatus = actualValue.normalizedValue();
+
+    verify(
+        Objects.equals(actualStatus, expectedStatus.normalizedValue()),
+        expectedStatus,
+        actualStatus,
+        "The response status differed from the expected status.");
+  }
+
+  private static void verifyValuesForToContainEntryExactly(Collection<?> expectedValues) {
+
+    if (expectedValues.isEmpty()) {
+      throw new InvalidAssertionException(
+          System.lineSeparator()
+              + """
+              `toContainEntryExactly()` was called with an empty collection.
+
+              Reason:
+              An exact header entry assertion requires at least one expected value.
+              Without an expected value, the assertion does not verify a header value.
+
+              How to fix:
+              -> Provide at least one expected header value.
+              """
+                  .strip());
+    }
+  }
+
+  private Map<?, ?> normalizedMap(String expected) {
+    requireActual(expected);
+    return (Map<?, ?>) actualValue.normalizedValue();
+  }
+
+  private static boolean containsValue(Object actual, Object expected) {
+
+    if (actual instanceof Collection<?> collection) {
+      return collection.stream().anyMatch(value -> Objects.deepEquals(value, expected));
+    }
+
+    return Objects.deepEquals(actual, expected);
   }
 
   private A requireActual(Object expected) {

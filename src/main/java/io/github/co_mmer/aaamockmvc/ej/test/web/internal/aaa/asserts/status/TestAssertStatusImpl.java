@@ -8,10 +8,13 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertConten
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert2Status;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertOperand;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Note;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.Matchers;
@@ -31,20 +34,22 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
 
   private final TestAAAContext context;
 
+  @Note("Move to Context")
+  private AssertOperand<Integer, Integer> getAssertOperand() {
+    return AssertOperand.integer(this.context.getActResult().status());
+  }
+
   @Override
   public TestAssert2Status is(@NonNull HttpStatus status) {
-    var expectedValue = AssertValue.expectedStatus(status);
-
-    assertThat(
-        this.context.getStep(),
-        this.context.getActResult().status(),
-        Matchers.is(expectedValue.value().value()));
+    AAAAssert.expect(this.context.getStep(), getAssertOperand())
+        .toHaveStatus(AssertValue.expectedStatus(status));
     return this;
   }
 
   @Override
   public TestAssert2Status is(int status) {
-    assertThat(this.context.getStep(), this.context.getActResult().status(), Matchers.is(status));
+    AAAAssert.expect(this.context.getStep(), getAssertOperand())
+        .toHaveStatus(AssertValue.expectedStatus(status));
     return this;
   }
 

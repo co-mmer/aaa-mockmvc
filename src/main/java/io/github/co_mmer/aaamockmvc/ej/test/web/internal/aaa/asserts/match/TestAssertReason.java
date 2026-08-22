@@ -1,12 +1,14 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Note;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @Since("2.0.0")
+@Note("Deprecated 2.1.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestAssertReason {
 

@@ -77,6 +77,13 @@ public final class AssertOperand<A, N> {
     return new AssertOperand<>(value, TestArrangeNormalizer::normalizeObject);
   }
 
+  public static AssertOperand<Integer, Integer> integer(Integer value) {
+    if (value == null) {
+      return new AssertOperand<>(null, (Integer) null);
+    }
+    return new AssertOperand<>(value, value);
+  }
+
   public static AssertOperand<byte[], byte[]> bytes(byte[] value) {
 
     var snapshot = value.clone();
