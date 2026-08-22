@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 @Since("1.6.0")
+@Deprecated(forRemoval = true)
 public class TestAssertMatch<T> {
 
   private final TestStepDto step;

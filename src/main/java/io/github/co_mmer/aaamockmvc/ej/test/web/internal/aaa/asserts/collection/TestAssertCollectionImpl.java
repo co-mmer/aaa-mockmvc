@@ -1,14 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.collection;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssert.assertThat;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_ARRAY;
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert2Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert3Collection;
@@ -16,9 +7,9 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert4Co
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert5Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertLCollection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertMatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.Collection;
@@ -41,104 +32,32 @@ public final class TestAssertCollectionImpl<E>
 
   @Override
   public TestAssert2Collection<E> isNotEmpty() {
-    var actual = this.context.getAssertOperand().normalizedValue();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: not empty
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .strip());
-    }
-
-    assertThat(this.context.getStep(), actual, not(anyOf(is(EMPTY), is(EMPTY_ARRAY))));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).notToBeEmpty();
     return this;
   }
 
   @Override
   public TestAssertLCollection isEmpty() {
-    var actual = (Collection<?>) this.context.getAssertOperand().actual();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: empty
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .strip());
-    }
-
-    assertThat(this.context.getStep(), actual.size(), is(0));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).toBeEmpty();
     return this;
   }
 
   @Override
   public TestAssert2Collection<E> hasSize(int expectedSize) {
-    var actual = (Collection<?>) this.context.getAssertOperand().actual();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: size %d
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .formatted(expectedSize)
-                  .strip());
-    }
-
-    assertThat(this.context.getStep(), actual.size(), is(expectedSize));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toHaveSize(expectedSize);
     return this;
   }
 
   public TestAssertLCollection isEqualTo(@NonNull Collection<E> expectedCollection) {
-    var expectedValue = AssertValue.expectedCollection(expectedCollection);
-
-    @SuppressWarnings("unchecked")
-    var actual = (List<String>) this.context.getAssertOperand().normalizedValue();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: %s
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .formatted(expectedCollection)
-                  .strip());
-    }
-
-    assertThat(this.context.getStep(), actual, is(expectedValue.normalizedValue()));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toEqual(AssertValue.expectedCollection(expectedCollection));
     return this;
   }
 
   public TestAssert3Collection<E> contains(@NonNull Collection<E> expectedElements) {
-    var expectedValue = AssertValue.expectedCollection(expectedElements);
-
-    @SuppressWarnings("unchecked")
-    var actual = (List<String>) this.context.getAssertOperand().normalizedValue();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: contains %s
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .formatted(expectedElements)
-                  .strip());
-    }
-
-    var normalizeExpected = expectedValue.normalizedValue().toArray(String[]::new);
-    assertThat(this.context.getStep(), actual, hasItems(normalizeExpected));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toContain(AssertValue.expectedCollection(expectedElements));
     return this;
   }
 
@@ -149,48 +68,14 @@ public final class TestAssertCollectionImpl<E>
   }
 
   public TestAssert3Collection<E> containsAnyOrder(@NonNull Collection<E> expectedCollection) {
-    var expectedValue = AssertValue.expectedCollection(expectedCollection);
-
-    @SuppressWarnings("unchecked")
-    var actual = (List<String>) this.context.getAssertOperand().normalizedValue();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: contains in any order %s
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .formatted(expectedCollection)
-                  .strip());
-    }
-
-    var normalizeExpected = expectedValue.normalizedValue().toArray();
-    assertThat(this.context.getStep(), actual, containsInAnyOrder(normalizeExpected));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toContainExactlyInAnyOrder(AssertValue.expectedCollection(expectedCollection));
     return this;
   }
 
   public TestAssert3Collection<E> notContains(@NonNull Collection<E> unexpectedElements) {
-    var unexpectedValue = AssertValue.unexpectedElements(unexpectedElements);
-
-    @SuppressWarnings("unchecked")
-    var actual = (List<String>) this.context.getAssertOperand().normalizedValue();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: does not contain %s
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .formatted(unexpectedElements)
-                  .strip());
-    }
-
-    var normalizeExpected = unexpectedValue.normalizedValue().toArray(String[]::new);
-    assertThat(this.context.getStep(), actual, not(hasItems(normalizeExpected)));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .notToContain(AssertValue.unexpectedElements(unexpectedElements));
     return this;
   }
 
@@ -230,23 +115,8 @@ public final class TestAssertCollectionImpl<E>
   @SafeVarargs
   @Override
   public final TestAssert4Collection<E> matchAll(@NonNull Predicate<E>... conditions) {
-    var expectedValue = AssertValue.matchConditions(conditions);
-
-    @SuppressWarnings("unchecked")
-    var actual = (Collection<E>) this.context.getAssertOperand().actual();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: matches all conditions
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .strip());
-    }
-
-    TestAssertMatch.assertThat(this.context.getStep(), actual).matchAll(expectedValue.value());
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toMatchAll(AssertValue.matchConditions(conditions));
     return this;
   }
 
@@ -278,23 +148,8 @@ public final class TestAssertCollectionImpl<E>
   @SafeVarargs
   @Override
   public final TestAssert5Collection<E> matchAny(@NonNull Predicate<E>... conditions) {
-    var expectedValue = AssertValue.matchConditions(conditions);
-
-    @SuppressWarnings("unchecked")
-    var actual = (Collection<E>) this.context.getAssertOperand().actual();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: matches any conditions
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .strip());
-    }
-
-    TestAssertMatch.assertThat(this.context.getStep(), actual).matchAny(expectedValue.value());
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toMatchAny(AssertValue.matchConditions(conditions));
     return this;
   }
 
@@ -326,23 +181,8 @@ public final class TestAssertCollectionImpl<E>
   @SafeVarargs
   @Override
   public final TestAssertLCollection matchNone(@NonNull Predicate<E>... conditions) {
-    var expectedValue = AssertValue.matchConditions(conditions);
-
-    @SuppressWarnings("unchecked")
-    var actual = (Collection<E>) this.context.getAssertOperand().actual();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: matches no conditions
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .strip());
-    }
-
-    TestAssertMatch.assertThat(this.context.getStep(), actual).matchNone(expectedValue.value());
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toMatchNone(AssertValue.matchConditions(conditions));
     return this;
   }
 

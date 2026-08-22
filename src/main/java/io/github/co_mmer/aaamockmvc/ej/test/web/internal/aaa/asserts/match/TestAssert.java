@@ -10,6 +10,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 
 @Since("2.0.0")
+@Deprecated(forRemoval = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestAssert {
 

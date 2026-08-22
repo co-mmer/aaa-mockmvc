@@ -12,6 +12,10 @@ public abstract class TestAssertBase {
 
   private TestAAAContext context;
 
+  public TestAAAContext getContext() {
+    return this.context;
+  }
+
   protected void useContext(TestAAAContext context) {
     this.context = context;
   }
