@@ -1,20 +1,14 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.clazz;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssert.assertThat;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeObject;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert1Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert2Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert3Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert4Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssertLClass;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertMatch;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.function.Predicate;
@@ -34,54 +28,21 @@ public final class TestAssertClassImpl<T>
 
   @Override
   public TestAssert2Class<T> isNotNull() {
-
-    if (getActual() == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: not null
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .strip());
-    }
-
-    assertThat(this.context.getStep(), getActual(), is(notNullValue()));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).toBePresent();
     return this;
-  }
-
-  private Object getActual() {
-    return this.context.getAssertOperand().actual();
   }
 
   @Override
   public TestAssertLClass isNull() {
-    assertThat(this.context.getStep(), getActual(), is(nullValue()));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).toBeAbsent();
     return this;
   }
 
   @Override
   public TestAssertLClass isEqualTo(@NonNull T expectedResponse) {
-    var expectedValue = AssertValue.expectedResponse(expectedResponse);
-
-    @SuppressWarnings("unchecked")
-    T actual = (T) getActual();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: %s
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .formatted(expectedResponse)
-                  .strip());
-    }
-
-    assertThat(this.context.getStep(), actual.getClass(), is(expectedValue.value().getClass()));
-    assertThat(
-        this.context.getStep(), normalizeObject(actual), is(expectedValue.normalizedValue()));
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toHaveSameTypeAndValueAs(AssertValue.expectedResponse(expectedResponse))
+        .toEqual(AssertValue.expectedResponse(expectedResponse));
     return this;
   }
 
@@ -114,23 +75,8 @@ public final class TestAssertClassImpl<T>
   @SafeVarargs
   @Override
   public final TestAssert3Class<T> matchAll(@NonNull Predicate<T>... conditions) {
-    var expectedValue = AssertValue.matchConditions(conditions);
-
-    @SuppressWarnings("unchecked")
-    T actual = (T) getActual();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: matches all conditions
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .strip());
-    }
-
-    TestAssertMatch.assertThat(this.context.getStep(), actual).matchAll(expectedValue.value());
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toMatchAll(AssertValue.matchConditions(conditions));
     return this;
   }
 
@@ -162,23 +108,8 @@ public final class TestAssertClassImpl<T>
   @SafeVarargs
   @Override
   public final TestAssert4Class<T> matchAny(@NonNull Predicate<T>... conditions) {
-    var expectedValue = AssertValue.matchConditions(conditions);
-
-    @SuppressWarnings("unchecked")
-    T actual = (T) getActual();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: matches any conditions
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .strip());
-    }
-
-    TestAssertMatch.assertThat(this.context.getStep(), actual).matchAny(expectedValue.value());
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toMatchAny(AssertValue.matchConditions(conditions));
     return this;
   }
 
@@ -210,23 +141,8 @@ public final class TestAssertClassImpl<T>
   @SafeVarargs
   @Override
   public final TestAssertLClass matchNone(@NonNull Predicate<T>... conditions) {
-    var expectedValue = AssertValue.matchConditions(conditions);
-
-    @SuppressWarnings("unchecked")
-    T actual = (T) getActual();
-
-    if (actual == null) {
-      throw new AssertionError(
-          System.lineSeparator()
-              + """
-              Expected: matches no conditions
-              Actual:   null
-              Reason:   The response body was absent.
-              """
-                  .strip());
-    }
-
-    TestAssertMatch.assertThat(this.context.getStep(), actual).matchNone(expectedValue.value());
+    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
+        .toMatchNone(AssertValue.matchConditions(conditions));
     return this;
   }
 

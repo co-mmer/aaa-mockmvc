@@ -83,9 +83,7 @@ public final class AAAAssert<A, N> {
   }
 
   @Since("2.1.0")
-  public void toHaveSameTypeAndValueAs(AssertValue<?, ?> expectedValue) {
-    Objects.requireNonNull(expectedValue, "Assert value must not be null");
-
+  public AAAAssert<A, N> toHaveSameTypeAndValueAs(AssertValue<?, ?> expectedValue) {
     var actual = requireActual(expectedValue.value());
 
     verify(
@@ -93,6 +91,7 @@ public final class AAAAssert<A, N> {
         expectedValue.value(),
         actual,
         "The response body had a different type.");
+    return this;
   }
 
   @Since("2.1.0")
@@ -127,7 +126,7 @@ public final class AAAAssert<A, N> {
               -> To verify the number of elements, use:
                  hasSize(expectedSize)
               """
-                  .strip());
+              .strip());
     }
   }
 
@@ -165,7 +164,7 @@ public final class AAAAssert<A, N> {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-                  .strip());
+              .strip());
     }
   }
 
@@ -219,7 +218,7 @@ public final class AAAAssert<A, N> {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-                  .strip());
+              .strip());
     }
   }
 
