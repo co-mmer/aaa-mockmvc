@@ -1,5 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.InvalidAssertionException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.lang.reflect.Array;
@@ -99,6 +100,8 @@ public final class AAAAssert<A, N> {
     var expected = expectedValue.normalizedValue();
     var actual = normalizedCollection("contains " + expected);
 
+    verifyElementsForToContain(expected);
+
     verify(
         actual.containsAll(expected),
         "contains " + expected,
@@ -106,16 +109,64 @@ public final class AAAAssert<A, N> {
         "The response body did not contain every expected element.");
   }
 
+  private static void verifyElementsForToContain(Collection<?> expected) {
+    if (expected.isEmpty()) {
+      throw new InvalidAssertionException(
+          System.lineSeparator()
+              + """
+              `toContain()` was called with an empty collection.
+
+              Reason:
+              Checking whether a collection contains an empty collection is always true.
+              This creates a false-positive green test that does not verify production behavior.
+
+              How to fix:
+              -> To verify that the collection is empty, use:
+                 isEmpty()
+
+              -> To verify the number of elements, use:
+                 hasSize(expectedSize)
+              """
+                  .strip());
+    }
+  }
+
   @Since("2.1.0")
   public void notToContain(AssertValue<?, ? extends Collection<?>> unexpectedValue) {
+
     var unexpected = unexpectedValue.normalizedValue();
     var actual = normalizedCollection("does not contain " + unexpected);
+
+    verifyElementsForNotToContain(actual);
 
     verify(
         unexpected.stream().noneMatch(actual::contains),
         "does not contain " + unexpected,
         actualValue.actual(),
         "The response body contained an unexpected element.");
+  }
+
+  private static void verifyElementsForNotToContain(Collection<?> actual) {
+    if (actual.isEmpty()) {
+      throw new InvalidAssertionException(
+          System.lineSeparator()
+              + """
+              `notToContain()` was called for an empty response collection.
+
+              Reason:
+              Checking whether an empty response collection does not contain an element
+              is always true. This creates a false-positive green test that does not verify
+              the provided unexpected value.
+
+              How to fix:
+              -> If the response collection must contain elements, assert this first with:
+                 isNotEmpty()
+
+              -> If an empty response collection is expected, use:
+                 isEmpty()
+              """
+                  .strip());
+    }
   }
 
   @Since("2.1.0")
@@ -132,14 +183,44 @@ public final class AAAAssert<A, N> {
 
   @Since("2.1.0")
   public <T> void toMatchAll(AssertValue<Predicate<T>[], Predicate<T>[]> conditions) {
+
     var expected = "matches all conditions";
     var actual = requireActual(expected);
+    var values = valuesOf(actual);
+
+    verifyElementsForMatchAll(values);
+
     var matches =
-        valuesOf(actual).stream()
+        values.stream()
             .allMatch(
-                value -> Arrays.stream(conditions.value()).allMatch(it -> it.test(cast(value))));
+                value ->
+                    Arrays.stream(conditions.value())
+                        .allMatch(condition -> condition.test(cast(value))));
 
     verify(matches, expected, actual, "At least one value did not match every condition.");
+  }
+
+  private static void verifyElementsForMatchAll(List<?> values) {
+    if (values.isEmpty()) {
+      throw new InvalidAssertionException(
+          System.lineSeparator()
+              + """
+              `toMatchAll()` was called for an empty response collection.
+
+              Reason:
+              Checking whether all elements of an empty response collection match the conditions
+              is always true. This creates a false-positive green test that does not verify
+              the provided conditions.
+
+              How to fix:
+              -> If the response collection must contain elements, assert this first with:
+                 isNotEmpty()
+
+              -> If an empty response collection is expected, use:
+                 isEmpty()
+              """
+                  .strip());
+    }
   }
 
   @Since("2.1.0")

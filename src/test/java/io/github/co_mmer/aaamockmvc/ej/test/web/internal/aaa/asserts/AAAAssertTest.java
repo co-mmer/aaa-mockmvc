@@ -13,11 +13,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.InvalidAssertionException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
@@ -82,8 +84,7 @@ final class AAAAssertTest {
     return result;
   }
 
-  private static <E> AssertValue<Collection<E>, List<String>> collectionValue(
-      Collection<E> value) {
+  private static <E> AssertValue<Collection<E>, List<String>> collectionValue(Collection<E> value) {
     var normalizedValue = AssertOperand.collection(value).normalizedValue();
     return assertValue(value, normalizedValue);
   }
@@ -298,8 +299,7 @@ final class AAAAssertTest {
           arguments("empty string", EMPTY_STRING, 0),
           arguments("string", NON_EMPTY_STRING, TEST_A1_JSON.length()),
           arguments("empty bytes", EMPTY_BYTES, 0),
-          arguments(
-              "bytes", NON_EMPTY_BYTES, TEST_A1_JSON.getBytes(StandardCharsets.UTF_8).length),
+          arguments("bytes", NON_EMPTY_BYTES, TEST_A1_JSON.getBytes(StandardCharsets.UTF_8).length),
           arguments("empty map", EMPTY_MAP, 0),
           arguments("map", NON_EMPTY_MAP, 2),
           arguments("empty array", EMPTY_ARRAY, 0),
@@ -399,9 +399,7 @@ final class AAAAssertTest {
 
       return Stream.of(
           arguments(
-              "collection",
-              collection,
-              assertValue(TEST_LIST_A1_A2, collection.normalizedValue())),
+              "collection", collection, assertValue(TEST_LIST_A1_A2, collection.normalizedValue())),
           arguments("list", list, assertValue(TEST_LIST_A1_A2, list.normalizedValue())),
           arguments("set", set, assertValue(TEST_SET_A1_A2, set.normalizedValue())),
           arguments("boolean", PRESENT_BOOLEAN, assertValue(TEST_BOOLEAN, TEST_BOOLEAN)),
@@ -483,8 +481,7 @@ final class AAAAssertTest {
 
       // Act
       var error =
-          assertThrows(
-              NullPointerException.class, () -> assertion.toHaveSameTypeAndValueAs(null));
+          assertThrows(NullPointerException.class, () -> assertion.toHaveSameTypeAndValueAs(null));
 
       // Assert
       assertThat(error.getMessage(), equalTo("Assert value must not be null"));
@@ -545,18 +542,36 @@ final class AAAAssertTest {
       // The method returning normally is the assertion.
     }
 
-    // todo Fehler ?
     @Test
-    void GIVEN_empty_expected_collection_WHEN_toContain_THEN_no_AssertionError_is_thrown() {
+    void GIVEN_empty_expected_collection_WHEN_toContain_THEN_InvalidAssertionException_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, LIST_A1_A2);
       var expectedValue = collectionValue(List.of());
 
       // Act
-      assertion.toContain(expectedValue);
+      var error =
+          assertThrows(InvalidAssertionException.class, () -> assertion.toContain(expectedValue));
 
       // Assert
-      // The method returning normally is the assertion.
+      var expectedMessage =
+          System.lineSeparator()
+              + """
+              `toContain()` was called with an empty collection.
+
+              Reason:
+              Checking whether a collection contains an empty collection is always true.
+              This creates a false-positive green test that does not verify production behavior.
+
+              How to fix:
+              -> To verify that the collection is empty, use:
+                 isEmpty()
+
+              -> To verify the number of elements, use:
+                 hasSize(expectedSize)
+              """
+                  .strip();
+
+      assertThat(expectedMessage, is(error.getMessage()));
     }
 
     @Test
@@ -644,18 +659,38 @@ final class AAAAssertTest {
       // The method returning normally is the assertion.
     }
 
-    // todo fehler ?
     @Test
-    void GIVEN_empty_body_WHEN_notToContain_THEN_no_AssertionError_is_thrown() {
+    void GIVEN_empty_body_WHEN_notToContain_THEN_InvalidAssertionException_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, EMPTY_LIST);
       var unexpectedValue = collectionValue(List.of(A1));
 
       // Act
-      assertion.notToContain(unexpectedValue);
+      var error =
+          assertThrows(
+              InvalidAssertionException.class, () -> assertion.notToContain(unexpectedValue));
 
       // Assert
-      // The method returning normally is the assertion.
+      var expectedMessage =
+          System.lineSeparator()
+              + """
+              `notToContain()` was called for an empty response collection.
+
+              Reason:
+              Checking whether an empty response collection does not contain an element
+              is always true. This creates a false-positive green test that does not verify
+              the provided unexpected value.
+
+              How to fix:
+              -> If the response collection must contain elements, assert this first with:
+                 isNotEmpty()
+
+              -> If an empty response collection is expected, use:
+                 isEmpty()
+              """
+                  .strip();
+
+      assertThat(expectedMessage, is(error.getMessage()));
     }
 
     @Test
@@ -665,15 +700,13 @@ final class AAAAssertTest {
       var unexpectedValue = collectionValue(List.of(A1, A3));
 
       // Act
-      var error =
-          assertThrows(AssertionError.class, () -> assertion.notToContain(unexpectedValue));
+      var error = assertThrows(AssertionError.class, () -> assertion.notToContain(unexpectedValue));
 
       // Assert
       assertThat(
           error.getMessage(), containsString("The response body contained an unexpected element."));
     }
 
-    // todo vs empty_body
     @Test
     void GIVEN_absent_body_WHEN_notToContain_THEN_AssertionError_for_absent_body_is_thrown() {
       // Arrange
@@ -681,8 +714,7 @@ final class AAAAssertTest {
       var unexpectedValue = collectionValue(List.of(A1));
 
       // Act
-      var error =
-          assertThrows(AssertionError.class, () -> assertion.notToContain(unexpectedValue));
+      var error = assertThrows(AssertionError.class, () -> assertion.notToContain(unexpectedValue));
 
       // Assert
       assertThat(error.getMessage(), containsString("The response body was absent."));
@@ -695,8 +727,7 @@ final class AAAAssertTest {
       var unexpectedValue = collectionValue(List.of(A1));
 
       // Act
-      var error =
-          assertThrows(AssertionError.class, () -> assertion.notToContain(unexpectedValue));
+      var error = assertThrows(AssertionError.class, () -> assertion.notToContain(unexpectedValue));
 
       // Assert
       assertThat(error.getMessage(), containsString("Step:     Verify response"));
@@ -734,7 +765,6 @@ final class AAAAssertTest {
       // The method returning normally is the assertion.
     }
 
-    // todo fehler ?
     @Test
     void GIVEN_empty_collections_WHEN_toContainExactlyInAnyOrder_THEN_no_error_is_thrown() {
       // Arrange
@@ -758,13 +788,11 @@ final class AAAAssertTest {
       // Act
       var error =
           assertThrows(
-              AssertionError.class,
-              () -> assertion.toContainExactlyInAnyOrder(expectedValue));
+              AssertionError.class, () -> assertion.toContainExactlyInAnyOrder(expectedValue));
 
       // Assert
       assertThat(
-          error.getMessage(),
-          containsString("The response body contained different elements."));
+          error.getMessage(), containsString("The response body contained different elements."));
     }
 
     @Test
@@ -776,13 +804,11 @@ final class AAAAssertTest {
       // Act
       var error =
           assertThrows(
-              AssertionError.class,
-              () -> assertion.toContainExactlyInAnyOrder(expectedValue));
+              AssertionError.class, () -> assertion.toContainExactlyInAnyOrder(expectedValue));
 
       // Assert
       assertThat(
-          error.getMessage(),
-          containsString("The response body contained different elements."));
+          error.getMessage(), containsString("The response body contained different elements."));
     }
 
     @Test
@@ -794,8 +820,7 @@ final class AAAAssertTest {
       // Act
       var error =
           assertThrows(
-              AssertionError.class,
-              () -> assertion.toContainExactlyInAnyOrder(expectedValue));
+              AssertionError.class, () -> assertion.toContainExactlyInAnyOrder(expectedValue));
 
       // Assert
       assertThat(error.getMessage(), containsString("The response body was absent."));
@@ -810,8 +835,7 @@ final class AAAAssertTest {
       // Act
       var error =
           assertThrows(
-              AssertionError.class,
-              () -> assertion.toContainExactlyInAnyOrder(expectedValue));
+              AssertionError.class, () -> assertion.toContainExactlyInAnyOrder(expectedValue));
 
       // Assert
       assertThat(error.getMessage(), containsString("Step:     Verify response"));
@@ -826,8 +850,7 @@ final class AAAAssertTest {
     void GIVEN_every_value_matches_every_condition_WHEN_toMatchAll_THEN_no_error_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, LIST_A1_A2);
-      var conditions =
-          conditions(Objects::nonNull, value -> value.equals(A1) || value.equals(A2));
+      var conditions = conditions(Objects::nonNull, value -> value.equals(A1) || value.equals(A2));
 
       // Act
       assertion.toMatchAll(conditions);
@@ -849,18 +872,37 @@ final class AAAAssertTest {
       // The method returning normally is the assertion.
     }
 
-    // todo fehler ?
     @Test
-    void GIVEN_empty_collection_WHEN_toMatchAll_THEN_no_AssertionError_is_thrown() {
+    void GIVEN_empty_collection_WHEN_toMatchAll_THEN_InvalidAssertionException_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, EMPTY_LIST);
       var conditions = conditions(ALWAYS_FALSE);
 
       // Act
-      assertion.toMatchAll(conditions);
+      var error =
+          assertThrows(InvalidAssertionException.class, () -> assertion.toMatchAll(conditions));
 
       // Assert
-      // An empty collection satisfies all conditions vacuously.
+      var expectedMessage =
+          System.lineSeparator()
+              + """
+              `toMatchAll()` was called for an empty response collection.
+
+              Reason:
+              Checking whether all elements of an empty response collection match the conditions
+              is always true. This creates a false-positive green test that does not verify
+              the provided conditions.
+
+              How to fix:
+              -> If the response collection must contain elements, assert this first with:
+                 isNotEmpty()
+
+              -> If an empty response collection is expected, use:
+                 isEmpty()
+              """
+                  .strip();
+
+      assertThat(expectedMessage, is(error.getMessage()));
     }
 
     @Test
@@ -887,8 +929,7 @@ final class AAAAssertTest {
 
       // Assert
       assertThat(
-          error.getMessage(),
-          containsString("At least one value did not match every condition."));
+          error.getMessage(), containsString("At least one value did not match every condition."));
     }
 
     @Test

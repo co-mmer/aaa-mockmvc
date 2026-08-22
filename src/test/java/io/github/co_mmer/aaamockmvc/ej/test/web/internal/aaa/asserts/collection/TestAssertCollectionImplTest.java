@@ -36,7 +36,6 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
   private TestAssertCollectionImpl<TestObjectSimple> impl;
 
-
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
@@ -122,19 +121,22 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
   @Test
   void WHEN_matchAll_2_THEN_toMatchAll_is_called() {
-    assertCall(() -> impl.matchAll(PREDICATE_A, PREDICATE_A),
+    assertCall(
+        () -> impl.matchAll(PREDICATE_A, PREDICATE_A),
         mock -> verify(mock, times(1)).toMatchAll(any()));
   }
 
   @Test
   void WHEN_matchAll_3_THEN_toMatchAll_is_called() {
-    assertCall(() -> impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A),
+    assertCall(
+        () -> impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A),
         mock -> verify(mock, times(1)).toMatchAll(any()));
   }
 
   @Test
   void WHEN_matchAll_varargs_THEN_toMatchAll_is_called() {
-    assertCall(() -> impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
+    assertCall(
+        () -> impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
         mock -> verify(mock, times(1)).toMatchAll(any()));
   }
 
@@ -145,43 +147,49 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
   @Test
   void WHEN_matchAny_2_THEN_toMatchAny_is_called() {
-    assertCall(() -> impl.matchAny(PREDICATE_A, PREDICATE_A),
+    assertCall(
+        () -> impl.matchAny(PREDICATE_A, PREDICATE_A),
         mock -> verify(mock, times(1)).toMatchAny(any()));
   }
 
   @Test
   void WHEN_matchAny_3_THEN_toMatchAny_is_called() {
-    assertCall(() -> impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A),
+    assertCall(
+        () -> impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A),
         mock -> verify(mock, times(1)).toMatchAny(any()));
   }
 
   @Test
   void WHEN_matchAny_varargs_THEN_toMatchAny_is_called() {
-    assertCall(() -> impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
+    assertCall(
+        () -> impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
         mock -> verify(mock, times(1)).toMatchAny(any()));
   }
 
   @Test
   void WHEN_matchNone_THEN_toMatchNone_is_called() {
-    assertCall(() -> impl.matchNone(PREDICATE_A),
-        mock -> verify(mock, times(1)).toMatchNone(any()));
+    assertCall(
+        () -> impl.matchNone(PREDICATE_A), mock -> verify(mock, times(1)).toMatchNone(any()));
   }
 
   @Test
   void WHEN_matchNone_2_THEN_toMatchNone_is_called() {
-    assertCall(() -> impl.matchNone(PREDICATE_A, PREDICATE_A),
+    assertCall(
+        () -> impl.matchNone(PREDICATE_A, PREDICATE_A),
         mock -> verify(mock, times(1)).toMatchNone(any()));
   }
 
   @Test
   void WHEN_matchNone_3_THEN_toMatchNone_is_called() {
-    assertCall(() -> impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A),
+    assertCall(
+        () -> impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A),
         mock -> verify(mock, times(1)).toMatchNone(any()));
   }
 
   @Test
   void WHEN_matchNone_varargs_THEN_toMatchNone_is_called() {
-    assertCall(() -> impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
+    assertCall(
+        () -> impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
         mock -> verify(mock, times(1)).toMatchNone(any()));
   }
 
@@ -196,6 +204,5 @@ class TestAssertCollectionImplTest extends TestAssertBase {
       // Assert
       assertThat(headers, instanceOf(TestAssertHeadImpl.class));
     }
-
   }
 }
