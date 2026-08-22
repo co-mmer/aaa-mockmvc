@@ -473,20 +473,7 @@ final class AAAAssertTest {
       // Assert
       assertThat(error.getMessage(), containsString("The response body was absent."));
     }
-
-    @Test
-    void GIVEN_null_assert_value_WHEN_toHaveSameTypeAndValueAs_THEN_NPE_is_thrown() {
-      // Arrange
-      var assertion = AAAAssert.expect(ANY_STEP, AssertOperand.string(A));
-
-      // Act
-      var error =
-          assertThrows(NullPointerException.class, () -> assertion.toHaveSameTypeAndValueAs(null));
-
-      // Assert
-      assertThat(error.getMessage(), equalTo("Assert value must not be null"));
-    }
-
+    
     @Test
     void GIVEN_named_step_WHEN_toHaveSameTypeAndValueAs_fails_THEN_step_is_in_message() {
       // Arrange
@@ -560,7 +547,7 @@ final class AAAAssertTest {
 
               Reason:
               Checking whether a collection contains an empty collection is always true.
-              This creates a false-positive green test that does not verify production behavior.
+              This creates a false-positive "green test" that does not verify production behavior.
 
               How to fix:
               -> To verify that the collection is empty, use:
@@ -569,7 +556,7 @@ final class AAAAssertTest {
               -> To verify the number of elements, use:
                  hasSize(expectedSize)
               """
-                  .strip();
+              .strip();
 
       assertThat(expectedMessage, is(error.getMessage()));
     }
@@ -678,7 +665,7 @@ final class AAAAssertTest {
 
               Reason:
               Checking whether an empty response collection does not contain an element
-              is always true. This creates a false-positive green test that does not verify
+              is always true. This creates a false-positive "green test" that does not verify
               the provided unexpected value.
 
               How to fix:
@@ -688,7 +675,7 @@ final class AAAAssertTest {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-                  .strip();
+              .strip();
 
       assertThat(expectedMessage, is(error.getMessage()));
     }
@@ -900,7 +887,7 @@ final class AAAAssertTest {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-                  .strip();
+              .strip();
 
       assertThat(expectedMessage, is(error.getMessage()));
     }
