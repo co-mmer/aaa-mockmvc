@@ -4,10 +4,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.sameInstance;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.HttpMethod;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.RequestPath;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.EmptyBody;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.MultipartBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.request.body.TextBody;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -17,6 +19,7 @@ class TestArrangeBuilderTest {
 
   private static final String ANY_PATH = "/customers/42";
   private static final String ANY_BODY = "request body";
+  private static final TextBody ANY_TEXT_BODY = new TextBody("");
 
   private TestArrangeBuilder builder;
 
@@ -137,6 +140,40 @@ class TestArrangeBuilderTest {
       // Assert
       assertThat(result, is(sameInstance(body)));
       assertThat(builder.body(), is(sameInstance(body)));
+    }
+  }
+
+  @Nested
+  class SetMultipartBody {
+
+    @Test
+    void WHEN_multipartBody_THEN_return_multipartBody_body() {
+      // Act
+      var result = builder.multipartBody();
+
+      // Assert
+      assertThat(result, is(instanceOf(MultipartBody.class)));
+    }
+
+    @Test
+    void GIVEN_multipartBody_WHEN_multipartBody_THEN_return_same_instance() {
+      // Arrange
+      var multipartBody = builder.multipartBody();
+
+      // Act
+      var result = builder.multipartBody();
+
+      // Assert
+      assertThat(result, is(instanceOf(multipartBody.getClass())));
+    }
+
+    @Test
+    void GIVEN_textBody_WHEN_body_THEN_IllegalStateException_is_thrown() {
+      // Arrange
+      builder.body(ANY_TEXT_BODY);
+
+      // Act & Assert
+      assertThrows(IllegalStateException.class, () -> builder.multipartBody());
     }
   }
 

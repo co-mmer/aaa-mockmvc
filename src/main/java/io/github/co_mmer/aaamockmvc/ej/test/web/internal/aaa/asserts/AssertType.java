@@ -66,23 +66,4 @@ public final class AssertType<T> implements AAAType<T> {
   public Class<T> type() {
     return type;
   }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) {
-      return true;
-    }
-
-    return other instanceof AssertType<?> target && type.equals(target.type);
-  }
-
-  @Override
-  public int hashCode() {
-    return type.hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return type.getTypeName();
-  }
 }
