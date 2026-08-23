@@ -13,14 +13,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import org.springframework.http.HttpStatus;
 
 @Since("2.1.0")
 public final class AssertValue<T, N> {
-
-  private static final Form NORMALIZATION_FORM = Form.NFC;
 
   private static final String NULL_EXPECTED_BOOLEAN_MESSAGE = "Expected boolean must not be null";
   private static final String NULL_EXPECTED_BYTES_MESSAGE = "Expected byte must not be null";
@@ -68,23 +65,13 @@ public final class AssertValue<T, N> {
   private static final String NULL_MATCH_CONDITION_AT_POSITION_MESSAGE =
       "Match condition at position %d must not be null";
 
-  private static final String ACTUAL_COLLECTION_TYPE_MESSAGE = "Actual value must be a collection";
-
-  private static final String ACTUAL_ELEMENTS_TYPE_MESSAGE =
-      "Actual value must be a collection or an object array";
-
-  private static final String ACTUAL_MAP_TYPE_MESSAGE = "Actual value must be a map";
-
   private final T value;
 
   private final N normalizedValue;
 
-  private final Function<Object, N> actualNormalizer;
-
-  private AssertValue(T value, N normalizedValue, Function<Object, N> actualNormalizer) {
+  private AssertValue(T value, N normalizedValue) {
     this.value = value;
     this.normalizedValue = normalizedValue;
-    this.actualNormalizer = actualNormalizer;
   }
 
   @Since("2.1.0")
@@ -143,7 +130,7 @@ public final class AssertValue<T, N> {
   public static AssertValue<HttpStatus, Integer> expectedStatus(HttpStatus value) {
     DomainValidation.requireNonNull(value, NULL_EXPECTED_STATUS_MESSAGE);
 
-    return new AssertValue<>(value, value.value(), AssertValue::cast);
+    return new AssertValue<>(value, value.value());
   }
 
   @Since("2.1.0")
@@ -196,111 +183,61 @@ public final class AssertValue<T, N> {
   private static <T> AssertValue<T, T> requireNonNull(T value, String message) {
 
     DomainValidation.requireNonNull(value, message);
-
-    return new AssertValue<>(value, value, AssertValue::cast);
+    return new AssertValue<>(value, value);
   }
 
   private static <T> AssertValue<T, String> requireNormalizedObject(
       T value, String nullValueMessage) {
 
     DomainValidation.requireNonNull(value, nullValueMessage);
-
-    return new AssertValue<>(
-        value,
-        normalizeObject(value, NORMALIZATION_FORM),
-        actual -> normalizeObject(actual, NORMALIZATION_FORM));
+    return new AssertValue<>(value, normalizeObject(value, Form.NFC));
   }
 
   private static <E> AssertValue<Collection<E>, List<String>> requireNormalizedCollection(
       Collection<E> value, String nullValueMessage) {
 
     DomainValidation.requireNonNull(value, nullValueMessage);
-
-    return new AssertValue<>(
-        value,
-        normalizeCollection(value, NORMALIZATION_FORM),
-        actual -> normalizeCollection(requireCollection(actual), NORMALIZATION_FORM));
+    return new AssertValue<>(value, normalizeCollection(value, Form.NFC));
   }
 
   private static <E> AssertValue<E[], List<String>> requireNormalizedElements(
       E[] values, String nullValuesMessage, String nullElementMessage) {
 
     requireElementsNotNull(values, nullValuesMessage, nullElementMessage);
-
-    return new AssertValue<>(
-        values, normalizeArray(values), AssertValue::normalizeCollectionOrArray);
+    return new AssertValue<>(values, normalizeArray(values));
   }
 
   private static <K, V> AssertValue<Map<K, V>, Map<String, String>> requireNormalizedMap(
       Map<K, V> value) {
 
     DomainValidation.requireNonNull(value, AssertValue.NULL_EXPECTED_MAP_MESSAGE);
-
-    return new AssertValue<>(
-        value, normalizeMapSnapshot(value), actual -> normalizeMapSnapshot(requireMap(actual)));
+    return new AssertValue<>(value, normalizeMapSnapshot(value));
   }
 
   private static <T> AssertValue<T[], T[]> requireElements(T[] values) {
-
     requireElementsNotNull(
         values,
         AssertValue.NULL_MATCH_CONDITIONS_MESSAGE,
         AssertValue.NULL_MATCH_CONDITION_AT_POSITION_MESSAGE);
-
-    return new AssertValue<>(values, values, AssertValue::cast);
+    return new AssertValue<>(values, values);
   }
 
   private static void requireElementsNotNull(
       Object[] values, String nullValuesMessage, String nullElementMessage) {
 
     DomainValidation.requireNonNull(values, nullValuesMessage);
-
     for (var i = 0; i < values.length; i++) {
       DomainValidation.requireNonNull(values[i], nullElementMessage.formatted(i + 1));
     }
   }
 
-  private static Collection<?> requireCollection(Object actual) {
-    if (actual instanceof Collection<?> collection) {
-      return collection;
-    }
-
-    throw new IllegalArgumentException(ACTUAL_COLLECTION_TYPE_MESSAGE);
-  }
-
-  private static Map<?, ?> requireMap(Object actual) {
-    if (actual instanceof Map<?, ?> map) {
-      return map;
-    }
-
-    throw new IllegalArgumentException(ACTUAL_MAP_TYPE_MESSAGE);
-  }
-
-  private static List<String> normalizeCollectionOrArray(Object actual) {
-    if (actual instanceof Collection<?> collection) {
-      return normalizeCollection(collection, NORMALIZATION_FORM);
-    }
-
-    if (actual instanceof Object[] array) {
-      return normalizeArray(array);
-    }
-
-    throw new IllegalArgumentException(ACTUAL_ELEMENTS_TYPE_MESSAGE);
-  }
-
   private static List<String> normalizeArray(Object[] values) {
-    return Arrays.stream(values).map(value -> normalizeObject(value, NORMALIZATION_FORM)).toList();
+    return Arrays.stream(values).map(value -> normalizeObject(value, Form.NFC)).toList();
   }
 
   private static Map<String, String> normalizeMapSnapshot(Map<?, ?> value) {
-    var normalized = normalizeMap(value, NORMALIZATION_FORM);
-
+    var normalized = normalizeMap(value, Form.NFC);
     return Collections.unmodifiableMap(new LinkedHashMap<>(normalized));
-  }
-
-  @SuppressWarnings("unchecked")
-  private static <T> T cast(Object value) {
-    return (T) value;
   }
 
   @Override
@@ -316,10 +253,5 @@ public final class AssertValue<T, N> {
   @Override
   public int hashCode() {
     return normalizedValue.hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return value.toString();
   }
 }
