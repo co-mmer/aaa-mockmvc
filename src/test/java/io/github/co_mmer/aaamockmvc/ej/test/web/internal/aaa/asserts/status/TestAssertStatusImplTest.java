@@ -2,318 +2,175 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.status;
 
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.http.HttpStatus.ACCEPTED;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status;
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert2Status;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertOperand;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
-import java.util.stream.Stream;
-import org.junit.jupiter.api.Assertions;
+import java.util.function.Consumer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.http.HttpStatus;
+import org.mockito.Mockito;
 
-@SuppressWarnings("java:S2699")
 class TestAssertStatusImplTest extends TestAssertBase {
 
-  private TestAssert1Status impl;
-  private TestAssert2Status testAssert2;
+  private TestAssertStatusImpl impl;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
+    this.useActResult(OK);
     this.impl = new TestAssertStatusImpl(context);
-    this.testAssert2 = new TestAssertStatusImpl(context);
   }
 
-  @Nested
-  class is {
+  private void assertCall(Runnable actCall, Consumer<AAAAssert<?, ?>> verifyCall) {
+    var mockInstance = Mockito.mock(AAAAssert.class);
+    var mockClass = Mockito.mockStatic(AAAAssert.class);
+    mockClass.when(() -> AAAAssert.expect(any(), any())).thenReturn(mockInstance);
 
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_is_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> impl.is(null));
-    }
+    actCall.run();
 
-    @Test
-    void GIVEN_ok_WHEN_isOk_THEN_success() {
-      // Arrange
-      useActResult(OK);
+    mockClass.verify(
+        () -> AAAAssert.expect(eq(getContext().getStep()), any(AssertOperand.class)),
+        Mockito.times(1));
 
-      // Act & Assert
-      impl.is(OK);
-    }
-
-    @Test
-    void GIVEN_noContent_WHEN_isOk_THEN_failed() {
-      // Arrange
-      useActResult(NO_CONTENT);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> impl.is(OK));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    @Test
-    void GIVEN_ok_WHEN_is200_THEN_success() {
-      // Arrange
-      useActResult(OK);
-
-      // Act & Assert
-      impl.is(200);
-    }
-
-    @Test
-    void GIVEN_noContent_WHEN_is200_THEN_failed() {
-      // Arrange
-      useActResult(NO_CONTENT);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> impl.is(200));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+    verifyCall.accept(mockInstance);
+    mockClass.close();
   }
 
-  @Nested
-  class status {
-
-    @ParameterizedTest
-    @MethodSource("useCaseHttpStatus")
-    void GIVEN_expected_HttpStatus_WHEN_assert_THEN_success(HttpStatus status) {
-      // Arrange
-      useActResult(status);
-
-      // Act & Assert
-      switch (status) {
-        case OK:
-          impl.isOk();
-          break;
-        case CREATED:
-          impl.isCreated();
-          break;
-        case ACCEPTED:
-          impl.isAccepted();
-          break;
-        case NOT_FOUND:
-          impl.isNotFound();
-          break;
-        case FORBIDDEN:
-          impl.isForbidden();
-          break;
-        case UNAUTHORIZED:
-          impl.isUnauthorized();
-          break;
-        default:
-          Assertions.fail();
-      }
-    }
-
-    @ParameterizedTest
-    @MethodSource("useCaseHttpStatus")
-    @SuppressWarnings("java:S5778")
-    void GIVEN_unexpected_HttpStatus_WHEN_assert_THEN_failed(HttpStatus status) {
-      // Arrange
-      useActResult(1);
-
-      // Act & Assert
-      var ex =
-          assertThrows(
-              AssertionError.class,
-              () -> {
-                switch (status) {
-                  case OK:
-                    impl.isOk();
-                    break;
-                  case CREATED:
-                    impl.isCreated();
-                    break;
-                  case ACCEPTED:
-                    impl.isAccepted();
-                    break;
-                  case NOT_FOUND:
-                    impl.isNotFound();
-                    break;
-                  case FORBIDDEN:
-                    impl.isForbidden();
-                    break;
-                  case UNAUTHORIZED:
-                    impl.isUnauthorized();
-                    break;
-                  default:
-                    Assertions.fail();
-                }
-              });
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    private static Stream<HttpStatus> useCaseHttpStatus() {
-      return Stream.of(OK, CREATED, ACCEPTED, NOT_FOUND, FORBIDDEN, UNAUTHORIZED);
-    }
+  @Test
+  void WHEN_is_HttpStatus_THEN_toHaveStatus_is_called() {
+    assertCall(
+        () -> impl.is(OK),
+        mock -> verify(mock, times(1)).toHaveStatus(AssertValue.expectedStatus(OK)));
   }
 
-  @Nested
-  class is2xxSuccessful {
-
-    @Test
-    void GIVEN_200_299_WHEN_is2xxSuccessful_THEN_success() {
-      // Arrange
-      for (var statusCode = 200; statusCode <= 299; statusCode++) {
-        useActResult(statusCode);
-
-        // Act & Assert
-        impl.is2xxSuccessful();
-      }
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {199, 301})
-    void GIVEN_199_300_WHEN_is2xxSuccessful_THEN_failed(int unexpectedStatusCodes) {
-      // Arrange
-      useActResult(unexpectedStatusCodes);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> impl.is2xxSuccessful());
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_is_statusCode_THEN_toHaveStatus_is_called() {
+    assertCall(
+        () -> impl.is(200),
+        mock -> verify(mock, times(1)).toHaveStatus(AssertValue.expectedStatus(200)));
   }
 
-  @Nested
-  class is3xxRedirect {
-
-    @Test
-    void GIVEN_300_399_WHEN_is3xxRedirect_THEN_success() {
-      // Arrange
-      for (var statusCode = 300; statusCode <= 399; statusCode++) {
-        useActResult(statusCode);
-
-        // Act & Assert
-        impl.is3xxRedirect();
-      }
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {299, 400})
-    void GIVEN_299_400_HttpStatus_WHEN_is3xxRedirect_THEN_failed(int unexpectedStatusCodes) {
-      // Arrange
-      useActResult(unexpectedStatusCodes);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> impl.is3xxRedirect());
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isOk_THEN_toHaveStatus_is_called() {
+    assertCall(
+        () -> impl.isOk(),
+        mock -> verify(mock, times(1)).toHaveStatus(AssertValue.expectedStatus(OK)));
   }
 
-  @Nested
-  class is4xxClientError {
-
-    @Test
-    void GIVEN_400_499_WHEN_is4xxClientError_THEN_success() {
-      // Arrange
-      for (var statusCode = 400; statusCode <= 499; statusCode++) {
-        useActResult(statusCode);
-
-        // Act & Assert
-        impl.is4xxClientError();
-      }
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {399, 500})
-    void GIVEN_399_500_WHEN_is4xxClientError_THEN_failed(int unexpectedStatusCodes) {
-      // Arrange
-      useActResult(unexpectedStatusCodes);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> impl.is4xxClientError());
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isCreated_THEN_toHaveStatus_is_called() {
+    assertCall(
+        () -> impl.isCreated(),
+        mock -> verify(mock, times(1)).toHaveStatus(AssertValue.expectedStatus(CREATED)));
   }
 
-  @Nested
-  class is5xxServerError {
-
-    @Test
-    void GIVEN_500_599_WHEN_is5xxServerError_THEN_success() {
-      // Arrange
-      for (var statusCode = 500; statusCode <= 599; statusCode++) {
-        useActResult(statusCode);
-
-        // Act & Assert
-        impl.is5xxServerError();
-      }
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {499, 600})
-    void GIVEN_499_600_WHEN_is5xxServerError_THEN_failed(int unexpectedStatusCodes) {
-      // Arrange
-      useActResult(unexpectedStatusCodes);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> impl.is5xxServerError());
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isAccepted_THEN_toHaveStatus_is_called() {
+    assertCall(
+        () -> impl.isAccepted(),
+        mock -> verify(mock, times(1)).toHaveStatus(AssertValue.expectedStatus(ACCEPTED)));
   }
 
-  @Nested
-  class isInRange {
+  @Test
+  void WHEN_isNotFound_THEN_toHaveStatus_is_called() {
+    assertCall(
+        () -> impl.isNotFound(),
+        mock -> verify(mock, times(1)).toHaveStatus(AssertValue.expectedStatus(NOT_FOUND)));
+  }
 
-    @Test
-    void GIVEN_300_399_WHEN_isInRange_THEN_success() {
-      // Arrange
-      for (var statusCode = 100; statusCode <= 200; statusCode++) {
-        useActResult(statusCode);
+  @Test
+  void WHEN_isForbidden_THEN_toHaveStatus_is_called() {
+    assertCall(
+        () -> impl.isForbidden(),
+        mock -> verify(mock, times(1)).toHaveStatus(AssertValue.expectedStatus(FORBIDDEN)));
+  }
 
-        // Act & Assert
-        impl.isInRange(100, 200);
-      }
-    }
+  @Test
+  void WHEN_isUnauthorized_THEN_toHaveStatus_is_called() {
+    assertCall(
+        () -> impl.isUnauthorized(),
+        mock -> verify(mock, times(1)).toHaveStatus(AssertValue.expectedStatus(UNAUTHORIZED)));
+  }
 
-    @ParameterizedTest
-    @ValueSource(ints = {99, 201})
-    void GIVEN_99_201_WHEN_isInRange100_200_THEN_failed(int unexpectedStatusCodes) {
-      // Arrange
-      useActResult(unexpectedStatusCodes);
+  @Test
+  void WHEN_is2xxSuccessful_THEN_toBeInRange_is_called() {
+    assertCall(
+        () -> impl.is2xxSuccessful(),
+        mock ->
+            verify(mock, times(1))
+                .toBeInRange(AssertValue.expectedStatus(200), AssertValue.expectedStatus(299)));
+  }
 
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> impl.isInRange(100, 200));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_is3xxRedirect_THEN_toBeInRange_is_called() {
+    assertCall(
+        () -> impl.is3xxRedirect(),
+        mock ->
+            verify(mock, times(1))
+                .toBeInRange(AssertValue.expectedStatus(300), AssertValue.expectedStatus(399)));
+  }
+
+  @Test
+  void WHEN_is4xxClientError_THEN_toBeInRange_is_called() {
+    assertCall(
+        () -> impl.is4xxClientError(),
+        mock ->
+            verify(mock, times(1))
+                .toBeInRange(AssertValue.expectedStatus(400), AssertValue.expectedStatus(499)));
+  }
+
+  @Test
+  void WHEN_is5xxServerError_THEN_toBeInRange_is_called() {
+    assertCall(
+        () -> impl.is5xxServerError(),
+        mock ->
+            verify(mock, times(1))
+                .toBeInRange(AssertValue.expectedStatus(500), AssertValue.expectedStatus(599)));
+  }
+
+  @Test
+  void WHEN_isInRange_THEN_toBeInRange_is_called() {
+    assertCall(
+        () -> impl.isInRange(100, 200),
+        mock ->
+            verify(mock, times(1))
+                .toBeInRange(AssertValue.expectedStatus(100), AssertValue.expectedStatus(200)));
   }
 
   @Nested
   class nextSteps {
 
     @Test
-    void WHEN_content_THEN_return_expected_class() {
+    void content() {
       // Act
-      var content = testAssert2.content();
+      var content = impl.content();
 
       // Assert
       assertThat(content, instanceOf(TestAssertContentImpl.class));
     }
 
     @Test
-    void WHEN_headers_THEN_return_expected_class() {
+    void headers() {
       // Act
-      var headers = testAssert2.headers();
+      var headers = impl.headers();
 
       // Assert
       assertThat(headers, instanceOf(TestAssertHeadImpl.class));

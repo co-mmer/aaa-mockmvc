@@ -1,49 +1,34 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.clazz;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeObject;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.B;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.not;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertMatch;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
-@SuppressWarnings("java:S2699")
 class TestAssertClassImplTest extends TestAssertBase {
 
   private static final Predicate<TestObjectSimple> PREDICATE_A =
       element -> element.name().equals(A);
-  private static final Predicate<TestObjectSimple> PREDICATE_NULL = null;
-  private static final Predicate<TestObjectSimple>[] PREDICATES_NULL = null;
-  private static final Predicate<TestObjectSimple> PREDICATE_NAME_EQUALS_A =
-      element -> element.name().equals(A);
-  private static final Predicate<TestObjectSimple> PREDICATE_ID_EQUALS_2 =
-      element -> element.id() == 2;
-  private static final Predicate<TestObjectSimple> PREDICATE_ID_EQUALS_1 =
-      element -> element.id() == 1;
+
+  private static final AssertValue<TestObjectSimple, String> ASSERT_VALUE_A1 =
+      AssertValue.expectedResponse(A1);
 
   private TestAssertClassImpl<TestObjectSimple> impl;
 
@@ -54,447 +39,128 @@ class TestAssertClassImplTest extends TestAssertBase {
     this.impl = new TestAssertClassImpl<>(context);
   }
 
-  @Nested
-  class isNotNull {
+  @SuppressWarnings("unchecked")
+  private void assertCall(Runnable actCall, Consumer<AAAAssert<?, ?>> verifyCall) {
+    var mockInstance = Mockito.mock(AAAAssert.class);
+    var mockClass = Mockito.mockStatic(AAAAssert.class);
 
-    @Test
-    void GIVEN_A1_WHEN_isNotNull_THEN_assert_true() {
-      // Arrange
-      useAssertResult(A1);
+    mockClass.when(() -> AAAAssert.expect(any(), any())).thenReturn(mockInstance);
+    Mockito.when(mockInstance.toHaveSameTypeAndValueAs(any())).thenReturn(mockInstance);
 
-      // Act & Assert
-      impl.isNotNull();
-    }
+    actCall.run();
 
-    @Test
-    void GIVEN_null_WHEN_isNotNull_THEN_assert_false() {
-      // Arrange
-      useAssertResult(null);
+    mockClass.verify(
+        () -> AAAAssert.expect(getContext().getStep(), getContext().getAssertOperand()),
+        Mockito.times(1));
 
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, impl::isNotNull);
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+    verifyCall.accept(mockInstance);
+    mockClass.close();
   }
 
-  @Nested
-  class isNull {
-
-    @Test
-    void GIVEN_null_WHEN_isNull_THEN_assert_true() {
-      // Arrange
-      useAssertResult(null);
-
-      // Act & Assert
-      impl.isNull();
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_isNull_THEN_return_assert_false() {
-      // Arrange
-      useAssertResult(A1);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, impl::isNull);
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isNotNull_THEN_toBePresent_is_called() {
+    assertCall(() -> impl.isNotNull(), mock -> verify(mock, times(1)).toBePresent());
   }
 
-  @Nested
-  class isEqualTo {
-
-    @Test
-    @SuppressWarnings("all")
-    void WHEN_isEqualTo_Null_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> impl.isEqualTo(null));
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_isEqualTo_A1_THEN_assert_true() {
-      // Arrange
-      useAssertResult(A1);
-
-      // Act & Assert
-      impl.isEqualTo(A1);
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_isEqualTo_A2_THEN_assert_false() {
-      // Arrange
-      useAssertResult(A1);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> impl.isEqualTo(A2));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_isEqualTo_A1_THEN_normalize_object_is_called() {
-      // Arrange
-      var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
-      useAssertResult(A1);
-
-      // Act
-      impl.isEqualTo(A1);
-
-      // Assert
-      mockTestArrangeNormalizer.verify(() -> normalizeObject(any()));
-      mockTestArrangeNormalizer.close();
-    }
-
-    @Test
-    void WHEN_isEqualTo_THEN_normalizedValue_is_called() {
-      // Arrange
-      var realUnexpectedValue = AssertValue.expectedResponse(A1);
-      var spyUnexpectedValue = spy(realUnexpectedValue);
-
-      var mockAssertValue = mockStatic(AssertValue.class);
-      mockAssertValue.when(() -> AssertValue.expectedResponse(A1)).thenReturn(spyUnexpectedValue);
-
-      useAssertResult(A1);
-
-      // Act
-      impl.isEqualTo(A1);
-
-      // Assert
-      verify(spyUnexpectedValue).normalizedValue();
-      mockAssertValue.close();
-    }
+  @Test
+  void WHEN_isNull_THEN_toBeAbsent_is_called() {
+    assertCall(() -> impl.isNull(), mock -> verify(mock, times(1)).toBeAbsent());
   }
 
-  @Nested
-  class matchAll {
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_WHEN_matchAll_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> impl.matchAll(PREDICATE_NULL));
-    }
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_null_WHEN_matchAll_THEN_throw_Exception() {
-      assertThrows(
-          IllegalArgumentException.class, () -> impl.matchAll(PREDICATE_NULL, PREDICATE_NULL));
-    }
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_null_null_WHEN_matchAll_THEN_throw_Exception() {
-      assertThrows(
-          IllegalArgumentException.class,
-          () -> impl.matchAll(PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL));
-    }
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_null_null_null_WHEN_matchAll_THEN_throw_Exception() {
-      assertThrows(
-          IllegalArgumentException.class,
-          () -> impl.matchAll(PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL));
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_matchAll_A_THEN_assert_true() {
-      // Arrange
-      useAssertResult(A1);
-
-      // Act & Assert
-      impl.matchAll(PREDICATE_NAME_EQUALS_A);
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_matchAll_A_1_THEN_assert_true() {
-      // Arrange
-      useAssertResult(A1);
-
-      // Act & Assert
-      impl.matchAll(PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1);
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_matchAll_A_2_THEN_assert_false() {
-      // Arrange
-      useAssertResult(A1);
-
-      // Act & Assert
-      var ex =
-          assertThrows(
-              AssertionError.class,
-              () -> impl.matchAll(PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_2));
-      assertThat(ex.getMessage(), not(EMPTY));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_WHEN_matchAll_vararg_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> impl.matchAll(PREDICATES_NULL));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    void GIVEN_A1_WHEN_matchAll_N_Predicate_THEN_success() {
-      // Arrange
-      var mocked = mockStatic(TestAssertMatch.class);
-      var match = mock(TestAssertMatch.class);
-      mocked.when(() -> TestAssertMatch.assertThat(STEP, A1)).thenReturn(match);
-      useAssertResult(A1);
-
-      // Act
-      impl.matchAll(PREDICATE_A);
-
-      // Assert
-      var p1 = new Predicate[] {PREDICATE_A};
-      verify(match).matchAll(p1);
-
-      impl.matchAll(PREDICATE_A, PREDICATE_A);
-      var p2 = new Predicate[] {PREDICATE_A, PREDICATE_A};
-      verify(match).matchAll(p2);
-
-      impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A);
-      var p3 = new Predicate[] {PREDICATE_A, PREDICATE_A, PREDICATE_A};
-      verify(match).matchAll(p3);
-
-      mocked.close();
-    }
+  @Test
+  void WHEN_isEqualTo_THEN_toHaveSameTypeAndValueAs_and_toEqual_are_called() {
+    assertCall(
+        () -> impl.isEqualTo(A1),
+        mock -> {
+          verify(mock, times(1)).toHaveSameTypeAndValueAs(ASSERT_VALUE_A1);
+          verify(mock, times(1)).toEqual(ASSERT_VALUE_A1);
+        });
   }
 
-  @Nested
-  class matchAny {
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_WHEN_matchAny_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> impl.matchAny(PREDICATE_NULL));
-    }
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_null_WHEN_matchAny_THEN_throw_Exception() {
-      assertThrows(
-          IllegalArgumentException.class, () -> impl.matchAny(PREDICATE_NULL, PREDICATE_NULL));
-    }
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_null_null_WHEN_matchAny_THEN_throw_Exception() {
-      assertThrows(
-          IllegalArgumentException.class,
-          () -> impl.matchAny(PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL));
-    }
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_null_null_null_WHEN_matchAny_THEN_throw_Exception() {
-      assertThrows(
-          IllegalArgumentException.class,
-          () -> impl.matchAny(PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL));
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_matchAny_1_THEN_assert_true() {
-      // Arrange
-      useAssertResult(A1);
-
-      // Act & Assert
-      impl.matchAny(PREDICATE_ID_EQUALS_1);
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_matchAny_B_THEN_assert_false() {
-      // Arrange
-      useAssertResult(A1);
-
-      // Act & Assert
-      var ex =
-          assertThrows(
-              AssertionError.class, () -> impl.matchAny(element -> element.name().equals(B)));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_matchAny_B_1_THEN_assert_true() {
-      // Arrange
-      useAssertResult(A1);
-
-      // Act & Assert
-      impl.matchAny(element -> element.name().equals(B), PREDICATE_ID_EQUALS_1);
-    }
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_WHEN_matchAny_vararg_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> impl.matchAny(PREDICATES_NULL));
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_matchAny_B_3_THEN_assert_false() {
-      // Arrange
-      useAssertResult(A1);
-
-      // Act & Assert
-      var ex =
-          assertThrows(
-              AssertionError.class,
-              () ->
-                  impl.matchAny(element -> element.name().equals(B), element -> element.id() == 3));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    void GIVEN_A1_WHEN_matchAll_N_Predicate_THEN_success() {
-      // Arrange
-      var mocked = mockStatic(TestAssertMatch.class);
-      var match = mock(TestAssertMatch.class);
-      mocked.when(() -> TestAssertMatch.assertThat(STEP, A1)).thenReturn(match);
-      useAssertResult(A1);
-
-      // Act
-      impl.matchAny(PREDICATE_A);
-
-      // Assert
-      var p1 = new Predicate[] {PREDICATE_A};
-      verify(match).matchAny(p1);
-
-      impl.matchAny(PREDICATE_A, PREDICATE_A);
-      var p2 = new Predicate[] {PREDICATE_A, PREDICATE_A};
-      verify(match).matchAny(p2);
-
-      impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A);
-      var p3 = new Predicate[] {PREDICATE_A, PREDICATE_A, PREDICATE_A};
-      verify(match).matchAny(p3);
-
-      mocked.close();
-    }
+  @Test
+  void WHEN_matchAll_THEN_toMatchAll_is_called() {
+    assertCall(() -> impl.matchAll(PREDICATE_A), mock -> verify(mock, times(1)).toMatchAll(any()));
   }
 
-  @Nested
-  class matchNone {
+  @Test
+  void WHEN_matchAll_2_THEN_toMatchAll_is_called() {
+    assertCall(
+        () -> impl.matchAll(PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).toMatchAll(any()));
+  }
 
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_WHEN_matchNone_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> impl.matchNone(PREDICATE_NULL));
-    }
+  @Test
+  void WHEN_matchAll_3_THEN_toMatchAll_is_called() {
+    assertCall(
+        () -> impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).toMatchAll(any()));
+  }
 
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_null_WHEN_matchNone_THEN_throw_Exception() {
-      assertThrows(
-          IllegalArgumentException.class, () -> impl.matchNone(PREDICATE_NULL, PREDICATE_NULL));
-    }
+  @Test
+  void WHEN_matchAll_varargs_THEN_toMatchAll_is_called() {
+    assertCall(
+        () -> impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).toMatchAll(any()));
+  }
 
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_null_null_WHEN_matchNone_THEN_throw_Exception() {
-      assertThrows(
-          IllegalArgumentException.class,
-          () -> impl.matchNone(PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL));
-    }
+  @Test
+  void WHEN_matchAny_THEN_toMatchAny_is_called() {
+    assertCall(() -> impl.matchAny(PREDICATE_A), mock -> verify(mock, times(1)).toMatchAny(any()));
+  }
 
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_null_null_null_WHEN_matchNone_THEN_throw_Exception() {
-      assertThrows(
-          IllegalArgumentException.class,
-          () -> impl.matchNone(PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL, PREDICATE_NULL));
-    }
+  @Test
+  void WHEN_matchAny_2_THEN_toMatchAny_is_called() {
+    assertCall(
+        () -> impl.matchAny(PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).toMatchAny(any()));
+  }
 
-    @Test
-    void GIVEN_A1_WHEN_matchNone_2_THEN_assert_true() {
-      // Arrange
-      useAssertResult(A1);
+  @Test
+  void WHEN_matchAny_3_THEN_toMatchAny_is_called() {
+    assertCall(
+        () -> impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).toMatchAny(any()));
+  }
 
-      // Act & Assert
-      impl.matchNone(PREDICATE_ID_EQUALS_2);
-    }
+  @Test
+  void WHEN_matchAny_varargs_THEN_toMatchAny_is_called() {
+    assertCall(
+        () -> impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).toMatchAny(any()));
+  }
 
-    @Test
-    void GIVEN_A1_WHEN_matchNone_A_THEN_assert_false() {
-      // Arrange
-      useAssertResult(A1);
+  @Test
+  void WHEN_matchNone_THEN_toMatchNone_is_called() {
+    assertCall(
+        () -> impl.matchNone(PREDICATE_A), mock -> verify(mock, times(1)).toMatchNone(any()));
+  }
 
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> impl.matchNone(PREDICATE_NAME_EQUALS_A));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_matchNone_2_THEN_toMatchNone_is_called() {
+    assertCall(
+        () -> impl.matchNone(PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).toMatchNone(any()));
+  }
 
-    @Test
-    void GIVEN_A1_WHEN_matchNone_B_2_THEN_assert_true() {
-      // Arrange
-      useAssertResult(A1);
+  @Test
+  void WHEN_matchNone_3_THEN_toMatchNone_is_called() {
+    assertCall(
+        () -> impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).toMatchNone(any()));
+  }
 
-      // Act & Assert
-      impl.matchNone(element -> element.name().equals(B), PREDICATE_ID_EQUALS_2);
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_matchNone_A_3_THEN_assert_false() {
-      // Arrange
-      useAssertResult(A1);
-
-      // Act & Assert
-      var ex =
-          assertThrows(
-              AssertionError.class,
-              () -> impl.matchNone(PREDICATE_NAME_EQUALS_A, element -> element.id() == 3));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_matchNone_A_1_THEN_assert_false() {
-      // Arrange
-      useAssertResult(A1);
-
-      // Act & Assert
-      var ex =
-          assertThrows(
-              AssertionError.class,
-              () -> impl.matchNone(PREDICATE_NAME_EQUALS_A, PREDICATE_ID_EQUALS_1));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_WHEN_matchNone_vararg_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> impl.matchNone(PREDICATES_NULL));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    void GIVEN_A1_WHEN_matchAll_N_Predicate_THEN_success() {
-      // Arrange
-      var mocked = mockStatic(TestAssertMatch.class);
-      var match = mock(TestAssertMatch.class);
-      mocked.when(() -> TestAssertMatch.assertThat(STEP, A1)).thenReturn(match);
-      useAssertResult(A1);
-
-      // Act
-      impl.matchNone(PREDICATE_A);
-
-      // Assert
-      var p1 = new Predicate[] {PREDICATE_A};
-      verify(match).matchNone(p1);
-
-      impl.matchNone(PREDICATE_A, PREDICATE_A);
-      var p2 = new Predicate[] {PREDICATE_A, PREDICATE_A};
-      verify(match).matchNone(p2);
-
-      impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A);
-      var p3 = new Predicate[] {PREDICATE_A, PREDICATE_A, PREDICATE_A};
-      verify(match).matchNone(p3);
-
-      mocked.close();
-    }
+  @Test
+  void WHEN_matchNone_varargs_THEN_toMatchNone_is_called() {
+    assertCall(
+        () -> impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).toMatchNone(any()));
   }
 
   @Nested
   class nextStep {
 
     @Test
-    void WHEN_headers_THEN_return_expected_class() {
+    void headers() {
       // Act
       var headers = impl.headers();
 

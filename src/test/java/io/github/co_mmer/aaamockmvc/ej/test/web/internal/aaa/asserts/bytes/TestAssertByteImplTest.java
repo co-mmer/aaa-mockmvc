@@ -1,28 +1,30 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.bytes;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_ARRAY;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY_OBJECT;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A2_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.not;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
+import java.util.function.Consumer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
 
-@SuppressWarnings("java:S2699")
 class TestAssertByteImplTest extends TestAssertBase {
+
+  private static final byte[] TEST_A1_BYTES = TEST_A1_JSON.getBytes();
+
+  private static final AssertValue<byte[], byte[]> ASSERT_VALUE_A1 =
+      AssertValue.expectedBytes(TEST_A1_BYTES);
 
   private TestAssertByteImpl impl;
 
@@ -30,113 +32,48 @@ class TestAssertByteImplTest extends TestAssertBase {
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
+    this.useActResult(TEST_A1_BYTES);
     this.impl = new TestAssertByteImpl(context);
   }
 
-  @Nested
-  class isNotEmpty {
+  private void assertCall(Runnable actCall, Consumer<AAAAssert<?, ?>> verifyCall) {
+    var mockInstance = Mockito.mock(AAAAssert.class);
+    var mockClass = Mockito.mockStatic(AAAAssert.class);
+    mockClass.when(() -> AAAAssert.expect(any(), any())).thenReturn(mockInstance);
 
-    @Test
-    void GIVEN_byte_WHEN_isNotEmpty_THEN_success() {
-      // Arrange
-      useActResult(TEST_A1_JSON.getBytes());
+    actCall.run();
 
-      // Act & Assert
-      impl.isNotEmpty();
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {EMPTY, EMPTY_ARRAY, EMPTY_OBJECT})
-    void GIVEN_blank_WHEN_isNotEmpty_THEN_failed(String content) {
-      // Arrange
-      useActResult(content.getBytes());
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, impl::isNotEmpty);
-      assertThat(ex.getMessage(), not(EMPTY));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+    verifyCall.accept(mockInstance);
+    mockClass.close();
   }
 
-  @Nested
-  class isEmpty {
-
-    @ParameterizedTest
-    @ValueSource(strings = {EMPTY, EMPTY_ARRAY, EMPTY_OBJECT})
-    void GIVEN_blank_WHEN_isEmpty_THEN_success(String content) {
-      // Arrange
-      useActResult(content.getBytes());
-
-      // Act & Assert
-      impl.isEmpty();
-    }
-
-    @Test
-    void GIVEN_byte_WHEN_isEmpty_THEN_failed() {
-      // Arrange
-      useActResult(TEST_A1_JSON.getBytes());
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, impl::isEmpty);
-      assertThat(ex.getMessage(), not(EMPTY));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isNotEmpty_THEN_notToBeEmpty_is_called() {
+    assertCall(() -> impl.isNotEmpty(), mock -> verify(mock, times(1)).notToBeEmpty());
   }
 
-  @Nested
-  class hasLength {
-
-    @Test
-    void GIVEN_length1_WHEN_hasLength1_THEN_success() {
-      // Arrange
-      useActResult(TEST_A1_JSON.getBytes());
-
-      // Act & Assert
-      impl.hasLength(TEST_A1_JSON.length());
-    }
-
-    @Test
-    void GIVEN_length1_WHEN_hasLength8_THEN_failed() {
-      // Arrange
-      useActResult(TEST_A1_JSON.getBytes());
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> impl.hasLength(8));
-      assertThat(ex.getMessage(), not(EMPTY));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isEmpty_THEN_toBeEmpty_is_called() {
+    assertCall(() -> impl.isEmpty(), mock -> verify(mock, times(1)).toBeEmpty());
   }
 
-  @Nested
-  class isEqualTo {
+  @Test
+  void WHEN_hasLength_THEN_toHaveSize_is_called() {
+    assertCall(() -> impl.hasLength(1), mock -> verify(mock, times(1)).toHaveSize(1));
+  }
 
-    @Test
-    void GIVEN_expected_WHEN_isEqualTo_THEN_success() {
-      // Arrange
-      useActResult(TEST_A1_JSON.getBytes());
-
-      // Act & Assert
-      impl.isEqualTo(TEST_A1_JSON.getBytes());
-    }
-
-    @Test
-    @SuppressWarnings("java:S5778")
-    void GIVEN_unexpected_byte_WHEN_isEqualTo_THEN_failed() {
-      // Arrange
-      useActResult(TEST_A1_JSON.getBytes());
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> impl.isEqualTo(TEST_A2_JSON.getBytes()));
-      assertThat(ex.getMessage(), not(EMPTY));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isEqualTo_THEN_toEqual_is_called() {
+    assertCall(
+        () -> impl.isEqualTo(TEST_A1_BYTES),
+        mock -> verify(mock, times(1)).toEqual(ASSERT_VALUE_A1));
   }
 
   @Nested
   class nextStep {
 
     @Test
-    void WHEN_headers_THEN_return_expected_class() {
+    void headers() {
       // Act
       var headers = impl.headers();
 

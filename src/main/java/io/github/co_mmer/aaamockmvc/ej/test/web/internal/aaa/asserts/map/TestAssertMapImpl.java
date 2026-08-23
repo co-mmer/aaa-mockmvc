@@ -30,7 +30,6 @@ public final class TestAssertMapImpl<K, V>
   @Override
   public TestAssertLMap isEmpty() {
     AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).toBeEmpty();
-
     return this;
   }
 

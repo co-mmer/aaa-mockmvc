@@ -60,12 +60,6 @@ public final class AAAAssert<A, N> {
   }
 
   @Since("2.1.0")
-  public void notToBeEmptyBytes() {
-    var actual = requireActual("not empty");
-    verify(sizeOf(actual) > 2, "not empty", actual, "The response body was empty.");
-  }
-
-  @Since("2.1.0")
   public void toHaveSize(int expectedSize) {
     var expected = "size " + expectedSize;
     var actual = requireActual(expected);

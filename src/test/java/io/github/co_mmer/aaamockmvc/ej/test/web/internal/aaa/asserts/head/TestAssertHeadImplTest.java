@@ -5,231 +5,87 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.HEADER_VALUE_TOKEN;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertOperand;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
+import java.util.function.Consumer;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
-@SuppressWarnings("java:S2699")
 class TestAssertHeadImplTest extends TestAssertBase {
 
-  private TestAssertHead testAssert;
+  private static final String[] EXPECTED_HEADER_VALUES = {HEADER_VALUE_TOKEN, HEADER_VALUE_JSON};
+
+  private TestAssertHeadImpl impl;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
-    this.testAssert = new TestAssertHeadImpl(context);
+    this.useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
+    this.impl = new TestAssertHeadImpl(context);
   }
 
-  @Nested
-  class containsKey {
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_containsKey_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> testAssert.containsKey(null));
-    }
-
-    @Test
-    void GIVEN_key1_value1_WHEN_containsKey_key1_THEN_success() {
-      // Arrange
-      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
-
-      // Act & Assert
-      testAssert.containsKey(HEADER_KEY_AUTH);
-    }
-
-    @Test
-    void GIVEN_key1_value1_WHEN_containsKey_key2_THEN_failed() {
-      // Arrange
-      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
-
-      // Act & Assert
-      var ex =
-          assertThrows(AssertionError.class, () -> testAssert.containsKey(HEADER_KEY_CONTENT_TYPE));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-  }
-
-  @Nested
-  class doesNotContainKey {
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_doesNotContainKey_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> testAssert.doesNotContainKey(null));
-    }
-
-    @Test
-    void GIVEN_key1_value1_WHEN_doesNotContainKey_key2_THEN_success() {
-      // Arrange
-      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
-
-      // Act & Assert
-      testAssert.doesNotContainKey(HEADER_KEY_CONTENT_TYPE);
-    }
-
-    @Test
-    void GIVEN_key1_value1_WHEN_doesNotContainKey_key1_THEN_failed() {
-      // Arrange
-      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
-
-      // Act & Assert
-      var ex =
-          assertThrows(AssertionError.class, () -> testAssert.doesNotContainKey(HEADER_KEY_AUTH));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-  }
-
-  @Nested
-  class containsEntry {
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_containsEntry_THEN_throwException() {
-      assertThrows(IllegalArgumentException.class, () -> testAssert.containsEntry(null, null));
-    }
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_keyIsNull_WHEN_containsEntry_THEN_throwException() {
-      assertThrows(
-          IllegalArgumentException.class, () -> testAssert.containsEntry(null, HEADER_VALUE_TOKEN));
-    }
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_valueIsNull_WHEN_containsEntry_THEN_throwException() {
-      assertThrows(
-          IllegalArgumentException.class, () -> testAssert.containsEntry(HEADER_KEY_AUTH, null));
-    }
-
-    @Test
-    void GIVEN_key1_value1_WHEN_containsEntry_key1_value1_THEN_success() {
-      // Arrange
-      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
-
-      // Act & Assert
-      testAssert.containsEntry(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
-    }
-
-    @Test
-    void GIVEN_key1_value1_WHEN_containsEntry_key1_value2_THEN_failed() {
-      // Arrange
-      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
-
-      // Act & Assert
-      var ex =
-          assertThrows(
-              AssertionError.class,
-              () -> testAssert.containsEntry(HEADER_KEY_AUTH, HEADER_VALUE_JSON));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    @Test
-    void GIVEN_key1_value1_WHEN_containsEntry_key2_value1_THEN_failed() {
-      // Arrange
-      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN);
-
-      // Act & Assert
-      var ex =
-          assertThrows(
-              AssertionError.class,
-              () -> testAssert.containsEntry(HEADER_KEY_CONTENT_TYPE, HEADER_VALUE_TOKEN));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-  }
-
-  @Nested
   @SuppressWarnings("all")
-  class containsEntryExactly {
+  private void assertCall(Runnable actCall, Consumer<AAAAssert<?, ?>> verifyCall) {
+    var mockInstance = Mockito.mock(AAAAssert.class);
+    var mockClass = Mockito.mockStatic(AAAAssert.class);
+    mockClass.when(() -> AAAAssert.expect(any(), any())).thenReturn(mockInstance);
 
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_containsEntryExactly_THEN_throwException() {
-      assertThrows(
-          IllegalArgumentException.class, () -> testAssert.containsEntryExactly(null, null));
-    }
+    actCall.run();
 
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_keyIsNull_WHEN_containsEntryExactly_THEN_throwException() {
-      assertThrows(
-          IllegalArgumentException.class,
-          () -> testAssert.containsEntryExactly(null, HEADER_VALUE_TOKEN));
-    }
+    mockClass.verify(
+        () -> AAAAssert.expect(eq(getContext().getStep()), any(AssertOperand.class)),
+        Mockito.times(1));
 
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_valueIsNull_WHEN_containsEntryExactly_THEN_throwException() {
-      assertThrows(
-          IllegalArgumentException.class,
-          () -> testAssert.containsEntryExactly(HEADER_KEY_AUTH, null));
-    }
+    verifyCall.accept(mockInstance);
+    mockClass.close();
+  }
 
-    @Test
-    void GIVEN_key1_value1_value2_WHEN_containsEntryExactly_key1_value1_value2_THEN_success() {
-      // Arrange
-      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
+  @Test
+  void WHEN_containsKey_THEN_toContainKey_is_called() {
+    assertCall(
+        () -> impl.containsKey(HEADER_KEY_AUTH),
+        mock ->
+            verify(mock, times(1)).toContainKey(AssertValue.expectedHeaderName(HEADER_KEY_AUTH)));
+  }
 
-      // Act & Assert
-      testAssert.containsEntryExactly(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
-    }
+  @Test
+  void WHEN_doesNotContainKey_THEN_notToContainKey_is_called() {
+    assertCall(
+        () -> impl.doesNotContainKey(HEADER_KEY_CONTENT_TYPE),
+        mock ->
+            verify(mock, times(1))
+                .notToContainKey(AssertValue.unexpectedHeaderName(HEADER_KEY_CONTENT_TYPE)));
+  }
 
-    @Test
-    void GIVEN_key1_value1_value2_WHEN_containsEntryExactly_key1_value2_value1_THEN_success() {
-      // Arrange
-      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
+  @Test
+  void WHEN_containsEntry_THEN_toContainEntry_is_called() {
+    assertCall(
+        () -> impl.containsEntry(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN),
+        mock ->
+            verify(mock, times(1))
+                .toContainEntry(
+                    AssertValue.expectedHeaderName(HEADER_KEY_AUTH),
+                    AssertValue.expectedHeaderValue(HEADER_VALUE_TOKEN)));
+  }
 
-      // Act & Assert
-      testAssert.containsEntryExactly(HEADER_KEY_AUTH, HEADER_VALUE_JSON, HEADER_VALUE_TOKEN);
-    }
-
-    @Test
-    void GIVEN_key1_value1_value2_WHEN_containsEntryExactly_key1_value1_THEN_failed() {
-      // Arrange
-      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
-
-      // Act & Assert
-      var ex =
-          assertThrows(
-              AssertionError.class,
-              () -> testAssert.containsEntryExactly(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    @Test
-    void GIVEN_key1_value1_value2_WHEN_containsEntryExactly_key2_value1_value2_THEN_failed() {
-      // Arrange
-      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
-
-      // Act & Assert
-      var ex =
-          assertThrows(
-              AssertionError.class,
-              () ->
-                  testAssert.containsEntryExactly(
-                      HEADER_KEY_CONTENT_TYPE, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    @Test
-    void GIVEN_key1_value1_value2_WHEN_containsEntryExactly_key1_THEN_failed() {
-      // Arrange
-      useActResult(HEADER_KEY_AUTH, HEADER_VALUE_TOKEN, HEADER_VALUE_JSON);
-
-      // Act & Assert
-      var ex =
-          assertThrows(
-              AssertionError.class, () -> testAssert.containsEntryExactly(HEADER_KEY_AUTH));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_containsEntryExactly_THEN_toContainEntryExactly_is_called() {
+    assertCall(
+        () -> impl.containsEntryExactly(HEADER_KEY_AUTH, EXPECTED_HEADER_VALUES),
+        mock ->
+            verify(mock, times(1))
+                .toContainEntryExactly(
+                    AssertValue.expectedHeaderName(HEADER_KEY_AUTH),
+                    AssertValue.expectedHeaderValues(EXPECTED_HEADER_VALUES)));
   }
 }

@@ -67,7 +67,7 @@ public final class AssertValue<T, N> {
 
   private static final String NULL_MATCH_CONDITION_AT_POSITION_MESSAGE =
       "Match condition at position %d must not be null";
-  
+
   private static final String ACTUAL_COLLECTION_TYPE_MESSAGE = "Actual value must be a collection";
 
   private static final String ACTUAL_ELEMENTS_TYPE_MESSAGE =
@@ -93,8 +93,7 @@ public final class AssertValue<T, N> {
   }
 
   public static AssertValue<byte[], byte[]> expectedBytes(byte[] value) {
-    var snapshot = value.clone();
-    return requireNonNull(snapshot, NULL_EXPECTED_BYTES_MESSAGE);
+    return requireNonNull(value, NULL_EXPECTED_BYTES_MESSAGE);
   }
 
   @Since("2.1.0")

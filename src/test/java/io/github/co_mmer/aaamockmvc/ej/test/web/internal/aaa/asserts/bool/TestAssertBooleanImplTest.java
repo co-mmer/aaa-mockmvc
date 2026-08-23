@@ -2,158 +2,88 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.bool;
 
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
+import java.util.function.Consumer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
-@SuppressWarnings("java:S2699")
 class TestAssertBooleanImplTest extends TestAssertBase {
 
-  private TestAssertBooleanImpl testAssert;
+  private static final AssertValue<Boolean, Boolean> ASSERT_VALUE_TRUE =
+      AssertValue.expectedBoolean(Boolean.TRUE);
+
+  private static final AssertValue<Boolean, Boolean> ASSERT_VALUE_FALSE =
+      AssertValue.expectedBoolean(Boolean.FALSE);
+
+  private TestAssertBooleanImpl impl;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
-    this.testAssert = new TestAssertBooleanImpl(context);
+    this.impl = new TestAssertBooleanImpl(context);
   }
 
-  @Nested
-  class isNotNull {
+  private void assertCall(Runnable actCall, Consumer<AAAAssert<?, ?>> verifyCall) {
+    var mockInstance = Mockito.mock(AAAAssert.class);
+    var mockClass = Mockito.mockStatic(AAAAssert.class);
+    mockClass.when(() -> AAAAssert.expect(any(), any())).thenReturn(mockInstance);
 
-    @Test
-    void GIVEN_True_WHEN_isNotNull_THEN_assert_true() {
-      // Arrange
-      useAssertResult(Boolean.TRUE);
+    actCall.run();
 
-      // Act & Assert
-      testAssert.isNotNull();
-    }
+    mockClass.verify(
+        () -> AAAAssert.expect(getContext().getStep(), getContext().getAssertOperand()),
+        Mockito.times(1));
 
-    @Test
-    void GIVEN_null_WHEN_isNotNull_THEN_assert_false() {
-      // Arrange
-      useAssertResult(null);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, testAssert::isNotNull);
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+    verifyCall.accept(mockInstance);
+    mockClass.close();
   }
 
-  @Nested
-  class isNull {
-
-    @Test
-    void GIVEN_null_WHEN_isNull_THEN_assert_true() {
-      // Arrange
-      useAssertResult(null);
-
-      // Act & Assert
-      testAssert.isNull();
-    }
-
-    @Test
-    void GIVEN_True_WHEN_isNull_THEN_return_assert_false() {
-      // Arrange
-      useAssertResult(Boolean.TRUE);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, testAssert::isNull);
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isNull_THEN_toBeAbsent_is_called() {
+    assertCall(() -> impl.isNull(), mock -> verify(mock, times(1)).toBeAbsent());
   }
 
-  @Nested
-  class isTrue {
-
-    @Test
-    void GIVEN_true_WHEN_isTrue_THEN_assert_true() {
-      // Arrange
-      useAssertResult(Boolean.TRUE);
-
-      // Act & Assert
-      testAssert.isTrue();
-    }
-
-    @Test
-    void GIVEN_False_WHEN_isTrue_THEN_return_assert_false() {
-      // Arrange
-      useAssertResult(Boolean.FALSE);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, testAssert::isTrue);
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isNotNull_THEN_toBePresent_is_called() {
+    assertCall(() -> impl.isNotNull(), mock -> verify(mock, times(1)).toBePresent());
   }
 
-  @Nested
-  class isFalse {
-
-    @Test
-    void GIVEN_False_WHEN_isFalse_THEN_assert_true() {
-      // Arrange
-      useAssertResult(Boolean.FALSE);
-
-      // Act & Assert
-      testAssert.isFalse();
-    }
-
-    @Test
-    void GIVEN_True_WHEN_isFalse_THEN_return_assert_false() {
-      // Arrange
-      useAssertResult(Boolean.TRUE);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, testAssert::isFalse);
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isEqualTo_THEN_toEqual_is_called() {
+    assertCall(
+        () -> impl.isEqualTo(Boolean.TRUE),
+        mock -> verify(mock, times(1)).toEqual(ASSERT_VALUE_TRUE));
   }
 
-  @Nested
-  class isEqualTo {
+  @Test
+  void WHEN_isTrue_THEN_toEqual_is_called() {
+    assertCall(() -> impl.isTrue(), mock -> verify(mock, times(1)).toEqual(ASSERT_VALUE_TRUE));
+  }
 
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void GIVEN_null_WHEN_isEqualTo_THEN_throw_IllegalArgumentException() {
-      // Act & Assert
-      assertThrows(IllegalArgumentException.class, () -> testAssert.isEqualTo(null));
-    }
-
-    @Test
-    void GIVEN_False_WHEN_isEqualTo_THEN_assert_true() {
-      // Arrange
-      useAssertResult(Boolean.FALSE);
-
-      // Act & Assert
-      testAssert.isEqualTo(Boolean.FALSE);
-    }
-
-    @Test
-    void GIVEN_True_WHEN_isEqualTo_THEN_return_assert_false() {
-      // Arrange
-      useAssertResult(Boolean.TRUE);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert.isEqualTo(Boolean.FALSE));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isFalse_THEN_toEqual_is_called() {
+    assertCall(() -> impl.isFalse(), mock -> verify(mock, times(1)).toEqual(ASSERT_VALUE_FALSE));
   }
 
   @Nested
   class nextStep {
 
     @Test
-    void WHEN_headers_THEN_return_expected_class() {
+    void headers() {
       // Act
-      var headers = testAssert.headers();
+      var headers = impl.headers();
 
       // Assert
       assertThat(headers, instanceOf(TestAssertHeadImpl.class));

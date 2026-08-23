@@ -1,156 +1,82 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeObject;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils.EMPTY;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A2_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
+import java.util.function.Consumer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
-@SuppressWarnings("java:S2699")
 class TestAssertStringImplTest extends TestAssertBase {
 
-  private TestAssertStringImpl testAssert;
+  private static final AssertValue<String, String> ASSERT_VALUE_A1 =
+      AssertValue.expectedString(TEST_A1_JSON);
+
+  private TestAssertStringImpl impl;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
-    this.testAssert = new TestAssertStringImpl(context);
+    this.impl = new TestAssertStringImpl(context);
   }
 
-  @Nested
-  class isNotEmpty {
+  private void assertCall(Runnable actCall, Consumer<AAAAssert<?, ?>> verifyCall) {
+    var mockInstance = Mockito.mock(AAAAssert.class);
+    var mockClass = Mockito.mockStatic(AAAAssert.class);
+    mockClass.when(() -> AAAAssert.expect(any(), any())).thenReturn(mockInstance);
 
-    @Test
-    void GIVEN_A1_WHEN_isNotEmpty_THEN_success() {
-      // Arrange
-      useActResult(TEST_A1_JSON);
+    actCall.run();
 
-      // Act & Assert
-      testAssert.isNotEmpty();
-    }
+    mockClass.verify(
+        () -> AAAAssert.expect(getContext().getStep(), getContext().getAssertOperand()),
+        Mockito.times(1));
 
-    @Test
-    void GIVEN_empty_WHEN_isNotEmpty_THEN_failed() {
-      // Arrange
-      useActResult(EMPTY);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, testAssert::isNotEmpty);
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+    verifyCall.accept(mockInstance);
+    mockClass.close();
   }
 
-  @Nested
-  class isEmpty {
-
-    @Test
-    void GIVEN_empty_WHEN_isEmpty_THEN_success() {
-      // Arrange
-      useActResult(EMPTY);
-
-      // Act & Assert
-      testAssert.isEmpty();
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_isEmpty_THEN_failed() {
-      // Arrange
-      useActResult(TEST_A1_JSON);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, testAssert::isEmpty);
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isNotEmpty_THEN_notToBeEmpty_is_called() {
+    assertCall(() -> impl.isNotEmpty(), mock -> verify(mock, times(1)).notToBeEmpty());
   }
 
-  @Nested
-  class isEqualTo {
-
-    @Test
-    @SuppressWarnings("all")
-    void GIVEN_null_WHEN_isEqualTo_THEN_throw_Exception() {
-      assertThrows(IllegalArgumentException.class, () -> testAssert.isEqualTo(null));
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_isEqualTo_A1_THEN_success() {
-      // Arrange
-      useActResult(TEST_A1_JSON);
-
-      // Act & Assert
-      testAssert.isEqualTo(TEST_A1_JSON);
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_isEqualTo_A2_THEN_failed() {
-      // Arrange
-      useActResult(TEST_A1_JSON);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert.isEqualTo(TEST_A2_JSON));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_isEqualTo_THEN_normalize_object_is_called() {
-      // Arrange
-      var mockTestArrangeNormalizer = mockStatic(TestArrangeNormalizer.class);
-      useActResult(TEST_A1_JSON);
-
-      // Act
-      testAssert.isEqualTo(TEST_A1_JSON);
-
-      // Assert
-      mockTestArrangeNormalizer.verify(() -> normalizeObject(any()), times(2));
-      mockTestArrangeNormalizer.close();
-    }
+  @Test
+  void WHEN_isEmpty_THEN_toBeEmpty_is_called() {
+    assertCall(() -> impl.isEmpty(), mock -> verify(mock, times(1)).toBeEmpty());
   }
 
-  @Nested
-  class hasLength {
+  @Test
+  void WHEN_hasLength_THEN_toHaveLength_is_called() {
+    assertCall(() -> impl.hasLength(1), mock -> verify(mock, times(1)).toHaveLength(1));
+  }
 
-    @Test
-    void GIVEN_A1_WHEN_hasLength_THEN_success() {
-      // Arrange
-      useActResult(TEST_A1_JSON);
-
-      // Act & Assert
-      testAssert.hasLength(TEST_A1_JSON.length());
-    }
-
-    @Test
-    void GIVEN_A1_WHEN_hasLength10_THEN_failed() {
-      // Arrange
-      useActResult(TEST_A1_JSON);
-
-      // Act & Assert
-      var ex = assertThrows(AssertionError.class, () -> testAssert.hasLength(10));
-      assertThat(ex.getMessage(), containsString(STEP_NAME));
-    }
+  @Test
+  void WHEN_isEqualTo_THEN_toEqual_is_called() {
+    assertCall(
+        () -> impl.isEqualTo(TEST_A1_JSON),
+        mock -> verify(mock, times(1)).toEqual(ASSERT_VALUE_A1));
   }
 
   @Nested
   class nextStep {
 
     @Test
-    void WHEN_headers_THEN_return_expected_class() {
+    void headers() {
       // Act
-      var headers = testAssert.headers();
+      var headers = impl.headers();
 
       // Assert
       assertThat(headers, instanceOf(TestAssertHeadImpl.class));

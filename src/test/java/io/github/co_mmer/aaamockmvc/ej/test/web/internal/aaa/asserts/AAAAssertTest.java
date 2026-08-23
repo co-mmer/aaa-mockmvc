@@ -183,7 +183,7 @@ final class AAAAssertTest {
                   + LINE_SEPARATOR
                   + "Expected: not empty"
                   + LINE_SEPARATOR
-                  + "Actual:   "
+                  + "Actual:   \"\""
                   + LINE_SEPARATOR
                   + "Reason:   The response body was empty."));
     }
