@@ -18,58 +18,56 @@ import java.util.function.Function;
 @Since("2.1.0")
 public final class AssertOperand<A, N> {
 
-  private final A actualContent;
+  private final A actualValue;
   private final N normalizedValue;
 
-  private AssertOperand(A actualContent, Function<? super A, ? extends N> normalizer) {
-
-    this.actualContent = actualContent;
-    this.normalizedValue = normalizer.apply(actualContent);
+  private AssertOperand(A actual, Function<? super A, ? extends N> normalizer) {
+    this.actualValue = actual;
+    this.normalizedValue = normalizer.apply(actual);
   }
 
-  private AssertOperand(A actualContent, N normalizedValue) {
-
-    this.actualContent = actualContent;
+  private AssertOperand(A actual, N normalizedValue) {
+    this.actualValue = actual;
     this.normalizedValue = normalizedValue;
   }
 
+  @Since("2.1.0")
   public static <E> AssertOperand<Collection<E>, List<String>> collection(
       Collection<? extends E> value) {
 
     if (value == null) {
       return new AssertOperand<>(null, (List<String>) null);
     }
+
     Collection<E> snapshot = List.copyOf(value);
-
     return new AssertOperand<>(snapshot, actual -> List.copyOf(normalizeCollection(actual)));
   }
 
+  @Since("2.1.0")
   public static <E> AssertOperand<List<E>, List<String>> list(List<? extends E> value) {
-
     List<E> snapshot = List.copyOf(value);
-
     return new AssertOperand<>(snapshot, actual -> List.copyOf(normalizeCollection(actual)));
   }
 
+  @Since("2.1.0")
   public static <E> AssertOperand<Set<E>, Set<String>> set(Set<? extends E> value) {
-
     Set<E> snapshot = Collections.unmodifiableSet(new LinkedHashSet<E>(value));
-
     return new AssertOperand<>(
         snapshot,
         actual -> Collections.unmodifiableSet(new LinkedHashSet<>(normalizeCollection(actual))));
   }
 
+  @Since("2.1.0")
   public static AssertOperand<Boolean, Boolean> bool(Boolean value) {
-
     return new AssertOperand<>(value, actual -> actual);
   }
 
+  @Since("2.1.0")
   public static AssertOperand<String, String> string(String value) {
-
     return new AssertOperand<>(value, actual -> actual);
   }
 
+  @Since("2.1.0")
   public static <C> AssertOperand<C, String> clazz(C value) {
     if (value == null) {
       return new AssertOperand<>(null, (String) null);
@@ -78,6 +76,7 @@ public final class AssertOperand<A, N> {
     return new AssertOperand<>(value, TestArrangeNormalizer::normalizeObject);
   }
 
+  @Since("2.1.0")
   public static AssertOperand<Integer, Integer> integer(Integer value) {
     if (value == null) {
       return new AssertOperand<>(null, (Integer) null);
@@ -85,13 +84,13 @@ public final class AssertOperand<A, N> {
     return new AssertOperand<>(value, value);
   }
 
+  @Since("2.1.0")
   public static AssertOperand<byte[], byte[]> bytes(byte[] value) {
-
     var snapshot = value.clone();
-
     return new AssertOperand<>(snapshot, byte[]::clone);
   }
 
+  @Since("2.1.0")
   public static <K, V> AssertOperand<Map<K, V>, Map<String, String>> map(
       Map<? extends K, ? extends V> value) {
 
@@ -100,11 +99,11 @@ public final class AssertOperand<A, N> {
     }
 
     Map<K, V> snapshot = Collections.unmodifiableMap(new LinkedHashMap<>(value));
-
     return new AssertOperand<>(
         snapshot, actual -> Collections.unmodifiableMap(new LinkedHashMap<>(normalizeMap(actual))));
   }
 
+  @Since("2.1.0")
   public static AssertOperand<Map<String, List<String>>, Map<String, List<String>>> headers(
       Map<String, ? extends List<String>> value) {
 
@@ -113,9 +112,7 @@ public final class AssertOperand<A, N> {
     }
 
     Map<String, List<String>> snapshot = new LinkedHashMap<>();
-
     value.forEach((key, values) -> snapshot.put(key, List.copyOf(values)));
-
     var immutableSnapshot = Collections.unmodifiableMap(snapshot);
 
     return new AssertOperand<>(
@@ -123,10 +120,12 @@ public final class AssertOperand<A, N> {
         actual -> Collections.unmodifiableMap(new LinkedHashMap<>(normalizeMapList(actual))));
   }
 
+  @Since("2.1.0")
   public A actual() {
-    return this.actualContent;
+    return this.actualValue;
   }
 
+  @Since("2.1.0")
   public N normalizedValue() {
     return this.normalizedValue;
   }

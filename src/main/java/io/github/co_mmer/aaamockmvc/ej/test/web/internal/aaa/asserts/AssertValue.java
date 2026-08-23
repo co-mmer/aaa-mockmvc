@@ -129,7 +129,6 @@ public final class AssertValue<T, N> {
   @Since("2.1.0")
   public static AssertValue<HttpStatus, Integer> expectedStatus(HttpStatus value) {
     DomainValidation.requireNonNull(value, NULL_EXPECTED_STATUS_MESSAGE);
-
     return new AssertValue<>(value, value.value());
   }
 
@@ -155,7 +154,6 @@ public final class AssertValue<T, N> {
 
   @Since("2.1.0")
   public static AssertValue<String[], List<String>> expectedHeaderValues(String... values) {
-
     return requireNormalizedElements(
         values,
         NULL_EXPECTED_HEADER_VALUES_MESSAGE,
@@ -181,7 +179,6 @@ public final class AssertValue<T, N> {
   }
 
   private static <T> AssertValue<T, T> requireNonNull(T value, String message) {
-
     DomainValidation.requireNonNull(value, message);
     return new AssertValue<>(value, value);
   }
