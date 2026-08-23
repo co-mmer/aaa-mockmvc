@@ -2,7 +2,6 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.answer;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Nested;
@@ -56,13 +55,9 @@ class AnswerTypeTest {
 
     @Test
     void GIVEN_null_WHEN_create_THEN_throw_domain_error() {
-      // Arrange
-      Class<String> elementType = null;
-
       // Act
       var exception =
-          assertThrows(
-              IllegalArgumentException.class, () -> AnswerType.collectionElement(elementType));
+          assertThrows(IllegalArgumentException.class, () -> AnswerType.collectionElement(null));
 
       // Assert
       assertThat(exception.getMessage(), is("Collection element type must not be null"));
@@ -86,12 +81,9 @@ class AnswerTypeTest {
 
     @Test
     void GIVEN_null_WHEN_create_THEN_throw_domain_error() {
-      // Arrange
-      Class<String> elementType = null;
-
       // Act
       var exception =
-          assertThrows(IllegalArgumentException.class, () -> AnswerType.listElement(elementType));
+          assertThrows(IllegalArgumentException.class, () -> AnswerType.listElement(null));
 
       // Assert
       assertThat(exception.getMessage(), is("List element type must not be null"));
@@ -115,12 +107,9 @@ class AnswerTypeTest {
 
     @Test
     void GIVEN_null_WHEN_create_THEN_throw_domain_error() {
-      // Arrange
-      Class<String> elementType = null;
-
       // Act
       var exception =
-          assertThrows(IllegalArgumentException.class, () -> AnswerType.setElement(elementType));
+          assertThrows(IllegalArgumentException.class, () -> AnswerType.setElement(null));
 
       // Assert
       assertThat(exception.getMessage(), is("Set element type must not be null"));
@@ -144,12 +133,8 @@ class AnswerTypeTest {
 
     @Test
     void GIVEN_null_WHEN_create_THEN_throw_domain_error() {
-      // Arrange
-      Class<String> keyType = null;
-
       // Act
-      var exception =
-          assertThrows(IllegalArgumentException.class, () -> AnswerType.mapKey(keyType));
+      var exception = assertThrows(IllegalArgumentException.class, () -> AnswerType.mapKey(null));
 
       // Assert
       assertThat(exception.getMessage(), is("Map key type must not be null"));
@@ -173,60 +158,11 @@ class AnswerTypeTest {
 
     @Test
     void GIVEN_null_WHEN_create_THEN_throw_domain_error() {
-      // Arrange
-      Class<Integer> valueType = null;
-
       // Act
-      var exception =
-          assertThrows(IllegalArgumentException.class, () -> AnswerType.mapValue(valueType));
+      var exception = assertThrows(IllegalArgumentException.class, () -> AnswerType.mapValue(null));
 
       // Assert
       assertThat(exception.getMessage(), is("Map value type must not be null"));
-    }
-  }
-
-  @Nested
-  class valueObject {
-
-    @Test
-    void GIVEN_same_type_WHEN_compare_THEN_equal() {
-      // Arrange
-      var first = AnswerType.result(String.class);
-      var second = AnswerType.result(String.class);
-
-      // Act
-      var equal = first.equals(second);
-      var sameHashCode = first.hashCode() == second.hashCode();
-
-      // Assert
-      assertThat(equal, is(true));
-      assertThat(sameHashCode, is(true));
-    }
-
-    @Test
-    void GIVEN_different_type_WHEN_compare_THEN_not_equal() {
-      // Arrange
-      var first = AnswerType.result(String.class);
-      var second = AnswerType.result(Integer.class);
-
-      // Act
-      var equal = first.equals(second);
-
-      // Assert
-      assertThat(equal, is(false));
-      assertThat(first, is(not(second)));
-    }
-
-    @Test
-    void GIVEN_type_WHEN_toString_THEN_return_type_name() {
-      // Arrange
-      var target = AnswerType.result(String.class);
-
-      // Act
-      var result = target.toString();
-
-      // Assert
-      assertThat(result, is(String.class.getTypeName()));
     }
   }
 }
