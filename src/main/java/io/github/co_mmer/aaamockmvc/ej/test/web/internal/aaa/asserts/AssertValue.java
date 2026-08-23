@@ -23,6 +23,7 @@ public final class AssertValue<T, N> {
   private static final Form NORMALIZATION_FORM = Form.NFC;
 
   private static final String NULL_EXPECTED_BOOLEAN_MESSAGE = "Expected boolean must not be null";
+  private static final String NULL_EXPECTED_BYTES_MESSAGE = "Expected byte must not be null";
 
   private static final String NULL_EXPECTED_RESPONSE_MESSAGE = "Expected response must not be null";
 
@@ -91,6 +92,11 @@ public final class AssertValue<T, N> {
   @Since("2.1.0")
   public static AssertValue<Boolean, Boolean> expectedBoolean(Boolean value) {
     return requireNonNull(value, NULL_EXPECTED_BOOLEAN_MESSAGE);
+  }
+
+  public static AssertValue<byte[], byte[]> expectedBytes(byte[] value) {
+    var snapshot = value.clone();
+    return requireNonNull(snapshot, NULL_EXPECTED_BYTES_MESSAGE);
   }
 
   @Since("2.1.0")
@@ -188,12 +194,6 @@ public final class AssertValue<T, N> {
   @Since("2.1.0")
   public N normalizedValue() {
     return normalizedValue;
-  }
-
-  @Since("2.1.0")
-  public N normalizeActual(Object actual) {
-    DomainValidation.requireNonNull(actual, NULL_ACTUAL_VALUE_MESSAGE);
-    return actualNormalizer.apply(actual);
   }
 
   private static <T> AssertValue<T, T> requireNonNull(T value, String message) {

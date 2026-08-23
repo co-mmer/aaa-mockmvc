@@ -21,7 +21,7 @@ public final class TestAssertHeadImpl implements TestAssertHead {
 
   @Note("Move to Context")
   private AssertOperand<?, ?> getAssertOperand() {
-    return AssertOperand.map(this.context.getActResult().headers());
+    return AssertOperand.headers(this.context.getActResult().headers());
   }
 
   @Override

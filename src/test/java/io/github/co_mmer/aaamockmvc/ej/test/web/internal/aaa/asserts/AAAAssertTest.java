@@ -473,7 +473,7 @@ final class AAAAssertTest {
       // Assert
       assertThat(error.getMessage(), containsString("The response body was absent."));
     }
-    
+
     @Test
     void GIVEN_named_step_WHEN_toHaveSameTypeAndValueAs_fails_THEN_step_is_in_message() {
       // Arrange
@@ -556,7 +556,7 @@ final class AAAAssertTest {
               -> To verify the number of elements, use:
                  hasSize(expectedSize)
               """
-              .strip();
+                  .strip();
 
       assertThat(expectedMessage, is(error.getMessage()));
     }
@@ -675,7 +675,7 @@ final class AAAAssertTest {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-              .strip();
+                  .strip();
 
       assertThat(expectedMessage, is(error.getMessage()));
     }
@@ -887,7 +887,7 @@ final class AAAAssertTest {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-              .strip();
+                  .strip();
 
       assertThat(expectedMessage, is(error.getMessage()));
     }

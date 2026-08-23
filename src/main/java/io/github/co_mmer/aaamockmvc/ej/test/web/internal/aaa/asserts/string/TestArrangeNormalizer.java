@@ -4,6 +4,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -24,10 +25,6 @@ public final class TestArrangeNormalizer {
   @Since("1.4.0")
   public static String normalizeObject(Object actual, Form form) {
     return Normalizer.normalize(actual.toString(), form);
-  }
-
-  private static String handlingCharSequence(CharSequence cs) {
-    return cs.toString();
   }
 
   @Since("1.4.0")
@@ -63,6 +60,18 @@ public final class TestArrangeNormalizer {
     }
 
     return result;
+  }
+
+  public static Map<String, List<String>> normalizeMapList(
+      Map<?, ? extends Collection<?>> headers) {
+
+    Map<String, List<String>> normalizedHeaders = new LinkedHashMap<>();
+
+    headers.forEach(
+        (key, values) ->
+            normalizedHeaders.put(normalizeObject(key), List.copyOf(normalizeCollection(values))));
+
+    return Collections.unmodifiableMap(normalizedHeaders);
   }
 
   private static String normalizeNullable(Object value, Form form) {

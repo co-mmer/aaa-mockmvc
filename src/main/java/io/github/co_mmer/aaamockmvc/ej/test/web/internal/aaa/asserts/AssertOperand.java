@@ -2,6 +2,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeCollection;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeMap;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeMapList;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
@@ -102,6 +103,24 @@ public final class AssertOperand<A, N> {
 
     return new AssertOperand<>(
         snapshot, actual -> Collections.unmodifiableMap(new LinkedHashMap<>(normalizeMap(actual))));
+  }
+
+  public static AssertOperand<Map<String, List<String>>, Map<String, List<String>>> headers(
+      Map<String, ? extends List<String>> value) {
+
+    if (value == null) {
+      return new AssertOperand<>(null, (Map<String, List<String>>) null);
+    }
+
+    Map<String, List<String>> snapshot = new LinkedHashMap<>();
+
+    value.forEach((key, values) -> snapshot.put(key, List.copyOf(values)));
+
+    var immutableSnapshot = Collections.unmodifiableMap(snapshot);
+
+    return new AssertOperand<>(
+        immutableSnapshot,
+        actual -> Collections.unmodifiableMap(new LinkedHashMap<>(normalizeMapList(actual))));
   }
 
   public A actual() {

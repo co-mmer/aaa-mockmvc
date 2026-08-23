@@ -5,9 +5,11 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssert2Byte;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssertLByte;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertOperand;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Note;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import lombok.RequiredArgsConstructor;
 
@@ -17,29 +19,33 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
 
   private final TestAAAContext context;
 
+  @Note("Move to Context")
+  private AssertOperand<?, ?> getAssertOperand() {
+    return AssertOperand.bytes(this.context.getActResult().contentAsBytes());
+  }
+
   @Override
   public TestAssert2Byte isNotEmpty() {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).notToBeEmpty();
+    AAAAssert.expect(this.context.getStep(), getAssertOperand()).notToBeEmpty();
     return this;
   }
 
   @Override
   public TestAssertLByte isEmpty() {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).toBeEmpty();
+    AAAAssert.expect(this.context.getStep(), getAssertOperand()).toBeEmpty();
     return this;
   }
 
   @Override
   public TestAssert2Byte hasLength(int expectedLength) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toHaveSize(expectedLength);
+    AAAAssert.expect(this.context.getStep(), getAssertOperand()).toHaveSize(expectedLength);
     return this;
   }
 
   @Override
   public TestAssertLByte isEqualTo(byte[] expectedByte) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toEqual(AssertValue.expectedResponse(expectedByte));
+    AAAAssert.expect(this.context.getStep(), getAssertOperand())
+        .toEqual(AssertValue.expectedBytes(expectedByte));
     return this;
   }
 

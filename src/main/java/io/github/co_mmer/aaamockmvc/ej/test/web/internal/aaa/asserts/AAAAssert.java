@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.function.Predicate;
 
 @Since("2.1.0")
@@ -56,6 +57,12 @@ public final class AAAAssert<A, N> {
   public void notToBeEmpty() {
     var actual = requireActual("not empty");
     verify(sizeOf(actual) > 0, "not empty", actual, "The response body was empty.");
+  }
+
+  @Since("2.1.0")
+  public void notToBeEmptyBytes() {
+    var actual = requireActual("not empty");
+    verify(sizeOf(actual) > 2, "not empty", actual, "The response body was empty.");
   }
 
   @Since("2.1.0")
@@ -287,7 +294,7 @@ public final class AAAAssert<A, N> {
   public void toContainEntry(AssertValue<?, ?> expectedKey, AssertValue<?, ?> expectedValue) {
 
     var key = expectedKey.normalizedValue();
-    var value = expectedValue.normalizedValue();
+    var expected = expectedValue.normalizedValue();
     var actual = normalizedMap("contains entry " + expectedKey.value());
 
     verify(
@@ -299,7 +306,9 @@ public final class AAAAssert<A, N> {
     var actualEntryValue = actual.get(key);
 
     verify(
-        containsValue(actualEntryValue, value),
+        actualEntryValue instanceof Collection<?> actualValues
+            && actualValues.stream()
+                .anyMatch(actualValue -> Objects.deepEquals(actualValue, expected)),
         expectedValue.value(),
         actualEntryValue,
         "The response header did not contain the expected value.");
@@ -310,9 +319,9 @@ public final class AAAAssert<A, N> {
       AssertValue<?, ?> expectedKey, AssertValue<?, ? extends Collection<?>> expectedValues) {
 
     var key = expectedKey.normalizedValue();
-    var values = expectedValues.normalizedValue();
+    var expected = expectedValues.normalizedValue();
 
-    verifyValuesForToContainEntryExactly(values);
+    verifyValuesForToContainEntryExactly(expected);
 
     var actual = normalizedMap("contains entry exactly " + expectedKey.value());
 
@@ -325,8 +334,8 @@ public final class AAAAssert<A, N> {
     var actualEntryValue = actual.get(key);
 
     verify(
-        actualEntryValue instanceof Collection<?>
-            && occurrences((Collection<?>) actualEntryValue).equals(occurrences(values)),
+        actualEntryValue instanceof Collection<?> actualValues
+            && occurrences(actualValues).equals(occurrences(expected)),
         expectedValues.value(),
         actualEntryValue,
         "The response header contained different values.");
@@ -403,14 +412,40 @@ public final class AAAAssert<A, N> {
 
     return message
         .append("Expected: ")
-        .append(expected)
+        .append(formatValue(expected))
         .append(lineSeparator)
         .append("Actual:   ")
-        .append(actual)
+        .append(formatValue(actual))
         .append(lineSeparator)
         .append("Reason:   ")
         .append(reason)
         .toString();
+  }
+
+  private static String formatValue(Object value) {
+    if (value == null) {
+      return "null";
+    }
+
+    if (value instanceof CharSequence text && text.isEmpty()) {
+      return "\"\"";
+    }
+
+    if (value instanceof byte[] bytes) {
+      return "byte[" + bytes.length + "] " + Arrays.toString(bytes);
+    }
+
+    if (value.getClass().isArray()) {
+      var result = new StringJoiner(", ", "[", "]");
+
+      for (var index = 0; index < Array.getLength(value); index++) {
+        result.add(formatValue(Array.get(value, index)));
+      }
+
+      return result.toString();
+    }
+
+    return String.valueOf(value);
   }
 
   private static int sizeOf(Object value) {
