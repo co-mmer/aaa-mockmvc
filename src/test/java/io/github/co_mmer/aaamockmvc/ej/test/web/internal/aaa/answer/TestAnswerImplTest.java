@@ -19,7 +19,6 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
@@ -37,14 +36,14 @@ class TestAnswerImplTest extends TestAssertBase {
 
   private static final String TESTING = "Testing";
   private TestAAAContext context;
-  private TestAnswer testAnswer;
+  private TestAnswer impl;
 
   @BeforeEach
   @SneakyThrows
   void setUp() {
     this.context = TestContext.mockContext(TESTING);
     this.useContext(context);
-    this.testAnswer = new TestAnswerImpl(context);
+    this.impl = new TestAnswerImpl(context);
   }
 
   @Nested
@@ -56,7 +55,7 @@ class TestAnswerImplTest extends TestAssertBase {
       useActResult(TEST_BOOLEAN_JSON);
 
       // Act
-      var result = testAnswer.asBoolean();
+      var result = impl.asBoolean();
 
       // Assert
       assertThat(result, is(TEST_BOOLEAN));
@@ -64,16 +63,12 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    @SuppressWarnings("all")
-    void GIVEN_empty_WHEN_asBoolean_THEN_return_null() {
+    void GIVEN_empty_WHEN_asBoolean_THEN_TestAnswerFailed_is_thrown() {
       // Arrange
       useActResult(EMPTY);
 
-      // Act
-      var result = testAnswer.asBoolean();
-
-      // Assert
-      assertThat(result, is(nullValue()));
+      // Act & Assert
+      assertThrows(TestAnswerFailed.class, () -> impl.asBoolean());
     }
 
     @Test
@@ -82,7 +77,7 @@ class TestAnswerImplTest extends TestAssertBase {
       var mockTestGenericMapper = mockParseWithClass();
 
       // Act
-      var ex = assertThrows(TestAnswerFailed.class, () -> testAnswer.asBoolean());
+      var ex = assertThrows(TestAnswerFailed.class, () -> impl.asBoolean());
 
       // Assert
       assertThat(
@@ -102,7 +97,7 @@ class TestAnswerImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON);
 
       // Act
-      var result = testAnswer.asString();
+      var result = impl.asString();
 
       // Assert
       assertThat(result, is(TEST_A1_JSON));
@@ -116,7 +111,7 @@ class TestAnswerImplTest extends TestAssertBase {
       useActResult(EMPTY);
 
       // Act
-      var result = testAnswer.asString();
+      var result = impl.asString();
 
       // Assert
       assertThat(result, is(EMPTY));
@@ -132,7 +127,7 @@ class TestAnswerImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON.getBytes());
 
       // Act
-      var result = testAnswer.asByte();
+      var result = impl.asByte();
 
       // Assert
       assertThat(result, is(TEST_A1_JSON.getBytes()));
@@ -147,7 +142,7 @@ class TestAnswerImplTest extends TestAssertBase {
     @SuppressWarnings("ConstantConditions")
     void GIVEN_null_WHEN_asObject_THEN_throw_IllegalArgumentException() {
       // Act & Arrange
-      assertThrows(IllegalArgumentException.class, () -> testAnswer.asObject(null));
+      assertThrows(IllegalArgumentException.class, () -> impl.asObject(null));
     }
 
     @Test
@@ -156,23 +151,19 @@ class TestAnswerImplTest extends TestAssertBase {
       useActResult(TEST_A1_JSON);
 
       // Act
-      var result = testAnswer.asObject(TestObjectSimple.class);
+      var result = impl.asObject(TestObjectSimple.class);
 
       // Assert
       assertThat(result, is(A1));
     }
 
     @Test
-    @SuppressWarnings("all")
-    void GIVEN_empty_WHEN_asObject_THEN_return_null() {
+    void GIVEN_empty_WHEN_asObject_THEN_TestAnswerFailed_is_thrown() {
       // Arrange
       useActResult(EMPTY);
 
-      // Act
-      var result = testAnswer.asObject(TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
+      // Act & Assert
+      assertThrows(TestAnswerFailed.class, () -> impl.asObject(TestObjectSimple.class));
     }
 
     @Test
@@ -181,8 +172,7 @@ class TestAnswerImplTest extends TestAssertBase {
       var mockTestGenericMapper = mockParseWithClass();
 
       // Act
-      var ex =
-          assertThrows(TestAnswerFailed.class, () -> testAnswer.asObject(TestObjectSimple.class));
+      var ex = assertThrows(TestAnswerFailed.class, () -> impl.asObject(TestObjectSimple.class));
 
       // Assert
       assertThat(
@@ -200,7 +190,7 @@ class TestAnswerImplTest extends TestAssertBase {
     @SuppressWarnings("ConstantConditions")
     void GIVEN_null_WHEN_asCollection_THEN_throw_IllegalArgumentException() {
       // Act & Arrange
-      assertThrows(IllegalArgumentException.class, () -> testAnswer.asCollection(null));
+      assertThrows(IllegalArgumentException.class, () -> impl.asCollection(null));
     }
 
     @Test
@@ -209,7 +199,7 @@ class TestAnswerImplTest extends TestAssertBase {
       useActResult(TEST_LIST_A1_A2_JSON);
 
       // Act
-      var result = testAnswer.asCollection(TestObjectSimple.class);
+      var result = impl.asCollection(TestObjectSimple.class);
 
       // Assert
       assertThat(result, is(TEST_LIST_A1_A2));
@@ -217,15 +207,12 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_null_WHEN_asCollection_THEN_return_null() {
+    void GIVEN_empty_WHEN_asCollection_THEN_TestAnswerFailed_is_thrown() {
       // Arrange
       useActResult(EMPTY);
 
-      // Act
-      var result = testAnswer.asCollection(TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
+      // Act & Assert
+      assertThrows(TestAnswerFailed.class, () -> impl.asCollection(TestObjectSimple.class));
     }
 
     @Test
@@ -235,8 +222,7 @@ class TestAnswerImplTest extends TestAssertBase {
 
       // Act
       var ex =
-          assertThrows(
-              TestAnswerFailed.class, () -> testAnswer.asCollection(TestObjectSimple.class));
+          assertThrows(TestAnswerFailed.class, () -> impl.asCollection(TestObjectSimple.class));
 
       // Assert
       assertThat(
@@ -254,7 +240,7 @@ class TestAnswerImplTest extends TestAssertBase {
     @SuppressWarnings("ConstantConditions")
     void GIVEN_null_WHEN_asList_THEN_throw_IllegalArgumentException() {
       // Act & Arrange
-      assertThrows(IllegalArgumentException.class, () -> testAnswer.asList(null));
+      assertThrows(IllegalArgumentException.class, () -> impl.asList(null));
     }
 
     @Test
@@ -263,7 +249,7 @@ class TestAnswerImplTest extends TestAssertBase {
       useActResult(TEST_LIST_A1_A2_JSON);
 
       // Act
-      var result = testAnswer.asList(TestObjectSimple.class);
+      var result = impl.asList(TestObjectSimple.class);
 
       // Assert
       assertThat(result, is(TEST_LIST_A1_A2));
@@ -271,15 +257,12 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_null_WHEN_asList_THEN_return_null() {
+    void GIVEN_empty_WHEN_asList_THEN_TestAnswerFailed_is_thrown() {
       // Arrange
       useActResult(EMPTY);
 
-      // Act
-      var result = testAnswer.asList(TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
+      // Act & Assert
+      assertThrows(TestAnswerFailed.class, () -> impl.asList(TestObjectSimple.class));
     }
 
     @Test
@@ -288,8 +271,7 @@ class TestAnswerImplTest extends TestAssertBase {
       var mockTestGenericMapper = mockParseListWithClass();
 
       // Act
-      var ex =
-          assertThrows(TestAnswerFailed.class, () -> testAnswer.asList(TestObjectSimple.class));
+      var ex = assertThrows(TestAnswerFailed.class, () -> impl.asList(TestObjectSimple.class));
 
       // Assert
       assertThat(
@@ -307,7 +289,7 @@ class TestAnswerImplTest extends TestAssertBase {
     @SuppressWarnings("ConstantConditions")
     void GIVEN_null_WHEN_asSet_THEN_throw_IllegalArgumentException() {
       // Act & Arrange
-      assertThrows(IllegalArgumentException.class, () -> testAnswer.asSet(null));
+      assertThrows(IllegalArgumentException.class, () -> impl.asSet(null));
     }
 
     @Test
@@ -316,7 +298,7 @@ class TestAnswerImplTest extends TestAssertBase {
       useActResult(TEST_SET_A1_A2_JSON);
 
       // Act
-      var result = testAnswer.asSet(TestObjectSimple.class);
+      var result = impl.asSet(TestObjectSimple.class);
 
       // Assert
       assertThat(result, is(TEST_SET_A1_A2));
@@ -324,15 +306,12 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_null_WHEN_asSet_THEN_return_null() {
+    void GIVEN_empty_WHEN_asSet_THEN_TestAnswerFailed_is_thrown() {
       // Arrange
       useActResult(EMPTY);
 
-      // Act
-      var result = testAnswer.asSet(TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
+      // Act & Assert
+      assertThrows(TestAnswerFailed.class, () -> impl.asSet(TestObjectSimple.class));
     }
 
     @Test
@@ -341,7 +320,7 @@ class TestAnswerImplTest extends TestAssertBase {
       var mockTestGenericMapper = mockParseSetWithClass();
 
       // Act
-      var ex = assertThrows(TestAnswerFailed.class, () -> testAnswer.asSet(TestObjectSimple.class));
+      var ex = assertThrows(TestAnswerFailed.class, () -> impl.asSet(TestObjectSimple.class));
 
       // Assert
       assertThat(
@@ -359,22 +338,21 @@ class TestAnswerImplTest extends TestAssertBase {
     @SuppressWarnings("ConstantConditions")
     void GIVEN_null_WHEN_asMap_THEN_throw_IllegalArgumentException() {
       // Act & Arrange
-      assertThrows(IllegalArgumentException.class, () -> testAnswer.asMap(null, null));
+      assertThrows(IllegalArgumentException.class, () -> impl.asMap(null, null));
     }
 
     @Test
     @SuppressWarnings("ConstantConditions")
     void GIVEN_keyIsNull_WHEN_asMap_THEN_throw_IllegalArgumentException() {
       // Act & Arrange
-      assertThrows(
-          IllegalArgumentException.class, () -> testAnswer.asMap(null, TestObjectSimple.class));
+      assertThrows(IllegalArgumentException.class, () -> impl.asMap(null, TestObjectSimple.class));
     }
 
     @Test
     @SuppressWarnings("ConstantConditions")
     void GIVEN_valueIsNull_WHEN_asMap_THEN_throw_IllegalArgumentException() {
       // Act & Arrange
-      assertThrows(IllegalArgumentException.class, () -> testAnswer.asMap(Integer.class, null));
+      assertThrows(IllegalArgumentException.class, () -> impl.asMap(Integer.class, null));
     }
 
     @Test
@@ -384,7 +362,7 @@ class TestAnswerImplTest extends TestAssertBase {
       useActResult(TEST_MAP_A1_A2_JSON);
 
       // Act
-      var result = testAnswer.asMap(Integer.class, TestObjectSimple.class);
+      var result = impl.asMap(Integer.class, TestObjectSimple.class);
 
       // Assert
       assertThat(result, is(TEST_MAP_A1_A2));
@@ -392,15 +370,12 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_empty_WHEN_asMap_THEN_return_null() {
+    void GIVEN_empty_WHEN_asMap_THEN_TestAnswerFailed_is_thrown() {
       // Arrange
       useActResult(EMPTY);
 
-      // Act
-      var result = testAnswer.asMap(Integer.class, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
+      // Act & Assert
+      assertThrows(TestAnswerFailed.class, () -> impl.asMap(Integer.class, TestObjectSimple.class));
     }
 
     @Test
@@ -411,8 +386,7 @@ class TestAnswerImplTest extends TestAssertBase {
       // Act
       var ex =
           assertThrows(
-              TestAnswerFailed.class,
-              () -> testAnswer.asMap(Integer.class, TestObjectSimple.class));
+              TestAnswerFailed.class, () -> impl.asMap(Integer.class, TestObjectSimple.class));
 
       // Assert
       assertThat(

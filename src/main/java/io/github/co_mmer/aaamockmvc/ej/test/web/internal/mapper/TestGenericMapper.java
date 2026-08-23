@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.AAAType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.utils.StringUtils;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -17,10 +17,13 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TestGenericMapper {
 
-  private static <T> T parse(ObjectMapper om, String content, JavaType type)
+  private static <T> T parse(ObjectMapper om, String json, JavaType type)
       throws TestGenericMapperException {
+
+    Objects.requireNonNull(json, "json must not be null (can be empty)");
+
     try {
-      return StringUtils.isBlank(content) ? null : om.readValue(content, type);
+      return om.readValue(json, type);
     } catch (Exception e) {
       throw new TestGenericMapperException(e);
     }
