@@ -352,6 +352,50 @@ public final class AAAAssert<A, N> {
         "The response status differed from the expected status.");
   }
 
+  @Since("2.1.0")
+  public void toBeInRange(
+      AssertValue<?, Integer> expectedMinimum, AssertValue<?, Integer> expectedMaximum) {
+
+    var minimum = expectedMinimum.normalizedValue();
+    var maximum = expectedMaximum.normalizedValue();
+
+    verifyRange(minimum, maximum);
+
+    var expected = "in range [" + minimum + ", " + maximum + "]";
+    var actual = requireActual(expected);
+    var normalizedActual = actualValue.normalizedValue();
+
+    verify(
+        normalizedActual instanceof Integer actualStatus
+            && actualStatus >= minimum
+            && actualStatus <= maximum,
+        expected,
+        actual,
+        "The response status was outside the expected range.");
+  }
+
+  private static void verifyRange(int minimum, int maximum) {
+    if (minimum > maximum) {
+      throw new InvalidAssertionException(
+          System.lineSeparator()
+              + """
+              `isInRange()` was called with an invalid range.
+
+              Reason:
+              The minimum value must not be greater than the maximum value.
+
+              Actual range:
+              -> minimum: %d
+              -> maximum: %d
+
+              How to fix:
+              -> Provide a minimum value that is less than or equal to the maximum value.
+              """
+                  .formatted(minimum, maximum)
+                  .strip());
+    }
+  }
+
   private static void verifyValuesForToContainEntryExactly(Collection<?> expectedValues) {
 
     if (expectedValues.isEmpty()) {
@@ -374,15 +418,6 @@ public final class AAAAssert<A, N> {
   private Map<?, ?> normalizedMap(String expected) {
     requireActual(expected);
     return (Map<?, ?>) actualValue.normalizedValue();
-  }
-
-  private static boolean containsValue(Object actual, Object expected) {
-
-    if (actual instanceof Collection<?> collection) {
-      return collection.stream().anyMatch(value -> Objects.deepEquals(value, expected));
-    }
-
-    return Objects.deepEquals(actual, expected);
   }
 
   private A requireActual(Object expected) {

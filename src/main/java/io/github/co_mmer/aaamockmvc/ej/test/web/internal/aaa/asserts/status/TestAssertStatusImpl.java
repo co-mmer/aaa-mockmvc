@@ -1,9 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.status;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.lessThanOrEqualTo;
-
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status;
@@ -17,7 +13,6 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAACont
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Note;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import lombok.RequiredArgsConstructor;
-import org.hamcrest.Matchers;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 
@@ -105,9 +100,9 @@ public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert
 
   @Override
   public TestAssert2Status isInRange(int minStatusCode, int maxStatusCode) {
-    var status = this.context.getActResult().status();
-    assertThat(this.context.getStep(), status, Matchers.is(greaterThanOrEqualTo(minStatusCode)));
-    assertThat(this.context.getStep(), status, Matchers.is(lessThanOrEqualTo(maxStatusCode)));
+    AAAAssert.expect(this.context.getStep(), getAssertOperand())
+        .toBeInRange(
+            AssertValue.expectedStatus(minStatusCode), AssertValue.expectedStatus(maxStatusCode));
     return this;
   }
 

@@ -67,9 +67,7 @@ public final class AssertValue<T, N> {
 
   private static final String NULL_MATCH_CONDITION_AT_POSITION_MESSAGE =
       "Match condition at position %d must not be null";
-
-  private static final String NULL_ACTUAL_VALUE_MESSAGE = "Actual value must not be null";
-
+  
   private static final String ACTUAL_COLLECTION_TYPE_MESSAGE = "Actual value must be a collection";
 
   private static final String ACTUAL_ELEMENTS_TYPE_MESSAGE =
