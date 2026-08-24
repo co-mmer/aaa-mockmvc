@@ -2,26 +2,30 @@
 
 ## [2.1.0]
 
-Version **2.1.0** introduces consistent domain validation across the AAA-MockMvc DSL.
+Version **2.1.0** strengthens the AAA-MockMvc DSL with consistent domain validation and clearer,
+more actionable failure diagnostics.
 
 Invalid request configuration, response target types, and assertion inputs are now rejected with
 descriptive `IllegalArgumentException` messages. Validation identifies the affected DSL argument
 and includes its position when multiple values or conditions are supplied.
 
-Failed DSL assertions now use a consistent, structured message that clearly separates the expected
-result, the actual response value, and the reason for the failure.
+Failed DSL assertions now follow a consistent structure that separates the expected result, the
+actual response value, and the reason for the mismatch. At the same time, Hamcrest has been removed
+from the framework's assertion implementation, reducing the dependency footprint without changing
+the public assertion DSL.
 
 ### 🌿 Highlights
 
 * **Consistent DSL validation** — Invalid arguments are detected close to where they are provided.
-* **Clear failure messages** — Errors identify the affected request value, response target,
+* **Clear validation messages** — Errors identify the affected request value, response target,
   assertion input, or condition.
 * **Predictable exception behavior** — Affected null arguments now produce
   `IllegalArgumentException` instead of Lombok-generated `NullPointerException`.
-* **Structured assertion failures** — Failed DSL assertions now report `Expected`, `Actual`, and
-  `Reason` in a consistent format.
-* **Leaner dependency footprint** — Hamcrest is no longer used by the framework's internal
-  assertion handling and has been removed as a dependency.
+* **Structured assertion failures** — Failed DSL assertions consistently report `Expected`,
+  `Actual`, and `Reason`.
+* **Leaner dependency footprint** — Hamcrest is no longer used by the framework's assertion
+  implementation and has been removed as a dependency.
+* **Stable public DSL** — Existing assertion methods continue to be used in the same way.
 * **No mapping behavior changes** — Response deserialization and assertion semantics remain
   unchanged.
 
@@ -78,9 +82,15 @@ Actual: <actual response value>
 Reason: <why the assertion failed>
 ```
 
-This makes failures easier to scan and compare: `Expected` describes the asserted outcome,
-`Actual` shows the value returned by the response, and `Reason` explains the mismatch in context.
-The public assertion DSL remains unchanged.
+`Expected` describes the asserted outcome, `Actual` shows the value returned by the response, and
+`Reason` explains the mismatch in context. This makes failures easier to scan, understand, and
+compare while debugging a test. No changes to existing assertion calls are required.
+
+#### Assertion implementation and dependency cleanup
+
+The framework's assertion handling no longer relies on Hamcrest. Assertion failures are now
+produced consistently by AAA-MockMvc itself, and the Hamcrest dependency has been removed. This is
+an internal implementation change and does not introduce a new public API.
 
 * Moved runtime input validation from Lombok annotations into dedicated internal domain objects.
 * Kept validation rules and their error messages close to the values they protect.
