@@ -10,12 +10,9 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.asserts;
  * (e.g., calling {@code toContain()} with an empty collection or calling {@code notToContain()} on
  * an empty collection).
  *
- * <p>By extending {@link IllegalArgumentException}, this exception clearly distinguishes framework
- * misuse from production code bugs in test runner reports and IDEs.
- *
  * @since 2.1.0
  */
-public class InvalidAssertionException extends IllegalArgumentException {
+public class InvalidAssertionException extends RuntimeException {
 
   /**
    * Constructs a new {@code InvalidAssertionException} with a detailed message explaining the
