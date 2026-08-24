@@ -20,6 +20,8 @@ import java.util.function.Predicate;
 public final class AAAAssert<A, N> {
 
   private static final String RESPONSE_BODY_ABSENT = "The response body was absent.";
+  private static final String THE_RESPONSE_BODY_WAS_NOT_EMPTY = "The response body was not empty.";
+  private static final String THE_RESPONSE_BODY_WAS_EMPTY = "The response body was empty.";
 
   private final TestStepDto step;
   private final AssertOperand<A, N> actualValue;
@@ -29,9 +31,12 @@ public final class AAAAssert<A, N> {
     this.actualValue = actualValue;
   }
 
+  private static InvalidAssertionException invalidAssertion(String message) {
+    return new InvalidAssertionException(System.lineSeparator() + message.strip());
+  }
+
   @Since("2.1.0")
   public static <A, N> AAAAssert<A, N> expect(TestStepDto step, AssertOperand<A, N> actualValue) {
-
     return new AAAAssert<>(step, actualValue);
   }
 
@@ -52,39 +57,35 @@ public final class AAAAssert<A, N> {
   @Since("2.1.0")
   public void toBeEmpty() {
     var actual = requireActual("empty");
-    verify(sizeOf(actual) == 0, "empty", actual, "The response body was not empty.");
+    verify(sizeOf(actual) == 0, "empty", actual, THE_RESPONSE_BODY_WAS_NOT_EMPTY);
   }
 
   @Since("2.1.0")
   public void notToBeEmpty() {
     var actual = requireActual("not empty");
-    verify(sizeOf(actual) > 0, "not empty", actual, "The response body was empty.");
+    verify(sizeOf(actual) > 0, "not empty", actual, THE_RESPONSE_BODY_WAS_EMPTY);
   }
 
   @Since("2.1.0")
   public void toHaveSize(AssertValue<?, Integer> expectedSize) {
-    var expected = "size " + expectedSize.normalizedValue();
-    var actual = requireActual(expected);
-    var actualSize = sizeOf(actual);
-
-    verify(
-        actualSize == expectedSize.normalizedValue(),
-        expected,
-        "size " + actualSize,
-        "The response body had a different size.");
+    verifyDimension("size", expectedSize);
   }
 
   @Since("2.1.0")
   public void toHaveLength(AssertValue<?, Integer> expectedLength) {
-    var expected = "length " + expectedLength.normalizedValue();
+    verifyDimension("length", expectedLength);
+  }
+
+  private void verifyDimension(String dimension, AssertValue<?, Integer> expectedValue) {
+    var expected = dimension + " " + expectedValue.normalizedValue();
     var actual = requireActual(expected);
-    var actualSize = sizeOf(actual);
+    var actualDimension = sizeOf(actual);
 
     verify(
-        actualSize == expectedLength.normalizedValue(),
+        actualDimension == expectedValue.normalizedValue(),
         expected,
-        "length " + actualSize,
-        "The response body had a different length.");
+        dimension + " " + actualDimension,
+        "The response body had a different " + dimension + ".");
   }
 
   @Since("2.1.0")
@@ -126,9 +127,8 @@ public final class AAAAssert<A, N> {
 
   private static void verifyElementsForToContain(Collection<?> expected) {
     if (expected.isEmpty()) {
-      throw new InvalidAssertionException(
-          System.lineSeparator()
-              + """
+      throw invalidAssertion(
+          """
               `toContain()` was called with an empty collection.
 
               Reason:
@@ -141,8 +141,7 @@ public final class AAAAssert<A, N> {
 
               -> To verify the number of elements, use:
                  hasSize(expectedSize)
-              """
-                  .strip());
+              """);
     }
   }
 
@@ -163,9 +162,8 @@ public final class AAAAssert<A, N> {
 
   private static void verifyElementsForNotToContain(Collection<?> actual) {
     if (actual.isEmpty()) {
-      throw new InvalidAssertionException(
-          System.lineSeparator()
-              + """
+      throw invalidAssertion(
+          """
               `notToContain()` was called for an empty response collection.
 
               Reason:
@@ -179,8 +177,7 @@ public final class AAAAssert<A, N> {
 
               -> If an empty response collection is expected, use:
                  isEmpty()
-              """
-                  .strip());
+              """);
     }
   }
 
@@ -198,28 +195,32 @@ public final class AAAAssert<A, N> {
 
   @Since("2.1.0")
   public <T> void toMatchAll(AssertValue<Predicate<T>[], Predicate<T>[]> conditions) {
-
     var expected = "matches all conditions";
     var actual = requireActual(expected);
     var values = valuesOf(actual);
 
     verifyElementsForMatchAll(values);
 
-    var matches =
-        values.stream()
-            .allMatch(
-                value ->
-                    Arrays.stream(conditions.value())
-                        .allMatch(condition -> condition.test(cast(value))));
-
+    var matches = values.stream().allMatch(value -> matchesAll(value, conditions));
     verify(matches, expected, actual, "At least one value did not match every condition.");
+  }
+
+  private static <T> boolean matchesAll(
+      Object value, AssertValue<Predicate<T>[], Predicate<T>[]> conditions) {
+
+    return Arrays.stream(conditions.value()).allMatch(condition -> condition.test(cast(value)));
+  }
+
+  private static <T> boolean matchesAny(
+      Object value, AssertValue<Predicate<T>[], Predicate<T>[]> conditions) {
+
+    return Arrays.stream(conditions.value()).anyMatch(condition -> condition.test(cast(value)));
   }
 
   private static void verifyElementsForMatchAll(List<?> values) {
     if (values.isEmpty()) {
-      throw new InvalidAssertionException(
-          System.lineSeparator()
-              + """
+      throw invalidAssertion(
+          """
               `toMatchAll()` was called for an empty response collection.
 
               Reason:
@@ -233,8 +234,7 @@ public final class AAAAssert<A, N> {
 
               -> If an empty response collection is expected, use:
                  isEmpty()
-              """
-                  .strip());
+              """);
     }
   }
 
@@ -242,11 +242,7 @@ public final class AAAAssert<A, N> {
   public <T> void toMatchAny(AssertValue<Predicate<T>[], Predicate<T>[]> conditions) {
     var expected = "matches any conditions";
     var actual = requireActual(expected);
-    var matches =
-        valuesOf(actual).stream()
-            .anyMatch(
-                value -> Arrays.stream(conditions.value()).anyMatch(it -> it.test(cast(value))));
-
+    var matches = valuesOf(actual).stream().anyMatch(value -> matchesAny(value, conditions));
     verify(matches, expected, actual, "No value matched any condition.");
   }
 
@@ -254,11 +250,7 @@ public final class AAAAssert<A, N> {
   public <T> void toMatchNone(AssertValue<Predicate<T>[], Predicate<T>[]> conditions) {
     var expected = "matches no conditions";
     var actual = requireActual(expected);
-    var matches =
-        valuesOf(actual).stream()
-            .noneMatch(
-                value -> Arrays.stream(conditions.value()).anyMatch(it -> it.test(cast(value))));
-
+    var matches = valuesOf(actual).stream().noneMatch(value -> matchesAny(value, conditions));
     verify(matches, expected, actual, "At least one value matched a condition.");
   }
 
@@ -291,23 +283,31 @@ public final class AAAAssert<A, N> {
 
     var key = expectedKey.normalizedValue();
     var expected = expectedValue.normalizedValue();
-    var actual = normalizedMap("contains entry " + expectedKey.value());
-
-    verify(
-        actual.containsKey(key),
-        expectedKey.value(),
-        actualValue.actual(),
-        "The response headers did not contain the expected key.");
+    var actual =
+        requireMapContainingKey(key, expectedKey.value(), "contains entry " + expectedKey.value());
 
     var actualEntryValue = actual.get(key);
 
     verify(
         actualEntryValue instanceof Collection<?> actualValues
-            && actualValues.stream()
-                .anyMatch(actualValue -> Objects.deepEquals(actualValue, expected)),
+            && actualValues.stream().anyMatch(value -> Objects.deepEquals(value, expected)),
         expectedValue.value(),
         actualEntryValue,
         "The response header did not contain the expected value.");
+  }
+
+  private Map<?, ?> requireMapContainingKey(
+      Object normalizedKey, Object displayedKey, String expectation) {
+
+    var actual = normalizedMap(expectation);
+
+    verify(
+        actual.containsKey(normalizedKey),
+        displayedKey,
+        actualValue.actual(),
+        "The response headers did not contain the expected key.");
+
+    return actual;
   }
 
   @Since("2.1.0")
@@ -319,13 +319,9 @@ public final class AAAAssert<A, N> {
 
     verifyValuesForToContainEntryExactly(expected);
 
-    var actual = normalizedMap("contains entry exactly " + expectedKey.value());
-
-    verify(
-        actual.containsKey(key),
-        expectedKey.value(),
-        actualValue.actual(),
-        "The response headers did not contain the expected key.");
+    var actual =
+        requireMapContainingKey(
+            key, expectedKey.value(), "contains entry exactly " + expectedKey.value());
 
     var actualEntryValue = actual.get(key);
 
@@ -372,9 +368,8 @@ public final class AAAAssert<A, N> {
 
   private static void verifyRange(int minimum, int maximum) {
     if (minimum > maximum) {
-      throw new InvalidAssertionException(
-          System.lineSeparator()
-              + """
+      throw invalidAssertion(
+          """
               `isInRange()` was called with an invalid range.
 
               Reason:
@@ -387,17 +382,15 @@ public final class AAAAssert<A, N> {
               How to fix:
               -> Provide a minimum value that is less than or equal to the maximum value.
               """
-                  .formatted(minimum, maximum)
-                  .strip());
+              .formatted(minimum, maximum));
     }
   }
 
   private static void verifyValuesForToContainEntryExactly(Collection<?> expectedValues) {
 
     if (expectedValues.isEmpty()) {
-      throw new InvalidAssertionException(
-          System.lineSeparator()
-              + """
+      throw invalidAssertion(
+          """
               `toContainEntryExactly()` was called with an empty collection.
 
               Reason:
@@ -406,8 +399,7 @@ public final class AAAAssert<A, N> {
 
               How to fix:
               -> Provide at least one expected header value.
-              """
-                  .strip());
+              """);
     }
   }
 
