@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz;
 
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 
 interface OperationEquals<T> {
 

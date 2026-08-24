@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection;
 
 import java.util.Collection;
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 
 interface OperationContains<E> {
 

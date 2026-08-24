@@ -54,7 +54,25 @@ Whether you’re building REST APIs, testing controllers, or ensuring contract c
 
 ## News
 
-### 🌿 Release v2.0.0
+### 🌿 Release 2.1.0
+
+This release strengthens validation across the AAA-MockMvc and makes assertion failures easier
+to understand and diagnose.
+
+#### What’s new
+
+* Request configuration, Answer target types, and assertion inputs are now validated consistently.
+* Invalid DSL arguments produce descriptive `IllegalArgumentException` messages that identify the
+  affected input and, where applicable, its position.
+* Failed DSL assertions now clearly separate the expected result, actual response value, and reason
+  for the failure using `Expected`, `Actual`, and `Reason`.
+* Hamcrest has been removed from the framework's assertion implementation, reducing the dependency
+  footprint without changing the public assertion DSL.
+* See full details in the [Release Note](./RELEASE.md#210)
+
+--- 
+
+### 🌿 Release 2.0.0
 
 This is a quality-of-life release poured with a lot of care tests read cleaner and fail clearer.
 
@@ -101,7 +119,7 @@ The sources can also be downloaded directly to access the documentation of the c
 <dependency>
   <groupId>io.github.co-mmer</groupId>
   <artifactId>aaa-mockmvc</artifactId>
-  <version>2.0.1</version>
+  <version>2.1.0</version>
   <scope>test</scope>
 </dependency>
 

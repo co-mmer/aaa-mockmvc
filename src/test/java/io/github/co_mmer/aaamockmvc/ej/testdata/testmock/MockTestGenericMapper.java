@@ -3,8 +3,9 @@ package io.github.co_mmer.aaamockmvc.ej.testdata.testmock;
 import static org.mockito.Mockito.mockStatic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.answer.AnswerType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.TestGenericMapperException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mockito.MockedStatic;
@@ -22,7 +23,9 @@ public class MockTestGenericMapper {
         .when(
             () ->
                 TestGenericMapper.parse(
-                    Mockito.any(ObjectMapper.class), Mockito.anyString(), Mockito.<Class<?>>any()))
+                    Mockito.any(ObjectMapper.class),
+                    Mockito.anyString(),
+                    Mockito.<AnswerType<?>>any()))
         .thenThrow(ERROR);
 
     return mockTestGenericMapper;
@@ -34,7 +37,9 @@ public class MockTestGenericMapper {
         .when(
             () ->
                 TestGenericMapper.parseCollection(
-                    Mockito.any(ObjectMapper.class), Mockito.anyString(), Mockito.<Class<?>>any()))
+                    Mockito.any(ObjectMapper.class),
+                    Mockito.anyString(),
+                    Mockito.<AnswerType<?>>any()))
         .thenThrow(ERROR);
 
     return mockTestGenericMapper;
@@ -46,7 +51,9 @@ public class MockTestGenericMapper {
         .when(
             () ->
                 TestGenericMapper.parseList(
-                    Mockito.any(ObjectMapper.class), Mockito.anyString(), Mockito.<Class<?>>any()))
+                    Mockito.any(ObjectMapper.class),
+                    Mockito.anyString(),
+                    Mockito.<AnswerType<?>>any()))
         .thenThrow(ERROR);
 
     return mockTestGenericMapper;
@@ -58,7 +65,9 @@ public class MockTestGenericMapper {
         .when(
             () ->
                 TestGenericMapper.parseSet(
-                    Mockito.any(ObjectMapper.class), Mockito.anyString(), Mockito.<Class<?>>any()))
+                    Mockito.any(ObjectMapper.class),
+                    Mockito.anyString(),
+                    Mockito.<AnswerType<?>>any()))
         .thenThrow(ERROR);
 
     return mockTestGenericMapper;
@@ -72,8 +81,8 @@ public class MockTestGenericMapper {
                 TestGenericMapper.parseMap(
                     Mockito.any(ObjectMapper.class),
                     Mockito.anyString(),
-                    Mockito.<Class<?>>any(),
-                    Mockito.<Class<?>>any()))
+                    Mockito.<AnswerType<?>>any(),
+                    Mockito.<AnswerType<?>>any()))
         .thenThrow(ERROR);
 
     return mockTestGenericMapper;

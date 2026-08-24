@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status;
 
-import lombok.NonNull;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.NonNull;
 
 /**
  * Assertions for the HTTP response status code.

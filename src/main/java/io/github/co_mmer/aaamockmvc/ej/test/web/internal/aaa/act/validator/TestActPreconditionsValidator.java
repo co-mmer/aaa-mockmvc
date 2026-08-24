@@ -1,0 +1,26 @@
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.validator;
+
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.match.TestAssertReason.reasonOf;
+
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
+@Since("2.0.0")
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+public final class TestActPreconditionsValidator {
+
+  private static final String MISSING_ARRANGE_BEFORE_ACT_PERFORM =
+      "Act error: No 'arrange()' step configured. "
+          + "Call 'arrange().get|post|put|patch|delete|head|options(...)' "
+          + "before 'act().perform()'";
+
+  @Since("2.0.0")
+  public static void verifyPerform(TestAAAContext context) {
+    if (context.getArrangeBuilder() == null) {
+      var reason = reasonOf(context.getStep(), MISSING_ARRANGE_BEFORE_ACT_PERFORM);
+      throw new IllegalStateException(reason);
+    }
+  }
+}

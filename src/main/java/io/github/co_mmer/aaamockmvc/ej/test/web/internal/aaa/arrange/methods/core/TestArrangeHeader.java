@@ -1,0 +1,42 @@
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.methods.core;
+
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.arrange.base.TestArrangeBaseAbstract;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
+import java.util.List;
+import java.util.Map;
+import org.springframework.http.MediaType;
+
+@Since("1.0.0")
+public abstract class TestArrangeHeader extends TestArrangeBaseAbstract {
+
+  @Since("2.0.0")
+  protected TestArrangeHeader(TestAAAContext context) {
+    super(context);
+  }
+
+  @Since("1.0.0")
+  protected void setAccepts(MediaType... types) {
+    getRequestHeaders().accept(types);
+  }
+
+  @Since("1.0.0")
+  protected void setAuth(String token) {
+    getRequestHeaders().auth(token);
+  }
+
+  @Since("1.0.0")
+  protected void setContentType(MediaType type) {
+    getRequestHeaders().contentType(type);
+  }
+
+  @Since("1.0.0")
+  protected void put(String key, Object value) {
+    getRequestHeaders().add(key, String.valueOf(value));
+  }
+
+  @Since("1.0.0")
+  protected void putAll(Map<String, List<Object>> keyValue) {
+    getRequestHeaders().set(keyValue);
+  }
+}

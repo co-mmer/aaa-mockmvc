@@ -1,5 +1,33 @@
 # <img src="./images/aaa-mockmvc-icon-27.png" align="left"/> Changelog
 
+## [2.1.0]
+
+### ✨ New Features
+
+* Added comprehensive domain validation across request configuration, Answer target selection, and
+  assertion inputs.
+* Invalid DSL arguments now produce descriptive `IllegalArgumentException` messages that identify
+  the affected input and, where applicable, its one-based position.
+
+### 🧹 Improvements
+
+* Replaced Lombok-generated null checks on public DSL entry paths with explicit validation owned by
+  internal domain objects, colocating validation rules and messages with the values they protect.
+* Refactored the internal request model for clearer separation of responsibilities, consistent
+  validation, immutable views, and defensive copies of managed request data.
+* Added validated target types for Answer operations and validated inputs for assertion evaluation.
+* Replaced Hamcrest-based assertion handling with framework-owned failure reporting that separates
+  `Expected`, `Actual`, and `Reason`, and removed Hamcrest from the framework's dependencies.
+
+### ☂️ Fixed
+
+* Corrected `Accept` header handling for multiple media types. Accept values are now represented
+  consistently as multiple HTTP header values. This may change the raw header representation from
+  `application/json, application/pdf` to `application/json,application/pdf` while preserving the
+  same HTTP semantics.
+
+---
+
 ## [2.0.1]
 
 ### 🧹 Improvements

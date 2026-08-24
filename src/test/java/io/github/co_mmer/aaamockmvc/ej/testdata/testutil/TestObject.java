@@ -15,6 +15,7 @@ public final class TestObject {
   public static final String B = "B";
   public static final String NEW = "NEW";
   public static final String CLOSE = "Close";
+  public static final String ANY_VALUE = "Any";
 
   public static final int ID1 = 1;
   public static final int ID2 = 2;
@@ -27,6 +28,9 @@ public final class TestObject {
   public static final TestObjectSimple A4 = new TestObjectSimple(ID4, A);
   public static final TestObjectMatch B1 = new TestObjectMatch(ID1, B, NEW);
   public static final TestObjectMatch B2 = new TestObjectMatch(ID2, B, NEW);
+
+  @SuppressWarnings("all")
+  public static final TestObjectSimple A1_NFD = new TestObjectSimple(ID1, "Cafe\u0301");
 
   public static final List<TestObjectMatch> TEST_LIST_B1NEW_B2NEW = List.of(B1, B2);
 

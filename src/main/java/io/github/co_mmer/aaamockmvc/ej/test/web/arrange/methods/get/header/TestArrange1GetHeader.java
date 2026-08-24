@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.get.header;
 
-import lombok.NonNull;
 import org.springframework.http.MediaType;
+import org.springframework.lang.NonNull;
 
 /**
  * GET arrange step for defining HTTP headers.

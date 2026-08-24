@@ -1,11 +1,13 @@
 package io.github.co_mmer.aaamockmvc.ej.test;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
 class AAAMockMvcExtensionTest {
 
@@ -15,8 +17,8 @@ class AAAMockMvcExtensionTest {
 
   @BeforeEach
   void setUp() {
-    this.mockExtensionContext = Mockito.mock(ExtensionContext.class);
-    this.mockAAAMockMvc = Mockito.mockStatic(AAAMockMvc.class);
+    this.mockExtensionContext = mock(ExtensionContext.class);
+    this.mockAAAMockMvc = mockStatic(AAAMockMvc.class);
     this.extension = new AAAMockMvcExtension();
   }
 
