@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.StringJoiner;
 import java.util.function.Predicate;
 
 @Since("2.1.0")
@@ -421,54 +420,8 @@ public final class AAAAssert<A, N> {
 
   private void verify(boolean matches, Object expected, Object actual, String reason) {
     if (!matches) {
-      throw new AssertionError(failureMessage(expected, actual, reason));
+      throw new AssertionError(AAAAssertFailure.create(step, expected, actual, reason));
     }
-  }
-
-  private String failureMessage(Object expected, Object actual, String reason) {
-    var lineSeparator = System.lineSeparator();
-    var message = new StringBuilder(lineSeparator);
-
-    if (step != null && step.name() != null && !step.name().isBlank()) {
-      message.append("Step:     ").append(step.name().strip()).append(lineSeparator);
-    }
-
-    return message
-        .append("Expected: ")
-        .append(formatValue(expected))
-        .append(lineSeparator)
-        .append("Actual:   ")
-        .append(formatValue(actual))
-        .append(lineSeparator)
-        .append("Reason:   ")
-        .append(reason)
-        .toString();
-  }
-
-  private static String formatValue(Object value) {
-    if (value == null) {
-      return "null";
-    }
-
-    if (value instanceof CharSequence text && text.isEmpty()) {
-      return "\"\"";
-    }
-
-    if (value instanceof byte[] bytes) {
-      return "byte[" + bytes.length + "] " + Arrays.toString(bytes);
-    }
-
-    if (value.getClass().isArray()) {
-      var result = new StringJoiner(", ", "[", "]");
-
-      for (var index = 0; index < Array.getLength(value); index++) {
-        result.add(formatValue(Array.get(value, index)));
-      }
-
-      return result.toString();
-    }
-
-    return String.valueOf(value);
   }
 
   private static int sizeOf(Object value) {
