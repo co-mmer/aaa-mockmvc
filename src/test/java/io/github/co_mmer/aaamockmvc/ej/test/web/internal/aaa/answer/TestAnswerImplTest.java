@@ -19,6 +19,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.answer.TestAnswer;
@@ -63,12 +64,16 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_empty_WHEN_asBoolean_THEN_TestAnswerFailed_is_thrown() {
+    @SuppressWarnings("all")
+    void GIVEN_empty_WHEN_asBoolean_THEN_return_null() {
       // Arrange
       useActResult(EMPTY);
 
-      // Act & Assert
-      assertThrows(TestAnswerFailed.class, () -> impl.asBoolean());
+      // Act
+      var result = impl.asBoolean();
+
+      // Assert
+      assertThat(result, is(nullValue()));
     }
 
     @Test
@@ -158,12 +163,16 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_empty_WHEN_asObject_THEN_TestAnswerFailed_is_thrown() {
+    @SuppressWarnings("all")
+    void GIVEN_empty_WHEN_asObject_THEN_return_null() {
       // Arrange
       useActResult(EMPTY);
 
-      // Act & Assert
-      assertThrows(TestAnswerFailed.class, () -> impl.asObject(TestObjectSimple.class));
+      // Act
+      var result = impl.asObject(TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, is(nullValue()));
     }
 
     @Test
@@ -207,12 +216,15 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_empty_WHEN_asCollection_THEN_TestAnswerFailed_is_thrown() {
+    void GIVEN_empty_WHEN_asCollection_THEN_return_null() {
       // Arrange
       useActResult(EMPTY);
 
-      // Act & Assert
-      assertThrows(TestAnswerFailed.class, () -> impl.asCollection(TestObjectSimple.class));
+      // Act
+      var result = impl.asCollection(TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, is(nullValue()));
     }
 
     @Test
@@ -257,12 +269,15 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_empty_WHEN_asList_THEN_TestAnswerFailed_is_thrown() {
+    void GIVEN_empty_WHEN_asList_THEN_return_null() {
       // Arrange
       useActResult(EMPTY);
 
-      // Act & Assert
-      assertThrows(TestAnswerFailed.class, () -> impl.asList(TestObjectSimple.class));
+      // Act
+      var result = impl.asList(TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, is(nullValue()));
     }
 
     @Test
@@ -306,12 +321,15 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_empty_WHEN_asSet_THEN_TestAnswerFailed_is_thrown() {
+    void GIVEN_empty_WHEN_asSet_THEN_return_null() {
       // Arrange
       useActResult(EMPTY);
 
-      // Act & Assert
-      assertThrows(TestAnswerFailed.class, () -> impl.asSet(TestObjectSimple.class));
+      // Act
+      var result = impl.asSet(TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, is(nullValue()));
     }
 
     @Test
@@ -370,12 +388,15 @@ class TestAnswerImplTest extends TestAssertBase {
     }
 
     @Test
-    void GIVEN_empty_WHEN_asMap_THEN_TestAnswerFailed_is_thrown() {
+    void GIVEN_empty_WHEN_asMap_THEN_return_null() {
       // Arrange
       useActResult(EMPTY);
 
-      // Act & Assert
-      assertThrows(TestAnswerFailed.class, () -> impl.asMap(Integer.class, TestObjectSimple.class));
+      // Act
+      var result = impl.asMap(Integer.class, TestObjectSimple.class);
+
+      // Assert
+      assertThat(result, is(nullValue()));
     }
 
     @Test

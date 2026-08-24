@@ -5,6 +5,7 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.stri
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeMapList;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Note;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.Collection;
 import java.util.Collections;
@@ -45,12 +46,20 @@ public final class AssertOperand<A, N> {
 
   @Since("2.1.0")
   public static <E> AssertOperand<List<E>, List<String>> list(List<? extends E> value) {
+    if (value == null) {
+      return new AssertOperand<>(null, (List<String>) null);
+    }
+
     List<E> snapshot = List.copyOf(value);
     return new AssertOperand<>(snapshot, actual -> List.copyOf(normalizeCollection(actual)));
   }
 
   @Since("2.1.0")
   public static <E> AssertOperand<Set<E>, Set<String>> set(Set<? extends E> value) {
+    if (value == null) {
+      return new AssertOperand<>(null, (Set<String>) null);
+    }
+
     Set<E> snapshot = Collections.unmodifiableSet(new LinkedHashSet<E>(value));
     return new AssertOperand<>(
         snapshot,
@@ -59,11 +68,17 @@ public final class AssertOperand<A, N> {
 
   @Since("2.1.0")
   public static AssertOperand<Boolean, Boolean> bool(Boolean value) {
+    if (value == null) {
+      return new AssertOperand<>(null, (Boolean) null);
+    }
     return new AssertOperand<>(value, actual -> actual);
   }
 
   @Since("2.1.0")
   public static AssertOperand<String, String> string(String value) {
+    if (value == null) {
+      return new AssertOperand<>(null, (String) null);
+    }
     return new AssertOperand<>(value, actual -> actual);
   }
 
@@ -86,11 +101,15 @@ public final class AssertOperand<A, N> {
 
   @Since("2.1.0")
   public static AssertOperand<byte[], byte[]> bytes(byte[] value) {
+    if (value == null) {
+      return new AssertOperand<>(null, (byte[]) null);
+    }
     var snapshot = value.clone();
     return new AssertOperand<>(snapshot, byte[]::clone);
   }
 
   @Since("2.1.0")
+  @Note("2.1.0 value nullable, 2.2.0 notNull")
   public static <K, V> AssertOperand<Map<K, V>, Map<String, String>> map(
       Map<? extends K, ? extends V> value) {
 

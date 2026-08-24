@@ -251,4 +251,9 @@ public final class AssertValue<T, N> {
   public int hashCode() {
     return normalizedValue.hashCode();
   }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
 }

@@ -60,12 +60,16 @@ class TestAssertContentImplTest {
 
     @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n", "   "})
-    void GIVEN_blank_body_WHEN_asBoolean_THEN_AssertionFailedError_is_thrown(String body) {
+    void GIVEN_blank_body_WHEN_asBoolean_THEN_store_null(String body) {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
-      assertThrows(AssertionFailedError.class, () -> impl.asBoolean());
+      impl.asBoolean();
+
+      // Assert
+      var stored = context.getAssertOperand();
+      assertThat(stored.actual(), nullValue());
     }
 
     @Test
@@ -177,12 +181,16 @@ class TestAssertContentImplTest {
 
     @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n", "   "})
-    void GIVEN_blank_body_WHEN_asClass_THEN_AssertionFailedError_is_thrown(String body) {
+    void GIVEN_blank_body_WHEN_asClass_THEN_store_null(String body) {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
-      assertThrows(AssertionFailedError.class, () -> impl.asClass(TestObjectSimple.class));
+      impl.asClass(TestObjectSimple.class);
+
+      // Assert
+      var stored = context.getAssertOperand();
+      assertThat(stored.actual(), nullValue());
     }
 
     @Test
@@ -226,12 +234,16 @@ class TestAssertContentImplTest {
 
     @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n", "   "})
-    void GIVEN_blank_body_WHEN_asCollection_THEN_AssertionFailedError_is_thrown(String body) {
+    void GIVEN_blank_body_WHEN_asCollection_THEN_store_null(String body) {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
-      assertThrows(AssertionFailedError.class, () -> impl.asCollection(TestObjectSimple.class));
+      impl.asCollection(TestObjectSimple.class);
+
+      // Assert
+      var stored = context.getAssertOperand();
+      assertThat(stored.actual(), nullValue());
     }
 
     @Test
@@ -293,12 +305,16 @@ class TestAssertContentImplTest {
 
     @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n", "   "})
-    void GIVEN_blank_body_WHEN_asList_THEN_AssertionFailedError_is_thrown(String body) {
+    void GIVEN_blank_body_WHEN_asList_THEN_store_null(String body) {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
-      assertThrows(AssertionFailedError.class, () -> impl.asList(TestObjectSimple.class));
+      impl.asList(TestObjectSimple.class);
+
+      // Assert
+      var stored = context.getAssertOperand();
+      assertThat(stored.actual(), nullValue());
     }
 
     @Test
@@ -375,12 +391,16 @@ class TestAssertContentImplTest {
 
     @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n", "   "})
-    void GIVEN_blank_body_WHEN_asSet_THEN_AssertionFailedError_is_thrown(String body) {
+    void GIVEN_blank_body_WHEN_asSet_THEN_store_null(String body) {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
-      assertThrows(AssertionFailedError.class, () -> impl.asSet(TestObjectSimple.class));
+      impl.asSet(TestObjectSimple.class);
+
+      // Assert
+      var stored = context.getAssertOperand();
+      assertThat(stored.actual(), nullValue());
     }
 
     @Test
@@ -465,13 +485,16 @@ class TestAssertContentImplTest {
 
     @ParameterizedTest
     @ValueSource(strings = {" ", "\t", "\n", "   "})
-    void GIVEN_blank_body_WHEN_asMap_THEN_AssertionFailedError_is_thrown(String body) {
+    void GIVEN_blank_body_WHEN_asMap_THEN_store_null(String body) {
       // Arrange
       when(context.getActResult().contentAsString()).thenReturn(body);
 
       // Act
-      assertThrows(
-          AssertionFailedError.class, () -> impl.asMap(Integer.class, TestObjectSimple.class));
+      impl.asMap(Integer.class, TestObjectSimple.class);
+
+      // Assert
+      var stored = context.getAssertOperand();
+      assertThat(stored.actual(), nullValue());
     }
 
     @Test

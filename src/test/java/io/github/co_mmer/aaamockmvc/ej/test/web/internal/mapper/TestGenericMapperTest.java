@@ -13,6 +13,7 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -25,6 +26,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
@@ -62,12 +64,15 @@ class TestGenericMapperTest {
     }
 
     @ParameterizedTest
+    @NullAndEmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
-    void GIVEN_empty_string_WHEN_parse_THEN_TestGenericMapperException_is_thrown(String content) {
-      assertThrows(
-          TestGenericMapperException.class,
-          () -> TestGenericMapper.parse(om, content, SIMPLE_ASSERT_TYPE));
+    void GIVEN_blank_string_WHEN_parse_THEN_return_null(String content) {
+      // Act
+      var result = TestGenericMapper.parse(om, content, SIMPLE_ASSERT_TYPE);
+
+      // Assert
+      assertThat(result, is(nullValue()));
     }
 
     @Test
@@ -96,12 +101,15 @@ class TestGenericMapperTest {
     }
 
     @ParameterizedTest
+    @NullAndEmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
-    void GIVEN_blank_WHEN_parseList_THEN_TestGenericMapperException_is_thrown(String content) {
-      assertThrows(
-          TestGenericMapperException.class,
-          () -> TestGenericMapper.parseList(om, content, SIMPLE_ASSERT_TYPE));
+    void GIVEN_blank_string_WHEN_parseList_THEN_return_null(String content) {
+      // Act
+      var result = TestGenericMapper.parseList(om, content, SIMPLE_ASSERT_TYPE);
+
+      // Assert
+      assertThat(result, is(nullValue()));
     }
 
     @Test
@@ -148,12 +156,15 @@ class TestGenericMapperTest {
     }
 
     @ParameterizedTest
+    @NullAndEmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
-    void GIVEN_blank_WHEN_parseSet_THEN_TestGenericMapperException_is_thrown(String content) {
-      assertThrows(
-          TestGenericMapperException.class,
-          () -> TestGenericMapper.parseSet(om, content, SIMPLE_ASSERT_TYPE));
+    void GIVEN_blank_string_WHEN_parseSet_THEN_return_null(String content) {
+      // Act
+      var result = TestGenericMapper.parseSet(om, content, SIMPLE_ASSERT_TYPE);
+
+      // Assert
+      assertThat(result, is(nullValue()));
     }
 
     @Test
@@ -202,12 +213,15 @@ class TestGenericMapperTest {
     }
 
     @ParameterizedTest
+    @NullAndEmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
-    void GIVEN_blank_WHEN_parseMap_THEN_TestGenericMapperException_is_thrown(String content) {
-      assertThrows(
-          TestGenericMapperException.class,
-          () -> TestGenericMapper.parseMap(om, content, INTEGER_ASSERT_TYPE, SIMPLE_ASSERT_TYPE));
+    void GIVEN_blank_string_WHEN_parseMap_THEN_return_null(String content) {
+      // Act
+      var result = TestGenericMapper.parseMap(om, content, INTEGER_ASSERT_TYPE, SIMPLE_ASSERT_TYPE);
+
+      // Assert
+      assertThat(result, is(nullValue()));
     }
 
     @Test
@@ -281,13 +295,15 @@ class TestGenericMapperTest {
     }
 
     @ParameterizedTest
+    @NullAndEmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
-    void GIVEN_blank_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown(
-        String content) {
-      assertThrows(
-          TestGenericMapperException.class,
-          () -> TestGenericMapper.parseCollection(om, content, SIMPLE_ASSERT_TYPE));
+    void GIVEN_blank_string_WHEN_parseCollection_THEN_return_null(String content) {
+      // Act
+      var result = TestGenericMapper.parseCollection(om, content, SIMPLE_ASSERT_TYPE);
+
+      // Assert
+      assertThat(result, is(nullValue()));
     }
 
     @Test
@@ -339,19 +355,20 @@ class TestGenericMapperTest {
     }
 
     @ParameterizedTest
+    @NullAndEmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
-    void GIVEN_blank_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown(
-        String response) {
+    void GIVEN_blank_WHEN_parseCollection_THEN_return_null(String response) {
       // Arrange
       when(mockHttpServletResponse.getContentAsString()).thenReturn(response);
 
-      // Act && Assert
-      assertThrows(
-          TestGenericMapperException.class,
-          () ->
-              TestGenericMapper.parseCollection(
-                  om, mockMvcResult.getResponse().getContentAsString(), SIMPLE_ASSERT_TYPE));
+      // Act
+      var result =
+          TestGenericMapper.parseCollection(
+              om, mockMvcResult.getResponse().getContentAsString(), SIMPLE_ASSERT_TYPE);
+
+      // Assert
+      assertThat(result, is(nullValue()));
     }
 
     @Test
