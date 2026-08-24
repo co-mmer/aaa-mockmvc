@@ -15,6 +15,7 @@ public final class TestObject {
   public static final String B = "B";
   public static final String NEW = "NEW";
   public static final String CLOSE = "Close";
+  public static final String ANY_VALUE = "Any";
 
   public static final int ID1 = 1;
   public static final int ID2 = 2;

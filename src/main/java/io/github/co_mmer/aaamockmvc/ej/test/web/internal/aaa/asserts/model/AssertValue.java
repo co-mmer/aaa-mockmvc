@@ -79,6 +79,7 @@ public final class AssertValue<T, N> {
     return requireNonNull(value, NULL_EXPECTED_BOOLEAN_MESSAGE);
   }
 
+  @Since("2.1.0")
   public static AssertValue<byte[], byte[]> expectedBytes(byte[] value) {
     return requireNonNull(value, NULL_EXPECTED_BYTES_MESSAGE);
   }
