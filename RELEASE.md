@@ -2,79 +2,80 @@
 
 ## [2.1.0]
 
-Version **2.1.0** strengthens the AAA-MockMvc DSL with consistent domain validation and clearer,
-more actionable failure diagnostics.
+Version **2.1.0** strengthens the AAA-MockMvc DSL with consistent validation and clearer, more
+actionable failure messages.
 
-Invalid request configuration, response target types, and assertion inputs are now rejected with
-descriptive `IllegalArgumentException` messages. Validation identifies the affected DSL argument
-and includes its position when multiple values or conditions are supplied.
+Invalid request configurations, response target types, and assertion inputs are now rejected close
+to where they are supplied with descriptive `IllegalArgumentException` messages. Each message
+identifies the affected DSL argument and, when multiple values or conditions are supplied, includes
+its one-based position.
 
-Failed DSL assertions now follow a consistent structure that separates the expected result, the
-actual response value, and the reason for the mismatch. At the same time, Hamcrest has been removed
-from the framework's assertion implementation, reducing the dependency footprint without changing
-the public assertion DSL.
+Assertion failures now use a consistent structure that separates the expected result, the observed
+response value, and the reason for the mismatch. The public assertion DSL, response mapping
+behavior, and assertion semantics remain unchanged.
 
 ### 🌿 Highlights
 
-* **Consistent DSL validation** — Invalid arguments are detected close to where they are provided.
-* **Clear validation messages** — Errors identify the affected request value, response target,
-  assertion input, or condition.
-* **Predictable exception behavior** — Affected null arguments now produce
-  `IllegalArgumentException` instead of Lombok-generated `NullPointerException`.
-* **Structured assertion failures** — Failed DSL assertions consistently report `Expected`,
-  `Actual`, and `Reason`.
-* **Leaner dependency footprint** — Hamcrest is no longer used by the framework's assertion
-  implementation and has been removed as a dependency.
-* **Stable public DSL** — Existing assertion methods continue to be used in the same way.
-* **No mapping behavior changes** — Response deserialization and assertion semantics remain
-  unchanged.
+- **Consistent DSL validation** — Invalid arguments are rejected close to where they are supplied.
+- **Actionable validation messages** — Errors identify the affected argument and, where applicable,
+  its position.
+- **Predictable exception behavior** — Null arguments in the affected APIs now
+  produce `IllegalArgumentException` instead of Lombok-generated `NullPointerException`.
+- **Structured assertion failures** — Failures consistently report `Expected`, `Actual`,
+  and `Reason`.
+- **Leaner dependency footprint** — Hamcrest is no longer used internally and has been removed as a
+  framework dependency.
+- **Stable public DSL** — Existing assertion calls and response mapping semantics remain unchanged.
 
 ### ✨ New Features
 
 #### Request validation
 
-Added validation for:
+Request validation now covers:
 
-* Request paths and URI syntax.
-* Path variable values and supported types.
-* Query parameter names and values.
-* Header names and values, including protection against carriage-return and line-feed characters.
-* Duplicate header names using different casing.
-* Accepted media types and content types.
-* Text and multipart request bodies.
+- Paths and URI syntax.
+- Path variable values and supported types.
+- Query parameter names and values.
+- Header names and values, including protection against carriage-return and line-feed characters.
+- Duplicate header names that differ only in letter casing.
+- Accepted media types and content types.
+- Text and multipart request bodies.
 
-#### Answer validation
+#### Response target validation
 
-Added validation for response target types used by:
+Response target types are now validated for:
 
-* `answer().asObject()`
-* `answer().asCollection()`
-* `answer().asList()`
-* `answer().asSet()`
-* `answer().asMap()`
+- `answer().asObject()`
+- `answer().asCollection()`
+- `answer().asList()`
+- `answer().asSet()`
+- `answer().asMap()`
 
 Missing result, element, map-key, and map-value types now produce precise validation messages.
 
 #### Assertion validation
 
-Added validation for assertion inputs, including:
+Assertion validation now covers:
 
-* Expected boolean, string, byte-array, object, collection, and map values.
-* Expected HTTP statuses.
-* Expected classes and collection element classes.
-* Map key and value classes.
-* Expected and unexpected collection elements.
-* Expected header names and values.
-* Predicate arguments used by `matchAll()`, `matchAny()`, and `matchNone()`.
+- Expected values for booleans, strings, byte arrays, objects, collections, and maps.
+- Expected HTTP statuses.
+- Expected result classes and collection element classes.
+- Map key and value classes.
+- Expected and unexpected collection elements.
+- Expected header names and values.
+- Predicate arguments supplied to `matchAll()`, `matchAny()`, and `matchNone()`.
 
 When one of multiple elements, header values, or match conditions is `null`, the validation message
-includes its one-based position.
+identifies it by its one-based position.
 
 ### 🧹 Improvements
 
 #### Structured assertion failures
 
-Assertion failures produced by the DSL now follow one consistent structure:
+Assertion failures are now easier to scan, understand, and compare while debugging tests. Existing
+assertion calls remain unchanged.
+
+Failures produced by the DSL now follow a consistent structure:
 
 ```text
 Expected: <expected result>
@@ -82,29 +83,32 @@ Actual: <actual response value>
 Reason: <why the assertion failed>
 ```
 
-`Expected` describes the asserted outcome, `Actual` shows the value returned by the response, and
-`Reason` explains the mismatch in context. This makes failures easier to scan, understand, and
-compare while debugging a test. No changes to existing assertion calls are required.
+For example, asserting an expected object when the endpoint returns an empty body produces:
 
-#### Assertion implementation and dependency cleanup
+```text
+Expected: SimpleObject[id=1, name=A]
+Actual:   null
+Reason:   The response body was absent.
+```
 
-The framework's assertion handling no longer relies on Hamcrest. Assertion failures are now
-produced consistently by AAA-MockMvc itself, and the Hamcrest dependency has been removed. This is
-an internal implementation change and does not introduce a new public API.
+Each field has a clear purpose:
 
-* Moved runtime input validation from Lombok annotations into dedicated internal domain objects.
-* Kept validation rules and their error messages close to the values they protect.
-* Improved consistency between the Request, Answer, and Assert areas of the DSL.
-* Added immutable views and defensive copies for internally managed request data.
-* Reworked assertion failure reporting to produce consistent messages across DSL assertions.
-* Removed the Hamcrest dependency from the framework's assertion implementation.
+- `Expected` describes the asserted outcome.
+- `Actual` shows the observed response value.
+- `Reason` explains the mismatch in context.
+
+#### Dependency cleanup
+
+Hamcrest is no longer used internally and has been removed as a framework dependency. This does not
+change the public assertion DSL. Projects that use Hamcrest directly should declare it explicitly
+rather than relying on AAA-MockMvc to provide it transitively.
 
 ### ☂️ Fixes
 
-* Corrected `Accept` header handling for multiple media types. Accept values are now represented
-  consistently as multiple HTTP header values. The raw representation may change from
-  `application/json, application/pdf` to `application/json,application/pdf` while preserving the
-  same HTTP semantics.
+- Corrected `Accept` header handling for multiple media types. Accept values are now represented
+  consistently as separate HTTP header values. As a result, the raw representation may change
+  from `application/json, application/pdf` to `application/json,application/pdf`, while preserving
+  the same HTTP semantics.
 
 ---
 
