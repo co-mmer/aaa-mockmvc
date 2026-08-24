@@ -81,6 +81,7 @@ class AssertValueTest {
     normalizer.close();
   }
 
+  @SuppressWarnings("all")
   private AssertValue<String, String> givenAssertValue(String value, String normalizedValue) {
     normalizer.when(() -> normalizeObject(value, Form.NFC)).thenReturn(normalizedValue);
     return expectedString(value);
@@ -355,6 +356,7 @@ class AssertValueTest {
   class ExpectedMap {
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_a_map_WHEN_expectedMap_THEN_normalized_result_is_an_unmodifiable_snapshot() {
       // Arrange
       var normalizedMap = new LinkedHashMap<>(ANY_NORMALIZED_MAP);

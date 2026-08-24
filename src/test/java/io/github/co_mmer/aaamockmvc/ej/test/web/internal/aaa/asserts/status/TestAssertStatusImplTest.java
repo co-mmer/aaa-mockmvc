@@ -5,6 +5,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.http.HttpStatus.ACCEPTED;
@@ -25,7 +27,6 @@ import java.util.function.Consumer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 class TestAssertStatusImplTest extends TestAssertBase {
 
@@ -40,15 +41,14 @@ class TestAssertStatusImplTest extends TestAssertBase {
   }
 
   private void assertCall(Runnable actCall, Consumer<AAAAssert<?, ?>> verifyCall) {
-    var mockInstance = Mockito.mock(AAAAssert.class);
-    var mockClass = Mockito.mockStatic(AAAAssert.class);
+    var mockInstance = mock(AAAAssert.class);
+    var mockClass = mockStatic(AAAAssert.class);
     mockClass.when(() -> AAAAssert.expect(any(), any())).thenReturn(mockInstance);
 
     actCall.run();
 
     mockClass.verify(
-        () -> AAAAssert.expect(eq(getContext().getStep()), any(AssertOperand.class)),
-        Mockito.times(1));
+        () -> AAAAssert.expect(eq(getContext().getStep()), any(AssertOperand.class)), times(1));
 
     verifyCall.accept(mockInstance);
     mockClass.close();

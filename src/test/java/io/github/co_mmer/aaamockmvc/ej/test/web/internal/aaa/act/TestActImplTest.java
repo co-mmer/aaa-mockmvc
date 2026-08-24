@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mockStatic;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.act.error.TestActFailedError;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
@@ -18,7 +19,6 @@ import java.util.Map;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 class TestActImplTest {
 
@@ -45,7 +45,7 @@ class TestActImplTest {
     // Arrange
     var request = this.context.getArrangeBuilder().build();
 
-    var mockedExecutor = Mockito.mockStatic(MockMvcExecutor.class);
+    var mockedExecutor = mockStatic(MockMvcExecutor.class);
     mockedExecutor
         .when(() -> MockMvcExecutor.execute(this.context.getEnvironment().mvc(), request))
         .thenReturn(ANY_EXECUTION_RESULT);
@@ -72,8 +72,8 @@ class TestActImplTest {
     // Arrange
     var request = this.context.getArrangeBuilder().build();
 
-    var mockedExecutor = Mockito.mockStatic(MockMvcExecutor.class);
-    var mockedDescription = Mockito.mockStatic(RequestDescription.class);
+    var mockedExecutor = mockStatic(MockMvcExecutor.class);
+    var mockedDescription = mockStatic(RequestDescription.class);
 
     mockedExecutor
         .when(() -> MockMvcExecutor.execute(this.context.getEnvironment().mvc(), request))

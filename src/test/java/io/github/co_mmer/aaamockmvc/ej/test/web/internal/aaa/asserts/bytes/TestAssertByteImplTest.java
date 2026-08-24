@@ -5,6 +5,8 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_N
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -17,7 +19,6 @@ import java.util.function.Consumer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 class TestAssertByteImplTest extends TestAssertBase {
 
@@ -37,8 +38,8 @@ class TestAssertByteImplTest extends TestAssertBase {
   }
 
   private void assertCall(Runnable actCall, Consumer<AAAAssert<?, ?>> verifyCall) {
-    var mockInstance = Mockito.mock(AAAAssert.class);
-    var mockClass = Mockito.mockStatic(AAAAssert.class);
+    var mockInstance = mock(AAAAssert.class);
+    var mockClass = mockStatic(AAAAssert.class);
     mockClass.when(() -> AAAAssert.expect(any(), any())).thenReturn(mockInstance);
 
     actCall.run();

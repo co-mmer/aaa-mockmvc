@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.lang.NonNull;
 
 @Since("2.1.0")
+@SuppressWarnings("java:S6218")
 public record TestActResult(
     int status,
     Map<String, List<String>> headers,

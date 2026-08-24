@@ -2,6 +2,7 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.mockito.Mockito.mock;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.TestActImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.answer.TestAnswerImpl;
@@ -10,11 +11,10 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertI
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepImpl;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 class TestStepImplTest {
 
-  private final TestAAAContext context = Mockito.mock(TestAAAContext.class);
+  private final TestAAAContext context = mock(TestAAAContext.class);
   private final TestStepImpl step = new TestStepImpl(context);
 
   @Test

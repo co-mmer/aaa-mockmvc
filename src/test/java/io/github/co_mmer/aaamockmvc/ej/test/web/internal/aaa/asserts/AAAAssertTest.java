@@ -1698,6 +1698,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_different_status_WHEN_toHaveStatus_THEN_AssertionError_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, status(HttpStatus.NOT_FOUND));
@@ -1714,6 +1715,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_absent_status_WHEN_toHaveStatus_THEN_AssertionError_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, status(null));
@@ -1730,6 +1732,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_named_step_WHEN_toHaveStatus_fails_THEN_step_is_in_message() {
       // Arrange
       var assertion = AAAAssert.expect(NAMED_STEP, status(HttpStatus.NOT_FOUND));
@@ -1764,6 +1767,7 @@ final class AAAAssertTest {
 
     @ParameterizedTest
     @MethodSource("statusesOutsideRange")
+    @SuppressWarnings("java:S5778")
     void GIVEN_status_is_outside_range_WHEN_toBeInRange_THEN_AssertionError_is_thrown(
         AssertOperand<?, Integer> actualStatus) {
       // Arrange
@@ -1782,6 +1786,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void
         GIVEN_minimum_is_greater_than_maximum_WHEN_toBeInRange_THEN_InvalidAssertionException_is_thrown() {
       // Arrange
@@ -1815,6 +1820,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_named_step_WHEN_toBeInRange_fails_THEN_step_is_in_message() {
       // Arrange
       var assertion = AAAAssert.expect(NAMED_STEP, status(HttpStatus.NOT_FOUND));

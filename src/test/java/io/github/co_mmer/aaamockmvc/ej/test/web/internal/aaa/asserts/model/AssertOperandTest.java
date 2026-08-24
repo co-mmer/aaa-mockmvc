@@ -114,6 +114,7 @@ class AssertOperandTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_operand_is_created_WHEN_collection_THEN_actual_snapshot_is_unmodifiable() {
       // Arrange
       var normalizer = mockNormalizeCollection();
@@ -167,6 +168,7 @@ class AssertOperandTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_operand_is_created_WHEN_list_THEN_actual_snapshot_is_unmodifiable() {
       // Arrange
       var normalizer = mockNormalizeCollection();
@@ -220,6 +222,7 @@ class AssertOperandTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_operand_is_created_WHEN_set_THEN_actual_snapshot_is_unmodifiable() {
       // Arrange
       var normalizer = mockNormalizeCollection();
@@ -429,6 +432,7 @@ class AssertOperandTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_operand_is_created_WHEN_map_THEN_actual_snapshot_is_unmodifiable() {
       // Arrange
       var normalizer = mockNormalizeMap();
@@ -486,6 +490,7 @@ class AssertOperandTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_operand_is_created_WHEN_headers_THEN_actual_map_and_value_lists_are_unmodifiable() {
       // Arrange
       var normalizer = mockNormalizeMapList();
