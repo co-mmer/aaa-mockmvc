@@ -62,7 +62,9 @@ class TestAssertMapImplTest extends TestAssertBase {
 
   @Test
   void WHEN_hasSize_THEN_toHaveSize_is_called() {
-    assertCall(() -> impl.hasSize(2), mock -> verify(mock, times(1)).toHaveSize(2));
+    assertCall(
+        () -> impl.hasSize(2),
+        mock -> verify(mock, times(1)).toHaveSize(AssertValue.expectedSize(2)));
   }
 
   @Test

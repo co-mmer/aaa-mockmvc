@@ -60,7 +60,9 @@ class TestAssertStringImplTest extends TestAssertBase {
 
   @Test
   void WHEN_hasLength_THEN_toHaveLength_is_called() {
-    assertCall(() -> impl.hasLength(1), mock -> verify(mock, times(1)).toHaveLength(1));
+    assertCall(
+        () -> impl.hasLength(1),
+        mock -> verify(mock, times(1)).toHaveLength(AssertValue.expectedLength(1)));
   }
 
   @Test

@@ -160,6 +160,16 @@ public final class AssertValue<T, N> {
         NULL_EXPECTED_HEADER_VALUE_AT_POSITION_MESSAGE);
   }
 
+  @Since("2.1.0")
+  public static AssertValue<Integer, Integer> expectedSize(Integer value) {
+    return requireNonNull(value, "Expected size must not be null");
+  }
+
+  @Since("2.1.0")
+  public static AssertValue<Integer, Integer> expectedLength(Integer value) {
+    return requireNonNull(value, "Expected length must not be null");
+  }
+
   @SafeVarargs
   @Since("2.1.0")
   public static <T> AssertValue<Predicate<T>[], Predicate<T>[]> matchConditions(

@@ -36,7 +36,7 @@ public final class TestAssertMapImpl<K, V>
   @Override
   public TestAssert3Map<K, V> hasSize(int expectedSize) {
     AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toHaveSize(expectedSize);
+        .toHaveSize(AssertValue.expectedSize(expectedSize));
 
     return this;
   }

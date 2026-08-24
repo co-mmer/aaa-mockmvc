@@ -59,7 +59,9 @@ class TestAssertByteImplTest extends TestAssertBase {
 
   @Test
   void WHEN_hasLength_THEN_toHaveSize_is_called() {
-    assertCall(() -> impl.hasLength(1), mock -> verify(mock, times(1)).toHaveSize(1));
+    assertCall(
+        () -> impl.hasLength(1),
+        mock -> verify(mock, times(1)).toHaveSize(AssertValue.expectedLength(1)));
   }
 
   @Test

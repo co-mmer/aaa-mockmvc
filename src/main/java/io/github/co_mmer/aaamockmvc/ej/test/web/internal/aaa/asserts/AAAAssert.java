@@ -60,26 +60,26 @@ public final class AAAAssert<A, N> {
   }
 
   @Since("2.1.0")
-  public void toHaveSize(int expectedSize) {
-    var expected = "size " + expectedSize;
+  public void toHaveSize(AssertValue<?, Integer> expectedSize) {
+    var expected = "size " + expectedSize.normalizedValue();
     var actual = requireActual(expected);
     var actualSize = sizeOf(actual);
 
     verify(
-        actualSize == expectedSize,
+        actualSize == expectedSize.normalizedValue(),
         expected,
         "size " + actualSize,
         "The response body had a different size.");
   }
 
   @Since("2.1.0")
-  public void toHaveLength(int length) {
-    var expected = "length " + length;
+  public void toHaveLength(AssertValue<?, Integer> expectedLength) {
+    var expected = "length " + expectedLength.normalizedValue();
     var actual = requireActual(expected);
     var actualSize = sizeOf(actual);
 
     verify(
-        actualSize == length,
+        actualSize == expectedLength.normalizedValue(),
         expected,
         "length " + actualSize,
         "The response body had a different length.");

@@ -1,5 +1,12 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts;
 
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.expectedHeaderName;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.expectedHeaderValue;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.expectedHeaderValues;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.expectedLength;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.expectedSize;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.expectedStatus;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.unexpectedHeaderName;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
@@ -34,6 +41,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.http.HttpStatus;
 
 final class AAAAssertTest {
 
@@ -84,6 +92,14 @@ final class AAAAssertTest {
     return result;
   }
 
+  @SuppressWarnings("unchecked")
+  private static <A, N> AssertOperand<A, N> assertOperand(A actual, N normalizedValue) {
+    var result = (AssertOperand<A, N>) mock(AssertOperand.class);
+    when(result.actual()).thenReturn(actual);
+    when(result.normalizedValue()).thenReturn(normalizedValue);
+    return result;
+  }
+
   private static <E> AssertValue<Collection<E>, List<String>> collectionValue(Collection<E> value) {
     var normalizedValue = AssertOperand.collection(value).normalizedValue();
     return assertValue(value, normalizedValue);
@@ -93,6 +109,16 @@ final class AAAAssertTest {
   private static AssertValue<Predicate<Object>[], Predicate<Object>[]> conditions(
       Predicate<Object>... conditions) {
     return assertValue(conditions, conditions);
+  }
+
+  private static AssertOperand<Map<String, List<String>>, Map<String, List<String>>> headers(
+      String... values) {
+    var headers = Map.of("X-Test", List.of(values));
+    return assertOperand(headers, headers);
+  }
+
+  private static AssertOperand<HttpStatus, Integer> status(HttpStatus value) {
+    return assertOperand(value, value == null ? null : value.value());
   }
 
   @Nested
@@ -217,7 +243,7 @@ final class AAAAssertTest {
     @ParameterizedTest(name = "{0}")
     @MethodSource("sizedOperands")
     void GIVEN_body_with_expected_size_WHEN_toHaveSize_THEN_no_AssertionError_is_thrown(
-        String useCase, AssertOperand<?, ?> operand, int expectedSize) {
+        String useCase, AssertOperand<?, ?> operand, AssertValue<?, Integer> expectedSize) {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, operand);
 
@@ -234,7 +260,7 @@ final class AAAAssertTest {
       var assertion = AAAAssert.expect(ANY_STEP, LIST_A1_A2);
 
       // Act
-      var error = assertThrows(AssertionError.class, () -> assertion.toHaveSize(1));
+      var error = assertThrows(AssertionError.class, () -> assertion.toHaveSize(expectedSize(1)));
 
       // Assert
       assertThat(error.getMessage(), containsString("The response body had a different size."));
@@ -247,7 +273,7 @@ final class AAAAssertTest {
       var assertion = AAAAssert.expect(ANY_STEP, EMPTY_LIST);
 
       // Act
-      var error = assertThrows(AssertionError.class, () -> assertion.toHaveSize(-1));
+      var error = assertThrows(AssertionError.class, () -> assertion.toHaveSize(expectedSize(-1)));
 
       // Assert
       assertThat(error.getMessage(), containsString("Expected: size -1"));
@@ -260,7 +286,7 @@ final class AAAAssertTest {
       var assertion = AAAAssert.expect(ANY_STEP, ABSENT_STRING);
 
       // Act
-      var error = assertThrows(AssertionError.class, () -> assertion.toHaveSize(0));
+      var error = assertThrows(AssertionError.class, () -> assertion.toHaveSize(expectedSize(0)));
 
       // Assert
       assertThat(error.getMessage(), containsString("The response body was absent."));
@@ -272,7 +298,7 @@ final class AAAAssertTest {
       var assertion = AAAAssert.expect(NAMED_STEP, AssertOperand.string(A));
 
       // Act
-      var error = assertThrows(AssertionError.class, () -> assertion.toHaveSize(2));
+      var error = assertThrows(AssertionError.class, () -> assertion.toHaveSize(expectedSize(2)));
 
       // Assert
       assertThat(
@@ -290,20 +316,126 @@ final class AAAAssertTest {
 
     private static Stream<Arguments> sizedOperands() {
       return Stream.of(
-          arguments("empty collection", EMPTY_COLLECTION, 0),
-          arguments("collection", NON_EMPTY_COLLECTION, 2),
-          arguments("empty list", EMPTY_LIST, 0),
-          arguments("list", LIST_A1_A2, 2),
-          arguments("empty set", EMPTY_SET, 0),
-          arguments("set", NON_EMPTY_SET, 2),
-          arguments("empty string", EMPTY_STRING, 0),
-          arguments("string", NON_EMPTY_STRING, TEST_A1_JSON.length()),
-          arguments("empty bytes", EMPTY_BYTES, 0),
-          arguments("bytes", NON_EMPTY_BYTES, TEST_A1_JSON.getBytes(StandardCharsets.UTF_8).length),
-          arguments("empty map", EMPTY_MAP, 0),
-          arguments("map", NON_EMPTY_MAP, 2),
-          arguments("empty array", EMPTY_ARRAY, 0),
-          arguments("array", NON_EMPTY_ARRAY, 2));
+          arguments("empty collection", EMPTY_COLLECTION, expectedSize(0)),
+          arguments("collection", NON_EMPTY_COLLECTION, expectedSize(2)),
+          arguments("empty list", EMPTY_LIST, expectedSize(0)),
+          arguments("list", LIST_A1_A2, expectedSize(2)),
+          arguments("empty set", EMPTY_SET, expectedSize(0)),
+          arguments("set", NON_EMPTY_SET, expectedSize(2)),
+          arguments("empty string", EMPTY_STRING, expectedSize(0)),
+          arguments("string", NON_EMPTY_STRING, expectedSize(TEST_A1_JSON.length())),
+          arguments("empty bytes", EMPTY_BYTES, expectedSize(0)),
+          arguments(
+              "bytes",
+              NON_EMPTY_BYTES,
+              expectedSize(TEST_A1_JSON.getBytes(StandardCharsets.UTF_8).length)),
+          arguments("empty map", EMPTY_MAP, expectedSize(0)),
+          arguments("map", NON_EMPTY_MAP, expectedSize(2)),
+          arguments("empty array", EMPTY_ARRAY, expectedSize(0)),
+          arguments("array", NON_EMPTY_ARRAY, expectedSize(2)));
+    }
+  }
+
+  @Nested
+  class ToHaveLength {
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("lengthOperands")
+    void GIVEN_body_with_expected_length_WHEN_toHaveLength_THEN_no_AssertionError_is_thrown(
+        String useCase, AssertOperand<?, ?> operand, AssertValue<?, Integer> expectedLength) {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, operand);
+
+      // Act
+      assertion.toHaveLength(expectedLength);
+
+      // Assert
+      // The method returning normally is the assertion.
+    }
+
+    @Test
+    void GIVEN_body_with_different_length_WHEN_toHaveLength_THEN_AssertionError_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, LIST_A1_A2);
+
+      // Act
+      var error =
+          assertThrows(AssertionError.class, () -> assertion.toHaveLength(expectedLength(1)));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("The response body had a different length."));
+      assertThat(error.getMessage(), containsString("Actual:   length 2"));
+    }
+
+    @Test
+    void GIVEN_negative_expected_length_WHEN_toHaveLength_THEN_AssertionError_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, EMPTY_LIST);
+
+      // Act
+      var error =
+          assertThrows(AssertionError.class, () -> assertion.toHaveLength(expectedLength(-1)));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("Expected: length -1"));
+      assertThat(error.getMessage(), containsString("Actual:   length 0"));
+    }
+
+    @Test
+    void GIVEN_absent_body_WHEN_toHaveLength_THEN_AssertionError_for_absent_body_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, ABSENT_STRING);
+
+      // Act
+      var error =
+          assertThrows(AssertionError.class, () -> assertion.toHaveLength(expectedLength(0)));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("The response body was absent."));
+    }
+
+    @Test
+    void GIVEN_named_step_WHEN_toHaveLength_fails_THEN_trimmed_step_is_in_message() {
+      // Arrange
+      var assertion = AAAAssert.expect(NAMED_STEP, AssertOperand.string(A));
+
+      // Act
+      var error =
+          assertThrows(AssertionError.class, () -> assertion.toHaveLength(expectedLength(2)));
+
+      // Assert
+      assertThat(
+          error.getMessage(),
+          equalTo(
+              LINE_SEPARATOR
+                  + "Step:     Verify response"
+                  + LINE_SEPARATOR
+                  + "Expected: length 2"
+                  + LINE_SEPARATOR
+                  + "Actual:   length 1"
+                  + LINE_SEPARATOR
+                  + "Reason:   The response body had a different length."));
+    }
+
+    private static Stream<Arguments> lengthOperands() {
+      return Stream.of(
+          arguments("empty collection", EMPTY_COLLECTION, expectedLength(0)),
+          arguments("collection", NON_EMPTY_COLLECTION, expectedLength(2)),
+          arguments("empty list", EMPTY_LIST, expectedLength(0)),
+          arguments("list", LIST_A1_A2, expectedLength(2)),
+          arguments("empty set", EMPTY_SET, expectedLength(0)),
+          arguments("set", NON_EMPTY_SET, expectedLength(2)),
+          arguments("empty string", EMPTY_STRING, expectedLength(0)),
+          arguments("string", NON_EMPTY_STRING, expectedLength(TEST_A1_JSON.length())),
+          arguments("empty bytes", EMPTY_BYTES, expectedLength(0)),
+          arguments(
+              "bytes",
+              NON_EMPTY_BYTES,
+              expectedLength(TEST_A1_JSON.getBytes(StandardCharsets.UTF_8).length)),
+          arguments("empty map", EMPTY_MAP, expectedLength(0)),
+          arguments("map", NON_EMPTY_MAP, expectedLength(2)),
+          arguments("empty array", EMPTY_ARRAY, expectedLength(0)),
+          arguments("array", NON_EMPTY_ARRAY, expectedLength(2)));
     }
   }
 
@@ -1163,6 +1295,545 @@ final class AAAAssertTest {
                   + "Actual:   A"
                   + LINE_SEPARATOR
                   + "Reason:   At least one value matched a condition."));
+    }
+  }
+
+  @Nested
+  class ToContainKey {
+
+    @Test
+    void GIVEN_expected_header_key_is_present_WHEN_toContainKey_THEN_no_error_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, headers(A));
+      var expectedKey = expectedHeaderName("X-Test");
+
+      // Act
+      assertion.toContainKey(expectedKey);
+
+      // Assert
+      // The method returning normally is the assertion.
+    }
+
+    @Test
+    void GIVEN_expected_header_key_is_missing_WHEN_toContainKey_THEN_AssertionError_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, headers(A));
+      var expectedKey = expectedHeaderName("X-Missing");
+
+      // Act
+      var error = assertThrows(AssertionError.class, () -> assertion.toContainKey(expectedKey));
+
+      // Assert
+      assertThat(
+          error.getMessage(),
+          containsString("The response headers did not contain the expected key."));
+    }
+
+    @Test
+    void GIVEN_absent_headers_WHEN_toContainKey_THEN_absent_body_AssertionError_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, assertOperand(null, null));
+      var expectedKey = expectedHeaderName("X-Test");
+
+      // Act
+      var error = assertThrows(AssertionError.class, () -> assertion.toContainKey(expectedKey));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("The response body was absent."));
+    }
+
+    @Test
+    void GIVEN_named_step_WHEN_toContainKey_fails_THEN_step_is_in_message() {
+      // Arrange
+      var assertion = AAAAssert.expect(NAMED_STEP, headers(A));
+      var expectedKey = expectedHeaderName("X-Missing");
+
+      // Act
+      var error = assertThrows(AssertionError.class, () -> assertion.toContainKey(expectedKey));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("Step:     Verify response"));
+      assertThat(error.getMessage(), containsString("Expected: X-Missing"));
+    }
+  }
+
+  @Nested
+  class NotToContainKey {
+
+    @Test
+    void GIVEN_unexpected_header_key_is_missing_WHEN_notToContainKey_THEN_no_error_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, headers(A));
+      var unexpectedKey = unexpectedHeaderName("X-Missing");
+
+      // Act
+      assertion.notToContainKey(unexpectedKey);
+
+      // Assert
+      // The method returning normally is the assertion.
+    }
+
+    @Test
+    void GIVEN_unexpected_header_key_is_present_WHEN_notToContainKey_THEN_error_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, headers(A));
+      var unexpectedKey = unexpectedHeaderName("X-Test");
+
+      // Act
+      var error =
+          assertThrows(AssertionError.class, () -> assertion.notToContainKey(unexpectedKey));
+
+      // Assert
+      assertThat(
+          error.getMessage(), containsString("The response headers contained the unexpected key."));
+    }
+
+    @Test
+    void GIVEN_absent_headers_WHEN_notToContainKey_THEN_absent_body_AssertionError_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, assertOperand(null, null));
+      var unexpectedKey = unexpectedHeaderName("X-Test");
+
+      // Act
+      var error =
+          assertThrows(AssertionError.class, () -> assertion.notToContainKey(unexpectedKey));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("The response body was absent."));
+    }
+
+    @Test
+    void GIVEN_named_step_WHEN_notToContainKey_fails_THEN_step_is_in_message() {
+      // Arrange
+      var assertion = AAAAssert.expect(NAMED_STEP, headers(A));
+      var unexpectedKey = unexpectedHeaderName("X-Test");
+
+      // Act
+      var error =
+          assertThrows(AssertionError.class, () -> assertion.notToContainKey(unexpectedKey));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("Step:     Verify response"));
+      assertThat(error.getMessage(), containsString("Expected: does not contain key X-Test"));
+    }
+  }
+
+  @Nested
+  class ToContainEntry {
+
+    @Test
+    void GIVEN_header_contains_expected_value_WHEN_toContainEntry_THEN_no_error_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, headers(A, "B"));
+      var expectedKey = expectedHeaderName("X-Test");
+      var expectedValue = expectedHeaderValue("B");
+
+      // Act
+      assertion.toContainEntry(expectedKey, expectedValue);
+
+      // Assert
+      // The method returning normally is the assertion.
+    }
+
+    @Test
+    void GIVEN_header_key_is_missing_WHEN_toContainEntry_THEN_key_AssertionError_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, headers(A));
+      var expectedKey = expectedHeaderName("X-Missing");
+      var expectedValue = expectedHeaderValue(A);
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class, () -> assertion.toContainEntry(expectedKey, expectedValue));
+
+      // Assert
+      assertThat(
+          error.getMessage(),
+          containsString("The response headers did not contain the expected key."));
+    }
+
+    @Test
+    void GIVEN_header_value_is_missing_WHEN_toContainEntry_THEN_value_AssertionError_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, headers(A));
+      var expectedKey = expectedHeaderName("X-Test");
+      var expectedValue = expectedHeaderValue("B");
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class, () -> assertion.toContainEntry(expectedKey, expectedValue));
+
+      // Assert
+      assertThat(
+          error.getMessage(),
+          containsString("The response header did not contain the expected value."));
+    }
+
+    @Test
+    void GIVEN_header_value_is_not_a_collection_WHEN_toContainEntry_THEN_error_is_thrown() {
+      // Arrange
+      var actualHeaders = Map.of("X-Test", A);
+      var assertion = AAAAssert.expect(ANY_STEP, assertOperand(actualHeaders, actualHeaders));
+      var expectedKey = expectedHeaderName("X-Test");
+      var expectedValue = expectedHeaderValue(A);
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class, () -> assertion.toContainEntry(expectedKey, expectedValue));
+
+      // Assert
+      assertThat(
+          error.getMessage(),
+          containsString("The response header did not contain the expected value."));
+    }
+
+    @Test
+    void GIVEN_absent_headers_WHEN_toContainEntry_THEN_absent_body_AssertionError_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, assertOperand(null, null));
+      var expectedKey = expectedHeaderName("X-Test");
+      var expectedValue = expectedHeaderValue(A);
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class, () -> assertion.toContainEntry(expectedKey, expectedValue));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("The response body was absent."));
+    }
+
+    @Test
+    void GIVEN_named_step_WHEN_toContainEntry_fails_THEN_step_is_in_message() {
+      // Arrange
+      var assertion = AAAAssert.expect(NAMED_STEP, headers(A));
+      var expectedKey = expectedHeaderName("X-Test");
+      var expectedValue = expectedHeaderValue("B");
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class, () -> assertion.toContainEntry(expectedKey, expectedValue));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("Step:     Verify response"));
+      assertThat(error.getMessage(), containsString("Expected: B"));
+    }
+  }
+
+  @Nested
+  class ToContainEntryExactly {
+
+    @Test
+    void
+        GIVEN_header_values_match_in_any_order_WHEN_toContainEntryExactly_THEN_no_error_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, headers(A, "B"));
+      var expectedKey = expectedHeaderName("X-Test");
+      var expectedValues = expectedHeaderValues("B", A);
+
+      // Act
+      assertion.toContainEntryExactly(expectedKey, expectedValues);
+
+      // Assert
+      // The method returning normally is the assertion.
+    }
+
+    @Test
+    void GIVEN_header_duplicate_counts_match_WHEN_toContainEntryExactly_THEN_no_error_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, headers(A, A, "B"));
+      var expectedKey = expectedHeaderName("X-Test");
+      var expectedValues = expectedHeaderValues(A, "B", A);
+
+      // Act
+      assertion.toContainEntryExactly(expectedKey, expectedValues);
+
+      // Assert
+      // The method returning normally is the assertion.
+    }
+
+    @Test
+    void
+        GIVEN_empty_expected_values_WHEN_toContainEntryExactly_THEN_InvalidAssertionException_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, headers(A));
+      var expectedKey = expectedHeaderName("X-Test");
+      var expectedValues = expectedHeaderValues();
+
+      // Act
+      var error =
+          assertThrows(
+              InvalidAssertionException.class,
+              () -> assertion.toContainEntryExactly(expectedKey, expectedValues));
+
+      // Assert
+      var expectedMessage =
+          LINE_SEPARATOR
+              + """
+              `toContainEntryExactly()` was called with an empty collection.
+
+              Reason:
+              An exact header entry assertion requires at least one expected value.
+              Without an expected value, the assertion does not verify a header value.
+
+              How to fix:
+              -> Provide at least one expected header value.
+              """
+                  .strip();
+
+      assertThat(error.getMessage(), is(expectedMessage));
+    }
+
+    @Test
+    void GIVEN_header_key_is_missing_WHEN_toContainEntryExactly_THEN_key_error_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, headers(A));
+      var expectedKey = expectedHeaderName("X-Missing");
+      var expectedValues = expectedHeaderValues(A);
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class,
+              () -> assertion.toContainEntryExactly(expectedKey, expectedValues));
+
+      // Assert
+      assertThat(
+          error.getMessage(),
+          containsString("The response headers did not contain the expected key."));
+    }
+
+    @Test
+    void GIVEN_header_values_differ_WHEN_toContainEntryExactly_THEN_value_error_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, headers(A, A, "B"));
+      var expectedKey = expectedHeaderName("X-Test");
+      var expectedValues = expectedHeaderValues(A, "B", "B");
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class,
+              () -> assertion.toContainEntryExactly(expectedKey, expectedValues));
+
+      // Assert
+      assertThat(
+          error.getMessage(), containsString("The response header contained different values."));
+    }
+
+    @Test
+    void GIVEN_header_value_is_not_a_collection_WHEN_toContainEntryExactly_THEN_error_is_thrown() {
+      // Arrange
+      var actualHeaders = Map.of("X-Test", A);
+      var assertion = AAAAssert.expect(ANY_STEP, assertOperand(actualHeaders, actualHeaders));
+      var expectedKey = expectedHeaderName("X-Test");
+      var expectedValues = expectedHeaderValues(A);
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class,
+              () -> assertion.toContainEntryExactly(expectedKey, expectedValues));
+
+      // Assert
+      assertThat(
+          error.getMessage(), containsString("The response header contained different values."));
+    }
+
+    @Test
+    void GIVEN_absent_headers_WHEN_toContainEntryExactly_THEN_absent_body_error_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, assertOperand(null, null));
+      var expectedKey = expectedHeaderName("X-Test");
+      var expectedValues = expectedHeaderValues(A);
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class,
+              () -> assertion.toContainEntryExactly(expectedKey, expectedValues));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("The response body was absent."));
+    }
+
+    @Test
+    void GIVEN_named_step_WHEN_toContainEntryExactly_fails_THEN_step_is_in_message() {
+      // Arrange
+      var assertion = AAAAssert.expect(NAMED_STEP, headers(A));
+      var expectedKey = expectedHeaderName("X-Test");
+      var expectedValues = expectedHeaderValues("B");
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class,
+              () -> assertion.toContainEntryExactly(expectedKey, expectedValues));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("Step:     Verify response"));
+      assertThat(error.getMessage(), containsString("Expected: [B]"));
+    }
+  }
+
+  @Nested
+  class ToHaveStatus {
+
+    @Test
+    void GIVEN_equal_numeric_status_WHEN_toHaveStatus_THEN_no_error_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, status(HttpStatus.OK));
+
+      // Act
+      assertion.toHaveStatus(expectedStatus(200));
+
+      // Assert
+      // The method returning normally is the assertion.
+    }
+
+    @Test
+    void GIVEN_different_status_WHEN_toHaveStatus_THEN_AssertionError_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, status(HttpStatus.NOT_FOUND));
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class, () -> assertion.toHaveStatus(expectedStatus(HttpStatus.OK)));
+
+      // Assert
+      assertThat(
+          error.getMessage(),
+          containsString("The response status differed from the expected status."));
+    }
+
+    @Test
+    void GIVEN_absent_status_WHEN_toHaveStatus_THEN_AssertionError_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, status(null));
+
+      // Act
+      var error =
+          assertThrows(AssertionError.class, () -> assertion.toHaveStatus(expectedStatus(200)));
+
+      // Assert
+      assertThat(
+          error.getMessage(),
+          containsString("The response status differed from the expected status."));
+      assertThat(error.getMessage(), containsString("Actual:   null"));
+    }
+
+    @Test
+    void GIVEN_named_step_WHEN_toHaveStatus_fails_THEN_step_is_in_message() {
+      // Arrange
+      var assertion = AAAAssert.expect(NAMED_STEP, status(HttpStatus.NOT_FOUND));
+
+      // Act
+      var error =
+          assertThrows(AssertionError.class, () -> assertion.toHaveStatus(expectedStatus(200)));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("Step:     Verify response"));
+      assertThat(error.getMessage(), containsString("Expected: 200"));
+      assertThat(error.getMessage(), containsString("Actual:   404"));
+    }
+  }
+
+  @Nested
+  class ToBeInRange {
+
+    @ParameterizedTest
+    @MethodSource("statusesInRange")
+    void GIVEN_status_is_in_inclusive_range_WHEN_toBeInRange_THEN_no_error_is_thrown(
+        AssertOperand<?, Integer> actualStatus) {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, actualStatus);
+
+      // Act
+      assertion.toBeInRange(expectedStatus(200), expectedStatus(299));
+
+      // Assert
+      // The method returning normally is the assertion.
+    }
+
+    @ParameterizedTest
+    @MethodSource("statusesOutsideRange")
+    void GIVEN_status_is_outside_range_WHEN_toBeInRange_THEN_AssertionError_is_thrown(
+        AssertOperand<?, Integer> actualStatus) {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, actualStatus);
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class,
+              () -> assertion.toBeInRange(expectedStatus(200), expectedStatus(299)));
+
+      // Assert
+      assertThat(
+          error.getMessage(),
+          containsString("The response status was outside the expected range."));
+    }
+
+    @Test
+    void
+        GIVEN_minimum_is_greater_than_maximum_WHEN_toBeInRange_THEN_InvalidAssertionException_is_thrown() {
+      // Arrange
+      var assertion = AAAAssert.expect(ANY_STEP, status(HttpStatus.OK));
+
+      // Act
+      var error =
+          assertThrows(
+              InvalidAssertionException.class,
+              () -> assertion.toBeInRange(expectedStatus(300), expectedStatus(200)));
+
+      // Assert
+      var expectedMessage =
+          LINE_SEPARATOR
+              + """
+              `isInRange()` was called with an invalid range.
+
+              Reason:
+              The minimum value must not be greater than the maximum value.
+
+              Actual range:
+              -> minimum: 300
+              -> maximum: 200
+
+              How to fix:
+              -> Provide a minimum value that is less than or equal to the maximum value.
+              """
+                  .strip();
+
+      assertThat(error.getMessage(), is(expectedMessage));
+    }
+
+    @Test
+    void GIVEN_named_step_WHEN_toBeInRange_fails_THEN_step_is_in_message() {
+      // Arrange
+      var assertion = AAAAssert.expect(NAMED_STEP, status(HttpStatus.NOT_FOUND));
+
+      // Act
+      var error =
+          assertThrows(
+              AssertionError.class,
+              () -> assertion.toBeInRange(expectedStatus(200), expectedStatus(299)));
+
+      // Assert
+      assertThat(error.getMessage(), containsString("Step:     Verify response"));
+      assertThat(error.getMessage(), containsString("Expected: in range [200, 299]"));
+    }
+
+    private static Stream<AssertOperand<?, Integer>> statusesInRange() {
+      return Stream.of(status(HttpStatus.OK), assertOperand(299, 299));
+    }
+
+    private static Stream<AssertOperand<?, Integer>> statusesOutsideRange() {
+      return Stream.of(assertOperand(199, 199), status(HttpStatus.NOT_FOUND));
     }
   }
 

@@ -70,7 +70,9 @@ class TestAssertCollectionImplTest extends TestAssertBase {
 
   @Test
   void WHEN_hasSize_THEN_toHaveSize_is_called() {
-    assertCall(() -> impl.hasSize(1), mock -> verify(mock, times(1)).toHaveSize(1));
+    assertCall(
+        () -> impl.hasSize(1),
+        mock -> verify(mock, times(1)).toHaveSize(AssertValue.expectedSize(1)));
   }
 
   @Test

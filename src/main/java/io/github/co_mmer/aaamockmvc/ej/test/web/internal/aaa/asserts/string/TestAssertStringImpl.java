@@ -34,7 +34,7 @@ public final class TestAssertStringImpl
   @Override
   public TestAssert2String hasLength(int expectedLength) {
     AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toHaveLength(expectedLength);
+        .toHaveLength(AssertValue.expectedLength(expectedLength));
     return this;
   }
 

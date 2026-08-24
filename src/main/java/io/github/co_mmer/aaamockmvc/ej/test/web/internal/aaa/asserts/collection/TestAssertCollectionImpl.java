@@ -45,7 +45,7 @@ public final class TestAssertCollectionImpl<E>
   @Override
   public TestAssert2Collection<E> hasSize(int expectedSize) {
     AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toHaveSize(expectedSize);
+        .toHaveSize(AssertValue.expectedSize(expectedSize));
     return this;
   }
 

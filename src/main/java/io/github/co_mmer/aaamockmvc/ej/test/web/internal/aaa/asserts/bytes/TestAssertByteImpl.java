@@ -38,7 +38,8 @@ public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byt
 
   @Override
   public TestAssert2Byte hasLength(int expectedLength) {
-    AAAAssert.expect(this.context.getStep(), getAssertOperand()).toHaveSize(expectedLength);
+    AAAAssert.expect(this.context.getStep(), getAssertOperand())
+        .toHaveSize(AssertValue.expectedLength(expectedLength));
     return this;
   }
 
