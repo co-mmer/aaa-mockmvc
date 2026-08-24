@@ -56,16 +56,18 @@ Whether you’re building REST APIs, testing controllers, or ensuring contract c
 
 ### 🌿 Release 2.1.0
 
-This release makes invalid request configuration easier to detect, understand, and correct.
+This release strengthens validation across the AAA-MockMvc and makes assertion failures easier
+to understand and diagnose.
 
 #### What’s new
 
-* Request paths, path variables, query parameters, headers, media types, and request bodies are now
-  validated consistently.
-* Invalid values produce clear `IllegalArgumentException` messages that identify the affected
-  request element.
-* The internal request model now uses dedicated domain objects for clearer responsibilities and
-  safer data handling.
+* Request configuration, Answer target types, and assertion inputs are now validated consistently.
+* Invalid DSL arguments produce descriptive `IllegalArgumentException` messages that identify the
+  affected input and, where applicable, its position.
+* Failed DSL assertions now clearly separate the expected result, actual response value, and reason
+  for the failure using `Expected`, `Actual`, and `Reason`.
+* Hamcrest has been removed from the framework's assertion implementation, reducing the dependency
+  footprint without changing the public assertion DSL.
 * See full details in the [Release Note](./RELEASE.md#210)
 
 --- 
