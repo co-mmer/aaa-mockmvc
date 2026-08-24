@@ -33,5 +33,4 @@ class StringUtilsTest {
   void GIVEN_empty_WHEN_EMPTY_THEN_return_true() {
     assertEquals("", StringUtils.EMPTY);
   }
-
 }

@@ -20,7 +20,7 @@ public final class StringUtils {
 
   @Since("1.4.1")
   public static final String EMPTY = "";
-  
+
   @Since("1.4.1")
   public static final String UNSET = "<unset>";
 }

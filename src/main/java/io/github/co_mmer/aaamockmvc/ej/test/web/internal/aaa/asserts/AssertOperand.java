@@ -5,7 +5,6 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.stri
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeMapList;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Note;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.Collection;
 import java.util.Collections;
@@ -109,7 +108,6 @@ public final class AssertOperand<A, N> {
   }
 
   @Since("2.1.0")
-  @Note("2.1.0 value nullable, 2.2.0 notNull")
   public static <K, V> AssertOperand<Map<K, V>, Map<String, String>> map(
       Map<? extends K, ? extends V> value) {
 
