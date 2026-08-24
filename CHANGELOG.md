@@ -4,22 +4,20 @@
 
 ### ✨ New Features
 
-* Added comprehensive domain validation across request configuration, answer type selection, and
+* Added comprehensive domain validation across request configuration, Answer target selection, and
   assertion inputs.
 * Invalid DSL arguments now produce descriptive `IllegalArgumentException` messages that identify
-  the affected input and, where applicable, its position.
+  the affected input and, where applicable, its one-based position.
 
 ### 🧹 Improvements
 
-* Replaced Lombok-generated null checks in the public DSL flow with explicit validation owned by
-  internal domain objects.
-* Refactored the internal request model for clearer separation of responsibilities and consistent
-  validation of paths, path variables, query parameters, headers, media types, and request bodies.
-* Added validated target types for Answer operations and validated inputs for assertions.
-* Added immutable views and defensive copies for internally managed request data.
-* Replaced Hamcrest-based internal assertion handling with consistent failure messages that clearly
-  separate `Expected`, `Actual`, and `Reason`.
-* Removed the Hamcrest dependency from the framework's assertion implementation.
+* Replaced Lombok-generated null checks on public DSL entry paths with explicit validation owned by
+  internal domain objects, colocating validation rules and messages with the values they protect.
+* Refactored the internal request model for clearer separation of responsibilities, consistent
+  validation, immutable views, and defensive copies of managed request data.
+* Added validated target types for Answer operations and validated inputs for assertion evaluation.
+* Replaced Hamcrest-based assertion handling with framework-owned failure reporting that separates
+  `Expected`, `Actual`, and `Reason`, and removed Hamcrest from the framework's dependencies.
 
 ### ☂️ Fixed
 

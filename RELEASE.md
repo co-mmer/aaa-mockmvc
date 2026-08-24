@@ -70,7 +70,9 @@ identifies it by its one-based position.
 
 ### 🧹 Improvements
 
-#### Structured assertion failures
+This release introduces two main improvements to assertion handling and its internal implementation.
+
+#### 1. Structured assertion failures
 
 Assertion failures are now easier to scan, understand, and compare while debugging tests. Existing
 assertion calls remain unchanged.
@@ -97,7 +99,7 @@ Each field has a clear purpose:
 - `Actual` shows the observed response value.
 - `Reason` explains the mismatch in context.
 
-#### Dependency cleanup
+#### 2. Dependency cleanup
 
 Hamcrest is no longer used internally and has been removed as a framework dependency. This does not
 change the public assertion DSL. Projects that use Hamcrest directly should declare it explicitly
