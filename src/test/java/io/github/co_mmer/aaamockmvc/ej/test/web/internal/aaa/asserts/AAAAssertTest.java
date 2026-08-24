@@ -257,6 +257,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_body_with_different_size_WHEN_toHaveSize_THEN_AssertionError_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, LIST_A1_A2);
@@ -270,6 +271,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_negative_expected_size_WHEN_toHaveSize_THEN_AssertionError_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, EMPTY_LIST);
@@ -283,6 +285,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_absent_body_WHEN_toHaveSize_THEN_AssertionError_for_absent_body_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, ABSENT_STRING);
@@ -295,6 +298,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_named_step_WHEN_toHaveSize_fails_THEN_trimmed_step_is_in_message() {
       // Arrange
       var assertion = AAAAssert.expect(NAMED_STEP, AssertOperand.string(A));
@@ -356,6 +360,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_body_with_different_length_WHEN_toHaveLength_THEN_AssertionError_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, LIST_A1_A2);
@@ -370,6 +375,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_negative_expected_length_WHEN_toHaveLength_THEN_AssertionError_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, EMPTY_LIST);
@@ -384,6 +390,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_absent_body_WHEN_toHaveLength_THEN_AssertionError_for_absent_body_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, ABSENT_STRING);
@@ -397,6 +404,7 @@ final class AAAAssertTest {
     }
 
     @Test
+    @SuppressWarnings("java:S5778")
     void GIVEN_named_step_WHEN_toHaveLength_fails_THEN_trimmed_step_is_in_message() {
       // Arrange
       var assertion = AAAAssert.expect(NAMED_STEP, AssertOperand.string(A));
