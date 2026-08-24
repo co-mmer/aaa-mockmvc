@@ -22,10 +22,12 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.stri
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.ANY_VALUE;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.B;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.ID1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.ID2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_LIST_A1_A2;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_MAP_A1_A2;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.contains;
@@ -59,7 +61,14 @@ class AssertValueTest {
   private static final String NORMALIZED_VALUE_1 = "normalized-response-1";
   private static final String NORMALIZED_VALUE_2 = "normalized-response-2";
 
-  private static final List<String> ANY_NORMALIZED_LIST = List.of("normalized-A", "normalized-B");
+  private static final List<String> ANY_NORMALIZED_LIST =
+      List.of(NORMALIZED_VALUE_1, NORMALIZED_VALUE_2);
+
+  private static final Map<String, String> ANY_NORMALIZED_MAP =
+      Map.of(A, ANY_NORMALIZED_VALUE);
+
+  private static final Predicate<String> MATCHES = value -> true;
+  private static final Predicate<String> DOES_NOT_MATCH = value -> false;
 
   private MockedStatic<TestArrangeNormalizer> normalizer;
 
@@ -71,6 +80,11 @@ class AssertValueTest {
   @AfterEach
   void cleanUp() {
     normalizer.close();
+  }
+
+  private AssertValue<String, String> givenAssertValue(String value, String normalizedValue) {
+    normalizer.when(() -> normalizeObject(value, Form.NFC)).thenReturn(normalizedValue);
+    return expectedString(value);
   }
 
   @Nested
@@ -229,8 +243,7 @@ class AssertValueTest {
 
       // Assert
       assertThat(result.value(), arrayContaining(ID1, ID2));
-      assertThat(result.normalizedValue(),
-          contains(NORMALIZED_VALUE_1, NORMALIZED_VALUE_2));
+      assertThat(result.normalizedValue(), contains(NORMALIZED_VALUE_1, NORMALIZED_VALUE_2));
       normalizer.verify(() -> normalizeObject(ID1, Form.NFC));
       normalizer.verify(() -> normalizeObject(ID2, Form.NFC));
     }
@@ -238,8 +251,8 @@ class AssertValueTest {
     @Test
     void GIVEN_a_null_elements_array_WHEN_expectedElements_THEN_IllegalArgumentException_is_thrown() {
       // Act
-      var error = assertThrows(IllegalArgumentException.class,
-          () -> expectedElements((String[]) null));
+      var error =
+          assertThrows(IllegalArgumentException.class, () -> expectedElements((String[]) null));
 
       // Assert
       assertThat(error.getMessage(), is("Expected elements must not be null"));
@@ -249,8 +262,8 @@ class AssertValueTest {
     @Test
     void GIVEN_a_null_element_WHEN_expectedElements_THEN_position_IllegalArgumentException_is_thrown() {
       // Act
-      var error = assertThrows(IllegalArgumentException.class,
-          () -> expectedElements(ANY_VALUE, null));
+      var error =
+          assertThrows(IllegalArgumentException.class, () -> expectedElements(ANY_VALUE, null));
 
       // Assert
       assertThat(error.getMessage(), is("Expected element at position 2 must not be null"));
@@ -265,16 +278,16 @@ class AssertValueTest {
     @Test
     void GIVEN_an_element_collection_WHEN_unexpectedElements_THEN_value_and_normalized_value_are_preserved() {
       // Arrange
-      var value = List.of(ID1, ID2);
-      normalizer.when(() -> normalizeCollection(value, Form.NFC)).thenReturn(ANY_NORMALIZED_LIST);
+      normalizer.when(() -> normalizeCollection(TEST_LIST_A1_A2, Form.NFC))
+          .thenReturn(ANY_NORMALIZED_LIST);
 
       // Act
-      var result = unexpectedElements(value);
+      var result = unexpectedElements(TEST_LIST_A1_A2);
 
       // Assert
-      assertThat(result.value(), sameInstance(value));
+      assertThat(result.value(), sameInstance(TEST_LIST_A1_A2));
       assertThat(result.normalizedValue(), sameInstance(ANY_NORMALIZED_LIST));
-      normalizer.verify(() -> normalizeCollection(value, Form.NFC));
+      normalizer.verify(() -> normalizeCollection(TEST_LIST_A1_A2, Form.NFC));
     }
 
     @Test
@@ -296,8 +309,10 @@ class AssertValueTest {
     @Test
     void GIVEN_a_null_element_collection_WHEN_unexpectedElements_THEN_IllegalArgumentException_is_thrown() {
       // Act
-      var error = assertThrows(IllegalArgumentException.class, () -> unexpectedElements(
-          (Collection<String>) null));
+      var error =
+          assertThrows(
+              IllegalArgumentException.class,
+              () -> unexpectedElements((Collection<String>) null));
 
       // Assert
       assertThat(error.getMessage(), is("Unexpected elements must not be null"));
@@ -307,8 +322,8 @@ class AssertValueTest {
     @Test
     void GIVEN_a_null_element_array_WHEN_unexpectedElements_THEN_IllegalArgumentException_is_thrown() {
       // Act
-      var error = assertThrows(IllegalArgumentException.class,
-          () -> unexpectedElements((String[]) null));
+      var error =
+          assertThrows(IllegalArgumentException.class, () -> unexpectedElements((String[]) null));
 
       // Assert
       assertThat(error.getMessage(), is("Unexpected elements must not be null"));
@@ -318,8 +333,7 @@ class AssertValueTest {
     @Test
     void GIVEN_a_null_unexpected_element_WHEN_unexpectedElements_THEN_position_IllegalArgumentException_is_thrown() {
       // Act
-      var error =
-          assertThrows(IllegalArgumentException.class, () -> unexpectedElements(A, null));
+      var error = assertThrows(IllegalArgumentException.class, () -> unexpectedElements(A, null));
 
       // Assert
       assertThat(error.getMessage(), is("Unexpected element at position 2 must not be null"));
@@ -334,32 +348,26 @@ class AssertValueTest {
     @Test
     void GIVEN_a_map_WHEN_expectedMap_THEN_normalized_result_is_an_unmodifiable_snapshot() {
       // Arrange
-      Map<String, String> value = new LinkedHashMap<>();
-      value.put("A", "1");
-      var normalizedMap = new LinkedHashMap<String, String>();
-      normalizedMap.put("normalized-A", "normalized-1");
-      normalizer.when(() -> normalizeMap(value, Form.NFC)).thenReturn(normalizedMap);
+      var normalizedMap = new LinkedHashMap<>(ANY_NORMALIZED_MAP);
+      normalizer.when(() -> normalizeMap(TEST_MAP_A1_A2, Form.NFC)).thenReturn(normalizedMap);
 
       // Act
-      var result = expectedMap(value);
-      normalizedMap.put("normalized-B", "normalized-2");
+      var result = expectedMap(TEST_MAP_A1_A2);
+      normalizedMap.put(B, ANY_VALUE);
 
       // Assert
-      assertThat(result.value(), sameInstance(value));
-      assertThat(result.normalizedValue(), is(Map.of("normalized-A", "normalized-1")));
+      assertThat(result.value(), sameInstance(TEST_MAP_A1_A2));
+      assertThat(result.normalizedValue(), is(ANY_NORMALIZED_MAP));
       assertThrows(
           UnsupportedOperationException.class,
-          () -> result.normalizedValue().put("normalized-C", "normalized-3"));
-      normalizer.verify(() -> normalizeMap(value, Form.NFC));
+          () -> result.normalizedValue().put(B, ANY_VALUE));
+      normalizer.verify(() -> normalizeMap(TEST_MAP_A1_A2, Form.NFC));
     }
 
     @Test
     void GIVEN_a_null_map_WHEN_expectedMap_THEN_IllegalArgumentException_is_thrown() {
-      // Arrange
-      Map<String, String> value = null;
-
       // Act
-      var error = assertThrows(IllegalArgumentException.class, () -> expectedMap(value));
+      var error = assertThrows(IllegalArgumentException.class, () -> expectedMap(null));
 
       // Assert
       assertThat(error.getMessage(), is("Expected map must not be null"));
@@ -373,39 +381,32 @@ class AssertValueTest {
 
     @Test
     void GIVEN_an_HttpStatus_WHEN_expectedStatus_THEN_numeric_status_is_normalized() {
-      // Arrange
-      var value = HttpStatus.ACCEPTED;
-
       // Act
-      var result = expectedStatus(value);
+      var result = expectedStatus(HttpStatus.ACCEPTED);
 
       // Assert
-      assertThat(result.value(), sameInstance(value));
+      assertThat(result.value(), sameInstance(HttpStatus.ACCEPTED));
       assertThat(result.normalizedValue(), is(202));
       normalizer.verifyNoInteractions();
     }
 
     @Test
     void GIVEN_an_integer_status_WHEN_expectedStatus_THEN_status_is_preserved() {
-      // Arrange
-      var value = Integer.valueOf(299);
-
       // Act
-      var result = expectedStatus(value);
+      var result = expectedStatus(ID1);
 
       // Assert
-      assertThat(result.value(), sameInstance(value));
-      assertThat(result.normalizedValue(), sameInstance(value));
+      assertThat(result.value(), is(ID1));
+      assertThat(result.normalizedValue(), is(ID1));
       normalizer.verifyNoInteractions();
     }
 
     @Test
     void GIVEN_a_null_HttpStatus_WHEN_expectedStatus_THEN_IllegalArgumentException_is_thrown() {
-      // Arrange
-      HttpStatus value = null;
-
       // Act
-      var error = assertThrows(IllegalArgumentException.class, () -> expectedStatus(value));
+      var error =
+          assertThrows(
+              IllegalArgumentException.class, () -> expectedStatus((HttpStatus) null));
 
       // Assert
       assertThat(error.getMessage(), is("Expected HTTP status must not be null"));
@@ -414,11 +415,9 @@ class AssertValueTest {
 
     @Test
     void GIVEN_a_null_integer_status_WHEN_expectedStatus_THEN_IllegalArgumentException_is_thrown() {
-      // Arrange
-      Integer value = null;
-
       // Act
-      var error = assertThrows(IllegalArgumentException.class, () -> expectedStatus(value));
+      var error =
+          assertThrows(IllegalArgumentException.class, () -> expectedStatus((Integer) null));
 
       // Assert
       assertThat(error.getMessage(), is("Expected HTTP status must not be null"));
@@ -431,28 +430,23 @@ class AssertValueTest {
   class ExpectedHeaderName {
 
     @Test
-    void GIVEN_a_header_name_WHEN_expectedHeaderName_THEN_normalization_is_delegated_with_NFC() {
+    void GIVEN_a_header_name_WHEN_expectedHeaderName_THEN_value_and_normalized_value_are_preserved() {
       // Arrange
-      var value = "X-Header";
-      var normalizedValue = "normalized-header";
-      normalizer.when(() -> normalizeObject(value, Form.NFC)).thenReturn(normalizedValue);
+      normalizer.when(() -> normalizeObject(A, Form.NFC)).thenReturn(ANY_NORMALIZED_VALUE);
 
       // Act
-      var result = expectedHeaderName(value);
+      var result = expectedHeaderName(A);
 
       // Assert
-      assertThat(result.value(), sameInstance(value));
-      assertThat(result.normalizedValue(), sameInstance(normalizedValue));
-      normalizer.verify(() -> normalizeObject(value, Form.NFC));
+      assertThat(result.value(), sameInstance(A));
+      assertThat(result.normalizedValue(), sameInstance(ANY_NORMALIZED_VALUE));
+      normalizer.verify(() -> normalizeObject(A, Form.NFC));
     }
 
     @Test
     void GIVEN_a_null_header_name_WHEN_expectedHeaderName_THEN_IllegalArgumentException_is_thrown() {
-      // Arrange
-      String value = null;
-
       // Act
-      var error = assertThrows(IllegalArgumentException.class, () -> expectedHeaderName(value));
+      var error = assertThrows(IllegalArgumentException.class, () -> expectedHeaderName(null));
 
       // Assert
       assertThat(error.getMessage(), is("Expected header name must not be null"));
@@ -465,29 +459,23 @@ class AssertValueTest {
   class UnexpectedHeaderName {
 
     @Test
-    void GIVEN_a_header_name_WHEN_unexpectedHeaderName_THEN_normalization_is_delegated_with_NFC() {
+    void GIVEN_a_header_name_WHEN_unexpectedHeaderName_THEN_value_and_normalized_value_are_preserved() {
       // Arrange
-      var value = "X-Header";
-      var normalizedValue = "normalized-header";
-      normalizer.when(() -> normalizeObject(value, Form.NFC)).thenReturn(normalizedValue);
+      normalizer.when(() -> normalizeObject(A, Form.NFC)).thenReturn(ANY_NORMALIZED_VALUE);
 
       // Act
-      var result = unexpectedHeaderName(value);
+      var result = unexpectedHeaderName(A);
 
       // Assert
-      assertThat(result.value(), sameInstance(value));
-      assertThat(result.normalizedValue(), sameInstance(normalizedValue));
-      normalizer.verify(() -> normalizeObject(value, Form.NFC));
+      assertThat(result.value(), sameInstance(A));
+      assertThat(result.normalizedValue(), sameInstance(ANY_NORMALIZED_VALUE));
+      normalizer.verify(() -> normalizeObject(A, Form.NFC));
     }
 
     @Test
     void GIVEN_a_null_header_name_WHEN_unexpectedHeaderName_THEN_IllegalArgumentException_is_thrown() {
-      // Arrange
-      String value = null;
-
       // Act
-      var error =
-          assertThrows(IllegalArgumentException.class, () -> unexpectedHeaderName(value));
+      var error = assertThrows(IllegalArgumentException.class, () -> unexpectedHeaderName(null));
 
       // Assert
       assertThat(error.getMessage(), is("Unexpected header name must not be null"));
@@ -500,28 +488,23 @@ class AssertValueTest {
   class ExpectedHeaderValue {
 
     @Test
-    void GIVEN_a_header_value_WHEN_expectedHeaderValue_THEN_normalization_is_delegated_with_NFC() {
+    void GIVEN_a_header_value_WHEN_expectedHeaderValue_THEN_value_and_normalized_value_are_preserved() {
       // Arrange
-      var value = "value";
-      var normalizedValue = "normalized-value";
-      normalizer.when(() -> normalizeObject(value, Form.NFC)).thenReturn(normalizedValue);
+      normalizer.when(() -> normalizeObject(A, Form.NFC)).thenReturn(ANY_NORMALIZED_VALUE);
 
       // Act
-      var result = expectedHeaderValue(value);
+      var result = expectedHeaderValue(A);
 
       // Assert
-      assertThat(result.value(), sameInstance(value));
-      assertThat(result.normalizedValue(), sameInstance(normalizedValue));
-      normalizer.verify(() -> normalizeObject(value, Form.NFC));
+      assertThat(result.value(), sameInstance(A));
+      assertThat(result.normalizedValue(), sameInstance(ANY_NORMALIZED_VALUE));
+      normalizer.verify(() -> normalizeObject(A, Form.NFC));
     }
 
     @Test
     void GIVEN_a_null_header_value_WHEN_expectedHeaderValue_THEN_IllegalArgumentException_is_thrown() {
-      // Arrange
-      String value = null;
-
       // Act
-      var error = assertThrows(IllegalArgumentException.class, () -> expectedHeaderValue(value));
+      var error = assertThrows(IllegalArgumentException.class, () -> expectedHeaderValue(null));
 
       // Assert
       assertThat(error.getMessage(), is("Expected header value must not be null"));
@@ -534,32 +517,27 @@ class AssertValueTest {
   class ExpectedHeaderValues {
 
     @Test
-    void GIVEN_header_values_WHEN_expectedHeaderValues_THEN_every_value_is_normalized_with_NFC() {
+    void GIVEN_header_values_WHEN_expectedHeaderValues_THEN_value_and_normalized_value_are_preserved() {
       // Arrange
-      var first = "A";
-      var second = "B";
-      var normalizedFirst = "normalized-A";
-      var normalizedSecond = "normalized-B";
-      normalizer.when(() -> normalizeObject(first, Form.NFC)).thenReturn(normalizedFirst);
-      normalizer.when(() -> normalizeObject(second, Form.NFC)).thenReturn(normalizedSecond);
+      normalizer.when(() -> normalizeObject(A, Form.NFC)).thenReturn(NORMALIZED_VALUE_1);
+      normalizer.when(() -> normalizeObject(B, Form.NFC)).thenReturn(NORMALIZED_VALUE_2);
 
       // Act
-      var result = expectedHeaderValues(first, second);
+      var result = expectedHeaderValues(A, B);
 
       // Assert
-      assertThat(result.value(), arrayContaining(first, second));
-      assertThat(result.normalizedValue(), contains(normalizedFirst, normalizedSecond));
-      normalizer.verify(() -> normalizeObject(first, Form.NFC));
-      normalizer.verify(() -> normalizeObject(second, Form.NFC));
+      assertThat(result.value(), arrayContaining(A, B));
+      assertThat(result.normalizedValue(), contains(NORMALIZED_VALUE_1, NORMALIZED_VALUE_2));
+      normalizer.verify(() -> normalizeObject(A, Form.NFC));
+      normalizer.verify(() -> normalizeObject(B, Form.NFC));
     }
 
     @Test
     void GIVEN_a_null_header_values_array_WHEN_expectedHeaderValues_THEN_IllegalArgumentException_is_thrown() {
-      // Arrange
-      String[] values = null;
-
       // Act
-      var error = assertThrows(IllegalArgumentException.class, () -> expectedHeaderValues(values));
+      var error =
+          assertThrows(
+              IllegalArgumentException.class, () -> expectedHeaderValues((String[]) null));
 
       // Assert
       assertThat(error.getMessage(), is("Expected header values must not be null"));
@@ -568,13 +546,9 @@ class AssertValueTest {
 
     @Test
     void GIVEN_a_null_header_value_WHEN_expectedHeaderValues_THEN_position_IllegalArgumentException_is_thrown() {
-      // Arrange
-      var first = "A";
-      String second = null;
-
       // Act
       var error =
-          assertThrows(IllegalArgumentException.class, () -> expectedHeaderValues(first, second));
+          assertThrows(IllegalArgumentException.class, () -> expectedHeaderValues(A, null));
 
       // Assert
       assertThat(error.getMessage(), is("Expected header value at position 2 must not be null"));
@@ -588,25 +562,19 @@ class AssertValueTest {
 
     @Test
     void GIVEN_a_size_WHEN_expectedSize_THEN_value_is_preserved() {
-      // Arrange
-      var value = Integer.valueOf(3);
-
       // Act
-      var result = expectedSize(value);
+      var result = expectedSize(ID1);
 
       // Assert
-      assertThat(result.value(), sameInstance(value));
-      assertThat(result.normalizedValue(), sameInstance(value));
+      assertThat(result.value(), is(ID1));
+      assertThat(result.normalizedValue(), is(ID1));
       normalizer.verifyNoInteractions();
     }
 
     @Test
     void GIVEN_a_null_size_WHEN_expectedSize_THEN_IllegalArgumentException_is_thrown() {
-      // Arrange
-      Integer value = null;
-
       // Act
-      var error = assertThrows(IllegalArgumentException.class, () -> expectedSize(value));
+      var error = assertThrows(IllegalArgumentException.class, () -> expectedSize(null));
 
       // Assert
       assertThat(error.getMessage(), is("Expected size must not be null"));
@@ -620,25 +588,19 @@ class AssertValueTest {
 
     @Test
     void GIVEN_a_length_WHEN_expectedLength_THEN_value_is_preserved() {
-      // Arrange
-      var value = Integer.valueOf(3);
-
       // Act
-      var result = expectedLength(value);
+      var result = expectedLength(ID1);
 
       // Assert
-      assertThat(result.value(), sameInstance(value));
-      assertThat(result.normalizedValue(), sameInstance(value));
+      assertThat(result.value(), is(ID1));
+      assertThat(result.normalizedValue(), is(ID1));
       normalizer.verifyNoInteractions();
     }
 
     @Test
     void GIVEN_a_null_length_WHEN_expectedLength_THEN_IllegalArgumentException_is_thrown() {
-      // Arrange
-      Integer value = null;
-
       // Act
-      var error = assertThrows(IllegalArgumentException.class, () -> expectedLength(value));
+      var error = assertThrows(IllegalArgumentException.class, () -> expectedLength(null));
 
       // Assert
       assertThat(error.getMessage(), is("Expected length must not be null"));
@@ -652,26 +614,22 @@ class AssertValueTest {
 
     @Test
     void GIVEN_match_conditions_WHEN_matchConditions_THEN_array_is_preserved() {
-      // Arrange
-      Predicate<String> first = value -> true;
-      Predicate<String> second = value -> false;
-
       // Act
-      var result = matchConditions(first, second);
+      var result = matchConditions(MATCHES, DOES_NOT_MATCH);
 
       // Assert
-      assertThat(result.value(), arrayContaining(first, second));
+      assertThat(result.value(), arrayContaining(MATCHES, DOES_NOT_MATCH));
       assertThat(result.normalizedValue(), sameInstance(result.value()));
       normalizer.verifyNoInteractions();
     }
 
     @Test
     void GIVEN_a_null_conditions_array_WHEN_matchConditions_THEN_IllegalArgumentException_is_thrown() {
-      // Arrange
-      Predicate<String>[] conditions = null;
-
       // Act
-      var error = assertThrows(IllegalArgumentException.class, () -> matchConditions(conditions));
+      var error =
+          assertThrows(
+              IllegalArgumentException.class,
+              () -> matchConditions((Predicate<String>[]) null));
 
       // Assert
       assertThat(error.getMessage(), is("Match conditions must not be null"));
@@ -680,13 +638,9 @@ class AssertValueTest {
 
     @Test
     void GIVEN_a_null_match_condition_WHEN_matchConditions_THEN_position_IllegalArgumentException_is_thrown() {
-      // Arrange
-      Predicate<String> first = value -> true;
-      Predicate<String> second = null;
-
       // Act
-      var error = assertThrows(IllegalArgumentException.class,
-          () -> matchConditions(first, second));
+      var error =
+          assertThrows(IllegalArgumentException.class, () -> matchConditions(MATCHES, null));
 
       // Assert
       assertThat(error.getMessage(), is("Match condition at position 2 must not be null"));
@@ -701,16 +655,13 @@ class AssertValueTest {
     @Test
     void GIVEN_an_AssertValue_WHEN_value_THEN_original_value_is_returned() {
       // Arrange
-      var originalValue = "original";
-      var normalizedValue = "normalized";
-      normalizer.when(() -> normalizeObject(originalValue, Form.NFC)).thenReturn(normalizedValue);
-      var value = expectedString(originalValue);
+      var value = givenAssertValue(A, ANY_NORMALIZED_VALUE);
 
       // Act
       var result = value.value();
 
       // Assert
-      assertThat(result, sameInstance(originalValue));
+      assertThat(result, sameInstance(A));
     }
   }
 
@@ -721,16 +672,13 @@ class AssertValueTest {
     @Test
     void GIVEN_an_AssertValue_WHEN_normalizedValue_THEN_normalized_value_is_returned() {
       // Arrange
-      var originalValue = "original";
-      var normalizedValue = "normalized";
-      normalizer.when(() -> normalizeObject(originalValue, Form.NFC)).thenReturn(normalizedValue);
-      var value = expectedString(originalValue);
+      var value = givenAssertValue(A, ANY_NORMALIZED_VALUE);
 
       // Act
       var result = value.normalizedValue();
 
       // Assert
-      assertThat(result, sameInstance(normalizedValue));
+      assertThat(result, sameInstance(ANY_NORMALIZED_VALUE));
     }
   }
 
@@ -741,9 +689,7 @@ class AssertValueTest {
     @Test
     void GIVEN_the_same_instance_WHEN_equals_THEN_true_is_returned() {
       // Arrange
-      var originalValue = "original";
-      normalizer.when(() -> normalizeObject(originalValue, Form.NFC)).thenReturn("normalized");
-      var value = expectedString(originalValue);
+      var value = givenAssertValue(A, ANY_NORMALIZED_VALUE);
 
       // Act
       var result = value.equals(value);
@@ -755,12 +701,8 @@ class AssertValueTest {
     @Test
     void GIVEN_equal_normalized_values_WHEN_equals_THEN_true_is_returned() {
       // Arrange
-      var firstOriginalValue = "first";
-      var secondOriginalValue = "second";
-      normalizer.when(() -> normalizeObject(firstOriginalValue, Form.NFC)).thenReturn("same");
-      normalizer.when(() -> normalizeObject(secondOriginalValue, Form.NFC)).thenReturn("same");
-      var first = expectedString(firstOriginalValue);
-      var second = expectedString(secondOriginalValue);
+      var first = givenAssertValue(A, ANY_NORMALIZED_VALUE);
+      var second = givenAssertValue(B, ANY_NORMALIZED_VALUE);
 
       // Act
       var result = first.equals(second);
@@ -772,12 +714,8 @@ class AssertValueTest {
     @Test
     void GIVEN_different_normalized_values_WHEN_equals_THEN_false_is_returned() {
       // Arrange
-      var firstOriginalValue = "first";
-      var secondOriginalValue = "second";
-      normalizer.when(() -> normalizeObject(firstOriginalValue, Form.NFC)).thenReturn("one");
-      normalizer.when(() -> normalizeObject(secondOriginalValue, Form.NFC)).thenReturn("two");
-      var first = expectedString(firstOriginalValue);
-      var second = expectedString(secondOriginalValue);
+      var first = givenAssertValue(A, NORMALIZED_VALUE_1);
+      var second = givenAssertValue(B, NORMALIZED_VALUE_2);
 
       // Act
       var result = first.equals(second);
@@ -789,13 +727,11 @@ class AssertValueTest {
     @Test
     void GIVEN_null_or_another_type_WHEN_equals_THEN_false_is_returned() {
       // Arrange
-      var originalValue = "original";
-      normalizer.when(() -> normalizeObject(originalValue, Form.NFC)).thenReturn("normalized");
-      var value = expectedString(originalValue);
+      var value = givenAssertValue(A, ANY_NORMALIZED_VALUE);
 
       // Act
       var nullResult = value.equals(null);
-      var otherTypeResult = value.equals("normalized");
+      var otherTypeResult = value.equals(ANY_VALUE);
 
       // Assert
       assertThat(nullResult, is(false));
@@ -810,16 +746,13 @@ class AssertValueTest {
     @Test
     void GIVEN_an_AssertValue_WHEN_hashCode_THEN_normalized_value_hash_is_returned() {
       // Arrange
-      var originalValue = "original";
-      var normalizedValue = "normalized";
-      normalizer.when(() -> normalizeObject(originalValue, Form.NFC)).thenReturn(normalizedValue);
-      var value = expectedString(originalValue);
+      var value = givenAssertValue(A, ANY_NORMALIZED_VALUE);
 
       // Act
       var result = value.hashCode();
 
       // Assert
-      assertThat(result, is(normalizedValue.hashCode()));
+      assertThat(result, is(ANY_NORMALIZED_VALUE.hashCode()));
     }
   }
 
@@ -830,15 +763,13 @@ class AssertValueTest {
     @Test
     void GIVEN_an_AssertValue_WHEN_toString_THEN_original_value_string_is_returned() {
       // Arrange
-      var originalValue = "original";
-      normalizer.when(() -> normalizeObject(originalValue, Form.NFC)).thenReturn("normalized");
-      var value = expectedString(originalValue);
+      var value = givenAssertValue(A, ANY_NORMALIZED_VALUE);
 
       // Act
       var result = value.toString();
 
       // Assert
-      assertThat(result, is(originalValue));
+      assertThat(result, is(A));
     }
   }
 }
