@@ -13,7 +13,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -47,32 +47,32 @@ class AssertOperandTest {
   private static final Map<String, List<String>> ANY_NORMALIZED_MAP_LIST =
       Map.of(ANY_STRING, List.of(ANY_NORMALIZED_STRING));
 
-  private static MockedStatic<TestArrangeNormalizer> mockNormalizeCollection() {
-    var normalizer = mockStatic(TestArrangeNormalizer.class);
+  private static MockedStatic<UnicodeNormalizer> mockNormalizeCollection() {
+    var normalizer = mockStatic(UnicodeNormalizer.class);
     normalizer
-        .when(() -> TestArrangeNormalizer.normalizeCollection(any()))
+        .when(() -> UnicodeNormalizer.normalizeCollection(any()))
         .thenReturn(ANY_NORMALIZED_COLLECTION);
     return normalizer;
   }
 
-  private static MockedStatic<TestArrangeNormalizer> mockNormalizeObject() {
-    var normalizer = mockStatic(TestArrangeNormalizer.class);
+  private static MockedStatic<UnicodeNormalizer> mockNormalizeObject() {
+    var normalizer = mockStatic(UnicodeNormalizer.class);
     normalizer
-        .when(() -> TestArrangeNormalizer.normalizeObject(any()))
+        .when(() -> UnicodeNormalizer.normalizeObject(any()))
         .thenReturn(ANY_NORMALIZED_STRING);
     return normalizer;
   }
 
-  private static MockedStatic<TestArrangeNormalizer> mockNormalizeMap() {
-    var normalizer = mockStatic(TestArrangeNormalizer.class);
-    normalizer.when(() -> TestArrangeNormalizer.normalizeMap(any())).thenReturn(ANY_NORMALIZED_MAP);
+  private static MockedStatic<UnicodeNormalizer> mockNormalizeMap() {
+    var normalizer = mockStatic(UnicodeNormalizer.class);
+    normalizer.when(() -> UnicodeNormalizer.normalizeMap(any())).thenReturn(ANY_NORMALIZED_MAP);
     return normalizer;
   }
 
-  private static MockedStatic<TestArrangeNormalizer> mockNormalizeMapList() {
-    var normalizer = mockStatic(TestArrangeNormalizer.class);
+  private static MockedStatic<UnicodeNormalizer> mockNormalizeMapList() {
+    var normalizer = mockStatic(UnicodeNormalizer.class);
     normalizer
-        .when(() -> TestArrangeNormalizer.normalizeMapList(any()))
+        .when(() -> UnicodeNormalizer.normalizeMapList(any()))
         .thenReturn(ANY_NORMALIZED_MAP_LIST);
     return normalizer;
   }
@@ -84,7 +84,7 @@ class AssertOperandTest {
     @Test
     void GIVEN_null_WHEN_collection_THEN_values_are_null() {
       // Arrange
-      var normalizer = mockStatic(TestArrangeNormalizer.class);
+      var normalizer = mockStatic(UnicodeNormalizer.class);
 
       // Act
       var operand = AssertOperand.collection(null);
@@ -109,7 +109,7 @@ class AssertOperandTest {
       // Assert
       assertThat(operand.actual(), containsInAnyOrder(A, B));
       assertThat(operand.normalizedValue(), is(ANY_NORMALIZED_COLLECTION));
-      normalizer.verify(() -> TestArrangeNormalizer.normalizeCollection(any()), times(1));
+      normalizer.verify(() -> UnicodeNormalizer.normalizeCollection(any()), times(1));
       normalizer.close();
     }
 
@@ -137,7 +137,7 @@ class AssertOperandTest {
     @Test
     void GIVEN_null_WHEN_list_THEN_values_are_null() {
       // Arrange
-      var normalizer = mockStatic(TestArrangeNormalizer.class);
+      var normalizer = mockStatic(UnicodeNormalizer.class);
 
       // Act
       var operand = AssertOperand.list(null);
@@ -162,7 +162,7 @@ class AssertOperandTest {
       // Assert
       assertThat(operand.actual(), contains(A, B));
       assertThat(operand.normalizedValue(), is(ANY_NORMALIZED_COLLECTION));
-      normalizer.verify(() -> TestArrangeNormalizer.normalizeCollection(any()), times(1));
+      normalizer.verify(() -> UnicodeNormalizer.normalizeCollection(any()), times(1));
       normalizer.close();
     }
 
@@ -190,7 +190,7 @@ class AssertOperandTest {
     @Test
     void GIVEN_null_WHEN_set_THEN_actual_and_normalized_value_are_null() {
       // Arrange
-      var normalizer = mockStatic(TestArrangeNormalizer.class);
+      var normalizer = mockStatic(UnicodeNormalizer.class);
 
       // Act
       var operand = AssertOperand.set(null);
@@ -215,7 +215,7 @@ class AssertOperandTest {
       // Assert
       assertThat(operand.actual(), contains(A, B));
       assertThat(operand.normalizedValue(), is(new LinkedHashSet<>(ANY_NORMALIZED_COLLECTION)));
-      normalizer.verify(() -> TestArrangeNormalizer.normalizeCollection(any()), times(1));
+      normalizer.verify(() -> UnicodeNormalizer.normalizeCollection(any()), times(1));
       normalizer.close();
     }
 
@@ -293,7 +293,7 @@ class AssertOperandTest {
     @Test
     void GIVEN_null_WHEN_object_THEN_actual_and_normalized_value_are_null() {
       // Arrange
-      var normalizer = mockStatic(TestArrangeNormalizer.class);
+      var normalizer = mockStatic(UnicodeNormalizer.class);
 
       // Act
       var operand = AssertOperand.clazz(null);
@@ -316,7 +316,7 @@ class AssertOperandTest {
       // Assert
       assertThat(operand.actual(), is(sameInstance(ANY_CLASS)));
       assertThat(operand.normalizedValue(), is(ANY_NORMALIZED_STRING));
-      normalizer.verify(() -> TestArrangeNormalizer.normalizeObject(ANY_CLASS), times(1));
+      normalizer.verify(() -> UnicodeNormalizer.normalizeObject(ANY_CLASS), times(1));
       normalizer.close();
     }
   }
@@ -397,7 +397,7 @@ class AssertOperandTest {
     @Test
     void GIVEN_null_WHEN_map_THEN_actual_and_normalized_value_are_null() {
       // Arrange
-      var normalizer = mockStatic(TestArrangeNormalizer.class);
+      var normalizer = mockStatic(UnicodeNormalizer.class);
 
       // Act
       var operand = AssertOperand.map(null);
@@ -424,7 +424,7 @@ class AssertOperandTest {
       // Assert
       assertThat(operand.actual(), is(Map.of(A, A, B, B)));
       assertThat(operand.normalizedValue(), is(ANY_NORMALIZED_MAP));
-      normalizer.verify(() -> TestArrangeNormalizer.normalizeMap(any()), times(1));
+      normalizer.verify(() -> UnicodeNormalizer.normalizeMap(any()), times(1));
       normalizer.close();
     }
 
@@ -453,7 +453,7 @@ class AssertOperandTest {
     @Test
     void GIVEN_null_WHEN_headers_THEN_actual_and_normalized_value_are_null() {
       // Arrange
-      var normalizer = mockStatic(TestArrangeNormalizer.class);
+      var normalizer = mockStatic(UnicodeNormalizer.class);
 
       // Act
       var operand = AssertOperand.headers(null);
@@ -481,7 +481,7 @@ class AssertOperandTest {
       // Assert
       assertThat(operand.actual(), is(Map.of(A, List.of(A, B))));
       assertThat(operand.normalizedValue(), is(ANY_NORMALIZED_MAP_LIST));
-      normalizer.verify(() -> TestArrangeNormalizer.normalizeMapList(any()), times(1));
+      normalizer.verify(() -> UnicodeNormalizer.normalizeMapList(any()), times(1));
       normalizer.close();
     }
 

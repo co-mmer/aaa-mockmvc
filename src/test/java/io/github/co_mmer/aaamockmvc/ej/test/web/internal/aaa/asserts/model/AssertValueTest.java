@@ -16,9 +16,9 @@ import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.mode
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue.matchConditions;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue.unexpectedElements;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue.unexpectedHeaderName;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeCollection;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeMap;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeObject;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer.normalizeCollection;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer.normalizeMap;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer.normalizeObject;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.ANY_VALUE;
@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mockStatic;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer;
 import java.text.Normalizer.Form;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -69,11 +69,11 @@ class AssertValueTest {
   private static final Predicate<String> MATCHES = value -> true;
   private static final Predicate<String> DOES_NOT_MATCH = value -> false;
 
-  private MockedStatic<TestArrangeNormalizer> normalizer;
+  private MockedStatic<UnicodeNormalizer> normalizer;
 
   @BeforeEach
   void setUp() {
-    normalizer = mockStatic(TestArrangeNormalizer.class);
+    normalizer = mockStatic(UnicodeNormalizer.class);
   }
 
   @AfterEach

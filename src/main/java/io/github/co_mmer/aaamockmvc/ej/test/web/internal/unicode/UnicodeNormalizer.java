@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.text.Normalizer;
@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Since("1.3.0")
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class TestArrangeNormalizer {
+public final class UnicodeNormalizer {
 
   @Since("1.3.0")
   public static String normalizeObject(Object actual) {

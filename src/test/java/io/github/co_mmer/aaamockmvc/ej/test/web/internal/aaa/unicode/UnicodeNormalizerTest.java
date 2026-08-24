@@ -1,8 +1,8 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.unicode;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeCollection;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeMap;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeObject;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer.normalizeCollection;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer.normalizeMap;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer.normalizeObject;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.COLLISION_CHARSEQ_FIRST_NONCHARSEQ_SECOND;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.COLLISION_NONCHARSEQ_FIRST_CHARSEQ_SECOND;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestNormalizer.NORMALIZED_CAFE;
@@ -23,7 +23,7 @@ import java.util.LinkedHashMap;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
-class TestArrangeNormalizerTest {
+class UnicodeNormalizerTest {
 
   @Test
   void GIVEN_null_WHEN_normalizeObject_THEN_throw_NullPointerException() {

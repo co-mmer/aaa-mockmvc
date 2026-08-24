@@ -1,11 +1,11 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeCollection;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeMap;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeMapList;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer.normalizeCollection;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer.normalizeMap;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer.normalizeMapList;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -69,7 +69,7 @@ public final class AssertOperand<A, N> {
 
   @Since("2.1.0")
   public static <C> AssertOperand<C, String> clazz(C value) {
-    return normalize(value, TestArrangeNormalizer::normalizeObject);
+    return normalize(value, UnicodeNormalizer::normalizeObject);
   }
 
   @Since("2.1.0")
