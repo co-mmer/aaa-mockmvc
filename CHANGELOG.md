@@ -17,6 +17,9 @@
   validation of paths, path variables, query parameters, headers, media types, and request bodies.
 * Added validated target types for Answer operations and validated inputs for assertions.
 * Added immutable views and defensive copies for internally managed request data.
+* Replaced Hamcrest-based internal assertion handling with consistent failure messages that clearly
+  separate `Expected`, `Actual`, and `Reason`.
+* Removed the Hamcrest dependency from the framework's assertion implementation.
 
 ### ☂️ Fixed
 

@@ -8,6 +8,9 @@ Invalid request configuration, response target types, and assertion inputs are n
 descriptive `IllegalArgumentException` messages. Validation identifies the affected DSL argument
 and includes its position when multiple values or conditions are supplied.
 
+Failed DSL assertions now use a consistent, structured message that clearly separates the expected
+result, the actual response value, and the reason for the failure.
+
 ### 🌿 Highlights
 
 * **Consistent DSL validation** — Invalid arguments are detected close to where they are provided.
@@ -15,6 +18,10 @@ and includes its position when multiple values or conditions are supplied.
   assertion input, or condition.
 * **Predictable exception behavior** — Affected null arguments now produce
   `IllegalArgumentException` instead of Lombok-generated `NullPointerException`.
+* **Structured assertion failures** — Failed DSL assertions now report `Expected`, `Actual`, and
+  `Reason` in a consistent format.
+* **Leaner dependency footprint** — Hamcrest is no longer used by the framework's internal
+  assertion handling and has been removed as a dependency.
 * **No mapping behavior changes** — Response deserialization and assertion semantics remain
   unchanged.
 
@@ -61,10 +68,26 @@ includes its one-based position.
 
 ### 🧹 Improvements
 
+#### Structured assertion failures
+
+Assertion failures produced by the DSL now follow one consistent structure:
+
+```text
+Expected: <expected result>
+Actual: <actual response value>
+Reason: <why the assertion failed>
+```
+
+This makes failures easier to scan and compare: `Expected` describes the asserted outcome,
+`Actual` shows the value returned by the response, and `Reason` explains the mismatch in context.
+The public assertion DSL remains unchanged.
+
 * Moved runtime input validation from Lombok annotations into dedicated internal domain objects.
 * Kept validation rules and their error messages close to the values they protect.
 * Improved consistency between the Request, Answer, and Assert areas of the DSL.
 * Added immutable views and defensive copies for internally managed request data.
+* Reworked assertion failure reporting to produce consistent messages across DSL assertions.
+* Removed the Hamcrest dependency from the framework's assertion implementation.
 
 ### ☂️ Fixes
 
