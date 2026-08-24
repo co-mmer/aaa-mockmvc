@@ -65,9 +65,7 @@ class AssertOperandTest {
 
   private static MockedStatic<TestArrangeNormalizer> mockNormalizeMap() {
     var normalizer = mockStatic(TestArrangeNormalizer.class);
-    normalizer
-        .when(() -> TestArrangeNormalizer.normalizeMap(any()))
-        .thenReturn(ANY_NORMALIZED_MAP);
+    normalizer.when(() -> TestArrangeNormalizer.normalizeMap(any())).thenReturn(ANY_NORMALIZED_MAP);
     return normalizer;
   }
 
@@ -130,8 +128,6 @@ class AssertOperandTest {
       assertThat(exception, is(not(nullValue())));
       normalizer.close();
     }
-
-
   }
 
   @Nested
@@ -367,15 +363,15 @@ class AssertOperandTest {
     @Test
     void GIVEN_bytes_WHEN_bytes_THEN_input_is_defensively_copied() {
       // Arrange
-      var value = new byte[]{A_BYTE, B_BYTE, C_BYTE};
+      var value = new byte[] {A_BYTE, B_BYTE, C_BYTE};
 
       // Act
       var operand = AssertOperand.bytes(value);
       value[0] = ANY_CHANGED_BYTE;
 
       // Assert
-      assertArrayEquals(new byte[]{A_BYTE, B_BYTE, C_BYTE}, operand.actual());
-      assertArrayEquals(new byte[]{A_BYTE, B_BYTE, C_BYTE}, operand.normalizedValue());
+      assertArrayEquals(new byte[] {A_BYTE, B_BYTE, C_BYTE}, operand.actual());
+      assertArrayEquals(new byte[] {A_BYTE, B_BYTE, C_BYTE}, operand.normalizedValue());
       assertThat(operand.actual(), is(not(sameInstance(value))));
       assertThat(operand.normalizedValue(), is(not(sameInstance(operand.actual()))));
     }
@@ -383,14 +379,14 @@ class AssertOperandTest {
     @Test
     void GIVEN_bytes_are_changed_WHEN_actual_THEN_normalized_bytes_remain_unchanged() {
       // Arrange
-      var operand = AssertOperand.bytes(new byte[]{A_BYTE, B_BYTE, C_BYTE});
+      var operand = AssertOperand.bytes(new byte[] {A_BYTE, B_BYTE, C_BYTE});
 
       // Act
       operand.actual()[0] = ANY_CHANGED_BYTE;
 
       // Assert
-      assertArrayEquals(new byte[]{ANY_CHANGED_BYTE, B_BYTE, C_BYTE}, operand.actual());
-      assertArrayEquals(new byte[]{A_BYTE, B_BYTE, C_BYTE}, operand.normalizedValue());
+      assertArrayEquals(new byte[] {ANY_CHANGED_BYTE, B_BYTE, C_BYTE}, operand.actual());
+      assertArrayEquals(new byte[] {A_BYTE, B_BYTE, C_BYTE}, operand.normalizedValue());
     }
   }
 
