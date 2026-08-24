@@ -9,9 +9,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.BeforeEach;

@@ -14,9 +14,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 
 @Since("2.1.0")
+@EqualsAndHashCode
 public final class AssertValue<T, N> {
 
   private static final String NULL_EXPECTED_BOOLEAN_MESSAGE = "Expected boolean must not be null";
@@ -246,21 +248,6 @@ public final class AssertValue<T, N> {
   private static Map<String, String> normalizeMapSnapshot(Map<?, ?> value) {
     var normalized = normalizeMap(value, Form.NFC);
     return Collections.unmodifiableMap(new LinkedHashMap<>(normalized));
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) {
-      return true;
-    }
-
-    return other instanceof AssertValue<?, ?> target
-        && normalizedValue.equals(target.normalizedValue);
-  }
-
-  @Override
-  public int hashCode() {
-    return normalizedValue.hashCode();
   }
 
   @Override

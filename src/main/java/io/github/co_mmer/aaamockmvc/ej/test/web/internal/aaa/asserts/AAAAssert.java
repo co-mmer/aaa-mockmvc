@@ -142,7 +142,7 @@ public final class AAAAssert<A, N> {
               -> To verify the number of elements, use:
                  hasSize(expectedSize)
               """
-              .strip());
+                  .strip());
     }
   }
 
@@ -180,7 +180,7 @@ public final class AAAAssert<A, N> {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-              .strip());
+                  .strip());
     }
   }
 
@@ -234,7 +234,7 @@ public final class AAAAssert<A, N> {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-              .strip());
+                  .strip());
     }
   }
 
@@ -304,7 +304,7 @@ public final class AAAAssert<A, N> {
     verify(
         actualEntryValue instanceof Collection<?> actualValues
             && actualValues.stream()
-            .anyMatch(actualValue -> Objects.deepEquals(actualValue, expected)),
+                .anyMatch(actualValue -> Objects.deepEquals(actualValue, expected)),
         expectedValue.value(),
         actualEntryValue,
         "The response header did not contain the expected value.");
@@ -387,8 +387,8 @@ public final class AAAAssert<A, N> {
               How to fix:
               -> Provide a minimum value that is less than or equal to the maximum value.
               """
-              .formatted(minimum, maximum)
-              .strip());
+                  .formatted(minimum, maximum)
+                  .strip());
     }
   }
 
@@ -407,7 +407,7 @@ public final class AAAAssert<A, N> {
               How to fix:
               -> Provide at least one expected header value.
               """
-              .strip());
+                  .strip());
     }
   }
 

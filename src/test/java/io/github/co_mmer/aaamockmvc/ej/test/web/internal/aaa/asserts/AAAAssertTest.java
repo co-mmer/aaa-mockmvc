@@ -690,7 +690,7 @@ final class AAAAssertTest {
               -> To verify the number of elements, use:
                  hasSize(expectedSize)
               """
-              .strip();
+                  .strip();
 
       assertThat(expectedMessage, is(error.getMessage()));
     }
@@ -809,7 +809,7 @@ final class AAAAssertTest {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-              .strip();
+                  .strip();
 
       assertThat(expectedMessage, is(error.getMessage()));
     }
@@ -1021,7 +1021,7 @@ final class AAAAssertTest {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-              .strip();
+                  .strip();
 
       assertThat(expectedMessage, is(error.getMessage()));
     }
@@ -1531,7 +1531,7 @@ final class AAAAssertTest {
 
     @Test
     void
-    GIVEN_header_values_match_in_any_order_WHEN_toContainEntryExactly_THEN_no_error_is_thrown() {
+        GIVEN_header_values_match_in_any_order_WHEN_toContainEntryExactly_THEN_no_error_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, headers(A, "B"));
       var expectedKey = expectedHeaderName("X-Test");
@@ -1560,7 +1560,7 @@ final class AAAAssertTest {
 
     @Test
     void
-    GIVEN_empty_expected_values_WHEN_toContainEntryExactly_THEN_InvalidAssertionException_is_thrown() {
+        GIVEN_empty_expected_values_WHEN_toContainEntryExactly_THEN_InvalidAssertionException_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, headers(A));
       var expectedKey = expectedHeaderName("X-Test");
@@ -1585,7 +1585,7 @@ final class AAAAssertTest {
               How to fix:
               -> Provide at least one expected header value.
               """
-              .strip();
+                  .strip();
 
       assertThat(error.getMessage(), is(expectedMessage));
     }
@@ -1783,7 +1783,7 @@ final class AAAAssertTest {
 
     @Test
     void
-    GIVEN_minimum_is_greater_than_maximum_WHEN_toBeInRange_THEN_InvalidAssertionException_is_thrown() {
+        GIVEN_minimum_is_greater_than_maximum_WHEN_toBeInRange_THEN_InvalidAssertionException_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, status(HttpStatus.OK));
 
@@ -1809,7 +1809,7 @@ final class AAAAssertTest {
               How to fix:
               -> Provide a minimum value that is less than or equal to the maximum value.
               """
-              .strip();
+                  .strip();
 
       assertThat(error.getMessage(), is(expectedMessage));
     }

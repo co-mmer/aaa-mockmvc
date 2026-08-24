@@ -125,7 +125,7 @@ class TestGenericMapperTest {
 
     @Test
     void
-    GIVEN_json_object_instead_of_array_WHEN_parseList_THEN_TestGenericMapperException_is_thrown() {
+        GIVEN_json_object_instead_of_array_WHEN_parseList_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
@@ -134,7 +134,7 @@ class TestGenericMapperTest {
 
     @Test
     void
-    GIVEN_list_json_WHEN_parseList_with_wrong_element_class_THEN_TestGenericMapperException_is_thrown() {
+        GIVEN_list_json_WHEN_parseList_with_wrong_element_class_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
@@ -180,7 +180,7 @@ class TestGenericMapperTest {
 
     @Test
     void
-    GIVEN_json_object_instead_of_array_WHEN_parseSet_THEN_TestGenericMapperException_is_thrown() {
+        GIVEN_json_object_instead_of_array_WHEN_parseSet_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
@@ -189,7 +189,7 @@ class TestGenericMapperTest {
 
     @Test
     void
-    GIVEN_set_json_WHEN_parseSet_with_wrong_element_class_THEN_TestGenericMapperException_is_thrown() {
+        GIVEN_set_json_WHEN_parseSet_with_wrong_element_class_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
@@ -237,7 +237,7 @@ class TestGenericMapperTest {
 
     @Test
     void
-    GIVEN_array_json_instead_of_object_WHEN_parseMap_THEN_TestGenericMapperException_is_thrown() {
+        GIVEN_array_json_instead_of_object_WHEN_parseMap_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
@@ -319,7 +319,7 @@ class TestGenericMapperTest {
 
     @Test
     void
-    GIVEN_json_object_instead_of_array_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown() {
+        GIVEN_json_object_instead_of_array_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
@@ -328,7 +328,7 @@ class TestGenericMapperTest {
 
     @Test
     void
-    GIVEN_list_json_WHEN_parseCollection_with_wrong_element_class_THEN_TestGenericMapperException_is_thrown() {
+        GIVEN_list_json_WHEN_parseCollection_with_wrong_element_class_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
@@ -388,7 +388,7 @@ class TestGenericMapperTest {
     @Test
     @SneakyThrows
     void
-    GIVEN_json_object_instead_of_array_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown() {
+        GIVEN_json_object_instead_of_array_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown() {
       // Arrange
       when(mockHttpServletResponse.getContentAsString()).thenReturn(TEST_A1_JSON);
 
@@ -403,7 +403,7 @@ class TestGenericMapperTest {
     @Test
     @SneakyThrows
     void
-    GIVEN_list_json_WHEN_parseCollection_with_wrong_element_class_THEN_TestGenericMapperException_is_thrown() {
+        GIVEN_list_json_WHEN_parseCollection_with_wrong_element_class_THEN_TestGenericMapperException_is_thrown() {
       // Arrange
       when(mockHttpServletResponse.getContentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
 
@@ -418,7 +418,7 @@ class TestGenericMapperTest {
     @Test
     @SneakyThrows
     void
-    GIVEN_getContentAsString_throws_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown() {
+        GIVEN_getContentAsString_throws_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
