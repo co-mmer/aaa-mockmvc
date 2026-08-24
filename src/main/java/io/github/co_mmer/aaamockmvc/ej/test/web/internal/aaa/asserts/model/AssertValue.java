@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model;
 
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeCollection;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.string.TestArrangeNormalizer.normalizeMap;

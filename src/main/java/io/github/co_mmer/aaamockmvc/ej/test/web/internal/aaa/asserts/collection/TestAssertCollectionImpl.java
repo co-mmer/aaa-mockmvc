@@ -8,7 +8,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert5Co
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertLCollection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
@@ -22,11 +22,11 @@ import org.springframework.lang.NonNull;
 @RequiredArgsConstructor
 public final class TestAssertCollectionImpl<E>
     implements TestAssert1Collection<E>,
-        TestAssert2Collection<E>,
-        TestAssert3Collection<E>,
-        TestAssert4Collection<E>,
-        TestAssert5Collection<E>,
-        TestAssertLCollection {
+    TestAssert2Collection<E>,
+    TestAssert3Collection<E>,
+    TestAssert4Collection<E>,
+    TestAssert5Collection<E>,
+    TestAssertLCollection {
 
   private final TestAAAContext context;
 
@@ -88,7 +88,7 @@ public final class TestAssertCollectionImpl<E>
   @Override
   public TestAssert4Collection<E> matchAll(@NonNull Predicate<E> condition) {
     @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition};
+    Predicate<E>[] predicates = new Predicate[]{condition};
     return matchAll(predicates);
   }
 
@@ -97,7 +97,7 @@ public final class TestAssertCollectionImpl<E>
       @NonNull Predicate<E> condition1, @NonNull Predicate<E> condition2) {
 
     @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition1, condition2};
+    Predicate<E>[] predicates = new Predicate[]{condition1, condition2};
     return matchAll(predicates);
   }
 
@@ -108,7 +108,7 @@ public final class TestAssertCollectionImpl<E>
       @NonNull Predicate<E> condition3) {
 
     @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition1, condition2, condition3};
+    Predicate<E>[] predicates = new Predicate[]{condition1, condition2, condition3};
     return matchAll(predicates);
   }
 
@@ -123,7 +123,7 @@ public final class TestAssertCollectionImpl<E>
   @Override
   public TestAssert5Collection<E> matchAny(@NonNull Predicate<E> condition) {
     @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition};
+    Predicate<E>[] predicates = new Predicate[]{condition};
     return this.matchAny(predicates);
   }
 
@@ -131,7 +131,7 @@ public final class TestAssertCollectionImpl<E>
   public TestAssert5Collection<E> matchAny(
       @NonNull Predicate<E> condition1, @NonNull Predicate<E> condition2) {
     @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition1, condition2};
+    Predicate<E>[] predicates = new Predicate[]{condition1, condition2};
     return this.matchAny(predicates);
   }
 
@@ -141,7 +141,7 @@ public final class TestAssertCollectionImpl<E>
       @NonNull Predicate<E> condition2,
       @NonNull Predicate<E> condition3) {
     @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition1, condition2, condition3};
+    Predicate<E>[] predicates = new Predicate[]{condition1, condition2, condition3};
     return this.matchAny(predicates);
   }
 
@@ -156,7 +156,7 @@ public final class TestAssertCollectionImpl<E>
   @Override
   public TestAssertLCollection matchNone(@NonNull Predicate<E> condition) {
     @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition};
+    Predicate<E>[] predicates = new Predicate[]{condition};
     return this.matchNone(predicates);
   }
 
@@ -164,7 +164,7 @@ public final class TestAssertCollectionImpl<E>
   public TestAssertLCollection matchNone(
       @NonNull Predicate<E> condition1, @NonNull Predicate<E> condition2) {
     @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition1, condition2};
+    Predicate<E>[] predicates = new Predicate[]{condition1, condition2};
     return this.matchNone(predicates);
   }
 
@@ -174,7 +174,7 @@ public final class TestAssertCollectionImpl<E>
       @NonNull Predicate<E> condition2,
       @NonNull Predicate<E> condition3) {
     @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition1, condition2, condition3};
+    Predicate<E>[] predicates = new Predicate[]{condition1, condition2, condition3};
     return this.matchNone(predicates);
   }
 

@@ -5,7 +5,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert2String;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssertLString;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;

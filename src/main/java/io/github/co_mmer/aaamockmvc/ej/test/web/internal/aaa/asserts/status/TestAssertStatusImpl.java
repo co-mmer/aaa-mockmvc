@@ -5,8 +5,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert1Status;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.status.TestAssert2Status;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertOperand;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertOperand;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.content.TestAssertContentImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
@@ -20,7 +20,9 @@ import org.springframework.lang.NonNull;
 @RequiredArgsConstructor
 public final class TestAssertStatusImpl implements TestAssert1Status, TestAssert2Status {
 
-  private record Status(int min, int max) {}
+  private record Status(int min, int max) {
+
+  }
 
   private static final Status SUCCESSFUL = new Status(200, 299);
   private static final Status REDIRECT = new Status(300, 399);

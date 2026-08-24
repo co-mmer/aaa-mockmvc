@@ -9,8 +9,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Co
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.content.TestAssertContent;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertOperand;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertType;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertOperand;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.bool.TestAssertBooleanImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.bytes.TestAssertByteImpl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.clazz.TestAssertClassImpl;

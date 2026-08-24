@@ -1,6 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.model.TestActResult;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertOperand;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import java.util.Arrays;
 import java.util.Collections;

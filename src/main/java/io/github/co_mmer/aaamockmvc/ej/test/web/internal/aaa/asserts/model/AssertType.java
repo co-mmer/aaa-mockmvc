@@ -1,4 +1,4 @@
-package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts;
+package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.AAAType;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;

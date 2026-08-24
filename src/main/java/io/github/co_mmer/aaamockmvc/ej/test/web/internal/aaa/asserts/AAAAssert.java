@@ -1,6 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.InvalidAssertionException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertOperand;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.lang.reflect.Array;
@@ -140,7 +142,7 @@ public final class AAAAssert<A, N> {
               -> To verify the number of elements, use:
                  hasSize(expectedSize)
               """
-                  .strip());
+              .strip());
     }
   }
 
@@ -178,7 +180,7 @@ public final class AAAAssert<A, N> {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-                  .strip());
+              .strip());
     }
   }
 
@@ -232,7 +234,7 @@ public final class AAAAssert<A, N> {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-                  .strip());
+              .strip());
     }
   }
 
@@ -302,7 +304,7 @@ public final class AAAAssert<A, N> {
     verify(
         actualEntryValue instanceof Collection<?> actualValues
             && actualValues.stream()
-                .anyMatch(actualValue -> Objects.deepEquals(actualValue, expected)),
+            .anyMatch(actualValue -> Objects.deepEquals(actualValue, expected)),
         expectedValue.value(),
         actualEntryValue,
         "The response header did not contain the expected value.");
@@ -385,8 +387,8 @@ public final class AAAAssert<A, N> {
               How to fix:
               -> Provide a minimum value that is less than or equal to the maximum value.
               """
-                  .formatted(minimum, maximum)
-                  .strip());
+              .formatted(minimum, maximum)
+              .strip());
     }
   }
 
@@ -405,7 +407,7 @@ public final class AAAAssert<A, N> {
               How to fix:
               -> Provide at least one expected header value.
               """
-                  .strip());
+              .strip());
     }
   }
 

@@ -1,12 +1,12 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.expectedHeaderName;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.expectedHeaderValue;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.expectedHeaderValues;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.expectedLength;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.expectedSize;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.expectedStatus;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AssertValue.unexpectedHeaderName;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue.expectedHeaderName;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue.expectedHeaderValue;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue.expectedHeaderValues;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue.expectedLength;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue.expectedSize;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue.expectedStatus;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue.unexpectedHeaderName;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
@@ -27,6 +27,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.InvalidAssertionException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertOperand;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
@@ -688,7 +690,7 @@ final class AAAAssertTest {
               -> To verify the number of elements, use:
                  hasSize(expectedSize)
               """
-                  .strip();
+              .strip();
 
       assertThat(expectedMessage, is(error.getMessage()));
     }
@@ -807,7 +809,7 @@ final class AAAAssertTest {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-                  .strip();
+              .strip();
 
       assertThat(expectedMessage, is(error.getMessage()));
     }
@@ -1019,7 +1021,7 @@ final class AAAAssertTest {
               -> If an empty response collection is expected, use:
                  isEmpty()
               """
-                  .strip();
+              .strip();
 
       assertThat(expectedMessage, is(error.getMessage()));
     }
@@ -1529,7 +1531,7 @@ final class AAAAssertTest {
 
     @Test
     void
-        GIVEN_header_values_match_in_any_order_WHEN_toContainEntryExactly_THEN_no_error_is_thrown() {
+    GIVEN_header_values_match_in_any_order_WHEN_toContainEntryExactly_THEN_no_error_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, headers(A, "B"));
       var expectedKey = expectedHeaderName("X-Test");
@@ -1558,7 +1560,7 @@ final class AAAAssertTest {
 
     @Test
     void
-        GIVEN_empty_expected_values_WHEN_toContainEntryExactly_THEN_InvalidAssertionException_is_thrown() {
+    GIVEN_empty_expected_values_WHEN_toContainEntryExactly_THEN_InvalidAssertionException_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, headers(A));
       var expectedKey = expectedHeaderName("X-Test");
@@ -1583,7 +1585,7 @@ final class AAAAssertTest {
               How to fix:
               -> Provide at least one expected header value.
               """
-                  .strip();
+              .strip();
 
       assertThat(error.getMessage(), is(expectedMessage));
     }
@@ -1781,7 +1783,7 @@ final class AAAAssertTest {
 
     @Test
     void
-        GIVEN_minimum_is_greater_than_maximum_WHEN_toBeInRange_THEN_InvalidAssertionException_is_thrown() {
+    GIVEN_minimum_is_greater_than_maximum_WHEN_toBeInRange_THEN_InvalidAssertionException_is_thrown() {
       // Arrange
       var assertion = AAAAssert.expect(ANY_STEP, status(HttpStatus.OK));
 
@@ -1807,7 +1809,7 @@ final class AAAAssertTest {
               How to fix:
               -> Provide a minimum value that is less than or equal to the maximum value.
               """
-                  .strip();
+              .strip();
 
       assertThat(error.getMessage(), is(expectedMessage));
     }
