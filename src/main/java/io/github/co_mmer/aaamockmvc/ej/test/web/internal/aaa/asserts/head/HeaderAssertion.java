@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssertDetail.failure;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertionFailure.failure;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.InvalidAssertionException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;

@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.bool;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssertDetail.failure;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertionFailure.failure;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.step.TestStepDto;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
@@ -9,6 +9,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 public final class BooleanAssertion {
+
   private final BooleanValue actual;
   private final TestStepDto step;
 

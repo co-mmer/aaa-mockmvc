@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.collection;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssertDetail.failure;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertionFailure.failure;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.InvalidAssertionException;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.Conditions;
@@ -13,6 +13,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 public final class CollectionAssertion<E> {
+
   private final CollectionValue<E> actual;
   private final TestStepDto step;
 

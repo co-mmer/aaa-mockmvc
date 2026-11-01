@@ -10,8 +10,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 @Since("2.1.0")
-public record AAAAssertDetail(TestStepDto step, Object expected, Object actual, String assertion) {
-  
+public record TestAssertionFailure(
+    TestStepDto step, Object expected, Object actual, String assertion) {
+
   @NonNull
   @Since("2.1.0")
   public static org.opentest4j.AssertionFailedError failure(
@@ -20,7 +21,9 @@ public record AAAAssertDetail(TestStepDto step, Object expected, Object actual, 
       @Nullable Object expected,
       @Nullable Object actual) {
     return new org.opentest4j.AssertionFailedError(
-        new AAAAssertDetail(step, expected, actual, assertion).formatMessage(), expected, actual);
+        new TestAssertionFailure(step, expected, actual, assertion).formatMessage(),
+        expected,
+        actual);
   }
 
   @Since("2.1.0")
