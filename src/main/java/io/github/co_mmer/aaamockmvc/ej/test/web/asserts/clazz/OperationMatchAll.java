@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz;
 
 import java.util.function.Predicate;
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 
 interface OperationMatchAll<E> {
 

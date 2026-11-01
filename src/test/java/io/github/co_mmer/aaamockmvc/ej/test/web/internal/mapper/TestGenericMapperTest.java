@@ -1,6 +1,5 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper;
 
-import static io.github.co_mmer.aaamockmvc.ej.testdata.testmock.MockObjectMapper.throwOnWriteValueAsString;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A1;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.A2;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
@@ -13,26 +12,31 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.mapper.exception.TestGenericMapperException;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.MappingType;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
+import java.io.UnsupportedEncodingException;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 
 class TestGenericMapperTest {
 
+  private static final MappingType<TestObjectSimple> SIMPLE_TYPE =
+      new MappingType<>(TestObjectSimple.class);
+  private static final MappingType<String> STRING_TYPE = new MappingType<>(String.class);
+  private static final MappingType<Integer> INTEGER_TYPE = new MappingType<>(Integer.class);
   private MvcResult mockMvcResult;
   private MockHttpServletResponse mockHttpServletResponse;
   private ObjectMapper om;
@@ -52,33 +56,40 @@ class TestGenericMapperTest {
     @SneakyThrows
     void GIVEN_A1_JSON_WHEN_parse_THEN_return_A1() {
       // Act
-      var result = TestGenericMapper.parse(om, TEST_A1_JSON, TestObjectSimple.class);
+      var result =
+          TestGenericMapper.parse(TestGenericMapperTest.this.om, TEST_A1_JSON, SIMPLE_TYPE);
 
       // Assert
       assertThat(result, is(A1));
     }
 
     @ParameterizedTest
-    @NullAndEmptySource
+    @EmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
-    @SneakyThrows
-    void GIVEN_blank_string_WHEN_parse_THEN_return_null(String content) {
-      // Act
-      var result = TestGenericMapper.parse(om, content, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
+    void GIVEN_blank_string_WHEN_parse_THEN_TestGenericMapperException_is_thrown(String content) {
+      // Act & Assert
+      assertThrows(
+          TestGenericMapperException.class,
+          () -> TestGenericMapper.parse(TestGenericMapperTest.this.om, content, SIMPLE_TYPE));
     }
 
     @Test
-    void GIVEN_invalid_json_WHEN_parse_THEN_throw_Exception() {
+    void GIVEN_null_string_WHEN_parse_THEN_IllegalArgumentException_is_thrown() {
+      // Act & Assert
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> TestGenericMapper.parse(TestGenericMapperTest.this.om, null, SIMPLE_TYPE));
+    }
+
+    @Test
+    void GIVEN_invalid_json_WHEN_parse_THEN_TestGenericMapperException_is_thrown() {
       // Arrange
       var invalid = "{not-valid-json";
 
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parse(om, invalid, TestObjectSimple.class));
+          () -> TestGenericMapper.parse(TestGenericMapperTest.this.om, invalid, SIMPLE_TYPE));
     }
   }
 
@@ -89,49 +100,64 @@ class TestGenericMapperTest {
     @SneakyThrows
     void GIVEN_LIST_A1_A2_JSON_WHEN_parseList_THEN_return_List_A1_A2() {
       // Act
-      var result = TestGenericMapper.parseList(om, TEST_LIST_A1_A2_JSON, TestObjectSimple.class);
+      var result =
+          TestGenericMapper.parseList(
+              TestGenericMapperTest.this.om, TEST_LIST_A1_A2_JSON, SIMPLE_TYPE);
 
       // Assert
       assertThat(result, is(TEST_LIST_A1_A2));
     }
 
     @ParameterizedTest
-    @NullAndEmptySource
+    @EmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
-    @SneakyThrows
-    void GIVEN_blank_string_WHEN_parseList_THEN_return_null(String content) {
-      // Act
-      var result = TestGenericMapper.parseList(om, content, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
+    void GIVEN_blank_string_WHEN_parseList_THEN_TestGenericMapperException_is_thrown(
+        String content) {
+      // Act & Assert
+      assertThrows(
+          TestGenericMapperException.class,
+          () -> TestGenericMapper.parseList(TestGenericMapperTest.this.om, content, SIMPLE_TYPE));
     }
 
     @Test
-    void GIVEN_invalid_json_WHEN_parseList_THEN_throw_Exception() {
+    void GIVEN_null_string_WHEN_parseList_THEN_IllegalArgumentException_is_thrown() {
+      // Act & Assert
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> TestGenericMapper.parseList(TestGenericMapperTest.this.om, null, SIMPLE_TYPE));
+    }
+
+    @Test
+    void GIVEN_invalid_json_WHEN_parseList_THEN_TestGenericMapperException_is_thrown() {
       // Arrange
       var invalid = "{not-valid-json";
 
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseList(om, invalid, TestObjectSimple.class));
+          () -> TestGenericMapper.parseList(TestGenericMapperTest.this.om, invalid, SIMPLE_TYPE));
     }
 
     @Test
-    void GIVEN_json_object_instead_of_array_WHEN_parseList_THEN_throw_Exception() {
+    void
+        GIVEN_json_object_instead_of_array_WHEN_parseList_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseList(om, TEST_A1_JSON, TestObjectSimple.class));
+          () ->
+              TestGenericMapper.parseList(
+                  TestGenericMapperTest.this.om, TEST_A1_JSON, SIMPLE_TYPE));
     }
 
     @Test
-    void GIVEN_list_json_WHEN_parseList_with_wrong_element_class_THEN_throw_Exception() {
+    void
+        GIVEN_list_json_WHEN_parseList_with_wrong_element_class_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseList(om, TEST_LIST_A1_A2_JSON, String.class));
+          () ->
+              TestGenericMapper.parseList(
+                  TestGenericMapperTest.this.om, TEST_LIST_A1_A2_JSON, INTEGER_TYPE));
     }
   }
 
@@ -142,49 +168,63 @@ class TestGenericMapperTest {
     @SneakyThrows
     void GIVEN_SET_A1_A2_JSON_WHEN_parseSet_THEN_return_Set_A1_A2() {
       // Act
-      var result = TestGenericMapper.parseSet(om, TEST_SET_A1_A2_JSON, TestObjectSimple.class);
+      var result =
+          TestGenericMapper.parseSet(
+              TestGenericMapperTest.this.om, TEST_SET_A1_A2_JSON, SIMPLE_TYPE);
 
       // Assert
       assertThat(result, is(TEST_SET_A1_A2));
     }
 
     @ParameterizedTest
-    @NullAndEmptySource
+    @EmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
-    @SneakyThrows
-    void GIVEN_blank_string_WHEN_parseSet_THEN_return_null(String content) {
-      // Act
-      var result = TestGenericMapper.parseSet(om, content, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
+    void GIVEN_blank_string_WHEN_parseSet_THEN_TestGenericMapperException_is_thrown(
+        String content) {
+      // Act & Assert
+      assertThrows(
+          TestGenericMapperException.class,
+          () -> TestGenericMapper.parseSet(TestGenericMapperTest.this.om, content, SIMPLE_TYPE));
     }
 
     @Test
-    void GIVEN_invalid_json_WHEN_parseSet_THEN_throw_Exception() {
+    void GIVEN_null_string_WHEN_parseSet_THEN_IllegalArgumentException_is_thrown() {
+      // Act & Assert
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> TestGenericMapper.parseSet(TestGenericMapperTest.this.om, null, SIMPLE_TYPE));
+    }
+
+    @Test
+    void GIVEN_invalid_json_WHEN_parseSet_THEN_TestGenericMapperException_is_thrown() {
       // Arrange
       var invalid = "{not-valid-json";
 
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseSet(om, invalid, TestObjectSimple.class));
+          () -> TestGenericMapper.parseSet(TestGenericMapperTest.this.om, invalid, SIMPLE_TYPE));
     }
 
     @Test
-    void GIVEN_json_object_instead_of_array_WHEN_parseSet_THEN_throw_Exception() {
+    void
+        GIVEN_json_object_instead_of_array_WHEN_parseSet_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseSet(om, TEST_A1_JSON, TestObjectSimple.class));
+          () ->
+              TestGenericMapper.parseSet(TestGenericMapperTest.this.om, TEST_A1_JSON, SIMPLE_TYPE));
     }
 
     @Test
-    void GIVEN_set_json_WHEN_parseSet_with_wrong_element_class_THEN_throw_Exception() {
+    void
+        GIVEN_set_json_WHEN_parseSet_with_wrong_element_class_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseSet(om, TEST_SET_A1_A2_JSON, String.class));
+          () ->
+              TestGenericMapper.parseSet(
+                  TestGenericMapperTest.this.om, TEST_SET_A1_A2_JSON, STRING_TYPE));
     }
   }
 
@@ -197,43 +237,57 @@ class TestGenericMapperTest {
       // Act
       var result =
           TestGenericMapper.parseMap(
-              om, TEST_MAP_A1_A2_JSON, Integer.class, TestObjectSimple.class);
+              TestGenericMapperTest.this.om, TEST_MAP_A1_A2_JSON, INTEGER_TYPE, SIMPLE_TYPE);
 
       // Assert
       assertThat(result, is(TEST_MAP_A1_A2));
     }
 
     @ParameterizedTest
-    @NullAndEmptySource
+    @EmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
-    @SneakyThrows
-    void GIVEN_blank_string_WHEN_parseMap_THEN_return_null(String content) {
-      // Act
-      var result = TestGenericMapper.parseMap(om, content, Integer.class, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
+    void GIVEN_blank_string_WHEN_parseMap_THEN_TestGenericMapperException_is_thrown(
+        String content) {
+      // Act & Assert
+      assertThrows(
+          TestGenericMapperException.class,
+          () ->
+              TestGenericMapper.parseMap(
+                  TestGenericMapperTest.this.om, content, INTEGER_TYPE, SIMPLE_TYPE));
     }
 
     @Test
-    void GIVEN_invalid_json_WHEN_parseMap_THEN_throw_Exception() {
+    void GIVEN_null_string_WHEN_parseMap_THEN_IllegalArgumentException_is_thrown() {
+      // Act & Assert
+      assertThrows(
+          IllegalArgumentException.class,
+          () ->
+              TestGenericMapper.parseMap(
+                  TestGenericMapperTest.this.om, null, INTEGER_TYPE, SIMPLE_TYPE));
+    }
+
+    @Test
+    void GIVEN_invalid_json_WHEN_parseMap_THEN_TestGenericMapperException_is_thrown() {
       // Arrange
       var invalid = "{not-valid-json";
 
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseMap(om, invalid, Integer.class, TestObjectSimple.class));
+          () ->
+              TestGenericMapper.parseMap(
+                  TestGenericMapperTest.this.om, invalid, INTEGER_TYPE, SIMPLE_TYPE));
     }
 
     @Test
-    void GIVEN_array_json_instead_of_object_WHEN_parseMap_THEN_throw_Exception() {
+    void
+        GIVEN_array_json_instead_of_object_WHEN_parseMap_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
           () ->
               TestGenericMapper.parseMap(
-                  om, TEST_LIST_A1_A2_JSON, Integer.class, TestObjectSimple.class));
+                  TestGenericMapperTest.this.om, TEST_LIST_A1_A2_JSON, INTEGER_TYPE, SIMPLE_TYPE));
     }
 
     @Test
@@ -241,7 +295,8 @@ class TestGenericMapperTest {
     void GIVEN_numeric_keys_and_String_keyClass_WHEN_parseMap_THEN_return_map_with_string_keys() {
       // Act
       var result =
-          TestGenericMapper.parseMap(om, TEST_MAP_A1_A2_JSON, String.class, TestObjectSimple.class);
+          TestGenericMapper.parseMap(
+              TestGenericMapperTest.this.om, TEST_MAP_A1_A2_JSON, STRING_TYPE, SIMPLE_TYPE);
 
       // Assert
       assertThat(result.keySet(), containsInAnyOrder("1", "2"));
@@ -250,19 +305,23 @@ class TestGenericMapperTest {
     }
 
     @Test
-    void GIVEN_wrong_valueClass_WHEN_parseMap_THEN_throw_Exception() {
+    void GIVEN_wrong_valueClass_WHEN_parseMap_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseMap(om, TEST_MAP_A1_A2_JSON, Integer.class, String.class));
+          () ->
+              TestGenericMapper.parseMap(
+                  TestGenericMapperTest.this.om, TEST_MAP_A1_A2_JSON, INTEGER_TYPE, STRING_TYPE));
     }
 
     @Test
-    void GIVEN_wrong_key_and_value_class_WHEN_parseMap_THEN_throw_Exception() {
+    void GIVEN_wrong_key_and_value_class_WHEN_parseMap_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseMap(om, TEST_MAP_A1_A2_JSON, String.class, String.class));
+          () ->
+              TestGenericMapper.parseMap(
+                  TestGenericMapperTest.this.om, TEST_MAP_A1_A2_JSON, STRING_TYPE, STRING_TYPE));
     }
   }
 
@@ -274,49 +333,68 @@ class TestGenericMapperTest {
     void GIVEN_LIST_A1_A2_JSON_WHEN_parseCollection_THEN_return_Collection_A1_A2() {
       // Act
       var result =
-          TestGenericMapper.parseCollection(om, TEST_LIST_A1_A2_JSON, TestObjectSimple.class);
+          TestGenericMapper.parseCollection(
+              TestGenericMapperTest.this.om, TEST_LIST_A1_A2_JSON, SIMPLE_TYPE);
 
       // Assert
       assertThat(result, is(TEST_LIST_A1_A2));
     }
 
     @ParameterizedTest
-    @NullAndEmptySource
+    @EmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
-    @SneakyThrows
-    void GIVEN_blank_string_WHEN_parseCollection_THEN_return_null(String content) {
-      // Act
-      var result = TestGenericMapper.parseCollection(om, content, TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
+    void GIVEN_blank_string_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown(
+        String content) {
+      // Act & Assert
+      assertThrows(
+          TestGenericMapperException.class,
+          () ->
+              TestGenericMapper.parseCollection(
+                  TestGenericMapperTest.this.om, content, SIMPLE_TYPE));
     }
 
     @Test
-    void GIVEN_invalid_json_WHEN_parseCollection_THEN_throw_exception() {
+    void GIVEN_null_string_WHEN_parseCollection_THEN_IllegalArgumentException_is_thrown() {
+      // Act & Assert
+      assertThrows(
+          IllegalArgumentException.class,
+          () ->
+              TestGenericMapper.parseCollection(TestGenericMapperTest.this.om, null, SIMPLE_TYPE));
+    }
+
+    @Test
+    void GIVEN_invalid_json_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown() {
       // Arrange
       var invalid = "{not-valid-json";
 
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseCollection(om, invalid, TestObjectSimple.class));
+          () ->
+              TestGenericMapper.parseCollection(
+                  TestGenericMapperTest.this.om, invalid, SIMPLE_TYPE));
     }
 
     @Test
-    void GIVEN_json_object_instead_of_array_WHEN_parseCollection_THEN_throw_Exception() {
+    void
+        GIVEN_json_object_instead_of_array_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseCollection(om, TEST_A1_JSON, TestObjectSimple.class));
+          () ->
+              TestGenericMapper.parseCollection(
+                  TestGenericMapperTest.this.om, TEST_A1_JSON, SIMPLE_TYPE));
     }
 
     @Test
-    void GIVEN_list_json_WHEN_parseCollection_with_wrong_element_class_THEN_throw_Exception() {
+    void
+        GIVEN_list_json_WHEN_parseCollection_with_wrong_element_class_THEN_TestGenericMapperException_is_thrown() {
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseCollection(om, TEST_LIST_A1_A2_JSON, String.class));
+          () ->
+              TestGenericMapper.parseCollection(
+                  TestGenericMapperTest.this.om, TEST_LIST_A1_A2_JSON, STRING_TYPE));
     }
   }
 
@@ -327,83 +405,126 @@ class TestGenericMapperTest {
     @SneakyThrows
     void GIVEN_LIST_A1_A2_JSON_WHEN_parseCollection_THEN_return_Collection_A1_A2() {
       // Arrange
-      when(mockHttpServletResponse.getContentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
+      when(TestGenericMapperTest.this.mockHttpServletResponse.getContentAsString())
+          .thenReturn(TEST_LIST_A1_A2_JSON);
 
       // Act
       var result =
           TestGenericMapper.parseCollection(
-              om, mockMvcResult.getResponse().getContentAsString(), TestObjectSimple.class);
+              TestGenericMapperTest.this.om,
+              TestGenericMapperTest.this.mockMvcResult.getResponse().getContentAsString(),
+              SIMPLE_TYPE);
 
       // Assert
       assertThat(result, is(TEST_LIST_A1_A2));
     }
 
     @ParameterizedTest
-    @NullAndEmptySource
+    @EmptySource
     @ValueSource(strings = {" ", "\n", "\t", "   "})
     @SneakyThrows
-    void GIVEN_blank_WHEN_parseCollection_THEN_return_null(String response) {
+    void GIVEN_blank_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown(
+        String response) {
       // Arrange
-      when(mockHttpServletResponse.getContentAsString()).thenReturn(response);
-
-      // Act
-      var result =
-          TestGenericMapper.parseCollection(
-              om, mockMvcResult.getResponse().getContentAsString(), TestObjectSimple.class);
-
-      // Assert
-      assertThat(result, is(nullValue()));
-    }
-
-    @Test
-    @SneakyThrows
-    void GIVEN_invalid_json_WHEN_parseCollection_THEN_throw_Exception() {
-      // Arrange
-      when(mockHttpServletResponse.getContentAsString()).thenReturn("{not-valid-json");
+      when(TestGenericMapperTest.this.mockHttpServletResponse.getContentAsString())
+          .thenReturn(response);
 
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
           () ->
               TestGenericMapper.parseCollection(
-                  om, mockMvcResult.getResponse().getContentAsString(), TestObjectSimple.class));
+                  TestGenericMapperTest.this.om,
+                  TestGenericMapperTest.this.mockMvcResult.getResponse().getContentAsString(),
+                  SIMPLE_TYPE));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_json_object_instead_of_array_WHEN_parseCollection_THEN_throw_Exception() {
+    void GIVEN_null_body_WHEN_parseCollection_THEN_IllegalArgumentException_is_thrown() {
       // Arrange
-      when(mockHttpServletResponse.getContentAsString()).thenReturn(TEST_A1_JSON);
+      when(TestGenericMapperTest.this.mockHttpServletResponse.getContentAsString())
+          .thenReturn(null);
+
+      // Act & Assert
+      assertThrows(
+          IllegalArgumentException.class,
+          () ->
+              TestGenericMapper.parseCollection(
+                  TestGenericMapperTest.this.om,
+                  TestGenericMapperTest.this.mockMvcResult.getResponse().getContentAsString(),
+                  SIMPLE_TYPE));
+    }
+
+    @Test
+    @SneakyThrows
+    void GIVEN_invalid_json_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown() {
+      // Arrange
+      when(TestGenericMapperTest.this.mockHttpServletResponse.getContentAsString())
+          .thenReturn("{not-valid-json");
 
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
           () ->
               TestGenericMapper.parseCollection(
-                  om, mockMvcResult.getResponse().getContentAsString(), TestObjectSimple.class));
+                  TestGenericMapperTest.this.om,
+                  TestGenericMapperTest.this.mockMvcResult.getResponse().getContentAsString(),
+                  SIMPLE_TYPE));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_list_json_WHEN_parseCollection_with_wrong_element_class_THEN_throw_Exception() {
+    void
+        GIVEN_json_object_instead_of_array_WHEN_parseCollection_THEN_TestGenericMapperException_is_thrown() {
       // Arrange
-      when(mockHttpServletResponse.getContentAsString()).thenReturn(TEST_LIST_A1_A2_JSON);
+      when(TestGenericMapperTest.this.mockHttpServletResponse.getContentAsString())
+          .thenReturn(TEST_A1_JSON);
 
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
           () ->
               TestGenericMapper.parseCollection(
-                  om, mockMvcResult.getResponse().getContentAsString(), String.class));
+                  TestGenericMapperTest.this.om,
+                  TestGenericMapperTest.this.mockMvcResult.getResponse().getContentAsString(),
+                  SIMPLE_TYPE));
     }
 
     @Test
     @SneakyThrows
-    void GIVEN_getContentAsString_throws_WHEN_parseCollection_THEN_throw_Exception() {
+    void
+        GIVEN_list_json_WHEN_parseCollection_with_wrong_element_class_THEN_TestGenericMapperException_is_thrown() {
+      // Arrange
+      when(TestGenericMapperTest.this.mockHttpServletResponse.getContentAsString())
+          .thenReturn(TEST_LIST_A1_A2_JSON);
+
       // Act & Assert
       assertThrows(
           TestGenericMapperException.class,
-          () -> TestGenericMapper.parseCollection(om, TEST_LIST_A1_A2_JSON, String.class));
+          () ->
+              TestGenericMapper.parseCollection(
+                  TestGenericMapperTest.this.om,
+                  TestGenericMapperTest.this.mockMvcResult.getResponse().getContentAsString(),
+                  STRING_TYPE));
+    }
+
+    @Test
+    @SneakyThrows
+    void
+        GIVEN_getContentAsString_throws_WHEN_parseCollection_THEN_UnsupportedEncodingException_is_thrown() {
+      // Arrange
+      when(TestGenericMapperTest.this.mockHttpServletResponse.getContentAsString())
+          .thenThrow(new UnsupportedEncodingException("Unsupported encoding"));
+
+      // Act & Assert
+      assertThrows(
+          UnsupportedEncodingException.class,
+          () ->
+              TestGenericMapper.parseCollection(
+                  TestGenericMapperTest.this.om,
+                  TestGenericMapperTest.this.mockMvcResult.getResponse().getContentAsString(),
+                  SIMPLE_TYPE));
     }
   }
 
@@ -412,9 +533,10 @@ class TestGenericMapperTest {
 
     @Test
     @SneakyThrows
-    void GIVEN_unexpected_WHEN_toJson_THEN_throw_Exception() {
+    void GIVEN_unexpected_WHEN_toJson_THEN_TestGenericMapperException_is_thrown() {
       // Arrange
-      var mockObjectMapper = throwOnWriteValueAsString();
+      var mockObjectMapper = mock(ObjectMapper.class);
+      when(mockObjectMapper.writeValueAsString(A1)).thenThrow(mock(JsonProcessingException.class));
 
       // Act && Assert
       assertThrows(
@@ -425,7 +547,7 @@ class TestGenericMapperTest {
     @SneakyThrows
     void GIVEN_object_WHEN_toJson_THEN_return_expected_json() {
       // Act
-      var result = TestGenericMapper.toJson(om, A1);
+      var result = TestGenericMapper.toJson(TestGenericMapperTest.this.om, A1);
 
       // Assert
       assertThat(result, is(TEST_A1_JSON));
@@ -435,7 +557,7 @@ class TestGenericMapperTest {
     @SneakyThrows
     void GIVEN_list_WHEN_toJson_THEN_return_expected_json() {
       // Act
-      var result = TestGenericMapper.toJson(om, TEST_LIST_A1_A2);
+      var result = TestGenericMapper.toJson(TestGenericMapperTest.this.om, TEST_LIST_A1_A2);
 
       // Assert
       assertThat(result, is(TEST_LIST_A1_A2_JSON));
@@ -445,7 +567,7 @@ class TestGenericMapperTest {
     @SneakyThrows
     void GIVEN_set_WHEN_toJson_THEN_return_expected_json() {
       // Act
-      var result = TestGenericMapper.toJson(om, TEST_SET_A1_A2);
+      var result = TestGenericMapper.toJson(TestGenericMapperTest.this.om, TEST_SET_A1_A2);
 
       // Assert
       assertThat(result, is(TEST_SET_A1_A2_JSON));
@@ -455,7 +577,7 @@ class TestGenericMapperTest {
     @SneakyThrows
     void GIVEN_map_WHEN_toJson_THEN_return_expected_json() {
       // Act
-      var result = TestGenericMapper.toJson(om, TEST_MAP_A1_A2);
+      var result = TestGenericMapper.toJson(TestGenericMapperTest.this.om, TEST_MAP_A1_A2);
 
       // Assert
       assertThat(result, is(TEST_MAP_A1_A2_JSON));
@@ -465,7 +587,7 @@ class TestGenericMapperTest {
     @SneakyThrows
     void GIVEN_null_WHEN_toJson_THEN_return_string_null() {
       // Act
-      var result = TestGenericMapper.toJson(om, null);
+      var result = TestGenericMapper.toJson(TestGenericMapperTest.this.om, null);
 
       // Assert
       assertThat(result, is("null"));

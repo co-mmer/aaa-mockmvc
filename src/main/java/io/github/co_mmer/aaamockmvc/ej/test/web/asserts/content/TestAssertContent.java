@@ -6,8 +6,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert1Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert1Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssert1Map;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
-import lombok.NonNull;
 import org.opentest4j.AssertionFailedError;
+import org.springframework.lang.NonNull;
 
 /**
  * Entry point for content assertions.
@@ -77,7 +77,7 @@ public interface TestAssertContent {
    * @param <C> target type
    * @return the next step in the fluent assertion chain, exposing only arrange-appropriate methods
    *     based on the current state.
-   * @throws AssertionFailedError if the body cannot be deserialized to {@code expectedClass}
+   * @throws AssertionFailedError if the body cannot be deserialized to {@code resultClass}
    * @since 2.0.0
    */
   <C> TestAssert1Class<C> asClass(@NonNull Class<C> expectedClass) throws AssertionFailedError;

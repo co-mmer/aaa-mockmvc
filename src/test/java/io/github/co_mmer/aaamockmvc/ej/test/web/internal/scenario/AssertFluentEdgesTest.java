@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMatchers.allowsExactly;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMatchers.transition;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentMatchers.allowsExactly;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentMatchers.transition;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert1Boolean;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool.TestAssert2Boolean;
@@ -27,7 +27,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.map.TestAssertLMap;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert2String;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssertLString;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentAssert;
 import org.junit.jupiter.api.Test;
 
 class AssertFluentEdgesTest {

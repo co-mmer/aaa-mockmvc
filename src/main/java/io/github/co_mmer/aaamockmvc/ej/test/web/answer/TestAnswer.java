@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 
 /**
  * Read access (“answer” phase) to the captured HTTP response payload.

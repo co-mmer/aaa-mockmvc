@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header;
 
-import lombok.NonNull;
 import org.springframework.http.MediaType;
+import org.springframework.lang.NonNull;
 
 interface TestOperationContentType {
 

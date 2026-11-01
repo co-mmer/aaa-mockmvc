@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.delete.url;
 
 import java.util.Map;
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 
 interface TestOperationQuery2 {
 

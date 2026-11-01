@@ -1,5 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head;
 
+import org.springframework.lang.NonNull;
+
 /**
  * Assertions for HTTP response headers.
  *
@@ -39,7 +41,7 @@ public interface TestAssertHead {
    * @throws AssertionError if the header is not present
    * @since 2.0.0
    */
-  TestAssertHead containsKey(String expectedKey);
+  TestAssertHead containsKey(@NonNull String expectedKey);
 
   /**
    * Asserts that a header with the given name is not present.
@@ -50,7 +52,7 @@ public interface TestAssertHead {
    * @throws AssertionError if the header is present
    * @since 2.0.0
    */
-  TestAssertHead doesNotContainKey(String notExpectedKey);
+  TestAssertHead doesNotContainKey(@NonNull String notExpectedKey);
 
   /**
    * Asserts that the header exists and that <em>one of its values</em> equals the expected value.
@@ -65,7 +67,7 @@ public interface TestAssertHead {
    *     expectedValue}
    * @since 2.0.0
    */
-  TestAssertHead containsEntry(String expectedKey, String expectedValue);
+  TestAssertHead containsEntry(@NonNull String expectedKey, @NonNull String expectedValue);
 
   /**
    * Asserts that the header's values match <em>exactly</em> the provided list: same values, same
@@ -80,5 +82,6 @@ public interface TestAssertHead {
    *     order
    * @since 2.0.0
    */
-  TestAssertHead containsEntryExactly(String expectedKey, String... expectedValue);
+  TestAssertHead containsEntryExactly(
+      @NonNull String expectedKey, @NonNull String... expectedValue);
 }

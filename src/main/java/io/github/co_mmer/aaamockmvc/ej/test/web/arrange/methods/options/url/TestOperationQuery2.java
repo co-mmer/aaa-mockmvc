@@ -1,7 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.url;
 
 import java.util.Map;
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 
 interface TestOperationQuery2 {
 

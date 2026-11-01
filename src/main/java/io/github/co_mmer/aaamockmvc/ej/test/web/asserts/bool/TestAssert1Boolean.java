@@ -1,6 +1,6 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bool;
 
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 
 /**
  * Entry point for raw <b>Boolean</b> content assertions.

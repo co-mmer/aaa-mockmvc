@@ -6,7 +6,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.head.url.TestArr
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.url.TestArrange1OptionsUrl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.url.TestArrange1ResUrl;
 import java.net.URI;
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
 
 /**
  * Arrange phase entry point for defining the HTTP request.

@@ -1,8 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMatchers.allowsExactly;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMatchers.allowsNone;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMatchers.transition;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentMatchers.allowsExactly;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentMatchers.allowsNone;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentMatchers.transition;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.header.TestArrange1OptionsHeader;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.header.TestArrange3OptionsHeader;
@@ -11,7 +11,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.header.T
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.url.TestArrange1OptionsUrl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.url.TestArrange2OptionsUrl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.options.url.TestArrange3OptionsUrl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentAssert;
 import org.junit.jupiter.api.Test;
 
 class OptionsFluentEdgesTest {

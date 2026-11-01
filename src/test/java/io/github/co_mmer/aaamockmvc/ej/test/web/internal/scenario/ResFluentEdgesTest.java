@@ -1,8 +1,8 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario;
 
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMatchers.allowsExactly;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMatchers.allowsNone;
-import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentMatchers.transition;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentMatchers.allowsExactly;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentMatchers.allowsNone;
+import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentMatchers.transition;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArrange1ResBody;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.body.TestArrange2ResBody;
@@ -16,7 +16,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.header.TestA
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.url.TestArrange1ResUrl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.url.TestArrange2ResUrl;
 import io.github.co_mmer.aaamockmvc.ej.test.web.arrange.methods.res.url.TestArrange3ResUrl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.fluent.FluentAssert;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.scenario.fluent.FluentAssert;
 import org.junit.jupiter.api.Test;
 
 class ResFluentEdgesTest {

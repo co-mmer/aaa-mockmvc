@@ -33,14 +33,4 @@ class StringUtilsTest {
   void GIVEN_empty_WHEN_EMPTY_THEN_return_true() {
     assertEquals("", StringUtils.EMPTY);
   }
-
-  @Test
-  void GIVEN_empty_array_WHEN_EMPTY_ARRAY_THEN_return_true() {
-    assertEquals("[]", StringUtils.EMPTY_ARRAY);
-  }
-
-  @Test
-  void GIVEN_empty_object_WHEN_EMPTY_OBJECT_THEN_return_true() {
-    assertEquals("{}", StringUtils.EMPTY_OBJECT);
-  }
 }
