@@ -17,7 +17,7 @@ class TestAssertImplTest extends TestAssertBase {
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext();
-    this.useContext(context);
+    useContext(context);
     this.testAssert = new TestAssertImpl(context);
   }
 

@@ -6,17 +6,14 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert3Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssert4Class;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.clazz.TestAssertLClass;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.Conditions;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.function.Predicate;
-import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 
 @Since("1.0.0")
-@RequiredArgsConstructor
 public final class TestAssertClassImpl<T>
     implements TestAssert1Class<T>,
         TestAssert2Class<T>,
@@ -25,128 +22,136 @@ public final class TestAssertClassImpl<T>
         TestAssertLClass {
 
   private final TestAAAContext context;
+  private final ObjectAssertion<T> assertion;
+
+  @Since("2.1.0")
+  public TestAssertClassImpl(@NonNull TestAAAContext context, @NonNull ObjectValue<T> actual) {
+    this.context = context;
+    this.assertion = new ObjectAssertion<>(actual, context.getStep());
+  }
 
   @Override
+  @NonNull
   public TestAssert2Class<T> isNotNull() {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).toBePresent();
+    this.assertion.isNotNull();
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssertLClass isNull() {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).toBeAbsent();
+    this.assertion.isNull();
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssertLClass isEqualTo(@NonNull T expectedResponse) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toHaveSameTypeAndValueAs(AssertValue.expectedResponse(expectedResponse))
-        .toEqual(AssertValue.expectedResponse(expectedResponse));
+    this.assertion.isEqualTo(ObjectValue.expected(expectedResponse));
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssert3Class<T> matchAll(@NonNull Predicate<T> condition) {
-
-    @SuppressWarnings("unchecked")
-    Predicate<T>[] predicates = new Predicate[] {condition};
-    return this.matchAll(predicates);
+    this.assertion.matchAll(new Conditions<>(condition));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssert3Class<T> matchAll(
       @NonNull Predicate<T> condition1, @NonNull Predicate<T> condition2) {
-    @SuppressWarnings("unchecked")
-    Predicate<T>[] predicates = new Predicate[] {condition1, condition2};
-    return this.matchAll(predicates);
+    this.assertion.matchAll(new Conditions<>(condition1, condition2));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssert3Class<T> matchAll(
       @NonNull Predicate<T> condition1,
       @NonNull Predicate<T> condition2,
       @NonNull Predicate<T> condition3) {
-    @SuppressWarnings("unchecked")
-    Predicate<T>[] predicates = new Predicate[] {condition1, condition2, condition3};
-    return this.matchAll(predicates);
+    this.assertion.matchAll(new Conditions<>(condition1, condition2, condition3));
+    return this;
   }
 
   @SafeVarargs
   @Override
+  @NonNull
   public final TestAssert3Class<T> matchAll(@NonNull Predicate<T>... conditions) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toMatchAll(AssertValue.matchConditions(conditions));
+    this.assertion.matchAll(new Conditions<>(conditions));
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssert4Class<T> matchAny(@NonNull Predicate<T> condition) {
-    @SuppressWarnings("unchecked")
-    Predicate<T>[] predicates = new Predicate[] {condition};
-    return this.matchAny(predicates);
+    this.assertion.matchAny(new Conditions<>(condition));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssert4Class<T> matchAny(
       @NonNull Predicate<T> condition1, @NonNull Predicate<T> condition2) {
-    @SuppressWarnings("unchecked")
-    Predicate<T>[] predicates = new Predicate[] {condition1, condition2};
-    return this.matchAny(predicates);
+    this.assertion.matchAny(new Conditions<>(condition1, condition2));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssert4Class<T> matchAny(
       @NonNull Predicate<T> condition1,
       @NonNull Predicate<T> condition2,
       @NonNull Predicate<T> condition3) {
-    @SuppressWarnings("unchecked")
-    Predicate<T>[] predicates = new Predicate[] {condition1, condition2, condition3};
-    return this.matchAny(predicates);
+    this.assertion.matchAny(new Conditions<>(condition1, condition2, condition3));
+    return this;
   }
 
   @SafeVarargs
   @Override
+  @NonNull
   public final TestAssert4Class<T> matchAny(@NonNull Predicate<T>... conditions) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toMatchAny(AssertValue.matchConditions(conditions));
+    this.assertion.matchAny(new Conditions<>(conditions));
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssertLClass matchNone(@NonNull Predicate<T> condition) {
-    @SuppressWarnings("unchecked")
-    Predicate<T>[] predicates = new Predicate[] {condition};
-    return this.matchNone(predicates);
+    this.assertion.matchNone(new Conditions<>(condition));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssertLClass matchNone(
       @NonNull Predicate<T> condition1, @NonNull Predicate<T> condition2) {
-    @SuppressWarnings("unchecked")
-    Predicate<T>[] predicates = new Predicate[] {condition1, condition2};
-    return this.matchNone(predicates);
+    this.assertion.matchNone(new Conditions<>(condition1, condition2));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssertLClass matchNone(
       @NonNull Predicate<T> condition1,
       @NonNull Predicate<T> condition2,
       @NonNull Predicate<T> condition3) {
-    @SuppressWarnings("unchecked")
-    Predicate<T>[] predicates = new Predicate[] {condition1, condition2, condition3};
-    return this.matchNone(predicates);
+    this.assertion.matchNone(new Conditions<>(condition1, condition2, condition3));
+    return this;
   }
 
   @SafeVarargs
   @Override
+  @NonNull
   public final TestAssertLClass matchNone(@NonNull Predicate<T>... conditions) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toMatchNone(AssertValue.matchConditions(conditions));
+    this.assertion.matchNone(new Conditions<>(conditions));
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssertHead headers() {
     return new TestAssertHeadImpl(this.context);
   }

@@ -4,48 +4,54 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert1String;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssert2String;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.string.TestAssertLString;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
-import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 
 @Since("1.0.0")
-@RequiredArgsConstructor
 public final class TestAssertStringImpl
     implements TestAssert1String, TestAssert2String, TestAssertLString {
 
   private final TestAAAContext context;
+  private final StringAssertion assertion;
+
+  @Since("2.1.0")
+  public TestAssertStringImpl(@NonNull TestAAAContext context, @NonNull StringValue actual) {
+    this.context = context;
+    this.assertion = new StringAssertion(actual, context.getStep());
+  }
 
   @Override
+  @NonNull
   public TestAssert2String isNotEmpty() {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).notToBeEmpty();
+    this.assertion.isNotEmpty();
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssertLString isEmpty() {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).toBeEmpty();
+    this.assertion.isEmpty();
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssert2String hasLength(int expectedLength) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toHaveLength(AssertValue.expectedLength(expectedLength));
+    this.assertion.hasLength(expectedLength);
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssertLString isEqualTo(@NonNull String expectedString) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toEqual(AssertValue.expectedString(expectedString));
+    this.assertion.isEqualTo(new StringValue(expectedString));
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssertHead headers() {
     return new TestAssertHeadImpl(this.context);
   }

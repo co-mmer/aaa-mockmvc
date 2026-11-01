@@ -15,177 +15,24 @@ class AAAAssertDetailTest {
   private static final Object ACTUAL = "actual";
 
   @Test
-  void GIVEN_values_WHEN_bodyAbsent_THEN_expected_detail_is_created() {
+  void GIVEN_values_WHEN_failure_THEN_expected_error_is_created() {
     // Act
-    var result = AAAAssertDetail.bodyAbsent(STEP, EXPECTED, ACTUAL);
+    var result = AAAAssertDetail.failure(STEP, REASON, EXPECTED, ACTUAL);
 
     // Assert
-    assertDetail(result, "The response body was absent.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_bodyPresent_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.bodyPresent(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response body was present.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_bodyNotEmpty_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.bodyNotEmpty(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response body was not empty.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_bodyEmpty_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.bodyEmpty(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response body was empty.");
-  }
-
-  @Test
-  void GIVEN_dimension_WHEN_dimensionDiffered_THEN_expected_detail_is_created() {
-    // Arrange
-    var dimension = "size";
-
-    // Act
-    var result = AAAAssertDetail.dimensionDiffered(STEP, EXPECTED, ACTUAL, dimension);
-
-    // Assert
-    assertDetail(result, "The response body had a different size.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_valueDiffered_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.valueDiffered(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response body differed from the expected value.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_typeDiffered_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.typeDiffered(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response body had a different type.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_elementsMissing_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.elementsMissing(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response body did not contain every expected element.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_unexpectedElement_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.unexpectedElement(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response body contained an unexpected element.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_elementsDiffered_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.elementsDiffered(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response body contained different elements.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_notAllMatched_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.notAllMatched(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "At least one value did not match every condition.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_noneMatched_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.noneMatched(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "No value matched any condition.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_conditionMatched_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.conditionMatched(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "At least one value matched a condition.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_headerKeyMissing_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.headerKeyMissing(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response headers did not contain the expected key.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_unexpectedHeaderKey_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.unexpectedHeaderKey(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response headers contained the unexpected key.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_headerValueMissing_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.headerValueMissing(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response header did not contain the expected value.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_headerValuesDiffered_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.headerValuesDiffered(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response header contained different values.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_statusDiffered_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.statusDiffered(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response status differed from the expected status.");
-  }
-
-  @Test
-  void GIVEN_values_WHEN_statusOutOfRange_THEN_expected_detail_is_created() {
-    // Act
-    var result = AAAAssertDetail.statusOutOfRange(STEP, EXPECTED, ACTUAL);
-
-    // Assert
-    assertDetail(result, "The response status was outside the expected range.");
+    assertThat(
+        result.getMessage(),
+        equalTo(
+            LINE_SEPARATOR
+                + "Step:      Create user"
+                + LINE_SEPARATOR
+                + "Expected:  expected"
+                + LINE_SEPARATOR
+                + "Actual:    actual"
+                + LINE_SEPARATOR
+                + "Assertion: The assertion failed."));
+    assertThat(result.getExpected().getValue(), equalTo(EXPECTED));
+    assertThat(result.getActual().getValue(), equalTo(ACTUAL));
   }
 
   @Test
@@ -201,11 +48,11 @@ class AAAAssertDetailTest {
         result,
         equalTo(
             LINE_SEPARATOR
-                + "Expected: expected"
+                + "Expected:  expected"
                 + LINE_SEPARATOR
-                + "Actual:   actual"
+                + "Actual:    actual"
                 + LINE_SEPARATOR
-                + "Reason:   The assertion failed."));
+                + "Assertion: The assertion failed."));
   }
 
   @Test
@@ -222,13 +69,13 @@ class AAAAssertDetailTest {
         result,
         equalTo(
             LINE_SEPARATOR
-                + "Step:     Create user"
+                + "Step:      Create user"
                 + LINE_SEPARATOR
-                + "Expected: expected"
+                + "Expected:  expected"
                 + LINE_SEPARATOR
-                + "Actual:   actual"
+                + "Actual:    actual"
                 + LINE_SEPARATOR
-                + "Reason:   The assertion failed."));
+                + "Assertion: The assertion failed."));
   }
 
   @Test
@@ -244,11 +91,11 @@ class AAAAssertDetailTest {
         result,
         equalTo(
             LINE_SEPARATOR
-                + "Expected: expected"
+                + "Expected:  expected"
                 + LINE_SEPARATOR
-                + "Actual:   actual"
+                + "Actual:    actual"
                 + LINE_SEPARATOR
-                + "Reason:   The assertion failed."));
+                + "Assertion: The assertion failed."));
   }
 
   @Test
@@ -264,11 +111,11 @@ class AAAAssertDetailTest {
         result,
         equalTo(
             LINE_SEPARATOR
-                + "Expected: expected"
+                + "Expected:  expected"
                 + LINE_SEPARATOR
-                + "Actual:   actual"
+                + "Actual:    actual"
                 + LINE_SEPARATOR
-                + "Reason:   The assertion failed."));
+                + "Assertion: The assertion failed."));
   }
 
   @Test
@@ -284,11 +131,11 @@ class AAAAssertDetailTest {
         result,
         equalTo(
             LINE_SEPARATOR
-                + "Expected: null"
+                + "Expected:  null"
                 + LINE_SEPARATOR
-                + "Actual:   null"
+                + "Actual:    null"
                 + LINE_SEPARATOR
-                + "Reason:   The assertion failed."));
+                + "Assertion: The assertion failed."));
   }
 
   @Test
@@ -304,11 +151,11 @@ class AAAAssertDetailTest {
         result,
         equalTo(
             LINE_SEPARATOR
-                + "Expected: \"\""
+                + "Expected:  \"\""
                 + LINE_SEPARATOR
-                + "Actual:   \"\""
+                + "Actual:    \"\""
                 + LINE_SEPARATOR
-                + "Reason:   The assertion failed."));
+                + "Assertion: The assertion failed."));
   }
 
   @Test
@@ -325,11 +172,11 @@ class AAAAssertDetailTest {
         result,
         equalTo(
             LINE_SEPARATOR
-                + "Expected: byte[3] [1, -2, 127]"
+                + "Expected:  byte[3] [1, -2, 127]"
                 + LINE_SEPARATOR
-                + "Actual:   byte[3] [1, -2, 127]"
+                + "Actual:    byte[3] [1, -2, 127]"
                 + LINE_SEPARATOR
-                + "Reason:   The assertion failed."));
+                + "Assertion: The assertion failed."));
   }
 
   @Test
@@ -347,11 +194,11 @@ class AAAAssertDetailTest {
         result,
         equalTo(
             LINE_SEPARATOR
-                + "Expected: [1, 2, 3]"
+                + "Expected:  [1, 2, 3]"
                 + LINE_SEPARATOR
-                + "Actual:   [true, false]"
+                + "Actual:    [true, false]"
                 + LINE_SEPARATOR
-                + "Reason:   The assertion failed."));
+                + "Assertion: The assertion failed."));
   }
 
   @Test
@@ -369,11 +216,11 @@ class AAAAssertDetailTest {
         result,
         equalTo(
             LINE_SEPARATOR
-                + "Expected: [first, second]"
+                + "Expected:  [first, second]"
                 + LINE_SEPARATOR
-                + "Actual:   [value, null]"
+                + "Actual:    [value, null]"
                 + LINE_SEPARATOR
-                + "Reason:   The assertion failed."));
+                + "Assertion: The assertion failed."));
   }
 
   @Test
@@ -391,11 +238,11 @@ class AAAAssertDetailTest {
         result,
         equalTo(
             LINE_SEPARATOR
-                + "Expected: [[1, 2], [value, null]]"
+                + "Expected:  [[1, 2], [value, null]]"
                 + LINE_SEPARATOR
-                + "Actual:   [byte[2] [3, 4], [first, second]]"
+                + "Actual:    [byte[2] [3, 4], [first, second]]"
                 + LINE_SEPARATOR
-                + "Reason:   The assertion failed."));
+                + "Assertion: The assertion failed."));
   }
 
   @Test
@@ -411,14 +258,10 @@ class AAAAssertDetailTest {
         result,
         equalTo(
             LINE_SEPARATOR
-                + "Expected: 42"
+                + "Expected:  42"
                 + LINE_SEPARATOR
-                + "Actual:   true"
+                + "Actual:    true"
                 + LINE_SEPARATOR
-                + "Reason:   The assertion failed."));
-  }
-
-  private static void assertDetail(AAAAssertDetail actual, String reason) {
-    assertThat(actual, equalTo(new AAAAssertDetail(STEP, EXPECTED, ACTUAL, reason)));
+                + "Assertion: The assertion failed."));
   }
 }

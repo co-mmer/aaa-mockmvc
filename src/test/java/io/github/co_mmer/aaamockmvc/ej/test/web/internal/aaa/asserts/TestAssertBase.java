@@ -1,21 +1,18 @@
 package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.act.model.TestActResult;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertOperand;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
+import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public abstract class TestAssertBase {
 
   private TestAAAContext context;
-
-  public TestAAAContext getContext() {
-    return this.context;
-  }
 
   protected void useContext(TestAAAContext context) {
     this.context = context;
@@ -41,9 +38,5 @@ public abstract class TestAssertBase {
 
   protected void useActResult(String key, String... value) {
     this.context.setActResult(new TestActResult(-1, Map.of(key, Arrays.asList(value)), null, null));
-  }
-
-  protected <T> void useAssertResult(T actual) {
-    this.context.setAssertOperand(AssertOperand.clazz(actual));
   }
 }

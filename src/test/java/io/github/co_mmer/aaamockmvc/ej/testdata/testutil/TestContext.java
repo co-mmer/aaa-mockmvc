@@ -1,6 +1,7 @@
 package io.github.co_mmer.aaamockmvc.ej.testdata.testutil;
 
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_A1_JSON;
+import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_HEADER;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,6 +22,8 @@ public final class TestContext {
   public static TestAAAContext createContext() {
     var context = new TestAAAContext(createTestEnvironment());
     context.setArrangeBuilder(createRequestBuilder());
+    context.setActResult(
+        new TestActResult(200, TEST_HEADER, TEST_A1_JSON.getBytes(), TEST_A1_JSON));
     return context;
   }
 
@@ -28,6 +31,8 @@ public final class TestContext {
     var context = new TestAAAContext(createTestEnvironment());
     context.setStep(new TestStepDto(stepName));
     context.setArrangeBuilder(createRequestBuilder());
+    context.setActResult(
+        new TestActResult(200, TEST_HEADER, TEST_A1_JSON.getBytes(), TEST_A1_JSON));
     return context;
   }
 

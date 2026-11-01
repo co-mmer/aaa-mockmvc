@@ -4,84 +4,76 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObject.TEST_
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import java.util.function.Consumer;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedConstruction;
 
 class TestAssertStringImplTest extends TestAssertBase {
 
-  private static final AssertValue<String, String> ASSERT_VALUE_A1 =
-      AssertValue.expectedString(TEST_A1_JSON);
+  private static final StringValue ASSERT_VALUE_A1 = new StringValue(TEST_A1_JSON);
 
   private TestAssertStringImpl impl;
+  private MockedConstruction<StringAssertion> mockedAssertion;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
-    this.useContext(context);
-    this.impl = new TestAssertStringImpl(context);
+    useContext(context);
+    this.mockedAssertion = mockConstruction(StringAssertion.class);
+    this.impl = new TestAssertStringImpl(context, new StringValue(TEST_A1_JSON));
   }
 
-  private void assertCall(Runnable actCall, Consumer<AAAAssert<?, ?>> verifyCall) {
-    var mockInstance = mock(AAAAssert.class);
-    var mockClass = mockStatic(AAAAssert.class);
-    mockClass.when(() -> AAAAssert.expect(any(), any())).thenReturn(mockInstance);
+  @AfterEach
+  void tearDown() {
+    this.mockedAssertion.close();
+  }
 
+  private void assertCall(Runnable actCall, Consumer<StringAssertion> verifyCall) {
     actCall.run();
 
-    mockClass.verify(
-        () -> AAAAssert.expect(getContext().getStep(), getContext().getAssertOperand()), times(1));
-
-    verifyCall.accept(mockInstance);
-    mockClass.close();
+    verifyCall.accept(this.mockedAssertion.constructed().get(0));
   }
 
   @Test
-  void WHEN_isNotEmpty_THEN_notToBeEmpty_is_called() {
-    assertCall(() -> impl.isNotEmpty(), mock -> verify(mock, times(1)).notToBeEmpty());
+  void WHEN_isNotEmpty_THEN_isNotEmpty_is_called() {
+    assertCall(() -> this.impl.isNotEmpty(), mock -> verify(mock, times(1)).isNotEmpty());
   }
 
   @Test
-  void WHEN_isEmpty_THEN_toBeEmpty_is_called() {
-    assertCall(() -> impl.isEmpty(), mock -> verify(mock, times(1)).toBeEmpty());
+  void WHEN_isEmpty_THEN_isEmpty_is_called() {
+    assertCall(() -> this.impl.isEmpty(), mock -> verify(mock, times(1)).isEmpty());
   }
 
   @Test
-  void WHEN_hasLength_THEN_toHaveLength_is_called() {
+  void WHEN_hasLength_THEN_hasLength_is_called() {
+    assertCall(() -> this.impl.hasLength(1), mock -> verify(mock, times(1)).hasLength(1));
+  }
+
+  @Test
+  void WHEN_isEqualTo_THEN_isEqualTo_is_called() {
     assertCall(
-        () -> impl.hasLength(1),
-        mock -> verify(mock, times(1)).toHaveLength(AssertValue.expectedLength(1)));
+        () -> this.impl.isEqualTo(TEST_A1_JSON),
+        mock ->
+            verify(mock, times(1))
+                .isEqualTo(argThat(value -> value.value().equals(ASSERT_VALUE_A1.value()))));
   }
 
   @Test
-  void WHEN_isEqualTo_THEN_toEqual_is_called() {
-    assertCall(
-        () -> impl.isEqualTo(TEST_A1_JSON),
-        mock -> verify(mock, times(1)).toEqual(ASSERT_VALUE_A1));
-  }
+  void WHEN_headers_THEN_return_TestAssertHeadImpl() {
+    // Act
+    var headers = this.impl.headers();
 
-  @Nested
-  class nextStep {
-
-    @Test
-    void headers() {
-      // Act
-      var headers = impl.headers();
-
-      // Assert
-      assertThat(headers, instanceOf(TestAssertHeadImpl.class));
-    }
+    // Assert
+    assertThat(headers, instanceOf(TestAssertHeadImpl.class));
   }
 }

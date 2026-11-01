@@ -4,53 +4,53 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssert1Byte;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssert2Byte;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.bytes.TestAssertLByte;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertOperand;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Note;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
-import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
 
 @Since("1.4.0")
-@RequiredArgsConstructor
 public final class TestAssertByteImpl implements TestAssert1Byte, TestAssert2Byte, TestAssertLByte {
 
   private final TestAAAContext context;
+  private final ByteAssertion assertion;
 
-  @Note("Move to Context")
-  private AssertOperand<?, ?> getAssertOperand() {
-    return AssertOperand.bytes(this.context.getActResult().contentAsBytes());
+  @Since("2.1.0")
+  public TestAssertByteImpl(@NonNull TestAAAContext context, @NonNull ByteValue actual) {
+    this.context = context;
+    this.assertion = new ByteAssertion(actual, context.getStep());
   }
 
   @Override
+  @NonNull
   public TestAssert2Byte isNotEmpty() {
-    AAAAssert.expect(this.context.getStep(), getAssertOperand()).notToBeEmpty();
+    this.assertion.isNotEmpty();
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssertLByte isEmpty() {
-    AAAAssert.expect(this.context.getStep(), getAssertOperand()).toBeEmpty();
+    this.assertion.isEmpty();
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssert2Byte hasLength(int expectedLength) {
-    AAAAssert.expect(this.context.getStep(), getAssertOperand())
-        .toHaveSize(AssertValue.expectedLength(expectedLength));
+    this.assertion.hasLength(expectedLength);
     return this;
   }
 
   @Override
-  public TestAssertLByte isEqualTo(byte[] expectedByte) {
-    AAAAssert.expect(this.context.getStep(), getAssertOperand())
-        .toEqual(AssertValue.expectedBytes(expectedByte));
+  @NonNull
+  public TestAssertLByte isEqualTo(@NonNull byte[] expectedByte) {
+    this.assertion.isEqualTo(new ByteValue(expectedByte));
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssertHead headers() {
     return new TestAssertHeadImpl(this.context);
   }

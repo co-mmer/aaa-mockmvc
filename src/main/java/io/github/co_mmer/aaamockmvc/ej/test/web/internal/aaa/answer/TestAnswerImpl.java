@@ -53,7 +53,10 @@ public final class TestAnswerImpl implements TestAnswer {
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
-      var actual = TestGenericMapper.parse(mapper, content, answerType);
+      var actual =
+          content == null || content.isBlank()
+              ? null
+              : TestGenericMapper.parse(mapper, content, answerType);
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
@@ -74,7 +77,10 @@ public final class TestAnswerImpl implements TestAnswer {
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
-      var actual = TestGenericMapper.parseCollection(mapper, content, answerType);
+      var actual =
+          content == null || content.isBlank()
+              ? null
+              : TestGenericMapper.parseCollection(mapper, content, answerType);
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
@@ -96,7 +102,10 @@ public final class TestAnswerImpl implements TestAnswer {
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
-      var actual = TestGenericMapper.parseList(mapper, content, answerType);
+      var actual =
+          content == null || content.isBlank()
+              ? null
+              : TestGenericMapper.parseList(mapper, content, answerType);
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
@@ -118,7 +127,10 @@ public final class TestAnswerImpl implements TestAnswer {
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
-      var actual = TestGenericMapper.parseSet(mapper, content, answerType);
+      var actual =
+          content == null || content.isBlank()
+              ? null
+              : TestGenericMapper.parseSet(mapper, content, answerType);
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {
@@ -141,7 +153,10 @@ public final class TestAnswerImpl implements TestAnswer {
     var mapper = this.context.getEnvironment().objectMapper();
 
     try {
-      var actual = TestGenericMapper.parseMap(mapper, content, answerKey, answerValue);
+      var actual =
+          content == null || content.isBlank()
+              ? null
+              : TestGenericMapper.parseMap(mapper, content, answerKey, answerValue);
       this.context.setAnswerResult(new TestAnswerResult<>(actual));
       return actual;
     } catch (TestGenericMapperException e) {

@@ -8,203 +8,211 @@ import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_N
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestObjectSimple;
-import java.util.Collection;
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedConstruction;
 
 class TestAssertCollectionImplTest extends TestAssertBase {
 
   private static final Predicate<TestObjectSimple> PREDICATE_A =
       element -> element.name().equals(A);
 
-  private static final AssertValue<Collection<TestObjectSimple>, List<String>> ASSERT_VALUE_A1_A2 =
-      AssertValue.expectedCollection(TEST_LIST_A1_A2);
+  private static final CollectionValue<TestObjectSimple> VALUE_A1_A2 =
+      new CollectionValue<>(TEST_LIST_A1_A2);
 
   private TestAssertCollectionImpl<TestObjectSimple> impl;
+  private MockedConstruction<?> mockedAssertion;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
-    this.useContext(context);
-    this.impl = new TestAssertCollectionImpl<>(context);
+    useContext(context);
+    this.mockedAssertion = mockConstruction(CollectionAssertion.class);
+    this.impl = new TestAssertCollectionImpl<>(context, new CollectionValue<>(TEST_LIST_A1_A2));
   }
 
-  private void assertCall(Runnable actCall, Consumer<AAAAssert<?, ?>> verifyCall) {
-    var mockInstance = mock(AAAAssert.class);
-    var mockClass = mockStatic(AAAAssert.class);
-    mockClass.when(() -> AAAAssert.expect(any(), any())).thenReturn(mockInstance);
+  @AfterEach
+  void tearDown() {
+    this.mockedAssertion.close();
+  }
 
+  @SuppressWarnings("unchecked")
+  private void assertCall(
+      Runnable actCall, Consumer<CollectionAssertion<TestObjectSimple>> verifyCall) {
     actCall.run();
 
-    mockClass.verify(
-        () -> AAAAssert.expect(getContext().getStep(), getContext().getAssertOperand()), times(1));
-
-    verifyCall.accept(mockInstance);
-    mockClass.close();
+    verifyCall.accept(
+        (CollectionAssertion<TestObjectSimple>) this.mockedAssertion.constructed().get(0));
   }
 
   @Test
-  void WHEN_isNotEmpty_THEN_notToBeEmpty_is_called() {
-    assertCall(() -> impl.isNotEmpty(), mock -> verify(mock, times(1)).notToBeEmpty());
+  void WHEN_isNotEmpty_THEN_isNotEmpty_is_called() {
+    assertCall(() -> this.impl.isNotEmpty(), mock -> verify(mock, times(1)).isNotEmpty());
   }
 
   @Test
-  void WHEN_isEmpty_THEN_toBeEmpty_is_called() {
-    assertCall(() -> impl.isEmpty(), mock -> verify(mock, times(1)).toBeEmpty());
+  void WHEN_isEmpty_THEN_isEmpty_is_called() {
+    assertCall(() -> this.impl.isEmpty(), mock -> verify(mock, times(1)).isEmpty());
   }
 
   @Test
-  void WHEN_hasSize_THEN_toHaveSize_is_called() {
+  void WHEN_hasSize_THEN_hasSize_is_called() {
+    assertCall(() -> this.impl.hasSize(1), mock -> verify(mock, times(1)).hasSize(1));
+  }
+
+  @Test
+  void WHEN_isEqualTo_THEN_isEqualTo_is_called() {
     assertCall(
-        () -> impl.hasSize(1),
-        mock -> verify(mock, times(1)).toHaveSize(AssertValue.expectedSize(1)));
+        () -> this.impl.isEqualTo(TEST_LIST_A1_A2),
+        mock ->
+            verify(mock, times(1))
+                .isEqualTo(argThat(value -> value.values().equals(VALUE_A1_A2.values()))));
   }
 
   @Test
-  void WHEN_isEqualTo_THEN_toEqual_is_called() {
+  void WHEN_contains_THEN_contains_is_called() {
     assertCall(
-        () -> impl.isEqualTo(TEST_LIST_A1_A2),
-        mock -> verify(mock, times(1)).toEqual(ASSERT_VALUE_A1_A2));
+        () -> this.impl.contains(TEST_LIST_A1_A2),
+        mock ->
+            verify(mock, times(1))
+                .contains(argThat(value -> value.values().equals(VALUE_A1_A2.values()))));
   }
 
   @Test
-  void WHEN_contains_THEN_toContain_is_called() {
+  void WHEN_contains_varargs_THEN_contains_is_called() {
     assertCall(
-        () -> impl.contains(TEST_LIST_A1_A2),
-        mock -> verify(mock, times(1)).toContain(ASSERT_VALUE_A1_A2));
+        () -> this.impl.contains(A1, A2),
+        mock ->
+            verify(mock, times(1))
+                .contains(argThat(value -> value.values().equals(VALUE_A1_A2.values()))));
   }
 
   @Test
-  void WHEN_contains_varargs_THEN_toContain_is_called() {
+  void WHEN_containsAnyOrder_THEN_containsAnyOrder_is_called() {
     assertCall(
-        () -> impl.contains(A1, A2), mock -> verify(mock, times(1)).toContain(ASSERT_VALUE_A1_A2));
+        () -> this.impl.containsAnyOrder(TEST_LIST_A1_A2),
+        mock ->
+            verify(mock, times(1))
+                .containsAnyOrder(argThat(value -> value.values().equals(VALUE_A1_A2.values()))));
   }
 
   @Test
-  void WHEN_containsAnyOrder_THEN_toContainExactlyInAnyOrder_is_called() {
+  void WHEN_notContains_THEN_notContains_is_called() {
     assertCall(
-        () -> impl.containsAnyOrder(TEST_LIST_A1_A2),
-        mock -> verify(mock, times(1)).toContainExactlyInAnyOrder(ASSERT_VALUE_A1_A2));
+        () -> this.impl.notContains(TEST_LIST_A1_A2),
+        mock ->
+            verify(mock, times(1))
+                .notContains(argThat(value -> value.values().equals(VALUE_A1_A2.values()))));
   }
 
   @Test
-  void WHEN_notContains_THEN_notToContain_is_called() {
+  void WHEN_notContains_varargs_THEN_notContains_is_called() {
     assertCall(
-        () -> impl.notContains(TEST_LIST_A1_A2),
-        mock -> verify(mock, times(1)).notToContain(ASSERT_VALUE_A1_A2));
+        () -> this.impl.notContains(A1, A2),
+        mock ->
+            verify(mock, times(1))
+                .notContains(argThat(value -> value.values().equals(VALUE_A1_A2.values()))));
   }
 
   @Test
-  void WHEN_notContains_varargs_THEN_notToContain_is_called() {
+  void WHEN_matchAll_THEN_matchAll_is_called() {
     assertCall(
-        () -> impl.notContains(A1, A2),
-        mock -> verify(mock, times(1)).notToContain(ASSERT_VALUE_A1_A2));
+        () -> this.impl.matchAll(PREDICATE_A), mock -> verify(mock, times(1)).matchAll(any()));
   }
 
   @Test
-  void WHEN_matchAll_THEN_toMatchAll_is_called() {
-    assertCall(() -> impl.matchAll(PREDICATE_A), mock -> verify(mock, times(1)).toMatchAll(any()));
-  }
-
-  @Test
-  void WHEN_matchAll_2_THEN_toMatchAll_is_called() {
+  void WHEN_matchAll_2_THEN_matchAll_is_called() {
     assertCall(
-        () -> impl.matchAll(PREDICATE_A, PREDICATE_A),
-        mock -> verify(mock, times(1)).toMatchAll(any()));
+        () -> this.impl.matchAll(PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).matchAll(any()));
   }
 
   @Test
-  void WHEN_matchAll_3_THEN_toMatchAll_is_called() {
+  void WHEN_matchAll_3_THEN_matchAll_is_called() {
     assertCall(
-        () -> impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A),
-        mock -> verify(mock, times(1)).toMatchAll(any()));
+        () -> this.impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).matchAll(any()));
   }
 
   @Test
-  void WHEN_matchAll_varargs_THEN_toMatchAll_is_called() {
+  void WHEN_matchAll_varargs_THEN_matchAll_is_called() {
     assertCall(
-        () -> impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
-        mock -> verify(mock, times(1)).toMatchAll(any()));
+        () -> this.impl.matchAll(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).matchAll(any()));
   }
 
   @Test
   void WHEN_matchAny_THEN_matchAny_is_called() {
-    assertCall(() -> impl.matchAny(PREDICATE_A), mock -> verify(mock, times(1)).toMatchAny(any()));
+    assertCall(
+        () -> this.impl.matchAny(PREDICATE_A), mock -> verify(mock, times(1)).matchAny(any()));
   }
 
   @Test
-  void WHEN_matchAny_2_THEN_toMatchAny_is_called() {
+  void WHEN_matchAny_2_THEN_matchAny_is_called() {
     assertCall(
-        () -> impl.matchAny(PREDICATE_A, PREDICATE_A),
-        mock -> verify(mock, times(1)).toMatchAny(any()));
+        () -> this.impl.matchAny(PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).matchAny(any()));
   }
 
   @Test
-  void WHEN_matchAny_3_THEN_toMatchAny_is_called() {
+  void WHEN_matchAny_3_THEN_matchAny_is_called() {
     assertCall(
-        () -> impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A),
-        mock -> verify(mock, times(1)).toMatchAny(any()));
+        () -> this.impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).matchAny(any()));
   }
 
   @Test
-  void WHEN_matchAny_varargs_THEN_toMatchAny_is_called() {
+  void WHEN_matchAny_varargs_THEN_matchAny_is_called() {
     assertCall(
-        () -> impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
-        mock -> verify(mock, times(1)).toMatchAny(any()));
+        () -> this.impl.matchAny(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).matchAny(any()));
   }
 
   @Test
-  void WHEN_matchNone_THEN_toMatchNone_is_called() {
+  void WHEN_matchNone_THEN_matchNone_is_called() {
     assertCall(
-        () -> impl.matchNone(PREDICATE_A), mock -> verify(mock, times(1)).toMatchNone(any()));
+        () -> this.impl.matchNone(PREDICATE_A), mock -> verify(mock, times(1)).matchNone(any()));
   }
 
   @Test
-  void WHEN_matchNone_2_THEN_toMatchNone_is_called() {
+  void WHEN_matchNone_2_THEN_matchNone_is_called() {
     assertCall(
-        () -> impl.matchNone(PREDICATE_A, PREDICATE_A),
-        mock -> verify(mock, times(1)).toMatchNone(any()));
+        () -> this.impl.matchNone(PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).matchNone(any()));
   }
 
   @Test
-  void WHEN_matchNone_3_THEN_toMatchNone_is_called() {
+  void WHEN_matchNone_3_THEN_matchNone_is_called() {
     assertCall(
-        () -> impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A),
-        mock -> verify(mock, times(1)).toMatchNone(any()));
+        () -> this.impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).matchNone(any()));
   }
 
   @Test
-  void WHEN_matchNone_varargs_THEN_toMatchNone_is_called() {
+  void WHEN_matchNone_varargs_THEN_matchNone_is_called() {
     assertCall(
-        () -> impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
-        mock -> verify(mock, times(1)).toMatchNone(any()));
+        () -> this.impl.matchNone(PREDICATE_A, PREDICATE_A, PREDICATE_A, PREDICATE_A),
+        mock -> verify(mock, times(1)).matchNone(any()));
   }
 
-  @Nested
-  class nextStep {
+  @Test
+  void WHEN_headers_THEN_return_TestAssertHeadImpl() {
+    // Act
+    var headers = this.impl.headers();
 
-    @Test
-    void headers() {
-      // Act
-      var headers = impl.headers();
-
-      // Assert
-      assertThat(headers, instanceOf(TestAssertHeadImpl.class));
-    }
+    // Assert
+    assertThat(headers, instanceOf(TestAssertHeadImpl.class));
   }
 }

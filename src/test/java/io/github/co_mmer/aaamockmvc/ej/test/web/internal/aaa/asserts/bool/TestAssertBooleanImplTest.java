@@ -3,90 +3,78 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.bool;
 import static io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestValue.STEP_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.TestAssertBase;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
 import io.github.co_mmer.aaamockmvc.ej.testdata.testutil.TestContext;
 import java.util.function.Consumer;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedConstruction;
 
 class TestAssertBooleanImplTest extends TestAssertBase {
 
-  private static final AssertValue<Boolean, Boolean> ASSERT_VALUE_TRUE =
-      AssertValue.expectedBoolean(Boolean.TRUE);
-
-  private static final AssertValue<Boolean, Boolean> ASSERT_VALUE_FALSE =
-      AssertValue.expectedBoolean(Boolean.FALSE);
+  private static final BooleanValue VALUE_TRUE = BooleanValue.expected(Boolean.TRUE);
 
   private TestAssertBooleanImpl impl;
+  private MockedConstruction<BooleanAssertion> mockedAssertion;
 
   @BeforeEach
   void setUp() {
     var context = TestContext.createContext(STEP_NAME);
     this.useContext(context);
-    this.impl = new TestAssertBooleanImpl(context);
+    this.mockedAssertion = mockConstruction(BooleanAssertion.class);
+    this.impl = new TestAssertBooleanImpl(context, new BooleanValue(Boolean.TRUE));
   }
 
-  private void assertCall(Runnable actCall, Consumer<AAAAssert<?, ?>> verifyCall) {
-    var mockInstance = mock(AAAAssert.class);
-    var mockClass = mockStatic(AAAAssert.class);
-    mockClass.when(() -> AAAAssert.expect(any(), any())).thenReturn(mockInstance);
+  @AfterEach
+  void tearDown() {
+    this.mockedAssertion.close();
+  }
 
+  private void assertCall(Runnable actCall, Consumer<BooleanAssertion> verifyCall) {
     actCall.run();
 
-    mockClass.verify(
-        () -> AAAAssert.expect(getContext().getStep(), getContext().getAssertOperand()), times(1));
-
-    verifyCall.accept(mockInstance);
-    mockClass.close();
+    verifyCall.accept(this.mockedAssertion.constructed().get(0));
   }
 
   @Test
-  void WHEN_isNull_THEN_toBeAbsent_is_called() {
-    assertCall(() -> impl.isNull(), mock -> verify(mock, times(1)).toBeAbsent());
+  void WHEN_isNull_THEN_isNull_is_called() {
+    assertCall(() -> this.impl.isNull(), mock -> verify(mock, times(1)).isNull());
   }
 
   @Test
-  void WHEN_isNotNull_THEN_toBePresent_is_called() {
-    assertCall(() -> impl.isNotNull(), mock -> verify(mock, times(1)).toBePresent());
+  void WHEN_isNotNull_THEN_isNotNull_is_called() {
+    assertCall(() -> this.impl.isNotNull(), mock -> verify(mock, times(1)).isNotNull());
   }
 
   @Test
-  void WHEN_isEqualTo_THEN_toEqual_is_called() {
+  void WHEN_isEqualTo_THEN_isEqualTo_is_called() {
     assertCall(
-        () -> impl.isEqualTo(Boolean.TRUE),
-        mock -> verify(mock, times(1)).toEqual(ASSERT_VALUE_TRUE));
+        () -> this.impl.isEqualTo(Boolean.TRUE),
+        mock -> verify(mock, times(1)).isEqualTo(VALUE_TRUE));
   }
 
   @Test
-  void WHEN_isTrue_THEN_toEqual_is_called() {
-    assertCall(() -> impl.isTrue(), mock -> verify(mock, times(1)).toEqual(ASSERT_VALUE_TRUE));
+  void WHEN_isTrue_THEN_isTrue_is_called() {
+    assertCall(() -> this.impl.isTrue(), mock -> verify(mock, times(1)).isTrue());
   }
 
   @Test
-  void WHEN_isFalse_THEN_toEqual_is_called() {
-    assertCall(() -> impl.isFalse(), mock -> verify(mock, times(1)).toEqual(ASSERT_VALUE_FALSE));
+  void WHEN_isFalse_THEN_isFalse_is_called() {
+    assertCall(() -> this.impl.isFalse(), mock -> verify(mock, times(1)).isFalse());
   }
 
-  @Nested
-  class nextStep {
+  @Test
+  void WHEN_headers_THEN_return_TestAssertHeadImpl() {
+    // Act
+    var headers = this.impl.headers();
 
-    @Test
-    void headers() {
-      // Act
-      var headers = impl.headers();
-
-      // Assert
-      assertThat(headers, instanceOf(TestAssertHeadImpl.class));
-    }
+    // Assert
+    assertThat(headers, instanceOf(TestAssertHeadImpl.class));
   }
 }

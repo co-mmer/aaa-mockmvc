@@ -46,6 +46,7 @@ public final class TestObject {
   public static final Map<Integer, TestObjectSimple> TEST_MAP_A1_A2 = Map.of(ID1, A1, ID2, A2);
   public static final Map<Integer, TestObjectSimple> TEST_MAP_A2_A3 = Map.of(ID2, A2, ID3, A3);
 
+  public static final Map<String, List<String>> TEST_HEADER = Map.of("KEY_1", List.of("VALUE_1"));
   public static final String TEST_A1_JSON = mapToString(A1);
   public static final String TEST_A2_JSON = mapToString(A2);
   public static final String TEST_LIST_A1_A2_JSON = mapToString(TEST_LIST_A1_A2);

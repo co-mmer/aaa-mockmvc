@@ -7,19 +7,15 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert4Co
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssert5Collection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.collection.TestAssertLCollection;
 import io.github.co_mmer.aaamockmvc.ej.test.web.asserts.head.TestAssertHead;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.AAAAssert;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head.TestAssertHeadImpl;
-import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.AssertValue;
+import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.model.Conditions;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.context.TestAAAContext;
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import java.util.Collection;
-import java.util.List;
 import java.util.function.Predicate;
-import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 
 @Since("1.4.0")
-@RequiredArgsConstructor
 public final class TestAssertCollectionImpl<E>
     implements TestAssert1Collection<E>,
         TestAssert2Collection<E>,
@@ -29,164 +25,175 @@ public final class TestAssertCollectionImpl<E>
         TestAssertLCollection {
 
   private final TestAAAContext context;
+  private final CollectionAssertion<E> assertion;
+
+  @Since("2.1.0")
+  public TestAssertCollectionImpl(
+      @NonNull TestAAAContext context, @NonNull CollectionValue<E> actual) {
+    this.context = context;
+    this.assertion = new CollectionAssertion<>(actual, context.getStep());
+  }
 
   @Override
+  @NonNull
   public TestAssert2Collection<E> isNotEmpty() {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).notToBeEmpty();
+    this.assertion.isNotEmpty();
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssertLCollection isEmpty() {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand()).toBeEmpty();
+    this.assertion.isEmpty();
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssert2Collection<E> hasSize(int expectedSize) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toHaveSize(AssertValue.expectedSize(expectedSize));
+    this.assertion.hasSize(expectedSize);
     return this;
   }
 
+  @NonNull
   public TestAssertLCollection isEqualTo(@NonNull Collection<E> expectedCollection) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toEqual(AssertValue.expectedCollection(expectedCollection));
+    this.assertion.isEqualTo(new CollectionValue<>(expectedCollection));
     return this;
   }
 
+  @NonNull
   public TestAssert3Collection<E> contains(@NonNull Collection<E> expectedElements) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toContain(AssertValue.expectedCollection(expectedElements));
+    this.assertion.contains(new CollectionValue<>(expectedElements));
     return this;
   }
 
   @SafeVarargs
+  @NonNull
   public final TestAssert3Collection<E> contains(@NonNull E... expectedElements) {
-    var expectedValue = AssertValue.expectedElements(expectedElements);
-    return contains(List.of(expectedValue.value()));
+    this.assertion.contains(CollectionValue.of(expectedElements));
+    return this;
   }
 
+  @NonNull
   public TestAssert3Collection<E> containsAnyOrder(@NonNull Collection<E> expectedCollection) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toContainExactlyInAnyOrder(AssertValue.expectedCollection(expectedCollection));
+    this.assertion.containsAnyOrder(new CollectionValue<>(expectedCollection));
     return this;
   }
 
+  @NonNull
   public TestAssert3Collection<E> notContains(@NonNull Collection<E> unexpectedElements) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .notToContain(AssertValue.unexpectedElements(unexpectedElements));
+    this.assertion.notContains(new CollectionValue<>(unexpectedElements));
     return this;
   }
 
   @SafeVarargs
+  @NonNull
   public final TestAssert3Collection<E> notContains(@NonNull E... unexpectedElements) {
-    var unexpectedValue = AssertValue.unexpectedElements(unexpectedElements);
-    return notContains(List.of(unexpectedValue.value()));
+    this.assertion.notContains(CollectionValue.of(unexpectedElements));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssert4Collection<E> matchAll(@NonNull Predicate<E> condition) {
-    @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition};
-    return matchAll(predicates);
+    this.assertion.matchAll(new Conditions<>(condition));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssert4Collection<E> matchAll(
       @NonNull Predicate<E> condition1, @NonNull Predicate<E> condition2) {
-
-    @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition1, condition2};
-    return matchAll(predicates);
+    this.assertion.matchAll(new Conditions<>(condition1, condition2));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssert4Collection<E> matchAll(
       @NonNull Predicate<E> condition1,
       @NonNull Predicate<E> condition2,
       @NonNull Predicate<E> condition3) {
-
-    @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition1, condition2, condition3};
-    return matchAll(predicates);
+    this.assertion.matchAll(new Conditions<>(condition1, condition2, condition3));
+    return this;
   }
 
   @SafeVarargs
   @Override
+  @NonNull
   public final TestAssert4Collection<E> matchAll(@NonNull Predicate<E>... conditions) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toMatchAll(AssertValue.matchConditions(conditions));
+    this.assertion.matchAll(new Conditions<>(conditions));
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssert5Collection<E> matchAny(@NonNull Predicate<E> condition) {
-    @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition};
-    return this.matchAny(predicates);
+    this.assertion.matchAny(new Conditions<>(condition));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssert5Collection<E> matchAny(
       @NonNull Predicate<E> condition1, @NonNull Predicate<E> condition2) {
-    @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition1, condition2};
-    return this.matchAny(predicates);
+    this.assertion.matchAny(new Conditions<>(condition1, condition2));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssert5Collection<E> matchAny(
       @NonNull Predicate<E> condition1,
       @NonNull Predicate<E> condition2,
       @NonNull Predicate<E> condition3) {
-    @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition1, condition2, condition3};
-    return this.matchAny(predicates);
+    this.assertion.matchAny(new Conditions<>(condition1, condition2, condition3));
+    return this;
   }
 
   @SafeVarargs
   @Override
+  @NonNull
   public final TestAssert5Collection<E> matchAny(@NonNull Predicate<E>... conditions) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toMatchAny(AssertValue.matchConditions(conditions));
+    this.assertion.matchAny(new Conditions<>(conditions));
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssertLCollection matchNone(@NonNull Predicate<E> condition) {
-    @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition};
-    return this.matchNone(predicates);
+    this.assertion.matchNone(new Conditions<>(condition));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssertLCollection matchNone(
       @NonNull Predicate<E> condition1, @NonNull Predicate<E> condition2) {
-    @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition1, condition2};
-    return this.matchNone(predicates);
+    this.assertion.matchNone(new Conditions<>(condition1, condition2));
+    return this;
   }
 
   @Override
+  @NonNull
   public TestAssertLCollection matchNone(
       @NonNull Predicate<E> condition1,
       @NonNull Predicate<E> condition2,
       @NonNull Predicate<E> condition3) {
-    @SuppressWarnings("unchecked")
-    Predicate<E>[] predicates = new Predicate[] {condition1, condition2, condition3};
-    return this.matchNone(predicates);
+    this.assertion.matchNone(new Conditions<>(condition1, condition2, condition3));
+    return this;
   }
 
   @SafeVarargs
   @Override
+  @NonNull
   public final TestAssertLCollection matchNone(@NonNull Predicate<E>... conditions) {
-    AAAAssert.expect(this.context.getStep(), this.context.getAssertOperand())
-        .toMatchNone(AssertValue.matchConditions(conditions));
+    this.assertion.matchNone(new Conditions<>(conditions));
     return this;
   }
 
   @Override
+  @NonNull
   public TestAssertHead headers() {
     return new TestAssertHeadImpl(this.context);
   }
