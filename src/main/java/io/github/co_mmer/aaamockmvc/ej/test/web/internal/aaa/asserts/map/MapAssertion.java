@@ -13,11 +13,6 @@ public final class MapAssertion<K, V> {
   private final TestStepDto step;
 
   @Since("2.1.0")
-  public MapAssertion(@NonNull MapValue<K, V> actual) {
-    this(actual, null);
-  }
-
-  @Since("2.1.0")
   public MapAssertion(@NonNull MapValue<K, V> actual, @Nullable TestStepDto step) {
     this.actual = actual;
     this.step = step;

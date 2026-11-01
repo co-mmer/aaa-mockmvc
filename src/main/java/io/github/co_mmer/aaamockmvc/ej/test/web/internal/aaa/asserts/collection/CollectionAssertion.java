@@ -18,11 +18,6 @@ public final class CollectionAssertion<E> {
   private final TestStepDto step;
 
   @Since("2.1.0")
-  public CollectionAssertion(@NonNull CollectionValue<E> actual) {
-    this(actual, null);
-  }
-
-  @Since("2.1.0")
   public CollectionAssertion(@NonNull CollectionValue<E> actual, @Nullable TestStepDto step) {
     this.actual = actual;
     this.step = step;

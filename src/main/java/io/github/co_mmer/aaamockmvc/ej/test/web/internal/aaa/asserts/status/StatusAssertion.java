@@ -13,11 +13,6 @@ public final class StatusAssertion {
   private final TestStepDto step;
 
   @Since("2.1.0")
-  public StatusAssertion(@NonNull StatusValue actual) {
-    this(actual, null);
-  }
-
-  @Since("2.1.0")
   public StatusAssertion(@NonNull StatusValue actual, @Nullable TestStepDto step) {
     this.actual = actual;
     this.step = step;
