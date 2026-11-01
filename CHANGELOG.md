@@ -17,7 +17,7 @@
   validation, immutable views, and defensive copies of managed request data.
 * Added validated target types for Answer operations and validated inputs for assertion evaluation.
 * Replaced Hamcrest-based assertion handling with framework-owned failure reporting that separates
-  `Expected`, `Actual`, and `Reason`, and removed Hamcrest from the framework's dependencies.
+  `Expected`, `Actual`, and `Assertion`, and removed Hamcrest from the framework's dependencies.
 
 ### ☂️ Fixed
 

@@ -22,7 +22,7 @@ behavior, and assertion semantics remain unchanged.
 - **Predictable exception behavior** — Null arguments in the affected APIs now
   produce `IllegalArgumentException` instead of Lombok-generated `NullPointerException`.
 - **Structured assertion failures** — Failures consistently report `Expected`, `Actual`,
-  and `Reason`.
+  and `Assertion`.
 - **Leaner dependency footprint** — Hamcrest is no longer used internally and has been removed as a
   framework dependency.
 - **Stable public DSL** — Existing assertion calls and response mapping semantics remain unchanged.
@@ -80,24 +80,24 @@ assertion calls remain unchanged.
 Failures produced by the DSL now follow a consistent structure:
 
 ```text
-Expected: <expected result>
-Actual: <actual response value>
-Reason: <why the assertion failed>
+Expected:  <expected result>
+Actual:    <actual response value>
+Assertion: <why the assertion failed>
 ```
 
 For example, asserting an expected object when the endpoint returns an empty body produces:
 
 ```text
-Expected: SimpleObject[id=1, name=A]
-Actual:   null
-Reason:   The response body was absent.
+Expected:  SimpleObject[id=1, name=A]
+Actual:    null
+Assertion: The response body was absent.
 ```
 
 Each field has a clear purpose:
 
 - `Expected` describes the asserted outcome.
 - `Actual` shows the observed response value.
-- `Reason` explains the mismatch in context.
+- `Assertion` explains the mismatch in context.
 
 #### 2. Dependency cleanup
 
