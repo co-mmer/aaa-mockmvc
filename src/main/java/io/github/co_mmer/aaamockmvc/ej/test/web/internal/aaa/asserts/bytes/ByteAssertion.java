@@ -8,6 +8,7 @@ import java.util.Arrays;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
+@Since("2.1.0")
 public final class ByteAssertion {
 
   private final ByteValue actual;
@@ -51,7 +52,7 @@ public final class ByteAssertion {
 
   @Since("2.1.0")
   public void isEqualTo(@NonNull ByteValue expected) {
-    if (!(Arrays.equals(this.actual.value(), expected.value()))) {
+    if (!Arrays.equals(this.actual.value(), expected.value())) {
       throw failure(
           this.step,
           "The response bytes must match the expected bytes in both value and order.",

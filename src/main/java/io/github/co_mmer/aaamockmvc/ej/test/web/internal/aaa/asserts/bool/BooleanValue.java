@@ -4,18 +4,8 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
-public record BooleanValue(Boolean value) {
-  @Since("2.1.0")
-  public BooleanValue(@Nullable Boolean value) {
-    this.value = value;
-  }
-
-  @Nullable
-  @Override
-  @Since("2.1.0")
-  public Boolean value() {
-    return this.value;
-  }
+@Since("2.1.0")
+public record BooleanValue(@Nullable Boolean value) {
 
   @NonNull
   @Since("2.1.0")

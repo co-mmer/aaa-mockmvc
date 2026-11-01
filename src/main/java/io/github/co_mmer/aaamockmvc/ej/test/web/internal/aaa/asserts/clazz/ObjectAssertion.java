@@ -9,6 +9,7 @@ import java.util.Objects;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
+@Since("2.1.0")
 public final class ObjectAssertion<T> {
 
   private final ObjectValue<T> actual;

@@ -7,7 +7,9 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import org.springframework.lang.Nullable;
 
+@Since("2.1.0")
 public final class Conditions<E> {
+
   private final List<Predicate<E>> values;
 
   @SafeVarargs
@@ -19,7 +21,7 @@ public final class Conditions<E> {
     if (Arrays.stream(values).anyMatch(Objects::isNull)) {
       throw new IllegalArgumentException("Match conditions must not contain null.");
     }
-    this.values = List.copyOf(Arrays.asList(values));
+    this.values = List.of(values);
   }
 
   @Since("2.1.0")

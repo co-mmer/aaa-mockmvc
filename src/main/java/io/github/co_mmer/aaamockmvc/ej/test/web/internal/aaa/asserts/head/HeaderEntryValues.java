@@ -3,12 +3,13 @@ package io.github.co_mmer.aaamockmvc.ej.test.web.internal.aaa.asserts.head;
 import static io.github.co_mmer.aaamockmvc.ej.test.web.internal.unicode.UnicodeNormalizer.normalizeCollection;
 
 import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
-import java.util.Arrays;
 import java.util.List;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
+@Since("2.1.0")
 public final class HeaderEntryValues {
+
   private final List<String> values;
   private final List<String> comparison;
 
@@ -23,7 +24,7 @@ public final class HeaderEntryValues {
             "Header value at position %d must not be null.".formatted(i + 1));
       }
     }
-    this.values = List.copyOf(Arrays.asList(values));
+    this.values = List.of(values);
     this.comparison = normalizeCollection(this.values);
   }
 

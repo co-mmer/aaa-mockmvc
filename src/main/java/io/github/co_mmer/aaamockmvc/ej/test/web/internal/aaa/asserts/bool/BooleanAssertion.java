@@ -8,6 +8,7 @@ import java.util.Objects;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
+@Since("2.1.0")
 public final class BooleanAssertion {
 
   private final BooleanValue actual;
@@ -36,7 +37,7 @@ public final class BooleanAssertion {
 
   @Since("2.1.0")
   public void isEqualTo(@NonNull BooleanValue expected) {
-    if (!(Objects.equals(this.actual.value(), expected.value()))) {
+    if (!Objects.equals(this.actual.value(), expected.value())) {
       throw failure(
           this.step,
           "The response Boolean value must equal the expected value.",

@@ -7,6 +7,7 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
+@Since("2.1.0")
 public final class MapAssertion<K, V> {
 
   private final MapValue<K, V> actual;

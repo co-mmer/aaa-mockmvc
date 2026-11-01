@@ -7,15 +7,11 @@ import io.github.co_mmer.aaamockmvc.ej.test.web.internal.metadata.Since;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
+@Since("2.1.0")
 public final class StringAssertion {
 
   private final StringValue actual;
   private final TestStepDto step;
-
-  @Since("2.1.0")
-  public StringAssertion(@NonNull StringValue actual) {
-    this(actual, null);
-  }
 
   @Since("2.1.0")
   public StringAssertion(@NonNull StringValue actual, @Nullable TestStepDto step) {
@@ -25,7 +21,7 @@ public final class StringAssertion {
 
   @Since("2.1.0")
   public void isEmpty() {
-    if (this.actual.value().length() != 0) {
+    if (!this.actual.value().isEmpty()) {
       throw failure(
           this.step,
           "The response text must contain zero characters.",
@@ -36,7 +32,7 @@ public final class StringAssertion {
 
   @Since("2.1.0")
   public void isNotEmpty() {
-    if (this.actual.value().length() == 0) {
+    if (this.actual.value().isEmpty()) {
       throw failure(
           this.step,
           "The response text must contain at least one character.",
@@ -58,7 +54,7 @@ public final class StringAssertion {
 
   @Since("2.1.0")
   public void isEqualTo(@NonNull StringValue expected) {
-    if (!(this.actual.comparison().equals(expected.comparison()))) {
+    if (!this.actual.comparison().equals(expected.comparison())) {
       throw failure(
           this.step,
           "The response text must equal the expected text.",
